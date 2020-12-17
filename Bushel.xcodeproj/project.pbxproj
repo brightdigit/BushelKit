@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B387B824258BD86200200712 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B387B823258BD86200200712 /* main.swift */; };
+		B387B82C258BD86900200712 /* BushelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B387B82B258BD86900200712 /* BushelKit */; };
 		B3D6EE8125899C3F00BDB5C6 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EE8025899C3F00BDB5C6 /* BushelApp.swift */; };
 		B3D6EE8325899C3F00BDB5C6 /* BushelDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EE8225899C3F00BDB5C6 /* BushelDocument.swift */; };
 		B3D6EE8525899C3F00BDB5C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EE8425899C3F00BDB5C6 /* ContentView.swift */; };
@@ -14,7 +16,23 @@
 		B3D6EE8A25899C4000BDB5C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3D6EE8925899C4000BDB5C6 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B387B81F258BD86200200712 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B387B81B258BD61C00200712 /* BushelKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BushelKit; path = Packages/BushelKit; sourceTree = "<group>"; };
+		B387B821258BD86200200712 /* bshl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bshl; sourceTree = BUILT_PRODUCTS_DIR; };
+		B387B823258BD86200200712 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B387B82D258BD89D00200712 /* bshl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bshl.entitlements; sourceTree = "<group>"; };
 		B3D6EE7D25899C3F00BDB5C6 /* Bushel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bushel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3D6EE8025899C3F00BDB5C6 /* BushelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelApp.swift; sourceTree = "<group>"; };
 		B3D6EE8225899C3F00BDB5C6 /* BushelDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelDocument.swift; sourceTree = "<group>"; };
@@ -26,6 +44,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B387B81E258BD86200200712 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B387B82C258BD86900200712 /* BushelKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3D6EE7A25899C3F00BDB5C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -36,11 +62,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B387B81A258BD61200200712 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				B387B81B258BD61C00200712 /* BushelKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		B387B822258BD86200200712 /* bshl */ = {
+			isa = PBXGroup;
+			children = (
+				B387B82D258BD89D00200712 /* bshl.entitlements */,
+				B387B823258BD86200200712 /* main.swift */,
+			);
+			path = bshl;
+			sourceTree = "<group>";
+		};
+		B387B82A258BD86900200712 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B3D6EE7425899C3F00BDB5C6 = {
 			isa = PBXGroup;
 			children = (
+				B387B81A258BD61200200712 /* Packages */,
 				B3D6EE7F25899C3F00BDB5C6 /* Bushel */,
+				B387B822258BD86200200712 /* bshl */,
 				B3D6EE7E25899C3F00BDB5C6 /* Products */,
+				B387B82A258BD86900200712 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				B3D6EE7D25899C3F00BDB5C6 /* Bushel.app */,
+				B387B821258BD86200200712 /* bshl */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,6 +131,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B387B820258BD86200200712 /* bshl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B387B825258BD86200200712 /* Build configuration list for PBXNativeTarget "bshl" */;
+			buildPhases = (
+				B387B81D258BD86200200712 /* Sources */,
+				B387B81E258BD86200200712 /* Frameworks */,
+				B387B81F258BD86200200712 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bshl;
+			packageProductDependencies = (
+				B387B82B258BD86900200712 /* BushelKit */,
+			);
+			productName = bshl;
+			productReference = B387B821258BD86200200712 /* bshl */;
+			productType = "com.apple.product-type.tool";
+		};
 		B3D6EE7C25899C3F00BDB5C6 /* Bushel */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B3D6EE8F25899C4000BDB5C6 /* Build configuration list for PBXNativeTarget "Bushel" */;
@@ -103,6 +177,9 @@
 				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
+					B387B820258BD86200200712 = {
+						CreatedOnToolsVersion = 12.3;
+					};
 					B3D6EE7C25899C3F00BDB5C6 = {
 						CreatedOnToolsVersion = 12.3;
 					};
@@ -122,6 +199,7 @@
 			projectRoot = "";
 			targets = (
 				B3D6EE7C25899C3F00BDB5C6 /* Bushel */,
+				B387B820258BD86200200712 /* bshl */,
 			);
 		};
 /* End PBXProject section */
@@ -139,6 +217,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B387B81D258BD86200200712 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B387B824258BD86200200712 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3D6EE7925899C3F00BDB5C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,6 +238,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		B387B826258BD86200200712 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = bshl/bshl.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B387B827258BD86200200712 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = bshl/bshl.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		B3D6EE8D25899C4000BDB5C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -318,6 +428,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B387B825258BD86200200712 /* Build configuration list for PBXNativeTarget "bshl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B387B826258BD86200200712 /* Debug */,
+				B387B827258BD86200200712 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B3D6EE7825899C3F00BDB5C6 /* Build configuration list for PBXProject "Bushel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -337,6 +456,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B387B82B258BD86900200712 /* BushelKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BushelKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B3D6EE7525899C3F00BDB5C6 /* Project object */;
 }
