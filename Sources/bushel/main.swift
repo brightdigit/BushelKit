@@ -3,9 +3,15 @@ import Virtualization
 private let readPipe = Pipe()
 private let writePipe = Pipe()
 
-let kernelURL: URL! = nil
-let bootableImageURL: URL! = nil
-let initialRamdiskURL: URL! = nil
+let kernelURL = URL(fileURLWithPath: "/Users/leo/Downloads/vmlinuz-5.4.0-26-generic.efi.signed")
+let bootableImageURL = URL(fileURLWithPath: "/Users/leo/Downloads", isDirectory: true).appendingPathComponent(UUID().uuidString) // FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+FileManager.default.createFile(atPath: bootableImageURL.path, contents: nil, attributes: nil)
+// let result = truncate(bootableImageURL.absoluteString, 1024 * 1024 * 1024);
+let harddrive = try! FileHandle(forWritingTo: bootableImageURL)
+try! harddrive.truncate(atOffset: 1024 * 1024 * 1024)
+try! harddrive.close()
+let initialRamdiskURL = URL(fileURLWithPath: "/Users/leo/Downloads/initrd")
+
 let bootloader = VZLinuxBootLoader(kernelURL: kernelURL)
 bootloader.initialRamdiskURL = initialRamdiskURL
 bootloader.commandLine = "console=hvc0"
