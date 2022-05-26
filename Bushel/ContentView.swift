@@ -21,6 +21,25 @@ struct ContentView: View {
   @State var progress : Double?
     var body: some View {
       VStack{
+        Button("Load Image") {
+          let panel = NSOpenPanel()
+          panel.nameFieldLabel = "Open Restore Image:"
+          panel.allowedContentTypes = [.init("com.apple.itunes.ipsw")!, .init("com.apple.iphone.ipsw")!]
+          panel.isExtensionHidden = true
+          panel.begin { response in
+            guard let fileURL = panel.url, response == .OK else {
+              return
+            }
+            VZMacOSRestoreImage.load(from: fileURL) { result in
+              guard let image = try? result.get() else {
+                return
+              }
+              DispatchQueue.main.async {
+                self.image = image
+              }
+            }
+          }
+        }
         Button("Get Image") {
           VZMacOSRestoreImage.fetchLatestSupported { (result : Result<VZMacOSRestoreImage, Error>) in
             self.image = try? result.get()
