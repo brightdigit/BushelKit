@@ -7,23 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B315106E2841127500299415 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315106D2841127500299415 /* MainView.swift */; };
 		B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */; };
 		B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAD283E7B3A00F3E336 /* ContentView.swift */; };
 		B3BB2FB0283E7B3B00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
 		B3BB2FB3283E7B3B00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */; };
+		B3BB2FF6283FB62D00F3E336 /* Bushel_downloadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FF5283FB62D00F3E336 /* Bushel_downloadApp.swift */; };
+		B3BB2FF8283FB62D00F3E336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FF7283FB62D00F3E336 /* ContentView.swift */; };
+		B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */; };
+		B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B315106D2841127500299415 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B3BB2FA8283E7B3A00F3E336 /* Bushel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bushel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelApp.swift; sourceTree = "<group>"; };
 		B3BB2FAD283E7B3A00F3E336 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel.entitlements; sourceTree = "<group>"; };
+		B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bushel-download.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3BB2FF5283FB62D00F3E336 /* Bushel_downloadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bushel_downloadApp.swift; sourceTree = "<group>"; };
+		B3BB2FF7283FB62D00F3E336 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel_download.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B3BB2FA5283E7B3A00F3E336 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3BB2FF0283FB62D00F3E336 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				B3BB2FAA283E7B3A00F3E336 /* Bushel */,
+				B3BB2FF4283FB62D00F3E336 /* Bushel-download */,
 				B3BB2FA9283E7B3A00F3E336 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				B3BB2FA8283E7B3A00F3E336 /* Bushel.app */,
+				B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,6 +78,7 @@
 				B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */,
 				B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */,
 				B3BB2FB1283E7B3B00F3E336 /* Preview Content */,
+				B315106D2841127500299415 /* MainView.swift */,
 			);
 			path = Bushel;
 			sourceTree = "<group>";
@@ -65,6 +87,26 @@
 			isa = PBXGroup;
 			children = (
 				B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B3BB2FF4283FB62D00F3E336 /* Bushel-download */ = {
+			isa = PBXGroup;
+			children = (
+				B3BB2FF5283FB62D00F3E336 /* Bushel_downloadApp.swift */,
+				B3BB2FF7283FB62D00F3E336 /* ContentView.swift */,
+				B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */,
+				B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */,
+				B3BB2FFB283FB62E00F3E336 /* Preview Content */,
+			);
+			path = "Bushel-download";
+			sourceTree = "<group>";
+		};
+		B3BB2FFB283FB62E00F3E336 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -89,6 +131,23 @@
 			productReference = B3BB2FA8283E7B3A00F3E336 /* Bushel.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B3BB2FF2283FB62D00F3E336 /* Bushel-download */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3BB3001283FB62E00F3E336 /* Build configuration list for PBXNativeTarget "Bushel-download" */;
+			buildPhases = (
+				B3BB2FEF283FB62D00F3E336 /* Sources */,
+				B3BB2FF0283FB62D00F3E336 /* Frameworks */,
+				B3BB2FF1283FB62D00F3E336 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bushel-download";
+			productName = "Bushel-download";
+			productReference = B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -100,6 +159,9 @@
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					B3BB2FA7283E7B3A00F3E336 = {
+						CreatedOnToolsVersion = 13.4;
+					};
+					B3BB2FF2283FB62D00F3E336 = {
 						CreatedOnToolsVersion = 13.4;
 					};
 				};
@@ -118,6 +180,7 @@
 			projectRoot = "";
 			targets = (
 				B3BB2FA7283E7B3A00F3E336 /* Bushel */,
+				B3BB2FF2283FB62D00F3E336 /* Bushel-download */,
 			);
 		};
 /* End PBXProject section */
@@ -132,6 +195,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B3BB2FF1283FB62D00F3E336 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */,
+				B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -140,7 +212,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */,
+				B315106E2841127500299415 /* MainView.swift in Sources */,
 				B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3BB2FEF283FB62D00F3E336 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3BB2FF8283FB62D00F3E336 /* ContentView.swift in Sources */,
+				B3BB2FF6283FB62D00F3E336 /* Bushel_downloadApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +396,60 @@
 			};
 			name = Release;
 		};
+		B3BB2FFF283FB62E00F3E336 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bushel-download/Bushel_download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bushel-download/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brightdigit.Bushel-download";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B3BB3000283FB62E00F3E336 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bushel-download/Bushel_download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bushel-download/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brightdigit.Bushel-download";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -331,6 +467,15 @@
 			buildConfigurations = (
 				B3BB2FB8283E7B3B00F3E336 /* Debug */,
 				B3BB2FB9283E7B3B00F3E336 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3BB3001283FB62E00F3E336 /* Build configuration list for PBXNativeTarget "Bushel-download" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3BB2FFF283FB62E00F3E336 /* Debug */,
+				B3BB3000283FB62E00F3E336 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
