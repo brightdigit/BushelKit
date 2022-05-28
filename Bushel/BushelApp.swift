@@ -12,7 +12,7 @@ import Virtualization
 struct BushelApp: App {
     var body: some Scene {
         WindowGroup {
-          ContentView()
+          MainView()
         }
     }
 }
