@@ -9,9 +9,16 @@ import SwiftUI
 import Virtualization
 import Combine
 
-struct LocalImage : Codable, Identifiable {
-  let name : String
+
+struct LocalImage : Codable, Identifiable, Hashable {
+  static func == (lhs: LocalImage, rhs: LocalImage) -> Bool {
+    lhs.url == rhs.url
+  }
+  
+  var name : String
   let url : URL
+  let buildVersion : String
+  let operatingSystemVersion : OperatingSystemVersion
   
   var id: URL {
     url
@@ -54,6 +61,7 @@ extension VZMacOSRestoreImage {
 }
 class AppObject : ObservableObject {
   @Published var remoteImage : RemoteImage?
+  @Published var images : [LocalImage] = .init()
   
   let remoteImageFetcher : RemoteImageFetcher
 
@@ -75,26 +83,38 @@ class AppObject : ObservableObject {
       self.refreshTriggerSubject.send()
     }
   }
+  
+  func beginDownloadingRemoteImage(_ image: RemoteImage) {
+    
+  }
 }
 
 
 struct MainView: View {
+  @State var selectedImage : LocalImage? 
   @EnvironmentObject var object : AppObject
     var body: some View {
       TabView {
         VStack {
-          RemoteImageView(image: object.remoteImage)
+          RemoteImageView(image: object.remoteImage).border(.secondary)
+          ImageList(images: object.images, imageBinding: self.$selectedImage)
         }.tabItem {
           
           Label("Images", systemImage:  "externaldrive.fill")
         
       }.onAppear(perform: object.initialize)
-      }
+      }.frame(width: 400.0)
     }
+}
+
+extension PreviewProvider {
+  static func previewImageFetch (_ closure: @escaping (Result<RemoteImage,Error>) -> Void) {
+    closure(.success(.init(buildVersion: "21F79", operatingSystemVersion: .init(majorVersion: 12, minorVersion: 4, patchVersion: 0), url: .init(string: "https://apple.com")!)))
+  }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+      MainView().environmentObject(AppObject(remoteImageFetcher: Self.previewImageFetch(_:)))
     }
 }
