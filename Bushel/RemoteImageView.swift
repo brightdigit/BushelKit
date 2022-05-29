@@ -6,23 +6,25 @@
 //
 
 import SwiftUI
-
-
 struct RemoteImageView: View {
-  let image : RemoteImage
+  
+  let image : RemoteImage?
     var body: some View {
       HStack{
-        Image(systemName: "applelogo")
-      
-//        Form{
-//          Section{
-//          TextField("Build Version", text: .constant(image.buildVersion))
-//          Text(image.buildVersion)
-//          Text("macOS \(image.operatingSystemVersion.description)")
-//          Text(image.url.absoluteString)
-//          }
-//        }
-      }
+        ZStack{
+          Rectangle().strokeBorder(.secondary).opacity(0.50)
+          Rectangle().fill(Color.secondary.opacity(0.25))
+          Image(systemName: "applelogo").resizable().aspectRatio(contentMode: .fit).padding(8.0)
+        }.aspectRatio(1.0, contentMode: .fit).padding(8.0)
+        VStack(alignment: .leading){
+          
+          Text("macOS \(image?.operatingSystemVersion.description ?? "")").font(.largeTitle)
+          
+          Text(image?.buildVersion ?? "").font(.title)
+        
+          Text(image?.url.absoluteString ?? "").font(.caption)
+        }
+      }.padding().frame(height: 120.0, alignment: .center)
     }
 }
 

@@ -12,7 +12,7 @@ import Virtualization
 struct BushelApp: App {
     var body: some Scene {
         WindowGroup {
-          MainView()
+          MainView().environmentObject(AppObject(remoteImageFetcher: nil))
         }
     }
 }

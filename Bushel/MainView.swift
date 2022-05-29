@@ -34,7 +34,7 @@ extension RemoteImage {
 }
 
 extension RemoteImage {
-  func publisher(from fetch: @escaping  RemoteImageFetcher) -> AnyPublisher<Result<RemoteImage, Error>, Never> {
+  static func publisher(from fetch: @escaping  RemoteImageFetcher) -> AnyPublisher<Result<RemoteImage, Error>, Never> {
     return Future { fulfill in
       fetch{
         fulfill(.success($0))
@@ -61,6 +61,13 @@ class AppObject : ObservableObject {
   
   init (remoteImageFetcher : RemoteImageFetcher?) {
     self.remoteImageFetcher = remoteImageFetcher ?? VZMacOSRestoreImage.remoteImageFetch
+    
+    self.refreshTriggerSubject.flatMap{
+      RemoteImage.publisher(from: self.remoteImageFetcher)
+    }.compactMap{
+      try? $0.get()
+    }.receive(on: DispatchQueue.main)
+      .assign(to: &self.$remoteImage)
   }
   
   func initialize() {
@@ -72,14 +79,16 @@ class AppObject : ObservableObject {
 
 
 struct MainView: View {
-
+  @EnvironmentObject var object : AppObject
     var body: some View {
       TabView {
         VStack {
-          Group{
-            
-          }
-        }
+          RemoteImageView(image: object.remoteImage)
+        }.tabItem {
+          
+          Label("Images", systemImage:  "externaldrive.fill")
+        
+      }.onAppear(perform: object.initialize)
       }
     }
 }
