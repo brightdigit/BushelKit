@@ -40,6 +40,6 @@ struct ImageList: View {
 
 struct ImageList_Previews: PreviewProvider {
     static var previews: some View {
-      ImageList(images: [.init(name: "Hello", url: .init(string: "https://apple.com")!, buildVersion: "21F79", operatingSystemVersion: .init(majorVersion: 12, minorVersion: 4, patchVersion: 0))], imageBinding: .constant(nil))
+      ImageList(images: [.init(name: "Hello", url: .init(string: "https://apple.com")!, buildVersion: "21F79", operatingSystemVersion: .init(majorVersion: 12, minorVersion: 4, patchVersion: 0), sha256: .init(hexidecialString: "1f9e921f77bbcb5cf78026389d6f7331cdd675bc081ffac77fc00405a7e822b3")!)], imageBinding: .constant(nil))
     }
 }

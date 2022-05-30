@@ -11,6 +11,15 @@ import Combine
 
 
 struct LocalImage : Codable, Identifiable, Hashable {
+  internal init(name: String, url: URL, buildVersion: String, operatingSystemVersion: OperatingSystemVersion,
+                sha256: SHA256) {
+    self.name = name
+    self.url = url
+    self.buildVersion = buildVersion
+    self.operatingSystemVersion = operatingSystemVersion
+    self.sha256 = sha256
+  }
+  
   static func == (lhs: LocalImage, rhs: LocalImage) -> Bool {
     lhs.url == rhs.url
   }
@@ -19,9 +28,17 @@ struct LocalImage : Codable, Identifiable, Hashable {
   let url : URL
   let buildVersion : String
   let operatingSystemVersion : OperatingSystemVersion
+  let sha256 : SHA256
   
   var id: URL {
     url
+  }
+  
+  init (fromRemoteImage remoteImage: RemoteImage, at url: URL) {
+    let name = remoteImage.url.deletingPathExtension().lastPathComponent
+    
+    self.init(name: name, url: url, buildVersion: remoteImage.buildVersion, operatingSystemVersion: remoteImage.operatingSystemVersion,
+              sha256: remoteImage.sha256)
   }
 }
 struct Configuration : Codable {
@@ -52,7 +69,7 @@ extension String {
     
 }
 
-struct SHA256 {
+struct SHA256 : Codable, Hashable {
   internal init(data: Data) {
     self.data = data
   }
@@ -82,6 +99,15 @@ struct RemoteImage {
   let contentLength : Int
   let lastModified: Date
   let sha256 : SHA256
+  
+  func localFileNameDownloadedAt(_ date: Date) -> String {
+    let pathExtension = url.pathExtension
+    let lastPathComponent = url.deletingPathExtension().lastPathComponent
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyMMddHHmmss"
+    formatter.timeZone = TimeZone.init(secondsFromGMT: 0)
+    return "\(lastPathComponent)[\(formatter.string(from: date))].\(pathExtension)"
+  }
   
   var size : String {
     let formatter = ByteCountFormatter()
@@ -166,6 +192,7 @@ extension VZMacOSRestoreImage {
   }
 }
 class AppObject : ObservableObject {
+  var cancellables = [AnyCancellable]()
   @Published var remoteImage : RemoteImage?
   @Published var images : [LocalImage] = .init()
   
@@ -190,8 +217,21 @@ class AppObject : ObservableObject {
     }
   }
   
-  func beginDownloadingRemoteImage(_ image: RemoteImage) {
+  func beginDownloadingRemoteImage(_ image: RemoteImage, with downloader: Downloader) throws {
+    let applicationSupportDirectoryURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .localDomainMask, appropriateFor: nil, create: true)
+    let imagesDirectory = applicationSupportDirectoryURL.appendingPathComponent("images", isDirectory: true)
+    try FileManager.default.createDirectory(at: imagesDirectory, withIntermediateDirectories: true)
+    let destinationURL = imagesDirectory.appendingPathComponent( image.localFileNameDownloadedAt(.init()))
     
+    
+      downloader.$isCompleted.compactMap {
+        try? $0?.get()
+      }.map {
+        LocalImage(fromRemoteImage: image, at: destinationURL)
+      }.sink { localImage in
+        self.images.append(localImage)
+      }.store(in: &self.cancellables)
+    downloader.begin(from: image.url, to: destinationURL)
   }
 }
 

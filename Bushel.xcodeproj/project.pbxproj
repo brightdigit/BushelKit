@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B315106E2841127500299415 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315106D2841127500299415 /* MainView.swift */; };
 		B315D8362843D0310012628A /* ImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315D8352843D0310012628A /* ImageList.swift */; };
+		B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34ABE9028443EFB00F22379 /* Downloader.swift */; };
 		B3A55E15284197FE00FD6930 /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A55E14284197FE00FD6930 /* RemoteImageView.swift */; };
 		B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */; };
 		B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAD283E7B3A00F3E336 /* ContentView.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		B315106D2841127500299415 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B315D8352843D0310012628A /* ImageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageList.swift; sourceTree = "<group>"; };
+		B34ABE9028443EFB00F22379 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		B3A55E14284197FE00FD6930 /* RemoteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
 		B3BB2FA8283E7B3A00F3E336 /* Bushel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bushel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelApp.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				B315106D2841127500299415 /* MainView.swift */,
 				B3A55E14284197FE00FD6930 /* RemoteImageView.swift */,
 				B315D8352843D0310012628A /* ImageList.swift */,
+				B34ABE9028443EFB00F22379 /* Downloader.swift */,
 			);
 			path = Bushel;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			files = (
 				B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */,
 				B315106E2841127500299415 /* MainView.swift in Sources */,
+				B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */,
 				B3A55E15284197FE00FD6930 /* RemoteImageView.swift in Sources */,
 				B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */,
 				B315D8362843D0310012628A /* ImageList.swift in Sources */,
