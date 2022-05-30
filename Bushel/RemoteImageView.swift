@@ -28,17 +28,27 @@ struct RemoteImageView: View {
           Text(image?.lastModified.formatted() ?? "")
         }
         VStack{
-          Button("Download \(image?.size ?? "")") {
-            guard let image = image else {
-              return
-            }
-            do {
-            try self.object.beginDownloadingRemoteImage(image, with: downloader)
-            } catch {
-              self.error = error
-            }
+          Button {
+            
+              guard let image = image else {
+                return
+              }
+              do {
+              try self.object.beginDownloadingRemoteImage(image, with: downloader)
+              } catch {
+                self.error = error
+              }
+          } label: {
+            Text("Download \(image?.size ?? "")").frame(maxWidth: .infinity)
           }
-        }
+
+          
+              ProgressView(
+                "",
+                value: Float(self.downloader.totalBytesWritten),
+                total:  self.downloader.totalBytesExpectedToWrite.map(Float.init) ?? 0.0
+              )
+        }.frame(width: 150.0)
       }.padding().frame(height: 120.0, alignment: .center)
     }
 }
