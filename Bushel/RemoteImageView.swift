@@ -8,6 +8,8 @@
 import SwiftUI
 struct RemoteImageView: View {
   @EnvironmentObject var object : AppObject
+  @StateObject var downloader = Downloader()
+  @State var error : Error?
   let image : RemoteImage?
     var body: some View {
       HStack(spacing: 8.0){
@@ -30,7 +32,11 @@ struct RemoteImageView: View {
             guard let image = image else {
               return
             }
-            object.beginDownloadingRemoteImage(image)
+            do {
+            try self.object.beginDownloadingRemoteImage(image, with: downloader)
+            } catch {
+              self.error = error
+            }
           }
         }
       }.padding().frame(height: 120.0, alignment: .center)
