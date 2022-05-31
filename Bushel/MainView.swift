@@ -124,7 +124,10 @@ struct RemoteImage {
 
 extension RemoteImage {
   init  (vzRestoreImage : VZMacOSRestoreImage, headers : [AnyHashable : Any]) throws {
-    guard let contentLength = headers["Content-Length"] as? Int else {
+    guard let contentLengthString = headers["Content-Length"] as? String else {
+      throw NSError()
+    }
+    guard let contentLength = Int(contentLengthString) else {
       throw NSError()
     }
     guard let lastModified = (headers["Last-Modified"] as? String).flatMap(Self.lastModifiedDateFormatter.date(from:)) else {
@@ -218,7 +221,7 @@ class AppObject : ObservableObject {
   }
   
   func beginDownloadingRemoteImage(_ image: RemoteImage, with downloader: Downloader) throws {
-    let applicationSupportDirectoryURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .localDomainMask, appropriateFor: nil, create: true)
+    let applicationSupportDirectoryURL = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     let imagesDirectory = applicationSupportDirectoryURL.appendingPathComponent("images", isDirectory: true)
     try FileManager.default.createDirectory(at: imagesDirectory, withIntermediateDirectories: true)
     let destinationURL = imagesDirectory.appendingPathComponent( image.localFileNameDownloadedAt(.init()))
@@ -249,7 +252,7 @@ struct MainView: View {
           Label("Images", systemImage:  "externaldrive.fill")
         
       }.onAppear(perform: object.initialize)
-      }.frame(width: 400.0)
+      }.frame(width: 500.0)
     }
 }
 
