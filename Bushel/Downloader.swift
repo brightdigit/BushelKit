@@ -24,6 +24,27 @@ class Downloader : NSObject, ObservableObject, URLSessionDownloadDelegate {
   let requestSubject = PassthroughSubject<DownloadRequest, Never>()
   let locationURLSubject = PassthroughSubject<URL, Never>()
   
+    let formatter = ByteCountFormatter()
+  
+  var prettyBytesWritten : String {
+    
+    return formatter.string(from: .init(value: .init(self.totalBytesWritten), unit: .bytes))
+  }
+  var prettyBytesTotal  : String? {
+    self.totalBytesExpectedToWrite.map{
+      formatter.string(from: .init(value: .init($0), unit: .bytes))
+    }
+  }
+  
+  var percentCompleted : Float? {
+    self.totalBytesExpectedToWrite.map{
+      Float((self.totalBytesWritten * 10000) / $0) / 100.0
+    }
+  }
+  var isActive : Bool {
+    isCompleted == nil && task != nil
+  }
+  
   internal init(configuration: URLSessionConfiguration? = nil, queue: OperationQueue? = nil) {
     //self.downloadURL = downloadURL
     

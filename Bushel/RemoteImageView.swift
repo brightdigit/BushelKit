@@ -10,6 +10,12 @@ struct RemoteImageView: View {
   @EnvironmentObject var object : AppObject
   @StateObject var downloader = Downloader()
   @State var error : Error?
+  
+  let numberFormatter : NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 2
+    return formatter
+  }()
   let image : RemoteImage?
     var body: some View {
       HStack(spacing: 8.0){
@@ -39,16 +45,17 @@ struct RemoteImageView: View {
                 self.error = error
               }
           } label: {
-            Text("Download \(image?.size ?? "")").frame(maxWidth: .infinity)
-          }
+            Text(downloader.isActive ?
+                 "\(self.numberFormatter.string(from: (downloader.percentCompleted ?? 0.0) as NSNumber)!)% Downloaded" :
+                 "Download \(image?.size ?? "")").frame(maxWidth: .infinity)
+          }.disabled(downloader.isActive)
 
           
               ProgressView(
-                "",
-                value: Float(self.downloader.totalBytesWritten),
+                value: Float(self.downloader.totalBytesWritten) ,
                 total:  self.downloader.totalBytesExpectedToWrite.map(Float.init) ?? 0.0
-              )
-        }.frame(width: 150.0)
+              ).opacity(self.downloader.totalBytesExpectedToWrite == nil ? 0.5 : 1.0)
+        }.frame(width: 150.0).padding(.horizontal)
       }.padding().frame(height: 120.0, alignment: .center)
     }
 }
