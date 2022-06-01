@@ -32,7 +32,39 @@
 		B3BB2FF8283FB62D00F3E336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FF7283FB62D00F3E336 /* ContentView.swift */; };
 		B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */; };
 		B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */; };
+		B3CED9092848062A0072CACC /* LocalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CED9082848062A0072CACC /* LocalImageView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B3CED9002847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8F87D51D26C34111000EADA4;
+			remoteInfo = "macOSVirtualMachineSampleApp-Swift";
+		};
+		B3CED9022847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8F87D53126C341AC000EADA4;
+			remoteInfo = "InstallationTool-Swift";
+		};
+		B3CED9042847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8FDABC3A270D1DC600D7FC60;
+			remoteInfo = "macOSVirtualMachineSampleApp-Objective-C";
+		};
+		B3CED9062847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8FDABC59270D1FFE00D7FC60;
+			remoteInfo = "InstallationTool-Objective-C";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B315106D2841127500299415 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -64,6 +96,8 @@
 		B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel_download.entitlements; sourceTree = "<group>"; };
+		B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = macOSVirtualMachineSampleApp.xcodeproj; path = RunningMacOSInAVirtualMachineOnAppleSiliconMacs/macOSVirtualMachineSampleApp.xcodeproj; sourceTree = "<group>"; };
+		B3CED9082848062A0072CACC /* LocalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +129,7 @@
 		B3BB2F9F283E7B3A00F3E336 = {
 			isa = PBXGroup;
 			children = (
+				B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */,
 				B3BB2FAA283E7B3A00F3E336 /* Bushel */,
 				B3BB2FF4283FB62D00F3E336 /* Bushel-download */,
 				B3BB2FA9283E7B3A00F3E336 /* Products */,
@@ -135,6 +170,7 @@
 				B3A55E14284197FE00FD6930 /* RemoteImageView.swift */,
 				B3662A9D2846F89A00F8430B /* SHA256.swift */,
 				B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */,
+				B3CED9082848062A0072CACC /* LocalImageView.swift */,
 			);
 			path = Bushel;
 			sourceTree = "<group>";
@@ -165,6 +201,17 @@
 				B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B3CED8FA2847FE070072CACC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B3CED9012847FE070072CACC /* macOSVirtualMachineSampleApp-Swift.app */,
+				B3CED9032847FE070072CACC /* InstallationTool-Swift */,
+				B3CED9052847FE070072CACC /* macOSVirtualMachineSampleApp-Objective-C.app */,
+				B3CED9072847FE070072CACC /* InstallationTool-Objective-C */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +280,12 @@
 			mainGroup = B3BB2F9F283E7B3A00F3E336;
 			productRefGroup = B3BB2FA9283E7B3A00F3E336 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B3CED8FA2847FE070072CACC /* Products */;
+					ProjectRef = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B3BB2FA7283E7B3A00F3E336 /* Bushel */,
@@ -240,6 +293,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B3CED9012847FE070072CACC /* macOSVirtualMachineSampleApp-Swift.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "macOSVirtualMachineSampleApp-Swift.app";
+			remoteRef = B3CED9002847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B3CED9032847FE070072CACC /* InstallationTool-Swift */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "InstallationTool-Swift";
+			remoteRef = B3CED9022847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B3CED9052847FE070072CACC /* macOSVirtualMachineSampleApp-Objective-C.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "macOSVirtualMachineSampleApp-Objective-C.app";
+			remoteRef = B3CED9042847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B3CED9072847FE070072CACC /* InstallationTool-Objective-C */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "InstallationTool-Objective-C";
+			remoteRef = B3CED9062847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B3BB2FA6283E7B3A00F3E336 /* Resources */ = {
@@ -279,6 +363,7 @@
 				B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */,
 				B3662AA42846F89B00F8430B /* Configuration.swift in Sources */,
 				B3662A952846EFD000F8430B /* ImagesView.swift in Sources */,
+				B3CED9092848062A0072CACC /* LocalImageView.swift in Sources */,
 				B3A55E15284197FE00FD6930 /* RemoteImageView.swift in Sources */,
 				B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */,
 				B3662AA92846F89B00F8430B /* RemoteImage.swift in Sources */,

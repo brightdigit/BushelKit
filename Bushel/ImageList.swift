@@ -10,28 +10,29 @@ import SwiftUI
 struct ImageList: View {
   let images : [LocalImage]
   @Binding var imageBinding : LocalImage?
-    var body: some View {
+//  fileprivate func imageView(_ image: LocalImage) -> some View {
+//    return HStack{
+//      ZStack{
+//        Rectangle().strokeBorder(.secondary).opacity(0.50)
+//        Rectangle().fill(Color.secondary.opacity(0.25))
+//        Image(systemName: "applelogo").resizable().aspectRatio(contentMode: .fit).padding(8.0)
+//      }.aspectRatio(1.0, contentMode: .fit).padding(8.0)
+//      VStack(alignment: .leading){
+//        Text(image.name).font(.largeTitle)
+//        Text(image.operatingSystemVersion.description)
+//        Text(image.buildVersion)
+//        Text(image.url.absoluteString)
+//
+//      }
+//
+//    }.padding().frame(height: 120.0, alignment: .center)
+//  }
+  
+  var body: some View {
 
       List(images, selection: self.$imageBinding) { image in
         
-        HStack{
-          ZStack{
-            Rectangle().strokeBorder(.secondary).opacity(0.50)
-            Rectangle().fill(Color.secondary.opacity(0.25))
-            Image(systemName: "applelogo").resizable().aspectRatio(contentMode: .fit).padding(8.0)
-          }.aspectRatio(1.0, contentMode: .fit).padding(8.0)
-                    VStack(alignment: .leading){
-                      Text(image.name).font(.largeTitle)
-                      Text(image.operatingSystemVersion.description)
-                      Text(image.buildVersion)
-                      Text(image.url.absoluteString)
-          
-                      
-//                        Text(image.buildVersion).font(.title)
-//
-//                      Text(image.url.absoluteString).font(.caption).textSelection(.enabled)
-                    }
-        }.padding().frame(height: 120.0, alignment: .center)
+        LocalImageView(image: image)
 
         }
       
@@ -40,6 +41,6 @@ struct ImageList: View {
 
 struct ImageList_Previews: PreviewProvider {
     static var previews: some View {
-      ImageList(images: [.init(name: "Hello", url: .init(string: "https://apple.com")!, buildVersion: "21F79", operatingSystemVersion: .init(majorVersion: 12, minorVersion: 4, patchVersion: 0), sha256: .init(hexidecialString: "1f9e921f77bbcb5cf78026389d6f7331cdd675bc081ffac77fc00405a7e822b3")!)], imageBinding: .constant(nil))
+      ImageList(images: [.previewModel], imageBinding: .constant(nil))
     }
 }
