@@ -18,7 +18,8 @@ extension RemoteImage {
     guard let sha256 = SHA256(hexidecialString: sha256Hex) else {
       throw NSError()
     }
+    let isSupported = vzRestoreImage.mostFeaturefulSupportedConfiguration?.hardwareModel.isSupported ?? false
     self.init(buildVersion: vzRestoreImage.buildVersion, operatingSystemVersion: vzRestoreImage.operatingSystemVersion, url: vzRestoreImage.url,
-              contentLength: contentLength, lastModified: lastModified, sha256: sha256)
+              contentLength: contentLength, lastModified: lastModified, sha256: sha256, isSupported: isSupported)
   }
 }
