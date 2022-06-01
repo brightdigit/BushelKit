@@ -54,7 +54,7 @@ struct RemoteImageView: View {
               ProgressView(
                 value: Float(self.downloader.totalBytesWritten) ,
                 total:  self.downloader.totalBytesExpectedToWrite.map(Float.init) ?? 0.0
-              ).opacity(self.downloader.totalBytesExpectedToWrite == nil ? 0.5 : 1.0)
+              ).opacity(self.downloader.totalBytesExpectedToWrite == nil ? 0.0 : 1.0)
         }.frame(width: 150.0).padding(.horizontal)
       }.padding().frame(height: 120.0, alignment: .center)
     }
