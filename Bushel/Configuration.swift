@@ -1,5 +1,5 @@
-
-
-struct Configuration : Codable {
-  let images : [LocalImage]
-}
+//
+//
+//struct Configuration : Codable {
+//  let images : [LocalImage]
+//}

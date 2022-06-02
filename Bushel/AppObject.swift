@@ -8,6 +8,7 @@ class AppObject : ObservableObject {
   
   let applicationSupportDirectoryURL : URL
   let imagesDirectory : URL
+  let machinesDirectory : URL
   let remoteImageFetcher : RemoteImageFetcher
 
   let refreshTriggerSubject  = PassthroughSubject<Void, Never>()
@@ -18,6 +19,7 @@ class AppObject : ObservableObject {
     
     self.applicationSupportDirectoryURL = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     self.imagesDirectory = applicationSupportDirectoryURL.appendingPathComponent("images", isDirectory: true)
+    self.machinesDirectory = applicationSupportDirectoryURL.appendingPathComponent("machines", isDirectory: true)
     
     self.refreshTriggerSubject.flatMap{
       RemoteImage.publisher(from: self.remoteImageFetcher)
@@ -35,6 +37,7 @@ class AppObject : ObservableObject {
     }
     
       try! FileManager.default.createDirectory(at: imagesDirectory, withIntermediateDirectories: true)
+    try! FileManager.default.createDirectory(at: machinesDirectory, withIntermediateDirectories: true)
   }
   
   func beginDownloadingRemoteImage(_ image: RemoteImage, with downloader: Downloader) throws {

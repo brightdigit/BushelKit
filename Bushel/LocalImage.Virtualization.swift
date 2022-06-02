@@ -10,6 +10,6 @@ extension LocalImage {
     let name = url.deletingPathExtension().lastPathComponent
     let sha256Data = try Bushel.sha256(url: url)
     
-    self.init(name: name, url: url, buildVersion: image.buildVersion, operatingSystemVersion: image.operatingSystemVersion, sha256: .init(data: sha256Data), isSupported : isSupported)
+    self.init(name: name, url: url, buildVersion: image.buildVersion, operatingSystemVersion: image.operatingSystemVersion, sha256: .init(data: sha256Data), restoreImage: image)
   }
 }

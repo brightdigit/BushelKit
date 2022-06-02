@@ -27,6 +27,15 @@ struct MachineSharedDirectories {
   let tag : String
 }
 struct Machine {
+  internal init(cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], sourceImage: LocalImage) {
+    self.cpuCount = cpuCount
+    self.memorySize = memorySize
+    self.displays = displays
+    self.disks = disks
+    self.networks = networks
+    self.sourceImage = sourceImage
+  }
+  
   let cpuCount : Int
   let memorySize : UInt64
   let displays : [MachineDisplay]
@@ -34,7 +43,47 @@ struct Machine {
   let networks : [MachineNetwork]
   let sourceImage : LocalImage
   
+  
+  init(builder: MachineBuilder, validateWith validate: @escaping (Machine) throws -> Void) throws {
+    self.init(cpuCount: builder.cpuCount, memorySize: builder.memorySize, displays: builder.displays, disks: builder.disks, networks: builder.networks, sourceImage: builder.sourceImage)
+    
+    try validate(self)
+  }
 }
+
+extension VZVirtualMachineConfiguration {
+  static func validateMachine(_ machine: Machine) throws {
+    try self.validateMachine(machine, machineDirectory: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true))
+  }
+  static func validateMachine(_ machine: Machine, machineDirectory: URL) throws {
+    
+    _ = try self.validatedConfiguration(fromMachine: machine, machineDirectory: machineDirectory)
+  }
+  static func validatedConfiguration(fromMachine machine : Machine, machineDirectory: URL) throws -> VZVirtualMachineConfiguration {
+    let configuration = VZVirtualMachineConfiguration(machine: machine, machineDirectory: machineDirectory)
+    try configuration.validate()
+    return configuration
+  }
+  
+  convenience init (machine: Machine, machineDirectory: URL) {
+    self.init()
+    
+    
+    
+    let configuration = machine.sourceImage.mostFeaturefulSupportedConfiguration
+    
+    //VZMacAuxiliaryStorage()
+  }
+}
+extension Machine {
+  
+  init(builder: MachineBuilder) throws {
+    try self.init(builder: builder, validateWith: VZVirtualMachineConfiguration.validateMachine)
+  }
+}
+
+
+
 struct MachineDisplay {
   let width : Int
   let height: Int
