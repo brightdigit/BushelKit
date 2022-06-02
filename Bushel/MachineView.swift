@@ -5,6 +5,7 @@
 //  Created by Leo Dion on 6/1/22.
 //
 
+#if arch(arm64)
 import SwiftUI
 import Virtualization
 
@@ -27,25 +28,31 @@ struct MachineSharedDirectories {
   let tag : String
 }
 struct Machine {
-  internal init(cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], sourceImage: LocalImage) {
+  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], useHostAudio : Bool, sourceImage: LocalImage) {
+    self.id = id
+    self.name = name
     self.cpuCount = cpuCount
     self.memorySize = memorySize
     self.displays = displays
     self.disks = disks
     self.networks = networks
     self.sourceImage = sourceImage
+    self.useHostAudio = useHostAudio
   }
   
+  let name : String
+  let id : UUID
   let cpuCount : Int
   let memorySize : UInt64
   let displays : [MachineDisplay]
   let disks : [MachineDisk]
   let networks : [MachineNetwork]
   let sourceImage : LocalImage
+  let useHostAudio : Bool
   
   
   init(builder: MachineBuilder, validateWith validate: @escaping (Machine) throws -> Void) throws {
-    self.init(cpuCount: builder.cpuCount, memorySize: builder.memorySize, displays: builder.displays, disks: builder.disks, networks: builder.networks, sourceImage: builder.sourceImage)
+    self.init(name: builder.name, cpuCount: builder.cpuCount, memorySize: builder.memorySize, displays: builder.displays, disks: builder.disks, networks: builder.networks, sourceImage: builder.sourceImage, useHostAudio: <#Bool#>)
     
     try validate(self)
   }
@@ -53,26 +60,81 @@ struct Machine {
 
 extension VZVirtualMachineConfiguration {
   static func validateMachine(_ machine: Machine) throws {
-    try self.validateMachine(machine, machineDirectory: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true))
+    try self.validateMachine(machine, machineParentDirectory: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true))
   }
-  static func validateMachine(_ machine: Machine, machineDirectory: URL) throws {
+  static func validateMachine(_ machine: Machine, machineParentDirectory: URL) throws {
     
-    _ = try self.validatedConfiguration(fromMachine: machine, machineDirectory: machineDirectory)
+    _ = try self.validatedConfiguration(fromMachine: machine, machineParentDirectory: machineParentDirectory)
   }
-  static func validatedConfiguration(fromMachine machine : Machine, machineDirectory: URL) throws -> VZVirtualMachineConfiguration {
-    let configuration = VZVirtualMachineConfiguration(machine: machine, machineDirectory: machineDirectory)
+  static func validatedConfiguration(fromMachine machine : Machine, machineParentDirectory: URL) throws -> VZVirtualMachineConfiguration {
+    let configuration = try VZVirtualMachineConfiguration(machine: machine, machineParentDirectory: machineParentDirectory)
     try configuration.validate()
     return configuration
   }
   
-  convenience init (machine: Machine, machineDirectory: URL) {
+  static func createAudioDeviceConfiguration() -> VZVirtioSoundDeviceConfiguration {
+      let audioConfiguration = VZVirtioSoundDeviceConfiguration()
+
+      let inputStream = VZVirtioSoundDeviceInputStreamConfiguration()
+      inputStream.source = VZHostAudioInputStreamSource()
+
+      let outputStream = VZVirtioSoundDeviceOutputStreamConfiguration()
+      outputStream.sink = VZHostAudioOutputStreamSink()
+
+      audioConfiguration.streams = [inputStream, outputStream]
+      return audioConfiguration
+  }
+  
+  convenience init (machine: Machine, machineParentDirectory: URL) throws {
     self.init()
     
     
+    let machineDirectory = machineParentDirectory.appendingPathComponent(machine.id.uuidString, isDirectory: true)
+    try FileManager.default.createDirectory(at: machineDirectory, withIntermediateDirectories: true)
     
-    let configuration = machine.sourceImage.mostFeaturefulSupportedConfiguration
     
-    //VZMacAuxiliaryStorage()
+    self.platform = try VZMacPlatformConfiguration(machine: machine, in: machineDirectory)
+    self.cpuCount = machine.cpuCount
+    self.memorySize = machine.memorySize
+    
+    
+    // disks
+    #warning("missing disk creation and setup")
+    
+    // network
+    #warning("missing network creation and setup")
+    
+    // shared folder
+    #warning("missing shared folder creation and setup")
+    
+    self.bootLoader = VZMacOSBootLoader()
+    self.pointingDevices = [VZUSBScreenCoordinatePointingDeviceConfiguration()]
+    self.keyboards = [VZUSBKeyboardConfiguration()]
+    self.audioDevices = machine.useHostAudio ? [Self.createAudioDeviceConfiguration()] : []
+  }
+}
+
+extension VZMacPlatformConfiguration {
+  convenience init (machine: Machine, in machineDirectory: URL) throws {
+    self.init()
+    
+    guard let configuration = machine.sourceImage.mostFeaturefulSupportedConfiguration else {
+      throw NSError()
+    }
+    let auxiliaryStorageURL = machineDirectory.appendingPathComponent("auxiliary.storage")
+    let hardwareModelURL = machineDirectory.appendingPathComponent("hardware.model.bin")
+    let machineIdentifierURL = machineDirectory.appendingPathComponent("machine.identifier.bin")
+    
+    let auxiliaryStorage = try VZMacAuxiliaryStorage(creatingStorageAt: auxiliaryStorageURL,
+                                                      hardwareModel: configuration.hardwareModel,
+                                                            options: [])
+    
+    self.auxiliaryStorage = auxiliaryStorage
+    self.hardwareModel = configuration.hardwareModel
+    self.machineIdentifier = .init()
+    
+    try self.hardwareModel.dataRepresentation.write(to: hardwareModelURL)
+    try self.machineIdentifier.dataRepresentation.write(to: machineIdentifierURL)
   }
 }
 extension Machine {
@@ -234,3 +296,4 @@ struct MachineView_Previews: PreviewProvider {
       }
     }
 }
+#endif
