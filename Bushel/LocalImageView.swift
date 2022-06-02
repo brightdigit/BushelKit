@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LocalImageView: View {
-  
+  @Binding var machineImage : LocalImage?
   let image : LocalImage
+  
     var body: some View {
       HStack{
         ZStack{
@@ -25,8 +26,8 @@ struct LocalImageView: View {
           
         }
         Button("Create Machine") {
-          
-        }
+          self.machineImage = self.image
+        }.disabled(!image.isSupported)
         
       }.padding().frame(height: 120.0, alignment: .center)
     }
@@ -34,6 +35,6 @@ struct LocalImageView: View {
 
 struct LocalImageView_Previews: PreviewProvider {
     static var previews: some View {
-      LocalImageView(image: .previewModel)
+      LocalImageView(machineImage: .constant(nil), image: .previewModel)
     }
 }
