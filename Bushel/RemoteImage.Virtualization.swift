@@ -20,6 +20,6 @@ extension RemoteImage {
     }
     let isSupported = vzRestoreImage.mostFeaturefulSupportedConfiguration?.hardwareModel.isSupported ?? false
     self.init(buildVersion: vzRestoreImage.buildVersion, operatingSystemVersion: vzRestoreImage.operatingSystemVersion, url: vzRestoreImage.url,
-              contentLength: contentLength, lastModified: lastModified, sha256: sha256, isSupported: isSupported)
+              contentLength: contentLength, lastModified: lastModified, sha256: sha256, restoreImage: vzRestoreImage)
   }
 }

@@ -27,7 +27,7 @@ struct LocalImageView: View {
         }
         Button("Create Machine") {
           self.machineImage = self.image
-        }.disabled(!image.isSupported)
+        }.disabled(image.isSupported == false)
         
       }.padding().frame(height: 120.0, alignment: .center)
     }
