@@ -33,6 +33,7 @@
 		B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */; };
 		B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */; };
 		B3CED9092848062A0072CACC /* LocalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CED9082848062A0072CACC /* LocalImageView.swift */; };
+		B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9821228482E0C00EF5E29 /* MachineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel_download.entitlements; sourceTree = "<group>"; };
 		B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = macOSVirtualMachineSampleApp.xcodeproj; path = RunningMacOSInAVirtualMachineOnAppleSiliconMacs/macOSVirtualMachineSampleApp.xcodeproj; sourceTree = "<group>"; };
 		B3CED9082848062A0072CACC /* LocalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImageView.swift; sourceTree = "<group>"; };
+		B3F9821228482E0C00EF5E29 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				B3662A9D2846F89A00F8430B /* SHA256.swift */,
 				B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */,
 				B3CED9082848062A0072CACC /* LocalImageView.swift */,
+				B3F9821228482E0C00EF5E29 /* MachineView.swift */,
 			);
 			path = Bushel;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */,
 				B3662AA92846F89B00F8430B /* RemoteImage.swift in Sources */,
 				B3662AA52846F89B00F8430B /* RemoteImage.Combine.swift in Sources */,
+				B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */,
 				B3662AAA2846F89B00F8430B /* SHA256.swift in Sources */,
 				B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */,
 				B315D8362843D0310012628A /* ImageList.swift in Sources */,

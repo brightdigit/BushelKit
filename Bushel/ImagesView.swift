@@ -31,6 +31,10 @@ struct ImagesView: View {
             
           }
         }
+      }.sheet(item: self.$selectedImage) { image in
+        MachineView(from: image) { machine in
+          self.selectedImage = nil
+        }
       }
     }
 }
