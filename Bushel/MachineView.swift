@@ -362,7 +362,13 @@ struct MachineView: View {
         Section{
         HStack{
           Button("Build") {
-            self.onCompleted(nil)
+            let machine : Machine
+            do {
+            machine = try Machine(builder: self.machineBuilder)
+            } catch {
+              return
+            }
+            self.onCompleted(machine)
            
           }
           Button("Cancel") {
