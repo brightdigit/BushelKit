@@ -9,9 +9,43 @@
 import SwiftUI
 import Virtualization
 
+
+struct FileCreationError : Error {
+  let code : Int
+  let type : ErrorType
+  
+  enum ErrorType {
+  case `open`
+  case ftruncate
+  case close
+  }
+}
+extension FileManager {
+  func createFile (atPath path: String, withSize size: Int64) throws {
+    self.createFile(atPath: path, contents: nil)
+    let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
+    guard diskFd > 0 else {
+      throw FileCreationError(code: Int(errno), type: .open)
+    }
+
+    // 64GB disk space.
+    var result = ftruncate(diskFd, size)
+    
+    guard result == 0 else {
+      throw FileCreationError(code: Int(result), type: .ftruncate)
+    }
+
+
+    result = close(diskFd)
+    guard result == 0 else {
+      throw FileCreationError(code: Int(result), type: .close)
+    }
+  }
+}
+
 struct MachineNetwork {
   enum InterfaceType {
-    case bridge
+    case bridgeHostInterfaceWithID(String)
     case NAT
   }
   
@@ -23,12 +57,13 @@ struct MachineNetwork {
   let macAddress : MacAddress
 }
 
-struct MachineSharedDirectories {
+struct MachineSharedDirectory {
   let url : URL
   let tag : String
+  let readOnly : Bool = false
 }
 struct Machine {
-  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], useHostAudio : Bool, sourceImage: LocalImage) {
+  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], shares: [MachineSharedDirectory], useHostAudio : Bool, sourceImage: LocalImage) {
     self.id = id
     self.name = name
     self.cpuCount = cpuCount
@@ -36,6 +71,7 @@ struct Machine {
     self.displays = displays
     self.disks = disks
     self.networks = networks
+    self.shares = shares
     self.sourceImage = sourceImage
     self.useHostAudio = useHostAudio
   }
@@ -47,12 +83,13 @@ struct Machine {
   let displays : [MachineDisplay]
   let disks : [MachineDisk]
   let networks : [MachineNetwork]
+  let shares : [MachineSharedDirectory]
   let sourceImage : LocalImage
   let useHostAudio : Bool
   
   
   init(builder: MachineBuilder, validateWith validate: @escaping (Machine) throws -> Void) throws {
-    self.init(name: builder.name, cpuCount: builder.cpuCount, memorySize: builder.memorySize, displays: builder.displays, disks: builder.disks, networks: builder.networks, sourceImage: builder.sourceImage, useHostAudio: <#Bool#>)
+    self.init(name: builder.name, cpuCount: builder.cpuCount, memorySize: builder.memorySize, displays: builder.displays, disks: builder.disks, networks: builder.networks,  shares: builder.shares, useHostAudio: builder.useHostAudio, sourceImage: builder.sourceImage)
     
     try validate(self)
   }
@@ -98,15 +135,58 @@ extension VZVirtualMachineConfiguration {
     self.memorySize = machine.memorySize
     
     
+    let disksDirectory = machineDirectory.appendingPathComponent("disks", isDirectory: true)
+    try FileManager.default.createDirectory(at: disksDirectory, withIntermediateDirectories: true)
     // disks
-    #warning("missing disk creation and setup")
+    let storageDevices = try machine.disks.map{ disk -> VZVirtioBlockDeviceConfiguration in
+      let diskImageURL = disksDirectory.appendingPathComponent( disk.id.uuidString).appendingPathExtension("img")
+      
+      try FileManager.default.createFile(atPath: diskImageURL.path, withSize: Int64(disk.size))
+      
+      let attachment = try VZDiskImageStorageDeviceAttachment(url: diskImageURL, readOnly: disk.readOnly)
+      
+      return VZVirtioBlockDeviceConfiguration(attachment: attachment)
+    }
     
     // network
-    #warning("missing network creation and setup")
     
-    // shared folder
-    #warning("missing shared folder creation and setup")
+    let networkDevices = machine.networks.map { network -> VZVirtioNetworkDeviceConfiguration in
+      let networkDevice = VZVirtioNetworkDeviceConfiguration()
+      
+      let networkAttachment : VZNetworkDeviceAttachment?
+      
+      switch network.type {
+      case .NAT:
+        networkAttachment = VZNATNetworkDeviceAttachment()
+      case .bridgeHostInterfaceWithID(let identifier):
+        let interface = VZBridgedNetworkInterface.networkInterfaces.first( where: { $0.identifier == identifier})
+        networkAttachment = interface.map(VZBridgedNetworkDeviceAttachment.init(interface: ))
+      }
+      networkDevice.attachment = networkAttachment
+      
+      let macAddress : VZMACAddress?
+      
+      switch network.macAddress {
+      case .random:
+        macAddress = .randomLocallyAdministered()
+      case .string(let value):
+        macAddress = .init(string: value)
+      }
+      
+      networkDevice.macAddress = macAddress ?? .randomLocallyAdministered()
+      return networkDevice
+    }
     
+    let directorySharingDevices = machine.shares.map { share -> VZDirectorySharingDeviceConfiguration in
+      let configuration = VZVirtioFileSystemDeviceConfiguration(tag: share.tag)
+      let configShare = VZSingleDirectoryShare(directory: .init(url: share.url, readOnly: share.readOnly))
+      configuration.share = configShare
+      return configuration
+    }
+    
+    self.storageDevices = storageDevices
+    self.networkDevices = networkDevices
+    self.directorySharingDevices = directorySharingDevices
     self.bootLoader = VZMacOSBootLoader()
     self.pointingDevices = [VZUSBScreenCoordinatePointingDeviceConfiguration()]
     self.keyboards = [VZUSBKeyboardConfiguration()]
@@ -153,7 +233,8 @@ struct MachineDisplay {
 }
 
 struct MachineDisk {
-  let url : URL
+  let id : UUID
+  let size: UInt64
   let readOnly : Bool
 }
 
@@ -176,7 +257,7 @@ struct MachineBuilderRange {
 }
 
 struct MachineBuilder {
-  internal init(name: String? = nil, cpuCount: Int = 1, memorySize: UInt64 = (4 * 1024 * 1024 * 1024), displays: [MachineDisplay] = [MachineDisplay](), disks: [MachineDisk] = [MachineDisk](), sourceImage: LocalImage) {
+  internal init(name: String? = nil, cpuCount: Int = 1, memorySize: UInt64 = (4 * 1024 * 1024 * 1024), displays: [MachineDisplay] = [MachineDisplay](), disks: [MachineDisk] = [MachineDisk](), shares: [MachineSharedDirectory] = [MachineSharedDirectory](), sourceImage: LocalImage,useHostAudio : Bool = true) {
     
     self.cpuCount = cpuCount
     self.memorySize = memorySize
@@ -184,6 +265,7 @@ struct MachineBuilder {
     self.disks = disks
     self.sourceImage = sourceImage
     self.name = name ?? sourceImage.name
+    self.useHostAudio = useHostAudio
   }
   
   var name : String
@@ -192,7 +274,9 @@ struct MachineBuilder {
   var displays = [MachineDisplay]()
   var disks = [MachineDisk]()
   var networks = [MachineNetwork]()
+  var shares = [MachineSharedDirectory]()
   let sourceImage : LocalImage
+  let useHostAudio : Bool
   
 }
 extension ClosedRange {
