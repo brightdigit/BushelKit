@@ -236,6 +236,11 @@ struct MachineDisk {
   let id : UUID
   let size: UInt64
   let readOnly : Bool
+  init(id: UUID = .init(), size: UInt64, readOnly : Bool = false) {
+    self.id = id
+    self.size = size
+    self.readOnly = readOnly
+  }
 }
 
 struct MachineBuilderRange {
@@ -272,7 +277,7 @@ struct MachineBuilder {
   var cpuCount : Int = 1
   var memorySize : UInt64 = (4 * 1024 * 1024 * 1024)
   var displays = [MachineDisplay]()
-  var disks = [MachineDisk]()
+  var disks = [MachineDisk(size: 64 * 1024 * 1024 * 1024)]
   var networks = [MachineNetwork]()
   var shares = [MachineSharedDirectory]()
   let sourceImage : LocalImage
