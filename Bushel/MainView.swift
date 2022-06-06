@@ -10,20 +10,9 @@ import Virtualization
 import Combine
 import CommonCrypto
 
-
-
-
 struct MainView: View {
   
   @EnvironmentObject var object : AppObject
-//  fileprivate func imagesView() -> VStack<TupleView<(some View, ImageList)>> {
-//    return VStack {
-//      RemoteImageView(image: object.remoteImage).border(.secondary)
-//      ImageList(images: object.images, imageBinding: self.$selectedImage)
-//
-//    }
-//  }
-//
   var body: some View {
       TabView {
         ImagesView().tabItem {
