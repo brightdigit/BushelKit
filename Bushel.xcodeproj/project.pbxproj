@@ -3,56 +3,140 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B387B824258BD86200200712 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B387B823258BD86200200712 /* main.swift */; };
-		B387B82C258BD86900200712 /* BushelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B387B82B258BD86900200712 /* BushelKit */; };
-		B3D6EE8125899C3F00BDB5C6 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EE8025899C3F00BDB5C6 /* BushelApp.swift */; };
-		B3D6EE8325899C3F00BDB5C6 /* BushelDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EE8225899C3F00BDB5C6 /* BushelDocument.swift */; };
-		B3D6EE8525899C3F00BDB5C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EE8425899C3F00BDB5C6 /* ContentView.swift */; };
-		B3D6EE8725899C4000BDB5C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3D6EE8625899C4000BDB5C6 /* Assets.xcassets */; };
-		B3D6EE8A25899C4000BDB5C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3D6EE8925899C4000BDB5C6 /* Preview Assets.xcassets */; };
+		B315106E2841127500299415 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315106D2841127500299415 /* MainView.swift */; };
+		B315D8362843D0310012628A /* ImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315D8352843D0310012628A /* ImageList.swift */; };
+		B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34ABE9028443EFB00F22379 /* Downloader.swift */; };
+		B3662A952846EFD000F8430B /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A942846EFD000F8430B /* ImagesView.swift */; };
+		B3662AA52846F89B00F8430B /* RemoteImage.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A982846F89A00F8430B /* RemoteImage.Combine.swift */; };
+		B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A992846F89A00F8430B /* PreviewProvider.swift */; };
+		B3662AA72846F89B00F8430B /* LocalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9A2846F89A00F8430B /* LocalImage.swift */; };
+		B3662AA82846F89B00F8430B /* AppObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9B2846F89A00F8430B /* AppObject.swift */; };
+		B3662AA92846F89B00F8430B /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9C2846F89A00F8430B /* RemoteImage.swift */; };
+		B3662AAA2846F89B00F8430B /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9D2846F89A00F8430B /* SHA256.swift */; };
+		B3662AAB2846F89B00F8430B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3662A9F2846F89A00F8430B /* Preview Assets.xcassets */; };
+		B3662AAC2846F89B00F8430B /* RemoteImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AA02846F89A00F8430B /* RemoteImageFetcher.swift */; };
+		B3662AAD2846F89B00F8430B /* RemoteImage.Virtualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AA12846F89A00F8430B /* RemoteImage.Virtualization.swift */; };
+		B3662AAE2846F89B00F8430B /* VZMacOSRestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */; };
+		B3662AB02846F95F00F8430B /* LocalImage.Virtualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */; };
+		B38A5D14284D799400427013 /* VZMacPlatformConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D02284D799300427013 /* VZMacPlatformConfiguration.swift */; };
+		B38A5D15284D799400427013 /* VZVirtualMachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D07284D799300427013 /* VZVirtualMachineConfiguration.swift */; };
+		B38A5D16284D799400427013 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D08284D799300427013 /* FileManager.swift */; };
+		B38A5D17284D799400427013 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D09284D799300427013 /* Machine.swift */; };
+		B38A5D18284D799400427013 /* MachineBuilderRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0A284D799300427013 /* MachineBuilderRange.swift */; };
+		B38A5D19284D799400427013 /* FileCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0B284D799300427013 /* FileCreationError.swift */; };
+		B38A5D1A284D799400427013 /* MachineNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0C284D799300427013 /* MachineNetwork.swift */; };
+		B38A5D1B284D799400427013 /* MachineDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0D284D799300427013 /* MachineDisplay.swift */; };
+		B38A5D1C284D799400427013 /* MachineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0E284D799300427013 /* MachineBuilder.swift */; };
+		B38A5D1D284D799400427013 /* MachineDisk.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0F284D799300427013 /* MachineDisk.swift */; };
+		B38A5D1E284D799400427013 /* MachineSharedDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D10284D799300427013 /* MachineSharedDirectory.swift */; };
+		B38A5D1F284D799400427013 /* ClosedRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D11284D799400427013 /* ClosedRange.swift */; };
+		B38A5D20284D799400427013 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38A5D13284D799400427013 /* Preview Assets.xcassets */; };
+		B38A5D22284D7A1600427013 /* OperatingSystemVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */; };
+		B3A55E15284197FE00FD6930 /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A55E14284197FE00FD6930 /* RemoteImageView.swift */; };
+		B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */; };
+		B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAD283E7B3A00F3E336 /* ContentView.swift */; };
+		B3BB2FB0283E7B3B00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
+		B3BB2FB3283E7B3B00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */; };
+		B3BB2FF6283FB62D00F3E336 /* Bushel_downloadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FF5283FB62D00F3E336 /* Bushel_downloadApp.swift */; };
+		B3BB2FF8283FB62D00F3E336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FF7283FB62D00F3E336 /* ContentView.swift */; };
+		B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */; };
+		B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */; };
+		B3CED9092848062A0072CACC /* LocalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CED9082848062A0072CACC /* LocalImageView.swift */; };
+		B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9821228482E0C00EF5E29 /* MachineView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		B387B81F258BD86200200712 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
+/* Begin PBXContainerItemProxy section */
+		B3CED9002847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8F87D51D26C34111000EADA4;
+			remoteInfo = "macOSVirtualMachineSampleApp-Swift";
 		};
-/* End PBXCopyFilesBuildPhase section */
+		B3CED9022847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8F87D53126C341AC000EADA4;
+			remoteInfo = "InstallationTool-Swift";
+		};
+		B3CED9042847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8FDABC3A270D1DC600D7FC60;
+			remoteInfo = "macOSVirtualMachineSampleApp-Objective-C";
+		};
+		B3CED9062847FE070072CACC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8FDABC59270D1FFE00D7FC60;
+			remoteInfo = "InstallationTool-Objective-C";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B387B81B258BD61C00200712 /* BushelKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BushelKit; path = Packages/BushelKit; sourceTree = "<group>"; };
-		B387B821258BD86200200712 /* bshl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bshl; sourceTree = BUILT_PRODUCTS_DIR; };
-		B387B823258BD86200200712 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		B387B82D258BD89D00200712 /* bshl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bshl.entitlements; sourceTree = "<group>"; };
-		B3D6EE7D25899C3F00BDB5C6 /* Bushel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bushel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3D6EE8025899C3F00BDB5C6 /* BushelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelApp.swift; sourceTree = "<group>"; };
-		B3D6EE8225899C3F00BDB5C6 /* BushelDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelDocument.swift; sourceTree = "<group>"; };
-		B3D6EE8425899C3F00BDB5C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B3D6EE8625899C4000BDB5C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B3D6EE8925899C4000BDB5C6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B3D6EE8B25899C4000BDB5C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B3D6EE8C25899C4000BDB5C6 /* Bushel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel.entitlements; sourceTree = "<group>"; };
+		B315106D2841127500299415 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		B315D8352843D0310012628A /* ImageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageList.swift; sourceTree = "<group>"; };
+		B34ABE9028443EFB00F22379 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		B3662A942846EFD000F8430B /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
+		B3662A982846F89A00F8430B /* RemoteImage.Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.Combine.swift; sourceTree = "<group>"; };
+		B3662A992846F89A00F8430B /* PreviewProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
+		B3662A9A2846F89A00F8430B /* LocalImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalImage.swift; sourceTree = "<group>"; };
+		B3662A9B2846F89A00F8430B /* AppObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppObject.swift; sourceTree = "<group>"; };
+		B3662A9C2846F89A00F8430B /* RemoteImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		B3662A9D2846F89A00F8430B /* SHA256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
+		B3662A9F2846F89A00F8430B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3662AA02846F89A00F8430B /* RemoteImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImageFetcher.swift; sourceTree = "<group>"; };
+		B3662AA12846F89A00F8430B /* RemoteImage.Virtualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.Virtualization.swift; sourceTree = "<group>"; };
+		B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZMacOSRestoreImage.swift; sourceTree = "<group>"; };
+		B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImage.Virtualization.swift; sourceTree = "<group>"; };
+		B38A5D02284D799300427013 /* VZMacPlatformConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZMacPlatformConfiguration.swift; sourceTree = "<group>"; };
+		B38A5D07284D799300427013 /* VZVirtualMachineConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZVirtualMachineConfiguration.swift; sourceTree = "<group>"; };
+		B38A5D08284D799300427013 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		B38A5D09284D799300427013 /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
+		B38A5D0A284D799300427013 /* MachineBuilderRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineBuilderRange.swift; sourceTree = "<group>"; };
+		B38A5D0B284D799300427013 /* FileCreationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCreationError.swift; sourceTree = "<group>"; };
+		B38A5D0C284D799300427013 /* MachineNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineNetwork.swift; sourceTree = "<group>"; };
+		B38A5D0D284D799300427013 /* MachineDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineDisplay.swift; sourceTree = "<group>"; };
+		B38A5D0E284D799300427013 /* MachineBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineBuilder.swift; sourceTree = "<group>"; };
+		B38A5D0F284D799300427013 /* MachineDisk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineDisk.swift; sourceTree = "<group>"; };
+		B38A5D10284D799300427013 /* MachineSharedDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineSharedDirectory.swift; sourceTree = "<group>"; };
+		B38A5D11284D799400427013 /* ClosedRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosedRange.swift; sourceTree = "<group>"; };
+		B38A5D13284D799400427013 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingSystemVersion.swift; sourceTree = "<group>"; };
+		B3A55E14284197FE00FD6930 /* RemoteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
+		B3BB2FA8283E7B3A00F3E336 /* Bushel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bushel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelApp.swift; sourceTree = "<group>"; };
+		B3BB2FAD283E7B3A00F3E336 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel.entitlements; sourceTree = "<group>"; };
+		B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bushel-download.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3BB2FF5283FB62D00F3E336 /* Bushel_downloadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bushel_downloadApp.swift; sourceTree = "<group>"; };
+		B3BB2FF7283FB62D00F3E336 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel_download.entitlements; sourceTree = "<group>"; };
+		B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = macOSVirtualMachineSampleApp.xcodeproj; path = RunningMacOSInAVirtualMachineOnAppleSiliconMacs/macOSVirtualMachineSampleApp.xcodeproj; sourceTree = "<group>"; };
+		B3CED9082848062A0072CACC /* LocalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImageView.swift; sourceTree = "<group>"; };
+		B3F9821228482E0C00EF5E29 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B387B81E258BD86200200712 /* Frameworks */ = {
+		B3BB2FA5283E7B3A00F3E336 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B387B82C258BD86900200712 /* BushelKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B3D6EE7A25899C3F00BDB5C6 /* Frameworks */ = {
+		B3BB2FF0283FB62D00F3E336 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -62,102 +146,134 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B387B81A258BD61200200712 /* Packages */ = {
+		B3662A9E2846F89A00F8430B /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				B387B81B258BD61C00200712 /* BushelKit */,
+				B3662A9F2846F89A00F8430B /* Preview Assets.xcassets */,
 			);
-			name = Packages;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		B387B822258BD86200200712 /* bshl */ = {
+		B38A5D12284D799400427013 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				B387B82D258BD89D00200712 /* bshl.entitlements */,
-				B387B823258BD86200200712 /* main.swift */,
+				B38A5D13284D799400427013 /* Preview Assets.xcassets */,
 			);
-			path = bshl;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		B387B82A258BD86900200712 /* Frameworks */ = {
+		B3BB2F9F283E7B3A00F3E336 = {
 			isa = PBXGroup;
 			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B3D6EE7425899C3F00BDB5C6 = {
-			isa = PBXGroup;
-			children = (
-				B387B81A258BD61200200712 /* Packages */,
-				B3D6EE7F25899C3F00BDB5C6 /* Bushel */,
-				B387B822258BD86200200712 /* bshl */,
-				B3D6EE7E25899C3F00BDB5C6 /* Products */,
-				B387B82A258BD86900200712 /* Frameworks */,
+				B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */,
+				B3BB2FAA283E7B3A00F3E336 /* Bushel */,
+				B3BB2FF4283FB62D00F3E336 /* Bushel-download */,
+				B3BB2FA9283E7B3A00F3E336 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		B3D6EE7E25899C3F00BDB5C6 /* Products */ = {
+		B3BB2FA9283E7B3A00F3E336 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B3D6EE7D25899C3F00BDB5C6 /* Bushel.app */,
-				B387B821258BD86200200712 /* bshl */,
+				B3BB2FA8283E7B3A00F3E336 /* Bushel.app */,
+				B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B3D6EE7F25899C3F00BDB5C6 /* Bushel */ = {
+		B3BB2FAA283E7B3A00F3E336 /* Bushel */ = {
 			isa = PBXGroup;
 			children = (
-				B3D6EE8025899C3F00BDB5C6 /* BushelApp.swift */,
-				B3D6EE8225899C3F00BDB5C6 /* BushelDocument.swift */,
-				B3D6EE8425899C3F00BDB5C6 /* ContentView.swift */,
-				B3D6EE8625899C4000BDB5C6 /* Assets.xcassets */,
-				B3D6EE8B25899C4000BDB5C6 /* Info.plist */,
-				B3D6EE8C25899C4000BDB5C6 /* Bushel.entitlements */,
-				B3D6EE8825899C4000BDB5C6 /* Preview Content */,
+				B38A5D11284D799400427013 /* ClosedRange.swift */,
+				B38A5D0B284D799300427013 /* FileCreationError.swift */,
+				B38A5D08284D799300427013 /* FileManager.swift */,
+				B38A5D09284D799300427013 /* Machine.swift */,
+				B38A5D0E284D799300427013 /* MachineBuilder.swift */,
+				B38A5D0A284D799300427013 /* MachineBuilderRange.swift */,
+				B38A5D0F284D799300427013 /* MachineDisk.swift */,
+				B38A5D0D284D799300427013 /* MachineDisplay.swift */,
+				B38A5D0C284D799300427013 /* MachineNetwork.swift */,
+				B38A5D10284D799300427013 /* MachineSharedDirectory.swift */,
+				B38A5D12284D799400427013 /* Preview Content */,
+				B38A5D02284D799300427013 /* VZMacPlatformConfiguration.swift */,
+				B38A5D07284D799300427013 /* VZVirtualMachineConfiguration.swift */,
+				B3662A9B2846F89A00F8430B /* AppObject.swift */,
+				B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */,
+				B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */,
+				B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */,
+				B3BB2FAD283E7B3A00F3E336 /* ContentView.swift */,
+				B34ABE9028443EFB00F22379 /* Downloader.swift */,
+				B315D8352843D0310012628A /* ImageList.swift */,
+				B3662A942846EFD000F8430B /* ImagesView.swift */,
+				B3662A9A2846F89A00F8430B /* LocalImage.swift */,
+				B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */,
+				B315106D2841127500299415 /* MainView.swift */,
+				B3662A9E2846F89A00F8430B /* Preview Content */,
+				B3BB2FB1283E7B3B00F3E336 /* Preview Content */,
+				B3662A992846F89A00F8430B /* PreviewProvider.swift */,
+				B3662A982846F89A00F8430B /* RemoteImage.Combine.swift */,
+				B3662A9C2846F89A00F8430B /* RemoteImage.swift */,
+				B3662AA12846F89A00F8430B /* RemoteImage.Virtualization.swift */,
+				B3662AA02846F89A00F8430B /* RemoteImageFetcher.swift */,
+				B3A55E14284197FE00FD6930 /* RemoteImageView.swift */,
+				B3662A9D2846F89A00F8430B /* SHA256.swift */,
+				B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */,
+				B3CED9082848062A0072CACC /* LocalImageView.swift */,
+				B3F9821228482E0C00EF5E29 /* MachineView.swift */,
+				B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */,
 			);
 			path = Bushel;
 			sourceTree = "<group>";
 		};
-		B3D6EE8825899C4000BDB5C6 /* Preview Content */ = {
+		B3BB2FB1283E7B3B00F3E336 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				B3D6EE8925899C4000BDB5C6 /* Preview Assets.xcassets */,
+				B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B3BB2FF4283FB62D00F3E336 /* Bushel-download */ = {
+			isa = PBXGroup;
+			children = (
+				B3BB2FF5283FB62D00F3E336 /* Bushel_downloadApp.swift */,
+				B3BB2FF7283FB62D00F3E336 /* ContentView.swift */,
+				B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */,
+				B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */,
+				B3BB2FFB283FB62E00F3E336 /* Preview Content */,
+			);
+			path = "Bushel-download";
+			sourceTree = "<group>";
+		};
+		B3BB2FFB283FB62E00F3E336 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B3CED8FA2847FE070072CACC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B3CED9012847FE070072CACC /* macOSVirtualMachineSampleApp-Swift.app */,
+				B3CED9032847FE070072CACC /* InstallationTool-Swift */,
+				B3CED9052847FE070072CACC /* macOSVirtualMachineSampleApp-Objective-C.app */,
+				B3CED9072847FE070072CACC /* InstallationTool-Objective-C */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B387B820258BD86200200712 /* bshl */ = {
+		B3BB2FA7283E7B3A00F3E336 /* Bushel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B387B825258BD86200200712 /* Build configuration list for PBXNativeTarget "bshl" */;
+			buildConfigurationList = B3BB2FB7283E7B3B00F3E336 /* Build configuration list for PBXNativeTarget "Bushel" */;
 			buildPhases = (
-				B387B81D258BD86200200712 /* Sources */,
-				B387B81E258BD86200200712 /* Frameworks */,
-				B387B81F258BD86200200712 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = bshl;
-			packageProductDependencies = (
-				B387B82B258BD86900200712 /* BushelKit */,
-			);
-			productName = bshl;
-			productReference = B387B821258BD86200200712 /* bshl */;
-			productType = "com.apple.product-type.tool";
-		};
-		B3D6EE7C25899C3F00BDB5C6 /* Bushel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B3D6EE8F25899C4000BDB5C6 /* Build configuration list for PBXNativeTarget "Bushel" */;
-			buildPhases = (
-				B3D6EE7925899C3F00BDB5C6 /* Sources */,
-				B3D6EE7A25899C3F00BDB5C6 /* Frameworks */,
-				B3D6EE7B25899C3F00BDB5C6 /* Resources */,
+				B3BB2FA4283E7B3A00F3E336 /* Sources */,
+				B3BB2FA5283E7B3A00F3E336 /* Frameworks */,
+				B3BB2FA6283E7B3A00F3E336 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -165,111 +281,182 @@
 			);
 			name = Bushel;
 			productName = Bushel;
-			productReference = B3D6EE7D25899C3F00BDB5C6 /* Bushel.app */;
+			productReference = B3BB2FA8283E7B3A00F3E336 /* Bushel.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B3BB2FF2283FB62D00F3E336 /* Bushel-download */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3BB3001283FB62E00F3E336 /* Build configuration list for PBXNativeTarget "Bushel-download" */;
+			buildPhases = (
+				B3BB2FEF283FB62D00F3E336 /* Sources */,
+				B3BB2FF0283FB62D00F3E336 /* Frameworks */,
+				B3BB2FF1283FB62D00F3E336 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bushel-download";
+			productName = "Bushel-download";
+			productReference = B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B3D6EE7525899C3F00BDB5C6 /* Project object */ = {
+		B3BB2FA0283E7B3A00F3E336 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1230;
-				LastUpgradeCheck = 1230;
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					B387B820258BD86200200712 = {
-						CreatedOnToolsVersion = 12.3;
+					B3BB2FA7283E7B3A00F3E336 = {
+						CreatedOnToolsVersion = 13.4;
 					};
-					B3D6EE7C25899C3F00BDB5C6 = {
-						CreatedOnToolsVersion = 12.3;
+					B3BB2FF2283FB62D00F3E336 = {
+						CreatedOnToolsVersion = 13.4;
 					};
 				};
 			};
-			buildConfigurationList = B3D6EE7825899C3F00BDB5C6 /* Build configuration list for PBXProject "Bushel" */;
-			compatibilityVersion = "Xcode 9.3";
+			buildConfigurationList = B3BB2FA3283E7B3A00F3E336 /* Build configuration list for PBXProject "Bushel" */;
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = B3D6EE7425899C3F00BDB5C6;
-			productRefGroup = B3D6EE7E25899C3F00BDB5C6 /* Products */;
+			mainGroup = B3BB2F9F283E7B3A00F3E336;
+			productRefGroup = B3BB2FA9283E7B3A00F3E336 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B3CED8FA2847FE070072CACC /* Products */;
+					ProjectRef = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				B3D6EE7C25899C3F00BDB5C6 /* Bushel */,
-				B387B820258BD86200200712 /* bshl */,
+				B3BB2FA7283E7B3A00F3E336 /* Bushel */,
+				B3BB2FF2283FB62D00F3E336 /* Bushel-download */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		B3CED9012847FE070072CACC /* macOSVirtualMachineSampleApp-Swift.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "macOSVirtualMachineSampleApp-Swift.app";
+			remoteRef = B3CED9002847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B3CED9032847FE070072CACC /* InstallationTool-Swift */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "InstallationTool-Swift";
+			remoteRef = B3CED9022847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B3CED9052847FE070072CACC /* macOSVirtualMachineSampleApp-Objective-C.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "macOSVirtualMachineSampleApp-Objective-C.app";
+			remoteRef = B3CED9042847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B3CED9072847FE070072CACC /* InstallationTool-Objective-C */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "InstallationTool-Objective-C";
+			remoteRef = B3CED9062847FE070072CACC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
-		B3D6EE7B25899C3F00BDB5C6 /* Resources */ = {
+		B3BB2FA6283E7B3A00F3E336 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3D6EE8A25899C4000BDB5C6 /* Preview Assets.xcassets in Resources */,
-				B3D6EE8725899C4000BDB5C6 /* Assets.xcassets in Resources */,
+				B38A5D20284D799400427013 /* Preview Assets.xcassets in Resources */,
+				B3BB2FB3283E7B3B00F3E336 /* Preview Assets.xcassets in Resources */,
+				B3662AAB2846F89B00F8430B /* Preview Assets.xcassets in Resources */,
+				B3BB2FB0283E7B3B00F3E336 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3BB2FF1283FB62D00F3E336 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */,
+				B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B387B81D258BD86200200712 /* Sources */ = {
+		B3BB2FA4283E7B3A00F3E336 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B387B824258BD86200200712 /* main.swift in Sources */,
+				B3662AAE2846F89B00F8430B /* VZMacOSRestoreImage.swift in Sources */,
+				B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */,
+				B38A5D1D284D799400427013 /* MachineDisk.swift in Sources */,
+				B3662AA72846F89B00F8430B /* LocalImage.swift in Sources */,
+				B38A5D1B284D799400427013 /* MachineDisplay.swift in Sources */,
+				B3662AA82846F89B00F8430B /* AppObject.swift in Sources */,
+				B3662AAD2846F89B00F8430B /* RemoteImage.Virtualization.swift in Sources */,
+				B3662AB02846F95F00F8430B /* LocalImage.Virtualization.swift in Sources */,
+				B38A5D1A284D799400427013 /* MachineNetwork.swift in Sources */,
+				B3662AAC2846F89B00F8430B /* RemoteImageFetcher.swift in Sources */,
+				B38A5D16284D799400427013 /* FileManager.swift in Sources */,
+				B38A5D22284D7A1600427013 /* OperatingSystemVersion.swift in Sources */,
+				B38A5D17284D799400427013 /* Machine.swift in Sources */,
+				B38A5D1E284D799400427013 /* MachineSharedDirectory.swift in Sources */,
+				B315106E2841127500299415 /* MainView.swift in Sources */,
+				B38A5D15284D799400427013 /* VZVirtualMachineConfiguration.swift in Sources */,
+				B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */,
+				B3662A952846EFD000F8430B /* ImagesView.swift in Sources */,
+				B3CED9092848062A0072CACC /* LocalImageView.swift in Sources */,
+				B38A5D19284D799400427013 /* FileCreationError.swift in Sources */,
+				B3A55E15284197FE00FD6930 /* RemoteImageView.swift in Sources */,
+				B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */,
+				B3662AA92846F89B00F8430B /* RemoteImage.swift in Sources */,
+				B3662AA52846F89B00F8430B /* RemoteImage.Combine.swift in Sources */,
+				B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */,
+				B3662AAA2846F89B00F8430B /* SHA256.swift in Sources */,
+				B38A5D1C284D799400427013 /* MachineBuilder.swift in Sources */,
+				B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */,
+				B38A5D18284D799400427013 /* MachineBuilderRange.swift in Sources */,
+				B38A5D14284D799400427013 /* VZMacPlatformConfiguration.swift in Sources */,
+				B315D8362843D0310012628A /* ImageList.swift in Sources */,
+				B38A5D1F284D799400427013 /* ClosedRange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B3D6EE7925899C3F00BDB5C6 /* Sources */ = {
+		B3BB2FEF283FB62D00F3E336 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3D6EE8125899C3F00BDB5C6 /* BushelApp.swift in Sources */,
-				B3D6EE8325899C3F00BDB5C6 /* BushelDocument.swift in Sources */,
-				B3D6EE8525899C3F00BDB5C6 /* ContentView.swift in Sources */,
+				B3BB2FF8283FB62D00F3E336 /* ContentView.swift in Sources */,
+				B3BB2FF6283FB62D00F3E336 /* Bushel_downloadApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B387B826258BD86200200712 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = bshl/bshl.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MLT7M394S7;
-				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		B387B827258BD86200200712 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = bshl/bshl.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MLT7M394S7;
-				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		B3D6EE8D25899C4000BDB5C6 /* Debug */ = {
+		B3BB2FB5283E7B3B00F3E336 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -313,7 +500,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -323,14 +510,13 @@
 			};
 			name = Debug;
 		};
-		B3D6EE8E25899C4000BDB5C6 /* Release */ = {
+		B3BB2FB6283E7B3B00F3E336 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -368,7 +554,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -377,7 +563,7 @@
 			};
 			name = Release;
 		};
-		B3D6EE9025899C4000BDB5C6 /* Debug */ = {
+		B3BB2FB8283E7B3B00F3E336 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -385,23 +571,26 @@
 				CODE_SIGN_ENTITLEMENTS = Bushel/Bushel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bushel/Preview Content\"";
 				DEVELOPMENT_TEAM = MLT7M394S7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Bushel/Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.Bushel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		B3D6EE9125899C4000BDB5C6 /* Release */ = {
+		B3BB2FB9283E7B3B00F3E336 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -409,18 +598,75 @@
 				CODE_SIGN_ENTITLEMENTS = Bushel/Bushel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bushel/Preview Content\"";
 				DEVELOPMENT_TEAM = MLT7M394S7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Bushel/Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.Bushel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B3BB2FFF283FB62E00F3E336 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bushel-download/Bushel_download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bushel-download/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brightdigit.Bushel-download";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B3BB3000283FB62E00F3E336 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bushel-download/Bushel_download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bushel-download/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brightdigit.Bushel-download";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -428,41 +674,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B387B825258BD86200200712 /* Build configuration list for PBXNativeTarget "bshl" */ = {
+		B3BB2FA3283E7B3A00F3E336 /* Build configuration list for PBXProject "Bushel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B387B826258BD86200200712 /* Debug */,
-				B387B827258BD86200200712 /* Release */,
+				B3BB2FB5283E7B3B00F3E336 /* Debug */,
+				B3BB2FB6283E7B3B00F3E336 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B3D6EE7825899C3F00BDB5C6 /* Build configuration list for PBXProject "Bushel" */ = {
+		B3BB2FB7283E7B3B00F3E336 /* Build configuration list for PBXNativeTarget "Bushel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B3D6EE8D25899C4000BDB5C6 /* Debug */,
-				B3D6EE8E25899C4000BDB5C6 /* Release */,
+				B3BB2FB8283E7B3B00F3E336 /* Debug */,
+				B3BB2FB9283E7B3B00F3E336 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B3D6EE8F25899C4000BDB5C6 /* Build configuration list for PBXNativeTarget "Bushel" */ = {
+		B3BB3001283FB62E00F3E336 /* Build configuration list for PBXNativeTarget "Bushel-download" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B3D6EE9025899C4000BDB5C6 /* Debug */,
-				B3D6EE9125899C4000BDB5C6 /* Release */,
+				B3BB2FFF283FB62E00F3E336 /* Debug */,
+				B3BB3000283FB62E00F3E336 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B387B82B258BD86900200712 /* BushelKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BushelKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = B3D6EE7525899C3F00BDB5C6 /* Project object */;
+	rootObject = B3BB2FA0283E7B3A00F3E336 /* Project object */;
 }

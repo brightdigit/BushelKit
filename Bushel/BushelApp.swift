@@ -2,16 +2,17 @@
 //  BushelApp.swift
 //  Bushel
 //
-//  Created by Leo Dion on 12/15/20.
+//  Created by Leo Dion on 5/25/22.
 //
 
 import SwiftUI
+import Virtualization
 
 @main
 struct BushelApp: App {
     var body: some Scene {
-        DocumentGroup(newDocument: BushelDocument()) { file in
-            ContentView(document: file.$document)
+        WindowGroup {
+          MainView().environmentObject(AppObject(remoteImageFetcher: nil))
         }
     }
 }
