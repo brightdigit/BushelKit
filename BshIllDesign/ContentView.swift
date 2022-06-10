@@ -58,17 +58,19 @@ let machines = ["001-desktop",
 
 
 struct ContentView: View {
+    
     var body: some View {
-        LazyVGrid(columns: [GridItem(.fixed(120)),GridItem(.fixed(120)),GridItem(.fixed(120))], content: {
-            
-            ForEach(machines) { machine in
-                VStack{
-                    Image(machine.imageName).resizable().aspectRatio(contentMode: .fit).padding(.horizontal, 20.0)
-                    Text(machine.title).lineLimit(1).padding(4.0)
-                }.padding()
+        TabView{
+            ImageListView().tabItem {
+                Text("Images")
             }
-        })
-            
+            MachineListView().tabItem {
+                Text("Machines")
+            }
+            SettingsView().tabItem {
+                Text("Settings")
+            }
+        }
         
     }
 }
