@@ -53,6 +53,7 @@
 		B3BB2FFA283FB62E00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FF9283FB62E00F3E336 /* Assets.xcassets */; };
 		B3BB2FFD283FB62E00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FFC283FB62E00F3E336 /* Preview Assets.xcassets */; };
 		B3CED9092848062A0072CACC /* LocalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CED9082848062A0072CACC /* LocalImageView.swift */; };
+		B3DCD400285A1C9E00A0E86E /* TbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DCD3FB285A1C9E00A0E86E /* TbsView.swift */; };
 		B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9821228482E0C00EF5E29 /* MachineView.swift */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 		B3BB2FFE283FB62E00F3E336 /* Bushel_download.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel_download.entitlements; sourceTree = "<group>"; };
 		B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = macOSVirtualMachineSampleApp.xcodeproj; path = RunningMacOSInAVirtualMachineOnAppleSiliconMacs/macOSVirtualMachineSampleApp.xcodeproj; sourceTree = "<group>"; };
 		B3CED9082848062A0072CACC /* LocalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImageView.swift; sourceTree = "<group>"; };
+		B3DCD3FB285A1C9E00A0E86E /* TbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbsView.swift; sourceTree = "<group>"; };
 		B3F9821228482E0C00EF5E29 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,6 +196,7 @@
 				B39E8C6A285181210049FB7F /* BshIllDesign.entitlements */,
 				B39E8C67285181210049FB7F /* Preview Content */,
 				B3157F552852C44800DB5077 /* MachineListView.swift */,
+				B3DCD3FB285A1C9E00A0E86E /* TbsView.swift */,
 				B3157F5B2852C4A900DB5077 /* ImageListView.swift */,
 				B3157F5D2852C51300DB5077 /* SettingsView.swift */,
 			);
@@ -485,6 +488,7 @@
 				B3157F5C2852C4A900DB5077 /* ImageListView.swift in Sources */,
 				B3157F562852C44800DB5077 /* MachineListView.swift in Sources */,
 				B39E8C64285181200049FB7F /* ContentView.swift in Sources */,
+				B3DCD400285A1C9E00A0E86E /* TbsView.swift in Sources */,
 				B39E8C62285181200049FB7F /* BshIllDesignApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
