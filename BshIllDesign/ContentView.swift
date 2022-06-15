@@ -60,23 +60,35 @@ let machines = ["001-desktop",
 struct ContentView: View {
     
     var body: some View {
-        TabView{
-            ImageListView().tabItem {
-                Text("Images")
-            }
-            MachineListView().tabItem {
-                Text("Machines")
-            }
-            SettingsView().tabItem {
-                Text("Settings")
-            }
-        }
+        NavigationView {
+            List {
+                ForEach(machines) { (machine) in
+                    HStack{
+                        Image(machine.imageName).resizable().aspectRatio(contentMode: .fit).padding(4.0).frame(height: 20.0)
+                        Text(machine.title).lineLimit(1).padding(4.0)
+                            
+                    }
+                }
+            }.toolbar {
+                ToolbarItemGroup(placement: .automatic) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+
+                }
+            }.frame(minWidth: 200)
+            
+        }.navigationViewStyle(.columns)
         
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NavigationView{
+            ContentView()
+        }
     }
 }
