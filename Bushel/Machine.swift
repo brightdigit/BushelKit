@@ -3,7 +3,7 @@
 #if arch(arm64)
 import Virtualization
 struct Machine {
-  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], shares: [MachineSharedDirectory], useHostAudio : Bool, sourceImage: LocalImage) {
+  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], shares: [MachineSharedDirectory], useHostAudio : Bool, sourceImage: RestoreImage) {
     self.id = id
     self.name = name
     self.cpuCount = cpuCount
@@ -24,7 +24,7 @@ struct Machine {
   let disks : [MachineDisk]
   let networks : [MachineNetwork]
   let shares : [MachineSharedDirectory]
-  let sourceImage : LocalImage
+  let sourceImage : RestoreImage
   let useHostAudio : Bool
   
   

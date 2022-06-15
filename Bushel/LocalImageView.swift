@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LocalImageView: View {
-  @Binding var machineImage : LocalImage?
-  let image : LocalImage
+  @Binding var machineImage : RestoreImage?
+  let image : RestoreImage
   
     var body: some View {
       HStack{
@@ -22,7 +22,7 @@ struct LocalImageView: View {
           Text(image.name).font(.largeTitle)
           Text(image.operatingSystemVersion.description)
           Text(image.buildVersion)
-          Text(image.url.absoluteString)
+          //Text(image.localURL.absoluteString)
           
         }
         Button("Create Machine") {

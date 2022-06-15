@@ -13,7 +13,7 @@ struct MachineView: View {
   @State var machineBuilder : MachineBuilder
   let ranges = MachineBuilderRange.shared
   let onCompleted : (Machine?) -> Void
-  init (from image: LocalImage, _ completed: @escaping (Machine?) -> Void) {
+  init (from image: RestoreImage, _ completed: @escaping (Machine?) -> Void) {
     self._machineBuilder = .init(initialValue: .init(sourceImage: image))
     self.onCompleted = completed
   }

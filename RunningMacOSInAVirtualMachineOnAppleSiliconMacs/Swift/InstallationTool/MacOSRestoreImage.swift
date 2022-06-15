@@ -31,7 +31,7 @@ class MacOSRestoreImage: NSObject {
     // MARK: Download the Restore Image from the network
 
     private func downloadRestoreImage(restoreImage: VZMacOSRestoreImage, completionHandler: @escaping () -> Void) {
-        let downloadTask = URLSession.shared.downloadTask(with: restoreImage.url) { localURL, response, error in
+        let downloadTask = URLSession.shared.downloadTask(with: restoreImage.localURL) { localURL, response, error in
             if let error = error {
                 fatalError("Download failed. \(error.localizedDescription).")
             }

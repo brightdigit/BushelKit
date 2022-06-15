@@ -2,7 +2,7 @@
 
 
 struct MachineBuilder {
-  internal init(name: String? = nil, cpuCount: Int = 1, memorySize: UInt64 = (4 * 1024 * 1024 * 1024), displays: [MachineDisplay] = [MachineDisplay](), disks: [MachineDisk] = [MachineDisk](), shares: [MachineSharedDirectory] = [MachineSharedDirectory](), sourceImage: LocalImage,useHostAudio : Bool = true) {
+  internal init(name: String? = nil, cpuCount: Int = 1, memorySize: UInt64 = (4 * 1024 * 1024 * 1024), displays: [MachineDisplay] = [MachineDisplay](), disks: [MachineDisk] = [MachineDisk](), shares: [MachineSharedDirectory] = [MachineSharedDirectory](), sourceImage: RestoreImage,useHostAudio : Bool = true) {
     
 //    self.cpuCount = cpuCount
 //    self.memorySize = memorySize
@@ -20,7 +20,7 @@ struct MachineBuilder {
   var disks = [MachineDisk(size: 64 * 1024 * 1024 * 1024)]
   var networks = [MachineNetwork(type: .NAT, macAddress: .random)]
   var shares = [MachineSharedDirectory]()
-  let sourceImage : LocalImage
+  let sourceImage : RestoreImage
   let useHostAudio : Bool
   
 }

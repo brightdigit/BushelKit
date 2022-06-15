@@ -46,7 +46,7 @@ class MacOSVirtualMachineInstaller: NSObject {
         }
 
         setupVirtualMachine(macOSConfiguration: macOSConfiguration)
-        startInstallation(restoreImageURL: restoreImage.url)
+        startInstallation(restoreImageURL: restoreImage.localURL)
     }
 
     // MARK: Create the Mac Platform Configuration
