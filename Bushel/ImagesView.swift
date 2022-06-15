@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ImagesView: View {
   @State var error : Error?
-  @State var selectedImage : LocalImage? 
+  @State var selectedImage : RestoreImage? 
   @EnvironmentObject var object : AppObject
     var body: some View {
       VStack {
-        RemoteImageView(image: object.remoteImage).border(.secondary)
+//        RemoteImageView(image: object.remoteImage).border(.secondary)
         ImageList(images: object.images, imageBinding: self.$selectedImage)
         
         Button("Import Image") {

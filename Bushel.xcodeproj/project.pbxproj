@@ -16,7 +16,7 @@
 		B3662A952846EFD000F8430B /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A942846EFD000F8430B /* ImagesView.swift */; };
 		B3662AA52846F89B00F8430B /* RemoteImage.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A982846F89A00F8430B /* RemoteImage.Combine.swift */; };
 		B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A992846F89A00F8430B /* PreviewProvider.swift */; };
-		B3662AA72846F89B00F8430B /* LocalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9A2846F89A00F8430B /* LocalImage.swift */; };
+		B3662AA72846F89B00F8430B /* RestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9A2846F89A00F8430B /* RestoreImage.swift */; };
 		B3662AA82846F89B00F8430B /* AppObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9B2846F89A00F8430B /* AppObject.swift */; };
 		B3662AA92846F89B00F8430B /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9C2846F89A00F8430B /* RemoteImage.swift */; };
 		B3662AAA2846F89B00F8430B /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9D2846F89A00F8430B /* SHA256.swift */; };
@@ -98,7 +98,7 @@
 		B3662A942846EFD000F8430B /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		B3662A982846F89A00F8430B /* RemoteImage.Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.Combine.swift; sourceTree = "<group>"; };
 		B3662A992846F89A00F8430B /* PreviewProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
-		B3662A9A2846F89A00F8430B /* LocalImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalImage.swift; sourceTree = "<group>"; };
+		B3662A9A2846F89A00F8430B /* RestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImage.swift; sourceTree = "<group>"; };
 		B3662A9B2846F89A00F8430B /* AppObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppObject.swift; sourceTree = "<group>"; };
 		B3662A9C2846F89A00F8430B /* RemoteImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		B3662A9D2846F89A00F8430B /* SHA256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 				B34ABE9028443EFB00F22379 /* Downloader.swift */,
 				B315D8352843D0310012628A /* ImageList.swift */,
 				B3662A942846EFD000F8430B /* ImagesView.swift */,
-				B3662A9A2846F89A00F8430B /* LocalImage.swift */,
+				B3662A9A2846F89A00F8430B /* RestoreImage.swift */,
 				B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */,
 				B315106D2841127500299415 /* MainView.swift */,
 				B3662A9E2846F89A00F8430B /* Preview Content */,
@@ -500,7 +500,7 @@
 				B3662AAE2846F89B00F8430B /* VZMacOSRestoreImage.swift in Sources */,
 				B3BB2FAE283E7B3A00F3E336 /* ContentView.swift in Sources */,
 				B38A5D1D284D799400427013 /* MachineDisk.swift in Sources */,
-				B3662AA72846F89B00F8430B /* LocalImage.swift in Sources */,
+				B3662AA72846F89B00F8430B /* RestoreImage.swift in Sources */,
 				B38A5D1B284D799400427013 /* MachineDisplay.swift in Sources */,
 				B3662AA82846F89B00F8430B /* AppObject.swift in Sources */,
 				B3662AAD2846F89B00F8430B /* RemoteImage.Virtualization.swift in Sources */,

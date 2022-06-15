@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ImageList: View {
-  let images : [LocalImage]
-  @Binding var imageBinding : LocalImage?
+  let images : [RestoreImage]
+  @Binding var imageBinding : RestoreImage?
   
   var body: some View {
 

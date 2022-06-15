@@ -11,7 +11,7 @@ extension VZMacOSRestoreImage {
     return "\(lastPathComponent)[\(formatter.string(from: date))].\(pathExtension)"
   }
   
-  static func remoteImageFetch (_ closure: @escaping (Result<RemoteImage,Error>) -> Void) {
+  static func remoteImageFetch (_ closure: @escaping (Result<RestoreImage,Error>) -> Void) {
 
     self.fetchLatestSupported{ result in
       let vzRestoreImage : VZMacOSRestoreImage
@@ -35,7 +35,7 @@ extension VZMacOSRestoreImage {
           return
         }
 
-        let remoteImage : RemoteImage
+        let remoteImage : RestoreImage
         do {
           remoteImage = try .init(vzRestoreImage: vzRestoreImage, headers: response.allHeaderFields)
         } catch {

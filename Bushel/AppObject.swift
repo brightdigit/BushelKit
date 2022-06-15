@@ -3,17 +3,17 @@ import Foundation
 import Virtualization
 class AppObject : ObservableObject {
   var cancellables = [AnyCancellable]()
-  @Published var remoteImage : RemoteImage?
-  @Published var images : [LocalImage] = .init()
+  //@Published var remoteImage : RemoteImage?
+  @Published var images : [RestoreImage] = .init()
   
   let applicationSupportDirectoryURL : URL
   let imagesDirectory : URL
   let machinesDirectory : URL
-  let remoteImageFetcher : RemoteImageFetcher
+  let remoteImageFetcher : RemoteRestoreImageFetcher
 
   let refreshTriggerSubject  = PassthroughSubject<Void, Never>()
   
-  init (remoteImageFetcher : RemoteImageFetcher?) {
+  init (remoteImageFetcher : RemoteRestoreImageFetcher?) {
     #warning("don't mention `VZMacOSRestoreImage`")
     self.remoteImageFetcher = remoteImageFetcher ?? VZMacOSRestoreImage.remoteImageFetch
     
@@ -21,18 +21,25 @@ class AppObject : ObservableObject {
     self.imagesDirectory = applicationSupportDirectoryURL.appendingPathComponent("images", isDirectory: true)
     self.machinesDirectory = applicationSupportDirectoryURL.appendingPathComponent("machines", isDirectory: true)
     
-    self.refreshTriggerSubject.flatMap{
-      RemoteImage.publisher(from: self.remoteImageFetcher)
+      self.refreshTriggerSubject.flatMap{
+      RestoreImage.publisher(from: self.remoteImageFetcher)
     }.compactMap{
       try? $0.get()
-    }.receive(on: DispatchQueue.main)
-      .assign(to: &self.$remoteImage)
+    }.receive(on: DispatchQueue.main).sink(
+        receiveValue: self.addImage(_:)).store(in: &self.cancellables)
     
     
   }
+    
+    func addImage (_ image: RestoreImage) {
+        self.images.append(image)
+        self.images.sort { lhs, rhs in
+            return lhs.remoteURL != nil
+        }
+    }
   
   func initialize()  {
-    if remoteImage == nil {
+      if images.isEmpty {
       self.refreshTriggerSubject.send()
     }
     
@@ -40,29 +47,37 @@ class AppObject : ObservableObject {
     try! FileManager.default.createDirectory(at: machinesDirectory, withIntermediateDirectories: true)
   }
   
-  func beginDownloadingRemoteImage(_ image: RemoteImage, with downloader: Downloader) throws {
-    let destinationURL = imagesDirectory.appendingPathComponent( image.localFileNameDownloadedAt(.init()))
+  func beginDownloadingRemoteImage(_ image: RestoreImage, with downloader: Downloader) throws {
+      guard let localName = image.localFileNameDownloadedAt(.init()) else {
+          return
+      }
+      guard let remoteURL = image.remoteURL else {
+          return
+      }
+      let destinationURL = imagesDirectory.appendingPathComponent(localName )
     
     
       downloader.$isCompleted.compactMap {
         try? $0?.get()
       }.map {
-        LocalImage(fromRemoteImage: image, at: destinationURL)
+        RestoreImage(fromRemoteImage: image, at: destinationURL)
       }.sink { localImage in
         self.images.append(localImage)
       }.store(in: &self.cancellables)
-    downloader.begin(from: image.url, to: destinationURL)
+    downloader.begin(from: remoteURL, to: destinationURL)
   }
+    
+    
   
   func loadImage(from url: URL, _ completed: @escaping (Error?) -> Void) {
     #warning("don't mention `VZMacOSRestoreImage` and use closure")
     VZMacOSRestoreImage.load(from: url) { result in
       
-      let newResult = result.flatMap { image -> Result<LocalImage, Error> in
+      let newResult = result.flatMap { image -> Result<RestoreImage, Error> in
         let newURL = self.imagesDirectory.appendingPathComponent(image.localFileNameDownloadedAt(.init()))
          return .init{
             try FileManager.default.copyItem(at: url, to: newURL)
-            return try LocalImage(fromLocalImage: image, at: newURL)
+            return try RestoreImage(fromLocalImage: image, at: newURL)
           }
       }
       switch newResult {
