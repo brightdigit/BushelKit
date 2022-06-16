@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "057-park.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

@@ -10,12 +10,12 @@ import Virtualization
 import Combine
 import CommonCrypto
 
-struct MainView: View {
+struct MainView<RestoreImageMetadataType : RestoreImageMetadata>: View {
   
-  @EnvironmentObject var object : AppObject
+    @EnvironmentObject var object : AppObject<RestoreImageMetadataType>
   var body: some View {
       TabView {
-        ImagesView().tabItem {
+        ImagesView<RestoreImageMetadataType>().tabItem {
           
           Label("Images", systemImage:  "externaldrive.fill")
         

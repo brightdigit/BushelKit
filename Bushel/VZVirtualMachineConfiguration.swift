@@ -4,14 +4,14 @@ import Virtualization
 
 
 extension VZVirtualMachineConfiguration {
-  static func validateMachine(_ machine: Machine) throws {
+  static func validateMachine(_ machine: Machine<VZMacOSRestoreImage>) throws {
     try self.validateMachine(machine, machineParentDirectory: FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true))
   }
-  static func validateMachine(_ machine: Machine, machineParentDirectory: URL) throws {
+  static func validateMachine(_ machine: Machine<VZMacOSRestoreImage>, machineParentDirectory: URL) throws {
     
     _ = try self.validatedConfiguration(fromMachine: machine, machineParentDirectory: machineParentDirectory)
   }
-  static func validatedConfiguration(fromMachine machine : Machine, machineParentDirectory: URL) throws -> VZVirtualMachineConfiguration {
+  static func validatedConfiguration(fromMachine machine : Machine<VZMacOSRestoreImage>, machineParentDirectory: URL) throws -> VZVirtualMachineConfiguration {
     let configuration = try VZVirtualMachineConfiguration(machine: machine, machineParentDirectory: machineParentDirectory)
     try configuration.validate()
     return configuration
@@ -30,7 +30,7 @@ extension VZVirtualMachineConfiguration {
       return audioConfiguration
   }
   
-  convenience init (machine: Machine, machineParentDirectory: URL) throws {
+  convenience init (machine: Machine<VZMacOSRestoreImage>, machineParentDirectory: URL) throws {
     self.init()
     
     

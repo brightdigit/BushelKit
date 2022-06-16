@@ -9,11 +9,11 @@
 import Virtualization
 import SwiftUI
 
-struct MachineView: View {
-  @State var machineBuilder : MachineBuilder
+struct MachineView<RestoreImageMetadataType : RestoreImageMetadata>: View {
+  @State var machineBuilder : MachineBuilder<RestoreImageMetadataType>
   let ranges = MachineBuilderRange.shared
-  let onCompleted : (Machine?) -> Void
-  init (from image: RestoreImage, _ completed: @escaping (Machine?) -> Void) {
+  let onCompleted : (Machine<RestoreImageMetadataType>?) -> Void
+  init (from image: RestoreImage<RestoreImageMetadataType>, _ completed: @escaping (Machine<RestoreImageMetadataType>?) -> Void) {
     self._machineBuilder = .init(initialValue: .init(sourceImage: image))
     self.onCompleted = completed
   }
@@ -87,7 +87,7 @@ struct MachineView: View {
         Section{
         HStack{
           Button("Build") {
-            let machine : Machine
+            let machine : Machine<RestoreImageMetadataType>
             do {
             machine = try Machine(builder: self.machineBuilder)
             } catch {
@@ -107,7 +107,7 @@ struct MachineView: View {
 
 struct MachineView_Previews: PreviewProvider {
     static var previews: some View {
-      MachineView(from: .previewModel) { _ in
+      MachineView(from: PreviewModel.previewRemoteModel) { _ in
       }
     }
 }

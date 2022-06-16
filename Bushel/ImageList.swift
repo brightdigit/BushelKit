@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ImageList: View {
-  let images : [RestoreImage]
-  @Binding var imageBinding : RestoreImage?
+struct ImageList<RestoreImageMetadataType: RestoreImageMetadata>: View {
+    let images : [RestoreImage<RestoreImageMetadataType>]
+  @Binding var imageBinding : RestoreImage<RestoreImageMetadataType>?
   
   var body: some View {
 
       List(images, selection: self.$imageBinding) { image in
         
-        LocalImageView(machineImage: _imageBinding, image: image)
+        RestoreImageView(machineImage: _imageBinding, image: image)
 
         }
       
@@ -24,6 +24,6 @@ struct ImageList: View {
 
 struct ImageList_Previews: PreviewProvider {
     static var previews: some View {
-      ImageList(images: [.previewModel], imageBinding: .constant(nil))
+      ImageList<PreviewRestoreImageMetadata>(images: [PreviewModel.previewRemoteModel], imageBinding: .constant(nil))
     }
 }
