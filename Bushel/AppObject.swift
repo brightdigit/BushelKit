@@ -1,21 +1,21 @@
 import Combine
 import Foundation
 import Virtualization
-class AppObject : ObservableObject {
+class AppObject<RestoreImageMetadataType: RestoreImageMetadata> : ObservableObject {
   var cancellables = [AnyCancellable]()
   //@Published var remoteImage : RemoteImage?
-  @Published var images : [RestoreImage] = .init()
+  @Published var images : [RestoreImage<RestoreImageMetadataType>] = .init()
   
   let applicationSupportDirectoryURL : URL
   let imagesDirectory : URL
   let machinesDirectory : URL
-  let remoteImageFetcher : RemoteRestoreImageFetcher
+  let remoteImageFetcher : RemoteRestoreImageFetcher<RestoreImageMetadataType>
 
   let refreshTriggerSubject  = PassthroughSubject<Void, Never>()
   
-  init (remoteImageFetcher : RemoteRestoreImageFetcher?) {
+    init (remoteImageFetcher : @escaping RemoteRestoreImageFetcher<RestoreImageMetadataType>) {
     #warning("don't mention `VZMacOSRestoreImage`")
-    self.remoteImageFetcher = remoteImageFetcher ?? VZMacOSRestoreImage.remoteImageFetch
+    self.remoteImageFetcher = remoteImageFetcher
     
     self.applicationSupportDirectoryURL = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     self.imagesDirectory = applicationSupportDirectoryURL.appendingPathComponent("images", isDirectory: true)
@@ -31,7 +31,7 @@ class AppObject : ObservableObject {
     
   }
     
-    func addImage (_ image: RestoreImage) {
+    func addImage (_ image: RestoreImage<RestoreImageMetadataType>) {
         self.images.append(image)
         self.images.sort { lhs, rhs in
             return lhs.remoteURL != nil
@@ -47,7 +47,7 @@ class AppObject : ObservableObject {
     try! FileManager.default.createDirectory(at: machinesDirectory, withIntermediateDirectories: true)
   }
   
-  func beginDownloadingRemoteImage(_ image: RestoreImage, with downloader: Downloader) throws {
+  func beginDownloadingRemoteImage(_ image: RestoreImage<RestoreImageMetadataType>, with downloader: Downloader) throws {
       guard let localName = image.localFileNameDownloadedAt(.init()) else {
           return
       }
@@ -70,11 +70,11 @@ class AppObject : ObservableObject {
     
   
   func loadImage(from url: URL, _ completed: @escaping (Error?) -> Void) {
-    #warning("don't mention `VZMacOSRestoreImage` and use closure")
-    VZMacOSRestoreImage.load(from: url) { result in
+ 
+      RestoreImageMetadataType.load(from: url) { result in
       
-      let newResult = result.flatMap { image -> Result<RestoreImage, Error> in
-        let newURL = self.imagesDirectory.appendingPathComponent(image.localFileNameDownloadedAt(.init()))
+      let newResult = result.flatMap { image -> Result<RestoreImage<RestoreImageMetadataType>, Error> in
+        let newURL = self.imagesDirectory.appendingPathComponent(url.localFileNameDownloadedAt(.init()))
          return .init{
             try FileManager.default.copyItem(at: url, to: newURL)
             return try RestoreImage(fromLocalImage: image, at: newURL)
