@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3L-lU-GYj">
-                        <rect key="frame" x="20" y="353" width="321" height="135"/>
+                        <rect key="frame" x="20" y="409" width="321" height="79"/>
                         <clipView key="contentView" id="6EP-Bs-VeQ">
-                            <rect key="frame" x="1" y="1" width="319" height="133"/>
+                            <rect key="frame" x="1" y="1" width="319" height="77"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="X7V-lu-ReA" viewBased="YES" id="T36-Pw-3PT">
-                                    <rect key="frame" x="0.0" y="0.0" width="319" height="105"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="319" height="49"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -110,7 +110,7 @@
                             <constraint firstAttribute="width" constant="321" id="x0e-CC-Xw9"/>
                         </constraints>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="JAV-Ob-mQ2">
-                            <rect key="frame" x="1" y="118" width="182" height="16"/>
+                            <rect key="frame" x="1" y="118" width="319" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="IPz-U3-WZZ">
@@ -123,7 +123,7 @@
                         </tableHeaderView>
                     </scrollView>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PXk-nM-7dM">
-                        <rect key="frame" x="20" y="331" width="321" height="23"/>
+                        <rect key="frame" x="20" y="387" width="321" height="23"/>
                         <segmentedCell key="cell" enabled="NO" refusesFirstResponder="YES" borderStyle="border" alignment="left" segmentDistribution="fill" style="smallSquare" trackingMode="momentary" id="yHH-BK-aqb">
                             <font key="font" metaFont="system"/>
                             <segments>
@@ -132,7 +132,7 @@
                         </segmentedCell>
                     </segmentedControl>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="57h-bw-h1B">
-                        <rect key="frame" x="20" y="331" width="62" height="23"/>
+                        <rect key="frame" x="20" y="387" width="62" height="23"/>
                         <segmentedCell key="cell" enabled="NO" refusesFirstResponder="YES" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="smallSquare" trackingMode="momentary" id="6De-1C-G23">
                             <font key="font" metaFont="system"/>
                             <segments>
