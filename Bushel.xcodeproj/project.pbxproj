@@ -21,6 +21,13 @@
 		B3210C34285B5FFD002D7BEF /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3210C33285B5FFD002D7BEF /* SHA256.swift */; };
 		B3215C10285BDD7E002C2EA1 /* MachineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3215C0F285BDD7E002C2EA1 /* MachineItemView.swift */; };
 		B3215C16285BE199002C2EA1 /* MachineImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3215C15285BE199002C2EA1 /* MachineImagePickerView.swift */; };
+		B32BF394285EA0A5006842C7 /* MachineDialogWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B32BF393285EA0A5006842C7 /* MachineDialogWindow.xib */; };
+		B32BF39C285EA977006842C7 /* BshillDocApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF39B285EA977006842C7 /* BshillDocApp.swift */; };
+		B32BF39E285EA977006842C7 /* BshillDocDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF39D285EA977006842C7 /* BshillDocDocument.swift */; };
+		B32BF3A0285EA977006842C7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF39F285EA977006842C7 /* ContentView.swift */; };
+		B32BF3A2285EA978006842C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B32BF3A1285EA978006842C7 /* Assets.xcassets */; };
+		B32BF3A5285EA978006842C7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B32BF3A4285EA978006842C7 /* Preview Assets.xcassets */; };
+		B32BF3AC285EA99B006842C7 /* MachineDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF3AB285EA99B006842C7 /* MachineDialogView.swift */; };
 		B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34ABE9028443EFB00F22379 /* Downloader.swift */; };
 		B3662A952846EFD000F8430B /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A942846EFD000F8430B /* ImagesView.swift */; };
 		B3662AA52846F89B00F8430B /* RestoreImage.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A982846F89A00F8430B /* RestoreImage.Combine.swift */; };
@@ -112,6 +119,16 @@
 		B3210C33285B5FFD002D7BEF /* SHA256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
 		B3215C0F285BDD7E002C2EA1 /* MachineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineItemView.swift; sourceTree = "<group>"; };
 		B3215C15285BE199002C2EA1 /* MachineImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineImagePickerView.swift; sourceTree = "<group>"; };
+		B32BF393285EA0A5006842C7 /* MachineDialogWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MachineDialogWindow.xib; sourceTree = "<group>"; };
+		B32BF399285EA977006842C7 /* BshillDoc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BshillDoc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B32BF39B285EA977006842C7 /* BshillDocApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BshillDocApp.swift; sourceTree = "<group>"; };
+		B32BF39D285EA977006842C7 /* BshillDocDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BshillDocDocument.swift; sourceTree = "<group>"; };
+		B32BF39F285EA977006842C7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B32BF3A1285EA978006842C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B32BF3A4285EA978006842C7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B32BF3A6285EA978006842C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B32BF3A7285EA978006842C7 /* BshillDoc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BshillDoc.entitlements; sourceTree = "<group>"; };
+		B32BF3AB285EA99B006842C7 /* MachineDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineDialogView.swift; sourceTree = "<group>"; };
 		B34ABE9028443EFB00F22379 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		B3662A942846EFD000F8430B /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		B3662A982846F89A00F8430B /* RestoreImage.Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImage.Combine.swift; sourceTree = "<group>"; };
@@ -170,6 +187,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B32BF396285EA977006842C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B39E8C5C285181200049FB7F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -207,6 +231,7 @@
 				B3210C31285B5D71002D7BEF /* RestoreImageListView.swift */,
 				B3215C0F285BDD7E002C2EA1 /* MachineItemView.swift */,
 				B3215C15285BE199002C2EA1 /* MachineImagePickerView.swift */,
+				B32BF393285EA0A5006842C7 /* MachineDialogWindow.xib */,
 			);
 			path = Bshill;
 			sourceTree = "<group>";
@@ -215,6 +240,29 @@
 			isa = PBXGroup;
 			children = (
 				B3210C23285B5CCF002D7BEF /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B32BF39A285EA977006842C7 /* BshillDoc */ = {
+			isa = PBXGroup;
+			children = (
+				B32BF39B285EA977006842C7 /* BshillDocApp.swift */,
+				B32BF3AB285EA99B006842C7 /* MachineDialogView.swift */,
+				B32BF39D285EA977006842C7 /* BshillDocDocument.swift */,
+				B32BF39F285EA977006842C7 /* ContentView.swift */,
+				B32BF3A1285EA978006842C7 /* Assets.xcassets */,
+				B32BF3A6285EA978006842C7 /* Info.plist */,
+				B32BF3A7285EA978006842C7 /* BshillDoc.entitlements */,
+				B32BF3A3285EA978006842C7 /* Preview Content */,
+			);
+			path = BshillDoc;
+			sourceTree = "<group>";
+		};
+		B32BF3A3285EA978006842C7 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B32BF3A4285EA978006842C7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -267,6 +315,7 @@
 				B3BB2FF4283FB62D00F3E336 /* Bushel-download */,
 				B39E8C60285181200049FB7F /* BshIllDesign */,
 				B3210C1B285B5CCE002D7BEF /* Bshill */,
+				B32BF39A285EA977006842C7 /* BshillDoc */,
 				B3BB2FA9283E7B3A00F3E336 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -278,6 +327,7 @@
 				B3BB2FF3283FB62D00F3E336 /* Bushel-download.app */,
 				B39E8C5F285181200049FB7F /* BshIllDesign.app */,
 				B3210C1A285B5CCE002D7BEF /* Bshill.app */,
+				B32BF399285EA977006842C7 /* BshillDoc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -383,6 +433,23 @@
 			productReference = B3210C1A285B5CCE002D7BEF /* Bshill.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B32BF398285EA977006842C7 /* BshillDoc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B32BF3A8285EA978006842C7 /* Build configuration list for PBXNativeTarget "BshillDoc" */;
+			buildPhases = (
+				B32BF395285EA977006842C7 /* Sources */,
+				B32BF396285EA977006842C7 /* Frameworks */,
+				B32BF397285EA977006842C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BshillDoc;
+			productName = BshillDoc;
+			productReference = B32BF399285EA977006842C7 /* BshillDoc.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B39E8C5E285181200049FB7F /* BshIllDesign */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B39E8C71285181210049FB7F /* Build configuration list for PBXNativeTarget "BshIllDesign" */;
@@ -447,6 +514,9 @@
 					B3210C19285B5CCE002D7BEF = {
 						CreatedOnToolsVersion = 14.0;
 					};
+					B32BF398285EA977006842C7 = {
+						CreatedOnToolsVersion = 14.0;
+					};
 					B39E8C5E285181200049FB7F = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -481,6 +551,7 @@
 				B3BB2FF2283FB62D00F3E336 /* Bushel-download */,
 				B39E8C5E285181200049FB7F /* BshIllDesign */,
 				B3210C19285B5CCE002D7BEF /* Bshill */,
+				B32BF398285EA977006842C7 /* BshillDoc */,
 			);
 		};
 /* End PBXProject section */
@@ -522,7 +593,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3210C24285B5CCF002D7BEF /* Preview Assets.xcassets in Resources */,
+				B32BF394285EA0A5006842C7 /* MachineDialogWindow.xib in Resources */,
 				B3210C21285B5CCF002D7BEF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32BF397285EA977006842C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B32BF3A5285EA978006842C7 /* Preview Assets.xcassets in Resources */,
+				B32BF3A2285EA978006842C7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +650,17 @@
 				B3210C1D285B5CCE002D7BEF /* BshillApp.swift in Sources */,
 				B3210C32285B5D71002D7BEF /* RestoreImageListView.swift in Sources */,
 				B3215C16285BE199002C2EA1 /* MachineImagePickerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32BF395285EA977006842C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B32BF39C285EA977006842C7 /* BshillDocApp.swift in Sources */,
+				B32BF39E285EA977006842C7 /* BshillDocDocument.swift in Sources */,
+				B32BF3AC285EA99B006842C7 /* MachineDialogView.swift in Sources */,
+				B32BF3A0285EA977006842C7 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,6 +776,64 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.Bshill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B32BF3A9285EA978006842C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BshillDoc/BshillDoc.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BshillDoc/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BshillDoc/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshillDoc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B32BF3AA285EA978006842C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BshillDoc/BshillDoc.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BshillDoc/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BshillDoc/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshillDoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -975,6 +1125,15 @@
 			buildConfigurations = (
 				B3210C26285B5CCF002D7BEF /* Debug */,
 				B3210C27285B5CCF002D7BEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B32BF3A8285EA978006842C7 /* Build configuration list for PBXNativeTarget "BshillDoc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B32BF3A9285EA978006842C7 /* Debug */,
+				B32BF3AA285EA978006842C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
