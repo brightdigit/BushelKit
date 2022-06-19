@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B300D7D2285F68C600798E84 /* BshillRunnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300D7D1285F68C600798E84 /* BshillRunnerApp.swift */; };
+		B300D7D4285F68C600798E84 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300D7D3285F68C600798E84 /* ContentView.swift */; };
+		B300D7D6285F68C700798E84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B300D7D5285F68C700798E84 /* Assets.xcassets */; };
+		B300D7D9285F68C700798E84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B300D7D8285F68C700798E84 /* Preview Assets.xcassets */; };
+		B300D7E3285F71EA00798E84 /* VZVirtualMachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300D7E2285F71EA00798E84 /* VZVirtualMachineConfiguration.swift */; };
+		B300D7E6285F742800798E84 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300D7E4285F736700798E84 /* FileManager.swift */; };
+		B300D7E8285F746600798E84 /* FileCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300D7E7285F746600798E84 /* FileCreationError.swift */; };
 		B315106E2841127500299415 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315106D2841127500299415 /* MainView.swift */; };
 		B3157F562852C44800DB5077 /* MachineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3157F552852C44800DB5077 /* MachineListView.swift */; };
 		B3157F5C2852C4A900DB5077 /* ImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3157F5B2852C4A900DB5077 /* ImageListView.swift */; };
@@ -103,6 +110,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B300D7CF285F68C600798E84 /* BshillRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BshillRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B300D7D1285F68C600798E84 /* BshillRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BshillRunnerApp.swift; sourceTree = "<group>"; };
+		B300D7D3285F68C600798E84 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B300D7D5285F68C700798E84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B300D7D8285F68C700798E84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B300D7DA285F68C700798E84 /* BshillRunner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BshillRunner.entitlements; sourceTree = "<group>"; };
+		B300D7E2285F71EA00798E84 /* VZVirtualMachineConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VZVirtualMachineConfiguration.swift; sourceTree = "<group>"; };
+		B300D7E4285F736700798E84 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		B300D7E7285F746600798E84 /* FileCreationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCreationError.swift; sourceTree = "<group>"; };
 		B315106D2841127500299415 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B3157F552852C44800DB5077 /* MachineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineListView.swift; sourceTree = "<group>"; };
 		B3157F5B2852C4A900DB5077 /* ImageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListView.swift; sourceTree = "<group>"; };
@@ -180,6 +196,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B300D7CC285F68C600798E84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3210C17285B5CCE002D7BEF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -218,6 +241,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B300D7D0285F68C600798E84 /* BshillRunner */ = {
+			isa = PBXGroup;
+			children = (
+				B300D7D1285F68C600798E84 /* BshillRunnerApp.swift */,
+				B300D7D3285F68C600798E84 /* ContentView.swift */,
+				B300D7E7285F746600798E84 /* FileCreationError.swift */,
+				B300D7D5285F68C700798E84 /* Assets.xcassets */,
+				B300D7DA285F68C700798E84 /* BshillRunner.entitlements */,
+				B300D7E4285F736700798E84 /* FileManager.swift */,
+				B300D7E2285F71EA00798E84 /* VZVirtualMachineConfiguration.swift */,
+				B300D7D7285F68C700798E84 /* Preview Content */,
+			);
+			path = BshillRunner;
+			sourceTree = "<group>";
+		};
+		B300D7D7285F68C700798E84 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B300D7D8285F68C700798E84 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		B3210C1B285B5CCE002D7BEF /* Bshill */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +362,7 @@
 				B39E8C60285181200049FB7F /* BshIllDesign */,
 				B3210C1B285B5CCE002D7BEF /* Bshill */,
 				B32BF39A285EA977006842C7 /* BshillDoc */,
+				B300D7D0285F68C600798E84 /* BshillRunner */,
 				B3BB2FA9283E7B3A00F3E336 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -328,6 +375,7 @@
 				B39E8C5F285181200049FB7F /* BshIllDesign.app */,
 				B3210C1A285B5CCE002D7BEF /* Bshill.app */,
 				B32BF399285EA977006842C7 /* BshillDoc.app */,
+				B300D7CF285F68C600798E84 /* BshillRunner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -416,6 +464,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B300D7CE285F68C600798E84 /* BshillRunner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B300D7E1285F68C700798E84 /* Build configuration list for PBXNativeTarget "BshillRunner" */;
+			buildPhases = (
+				B300D7CB285F68C600798E84 /* Sources */,
+				B300D7CC285F68C600798E84 /* Frameworks */,
+				B300D7CD285F68C600798E84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BshillRunner;
+			productName = BshillRunner;
+			productReference = B300D7CF285F68C600798E84 /* BshillRunner.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B3210C19285B5CCE002D7BEF /* Bshill */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B3210C2C285B5CCF002D7BEF /* Build configuration list for PBXNativeTarget "Bshill" */;
@@ -511,6 +576,9 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
+					B300D7CE285F68C600798E84 = {
+						CreatedOnToolsVersion = 14.0;
+					};
 					B3210C19285B5CCE002D7BEF = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -552,6 +620,7 @@
 				B39E8C5E285181200049FB7F /* BshIllDesign */,
 				B3210C19285B5CCE002D7BEF /* Bshill */,
 				B32BF398285EA977006842C7 /* BshillDoc */,
+				B300D7CE285F68C600798E84 /* BshillRunner */,
 			);
 		};
 /* End PBXProject section */
@@ -588,6 +657,15 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B300D7CD285F68C600798E84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B300D7D9285F68C700798E84 /* Preview Assets.xcassets in Resources */,
+				B300D7D6285F68C700798E84 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3210C18285B5CCE002D7BEF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -639,6 +717,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B300D7CB285F68C600798E84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B300D7D4285F68C600798E84 /* ContentView.swift in Sources */,
+				B300D7D2285F68C600798E84 /* BshillRunnerApp.swift in Sources */,
+				B300D7E3285F71EA00798E84 /* VZVirtualMachineConfiguration.swift in Sources */,
+				B300D7E6285F742800798E84 /* FileManager.swift in Sources */,
+				B300D7E8285F746600798E84 /* FileCreationError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3210C16285B5CCE002D7BEF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -726,6 +816,62 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		B300D7DB285F68C700798E84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BshillRunner/BshillRunner.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BshillRunner/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshillRunner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B300D7DC285F68C700798E84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BshillRunner/BshillRunner.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BshillRunner/Preview Content\"";
+				DEVELOPMENT_TEAM = MLT7M394S7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshillRunner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		B3210C26285B5CCF002D7BEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -802,7 +948,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshillDoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -831,7 +977,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshillDoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1120,6 +1266,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B300D7E1285F68C700798E84 /* Build configuration list for PBXNativeTarget "BshillRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B300D7DB285F68C700798E84 /* Debug */,
+				B300D7DC285F68C700798E84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B3210C2C285B5CCF002D7BEF /* Build configuration list for PBXNativeTarget "Bshill" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -12,17 +12,27 @@ struct MachineDialogView: View {
     
 
     var body: some View {
-        NavigationSplitView {
-            List{
-                DisclosureGroup("Disks") {
-                    ForEach(document.disks) { disk in
-                        Text(disk.name)
-                    }
-                }
-            }
-        } detail: {
-            
+        NavigationView {
+                        List{
+                            DisclosureGroup("Disks") {
+                                ForEach(document.disks) { disk in
+                                    Text(disk.name)
+                                }
+                            }
+                        }
         }
+//
+//        NavigationSplitView {
+//            List{
+//                DisclosureGroup("Disks") {
+//                    ForEach(document.disks) { disk in
+//                        Text(disk.name)
+//                    }
+//                }
+//            }
+//        } detail: {
+//
+//        }
 
     }
 }
