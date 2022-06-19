@@ -146,19 +146,69 @@ struct MachineItemView: View {
                 }
                 
                 LabeledContent {
-                    
-                    Table(self.sharedDirectories, selection: self.$selectedSharedDirectory) {
+                    VStack{
+                        Table(self.sharedDirectories, selection: self.$selectedSharedDirectory) {
                             TableColumn("Tag", value: \.tag)
-                        TableColumn("Path", value: \.url.relativePath)
-                        TableColumn("Read Only", value: \.isReadOnly) { (share : MachineSharedDirectory) in
-                            Image(systemName: "lock.fill")
-                        }
+                            TableColumn("Path", value: \.url.relativePath)
+                            
+                            //                        TableColumn("Read Only", value: \.isReadOnly) { (share : MachineSharedDirectory) in
+                            //                            Image(systemName: "lock.fill")
+                            //                        }
+                            //                        TableColumn("Read Only", value: \.isReadOnly) { ( value : MachineSharedDirectory) in
+                            //                            Text("Hellow")
+                            //                        }
                         }.frame(height: 120.0)
+                        
+                        HStack(spacing: 0.0){
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "plus").resizable().aspectRatio(1.0,contentMode: .fit).frame(width: 12.0, height: 12.0).padding(8.0)
+                            }.buttonStyle(.borderless)
+                            Divider()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "minus").resizable().aspectRatio(contentMode: .fit).frame(width: 12.0, height: 12.0).padding(8.0)
+                            }.buttonStyle(.borderless)
+                            Divider()
+                            Spacer()
+                        }
+                    }
                 } label : {
                     Text("Shared Locations")
                 }
             }
-        
+            Section("Networking") {
+                
+                LabeledContent {
+                    VStack(spacing: 0.0){
+                        Table(self.disks, selection: self.$selectedDisk) {
+                            TableColumn("Name", value: \.name)
+                            TableColumn("Size") { (disk : MachineDisk) in
+                                Text("\(ByteCountFormatter().string(from: .init(value: .init(disk.size), unit: .bytes)))")
+                            }
+                        }.frame(height: 120.0)
+                        HStack(spacing: 0.0){
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "plus").resizable().aspectRatio(1.0,contentMode: .fit).frame(width: 12.0, height: 12.0).padding(8.0)
+                            }.buttonStyle(.borderless)
+                            Divider()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "minus").resizable().aspectRatio(contentMode: .fit).frame(width: 12.0, height: 12.0).padding(8.0)
+                            }.buttonStyle(.borderless)
+                            Divider()
+                            Spacer()
+                        }
+                    }.border(Color(NSColor.gridColor), width: 1)
+                } label : {
+                    Text("Adapters")
+                }
+            }
         }.padding().popover(isPresented: self.$shouldDisplayIconPicker) {
             MachineImagePickerView(images: images, selectedImage: self.$machineIcon)
         }
