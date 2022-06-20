@@ -41,7 +41,9 @@ struct ContentView: View {
     @State var isImporting : Bool = false
     @State var restoreImage: VZMacOSRestoreImage?
     @State var machine: VZVirtualMachine?
-    @Binding var startedMachine : VZVirtualMachine?
+  
+  let installWith: (VZMacOSRestoreImage, VZVirtualMachine) -> Void
+  
     var body: some View {
         VStack {
             HStack{
@@ -117,13 +119,11 @@ struct ContentView: View {
             }.disabled(self.restoreImage == nil)
             HStack{
                 Button("Start") {
-                    guard let machine = machine else {
+                  guard let restoreImage = restoreImage, let machine = machine else {
                         return
                     }
-                    DispatchQueue.main.async {
-                        self.startedMachine = machine
-                    }
-//                    
+                  self.installWith(restoreImage, machine)
+                    
 //                    machine.start { result in
 //                        dump(result)
 //                    }
@@ -136,6 +136,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(startedMachine: .constant(nil))
+      ContentView { _, _ in
+        
+      }
     }
 }

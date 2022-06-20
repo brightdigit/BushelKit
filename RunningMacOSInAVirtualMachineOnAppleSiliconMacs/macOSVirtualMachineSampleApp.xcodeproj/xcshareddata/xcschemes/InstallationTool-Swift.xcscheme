@@ -50,6 +50,12 @@
             ReferencedContainer = "container:macOSVirtualMachineSampleApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/leo/Downloads/RestoreImage.ipsw"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
