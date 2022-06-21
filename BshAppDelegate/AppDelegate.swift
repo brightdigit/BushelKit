@@ -29,7 +29,6 @@ struct VirtualMachineView : NSViewRepresentable {
 }
 
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate, VZVirtualMachineDelegate {
   private var installationObserver: NSKeyValueObservation?
   var window: NSWindow!
@@ -38,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, VZVirtualMachineDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
     
-      let view = ContentView(installWith: self.beingInstall, startMachine: self.startMachine(_:))
+      let view = StartMachineView(installWith: self.beingInstall, startMachine: self.startMachine(_:))
     let hostingController = NSHostingController(rootView: view)
     let window = NSWindow(contentViewController: hostingController)
     window.makeKeyAndOrderFront(self)
