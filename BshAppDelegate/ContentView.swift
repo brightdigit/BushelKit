@@ -10,6 +10,26 @@ import Virtualization
 
 
 extension VZMacPlatformConfiguration {
+    convenience init(fromDirectory machineDirectory: URL) throws {
+        self.init()
+        let auxiliaryStorageURL = machineDirectory.appendingPathComponent("auxiliary.storage")
+        let hardwareModelURL = machineDirectory.appendingPathComponent("hardware.model.bin")
+        let machineIdentifierURL = machineDirectory.appendingPathComponent("machine.identifier.bin")
+        if #available(macOS 13.0, *) {
+            self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        guard let hardwareModel = VZMacHardwareModel(dataRepresentation: try Data(contentsOf: hardwareModelURL) ) else {
+            throw NSError()
+        }
+        self.hardwareModel = hardwareModel
+        guard let machineIdentifier = VZMacMachineIdentifier(dataRepresentation: try .init(contentsOf: machineIdentifierURL)) else {
+            throw NSError()
+        }
+        self.machineIdentifier = machineIdentifier
+    }
     convenience init(restoreImage : VZMacOSRestoreImage, in machineDirectory: URL) throws
     {
         self.init()
@@ -43,6 +63,7 @@ struct ContentView: View {
     @State var machine: VZVirtualMachine?
   
   let installWith: (VZMacOSRestoreImage, VZVirtualMachine) -> Void
+    let startMachine: (VZVirtualMachine) -> Void
   
     var body: some View {
         VStack {
@@ -118,7 +139,7 @@ struct ContentView: View {
                 Text("Machine Built")
             }.disabled(self.restoreImage == nil)
             HStack{
-                Button("Start") {
+                Button("Install Image") {
                   guard let restoreImage = restoreImage, let machine = machine else {
                         return
                     }
@@ -130,6 +151,47 @@ struct ContentView: View {
                     
                 }.disabled(self.machine == nil)
             }
+            HStack{
+                Button("Open Machine") {
+                    let panel = NSOpenPanel()
+                    panel.nameFieldLabel = "Open Machine:"
+                    panel.allowedContentTypes =  [.directory]
+                    panel.canChooseFiles = false
+                    panel.canChooseDirectories = true
+                    panel.begin { response in
+                      guard let fileURL = panel.url, response == .OK else {
+                        return
+                      }
+                        let configuration : VZVirtualMachineConfiguration
+                        do {
+                            configuration = try VZVirtualMachineConfiguration(contentsOfDirectory: fileURL)
+                            try configuration.validate()
+                        } catch {
+                            dump(error)
+                            return
+                        }
+                        
+                        let machine = VZVirtualMachine(configuration: configuration)
+                        
+                        DispatchQueue.main.async {
+                            self.machine = machine
+                        }
+                    }
+                }
+            }
+            HStack{
+                Button("Start") {
+                    
+                    guard let machine = machine else {
+                          return
+                      }
+                    self.startMachine(machine)
+                      
+  //                    machine.start { result in
+  //                        dump(result)
+  //                    }
+                }
+            }
         }.padding()
     }
 }
@@ -138,6 +200,8 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
       ContentView { _, _ in
         
+      } startMachine: { _ in
+          
       }
     }
 }

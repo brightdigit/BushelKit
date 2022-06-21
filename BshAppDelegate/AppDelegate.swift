@@ -9,6 +9,7 @@ import Cocoa
 import SwiftUI
 import Virtualization
 
+
 struct VirtualMachineView : NSViewRepresentable {
     let virtualMachine : VZVirtualMachine
     func makeNSView(context: Context) -> VZVirtualMachineView {
@@ -37,13 +38,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, VZVirtualMachineDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Insert code here to initialize your application
     
-    let view = ContentView(installWith: self.beingInstall)
+      let view = ContentView(installWith: self.beingInstall, startMachine: self.startMachine(_:))
     let hostingController = NSHostingController(rootView: view)
     let window = NSWindow(contentViewController: hostingController)
     window.makeKeyAndOrderFront(self)
     self.window = window
   }
   
+    fileprivate func startMachine(_ machine: VZVirtualMachine) {
+        let view = VirtualMachineView(virtualMachine: machine)
+        machine.delegate = self
+        let hostingController = NSHostingController(rootView: view)
+        let window = NSWindow(contentViewController: hostingController)
+        window.setFrame(.init(x: 0, y: 0, width: 1920, height: 1080), display: true)
+        window.center()
+        window.makeKeyAndOrderFront(self)
+        machineViewWindows.append(window)
+        machine.start { result in
+            let error: Error?
+            do {
+                try result.get()
+                error = nil
+            } catch let caughtError {
+                error = caughtError
+            }
+            dump(error)
+        }
+    }
   fileprivate func installer(_ installer: VZMacOSInstaller) {
     
     NSLog("Starting installation.")
@@ -63,16 +84,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, VZVirtualMachineDelegate {
   }
   
   func beingInstall(withImage restoreImage: VZMacOSRestoreImage, toMachine machine: VZVirtualMachine) {
-    print(restoreImage.url)
-    print(restoreImage.url.scheme)
+
       let view = VirtualMachineView(virtualMachine: machine)
       machine.delegate = self
-      let hostingController = NSHostingController(rootView: view)
-      let window = NSWindow(contentViewController: hostingController)
-      window.setFrame(.init(x: 0, y: 0, width: 1920, height: 1080), display: true)
-      window.center()
-      window.makeKeyAndOrderFront(self)
-      machineViewWindows.append(window)
+      
     
     DispatchQueue.main.async {
       let installer = VZMacOSInstaller(virtualMachine: machine, restoringFromImageAt:restoreImage.url)
