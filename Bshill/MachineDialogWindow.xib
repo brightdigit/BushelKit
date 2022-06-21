@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21179.7" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21179.7"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,19 +12,19 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="578" height="508"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3008" height="1667"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="578" height="508"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3L-lU-GYj">
-                        <rect key="frame" x="20" y="409" width="321" height="79"/>
-                        <clipView key="contentView" id="6EP-Bs-VeQ">
-                            <rect key="frame" x="1" y="1" width="319" height="77"/>
+                    <scrollView ambiguous="YES" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3L-lU-GYj">
+                        <rect key="frame" x="20" y="437" width="321" height="51"/>
+                        <clipView key="contentView" ambiguous="YES" id="6EP-Bs-VeQ">
+                            <rect key="frame" x="1" y="1" width="319" height="49"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="X7V-lu-ReA" viewBased="YES" id="T36-Pw-3PT">
-                                    <rect key="frame" x="0.0" y="0.0" width="319" height="49"/>
+                                <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="X7V-lu-ReA" viewBased="YES" id="T36-Pw-3PT">
+                                    <rect key="frame" x="0.0" y="0.0" width="319" height="24"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -110,10 +110,10 @@
                             <constraint firstAttribute="width" constant="321" id="x0e-CC-Xw9"/>
                         </constraints>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="JAV-Ob-mQ2">
-                            <rect key="frame" x="1" y="118" width="319" height="16"/>
+                            <rect key="frame" x="1" y="62" width="319" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="IPz-U3-WZZ">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="IPz-U3-WZZ">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -122,8 +122,8 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PXk-nM-7dM">
-                        <rect key="frame" x="20" y="387" width="321" height="23"/>
+                    <segmentedControl verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PXk-nM-7dM">
+                        <rect key="frame" x="20" y="415" width="321" height="23"/>
                         <segmentedCell key="cell" enabled="NO" refusesFirstResponder="YES" borderStyle="border" alignment="left" segmentDistribution="fill" style="smallSquare" trackingMode="momentary" id="yHH-BK-aqb">
                             <font key="font" metaFont="system"/>
                             <segments>
@@ -131,8 +131,8 @@
                             </segments>
                         </segmentedCell>
                     </segmentedControl>
-                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="57h-bw-h1B">
-                        <rect key="frame" x="20" y="387" width="62" height="23"/>
+                    <segmentedControl verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="57h-bw-h1B">
+                        <rect key="frame" x="20" y="415" width="62" height="23"/>
                         <segmentedCell key="cell" enabled="NO" refusesFirstResponder="YES" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="smallSquare" trackingMode="momentary" id="6De-1C-G23">
                             <font key="font" metaFont="system"/>
                             <segments>

@@ -16,8 +16,9 @@ extension VZMacPlatformConfiguration {
         let hardwareModelURL = machineDirectory.appendingPathComponent("hardware.model.bin")
         let machineIdentifierURL = machineDirectory.appendingPathComponent("machine.identifier.bin")
         if #available(macOS 13.0, *) {
-            self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
+            //self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
         } else {
+            self.auxiliaryStorage = VZMacAuxiliaryStorage(contentsOf: auxiliaryStorageURL)
             // Fallback on earlier versions
         }
         
