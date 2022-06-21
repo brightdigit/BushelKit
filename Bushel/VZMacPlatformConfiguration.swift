@@ -5,7 +5,7 @@ import Foundation
 import Virtualization
 
 extension VZMacPlatformConfiguration {
-  convenience init (machine: Machine, in machineDirectory: URL) throws {
+  convenience init (machine: Machine<VZMacOSRestoreImage>, in machineDirectory: URL) throws {
     self.init()
     
     guard let configuration = machine.sourceImage.mostFeaturefulSupportedConfiguration else {

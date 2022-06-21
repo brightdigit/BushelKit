@@ -1,6 +1,26 @@
 import Foundation
 import Virtualization
 
+extension VZMacHardwareModel : RestoreImageMetadataHardwareModel {
+    
+}
+extension VZMacOSConfigurationRequirements : RestoreImageMetadataConfiguration {
+    typealias RestoreImageMetadataHardwareModelType = VZMacHardwareModel
+}
+
+extension VZVirtualMachineConfiguration : MachineConfigurationMetadata {
+    
+}
+extension VZMacOSRestoreImage : RestoreImageMetadata {
+    func createMachineConfigurationMetadata(basedOnMachine machine: Machine<VZMacOSRestoreImage>) -> VZVirtualMachineConfiguration {
+        fatalError()
+    }
+    
+    typealias MachineConfigurationMetadataType = VZVirtualMachineConfiguration
+    
+    
+    typealias RestoreImageMetadataConfigurationType = VZMacOSConfigurationRequirements
+}
 extension VZMacOSRestoreImage {
   func localFileNameDownloadedAt(_ date: Date) -> String {
     let pathExtension = self.url.pathExtension
@@ -11,7 +31,7 @@ extension VZMacOSRestoreImage {
     return "\(lastPathComponent)[\(formatter.string(from: date))].\(pathExtension)"
   }
   
-  static func remoteImageFetch (_ closure: @escaping (Result<RestoreImage,Error>) -> Void) {
+  static func remoteImageFetch (_ closure: @escaping (Result<RestoreImage<VZMacOSRestoreImage>,Error>) -> Void) {
 
     self.fetchLatestSupported{ result in
       let vzRestoreImage : VZMacOSRestoreImage

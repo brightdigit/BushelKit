@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct ImagesView: View {
+struct ImagesView<RestoreImageMetadataType : RestoreImageMetadata>: View {
   @State var error : Error?
-  @State var selectedImage : RestoreImage? 
-  @EnvironmentObject var object : AppObject
+  @State var selectedImage : RestoreImage<RestoreImageMetadataType>?
+  @EnvironmentObject var object : AppObject<RestoreImageMetadataType>
     var body: some View {
       VStack {
 //        RemoteImageView(image: object.remoteImage).border(.secondary)
@@ -42,7 +42,7 @@ struct ImagesView: View {
 struct ImagesView_Previews: PreviewProvider {
     static var previews: some View {
       TabView {
-        ImagesView().environmentObject(AppObject(remoteImageFetcher: Self.previewImageFetch(_:))).tabItem {
+        ImagesView<PreviewRestoreImageMetadata>().environmentObject(AppObject(remoteImageFetcher: Self.previewImageFetch(_:))).tabItem {
           
           Label("Images", systemImage:  "externaldrive.fill")
         

@@ -2,8 +2,8 @@
 
 #if arch(arm64)
 import Virtualization
-struct Machine {
-  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], shares: [MachineSharedDirectory], useHostAudio : Bool, sourceImage: RestoreImage) {
+struct Machine<RestoreImageMetadataType : RestoreImageMetadata> {
+  internal init(id : UUID = .init(), name : String, cpuCount: Int, memorySize: UInt64, displays: [MachineDisplay], disks: [MachineDisk], networks: [MachineNetwork], shares: [MachineSharedDirectory], useHostAudio : Bool, sourceImage: RestoreImage<RestoreImageMetadataType>) {
     self.id = id
     self.name = name
     self.cpuCount = cpuCount
@@ -24,20 +24,20 @@ struct Machine {
   let disks : [MachineDisk]
   let networks : [MachineNetwork]
   let shares : [MachineSharedDirectory]
-  let sourceImage : RestoreImage
+  let sourceImage : RestoreImage<RestoreImageMetadataType>
   let useHostAudio : Bool
   
   
-  init(builder: MachineBuilder, validateWith validate: @escaping (Machine) throws -> Void) throws {
+  init(builder: MachineBuilder<RestoreImageMetadataType>, validateWith validate: @escaping (Machine<RestoreImageMetadataType>) throws -> Void) throws {
     self.init(name: builder.name, cpuCount: builder.cpuCount, memorySize: builder.memorySize, displays: builder.displays, disks: builder.disks, networks: builder.networks,  shares: builder.shares, useHostAudio: builder.useHostAudio, sourceImage: builder.sourceImage)
     
     try validate(self)
   }
 }
 
-extension Machine {
+extension Machine where RestoreImageMetadataType == VZMacOSRestoreImage {
   
-  init(builder: MachineBuilder) throws {
+  init(builder: MachineBuilder<VZMacOSRestoreImage>) throws {
     try self.init(builder: builder, validateWith: VZVirtualMachineConfiguration.validateMachine)
   }
 }
