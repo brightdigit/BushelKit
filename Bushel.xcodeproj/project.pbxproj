@@ -50,6 +50,7 @@
 		B38A5D1F284D799400427013 /* ClosedRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D11284D799400427013 /* ClosedRange.swift */; };
 		B38A5D20284D799400427013 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38A5D13284D799400427013 /* Preview Assets.xcassets */; };
 		B38A5D22284D7A1600427013 /* OperatingSystemVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */; };
+		B38C30CF28629E3A00A8AC8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
 		B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */; };
 		B3BB2FAE283E7B3A00F3E336 /* RestoreImageManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAD283E7B3A00F3E336 /* RestoreImageManagerView.swift */; };
 		B3BB2FB0283E7B3B00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
@@ -221,6 +222,7 @@
 		B3BB2F9F283E7B3A00F3E336 = {
 			isa = PBXGroup;
 			children = (
+				B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */,
 				B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */,
 				B3BB2FAA283E7B3A00F3E336 /* Bushel */,
 				B33519252860FDFC00E2E10B /* BshAppDelegate */,
@@ -241,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				B3662A9B2846F89A00F8430B /* AppObject.swift */,
-				B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */,
 				B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */,
 				B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */,
 				B38A5D11284D799400427013 /* ClosedRange.swift */,
@@ -414,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B38C30CF28629E3A00A8AC8E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
