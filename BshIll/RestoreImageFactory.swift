@@ -1,0 +1,6 @@
+
+
+
+protocol RestoreImageFactory {
+  //func restoreImage(
+}

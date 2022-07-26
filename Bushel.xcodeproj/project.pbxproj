@@ -7,165 +7,174 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B315106E2841127500299415 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315106D2841127500299415 /* MainView.swift */; };
-		B315D8362843D0310012628A /* ImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B315D8352843D0310012628A /* ImageList.swift */; };
-		B33519382860FE2100E2E10B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33519362860FE2100E2E10B /* AppDelegate.swift */; };
-		B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34ABE9028443EFB00F22379 /* Downloader.swift */; };
-		B3662A952846EFD000F8430B /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A942846EFD000F8430B /* ImagesView.swift */; };
-		B3662AA52846F89B00F8430B /* RestoreImage.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A982846F89A00F8430B /* RestoreImage.Combine.swift */; };
-		B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A992846F89A00F8430B /* PreviewProvider.swift */; };
-		B3662AA72846F89B00F8430B /* RestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9A2846F89A00F8430B /* RestoreImage.swift */; };
-		B3662AA82846F89B00F8430B /* AppObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9B2846F89A00F8430B /* AppObject.swift */; };
-		B3662AAA2846F89B00F8430B /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662A9D2846F89A00F8430B /* SHA256.swift */; };
-		B3662AAB2846F89B00F8430B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3662A9F2846F89A00F8430B /* Preview Assets.xcassets */; };
-		B3662AAC2846F89B00F8430B /* RemoteRestoreImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AA02846F89A00F8430B /* RemoteRestoreImageFetcher.swift */; };
-		B3662AAD2846F89B00F8430B /* RestoreImage.Virtualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AA12846F89A00F8430B /* RestoreImage.Virtualization.swift */; };
-		B3662AAE2846F89B00F8430B /* VZMacOSRestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */; };
-		B3662AB02846F95F00F8430B /* LocalImage.Virtualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */; };
-		B37C7035286232FD00D2E235 /* MachineDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF3AB285EA99B006842C7 /* MachineDialogView.swift */; };
-		B37C7036286232FD00D2E235 /* BshillDocDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF39D285EA977006842C7 /* BshillDocDocument.swift */; };
-		B37C70372862330C00D2E235 /* BshillDocApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32BF39B285EA977006842C7 /* BshillDocApp.swift */; };
-		B37C70382862333700D2E235 /* RestoreImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3210C31285B5D71002D7BEF /* RestoreImageListView.swift */; };
-		B37C70392862333700D2E235 /* MachineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3215C0F285BDD7E002C2EA1 /* MachineItemView.swift */; };
-		B37C703A2862333700D2E235 /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3210C33285B5FFD002D7BEF /* SHA256.swift */; };
-		B37C703B2862333700D2E235 /* MachineImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3215C15285BE199002C2EA1 /* MachineImagePickerView.swift */; };
-		B37C703C2862333700D2E235 /* RestoreImageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3210C2F285B5D66002D7BEF /* RestoreImageItemView.swift */; };
-		B37C703D286233D700D2E235 /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FF7283FB62D00F3E336 /* DownloadView.swift */; };
-		B37C703E286233FD00D2E235 /* TbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DCD3FB285A1C9E00A0E86E /* TbsView.swift */; };
-		B37C703F286233FD00D2E235 /* ImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3157F5B2852C4A900DB5077 /* ImageListView.swift */; };
-		B37C7040286233FD00D2E235 /* DesignedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E8C63285181200049FB7F /* DesignedView.swift */; };
-		B37C7041286233FD00D2E235 /* MachineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3157F552852C44800DB5077 /* MachineListView.swift */; };
-		B37C7042286233FD00D2E235 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3157F5D2852C51300DB5077 /* SettingsView.swift */; };
-		B38A5D14284D799400427013 /* VZMacPlatformConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D02284D799300427013 /* VZMacPlatformConfiguration.swift */; };
-		B38A5D15284D799400427013 /* VZVirtualMachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D07284D799300427013 /* VZVirtualMachineConfiguration.swift */; };
-		B38A5D16284D799400427013 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D08284D799300427013 /* FileManager.swift */; };
-		B38A5D17284D799400427013 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D09284D799300427013 /* Machine.swift */; };
-		B38A5D18284D799400427013 /* MachineBuilderRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0A284D799300427013 /* MachineBuilderRange.swift */; };
-		B38A5D19284D799400427013 /* FileCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0B284D799300427013 /* FileCreationError.swift */; };
-		B38A5D1A284D799400427013 /* MachineNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0C284D799300427013 /* MachineNetwork.swift */; };
-		B38A5D1B284D799400427013 /* MachineDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0D284D799300427013 /* MachineDisplay.swift */; };
-		B38A5D1C284D799400427013 /* MachineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0E284D799300427013 /* MachineBuilder.swift */; };
-		B38A5D1D284D799400427013 /* MachineDisk.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D0F284D799300427013 /* MachineDisk.swift */; };
-		B38A5D1E284D799400427013 /* MachineSharedDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D10284D799300427013 /* MachineSharedDirectory.swift */; };
-		B38A5D1F284D799400427013 /* ClosedRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D11284D799400427013 /* ClosedRange.swift */; };
-		B38A5D20284D799400427013 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38A5D13284D799400427013 /* Preview Assets.xcassets */; };
-		B38A5D22284D7A1600427013 /* OperatingSystemVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */; };
-		B38C30CF28629E3A00A8AC8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
-		B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */; };
-		B3BB2FAE283E7B3A00F3E336 /* RestoreImageManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB2FAD283E7B3A00F3E336 /* RestoreImageManagerView.swift */; };
-		B3BB2FB0283E7B3B00F3E336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
-		B3BB2FB3283E7B3B00F3E336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */; };
-		B3CED9092848062A0072CACC /* RestoreImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CED9082848062A0072CACC /* RestoreImageView.swift */; };
-		B3E21B672860FFB7008102A6 /* VZVirtualMachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E21B642860FFB7008102A6 /* VZVirtualMachineConfiguration.swift */; };
-		B3E21B682860FFB7008102A6 /* StartMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E21B5F2860FFB7008102A6 /* StartMachineView.swift */; };
-		B3E21B692860FFB7008102A6 /* FileCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E21B662860FFB7008102A6 /* FileCreationError.swift */; };
-		B3E21B6A2860FFB7008102A6 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E21B652860FFB7008102A6 /* FileManager.swift */; };
-		B3E21B742862327D008102A6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E21B732862327D008102A6 /* main.swift */; };
-		B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9821228482E0C00EF5E29 /* MachineView.swift */; };
+		B301F24F286402160038E9F7 /* BshIllApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B301F24E286402160038E9F7 /* BshIllApp.swift */; };
+		B301F251286402160038E9F7 /* MachineDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B301F250286402160038E9F7 /* MachineDocument.swift */; };
+		B301F253286402160038E9F7 /* MachineSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B301F252286402160038E9F7 /* MachineSetupView.swift */; };
+		B301F258286402160038E9F7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B301F257286402160038E9F7 /* Preview Assets.xcassets */; };
+		B301F262286402270038E9F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */; };
+		B301F266286404BF0038E9F7 /* RestoreImageDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B301F265286404BF0038E9F7 /* RestoreImageDocumentView.swift */; };
+		B301F268286405140038E9F7 /* RestoreImageDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B301F267286405140038E9F7 /* RestoreImageDocument.swift */; };
+		B3310822288F197000A18C90 /* VirtualMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3310821288F197000A18C90 /* VirtualMachineView.swift */; };
+		B35432D628693C680019BCE3 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35432D528693C680019BCE3 /* WelcomeView.swift */; };
+		B35432DC28693D640019BCE3 /* RrisCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35432DB28693D640019BCE3 /* RrisCollectionView.swift */; };
+		B3636C7228820E01000C4F6D /* MockRestoreImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C4D28820E00000C4F6D /* MockRestoreImageLoader.swift */; };
+		B3636C7328820E01000C4F6D /* UTType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C4E28820E00000C4F6D /* UTType.swift */; };
+		B3636C7428820E01000C4F6D /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C4F28820E00000C4F6D /* Scene.swift */; };
+		B3636C7528820E01000C4F6D /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5028820E00000C4F6D /* App.swift */; };
+		B3636C7628820E01000C4F6D /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5128820E00000C4F6D /* URL.swift */; };
+		B3636C7728820E01000C4F6D /* CryptoSHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5228820E00000C4F6D /* CryptoSHA256.swift */; };
+		B3636C7828820E01000C4F6D /* RestoreImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5328820E00000C4F6D /* RestoreImageLoader.swift */; };
+		B3636C7928820E01000C4F6D /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5428820E00000C4F6D /* Machine.swift */; };
+		B3636C7A28820E01000C4F6D /* Rris.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5528820E00000C4F6D /* Rris.swift */; };
+		B3636C7B28820E01000C4F6D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5628820E00000C4F6D /* Image.swift */; };
+		B3636C7C28820E01000C4F6D /* FileRestoreImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5728820E00000C4F6D /* FileRestoreImageLoader.swift */; };
+		B3636C7D28820E01000C4F6D /* MissingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5828820E00000C4F6D /* MissingError.swift */; };
+		B3636C7E28820E01000C4F6D /* RrisImageCollectionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5928820E00000C4F6D /* RrisImageCollectionObject.swift */; };
+		B3636C7F28820E01000C4F6D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5A28820E00000C4F6D /* String.swift */; };
+		B3636C8028820E01000C4F6D /* ImageInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5B28820E00000C4F6D /* ImageInstaller.swift */; };
+		B3636C8128820E01000C4F6D /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5C28820E01000C4F6D /* FileManager.swift */; };
+		B3636C8228820E01000C4F6D /* CreatableFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5D28820E01000C4F6D /* CreatableFileDocument.swift */; };
+		B3636C8328820E01000C4F6D /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5E28820E01000C4F6D /* Formatters.swift */; };
+		B3636C8428820E01000C4F6D /* FileWrapperAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C5F28820E01000C4F6D /* FileWrapperAccessor.swift */; };
+		B3636C8528820E01000C4F6D /* RestoreImageDownloadDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6028820E01000C4F6D /* RestoreImageDownloadDestination.swift */; };
+		B3636C8628820E01000C4F6D /* OperatingSystemCodeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6128820E01000C4F6D /* OperatingSystemCodeName.swift */; };
+		B3636C8728820E01000C4F6D /* DirectoryExists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6228820E01000C4F6D /* DirectoryExists.swift */; };
+		B3636C8828820E01000C4F6D /* FileAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6328820E01000C4F6D /* FileAccessor.swift */; };
+		B3636C8928820E01000C4F6D /* ImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6428820E01000C4F6D /* ImageMetadata.swift */; };
+		B3636C8A28820E01000C4F6D /* RestoreImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6528820E01000C4F6D /* RestoreImageFactory.swift */; };
+		B3636C8B28820E01000C4F6D /* MachineRestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6628820E01000C4F6D /* MachineRestoreImage.swift */; };
+		B3636C8C28820E01000C4F6D /* RestoreImageLoaderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6728820E01000C4F6D /* RestoreImageLoaderObject.swift */; };
+		B3636C8D28820E01000C4F6D /* RrisCollectionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6828820E01000C4F6D /* RrisCollectionObject.swift */; };
+		B3636C8E28820E01000C4F6D /* WindowOpenHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6928820E01000C4F6D /* WindowOpenHandle.swift */; };
+		B3636C8F28820E01000C4F6D /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6A28820E01000C4F6D /* Configuration.swift */; };
+		B3636C9028820E01000C4F6D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6B28820E01000C4F6D /* Result.swift */; };
+		B3636C9128820E01000C4F6D /* ImageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6C28820E01000C4F6D /* ImageContainer.swift */; };
+		B3636C9228820E01000C4F6D /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6D28820E01000C4F6D /* Future.swift */; };
+		B3636C9328820E01000C4F6D /* RestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6E28820E01000C4F6D /* RestoreImage.swift */; };
+		B3636C9428820E01000C4F6D /* VirtualizationMacOSRestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C6F28820E01000C4F6D /* VirtualizationMacOSRestoreImage.swift */; };
+		B3636C9528820E01000C4F6D /* VZMacOSRestoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C7028820E01000C4F6D /* VZMacOSRestoreImage.swift */; };
+		B3636C9628820E01000C4F6D /* MockInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C7128820E01000C4F6D /* MockInstaller.swift */; };
+		B3636C9A288210F6000C4F6D /* RestoreImageLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C97288210F6000C4F6D /* RestoreImageLibrary.swift */; };
+		B3636C9B288210F6000C4F6D /* RestoreImageLibraryItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C98288210F6000C4F6D /* RestoreImageLibraryItemFile.swift */; };
+		B3636C9C288210F6000C4F6D /* RestoreImageLibraryDocumentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3636C99288210F6000C4F6D /* RestoreImageLibraryDocumentObject.swift */; };
+		B364B19F28750875006799DC /* Raleway-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B364B19928750875006799DC /* Raleway-Italic-VariableFont_wght.ttf */; };
+		B364B1A028750875006799DC /* Raleway-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B364B19E28750875006799DC /* Raleway-VariableFont_wght.ttf */; };
+		B364B1A228750E7A006799DC /* WelcomeActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B364B1A128750E7A006799DC /* WelcomeActionButton.swift */; };
+		B367B61A288F6E970053463C /* VZVirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B619288F6E970053463C /* VZVirtualMachine.swift */; };
+		B367B61C288F6EA10053463C /* OperatingSystemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B61B288F6EA10053463C /* OperatingSystemDetails.swift */; };
+		B367B61E288F6EA90053463C /* MachineInstallationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B61D288F6EA90053463C /* MachineInstallationObject.swift */; };
+		B367B620288F6F5D0053463C /* MachineSessionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B61F288F6F5D0053463C /* MachineSessionObject.swift */; };
+		B367B622288F6F920053463C /* MachinePreparationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B621288F6F920053463C /* MachinePreparationState.swift */; };
+		B367B624288F6FAF0053463C /* InstallerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B623288F6FAF0053463C /* InstallerType.swift */; };
+		B367B626288F6FDE0053463C /* VZMacPlatformConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B625288F6FDE0053463C /* VZMacPlatformConfiguration.swift */; };
+		B367B628288F70130053463C /* MachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B627288F70120053463C /* MachineConfiguration.swift */; };
+		B367B62A288F70400053463C /* VirtualInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B629288F70400053463C /* VirtualInstaller.swift */; };
+		B367B62C288F70710053463C /* VirtualMachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B62B288F70710053463C /* VirtualMachineConfiguration.swift */; };
+		B367B62E288F70AA0053463C /* VirtualMacOSInstallerPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367B62D288F70AA0053463C /* VirtualMacOSInstallerPublisher.swift */; };
+		B36ACF5C2883932E00416E90 /* MachineSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36ACF5B2883932E00416E90 /* MachineSession.swift */; };
+		B3753A8E286901A700A06E0F /* RestoreImageLibraryDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3753A8C286901A700A06E0F /* RestoreImageLibraryDocument.swift */; };
+		B3753A9028691D7600A06E0F /* RestoreImageLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3753A8F28691D7600A06E0F /* RestoreImageLibraryView.swift */; };
+		B37A362D286A91AF00B06D24 /* SourceImageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37A362C286A91AF00B06D24 /* SourceImageCollectionView.swift */; };
+		B382A47E2867EB94000E6408 /* OperatingSystemVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B382A4792867EB94000E6408 /* OperatingSystemVersion.swift */; };
+		B382A48028680454000E6408 /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B382A47F28680454000E6408 /* SHA256.swift */; };
+		B395C5F0287F957F00A11AC1 /* RestoreImageLibraryItemFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B395C5EF287F957F00A11AC1 /* RestoreImageLibraryItemFileView.swift */; };
+		B3C7DCB9288F720300C4C48B /* MachineSessionWindowHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7DCB8288F720300C4C48B /* MachineSessionWindowHandle.swift */; };
+		B3C7DCBB288F722900C4C48B /* BasicWindowOpenHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7DCBA288F722900C4C48B /* BasicWindowOpenHandle.swift */; };
+		B3D3E98F286BD2EA0046C6F9 /* RestoreImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D3E98E286BD2EA0046C6F9 /* RestoreImageView.swift */; };
+		B3D3E991286BDCF50046C6F9 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D3E990286BDCF50046C6F9 /* Downloader.swift */; };
+		B3E657442885F8FA0049F4DB /* MachineSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E657432885F8FA0049F4DB /* MachineSessionView.swift */; };
+		B3E657462885F95D0049F4DB /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E657452885F95D0049F4DB /* MachineView.swift */; };
+		B3EDD3072884893500383011 /* VZVirtualMachineConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EDD3022884893500383011 /* VZVirtualMachineConfiguration.swift */; };
+		B3EDD309288489F400383011 /* FileCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EDD308288489F400383011 /* FileCreationError.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		B3CED9002847FE070072CACC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8F87D51D26C34111000EADA4;
-			remoteInfo = "macOSVirtualMachineSampleApp-Swift";
-		};
-		B3CED9022847FE070072CACC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8F87D53126C341AC000EADA4;
-			remoteInfo = "InstallationTool-Swift";
-		};
-		B3CED9042847FE070072CACC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8FDABC3A270D1DC600D7FC60;
-			remoteInfo = "macOSVirtualMachineSampleApp-Objective-C";
-		};
-		B3CED9062847FE070072CACC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8FDABC59270D1FFE00D7FC60;
-			remoteInfo = "InstallationTool-Objective-C";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		B315106D2841127500299415 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		B3157F552852C44800DB5077 /* MachineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineListView.swift; sourceTree = "<group>"; };
-		B3157F5B2852C4A900DB5077 /* ImageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListView.swift; sourceTree = "<group>"; };
-		B3157F5D2852C51300DB5077 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		B315D8352843D0310012628A /* ImageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageList.swift; sourceTree = "<group>"; };
-		B3210C2F285B5D66002D7BEF /* RestoreImageItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageItemView.swift; sourceTree = "<group>"; };
-		B3210C31285B5D71002D7BEF /* RestoreImageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageListView.swift; sourceTree = "<group>"; };
-		B3210C33285B5FFD002D7BEF /* SHA256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
-		B3215C0F285BDD7E002C2EA1 /* MachineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineItemView.swift; sourceTree = "<group>"; };
-		B3215C15285BE199002C2EA1 /* MachineImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineImagePickerView.swift; sourceTree = "<group>"; };
-		B32BF39B285EA977006842C7 /* BshillDocApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BshillDocApp.swift; sourceTree = "<group>"; };
-		B32BF39D285EA977006842C7 /* BshillDocDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BshillDocDocument.swift; sourceTree = "<group>"; };
-		B32BF3AB285EA99B006842C7 /* MachineDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineDialogView.swift; sourceTree = "<group>"; };
-		B33519242860FDFC00E2E10B /* BshAppDelegate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BshAppDelegate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B33519362860FE2100E2E10B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B33519392860FE2B00E2E10B /* BshAppDelegate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BshAppDelegate.entitlements; sourceTree = "<group>"; };
-		B34ABE9028443EFB00F22379 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
-		B3662A942846EFD000F8430B /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
-		B3662A982846F89A00F8430B /* RestoreImage.Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImage.Combine.swift; sourceTree = "<group>"; };
-		B3662A992846F89A00F8430B /* PreviewProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
-		B3662A9A2846F89A00F8430B /* RestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImage.swift; sourceTree = "<group>"; };
-		B3662A9B2846F89A00F8430B /* AppObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppObject.swift; sourceTree = "<group>"; };
-		B3662A9D2846F89A00F8430B /* SHA256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
-		B3662A9F2846F89A00F8430B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B3662AA02846F89A00F8430B /* RemoteRestoreImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteRestoreImageFetcher.swift; sourceTree = "<group>"; };
-		B3662AA12846F89A00F8430B /* RestoreImage.Virtualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImage.Virtualization.swift; sourceTree = "<group>"; };
-		B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZMacOSRestoreImage.swift; sourceTree = "<group>"; };
-		B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImage.Virtualization.swift; sourceTree = "<group>"; };
-		B38A5D02284D799300427013 /* VZMacPlatformConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZMacPlatformConfiguration.swift; sourceTree = "<group>"; };
-		B38A5D07284D799300427013 /* VZVirtualMachineConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZVirtualMachineConfiguration.swift; sourceTree = "<group>"; };
-		B38A5D08284D799300427013 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		B38A5D09284D799300427013 /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
-		B38A5D0A284D799300427013 /* MachineBuilderRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineBuilderRange.swift; sourceTree = "<group>"; };
-		B38A5D0B284D799300427013 /* FileCreationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCreationError.swift; sourceTree = "<group>"; };
-		B38A5D0C284D799300427013 /* MachineNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineNetwork.swift; sourceTree = "<group>"; };
-		B38A5D0D284D799300427013 /* MachineDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineDisplay.swift; sourceTree = "<group>"; };
-		B38A5D0E284D799300427013 /* MachineBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineBuilder.swift; sourceTree = "<group>"; };
-		B38A5D0F284D799300427013 /* MachineDisk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineDisk.swift; sourceTree = "<group>"; };
-		B38A5D10284D799300427013 /* MachineSharedDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineSharedDirectory.swift; sourceTree = "<group>"; };
-		B38A5D11284D799400427013 /* ClosedRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosedRange.swift; sourceTree = "<group>"; };
-		B38A5D13284D799400427013 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingSystemVersion.swift; sourceTree = "<group>"; };
-		B39E8C63285181200049FB7F /* DesignedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignedView.swift; sourceTree = "<group>"; };
-		B3BB2FA8283E7B3A00F3E336 /* Bushel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bushel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushelApp.swift; sourceTree = "<group>"; };
-		B3BB2FAD283E7B3A00F3E336 /* RestoreImageManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageManagerView.swift; sourceTree = "<group>"; };
+		B301F24C286402160038E9F7 /* BshIll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BshIll.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B301F24E286402160038E9F7 /* BshIllApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BshIllApp.swift; sourceTree = "<group>"; };
+		B301F250286402160038E9F7 /* MachineDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineDocument.swift; sourceTree = "<group>"; };
+		B301F252286402160038E9F7 /* MachineSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSetupView.swift; sourceTree = "<group>"; };
+		B301F257286402160038E9F7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B301F259286402160038E9F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B301F25A286402160038E9F7 /* BshIll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BshIll.entitlements; sourceTree = "<group>"; };
+		B301F265286404BF0038E9F7 /* RestoreImageDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageDocumentView.swift; sourceTree = "<group>"; };
+		B301F267286405140038E9F7 /* RestoreImageDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageDocument.swift; sourceTree = "<group>"; };
+		B3310821288F197000A18C90 /* VirtualMachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachineView.swift; sourceTree = "<group>"; };
+		B35432D528693C680019BCE3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		B35432DB28693D640019BCE3 /* RrisCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RrisCollectionView.swift; sourceTree = "<group>"; };
+		B3636C4D28820E00000C4F6D /* MockRestoreImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRestoreImageLoader.swift; sourceTree = "<group>"; };
+		B3636C4E28820E00000C4F6D /* UTType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTType.swift; sourceTree = "<group>"; };
+		B3636C4F28820E00000C4F6D /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		B3636C5028820E00000C4F6D /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		B3636C5128820E00000C4F6D /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		B3636C5228820E00000C4F6D /* CryptoSHA256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSHA256.swift; sourceTree = "<group>"; };
+		B3636C5328820E00000C4F6D /* RestoreImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageLoader.swift; sourceTree = "<group>"; };
+		B3636C5428820E00000C4F6D /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
+		B3636C5528820E00000C4F6D /* Rris.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rris.swift; sourceTree = "<group>"; };
+		B3636C5628820E00000C4F6D /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		B3636C5728820E00000C4F6D /* FileRestoreImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRestoreImageLoader.swift; sourceTree = "<group>"; };
+		B3636C5828820E00000C4F6D /* MissingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingError.swift; sourceTree = "<group>"; };
+		B3636C5928820E00000C4F6D /* RrisImageCollectionObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RrisImageCollectionObject.swift; sourceTree = "<group>"; };
+		B3636C5A28820E00000C4F6D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		B3636C5B28820E00000C4F6D /* ImageInstaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageInstaller.swift; sourceTree = "<group>"; };
+		B3636C5C28820E01000C4F6D /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		B3636C5D28820E01000C4F6D /* CreatableFileDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatableFileDocument.swift; sourceTree = "<group>"; };
+		B3636C5E28820E01000C4F6D /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		B3636C5F28820E01000C4F6D /* FileWrapperAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileWrapperAccessor.swift; sourceTree = "<group>"; };
+		B3636C6028820E01000C4F6D /* RestoreImageDownloadDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageDownloadDestination.swift; sourceTree = "<group>"; };
+		B3636C6128820E01000C4F6D /* OperatingSystemCodeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperatingSystemCodeName.swift; sourceTree = "<group>"; };
+		B3636C6228820E01000C4F6D /* DirectoryExists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryExists.swift; sourceTree = "<group>"; };
+		B3636C6328820E01000C4F6D /* FileAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileAccessor.swift; sourceTree = "<group>"; };
+		B3636C6428820E01000C4F6D /* ImageMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMetadata.swift; sourceTree = "<group>"; };
+		B3636C6528820E01000C4F6D /* RestoreImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageFactory.swift; sourceTree = "<group>"; };
+		B3636C6628820E01000C4F6D /* MachineRestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineRestoreImage.swift; sourceTree = "<group>"; };
+		B3636C6728820E01000C4F6D /* RestoreImageLoaderObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageLoaderObject.swift; sourceTree = "<group>"; };
+		B3636C6828820E01000C4F6D /* RrisCollectionObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RrisCollectionObject.swift; sourceTree = "<group>"; };
+		B3636C6928820E01000C4F6D /* WindowOpenHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowOpenHandle.swift; sourceTree = "<group>"; };
+		B3636C6A28820E01000C4F6D /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		B3636C6B28820E01000C4F6D /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		B3636C6C28820E01000C4F6D /* ImageContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageContainer.swift; sourceTree = "<group>"; };
+		B3636C6D28820E01000C4F6D /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
+		B3636C6E28820E01000C4F6D /* RestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImage.swift; sourceTree = "<group>"; };
+		B3636C6F28820E01000C4F6D /* VirtualizationMacOSRestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualizationMacOSRestoreImage.swift; sourceTree = "<group>"; };
+		B3636C7028820E01000C4F6D /* VZMacOSRestoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VZMacOSRestoreImage.swift; sourceTree = "<group>"; };
+		B3636C7128820E01000C4F6D /* MockInstaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockInstaller.swift; sourceTree = "<group>"; };
+		B3636C97288210F6000C4F6D /* RestoreImageLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageLibrary.swift; sourceTree = "<group>"; };
+		B3636C98288210F6000C4F6D /* RestoreImageLibraryItemFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageLibraryItemFile.swift; sourceTree = "<group>"; };
+		B3636C99288210F6000C4F6D /* RestoreImageLibraryDocumentObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreImageLibraryDocumentObject.swift; sourceTree = "<group>"; };
+		B364B19928750875006799DC /* Raleway-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		B364B19E28750875006799DC /* Raleway-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		B364B1A128750E7A006799DC /* WelcomeActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeActionButton.swift; sourceTree = "<group>"; };
+		B367B619288F6E970053463C /* VZVirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VZVirtualMachine.swift; sourceTree = "<group>"; };
+		B367B61B288F6EA10053463C /* OperatingSystemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingSystemDetails.swift; sourceTree = "<group>"; };
+		B367B61D288F6EA90053463C /* MachineInstallationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineInstallationObject.swift; sourceTree = "<group>"; };
+		B367B61F288F6F5D0053463C /* MachineSessionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSessionObject.swift; sourceTree = "<group>"; };
+		B367B621288F6F920053463C /* MachinePreparationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePreparationState.swift; sourceTree = "<group>"; };
+		B367B623288F6FAF0053463C /* InstallerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerType.swift; sourceTree = "<group>"; };
+		B367B625288F6FDE0053463C /* VZMacPlatformConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VZMacPlatformConfiguration.swift; sourceTree = "<group>"; };
+		B367B627288F70120053463C /* MachineConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineConfiguration.swift; sourceTree = "<group>"; };
+		B367B629288F70400053463C /* VirtualInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualInstaller.swift; sourceTree = "<group>"; };
+		B367B62B288F70710053463C /* VirtualMachineConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachineConfiguration.swift; sourceTree = "<group>"; };
+		B367B62D288F70AA0053463C /* VirtualMacOSInstallerPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMacOSInstallerPublisher.swift; sourceTree = "<group>"; };
+		B36ACF5B2883932E00416E90 /* MachineSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSession.swift; sourceTree = "<group>"; };
+		B3753A8C286901A700A06E0F /* RestoreImageLibraryDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageLibraryDocument.swift; sourceTree = "<group>"; };
+		B3753A8F28691D7600A06E0F /* RestoreImageLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageLibraryView.swift; sourceTree = "<group>"; };
+		B37A362C286A91AF00B06D24 /* SourceImageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceImageCollectionView.swift; sourceTree = "<group>"; };
+		B382A4792867EB94000E6408 /* OperatingSystemVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingSystemVersion.swift; sourceTree = "<group>"; };
+		B382A47F28680454000E6408 /* SHA256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
+		B395C5EF287F957F00A11AC1 /* RestoreImageLibraryItemFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageLibraryItemFileView.swift; sourceTree = "<group>"; };
 		B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bushel.entitlements; sourceTree = "<group>"; };
-		B3BB2FF7283FB62D00F3E336 /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
-		B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = macOSVirtualMachineSampleApp.xcodeproj; path = RunningMacOSInAVirtualMachineOnAppleSiliconMacs/macOSVirtualMachineSampleApp.xcodeproj; sourceTree = "<group>"; };
-		B3CED9082848062A0072CACC /* RestoreImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageView.swift; sourceTree = "<group>"; };
-		B3DCD3FB285A1C9E00A0E86E /* TbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbsView.swift; sourceTree = "<group>"; };
-		B3E21B5F2860FFB7008102A6 /* StartMachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMachineView.swift; sourceTree = "<group>"; };
-		B3E21B642860FFB7008102A6 /* VZVirtualMachineConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VZVirtualMachineConfiguration.swift; sourceTree = "<group>"; };
-		B3E21B652860FFB7008102A6 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		B3E21B662860FFB7008102A6 /* FileCreationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCreationError.swift; sourceTree = "<group>"; };
-		B3E21B732862327D008102A6 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		B3F9821228482E0C00EF5E29 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
+		B3C7DCB8288F720300C4C48B /* MachineSessionWindowHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSessionWindowHandle.swift; sourceTree = "<group>"; };
+		B3C7DCBA288F722900C4C48B /* BasicWindowOpenHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicWindowOpenHandle.swift; sourceTree = "<group>"; };
+		B3D3E98E286BD2EA0046C6F9 /* RestoreImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreImageView.swift; sourceTree = "<group>"; };
+		B3D3E990286BDCF50046C6F9 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		B3E657432885F8FA0049F4DB /* MachineSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSessionView.swift; sourceTree = "<group>"; };
+		B3E657452885F95D0049F4DB /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
+		B3EDD3022884893500383011 /* VZVirtualMachineConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VZVirtualMachineConfiguration.swift; sourceTree = "<group>"; };
+		B3EDD308288489F400383011 /* FileCreationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCreationError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B33519212860FDFC00E2E10B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B3BB2FA5283E7B3A00F3E336 /* Frameworks */ = {
+		B301F249286402160038E9F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -175,46 +184,97 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B33519252860FDFC00E2E10B /* BshAppDelegate */ = {
+		B301F24D286402160038E9F7 /* BshIll */ = {
 			isa = PBXGroup;
 			children = (
-				B3210C2F285B5D66002D7BEF /* RestoreImageItemView.swift */,
-				B39E8C63285181200049FB7F /* DesignedView.swift */,
-				B3157F552852C44800DB5077 /* MachineListView.swift */,
-				B3DCD3FB285A1C9E00A0E86E /* TbsView.swift */,
-				B3157F5B2852C4A900DB5077 /* ImageListView.swift */,
-				B3157F5D2852C51300DB5077 /* SettingsView.swift */,
-				B3210C33285B5FFD002D7BEF /* SHA256.swift */,
-				B3BB2FF7283FB62D00F3E336 /* DownloadView.swift */,
-				B3210C31285B5D71002D7BEF /* RestoreImageListView.swift */,
-				B3215C0F285BDD7E002C2EA1 /* MachineItemView.swift */,
-				B3215C15285BE199002C2EA1 /* MachineImagePickerView.swift */,
-				B32BF39B285EA977006842C7 /* BshillDocApp.swift */,
-				B32BF3AB285EA99B006842C7 /* MachineDialogView.swift */,
-				B32BF39D285EA977006842C7 /* BshillDocDocument.swift */,
-				B3E21B5F2860FFB7008102A6 /* StartMachineView.swift */,
-				B3E21B662860FFB7008102A6 /* FileCreationError.swift */,
-				B3E21B652860FFB7008102A6 /* FileManager.swift */,
-				B3E21B642860FFB7008102A6 /* VZVirtualMachineConfiguration.swift */,
-				B33519362860FE2100E2E10B /* AppDelegate.swift */,
-				B33519392860FE2B00E2E10B /* BshAppDelegate.entitlements */,
-				B3E21B732862327D008102A6 /* main.swift */,
+				B3636C5028820E00000C4F6D /* App.swift */,
+				B301F25A286402160038E9F7 /* BshIll.entitlements */,
+				B301F24E286402160038E9F7 /* BshIllApp.swift */,
+				B3636C6A28820E01000C4F6D /* Configuration.swift */,
+				B3636C5D28820E01000C4F6D /* CreatableFileDocument.swift */,
+				B3636C5228820E00000C4F6D /* CryptoSHA256.swift */,
+				B3636C6228820E01000C4F6D /* DirectoryExists.swift */,
+				B3D3E990286BDCF50046C6F9 /* Downloader.swift */,
+				B3636C6328820E01000C4F6D /* FileAccessor.swift */,
+				B3EDD308288489F400383011 /* FileCreationError.swift */,
+				B3636C5C28820E01000C4F6D /* FileManager.swift */,
+				B3636C5728820E00000C4F6D /* FileRestoreImageLoader.swift */,
+				B3636C5F28820E01000C4F6D /* FileWrapperAccessor.swift */,
+				B3636C5E28820E01000C4F6D /* Formatters.swift */,
+				B3636C6D28820E01000C4F6D /* Future.swift */,
+				B3636C5628820E00000C4F6D /* Image.swift */,
+				B3636C6C28820E01000C4F6D /* ImageContainer.swift */,
+				B3636C5B28820E00000C4F6D /* ImageInstaller.swift */,
+				B3636C6428820E01000C4F6D /* ImageMetadata.swift */,
+				B301F259286402160038E9F7 /* Info.plist */,
+				B367B623288F6FAF0053463C /* InstallerType.swift */,
+				B3636C5428820E00000C4F6D /* Machine.swift */,
+				B367B627288F70120053463C /* MachineConfiguration.swift */,
+				B301F250286402160038E9F7 /* MachineDocument.swift */,
+				B367B61D288F6EA90053463C /* MachineInstallationObject.swift */,
+				B367B621288F6F920053463C /* MachinePreparationState.swift */,
+				B3636C6628820E01000C4F6D /* MachineRestoreImage.swift */,
+				B36ACF5B2883932E00416E90 /* MachineSession.swift */,
+				B367B61F288F6F5D0053463C /* MachineSessionObject.swift */,
+				B3E657432885F8FA0049F4DB /* MachineSessionView.swift */,
+				B301F252286402160038E9F7 /* MachineSetupView.swift */,
+				B3E657452885F95D0049F4DB /* MachineView.swift */,
+				B3636C5828820E00000C4F6D /* MissingError.swift */,
+				B3636C7128820E01000C4F6D /* MockInstaller.swift */,
+				B3636C4D28820E00000C4F6D /* MockRestoreImageLoader.swift */,
+				B3636C6128820E01000C4F6D /* OperatingSystemCodeName.swift */,
+				B367B61B288F6EA10053463C /* OperatingSystemDetails.swift */,
+				B382A4792867EB94000E6408 /* OperatingSystemVersion.swift */,
+				B301F256286402160038E9F7 /* Preview Content */,
+				B364B19928750875006799DC /* Raleway-Italic-VariableFont_wght.ttf */,
+				B364B19E28750875006799DC /* Raleway-VariableFont_wght.ttf */,
+				B3636C6E28820E01000C4F6D /* RestoreImage.swift */,
+				B301F267286405140038E9F7 /* RestoreImageDocument.swift */,
+				B301F265286404BF0038E9F7 /* RestoreImageDocumentView.swift */,
+				B3636C6028820E01000C4F6D /* RestoreImageDownloadDestination.swift */,
+				B3636C6528820E01000C4F6D /* RestoreImageFactory.swift */,
+				B3636C97288210F6000C4F6D /* RestoreImageLibrary.swift */,
+				B3753A8C286901A700A06E0F /* RestoreImageLibraryDocument.swift */,
+				B3636C99288210F6000C4F6D /* RestoreImageLibraryDocumentObject.swift */,
+				B3636C98288210F6000C4F6D /* RestoreImageLibraryItemFile.swift */,
+				B395C5EF287F957F00A11AC1 /* RestoreImageLibraryItemFileView.swift */,
+				B3753A8F28691D7600A06E0F /* RestoreImageLibraryView.swift */,
+				B3636C5328820E00000C4F6D /* RestoreImageLoader.swift */,
+				B3636C6728820E01000C4F6D /* RestoreImageLoaderObject.swift */,
+				B3D3E98E286BD2EA0046C6F9 /* RestoreImageView.swift */,
+				B3636C6B28820E01000C4F6D /* Result.swift */,
+				B3636C5528820E00000C4F6D /* Rris.swift */,
+				B3636C6828820E01000C4F6D /* RrisCollectionObject.swift */,
+				B35432DB28693D640019BCE3 /* RrisCollectionView.swift */,
+				B3636C5928820E00000C4F6D /* RrisImageCollectionObject.swift */,
+				B3636C4F28820E00000C4F6D /* Scene.swift */,
+				B382A47F28680454000E6408 /* SHA256.swift */,
+				B37A362C286A91AF00B06D24 /* SourceImageCollectionView.swift */,
+				B3636C5A28820E00000C4F6D /* String.swift */,
+				B3636C5128820E00000C4F6D /* URL.swift */,
+				B3636C4E28820E00000C4F6D /* UTType.swift */,
+				B367B629288F70400053463C /* VirtualInstaller.swift */,
+				B3636C6F28820E01000C4F6D /* VirtualizationMacOSRestoreImage.swift */,
+				B367B62B288F70710053463C /* VirtualMachineConfiguration.swift */,
+				B3310821288F197000A18C90 /* VirtualMachineView.swift */,
+				B367B62D288F70AA0053463C /* VirtualMacOSInstallerPublisher.swift */,
+				B3636C7028820E01000C4F6D /* VZMacOSRestoreImage.swift */,
+				B367B625288F6FDE0053463C /* VZMacPlatformConfiguration.swift */,
+				B367B619288F6E970053463C /* VZVirtualMachine.swift */,
+				B3EDD3022884893500383011 /* VZVirtualMachineConfiguration.swift */,
+				B364B1A128750E7A006799DC /* WelcomeActionButton.swift */,
+				B3C7DCBA288F722900C4C48B /* BasicWindowOpenHandle.swift */,
+				B35432D528693C680019BCE3 /* WelcomeView.swift */,
+				B3C7DCB8288F720300C4C48B /* MachineSessionWindowHandle.swift */,
+				B3636C6928820E01000C4F6D /* WindowOpenHandle.swift */,
 			);
-			path = BshAppDelegate;
+			path = BshIll;
 			sourceTree = "<group>";
 		};
-		B3662A9E2846F89A00F8430B /* Preview Content */ = {
+		B301F256286402160038E9F7 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				B3662A9F2846F89A00F8430B /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		B38A5D12284D799400427013 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				B38A5D13284D799400427013 /* Preview Assets.xcassets */,
+				B301F257286402160038E9F7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -223,9 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				B3BB2FAF283E7B3B00F3E336 /* Assets.xcassets */,
-				B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */,
-				B3BB2FAA283E7B3A00F3E336 /* Bushel */,
-				B33519252860FDFC00E2E10B /* BshAppDelegate */,
+				B301F24D286402160038E9F7 /* BshIll */,
 				B3BB2FA9283E7B3A00F3E336 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -233,68 +291,7 @@
 		B3BB2FA9283E7B3A00F3E336 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B3BB2FA8283E7B3A00F3E336 /* Bushel.app */,
-				B33519242860FDFC00E2E10B /* BshAppDelegate.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		B3BB2FAA283E7B3A00F3E336 /* Bushel */ = {
-			isa = PBXGroup;
-			children = (
-				B3662A9B2846F89A00F8430B /* AppObject.swift */,
-				B3BB2FB4283E7B3B00F3E336 /* Bushel.entitlements */,
-				B3BB2FAB283E7B3A00F3E336 /* BushelApp.swift */,
-				B38A5D11284D799400427013 /* ClosedRange.swift */,
-				B3BB2FAD283E7B3A00F3E336 /* RestoreImageManagerView.swift */,
-				B34ABE9028443EFB00F22379 /* Downloader.swift */,
-				B38A5D0B284D799300427013 /* FileCreationError.swift */,
-				B38A5D08284D799300427013 /* FileManager.swift */,
-				B315D8352843D0310012628A /* ImageList.swift */,
-				B3662A942846EFD000F8430B /* ImagesView.swift */,
-				B3662AAF2846F95F00F8430B /* LocalImage.Virtualization.swift */,
-				B38A5D09284D799300427013 /* Machine.swift */,
-				B38A5D0E284D799300427013 /* MachineBuilder.swift */,
-				B38A5D0A284D799300427013 /* MachineBuilderRange.swift */,
-				B38A5D0F284D799300427013 /* MachineDisk.swift */,
-				B38A5D0D284D799300427013 /* MachineDisplay.swift */,
-				B38A5D0C284D799300427013 /* MachineNetwork.swift */,
-				B38A5D10284D799300427013 /* MachineSharedDirectory.swift */,
-				B3F9821228482E0C00EF5E29 /* MachineView.swift */,
-				B315106D2841127500299415 /* MainView.swift */,
-				B38A5D21284D7A1600427013 /* OperatingSystemVersion.swift */,
-				B38A5D12284D799400427013 /* Preview Content */,
-				B3662A9E2846F89A00F8430B /* Preview Content */,
-				B3BB2FB1283E7B3B00F3E336 /* Preview Content */,
-				B3662A992846F89A00F8430B /* PreviewProvider.swift */,
-				B3662AA02846F89A00F8430B /* RemoteRestoreImageFetcher.swift */,
-				B3662A982846F89A00F8430B /* RestoreImage.Combine.swift */,
-				B3662A9A2846F89A00F8430B /* RestoreImage.swift */,
-				B3662AA12846F89A00F8430B /* RestoreImage.Virtualization.swift */,
-				B3CED9082848062A0072CACC /* RestoreImageView.swift */,
-				B3662A9D2846F89A00F8430B /* SHA256.swift */,
-				B3662AA22846F89B00F8430B /* VZMacOSRestoreImage.swift */,
-				B38A5D02284D799300427013 /* VZMacPlatformConfiguration.swift */,
-				B38A5D07284D799300427013 /* VZVirtualMachineConfiguration.swift */,
-			);
-			path = Bushel;
-			sourceTree = "<group>";
-		};
-		B3BB2FB1283E7B3B00F3E336 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				B3BB2FB2283E7B3B00F3E336 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		B3CED8FA2847FE070072CACC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B3CED9012847FE070072CACC /* macOSVirtualMachineSampleApp-Swift.app */,
-				B3CED9032847FE070072CACC /* InstallationTool-Swift */,
-				B3CED9052847FE070072CACC /* macOSVirtualMachineSampleApp-Objective-C.app */,
-				B3CED9072847FE070072CACC /* InstallationTool-Objective-C */,
+				B301F24C286402160038E9F7 /* BshIll.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -302,38 +299,21 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B33519232860FDFC00E2E10B /* BshAppDelegate */ = {
+		B301F24B286402160038E9F7 /* BshIll */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B33519342860FDFD00E2E10B /* Build configuration list for PBXNativeTarget "BshAppDelegate" */;
+			buildConfigurationList = B301F261286402160038E9F7 /* Build configuration list for PBXNativeTarget "BshIll" */;
 			buildPhases = (
-				B33519202860FDFC00E2E10B /* Sources */,
-				B33519212860FDFC00E2E10B /* Frameworks */,
-				B33519222860FDFC00E2E10B /* Resources */,
+				B301F248286402160038E9F7 /* Sources */,
+				B301F249286402160038E9F7 /* Frameworks */,
+				B301F24A286402160038E9F7 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = BshAppDelegate;
-			productName = BshAppDelegate;
-			productReference = B33519242860FDFC00E2E10B /* BshAppDelegate.app */;
-			productType = "com.apple.product-type.application";
-		};
-		B3BB2FA7283E7B3A00F3E336 /* Bushel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B3BB2FB7283E7B3B00F3E336 /* Build configuration list for PBXNativeTarget "Bushel" */;
-			buildPhases = (
-				B3BB2FA4283E7B3A00F3E336 /* Sources */,
-				B3BB2FA5283E7B3A00F3E336 /* Frameworks */,
-				B3BB2FA6283E7B3A00F3E336 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Bushel;
-			productName = Bushel;
-			productReference = B3BB2FA8283E7B3A00F3E336 /* Bushel.app */;
+			name = BshIll;
+			productName = BshIll;
+			productReference = B301F24C286402160038E9F7 /* BshIll.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -343,14 +323,11 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					B33519232860FDFC00E2E10B = {
-						CreatedOnToolsVersion = 13.4.1;
-					};
-					B3BB2FA7283E7B3A00F3E336 = {
-						CreatedOnToolsVersion = 13.4;
+					B301F24B286402160038E9F7 = {
+						CreatedOnToolsVersion = 14.0;
 					};
 				};
 			};
@@ -365,187 +342,165 @@
 			mainGroup = B3BB2F9F283E7B3A00F3E336;
 			productRefGroup = B3BB2FA9283E7B3A00F3E336 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B3CED8FA2847FE070072CACC /* Products */;
-					ProjectRef = B3CED8F92847FE070072CACC /* macOSVirtualMachineSampleApp.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
-				B3BB2FA7283E7B3A00F3E336 /* Bushel */,
-				B33519232860FDFC00E2E10B /* BshAppDelegate */,
+				B301F24B286402160038E9F7 /* BshIll */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		B3CED9012847FE070072CACC /* macOSVirtualMachineSampleApp-Swift.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "macOSVirtualMachineSampleApp-Swift.app";
-			remoteRef = B3CED9002847FE070072CACC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B3CED9032847FE070072CACC /* InstallationTool-Swift */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "InstallationTool-Swift";
-			remoteRef = B3CED9022847FE070072CACC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B3CED9052847FE070072CACC /* macOSVirtualMachineSampleApp-Objective-C.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "macOSVirtualMachineSampleApp-Objective-C.app";
-			remoteRef = B3CED9042847FE070072CACC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B3CED9072847FE070072CACC /* InstallationTool-Objective-C */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "InstallationTool-Objective-C";
-			remoteRef = B3CED9062847FE070072CACC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
-		B33519222860FDFC00E2E10B /* Resources */ = {
+		B301F24A286402160038E9F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B38C30CF28629E3A00A8AC8E /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B3BB2FA6283E7B3A00F3E336 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B38A5D20284D799400427013 /* Preview Assets.xcassets in Resources */,
-				B3BB2FB3283E7B3B00F3E336 /* Preview Assets.xcassets in Resources */,
-				B3662AAB2846F89B00F8430B /* Preview Assets.xcassets in Resources */,
-				B3BB2FB0283E7B3B00F3E336 /* Assets.xcassets in Resources */,
+				B301F262286402270038E9F7 /* Assets.xcassets in Resources */,
+				B364B1A028750875006799DC /* Raleway-VariableFont_wght.ttf in Resources */,
+				B301F258286402160038E9F7 /* Preview Assets.xcassets in Resources */,
+				B364B19F28750875006799DC /* Raleway-Italic-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B33519202860FDFC00E2E10B /* Sources */ = {
+		B301F248286402160038E9F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3E21B6A2860FFB7008102A6 /* FileManager.swift in Sources */,
-				B37C70382862333700D2E235 /* RestoreImageListView.swift in Sources */,
-				B3E21B672860FFB7008102A6 /* VZVirtualMachineConfiguration.swift in Sources */,
-				B37C70372862330C00D2E235 /* BshillDocApp.swift in Sources */,
-				B37C703B2862333700D2E235 /* MachineImagePickerView.swift in Sources */,
-				B37C7042286233FD00D2E235 /* SettingsView.swift in Sources */,
-				B37C7040286233FD00D2E235 /* DesignedView.swift in Sources */,
-				B3E21B742862327D008102A6 /* main.swift in Sources */,
-				B37C7041286233FD00D2E235 /* MachineListView.swift in Sources */,
-				B3E21B692860FFB7008102A6 /* FileCreationError.swift in Sources */,
-				B37C70392862333700D2E235 /* MachineItemView.swift in Sources */,
-				B37C703F286233FD00D2E235 /* ImageListView.swift in Sources */,
-				B33519382860FE2100E2E10B /* AppDelegate.swift in Sources */,
-				B37C703D286233D700D2E235 /* DownloadView.swift in Sources */,
-				B37C703A2862333700D2E235 /* SHA256.swift in Sources */,
-				B37C7036286232FD00D2E235 /* BshillDocDocument.swift in Sources */,
-				B37C703E286233FD00D2E235 /* TbsView.swift in Sources */,
-				B37C7035286232FD00D2E235 /* MachineDialogView.swift in Sources */,
-				B37C703C2862333700D2E235 /* RestoreImageItemView.swift in Sources */,
-				B3E21B682860FFB7008102A6 /* StartMachineView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B3BB2FA4283E7B3A00F3E336 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B3662AAE2846F89B00F8430B /* VZMacOSRestoreImage.swift in Sources */,
-				B3BB2FAE283E7B3A00F3E336 /* RestoreImageManagerView.swift in Sources */,
-				B38A5D1D284D799400427013 /* MachineDisk.swift in Sources */,
-				B3662AA72846F89B00F8430B /* RestoreImage.swift in Sources */,
-				B38A5D1B284D799400427013 /* MachineDisplay.swift in Sources */,
-				B3662AA82846F89B00F8430B /* AppObject.swift in Sources */,
-				B3662AAD2846F89B00F8430B /* RestoreImage.Virtualization.swift in Sources */,
-				B3662AB02846F95F00F8430B /* LocalImage.Virtualization.swift in Sources */,
-				B38A5D1A284D799400427013 /* MachineNetwork.swift in Sources */,
-				B3662AAC2846F89B00F8430B /* RemoteRestoreImageFetcher.swift in Sources */,
-				B38A5D16284D799400427013 /* FileManager.swift in Sources */,
-				B38A5D22284D7A1600427013 /* OperatingSystemVersion.swift in Sources */,
-				B38A5D17284D799400427013 /* Machine.swift in Sources */,
-				B38A5D1E284D799400427013 /* MachineSharedDirectory.swift in Sources */,
-				B315106E2841127500299415 /* MainView.swift in Sources */,
-				B38A5D15284D799400427013 /* VZVirtualMachineConfiguration.swift in Sources */,
-				B34ABE9128443EFB00F22379 /* Downloader.swift in Sources */,
-				B3662A952846EFD000F8430B /* ImagesView.swift in Sources */,
-				B3CED9092848062A0072CACC /* RestoreImageView.swift in Sources */,
-				B38A5D19284D799400427013 /* FileCreationError.swift in Sources */,
-				B3662AA62846F89B00F8430B /* PreviewProvider.swift in Sources */,
-				B3662AA52846F89B00F8430B /* RestoreImage.Combine.swift in Sources */,
-				B3F9821328482E0C00EF5E29 /* MachineView.swift in Sources */,
-				B3662AAA2846F89B00F8430B /* SHA256.swift in Sources */,
-				B38A5D1C284D799400427013 /* MachineBuilder.swift in Sources */,
-				B3BB2FAC283E7B3A00F3E336 /* BushelApp.swift in Sources */,
-				B38A5D18284D799400427013 /* MachineBuilderRange.swift in Sources */,
-				B38A5D14284D799400427013 /* VZMacPlatformConfiguration.swift in Sources */,
-				B315D8362843D0310012628A /* ImageList.swift in Sources */,
-				B38A5D1F284D799400427013 /* ClosedRange.swift in Sources */,
+				B367B61A288F6E970053463C /* VZVirtualMachine.swift in Sources */,
+				B3636C7328820E01000C4F6D /* UTType.swift in Sources */,
+				B3636C8528820E01000C4F6D /* RestoreImageDownloadDestination.swift in Sources */,
+				B3EDD3072884893500383011 /* VZVirtualMachineConfiguration.swift in Sources */,
+				B3EDD309288489F400383011 /* FileCreationError.swift in Sources */,
+				B3753A9028691D7600A06E0F /* RestoreImageLibraryView.swift in Sources */,
+				B35432DC28693D640019BCE3 /* RrisCollectionView.swift in Sources */,
+				B3636C7E28820E01000C4F6D /* RrisImageCollectionObject.swift in Sources */,
+				B3636C9128820E01000C4F6D /* ImageContainer.swift in Sources */,
+				B3636C7C28820E01000C4F6D /* FileRestoreImageLoader.swift in Sources */,
+				B3636C7428820E01000C4F6D /* Scene.swift in Sources */,
+				B367B626288F6FDE0053463C /* VZMacPlatformConfiguration.swift in Sources */,
+				B3636C8C28820E01000C4F6D /* RestoreImageLoaderObject.swift in Sources */,
+				B382A48028680454000E6408 /* SHA256.swift in Sources */,
+				B3636C9528820E01000C4F6D /* VZMacOSRestoreImage.swift in Sources */,
+				B3636C8228820E01000C4F6D /* CreatableFileDocument.swift in Sources */,
+				B367B62A288F70400053463C /* VirtualInstaller.swift in Sources */,
+				B3636C8128820E01000C4F6D /* FileManager.swift in Sources */,
+				B3636C8928820E01000C4F6D /* ImageMetadata.swift in Sources */,
+				B3636C8A28820E01000C4F6D /* RestoreImageFactory.swift in Sources */,
+				B3636C8428820E01000C4F6D /* FileWrapperAccessor.swift in Sources */,
+				B3636C7928820E01000C4F6D /* Machine.swift in Sources */,
+				B301F251286402160038E9F7 /* MachineDocument.swift in Sources */,
+				B3310822288F197000A18C90 /* VirtualMachineView.swift in Sources */,
+				B3636C8728820E01000C4F6D /* DirectoryExists.swift in Sources */,
+				B3636C8628820E01000C4F6D /* OperatingSystemCodeName.swift in Sources */,
+				B3636C9A288210F6000C4F6D /* RestoreImageLibrary.swift in Sources */,
+				B36ACF5C2883932E00416E90 /* MachineSession.swift in Sources */,
+				B301F24F286402160038E9F7 /* BshIllApp.swift in Sources */,
+				B3636C7D28820E01000C4F6D /* MissingError.swift in Sources */,
+				B3636C8F28820E01000C4F6D /* Configuration.swift in Sources */,
+				B367B61C288F6EA10053463C /* OperatingSystemDetails.swift in Sources */,
+				B3E657442885F8FA0049F4DB /* MachineSessionView.swift in Sources */,
+				B3636C9B288210F6000C4F6D /* RestoreImageLibraryItemFile.swift in Sources */,
+				B37A362D286A91AF00B06D24 /* SourceImageCollectionView.swift in Sources */,
+				B3636C7F28820E01000C4F6D /* String.swift in Sources */,
+				B3636C8828820E01000C4F6D /* FileAccessor.swift in Sources */,
+				B367B624288F6FAF0053463C /* InstallerType.swift in Sources */,
+				B395C5F0287F957F00A11AC1 /* RestoreImageLibraryItemFileView.swift in Sources */,
+				B3636C8328820E01000C4F6D /* Formatters.swift in Sources */,
+				B301F266286404BF0038E9F7 /* RestoreImageDocumentView.swift in Sources */,
+				B3636C7228820E01000C4F6D /* MockRestoreImageLoader.swift in Sources */,
+				B3636C9628820E01000C4F6D /* MockInstaller.swift in Sources */,
+				B35432D628693C680019BCE3 /* WelcomeView.swift in Sources */,
+				B367B620288F6F5D0053463C /* MachineSessionObject.swift in Sources */,
+				B3E657462885F95D0049F4DB /* MachineView.swift in Sources */,
+				B3636C8028820E01000C4F6D /* ImageInstaller.swift in Sources */,
+				B364B1A228750E7A006799DC /* WelcomeActionButton.swift in Sources */,
+				B3636C7528820E01000C4F6D /* App.swift in Sources */,
+				B3636C8E28820E01000C4F6D /* WindowOpenHandle.swift in Sources */,
+				B3636C9328820E01000C4F6D /* RestoreImage.swift in Sources */,
+				B367B622288F6F920053463C /* MachinePreparationState.swift in Sources */,
+				B3636C7A28820E01000C4F6D /* Rris.swift in Sources */,
+				B3636C8D28820E01000C4F6D /* RrisCollectionObject.swift in Sources */,
+				B3D3E991286BDCF50046C6F9 /* Downloader.swift in Sources */,
+				B3753A8E286901A700A06E0F /* RestoreImageLibraryDocument.swift in Sources */,
+				B3636C9028820E01000C4F6D /* Result.swift in Sources */,
+				B3C7DCBB288F722900C4C48B /* BasicWindowOpenHandle.swift in Sources */,
+				B301F253286402160038E9F7 /* MachineSetupView.swift in Sources */,
+				B3636C9428820E01000C4F6D /* VirtualizationMacOSRestoreImage.swift in Sources */,
+				B367B628288F70130053463C /* MachineConfiguration.swift in Sources */,
+				B3636C7B28820E01000C4F6D /* Image.swift in Sources */,
+				B3636C7628820E01000C4F6D /* URL.swift in Sources */,
+				B367B62C288F70710053463C /* VirtualMachineConfiguration.swift in Sources */,
+				B3C7DCB9288F720300C4C48B /* MachineSessionWindowHandle.swift in Sources */,
+				B382A47E2867EB94000E6408 /* OperatingSystemVersion.swift in Sources */,
+				B3636C9228820E01000C4F6D /* Future.swift in Sources */,
+				B367B61E288F6EA90053463C /* MachineInstallationObject.swift in Sources */,
+				B367B62E288F70AA0053463C /* VirtualMacOSInstallerPublisher.swift in Sources */,
+				B3636C7728820E01000C4F6D /* CryptoSHA256.swift in Sources */,
+				B3636C8B28820E01000C4F6D /* MachineRestoreImage.swift in Sources */,
+				B3636C9C288210F6000C4F6D /* RestoreImageLibraryDocumentObject.swift in Sources */,
+				B3D3E98F286BD2EA0046C6F9 /* RestoreImageView.swift in Sources */,
+				B3636C7828820E01000C4F6D /* RestoreImageLoader.swift in Sources */,
+				B301F268286405140038E9F7 /* RestoreImageDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B335192E2860FDFD00E2E10B /* Debug */ = {
+		B301F25B286402160038E9F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BshAppDelegate/BshAppDelegate.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BshIll/BshIll.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BshIll/Preview Content\"";
 				DEVELOPMENT_TEAM = MLT7M394S7;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BshIll/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshAppDelegate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshIll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		B335192F2860FDFD00E2E10B /* Release */ = {
+		B301F25C286402160038E9F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BshAppDelegate/BshAppDelegate.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BshIll/BshIll.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BshIll/Preview Content\"";
 				DEVELOPMENT_TEAM = MLT7M394S7;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BshIll/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshAppDelegate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.BshIll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -602,7 +557,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -656,7 +611,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -665,68 +620,14 @@
 			};
 			name = Release;
 		};
-		B3BB2FB8283E7B3B00F3E336 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Bushel/Bushel.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bushel/Preview Content\"";
-				DEVELOPMENT_TEAM = MLT7M394S7;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.Bushel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		B3BB2FB9283E7B3B00F3E336 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Bushel/Bushel.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bushel/Preview Content\"";
-				DEVELOPMENT_TEAM = MLT7M394S7;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brightdigit.Bushel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B33519342860FDFD00E2E10B /* Build configuration list for PBXNativeTarget "BshAppDelegate" */ = {
+		B301F261286402160038E9F7 /* Build configuration list for PBXNativeTarget "BshIll" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B335192E2860FDFD00E2E10B /* Debug */,
-				B335192F2860FDFD00E2E10B /* Release */,
+				B301F25B286402160038E9F7 /* Debug */,
+				B301F25C286402160038E9F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -736,15 +637,6 @@
 			buildConfigurations = (
 				B3BB2FB5283E7B3B00F3E336 /* Debug */,
 				B3BB2FB6283E7B3B00F3E336 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B3BB2FB7283E7B3B00F3E336 /* Build configuration list for PBXNativeTarget "Bushel" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B3BB2FB8283E7B3B00F3E336 /* Debug */,
-				B3BB2FB9283E7B3B00F3E336 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
