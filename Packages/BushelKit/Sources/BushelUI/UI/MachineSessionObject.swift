@@ -1,7 +1,7 @@
 //
 // MachineSessionObject.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/3/22.
 //
 
 import BushelMachine
@@ -11,13 +11,7 @@ import Virtualization
 #warning("Remove `import Virtualization`")
 
 class MachineSessionObject: NSObject, ObservableObject, VZVirtualMachineDelegate {
-  @Published var session: MachineSession? {
-    didSet {
-      if let vm = session as? VZVirtualMachine {
-        vm.delegate = self
-      }
-    }
-  }
+  @Published var session: MachineSession?
 
   func virtualMachine(_: VZVirtualMachine, didStopWithError error: Error) {
     dump(error)

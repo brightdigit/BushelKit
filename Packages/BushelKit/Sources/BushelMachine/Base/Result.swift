@@ -1,7 +1,7 @@
 //
 // Result.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 extension Result {
@@ -49,5 +49,12 @@ extension Result {
     }
 
     return result
+  }
+
+  var failure: Error? {
+    guard case let .failure(error) = self else {
+      return nil
+    }
+    return error
   }
 }

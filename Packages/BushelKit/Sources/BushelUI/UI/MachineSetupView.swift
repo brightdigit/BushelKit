@@ -1,18 +1,16 @@
 //
 // MachineSetupView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import BushelMachine
 import SwiftUI
 
 struct MachineSetupView: View {
-  @State var machinePreparing: MachinePreparationState?
   @State var machineRestoreImage: MachineRestoreImage?
   @State var isReadyToSave: Bool = false
   @Binding var document: MachineDocument
-  @State var configuration: MachineConfiguration?
   let url: URL?
   let restoreImageChoices: [MachineRestoreImage]
   @StateObject var installationObject = MachineInstallationObject()
@@ -29,78 +27,53 @@ struct MachineSetupView: View {
         }.padding()
       }
       Button {
-        if !document.machine.isBuilt {
-          self.machinePreparing = .building
-        } else if document.machine.operatingSystem == nil {
-          self.machinePreparing = .installing
-        } else {}
+        Task {
+          let factory: VirtualMachineFactory
+          do {
+            factory = try await document.machine.build()
+          } catch {
+            return
+          }
+          installationObject.setupInstaller(factory)
+          factory.beginBuild()
+        }
 
       } label: {
         Text("Build Machine")
       }
 
-    }.onReceive(self.installationObject.$isCompletedWithError, perform: { completed in
-      guard let completed = completed else {
+    }.onReceive(self.installationObject.$phaseProgress, perform: { phase in
+      guard case let .completed(result) = phase?.phase else {
         return
       }
-      do {
-        try completed.get()
-      } catch {
-        dump(error)
-        self.onCompleted?(error)
-        return
-      }
-      Task {
-        await MainActor.run {
-          self.machinePreparing = .none
+      switch result {
+      case let .success(machineConfigurationURL):
+        DispatchQueue.main.async {
+          self.document.machine.installationCompletedAt(machineConfigurationURL)
         }
-      }
 
+      case let .failure(error):
+        self.onCompleted?(error)
+      }
+      self.installationObject.cancel()
     }).fileExporter(isPresented: self.$isReadyToSave, document: self.document, contentType: .virtualMachine, onCompletion: { result in
       #warning("open document with result")
       dump(result)
       self.onCompleted?(nil)
     })
     .onAppear {
-      self.machineRestoreImage = document.machine.restoreImage.map(MachineRestoreImage.init(file:))
-    }.sheet(item: self.$machinePreparing, onDismiss: {
       DispatchQueue.main.async {
-        // self.document.machine.setConfiguration(configuration)
-        self.document.osInstallationCompleted(withConfiguration: self.configuration!)
+        self.machineRestoreImage = document.machine.restoreImage.map(MachineRestoreImage.init(file:))
+      }
+    }
+    .sheet(item: self.$installationObject.phaseProgress, onDismiss: {
+      DispatchQueue.main.async {
+        // self.document.osInstallationCompleted()
         self.isReadyToSave = true
       }
 
-    }) { state in
-      VStack {
-        HStack {
-          Image(systemName: state == .building ? "play.fill" : "checkmark.circle.fill")
-          Text("Building Machine...")
-        }
-        HStack {
-          Image(systemName: state == .installing ? "play.fill" : "checkmark.circle.fill")
-          ProgressView(value: self.installationObject.progressValue) {
-            Text("Installing Operating System...")
-          }
-        }
-
-      }.task {
-        guard let installer = try? await document.machine.createInstaller() else {
-          return
-        }
-        let vInstaller: VirtualInstaller
-        do {
-          let configuration = try document.machine.build(withInstaller: installer)
-          DispatchQueue.main.async {
-            self.machinePreparing = .installing
-            self.document.setConfiguration(configuration)
-            self.configuration = configuration
-          }
-          vInstaller = try document.machine.startInstallation(with: installer, using: configuration)
-        } catch {
-          return
-        }
-        installationObject.setupInstaller(vInstaller)
-      }
+    }) { phase in
+      MachineFactoryView(phaseProgress: phase)
     }
   }
 }
