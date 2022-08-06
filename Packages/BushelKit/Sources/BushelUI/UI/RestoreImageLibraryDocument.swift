@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/3/22.
 //
 
 import SwiftUI
@@ -142,7 +142,6 @@ struct RestoreImageLibraryDocument: FileDocument {
     let data = try encoder.encode(library)
     if imageFileWrappers.count > 0 {
       let imagesDirectoryFileWrapper = configuration.existingFile?.fileWrappers?["Restore Images"] ?? FileWrapper(directoryWithFileWrappers: [:])
-      #warning("Crash here Thread 9: '*** Collection <NSConcreteHashTable: 0x6000034c7250> was mutated while being enumerated.'")
       if imagesDirectoryFileWrapper.preferredFilename == nil {
         imagesDirectoryFileWrapper.preferredFilename = "Restore Images"
       }

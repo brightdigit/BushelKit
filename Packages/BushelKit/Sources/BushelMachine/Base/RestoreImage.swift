@@ -1,7 +1,7 @@
 //
 // RestoreImage.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/3/22.
 //
 
 import Foundation
@@ -17,30 +17,30 @@ public struct RestoreImage: Identifiable, Hashable {
 
   public let id: UUID = .init()
 
-  let installer: () async throws -> ImageInstaller
   public let metadata: ImageMetadata
-  public init(metadata: ImageMetadata, installer: @escaping () async throws -> ImageInstaller) {
+  public var fileAccessor: FileAccessor?
+  public init(metadata: ImageMetadata, fileAccessor: FileAccessor?) {
     self.metadata = metadata
-    self.installer = installer
+    self.fileAccessor = fileAccessor
   }
 
   public init(imageContainer: ImageContainer) {
-    self.init(metadata: imageContainer.metadata, installer: imageContainer.installer)
+    self.init(metadata: imageContainer.metadata, fileAccessor: imageContainer.fileAccessor)
   }
 }
 
 public extension RestoreImage {
-  enum Location {
+  @available(*, deprecated)
+  enum DeprecatedLocation {
     case library
     case local
     case remote
     case reloaded
   }
 
-  var location: Location {
+  var location: DeprecatedLocation {
     let url = metadata.url
     if url.isFileURL == true {
-      #warning("fix to allow subfolders under `Restore Images`")
       let directoryURL = url.deletingLastPathComponent()
       guard directoryURL.lastPathComponent == "Restore Images" else {
         return .local

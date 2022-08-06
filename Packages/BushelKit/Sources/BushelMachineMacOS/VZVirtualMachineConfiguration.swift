@@ -1,10 +1,11 @@
 //
 // VZVirtualMachineConfiguration.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 #if arch(arm64)
+  import BushelMachine
   import Virtualization
 
   extension VZVirtualMachineConfiguration {
@@ -58,10 +59,10 @@
       keyboards = [VZUSBKeyboardConfiguration()]
     }
 
-    convenience init(restoreImage: VZMacOSRestoreImage, in machineDirectory: URL) throws {
+    convenience init(toDirectory machineDirectory: URL, basedOn machine: Machine, withRestoreImage restoreImage: VZMacOSRestoreImage) throws {
       self.init()
 
-      let platform = try VZMacPlatformConfiguration(restoreImage: restoreImage, in: machineDirectory)
+      let platform = try VZMacPlatformConfiguration(toDirectory: machineDirectory, basedOn: machine, withRestoreImage: restoreImage)
       self.platform = platform
       try defaultConfiguration(machineDirectory, createDisks: true)
     }
