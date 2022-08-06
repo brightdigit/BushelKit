@@ -1,7 +1,7 @@
 //
 // RestoreImageDocumentView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import BushelMachine
@@ -11,12 +11,24 @@ import UniformTypeIdentifiers
 struct MockImageContainer: ImageContainer {
   let metadata: BushelMachine.ImageMetadata
 
-  func installer() async throws -> BushelMachine.ImageInstaller {
-    MockInstaller()
+  var fileAccessor: FileAccessor? {
+    nil
   }
 }
 
 struct MockImageManager: ImageManager {
+  func imageContainer(vzRestoreImage _: Void, sha256 _: BushelMachine.SHA256?, fileAccessor _: BushelMachine.FileAccessor?) async throws -> BushelMachine.ImageContainer {
+    MockImageContainer(metadata: metadata)
+  }
+
+  func restoreImage(from _: BushelMachine.FileAccessor) async throws {
+    fatalError()
+  }
+
+  func buildMachine(_: BushelMachine.Machine, restoreImage _: Void) -> BushelMachine.VirtualMachineFactory {
+    fatalError()
+  }
+
   internal init(metadata: ImageMetadata) {
     self.metadata = metadata
   }

@@ -1,40 +1,43 @@
 //
 // MachineInstallationObject.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import BushelMachine
 import Foundation
 
-class MachineInstallationObject: ObservableObject {
-  @Published var installer: VirtualInstaller?
-  @Published var isCompletedWithError: Result<Void, Error>?
-  @Published var progressValue: Double = 0
-
-  init() {
-    let vInstaller = $installer.compactMap { $0 }
-
-    let combinedPublishers = vInstaller.map { installer in
-      (installer.progressPublisher(forKeyPath: \.fractionCompleted), installer.completionPublisher())
+class MachineInstallationObject: ObservableObject, VirtualMachineFactoryDelegate {
+  @Published var factory: VirtualMachineFactory? {
+    didSet {
+      DispatchQueue.main.async {
+        self.factory?.delegate = self
+        self.phaseProgress = self.factory?.state
+      }
     }
-
-    let progressPublisher = combinedPublishers.share().map(\.0).switchToLatest()
-    let completedPublisher = combinedPublishers.share().map(\.1).switchToLatest()
-
-    progressPublisher.assign(to: &$progressValue)
-    completedPublisher.map { error in
-      let result: Result<Void, Error>?
-      result = error.map(Result.failure) ?? Result.success(())
-      return result
-    }.assign(to: &$isCompletedWithError)
   }
 
-  func setupInstaller(_ installer: VirtualInstaller) {
+  @Published var phaseProgress: VirtualMachineBuildingProgress?
+
+  init() {}
+
+  func factory(_: VirtualMachineFactory, didChangeState state: VirtualMachineBuildingProgress) {
+    DispatchQueue.main.async {
+      self.phaseProgress = state
+    }
+  }
+
+  func setupInstaller(_ factory: VirtualMachineFactory) {
     Task {
       await MainActor.run {
-        self.installer = installer
+        self.factory = factory
       }
+    }
+  }
+
+  func cancel() {
+    DispatchQueue.main.async {
+      self.factory = nil
     }
   }
 }
