@@ -1,15 +1,12 @@
 //
 // VZMacPlatformConfiguration.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
+import BushelMachine
 import Combine
 import Virtualization
-
-enum VirtualizationError: Error {
-  case undefinedType(String, Any?)
-}
 
 extension VZMacPlatformConfiguration {
   convenience init(fromDirectory machineDirectory: URL) throws {
@@ -33,7 +30,7 @@ extension VZMacPlatformConfiguration {
     self.machineIdentifier = machineIdentifier
   }
 
-  convenience init(restoreImage: VZMacOSRestoreImage, in machineDirectory: URL) throws {
+  convenience init(toDirectory machineDirectory: URL, basedOn _: Machine, withRestoreImage restoreImage: VZMacOSRestoreImage) throws {
     self.init()
 
     guard let configuration = restoreImage.mostFeaturefulSupportedConfiguration else {

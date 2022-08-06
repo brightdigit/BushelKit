@@ -1,19 +1,14 @@
 //
 // MachineDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import BushelMachine
 import UniformTypeIdentifiers
 
-enum DocumentError: Error {
-  case undefinedType(String, Any?)
-}
-
 struct MachineDocument: CreatableFileDocument, Identifiable {
   var machine: Machine
-  var sourceURL: URL?
   let sessionObject: MachineSessionObject = .init()
 
   var session: MachineSession? {
@@ -24,13 +19,15 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
     machine.id
   }
 
-  init(machine: Machine = .init(), sourceURL _: URL? = nil) {
+  init(machine: Machine = .init()) {
     self.machine = machine
-    sourceURL = nil
   }
 
-  mutating func setConfiguration(_ configuration: MachineConfiguration) {
-    machine.configurationURL = configuration.currentURL
+  mutating func updateFileAccessorURL(_ url: URL) {
+    guard (try? machine.rootFileAccessor?.getURL(createIfNotExists: false) != url) != true else {
+      return
+    }
+    machine.rootFileAccessor = machine.rootFileAccessor?.updatingWithURL(url, sha256: nil) ?? URLAccessor(url: url)
   }
 
   func session(fromMachine machine: Machine) throws -> MachineSession {
@@ -43,19 +40,9 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
     return try manager.session(fromMachine: machine)
   }
 
-  mutating func beginLoadingFromURL(_ url: URL) throws {
-    machine.configurationURL = url
-    let session = try session(fromMachine: machine)
-    sessionObject.session = session
-  }
-
-  mutating func osInstallationCompleted(withConfiguration configuration: MachineConfiguration) {
-    guard let metadata = machine.restoreImage?.metadata else {
-      return
-    }
-    machine.setConfiguration(configuration)
-
-    machine.operatingSystem = .init(type: .macOS, version: metadata.operatingSystemVersion, buildVersion: metadata.buildVersion)
+  mutating func loadSession(from url: URL) throws {
+    updateFileAccessorURL(url)
+    sessionObject.session = try session(fromMachine: machine)
   }
 
   static let untitledDocumentType: UTType = .virtualMachine
@@ -69,31 +56,43 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
       throw DocumentError.undefinedType("No contents of machine.json file.", machineFileWrapper)
     }
     let decoder = JSONDecoder()
-    let machine: Machine
+    var machine: Machine
     do {
       machine = try decoder.decode(Machine.self, from: data)
     } catch {
       dump(error)
       throw DocumentError.undefinedType("Decoding error for machine.json file.", error)
     }
-    // machine.fileWrapper = configuration.file
+    machine.rootFileAccessor = FileWrapperAccessor(fileWrapper: configuration.file, url: nil, sha256: nil)
+
     self.init(machine: machine)
   }
 
   func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-    var fileWrapper: FileWrapper
-    if let configurationURL = machine.configurationURL {
-      if let existingFile = configuration.existingFile, configurationURL == sourceURL {
-        fileWrapper = existingFile
+    var rootFileWrapper: FileWrapper
+
+    let rootURL = try machine.rootFileAccessor?.getURL()
+    let machineFactoryResultURL = machine.machineFactoryResultURL
+
+    if let rootURL = rootURL {
+      if let existingFile = configuration.existingFile {
+        rootFileWrapper = existingFile
       } else {
-        fileWrapper = try FileWrapper(url: configurationURL)
+        rootFileWrapper = try FileWrapper(url: rootURL)
       }
     } else {
-      fileWrapper = FileWrapper(directoryWithFileWrappers: [:])
+      rootFileWrapper = FileWrapper(directoryWithFileWrappers: [:])
     }
-    guard fileWrapper.isDirectory else {
+    guard rootFileWrapper.isDirectory else {
       throw DocumentError.undefinedType("filewrapped is not directory.", fileWrapper)
     }
+
+    if let machineFactoryResultURL = machineFactoryResultURL {
+      let machineDataWrapper = try FileWrapper(url: machineFactoryResultURL)
+      machineDataWrapper.preferredFilename = "data"
+      rootFileWrapper.addFileWrapper(machineDataWrapper)
+    }
+
     let encoder = JSONEncoder()
     let data = try encoder.encode(machine)
     if let metdataFileWrapper = configuration.existingFile?.fileWrappers?["machine.json"] {
@@ -103,9 +102,9 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
     } else {
       let metdataFileWrapper = FileWrapper(regularFileWithContents: data)
       metdataFileWrapper.preferredFilename = "machine.json"
-      fileWrapper.addFileWrapper(metdataFileWrapper)
+      rootFileWrapper.addFileWrapper(metdataFileWrapper)
     }
 
-    return fileWrapper
+    return rootFileWrapper
   }
 }

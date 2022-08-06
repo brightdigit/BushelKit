@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryItemFile.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/2/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import Foundation
@@ -27,17 +27,6 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     hasher.combine(location)
   }
 
-  public func installer() async throws -> ImageInstaller {
-    guard let fileAccessor = fileAccessor else {
-      throw MachineError.undefinedType("Missing fileAccessor for installer", self)
-    }
-    guard let manager = AnyImageManagers.imageManager(forSystem: metadata.vmSystem) else {
-      throw MachineError.undefinedType("Missing manager for installer", self)
-    }
-    let image = try await manager.load(from: fileAccessor, using: FileRestoreImageLoader())
-    return try await image.installer()
-  }
-
   public static func == (lhs: RestoreImageLibraryItemFile, rhs: RestoreImageLibraryItemFile) -> Bool {
     lhs.id == rhs.id
   }
@@ -56,7 +45,7 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
 
   public var name: String
   public let metadata: ImageMetadata
-  let location: RestoreImage.Location
+  let location: RestoreImage.DeprecatedLocation
   public var fileAccessor: FileAccessor?
 
   enum CodingKeys: String, CodingKey {
@@ -64,7 +53,7 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     case metadata
   }
 
-  public init(name: String? = nil, metadata: ImageMetadata, location: RestoreImage.Location = .library, fileAccessor: FileAccessor? = nil) {
+  public init(name: String? = nil, metadata: ImageMetadata, location: RestoreImage.DeprecatedLocation = .library, fileAccessor: FileAccessor? = nil) {
     self.name = name ?? metadata.url.deletingPathExtension().lastPathComponent
     self.metadata = metadata
     self.location = location
@@ -72,7 +61,7 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
   }
 
   public init(restoreImage: RestoreImage) {
-    self.init(metadata: restoreImage.metadata, location: restoreImage.location)
+    self.init(metadata: restoreImage.metadata, location: restoreImage.location, fileAccessor: restoreImage.fileAccessor)
   }
 }
 
@@ -82,6 +71,6 @@ public extension RestoreImageLibraryItemFile {
       throw MachineError.undefinedType("Missing fileAccessor for machine", self)
     }
     let temporaryFileURL = try fileAccessor.getURL()
-    return RestoreImageLibraryItemFile(name: name, metadata: metadata.withURL(temporaryFileURL))
+    return RestoreImageLibraryItemFile(name: name, metadata: metadata.withURL(temporaryFileURL), fileAccessor: fileAccessor)
   }
 }
