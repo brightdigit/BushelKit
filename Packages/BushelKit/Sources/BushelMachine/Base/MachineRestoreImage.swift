@@ -13,14 +13,14 @@ public struct MachineRestoreImage: Hashable, Identifiable {
     image = RestoreImage(imageContainer: file)
   }
 
-  public init(name: String, id: String, image: RestoreImage? = nil) {
+  public init(name: String, id: UUID = .init(), image: RestoreImage? = nil) {
     self.name = name
-    self.id = id.data(using: .utf8)!
+    self.id = id
     self.image = image
   }
 
   public let name: String
-  public let id: Data
+  public let id: UUID
 
   public let image: RestoreImage?
 }

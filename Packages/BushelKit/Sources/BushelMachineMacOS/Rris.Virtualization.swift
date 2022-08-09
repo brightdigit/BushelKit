@@ -11,7 +11,7 @@ import Virtualization
 public extension Rris {
   static let apple: Rris = .init(id: "apple", title: "Apple") {
     let vzRestoreImage = try await VZMacOSRestoreImage.fetchLatestSupported()
-    let virRestoreImage = try await VirtualizationMacOSRestoreImage(vzRestoreImage: vzRestoreImage, sha256: nil, fileAccessor: nil)
+    let virRestoreImage = try await VirtualizationMacOSRestoreImage(vzRestoreImage: vzRestoreImage, fileAccessor: nil)
     return [RestoreImage(imageContainer: virRestoreImage)]
   }
 }

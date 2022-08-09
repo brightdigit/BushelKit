@@ -81,10 +81,10 @@ struct MachineSetupView: View {
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     MachineSetupView(document: .constant(MachineDocument()), url: nil, restoreImageChoices: [
-      MachineRestoreImage(name: "name", id: "name"),
+      MachineRestoreImage(name: "name"),
 
-      MachineRestoreImage(name: "test", id: "test"),
-      MachineRestoreImage(name: "hello", id: "hello")
+      MachineRestoreImage(name: "test"),
+      MachineRestoreImage(name: "hello")
     ], onCompleted: nil)
   }
 }

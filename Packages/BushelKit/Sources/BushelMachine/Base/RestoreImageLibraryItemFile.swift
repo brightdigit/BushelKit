@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryItemFile.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     if let newFileAccessor = newFileAccessor {
       fileAccessor = newFileAccessor
     } else if let oldFileAccessor = self.fileAccessor {
-      fileAccessor = oldFileAccessor.updatingWithURL(url, sha256: metadata.sha256)
+      fileAccessor = oldFileAccessor.updatingWithURL(url)
     } else {
       fileAccessor = nil
     }
@@ -39,21 +39,24 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     self.init(name: name, metadata: metadata, location: .library)
   }
 
-  public var id: Data {
-    metadata.url.dataRepresentation
+  public var fileName: String {
+    [id.uuidString, metadata.fileExtension].joined(separator: ".")
   }
 
   public var name: String
+  public let id: UUID
   public let metadata: ImageMetadata
   let location: RestoreImage.DeprecatedLocation
   public var fileAccessor: FileAccessor?
 
   enum CodingKeys: String, CodingKey {
+    case id
     case name
     case metadata
   }
 
-  public init(name: String? = nil, metadata: ImageMetadata, location: RestoreImage.DeprecatedLocation = .library, fileAccessor: FileAccessor? = nil) {
+  public init(id: UUID = .init(), name: String? = nil, metadata: ImageMetadata, location: RestoreImage.DeprecatedLocation = .library, fileAccessor: FileAccessor? = nil) {
+    self.id = id
     self.name = name ?? metadata.url.deletingPathExtension().lastPathComponent
     self.metadata = metadata
     self.location = location
