@@ -1,14 +1,37 @@
 //
 // Windows.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
+protocol BlankFileDocument {
+  static var allowedContentTypes: [UTType] { get }
+  static func saveBlankDocumentAt(_ url: URL) throws
+}
+
 public enum Windows {
+  static func showNewSavedDocumentWindow<BlankDocumentType: BlankFileDocument>(ofType type: BlankDocumentType.Type) {
+    let panel = NSSavePanel()
+    panel.allowedContentTypes = type.allowedContentTypes
+    panel.isExtensionHidden = true
+    panel.begin { response in
+      guard let fileURL = panel.url, response == .OK else {
+        return
+      }
+      do {
+        try type.saveBlankDocumentAt(fileURL)
+      } catch {
+        dump(error)
+        return
+      }
+      self.openDocumentAtURL(fileURL)
+    }
+  }
+
   static func showNewDocumentWindow(ofType type: UTType) {
     let dc = NSDocumentController.shared
     if let newDocument = try? dc.makeUntitledDocument(ofType: type.identifier) {
@@ -18,22 +41,10 @@ public enum Windows {
     }
   }
 
-  static func showNewDocumentWindow<FileDocumentType: CreatableFileDocument>(ofType type: FileDocumentType.Type) throws -> FileDocumentType {
-    let dc = NSDocumentController.shared
-    let newDocument = try dc.makeUntitledDocument(ofType: type.untitledDocumentType.identifier)
-    guard let fileDocument = newDocument as? FileDocumentType else {
-      dump(newDocument)
-      throw DocumentError.undefinedType("Unable to create document as type.", (newDocument, type))
-    }
-    dc.addDocument(newDocument)
-    newDocument.makeWindowControllers()
-    newDocument.showWindows()
-    return fileDocument
-  }
-
   static func openDocumentAtURL(_ url: URL, andDisplay display: Bool = true) {
     let dc = NSDocumentController.shared
-    dc.openDocument(withContentsOf: url, display: display) { document, alreadyDisplayed, _ in
+
+    dc.openDocument(withContentsOf: url, display: display) { document, alreadyDisplayed, error in
       if let document = document {
         guard !alreadyDisplayed else {
           return
@@ -41,6 +52,8 @@ public enum Windows {
         dc.addDocument(document)
         document.makeWindowControllers()
         document.showWindows()
+      } else {
+        dump(error)
       }
     }
   }

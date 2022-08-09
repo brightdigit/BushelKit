@@ -17,7 +17,7 @@ struct MockImageContainer: ImageContainer {
 }
 
 struct MockImageManager: ImageManager {
-  func imageContainer(vzRestoreImage _: Void, sha256 _: BushelMachine.SHA256?, fileAccessor _: BushelMachine.FileAccessor?) async throws -> BushelMachine.ImageContainer {
+  func containerFor(image _: Void, fileAccessor _: BushelMachine.FileAccessor?) async throws -> BushelMachine.ImageContainer {
     MockImageContainer(metadata: metadata)
   }
 
@@ -50,7 +50,7 @@ struct MockImageManager: ImageManager {
   let metadata: BushelMachine.ImageMetadata
   func loadFromAccessor(_: BushelMachine.FileAccessor) async throws {}
 
-  func imageContainer(vzRestoreImage _: Void, sha256 _: BushelMachine.SHA256?) async throws -> BushelMachine.ImageContainer {
+  func imageContainer(vzRestoreImage _: Void) async throws -> BushelMachine.ImageContainer {
     MockImageContainer(metadata: metadata)
   }
 
@@ -67,7 +67,7 @@ struct RestoreImageDocumentView<ImageManagerType: ImageManager>: View {
   }
 
   internal init(document: RestoreImageDocument, manager: ImageManagerType, url: URL? = nil, loader: RestoreImageLoader = FileRestoreImageLoader()) {
-    let accessor = FileWrapperAccessor(fileWrapper: document.fileWrapper, url: url, sha256: nil)
+    let accessor = FileWrapperAccessor(fileWrapper: document.fileWrapper, url: url)
     self.init(url: url, manager: manager) {
       try await loader.load(from: accessor, using: manager)
     }

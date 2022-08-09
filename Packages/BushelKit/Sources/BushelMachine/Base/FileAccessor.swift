@@ -7,10 +7,9 @@
 import Foundation
 
 public protocol FileAccessor {
-  var sha256: SHA256? { get }
   func getData() -> Data?
   func getURL(createIfNotExists: Bool) throws -> URL
-  func updatingWithURL(_ url: URL, sha256: SHA256?) -> FileAccessor
+  func updatingWithURL(_ url: URL) -> FileAccessor
 }
 
 public extension FileAccessor {

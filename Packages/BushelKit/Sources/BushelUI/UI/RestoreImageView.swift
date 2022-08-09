@@ -1,7 +1,7 @@
 //
 // RestoreImageView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import BushelMachine
@@ -10,7 +10,7 @@ import UniformTypeIdentifiers
 
 struct RestoreImageView: View {
   let byteFormatter: ByteCountFormatter = .init()
-  let image: RestoreImage
+  let image: RestoreImagable
   @StateObject var downloader = Downloader()
   @State var downloadDestination: RestoreImageDownloadDestination?
   @State var askAboutDownload = false
@@ -117,7 +117,6 @@ struct RestoreImageView: View {
 
 struct RestoreImageView_Previews: PreviewProvider {
   static var previews: some View {
-    // ImageMetadata(isImageSupported: true, buildVersion: "true", operatingSystemVersion: OperatingSystemVersion(majorVersion: 13, minorVersion: 0, patchVersion: 0, sha256: SHA256(base64Encoded: "LbNHYPVKVKpwXUmqZInQ1Nr9gaYni4IKjelvzpl72LI=")!, contentLength: 0, lastModified: 2022-07-09 21:15:44 +0000, url: file:///var/folders/5d/8rl1m9ts5r96dxdh4rp_zx100000gn/T/com.brightdigit.BshIll/B6844821-A5C8-42B5-80C2-20F815FB920E.ipsw
-    RestoreImageView(image: .Previews.usingMetadata(.Previews.venturaBeta3))
+    RestoreImageView(image: RestoreImage.Previews.usingMetadata(.Previews.venturaBeta3))
   }
 }

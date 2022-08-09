@@ -1,28 +1,55 @@
 //
 // RestoreImageLibraryDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/9/22.
 //
 
+import BushelMachine
 import SwiftUI
 import UniformTypeIdentifiers
 
-import BushelMachine
+struct RestoreImageLibraryDocument: FileDocument, BlankFileDocument {
+  static let allowedContentTypes: [UTType] = [.restoreImageLibrary]
 
-struct RestoreImageLibraryDocument: FileDocument {
+  static func saveBlankDocumentAt(_ url: URL) throws {
+    let library = RestoreImageLibrary()
+    let encoder = JSONEncoder()
+    let data = try encoder.encode(library)
+    let restoreLibrariesDir = url.appendingPathComponent("Restore Images")
+    let metadataFileURL = url.appendingPathComponent("metadata.json")
+    try FileManager.default.createDirectory(at: restoreLibrariesDir, withIntermediateDirectories: true)
+    FileManager.default.createFile(atPath: metadataFileURL.path, contents: data)
+  }
+
   let sourceFileWrapper: FileWrapper?
 
   var library: RestoreImageLibrary
+  var sourceURL: URL?
 
   init(library: RestoreImageLibrary = .init(), sourceFileWrapper: FileWrapper? = nil) {
     self.library = library
     self.sourceFileWrapper = sourceFileWrapper
   }
 
-  mutating func updateBaseURL(_ url: URL?) {
-    guard let url = url else {
-      return
+  mutating func importFile(_ file: RestoreImageLibraryItemFile) {
+    if let sourceURL = sourceURL {
+      if let sourceFileURL = try? file.fileAccessor?.getURL() {
+        let restoreImageDirURL = sourceURL.appendingPathComponent("Restore Images")
+        let destinationFileURL = restoreImageDirURL.appendingPathComponent(file.fileName)
+        do {
+          try FileManager.default.createDirectory(at: restoreImageDirURL, withIntermediateDirectories: true)
+          try FileManager.default.copyItem(at: sourceFileURL, to: destinationFileURL)
+        } catch {
+          dump(error)
+          return
+        }
+      }
     }
+    library.items.append(file)
+  }
+
+  mutating func updateBaseURL(_ url: URL) {
+    sourceURL = url
     guard let fileWrapper = sourceFileWrapper else {
       return
     }
@@ -38,24 +65,25 @@ struct RestoreImageLibraryDocument: FileDocument {
     guard let imageWrappers = imageDirectoryWrapper.fileWrappers, imageDirectoryWrapper.isDirectory else {
       return
     }
-    let libraryItemSHAsMaps = library.items.map {
-      ($0.metadata.url.lastPathComponent, $0.metadata.sha256)
-    }
-    let libraryItemShas: [String: SHA256] = Dictionary(grouping: libraryItemSHAsMaps) { element in
-      element.0
-    }.compactMapValues { items in
-      guard items.count == 1 else {
-        return nil
-      }
-      return items.first?.1
-    }
+//    let libraryItemSHAsMaps = library.items.map {
+//      ($0.metadata.url.lastPathComponent, $0.metadata.sha256)
+//    }
+//    let libraryItemShas: [String: SHA256] = Dictionary(grouping: libraryItemSHAsMaps) { element in
+//      element.0
+//    }.compactMapValues { items in
+//      guard items.count == 1 else {
+//        return nil
+//      }
+//      return items.first?.1
+//    }
 
     let restoreImages = library.items.map { file in
-      let fileWrapper = imageWrappers[file.metadata.url.lastPathComponent]
-      let fileName = fileWrapper?.filename ?? file.metadata.url.lastPathComponent
+
+      let fileWrapper = imageWrappers[file.fileName]
+      let fileName = fileWrapper?.filename ?? file.fileName
       let url = url.appendingPathComponent("Restore Images").appendingPathComponent(fileName)
       let fileWrapperAccessor = fileWrapper.map {
-        FileWrapperAccessor(fileWrapper: $0, url: url, sha256: file.metadata.sha256)
+        FileWrapperAccessor(fileWrapper: $0, url: url)
       }
       return file.updatingWithURL(url, andFileAccessor: fileWrapperAccessor)
     }
@@ -83,7 +111,7 @@ struct RestoreImageLibraryDocument: FileDocument {
     let restoreImages = await withTaskGroup(of: RestoreImage?.self) { group in
       for (name, imageWrapper) in imageWrappers {
         let fileName = imageWrapper.filename ?? name
-        let accessor = FileWrapperAccessor(fileWrapper: imageWrapper, url: url?.appendingPathComponent("Restore Images").appendingPathComponent(fileName), sha256: nil)
+        let accessor = FileWrapperAccessor(fileWrapper: imageWrapper, url: url?.appendingPathComponent("Restore Images").appendingPathComponent(fileName))
         let imageManagers = AnyImageManagers.all
         group.addTask {
           for manager in imageManagers {
@@ -119,8 +147,8 @@ struct RestoreImageLibraryDocument: FileDocument {
     }
 
     for (index, item) in library.items.enumerated() {
-      if let fileWrapper = configuration.file.fileWrappers?["Restore Images"]?.fileWrappers?[item.metadata.url.lastPathComponent] {
-        library.items[index].fileAccessor = FileWrapperAccessor(fileWrapper: fileWrapper, url: nil, sha256: nil)
+      if let fileWrapper = configuration.file.fileWrappers?["Restore Images"]?.fileWrappers?[item.id.uuidString] {
+        library.items[index].fileAccessor = FileWrapperAccessor(fileWrapper: fileWrapper, url: nil)
       }
     }
     self.init(library: library, sourceFileWrapper: configuration.file)
@@ -130,12 +158,20 @@ struct RestoreImageLibraryDocument: FileDocument {
     let fileWrapper: FileWrapper = configuration.existingFile ?? .init(directoryWithFileWrappers: [String: FileWrapper]())
 
     let existingImageDirectoryFileWrapper = configuration.existingFile?.fileWrappers?["Restore Images"]?.fileWrappers
-    let sourceImageDirectoryFileWrapper = sourceFileWrapper?.fileWrappers?["Restore Images"]?.fileWrappers
+    // let sourceImageDirectoryFileWrapper = sourceFileWrapper?.fileWrappers?["Restore Images"]?.fileWrappers
     let imageFileWrappers = try library.items.compactMap { file -> FileWrapper? in
-      if let fileWrapper = existingImageDirectoryFileWrapper?[file.metadata.url.lastPathComponent] {
+      if let fileWrapper = existingImageDirectoryFileWrapper?[file.fileName] {
+        return fileWrapper
+      } else if let sourceFileURL = try? file.fileAccessor?.getURL() {
+        if let expectedDestinationURL = self.sourceURL?.appendingPathComponent("Restore Images").appendingPathComponent(file.fileName) {
+          if FileManager.default.fileExists(atPath: expectedDestinationURL.path) {
+            return nil
+          }
+        }
+        return try FileWrapper(url: sourceFileURL)
+      } else {
         return nil
       }
-      return try FileWrapper(url: file.metadata.url)
     }
 
     let encoder = JSONEncoder()

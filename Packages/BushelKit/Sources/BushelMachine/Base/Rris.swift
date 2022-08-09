@@ -1,7 +1,7 @@
 //
 // Rris.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/7/22.
 //
 
 public struct Rris: Identifiable, Hashable {
@@ -17,7 +17,6 @@ public struct Rris: Identifiable, Hashable {
 
   public let id: String
   public let title: String
-  @available(*, deprecated)
   public let fetch: () async throws -> [RestoreImage]
 
   public func hash(into hasher: inout Hasher) {

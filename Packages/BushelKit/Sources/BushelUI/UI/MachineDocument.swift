@@ -1,13 +1,14 @@
 //
 // MachineDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import BushelMachine
+import SwiftUI
 import UniformTypeIdentifiers
 
-struct MachineDocument: CreatableFileDocument, Identifiable {
+struct MachineDocument: FileDocument, Identifiable {
   var machine: Machine
   let sessionObject: MachineSessionObject = .init()
 
@@ -27,7 +28,7 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
     guard (try? machine.rootFileAccessor?.getURL(createIfNotExists: false) != url) != true else {
       return
     }
-    machine.rootFileAccessor = machine.rootFileAccessor?.updatingWithURL(url, sha256: nil) ?? URLAccessor(url: url)
+    machine.rootFileAccessor = machine.rootFileAccessor?.updatingWithURL(url) ?? URLAccessor(url: url)
   }
 
   func session(fromMachine machine: Machine) throws -> MachineSession {
@@ -45,7 +46,6 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
     sessionObject.session = try session(fromMachine: machine)
   }
 
-  static let untitledDocumentType: UTType = .virtualMachine
   static let readableContentTypes: [UTType] = [.virtualMachine]
 
   init(configuration: ReadConfiguration) throws {
@@ -63,7 +63,7 @@ struct MachineDocument: CreatableFileDocument, Identifiable {
       dump(error)
       throw DocumentError.undefinedType("Decoding error for machine.json file.", error)
     }
-    machine.rootFileAccessor = FileWrapperAccessor(fileWrapper: configuration.file, url: nil, sha256: nil)
+    machine.rootFileAccessor = FileWrapperAccessor(fileWrapper: configuration.file, url: nil)
 
     self.init(machine: machine)
   }

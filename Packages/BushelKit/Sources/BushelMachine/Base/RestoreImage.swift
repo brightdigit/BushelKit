@@ -1,12 +1,12 @@
 //
 // RestoreImage.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import Foundation
 
-public struct RestoreImage: Identifiable, Hashable {
+public struct RestoreImage: Identifiable, Hashable, RestoreImagable {
   public static func == (lhs: RestoreImage, rhs: RestoreImage) -> Bool {
     lhs.id == rhs.id
   }
@@ -38,6 +38,7 @@ public extension RestoreImage {
     case reloaded
   }
 
+  @available(*, deprecated)
   var location: DeprecatedLocation {
     let url = metadata.url
     if url.isFileURL == true {
