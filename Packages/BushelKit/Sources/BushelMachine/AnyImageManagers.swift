@@ -1,7 +1,7 @@
 //
 // AnyImageManagers.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/8/22.
 //
 
 //
@@ -19,7 +19,7 @@ public enum AnyImageManagers {
 
     public static func imageManager(forContentType contentType: UTType) -> AnyImageManager? {
       contentTypeMap[contentType].flatMap { index in
-        guard index < all.count, index > 0 else {
+        guard index < all.count, index >= 0 else {
           return nil
         }
         return all[index]

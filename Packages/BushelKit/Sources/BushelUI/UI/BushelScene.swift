@@ -1,7 +1,7 @@
 //
 // BushelScene.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import BushelMachine
@@ -21,7 +21,7 @@ public struct BushelScene: Scene {
     WindowGroup {
       WelcomeView()
     }.windowsHandle(.welcome).windowStyle(.hiddenTitleBar)
-    DocumentGroup(newDocument: RestoreImageLibraryDocument()) { file in
+    DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
       RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
     }
     DocumentGroup(newDocument: MachineDocument()) { file in
@@ -33,7 +33,7 @@ public struct BushelScene: Scene {
             Windows.showNewDocumentWindow(ofType: .virtualMachine)
           }
           Button("New Image Library") {
-            Windows.showNewDocumentWindow(ofType: .restoreImageLibrary)
+            Windows.showNewSavedDocumentWindow(ofType: RestoreImageLibraryDocument.self)
           }
         }
         Menu("Open Recent") {

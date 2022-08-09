@@ -1,7 +1,7 @@
 //
 // VZMacOSRestoreImage.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import BushelMachine
@@ -20,9 +20,7 @@ extension VZMacOSRestoreImage {
       return mostFeaturefulSupportedConfiguration?.hardwareModel.isSupported == true
     #endif
   }
-}
 
-extension VZMacOSRestoreImage {
   func headers(withSession session: URLSession = .shared) async throws -> [AnyHashable: Any] {
     var request = URLRequest(url: url)
     request.httpMethod = "HEAD"
@@ -34,9 +32,7 @@ extension VZMacOSRestoreImage {
 
     return response.allHeaderFields
   }
-}
 
-public extension VZMacOSRestoreImage {
   static func fetchLatestSupported() async throws -> VZMacOSRestoreImage {
     try await withCheckedThrowingContinuation { continuation in
       self.fetchLatestSupported { result in

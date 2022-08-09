@@ -1,13 +1,11 @@
 //
 // MachineSessionView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/7/22.
 //
 
 import BushelMachine
 import SwiftUI
-import Virtualization
-#warning("Remove `import Virtualization`")
 
 struct MachineSessionView: View {
   let url: URL
@@ -45,18 +43,10 @@ struct MachineSessionView: View {
         }
       }
     }.sheet(isPresented: $isSessionDisplayVisible) {
-      if let vm = document.session as? VZVirtualMachine {
-        VirtualMachineView(virtualMachine: vm)
-      }
+      document.session?.view
     }
     .onAppear {
       try? self.document.loadSession(from: url)
     }
   }
 }
-
-// struct MachineSessionView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MachineSessionView()
-//    }
-// }
