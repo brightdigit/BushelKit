@@ -24,9 +24,9 @@ struct FileWrapperAccessor: FileAccessor {
     return tempFileURL
   }
 
-  func updatingWithURL(_ url: URL, sha256: SHA256?) -> FileAccessor {
+  func updatingWithURL(_ url: URL) -> FileAccessor {
     if self.url != url {
-      return FileWrapperAccessor(fileWrapper: fileWrapper, url: url, sha256: sha256 ?? self.sha256)
+      return FileWrapperAccessor(fileWrapper: fileWrapper, url: url)
     } else {
       return self
     }
@@ -34,5 +34,4 @@ struct FileWrapperAccessor: FileAccessor {
 
   let fileWrapper: FileWrapper
   let url: URL?
-  let sha256: SHA256?
 }

@@ -1,7 +1,7 @@
 //
 // WelcomeView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import SwiftUI
@@ -33,7 +33,7 @@ struct WelcomeView: View {
           // WelcomeActionButton().padding()
 
           WelcomeActionButton(imageSystemName: "server.rack", title: "Start an Image Library", description: "Create a library for your Restore Images.") {
-            Windows.showNewDocumentWindow(ofType: .restoreImageLibrary)
+            Windows.showNewSavedDocumentWindow(ofType: RestoreImageLibraryDocument.self)
           }
 
           WelcomeActionButton(imageSystemName: "square.and.arrow.down.on.square", title: "Download a Restore Image", description: "Download a new version of macOS.") {

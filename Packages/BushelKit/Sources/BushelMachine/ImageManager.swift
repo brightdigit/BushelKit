@@ -24,7 +24,7 @@ public extension ImageManager {
 public protocol ImageManager: AnyImageManager {
   associatedtype ImageType
   func loadFromAccessor(_ accessor: FileAccessor) async throws -> ImageType
-  func imageContainer(vzRestoreImage: ImageType, sha256: SHA256?, fileAccessor: FileAccessor?) async throws -> ImageContainer
+  func containerFor(image: ImageType, fileAccessor: FileAccessor?) async throws -> ImageContainer
   func buildMachine(_ machine: Machine, restoreImage: ImageType) throws -> VirtualMachineFactory
   func restoreImage(from fileAccessor: FileAccessor) async throws -> ImageType
 }

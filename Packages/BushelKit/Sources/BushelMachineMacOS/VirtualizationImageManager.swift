@@ -1,7 +1,7 @@
 //
 // VirtualizationImageManager.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/7/22.
 //
 
 import BushelMachine
@@ -28,8 +28,8 @@ public struct VirtualizationImageManager: ImageManager {
     try await VZMacOSRestoreImage.loadFromURL(accessor.getURL())
   }
 
-  public func imageContainer(vzRestoreImage: VZMacOSRestoreImage, sha256: SHA256?, fileAccessor: FileAccessor?) async throws -> ImageContainer {
-    try await VirtualizationMacOSRestoreImage(vzRestoreImage: vzRestoreImage, sha256: sha256, fileAccessor: fileAccessor)
+  public func containerFor(image: VZMacOSRestoreImage, fileAccessor: FileAccessor?) async throws -> ImageContainer {
+    try await VirtualizationMacOSRestoreImage(vzRestoreImage: image, fileAccessor: fileAccessor)
   }
 
   public func session(fromMachine machine: Machine) throws -> MachineSession {
@@ -37,9 +37,7 @@ public struct VirtualizationImageManager: ImageManager {
       throw VirtualizationError.undefinedType("Missing configurationURL for session", self)
     }
 
-    let configuration = try VZVirtualMachineConfiguration(contentsOfDirectory: configurationURL)
-    try configuration.validate()
-    return VZVirtualMachine(configuration: configuration)
+    return try VirtualizationSession(fromConfigurationURL: configurationURL)
   }
 
   public func buildMachine(_ machine: Machine, restoreImage: VZMacOSRestoreImage) -> VirtualMachineFactory {

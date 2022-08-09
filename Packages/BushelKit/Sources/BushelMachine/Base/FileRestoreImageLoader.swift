@@ -1,33 +1,18 @@
 //
 // FileRestoreImageLoader.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/9/22.
 //
 
 import Foundation
 
 public class FileRestoreImageLoader: RestoreImageLoader {
   public func load<ImageManagerType>(from file: FileAccessor, using manager: ImageManagerType) async throws -> RestoreImage where ImageManagerType: ImageManager {
-    try await Task {
-      let sha256: Result<SHA256, Error>
-      if let filesha256 = file.sha256 {
-        sha256 = .success(filesha256)
-      } else {
-        async let asha256 = await Task {
-          try Result { file.getData() }.unwrap(error: MachineError.undefinedType("missing data from file.", file)).map(CryptoSHA256.hash).map { Data($0) }.map(SHA256.init(digest:)).get()
-        }.result
-        sha256 = await asha256
-      }
-      async let vzMacOSRestoreImage = Result { try await manager.loadFromAccessor(file) }
+    let vzMacOSRestoreImage = try await manager.loadFromAccessor(file)
 
-      let resultTuple: Result<(ImageManagerType.ImageType, SHA256), Error> = await vzMacOSRestoreImage.tupleWith(sha256)
+    let imageContainer = try await manager.containerFor(image: vzMacOSRestoreImage, fileAccessor: file)
 
-      let virtualImageResultArgs = resultTuple.map { image, sha in
-        (image, sha, file)
-      }
-      let virtualImageResult = await virtualImageResultArgs.flatMap(manager.imageContainer)
-      return try virtualImageResult.map(RestoreImage.init(imageContainer:)).get()
-    }.value
+    return RestoreImage(imageContainer: imageContainer)
   }
 
   public init() {}

@@ -8,13 +8,11 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 public struct URLAccessor: FileAccessor {
-  public init(url: URL, sha256: SHA256? = nil) {
+  public init(url: URL) {
     self.url = url
-    self.sha256 = sha256
   }
 
   let url: URL
-  public let sha256: BushelMachine.SHA256?
 
   public func getData() -> Data? {
     nil
@@ -24,7 +22,7 @@ public struct URLAccessor: FileAccessor {
     url
   }
 
-  public func updatingWithURL(_ url: URL, sha256: SHA256?) -> BushelMachine.FileAccessor {
-    URLAccessor(url: url, sha256: sha256)
+  public func updatingWithURL(_ url: URL) -> BushelMachine.FileAccessor {
+    URLAccessor(url: url)
   }
 }
