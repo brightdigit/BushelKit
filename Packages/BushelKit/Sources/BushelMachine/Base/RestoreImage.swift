@@ -1,7 +1,7 @@
 //
 // RestoreImage.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/9/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import Foundation
@@ -18,40 +18,13 @@ public struct RestoreImage: Identifiable, Hashable, RestoreImagable {
   public let id: UUID = .init()
 
   public let metadata: ImageMetadata
-  public var fileAccessor: FileAccessor?
-  public init(metadata: ImageMetadata, fileAccessor: FileAccessor?) {
+  public var location: ImageLocation
+  public init(metadata: ImageMetadata, location: ImageLocation) {
     self.metadata = metadata
-    self.fileAccessor = fileAccessor
+    self.location = location
   }
 
   public init(imageContainer: ImageContainer) {
-    self.init(metadata: imageContainer.metadata, fileAccessor: imageContainer.fileAccessor)
-  }
-}
-
-public extension RestoreImage {
-  @available(*, deprecated)
-  enum DeprecatedLocation {
-    case library
-    case local
-    case remote
-    case reloaded
-  }
-
-  @available(*, deprecated)
-  var location: DeprecatedLocation {
-    let url = metadata.url
-    if url.isFileURL == true {
-      let directoryURL = url.deletingLastPathComponent()
-      guard directoryURL.lastPathComponent == "Restore Images" else {
-        return .local
-      }
-      guard directoryURL.deletingLastPathComponent().pathExtension == "bshrilib" else {
-        return .local
-      }
-      return .library
-    } else {
-      return .remote
-    }
+    self.init(metadata: imageContainer.metadata, location: imageContainer.location)
   }
 }

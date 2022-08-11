@@ -1,7 +1,7 @@
 //
 // VirtualMacOSMachineFactory.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -18,7 +18,7 @@ class VirtualMacOSMachineFactory: VirtualMachineFactory {
     }
   }
 
-  var delegate: VirtualMachineFactoryDelegate?
+  weak var delegate: VirtualMachineFactoryDelegate?
   var progressObserver: NSKeyValueObservation?
 
   init(machine: Machine, restoreImage: VZMacOSRestoreImage) {

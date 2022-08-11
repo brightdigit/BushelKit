@@ -1,7 +1,7 @@
 //
 // ImageManager.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import Foundation
@@ -12,8 +12,8 @@ public extension ImageManager {
   }
 
   func buildMachine(_ machine: Machine, restoreImage: RestoreImage) async throws -> VirtualMachineFactory {
-    guard let fileAccessor = restoreImage.fileAccessor else {
-      throw MachineError.undefinedType("missing fileaccessor", restoreImage)
+    guard case let .file(fileAccessor) = restoreImage.location else {
+      throw MachineError.undefinedType("remote restore Image", restoreImage.location)
     }
 
     let image = try await self.restoreImage(from: fileAccessor)
