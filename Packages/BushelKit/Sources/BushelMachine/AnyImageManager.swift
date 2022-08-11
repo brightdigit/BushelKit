@@ -15,6 +15,7 @@ public protocol AnyImageManager {
   func load(from accessor: FileAccessor, using loader: RestoreImageLoader) async throws -> RestoreImage
   func session(fromMachine machine: Machine) throws -> MachineSession
   func buildMachine(_ machine: Machine, restoreImage: RestoreImage) async throws -> VirtualMachineFactory
+  func defaultName(for metadata: ImageMetadata) -> String
   static var systemID: VMSystemID { get }
   #if canImport(UniformTypeIdentifiers)
     static var restoreImageContentTypes: [UTType] { get }

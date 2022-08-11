@@ -1,7 +1,7 @@
 //
 // RestoreImageDownloadDestination.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import Foundation
@@ -12,6 +12,7 @@ public enum RestoreImageDownloadDestination {
 }
 
 public extension RestoreImageDownloadDestination {
+  @available(*, deprecated)
   func destinationURL(fromSavePanelURL url: URL) throws -> URL {
     guard self == .library else {
       return url

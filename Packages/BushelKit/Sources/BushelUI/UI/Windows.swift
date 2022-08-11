@@ -1,7 +1,7 @@
 //
 // Windows.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/9/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import AppKit
@@ -42,16 +42,21 @@ public enum Windows {
   }
 
   static func openDocumentAtURL(_ url: URL, andDisplay display: Bool = true) {
+    print("start:", url)
     let dc = NSDocumentController.shared
 
     dc.openDocument(withContentsOf: url, display: display) { document, alreadyDisplayed, error in
+      print("document:", url)
       if let document = document {
+        print("isdocument:", url)
         guard !alreadyDisplayed else {
           return
         }
+        print("adddocument:", url)
         dc.addDocument(document)
         document.makeWindowControllers()
-        document.showWindows()
+        // document.showWindows()
+        print("windows:", url)
       } else {
         dump(error)
       }

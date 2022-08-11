@@ -1,30 +1,28 @@
 //
 // RestoreImageLibraryItemFile.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/9/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import Foundation
 
 public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, ImageContainer {
   public func updatingWithURL(_ url: URL, andFileAccessor newFileAccessor: FileAccessor?) -> RestoreImageLibraryItemFile {
-    let fileAccessor: FileAccessor?
+    let fileAccessor: FileAccessor
 
     if let newFileAccessor = newFileAccessor {
       fileAccessor = newFileAccessor
-    } else if let oldFileAccessor = self.fileAccessor {
-      fileAccessor = oldFileAccessor.updatingWithURL(url)
     } else {
-      fileAccessor = nil
+      fileAccessor = self.fileAccessor.updatingWithURL(url)
     }
 
-    return RestoreImageLibraryItemFile(name: name, metadata: metadata.withURL(url), location: .library, fileAccessor: fileAccessor)
+    return RestoreImageLibraryItemFile(id: id, name: name, metadata: metadata, fileAccessor: fileAccessor)
   }
 
   public func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
     hasher.combine(name)
     hasher.combine(metadata)
-    hasher.combine(location)
   }
 
   public static func == (lhs: RestoreImageLibraryItemFile, rhs: RestoreImageLibraryItemFile) -> Bool {
@@ -33,10 +31,11 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
 
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: Self.CodingKeys)
+    let id = try container.decode(UUID.self, forKey: .id)
     let name = try container.decode(String.self, forKey: .name)
     let metadata = try container.decode(ImageMetadata.self, forKey: .metadata)
 
-    self.init(name: name, metadata: metadata, location: .library)
+    self.init(id: id, name: name, metadata: metadata)
   }
 
   public var fileName: String {
@@ -46,8 +45,11 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
   public var name: String
   public let id: UUID
   public let metadata: ImageMetadata
-  let location: RestoreImage.DeprecatedLocation
-  public var fileAccessor: FileAccessor?
+  public var fileAccessor: FileAccessor!
+
+  public var location: ImageLocation {
+    .file(fileAccessor)
+  }
 
   enum CodingKeys: String, CodingKey {
     case id
@@ -55,25 +57,24 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     case metadata
   }
 
-  public init(id: UUID = .init(), name: String? = nil, metadata: ImageMetadata, location: RestoreImage.DeprecatedLocation = .library, fileAccessor: FileAccessor? = nil) {
+  private init(id: UUID, name: String? = nil, metadata: ImageMetadata) {
     self.id = id
-    self.name = name ?? metadata.url.deletingPathExtension().lastPathComponent
+    self.name = name ?? metadata.defaultName
     self.metadata = metadata
-    self.location = location
+    fileAccessor = nil
+  }
+
+  public init(id: UUID, name: String? = nil, metadata: ImageMetadata, fileAccessor: FileAccessor) {
+    self.id = id
+    self.name = name ?? metadata.defaultName
+    self.metadata = metadata
     self.fileAccessor = fileAccessor
   }
 
-  public init(restoreImage: RestoreImage) {
-    self.init(metadata: restoreImage.metadata, location: restoreImage.location, fileAccessor: restoreImage.fileAccessor)
-  }
-}
-
-public extension RestoreImageLibraryItemFile {
-  func forMachine() throws -> RestoreImageLibraryItemFile {
-    guard let fileAccessor = fileAccessor else {
-      throw MachineError.undefinedType("Missing fileAccessor for machine", self)
+  public init?(loadFromImage restoreImage: RestoreImage) {
+    guard case let .file(accessor) = restoreImage.location else {
+      return nil
     }
-    let temporaryFileURL = try fileAccessor.getURL()
-    return RestoreImageLibraryItemFile(name: name, metadata: metadata.withURL(temporaryFileURL), fileAccessor: fileAccessor)
+    self.init(id: .init(), metadata: restoreImage.metadata, fileAccessor: accessor)
   }
 }

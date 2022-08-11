@@ -1,18 +1,18 @@
 //
 // ImageMetadata.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/9/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import Foundation
 public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
-  public init(isImageSupported: Bool, buildVersion: String, operatingSystemVersion: OperatingSystemVersion, contentLength: Int, lastModified: Date, url: URL, vmSystem: VMSystemID) {
+  public init(isImageSupported: Bool, buildVersion: String, operatingSystemVersion: OperatingSystemVersion, contentLength: Int, lastModified: Date, fileExtension: String, vmSystem: VMSystemID) {
     self.isImageSupported = isImageSupported
     self.buildVersion = buildVersion
     self.operatingSystemVersion = operatingSystemVersion
     self.contentLength = contentLength
     self.lastModified = lastModified
-    self.url = url
+    self.fileExtension = fileExtension
     self.vmSystem = vmSystem
   }
 
@@ -22,19 +22,17 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
   public let contentLength: Int
   public let lastModified: Date
   @available(*, deprecated)
-  public let url: URL
+  public let url: URL? = nil
   public let vmSystem: VMSystemID
-  public var fileExtension: String {
-    url.pathExtension
-  }
+  public let fileExtension: String
 
   public var debugDescription: String {
-    "\(Self.self)(isImageSupported: \(isImageSupported), buildVersion: \"\(buildVersion)\", operatingSystemVersion: \(operatingSystemVersion.debugDescription), contentLength: \(contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(lastModified.timeIntervalSinceReferenceDate)), url: \(url.debugDescription)"
+    "\(Self.self)(isImageSupported: \(isImageSupported), buildVersion: \"\(buildVersion)\", operatingSystemVersion: \(operatingSystemVersion.debugDescription), contentLength: \(contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(lastModified.timeIntervalSinceReferenceDate))"
   }
 }
 
-extension ImageMetadata {
-  func withURL(_ url: URL) -> ImageMetadata {
-    ImageMetadata(isImageSupported: isImageSupported, buildVersion: buildVersion, operatingSystemVersion: operatingSystemVersion, contentLength: contentLength, lastModified: lastModified, url: url, vmSystem: vmSystem)
+public extension ImageMetadata {
+  var defaultName: String {
+    AnyImageManagers.imageManager(forSystem: vmSystem)!.defaultName(for: self)
   }
 }

@@ -1,24 +1,20 @@
 //
 // RestoreImageDocumentView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct MockImageContainer: ImageContainer {
-  let metadata: BushelMachine.ImageMetadata
-
-  var fileAccessor: FileAccessor? {
-    nil
-  }
-}
-
 struct MockImageManager: ImageManager {
-  func containerFor(image _: Void, fileAccessor _: BushelMachine.FileAccessor?) async throws -> BushelMachine.ImageContainer {
-    MockImageContainer(metadata: metadata)
+  func defaultName(for _: BushelMachine.ImageMetadata) -> String {
+    "Windows Vista"
+  }
+
+  func containerFor(image _: Void, fileAccessor: BushelMachine.FileAccessor?) async throws -> BushelMachine.ImageContainer {
+    MockImageContainer(location: fileAccessor.map(ImageLocation.file) ?? .remote(.init(forHandle: BasicWindowOpenHandle.machine)), metadata: metadata)
   }
 
   func restoreImage(from _: BushelMachine.FileAccessor) async throws {
@@ -51,7 +47,7 @@ struct MockImageManager: ImageManager {
   func loadFromAccessor(_: BushelMachine.FileAccessor) async throws {}
 
   func imageContainer(vzRestoreImage _: Void) async throws -> BushelMachine.ImageContainer {
-    MockImageContainer(metadata: metadata)
+    MockImageContainer(location: .file(URLAccessor(url: URL(string: "file:///var/folders/5d/8rl1m9ts5r96dxdh4rp_zx100000gn/T/com.brightdigit.BshIll/B6844821-A5C8-42B5-80C2-20F815FB920E.ipsw")!)), metadata: metadata)
   }
 
   typealias ImageType = Void

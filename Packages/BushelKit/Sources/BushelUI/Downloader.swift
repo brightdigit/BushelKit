@@ -1,7 +1,7 @@
 //
 // Downloader.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 #if canImport(Combine)
@@ -12,10 +12,6 @@
     struct DownloadRequest {
       let downloadSourceURL: URL
       let destinationFileURL: URL
-    }
-
-    override public init() {
-      super.init()
     }
 
     @Published var totalBytesWritten: Int64 = 0
@@ -50,11 +46,8 @@
     }
 
     internal init(configuration: URLSessionConfiguration? = nil, queue: OperationQueue? = nil) {
-      // self.downloadURL = downloadURL
-
       super.init()
       let session = URLSession(configuration: configuration ?? .default, delegate: self, delegateQueue: queue)
-
       self.session = session
 
       let destinationFileURLPublisher = requestSubject.share().map(\.destinationFileURL)
@@ -63,13 +56,12 @@
         task.resume()
         return task
       }.assign(to: \.task, on: self)
+
       Publishers.CombineLatest(locationURLSubject, destinationFileURLPublisher).map { sourceURL, destinationURL in
         Result {
           try FileManager.default.moveItem(at: sourceURL, to: destinationURL)
         }
       }.receive(on: DispatchQueue.main).assign(to: &$isCompleted)
-
-      // self.session = session
     }
 
     public func cancel() {

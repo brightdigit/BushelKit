@@ -1,7 +1,7 @@
 //
 // RestoreImageView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/9/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -12,8 +12,84 @@ struct RestoreImageView: View {
   let byteFormatter: ByteCountFormatter = .init()
   let image: RestoreImagable
   @StateObject var downloader = Downloader()
-  @State var downloadDestination: RestoreImageDownloadDestination?
-  @State var askAboutDownload = false
+  @State var downloadRequest: RestoreImageDownloadRequest?
+  @State var sourceURL: URL?
+  @State var restoreImageDownload: RestoreImageDownload?
+
+  func beginDownloadRequest(_ downloadRequest: RestoreImageDownloadRequest) {
+    let panel = NSSavePanel()
+    switch downloadRequest.destination {
+    case .ipswFile:
+      panel.nameFieldLabel = "Save Restore Image as:"
+      panel.nameFieldStringValue = image.metadata.defaultName
+      panel.allowedContentTypes = UTType.ipswTypes
+      panel.isExtensionHidden = true
+    case .library:
+      panel.nameFieldLabel = "Save to Library:"
+      panel.allowedContentTypes = [UTType.restoreImageLibrary]
+      panel.isExtensionHidden = true
+    }
+    panel.begin { response in
+      guard let fileURL = panel.url, response == .OK else {
+        return
+      }
+
+      switch downloadRequest.destination {
+      case .ipswFile:
+        self.beginDownload(from: downloadRequest.sourceURL, to: fileURL)
+      case .library:
+        do {
+          try self.beginDownload(from: downloadRequest.sourceURL, toLibraryAt: fileURL)
+        } catch {
+          dump(error)
+        }
+      }
+    }
+  }
+
+  func reset() {
+    downloader.reset()
+    sourceURL = nil
+    downloadRequest = nil
+
+    restoreImageDownload = nil
+  }
+
+  func beginDownload(from sourceURL: URL, toLibraryAt url: URL) throws {
+    let fileID = UUID()
+    let libraryDirectoryExists = FileManager.default.directoryExists(at: url)
+    guard libraryDirectoryExists != .fileExists else {
+      throw MissingError.needDefinition("Invalid Library")
+    }
+
+    let restoreImagesSubdirectoryURL = url.appendingPathComponent("Restore Images")
+    let metadataURL = url.appendingPathComponent("metadata.json")
+
+    if FileManager.default.fileExists(atPath: metadataURL.path), libraryDirectoryExists == .directoryExists {
+      let restoreImageSubdirectoryExists = FileManager.default.directoryExists(at: restoreImagesSubdirectoryURL)
+
+      guard restoreImageSubdirectoryExists != .fileExists else {
+        throw MissingError.needDefinition("Invalid Library")
+      }
+
+      if restoreImageSubdirectoryExists == .notExists {
+        try FileManager.default.createDirectory(at: restoreImagesSubdirectoryURL, withIntermediateDirectories: true)
+      }
+    } else {
+      try RestoreImageLibraryDocument.saveBlankDocumentAt(url)
+    }
+
+    let destinationURL = restoreImagesSubdirectoryURL.appendingPathComponent(fileID.uuidString).appendingPathExtension(url.pathExtension)
+
+    restoreImageDownload = .library(url, fileID)
+    downloader.begin(from: sourceURL, to: destinationURL)
+  }
+
+  func beginDownload(from sourceURL: URL, to fileURL: URL) {
+    restoreImageDownload = .file(fileURL)
+    downloader.begin(from: sourceURL, to: fileURL)
+  }
+
   var body: some View {
     VStack {
       Image(operatingSystemVersion: image.metadata.operatingSystemVersion).resizable().aspectRatio(1.0, contentMode: .fit).frame(height: 80.0).mask {
@@ -27,13 +103,13 @@ struct RestoreImageView: View {
 
       VStack(alignment: .leading) {
         switch self.image.location {
-        case .remote:
+        case let .remote(url):
 
           if let prettyBytesTotal = downloader.prettyBytesTotal, let percentCompleted = downloader.percentCompleted {
             Button {
               downloader.cancel()
               downloader.reset()
-              self.downloadDestination = nil
+              self.downloadRequest = nil
             } label: {
               Text("Cancel")
             }
@@ -44,13 +120,13 @@ struct RestoreImageView: View {
             }
           } else {
             Button {
-              self.askAboutDownload = true
+              self.sourceURL = url
             } label: {
               Image(systemName: "icloud.and.arrow.down")
               Text("Download Image (\(byteFormatter.string(fromByteCount: Int64(image.metadata.contentLength))))")
             }
           }
-        case .local:
+        case .file:
 
           Button {} label: {
             HStack {
@@ -58,59 +134,54 @@ struct RestoreImageView: View {
               Text("Import Image")
             }
           }
-        case .library, .reloaded:
-          Button {} label: {
-            Image(systemName: "hammer.fill")
-            Text("Build Machine")
+        }
+
+      }.padding().sheet(item: self.$sourceURL) { url in
+
+        Button("Save to an IPSW File") {
+          self.downloadRequest = .init(sourceURL: url, destination: .ipswFile)
+        }
+        Button("Save to a Library") {
+          self.downloadRequest = .init(sourceURL: url, destination: .library)
+        }
+      }
+      .onChange(of: downloadRequest) { newValue in
+        guard let downloadRequest = newValue else {
+          return
+        }
+        self.beginDownloadRequest(downloadRequest)
+        self.sourceURL = nil
+      }.onReceive(self.downloader.$isCompleted, perform: { isCompletedResult in
+        guard let isCompletedResult = isCompletedResult, let restoreImageDownload = self.restoreImageDownload else {
+          return
+        }
+        self.reset()
+        switch (isCompletedResult, restoreImageDownload) {
+        case let (.failure(error), _):
+          dump(error)
+        case let (.success, .file(url)):
+          NSWorkspace.shared.open(url.deletingLastPathComponent())
+        case let (.success, .library(url, fileID)):
+          let decoder = JSONDecoder()
+          let encoder = JSONEncoder()
+          let metadataJSON = url.appendingPathComponent("metadata.json")
+          let fileURL = url.appendingPathComponent("Restore Images").appendingPathComponent(fileID.uuidString).appendingPathExtension("ipsw")
+          let newFile = RestoreImageLibraryItemFile(id: fileID, metadata: self.image.metadata, fileAccessor: URLAccessor(url: fileURL))
+          do {
+            var library = try decoder.decode(RestoreImageLibrary.self, from: .init(contentsOf: metadataJSON))
+            library.items.append(newFile)
+            try encoder.encode(library).write(to: metadataJSON)
+          } catch {
+            dump(error)
           }
         }
-      }
+      })
 
-    }.padding().alert("Download Restore Image", isPresented: self.$askAboutDownload, actions: {
-      Button("Save to an IPSW File") {
-        self.downloadDestination = .ipswFile
+      .onAppear {
+        #if DEBUG
+          debugPrint(self.image.metadata)
+        #endif
       }
-      Button("Save to a Library") {
-        self.downloadDestination = .library
-      }
-    }, message: {
-      Text("Would you to download this into library or just save the file?")
-    }).onChange(of: downloadDestination) { newValue in
-      guard let downloadDestination = newValue else {
-        return
-      }
-
-      let panel = NSSavePanel()
-      switch downloadDestination {
-      case .ipswFile:
-        panel.nameFieldLabel = "Save Restore Image as:"
-        panel.nameFieldStringValue = image.metadata.url.lastPathComponent
-        panel.allowedContentTypes = UTType.ipswTypes
-        panel.isExtensionHidden = true
-      case .library:
-        panel.nameFieldLabel = "Save to Library:"
-        panel.allowedContentTypes = [UTType.restoreImageLibrary]
-        panel.isExtensionHidden = true
-      }
-      panel.begin { response in
-
-        guard let fileURL = panel.url, response == .OK else {
-          return
-        }
-
-        let destinationURL: URL
-        do {
-          destinationURL = try downloadDestination.destinationURL(fromSavePanelURL: fileURL)
-        } catch {
-          #warning("Something")
-          return
-        }
-        downloader.begin(from: image.metadata.url, to: destinationURL)
-      }
-    }.onAppear {
-      #if DEBUG
-        debugPrint(self.image.metadata)
-      #endif
     }
   }
 }

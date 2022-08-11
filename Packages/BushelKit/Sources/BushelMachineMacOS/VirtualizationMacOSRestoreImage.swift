@@ -1,7 +1,7 @@
 //
 // VirtualizationMacOSRestoreImage.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -9,14 +9,15 @@ import Foundation
 import Virtualization
 
 public struct VirtualizationMacOSRestoreImage: ImageContainer {
-  init(contentLength: Int, lastModified: Date, vzRestoreImage: VZMacOSRestoreImage, fileAccessor: FileAccessor?) {
+  init(contentLength: Int, lastModified: Date, vzRestoreImage: VZMacOSRestoreImage, location: ImageLocation) {
     metadata = .init(contentLength: contentLength, lastModified: lastModified, vzRestoreImage: vzRestoreImage)
     self.vzRestoreImage = vzRestoreImage
-    self.fileAccessor = fileAccessor
+    self.location = location
   }
 
   public let metadata: ImageMetadata
-  public let fileAccessor: FileAccessor?
+  // public let fileAccessor: FileAccessor?
+  public var location: BushelMachine.ImageLocation
 
   let vzRestoreImage: VZMacOSRestoreImage
 
@@ -26,7 +27,8 @@ public struct VirtualizationMacOSRestoreImage: ImageContainer {
       guard let contentLength: Int = attrs[.size] as? Int, let lastModified = attrs[.modificationDate] as? Date else {
         throw VirtualizationError.undefinedType("Missing content length and lastModified from attrs", attrs)
       }
-      self.init(contentLength: contentLength, lastModified: lastModified, vzRestoreImage: vzRestoreImage, fileAccessor: fileAccessor)
+      self.init(contentLength: contentLength, lastModified: lastModified, vzRestoreImage: vzRestoreImage, location:
+        fileAccessor.map(ImageLocation.file) ?? ImageLocation.file(URLAccessor(url: vzRestoreImage.url)))
     } else {
       let headers = try await vzRestoreImage.headers()
       try self.init(vzRestoreImage: vzRestoreImage, headers: headers, fileAccessor: fileAccessor)
@@ -44,6 +46,6 @@ public struct VirtualizationMacOSRestoreImage: ImageContainer {
       throw MissingError.needDefinition((headers, "Last-Modified"))
     }
 
-    self.init(contentLength: contentLength, lastModified: lastModified, vzRestoreImage: vzRestoreImage, fileAccessor: fileAccessor)
+    self.init(contentLength: contentLength, lastModified: lastModified, vzRestoreImage: vzRestoreImage, location: fileAccessor.map(ImageLocation.file) ?? .remote(vzRestoreImage.url))
   }
 }

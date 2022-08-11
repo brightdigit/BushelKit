@@ -1,7 +1,7 @@
 //
 // MachineSetupView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -32,6 +32,7 @@ struct MachineSetupView: View {
           do {
             factory = try await document.machine.build()
           } catch {
+            dump(error)
             return
           }
           installationObject.setupInstaller(factory)
