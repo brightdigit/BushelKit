@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryItemFileView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -26,11 +26,8 @@ struct RestoreImageLibraryItemFileView: View {
         }
       }
       Button {
-        do {
-          self.newMachine = try MachineDocument(machine: .init(restoreImage: file.forMachine()))
-        } catch {
-          dump(error)
-        }
+        self.newMachine = MachineDocument(machine: .init(restoreImage: file))
+
       } label: {
         Image(systemName: "hammer.fill")
         Text("Build Machine")
@@ -49,6 +46,7 @@ struct RestoreImageLibraryItemFileView: View {
 
 struct RestoreImageLibraryItemFileView_Previews: PreviewProvider {
   static var previews: some View {
-    RestoreImageLibraryItemFileView(file: .constant(.init(name: "venturaBeta3", metadata: .Previews.venturaBeta3)))
+    RestoreImageLibraryItemFileView(file: .constant(.init(id: .init(), name: "venturaBeta3", metadata: .Previews.venturaBeta3, fileAccessor:
+      URLAccessor(url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw")))))
   }
 }

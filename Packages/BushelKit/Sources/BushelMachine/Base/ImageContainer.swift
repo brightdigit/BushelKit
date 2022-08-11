@@ -4,7 +4,8 @@
 // Created by Leo Dion on 8/6/22.
 //
 
+import Foundation
 public protocol ImageContainer {
   var metadata: ImageMetadata { get }
-  var fileAccessor: FileAccessor? { get }
+  var location: ImageLocation { get }
 }

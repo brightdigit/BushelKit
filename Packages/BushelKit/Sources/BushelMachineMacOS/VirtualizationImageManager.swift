@@ -1,7 +1,7 @@
 //
 // VirtualizationImageManager.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/7/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -18,6 +18,16 @@ public extension AnyImageManagers {
 }
 
 public struct VirtualizationImageManager: ImageManager {
+  static let defaultNamePrefix = "macOS"
+
+  public func defaultName(for metadata: BushelMachine.ImageMetadata) -> String {
+    guard let codeName = OperatingSystemCodeName(operatingSystemVersion: metadata.operatingSystemVersion) else {
+      return "\(Self.defaultNamePrefix) \(metadata.operatingSystemVersion) (\(metadata.buildVersion))"
+    }
+
+    return "\(Self.defaultNamePrefix) \(codeName.name) \(metadata.operatingSystemVersion) (\(metadata.buildVersion))"
+  }
+
   public static let restoreImageContentTypes = UTType.ipswTypes
   public static var systemID = VMSystemID.macOS
   public func validateAt(_: URL) throws {}
