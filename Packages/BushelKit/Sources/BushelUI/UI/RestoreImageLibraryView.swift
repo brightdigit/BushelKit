@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/9/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
@@ -68,8 +68,11 @@ struct RestoreImageLibraryDocumentView: View {
       do {
         let accessor = URLAccessor(url: newImageURL)
         let restoreImage = try await imageManager.load(from: accessor, using: FileRestoreImageLoader())
-        file = RestoreImageLibraryItemFile(restoreImage: restoreImage)
+        guard let restoreImageFile = RestoreImageLibraryItemFile(loadFromImage: restoreImage) else {
+          throw MachineError.undefinedType("invalid restore image", restoreImage)
+        }
 //
+        file = restoreImageFile
       } catch {
         dump(error)
         activeImports.removeAll { activeImport in
@@ -215,7 +218,7 @@ struct RestoreImageLibraryDocumentView: View {
 
 struct RestoreImageLibraryDocumentView_Previews: PreviewProvider {
   static var previews: some View {
-    RestoreImageLibraryDocumentView(document: .constant(RestoreImageLibraryDocument(library: .init(items: Self.data))), url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"), activeImports: [.init(sourceURL: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))], selected: .init(name: "Ventura Beta 3", metadata: .Previews.venturaBeta3))
+    RestoreImageLibraryDocumentView(document: .constant(RestoreImageLibraryDocument(library: .init(items: Self.data))), url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"), activeImports: [.init(sourceURL: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))], selected: .init(id: .init(), name: "Ventura Beta 3", metadata: .Previews.venturaBeta3, fileAccessor: URLAccessor(url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))))
 
     RestoreImageLibraryDocumentView(document: .constant(RestoreImageLibraryDocument()), url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"), activeImports: [], selected: nil)
   }

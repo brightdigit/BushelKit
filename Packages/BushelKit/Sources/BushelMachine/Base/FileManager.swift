@@ -1,7 +1,7 @@
 //
 // FileManager.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
+// Created by Leo Dion on 8/6/22.
 //
 
 import Foundation
@@ -55,7 +55,7 @@ public extension FileManager {
   #endif
 }
 
-extension FileManager {
+public extension FileManager {
   func directoryExists(at url: URL) -> DirectoryExists {
     var isDirectory: ObjCBool = false
     let fileExists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)

@@ -1,7 +1,7 @@
 //
 // MachineSessionView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/7/22.
+// Created by Leo Dion on 8/10/22.
 //
 
 import BushelMachine
