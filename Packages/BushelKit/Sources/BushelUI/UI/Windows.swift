@@ -8,11 +8,6 @@ import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
-protocol BlankFileDocument {
-  static var allowedContentTypes: [UTType] { get }
-  static func saveBlankDocumentAt(_ url: URL) throws
-}
-
 public enum Windows {
   static func showNewSavedDocumentWindow<BlankDocumentType: BlankFileDocument>(ofType type: BlankDocumentType.Type) {
     let panel = NSSavePanel()
@@ -63,7 +58,7 @@ public enum Windows {
     }
   }
 
-  static func openWindow(withHandle handle: WindowOpenHandle) {
+  static func openWindow<HandleType: WindowOpenHandle>(withHandle handle: HandleType) {
     NSWorkspace.shared.open(URL(forHandle: handle))
   }
 }

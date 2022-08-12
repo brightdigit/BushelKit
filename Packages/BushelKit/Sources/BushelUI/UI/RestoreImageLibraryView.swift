@@ -20,6 +20,7 @@ struct RestoreImageLibraryDocumentView: View {
   @State var window: NSWindow?
   @State var url: URL?
   @State var shouldSaveFile: Bool = false
+  @State var selectedFileID : UUID?
   let initialSelectedFile: RestoreImageLibraryItemFile?
   @State var importingURL: URL?
   @State var activeImports: [ActiveRestoreImageImport]
@@ -71,7 +72,6 @@ struct RestoreImageLibraryDocumentView: View {
         guard let restoreImageFile = RestoreImageLibraryItemFile(loadFromImage: restoreImage) else {
           throw MachineError.undefinedType("invalid restore image", restoreImage)
         }
-//
         file = restoreImageFile
       } catch {
         dump(error)
@@ -119,11 +119,17 @@ struct RestoreImageLibraryDocumentView: View {
             }
             Section {
               ForEach(self.document.library.items) { item in
-                NavigationLink {
-                  RestoreImageLibraryItemFileView(file: bindingFor(item))
-                } label: {
-                  Text("\(item.name)")
-                }
+                
+                  NavigationLink(tag: item.id, selection: self.$selectedFileID) {
+                    VStack{
+                      RestoreImageLibraryItemFileView(file: bindingFor(item)).padding()
+                      Spacer()
+                    }
+                  } label: {
+                    Text("\(item.name)")
+                  }
+                
+
               }
             }
           }
@@ -192,17 +198,21 @@ struct RestoreImageLibraryDocumentView: View {
             }
           }.padding(8.0)
 
-          if let binding = firstLibraryFileBinding {
-            NavigationLink {
-              RestoreImageLibraryItemFileView(file: binding)
-            } label: {
-              HStack {
-                Image(systemName: "filemenu.and.selection").resizable().aspectRatio(1.0, contentMode: .fit).foregroundColor(.accentColor).frame(height: 24.0)
-                Spacer().frame(width: 12.0)
-                Text("Select a Restore Image").font(.custom("Raleway", size: 24.0))
-              }
-            }.padding(8.0)
+          if let fileID = self.document.library.items.randomElement()?.id {
+            
+              Button {
+                DispatchQueue.main.async {
+                  self.selectedFileID = fileID
+                }
+              } label: {
+                HStack {
+                  Image(systemName: "filemenu.and.selection").resizable().aspectRatio(1.0, contentMode: .fit).foregroundColor(.accentColor).frame(height: 24.0)
+                  Spacer().frame(width: 12.0)
+                  Text("Select a Restore Image").font(.custom("Raleway", size: 24.0))
+                }
+              }.padding(8.0)
           }
+          
         }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.primary)
       }
 

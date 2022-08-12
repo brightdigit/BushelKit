@@ -10,11 +10,6 @@ import UniformTypeIdentifiers
 
 struct MachineDocument: FileDocument, Identifiable {
   var machine: Machine
-  let sessionObject: MachineSessionObject = .init()
-
-  var session: MachineSession? {
-    sessionObject.session
-  }
 
   var id: UUID {
     machine.id
@@ -22,6 +17,18 @@ struct MachineDocument: FileDocument, Identifiable {
 
   init(machine: Machine = .init()) {
     self.machine = machine
+  }
+  
+  mutating func validateSessionAt(_ url: URL) throws {
+    self.updateFileAccessorURL(url)
+    
+    let manager = (machine.restoreImage?.metadata.vmSystem).flatMap(AnyImageManagers.imageManager(forSystem:))
+
+    guard let manager = manager else {
+      throw DocumentError.undefinedType("No available manager.", machine.restoreImage?.metadata.vmSystem)
+    }
+    
+    try manager.validateSession(fromMachine: self.machine)
   }
 
   mutating func updateFileAccessorURL(_ url: URL) {
@@ -39,11 +46,6 @@ struct MachineDocument: FileDocument, Identifiable {
     }
 
     return try manager.session(fromMachine: machine)
-  }
-
-  mutating func loadSession(from url: URL) throws {
-    updateFileAccessorURL(url)
-    sessionObject.session = try session(fromMachine: machine)
   }
 
   static let readableContentTypes: [UTType] = [.virtualMachine]
