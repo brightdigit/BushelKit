@@ -17,26 +17,19 @@ struct RrisCollectionView: View {
     NavigationView {
       List {
         ForEach(self.selectedSourceObject.sources) { source in
-          NavigationLink {
-            SourceImageCollectionView(source: source)
+          NavigationLink(tag: source.id, selection: self.$selectedSourceObject.selectedSource)  {
+            VStack{
+              SourceImageCollectionView(source: source).padding()
+              Spacer()
+            }
           } label: {
             Text(source.title)
           }
         }
       }
+    }.onAppear {
+      self.selectedSourceObject.selectedSource = self.selectedSourceObject.sources.first?.id
     }
-//            Group{
-//                if case let .success(images) = self.selectedSourceObject.imageListResult {
-//                    List(selection: self.$selectedImage){
-//                        ForEach(images) { image in
-//                            Text(image.operatingSystemVersion.description)
-//                        }
-//                    }
-//                } else {
-//                    Text("No Source Selected")
-//                }
-//            }.frame(width: 500)
-//        }
   }
 }
 

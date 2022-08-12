@@ -7,6 +7,14 @@
 import Foundation
 
 public struct Machine: Identifiable, Codable {
+  
+  public static func loadFromURL(_ url: URL) throws -> Self {
+    let decoder = JSONDecoder()
+    let data = try Data(contentsOf: url.appendingPathComponent("machine.json"))
+    var machine = try decoder.decode(Self.self, from: data)
+    machine.rootFileAccessor = URLAccessor(url: url)
+    return machine
+  }
   public init(id: UUID = .init(), restoreImage: RestoreImageLibraryItemFile? = nil, operatingSystem: OperatingSystemDetails? = nil) {
     self.id = id
     self.restoreImage = restoreImage
