@@ -30,7 +30,6 @@ public struct VirtualizationImageManager: ImageManager {
 
   public static let restoreImageContentTypes = UTType.ipswTypes
   public static var systemID = VMSystemID.macOS
-  public func validateAt(_: URL) throws {}
 
   public init() {}
 
@@ -40,6 +39,13 @@ public struct VirtualizationImageManager: ImageManager {
 
   public func containerFor(image: VZMacOSRestoreImage, fileAccessor: FileAccessor?) async throws -> ImageContainer {
     try await VirtualizationMacOSRestoreImage(vzRestoreImage: image, fileAccessor: fileAccessor)
+  }
+  public func validateSession(fromMachine machine: Machine) throws {
+    guard let configurationURL = try machine.getMachineConfigurationURL() else {
+      throw VirtualizationError.undefinedType("Missing configurationURL for session", self)
+    }
+
+    try VirtualizationSession.validate(fromConfigurationURL: configurationURL)
   }
 
   public func session(fromMachine machine: Machine) throws -> MachineSession {

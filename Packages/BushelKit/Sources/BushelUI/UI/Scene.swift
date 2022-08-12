@@ -6,8 +6,12 @@
 
 import SwiftUI
 
-extension Scene {
-  func windowsHandle(_ handle: BasicWindowOpenHandle) -> some Scene {
-    handlesExternalEvents(matching: .init([handle.rawValue]))
+extension Scene {  
+  func windowsHandle<HandleType : StaticConditionalHandle>(_ handle: HandleType.Type) -> some Scene {
+    handlesExternalEvents(matching: .init(handle.conditions))
+  }
+  
+  func windowsHandle<HandleType : InstanceConditionalHandle>(_ handle: HandleType) -> some Scene {
+    handlesExternalEvents(matching: .init(handle.conditions))
   }
 }

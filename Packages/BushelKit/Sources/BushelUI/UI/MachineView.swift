@@ -16,7 +16,7 @@ struct MachineView: View {
       if document.machine.operatingSystem == nil {
         MachineSetupView(document: self.$document, url: self.url, restoreImageChoices: restoreImageChoices, onCompleted: nil)
       } else if let url = self.url {
-        MachineSessionView(document: self.$document, url: url)
+        MachineDetailsView(document: self.$document, url: url)
       }
     }
   }

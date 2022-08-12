@@ -20,7 +20,7 @@ public struct BushelScene: Scene {
   public var body: some Scene {
     WindowGroup {
       WelcomeView()
-    }.windowsHandle(.welcome).windowStyle(.hiddenTitleBar)
+    }.windowsHandle(BasicWindowOpenHandle.welcome).windowStyle(.hiddenTitleBar)
     DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
       RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
     }
@@ -52,11 +52,13 @@ public struct BushelScene: Scene {
       }
     }
     DocumentGroup(viewing: RestoreImageDocument.self) { file in
-      // https://stackoverflow.com/questions/67659770/how-to-read-large-files-using-swiftui-documentgroup-without-making-a-temporary-c
       RestoreImageDocumentView(document: file.document, manager: VirtualizationImageManager(), url: file.fileURL)
     }
-    WindowGroup {
+    WindowGroup(Text("Remote Restore Images"), id: "Remote Restore Images") {
       RrisCollectionView()
-    }.windowsHandle(.remoteSources)
+    }.windowsHandle(BasicWindowOpenHandle.remoteSources)
+    WindowGroup {
+      SessionView()
+    }.windowsHandle(MachineSessionWindowHandle.self)
   }
 }
