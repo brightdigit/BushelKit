@@ -9,13 +9,16 @@ import SwiftUI
 
 struct MachineSetupView: View {
   @State var machineRestoreImage: MachineRestoreImage?
+  @State var showSaveProgress: Bool = false
   @State var isReadyToSave: Bool = false
+  @State var machineSavedURL : URL? = nil
   @Binding var document: MachineDocument
   let url: URL?
   let restoreImageChoices: [MachineRestoreImage]
   @StateObject var installationObject = MachineInstallationObject()
 
   let onCompleted: ((Error?) -> Void)?
+  
 
   var body: some View {
     VStack {
@@ -57,9 +60,15 @@ struct MachineSetupView: View {
         self.onCompleted?(error)
       }
       self.installationObject.cancel()
-    }).fileExporter(isPresented: self.$isReadyToSave, document: self.document, contentType: .virtualMachine, onCompletion: { result in
-      #warning("open document with result")
-      dump(result)
+    }).fileExporter(isPresented: self.$isReadyToSave, document: self.document, contentType: .virtualMachine, onCompletion: { result in      
+      showSaveProgress = false
+      do {
+        let machineSavedURL = try result.get()
+        self.machineSavedURL = machineSavedURL
+        Windows.openDocumentAtURL(machineSavedURL)
+      } catch {
+        dump(error)
+      }
       self.onCompleted?(nil)
     })
     .onAppear {
@@ -71,10 +80,15 @@ struct MachineSetupView: View {
       DispatchQueue.main.async {
         // self.document.osInstallationCompleted()
         self.isReadyToSave = true
+        self.showSaveProgress = true
       }
 
     }) { phase in
       MachineFactoryView(phaseProgress: phase)
+    }.sheet(isPresented: self.$showSaveProgress) {
+      ProgressView {
+        Text("Saving New Machine...")
+      }
     }
   }
 }

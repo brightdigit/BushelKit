@@ -11,7 +11,7 @@ import Foundation
 #endif
 public protocol AnyImageManager {
   init()
-  func validateAt(_ url: URL) throws
+  func validateSession(fromMachine machine: Machine) throws
   func load(from accessor: FileAccessor, using loader: RestoreImageLoader) async throws -> RestoreImage
   func session(fromMachine machine: Machine) throws -> MachineSession
   func buildMachine(_ machine: Machine, restoreImage: RestoreImage) async throws -> VirtualMachineFactory

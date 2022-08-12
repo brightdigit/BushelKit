@@ -41,4 +41,9 @@ extension VirtualizationSession {
     try configuration.validate()
     self.init(machine: VZVirtualMachine(configuration: configuration))
   }
+  
+  static func validate(fromConfigurationURL configurationURL: URL) throws {
+    let configuration = try VZVirtualMachineConfiguration(contentsOfDirectory: configurationURL)
+    try configuration.validate()
+  }
 }

@@ -21,8 +21,6 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
   public let operatingSystemVersion: OperatingSystemVersion
   public let contentLength: Int
   public let lastModified: Date
-  @available(*, deprecated)
-  public let url: URL? = nil
   public let vmSystem: VMSystemID
   public let fileExtension: String
 

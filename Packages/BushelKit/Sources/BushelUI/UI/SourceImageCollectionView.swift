@@ -13,8 +13,6 @@ struct SourceImageCollectionView: View {
   }
 
   @StateObject var collectionObject: RrisImageCollectionObject
-//    let source : Rris
-//    @State var imageListResult : Result<[RestoreImage], Error>?
   var body: some View {
     Group {
       switch self.collectionObject.imageListResult {
@@ -25,7 +23,7 @@ struct SourceImageCollectionView: View {
       case let .failure(error):
         Text(error.localizedDescription)
       case .none:
-        ProgressView()
+        ProgressView().padding(20.0)
       }
     }.onAppear {
       self.collectionObject.loadImages()
