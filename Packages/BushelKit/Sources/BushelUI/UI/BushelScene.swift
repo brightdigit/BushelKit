@@ -1,7 +1,7 @@
 //
 // BushelScene.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/12/22.
 //
 
 import BushelMachine
@@ -12,6 +12,7 @@ public struct BushelScene: Scene {
   static let imageManagers = [
     VirtualizationImageManager.self
   ]
+  let recentDocumentsObject = RecentDocumentsObject()
 
   init() {
     try! AnyImageManagers.load(Self.imageManagers)
@@ -19,8 +20,8 @@ public struct BushelScene: Scene {
 
   public var body: some Scene {
     WindowGroup {
-      WelcomeView()
-    }.windowsHandle(BasicWindowOpenHandle.welcome).windowStyle(.hiddenTitleBar)
+      WelcomeView().environmentObject(recentDocumentsObject).frame(width: 950, height: 450).presentedWindowStyle(.hiddenTitleBar).presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
+    }.windowsHandle(BasicWindowOpenHandle.welcome).windowStyle(.hiddenTitleBar).disableResizability()
     DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
       RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
     }
@@ -37,7 +38,7 @@ public struct BushelScene: Scene {
           }
         }
         Menu("Open Recent") {
-          RecentDocumentsMenuContent()
+          RecentDocumentsMenuContent().environmentObject(recentDocumentsObject)
         }
       }
       CommandGroup(after: .newItem) {

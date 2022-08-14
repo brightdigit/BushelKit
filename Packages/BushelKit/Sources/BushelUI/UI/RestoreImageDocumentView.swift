@@ -1,7 +1,7 @@
 //
 // RestoreImageDocumentView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -23,7 +23,7 @@ struct RestoreImageDocumentView<ImageManagerType: ImageManager>: View {
       try await loader.load(from: accessor, using: manager)
     }
   }
-  
+
   let fetchImage: () async throws -> RestoreImage
   let url: URL?
   @State var restoreImageResult: Result<RestoreImage, Error>?

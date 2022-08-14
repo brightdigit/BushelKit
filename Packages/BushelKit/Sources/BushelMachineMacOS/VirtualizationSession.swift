@@ -1,7 +1,7 @@
 //
 // VirtualizationSession.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -41,7 +41,7 @@ extension VirtualizationSession {
     try configuration.validate()
     self.init(machine: VZVirtualMachine(configuration: configuration))
   }
-  
+
   static func validate(fromConfigurationURL configurationURL: URL) throws {
     let configuration = try VZVirtualMachineConfiguration(contentsOfDirectory: configurationURL)
     try configuration.validate()

@@ -1,7 +1,7 @@
 //
 // VZMacPlatformConfiguration.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -14,11 +14,15 @@ extension VZMacPlatformConfiguration {
     let auxiliaryStorageURL = machineDirectory.appendingPathComponent("auxiliary.storage")
     let hardwareModelURL = machineDirectory.appendingPathComponent("hardware.model.bin")
     let machineIdentifierURL = machineDirectory.appendingPathComponent("machine.identifier.bin")
-    if #available(macOS 13.0, *) {
-      self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
-    } else {
+    #if swift(>=5.7)
+      if #available(macOS 13.0, *) {
+        self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
+      } else {
+        auxiliaryStorage = VZMacAuxiliaryStorage(contentsOf: auxiliaryStorageURL)
+      }
+    #else
       auxiliaryStorage = VZMacAuxiliaryStorage(contentsOf: auxiliaryStorageURL)
-    }
+    #endif
 
     guard let hardwareModel = VZMacHardwareModel(dataRepresentation: try Data(contentsOf: hardwareModelURL)) else {
       throw VirtualizationError.undefinedType("Invalid hardware model url", hardwareModelURL)
