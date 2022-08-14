@@ -1,7 +1,7 @@
 //
 // MachineSetupView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -11,14 +11,13 @@ struct MachineSetupView: View {
   @State var machineRestoreImage: MachineRestoreImage?
   @State var showSaveProgress: Bool = false
   @State var isReadyToSave: Bool = false
-  @State var machineSavedURL : URL? = nil
+  @State var machineSavedURL: URL?
   @Binding var document: MachineDocument
   let url: URL?
   let restoreImageChoices: [MachineRestoreImage]
   @StateObject var installationObject = MachineInstallationObject()
 
   let onCompleted: ((Error?) -> Void)?
-  
 
   var body: some View {
     VStack {
@@ -60,7 +59,7 @@ struct MachineSetupView: View {
         self.onCompleted?(error)
       }
       self.installationObject.cancel()
-    }).fileExporter(isPresented: self.$isReadyToSave, document: self.document, contentType: .virtualMachine, onCompletion: { result in      
+    }).fileExporter(isPresented: self.$isReadyToSave, document: self.document, contentType: .virtualMachine, onCompletion: { result in
       showSaveProgress = false
       do {
         let machineSavedURL = try result.get()

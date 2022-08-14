@@ -1,7 +1,7 @@
 //
-// MachineSessionView.swift
+// MachineDetailsView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -25,7 +25,7 @@ struct MachineDetailsView: View {
         Button("Start") {
           Windows.openWindow(withHandle: MachineSessionWindowHandle(machineFilePath: url.path))
         }
-      case .failure(let error):
+      case let .failure(error):
         Button("Dump Error \(error.localizedDescription)") {
           dump(error)
         }
@@ -36,7 +36,7 @@ struct MachineDetailsView: View {
       }
     }
     .onAppear {
-      self.validationResult = Result{
+      self.validationResult = Result {
         try self.document.validateSessionAt(self.url)
       }
     }

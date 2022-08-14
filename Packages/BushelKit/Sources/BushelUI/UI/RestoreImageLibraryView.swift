@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -20,7 +20,7 @@ struct RestoreImageLibraryDocumentView: View {
   @State var window: NSWindow?
   @State var url: URL?
   @State var shouldSaveFile: Bool = false
-  @State var selectedFileID : UUID?
+  @State var selectedFileID: UUID?
   let initialSelectedFile: RestoreImageLibraryItemFile?
   @State var importingURL: URL?
   @State var activeImports: [ActiveRestoreImageImport]
@@ -119,17 +119,15 @@ struct RestoreImageLibraryDocumentView: View {
             }
             Section {
               ForEach(self.document.library.items) { item in
-                
-                  NavigationLink(tag: item.id, selection: self.$selectedFileID) {
-                    VStack{
-                      RestoreImageLibraryItemFileView(file: bindingFor(item)).padding()
-                      Spacer()
-                    }
-                  } label: {
-                    Text("\(item.name)")
-                  }
-                
 
+                NavigationLink(tag: item.id, selection: self.$selectedFileID) {
+                  VStack {
+                    RestoreImageLibraryItemFileView(file: bindingFor(item)).padding()
+                    Spacer()
+                  }
+                } label: {
+                  Text("\(item.name)")
+                }
               }
             }
           }
@@ -199,20 +197,19 @@ struct RestoreImageLibraryDocumentView: View {
           }.padding(8.0)
 
           if let fileID = self.document.library.items.randomElement()?.id {
-            
-              Button {
-                DispatchQueue.main.async {
-                  self.selectedFileID = fileID
-                }
-              } label: {
-                HStack {
-                  Image(systemName: "filemenu.and.selection").resizable().aspectRatio(1.0, contentMode: .fit).foregroundColor(.accentColor).frame(height: 24.0)
-                  Spacer().frame(width: 12.0)
-                  Text("Select a Restore Image").font(.custom("Raleway", size: 24.0))
-                }
-              }.padding(8.0)
+            Button {
+              DispatchQueue.main.async {
+                self.selectedFileID = fileID
+              }
+            } label: {
+              HStack {
+                Image(systemName: "filemenu.and.selection").resizable().aspectRatio(1.0, contentMode: .fit).foregroundColor(.accentColor).frame(height: 24.0)
+                Spacer().frame(width: 12.0)
+                Text("Select a Restore Image").font(.custom("Raleway", size: 24.0))
+              }
+            }.padding(8.0)
           }
-          
+
         }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.primary)
       }
 

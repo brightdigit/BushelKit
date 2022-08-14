@@ -1,13 +1,12 @@
 //
 // Machine.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import Foundation
 
 public struct Machine: Identifiable, Codable {
-  
   public static func loadFromURL(_ url: URL) throws -> Self {
     let decoder = JSONDecoder()
     let data = try Data(contentsOf: url.appendingPathComponent("machine.json"))
@@ -15,6 +14,7 @@ public struct Machine: Identifiable, Codable {
     machine.rootFileAccessor = URLAccessor(url: url)
     return machine
   }
+
   public init(id: UUID = .init(), restoreImage: RestoreImageLibraryItemFile? = nil, operatingSystem: OperatingSystemDetails? = nil) {
     self.id = id
     self.restoreImage = restoreImage
