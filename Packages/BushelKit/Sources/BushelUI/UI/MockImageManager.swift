@@ -1,7 +1,7 @@
 //
-// RestoreImageDocumentView.swift
+// MockImageManager.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -41,9 +41,7 @@ struct MockImageManager: ImageManager {
 
   static let restoreImageContentTypes: [UTType] = []
 
-  func validateSession(fromMachine machine: Machine) throws {
-    
-  }
+  func validateSession(fromMachine _: Machine) throws {}
 
   let metadata: BushelMachine.ImageMetadata
   func loadFromAccessor(_: BushelMachine.FileAccessor) async throws {}

@@ -1,0 +1,4 @@
+targets:
+- BushelMachine
+- BushelMachineMacOS
+- BushelUI

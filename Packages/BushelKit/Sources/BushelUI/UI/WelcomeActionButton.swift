@@ -1,7 +1,7 @@
 //
 // WelcomeActionButton.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/12/22.
 //
 
 import SwiftUI
@@ -17,7 +17,7 @@ struct WelcomeActionButton: View {
 
   func label() -> some View {
     HStack {
-      Image(systemName: self.imageSystemName).resizable().aspectRatio(contentMode: .fit).foregroundColor(.accentColor)
+      Image(systemName: self.imageSystemName).resizable().aspectRatio(contentMode: .fit).foregroundColor(.accentColor).frame(width: 25.0)
       VStack(alignment: .leading) {
         Text(self.title).font(.custom("Raleway", size: 14.0)).bold()
         Text(self.description).font(.custom("Raleway", size: 14.0)).fontWeight(.light)
