@@ -1,7 +1,7 @@
 //
 // RestoreImageLibraryDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/12/22.
 //
 
 import BushelMachine
@@ -77,7 +77,7 @@ struct RestoreImageLibraryDocument: FileDocument, BlankFileDocument {
 //      return items.first?.1
 //    }
 
-    let restoreImages = library.items.map { file in
+    let restoreImages = library.items.map { file -> RestoreImageLibraryItemFile in
 
       let fileWrapper = imageWrappers[file.fileName]
       let fileName = fileWrapper?.filename ?? file.fileName
@@ -108,7 +108,7 @@ struct RestoreImageLibraryDocument: FileDocument, BlankFileDocument {
     guard let imageWrappers = imageDirectoryWrapper.fileWrappers, imageDirectoryWrapper.isDirectory else {
       return
     }
-    let restoreImages = await withTaskGroup(of: RestoreImage?.self) { group in
+    let restoreImages = await withTaskGroup(of: RestoreImage?.self) { group -> [RestoreImage?] in
       for (name, imageWrapper) in imageWrappers {
         let fileName = imageWrapper.filename ?? name
         let accessor = FileWrapperAccessor(fileWrapper: imageWrapper, url: url?.appendingPathComponent("Restore Images").appendingPathComponent(fileName))

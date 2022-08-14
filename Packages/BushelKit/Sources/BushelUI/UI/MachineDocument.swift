@@ -1,7 +1,7 @@
 //
 // MachineDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/10/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -18,17 +18,17 @@ struct MachineDocument: FileDocument, Identifiable {
   init(machine: Machine = .init()) {
     self.machine = machine
   }
-  
+
   mutating func validateSessionAt(_ url: URL) throws {
-    self.updateFileAccessorURL(url)
-    
+    updateFileAccessorURL(url)
+
     let manager = (machine.restoreImage?.metadata.vmSystem).flatMap(AnyImageManagers.imageManager(forSystem:))
 
     guard let manager = manager else {
       throw DocumentError.undefinedType("No available manager.", machine.restoreImage?.metadata.vmSystem)
     }
-    
-    try manager.validateSession(fromMachine: self.machine)
+
+    try manager.validateSession(fromMachine: machine)
   }
 
   mutating func updateFileAccessorURL(_ url: URL) {

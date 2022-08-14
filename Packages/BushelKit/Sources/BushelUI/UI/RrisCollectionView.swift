@@ -1,7 +1,7 @@
 //
 // RrisCollectionView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -17,8 +17,8 @@ struct RrisCollectionView: View {
     NavigationView {
       List {
         ForEach(self.selectedSourceObject.sources) { source in
-          NavigationLink(tag: source.id, selection: self.$selectedSourceObject.selectedSource)  {
-            VStack{
+          NavigationLink(tag: source.id, selection: self.$selectedSourceObject.selectedSource) {
+            VStack {
               SourceImageCollectionView(source: source).padding()
               Spacer()
             }

@@ -1,14 +1,14 @@
 //
 // BasicWindowOpenHandle.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/6/22.
+// Created by Leo Dion on 8/13/22.
 //
 
 enum BasicWindowOpenHandle: String, CaseIterable, InstanceConditionalHandle {
   var path: String? {
-    return nil
+    nil
   }
-  
+
   case machine
   case localImages
   case remoteSources
@@ -17,7 +17,7 @@ enum BasicWindowOpenHandle: String, CaseIterable, InstanceConditionalHandle {
   var host: String {
     rawValue
   }
-  
+
   var conditions: Set<String> {
     [rawValue]
   }
