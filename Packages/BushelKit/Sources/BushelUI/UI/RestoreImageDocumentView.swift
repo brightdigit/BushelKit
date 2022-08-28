@@ -1,7 +1,7 @@
 //
 // RestoreImageDocumentView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
+// Created by Leo Dion on 8/28/22.
 //
 
 import BushelMachine
@@ -9,12 +9,8 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct RestoreImageDocumentView<ImageManagerType: ImageManager>: View {
-  let manager: ImageManagerType
-
-  internal init(url: URL?, manager: ImageManagerType, _ fetchImage: @escaping () async throws -> RestoreImage) {
-    self.url = url
+  internal init(url _: URL?, manager _: ImageManagerType, _ fetchImage: @escaping () async throws -> RestoreImage) {
     self.fetchImage = fetchImage
-    self.manager = manager
   }
 
   internal init(document: RestoreImageDocument, manager: ImageManagerType, url: URL? = nil, loader: RestoreImageLoader = FileRestoreImageLoader()) {
@@ -25,7 +21,7 @@ struct RestoreImageDocumentView<ImageManagerType: ImageManager>: View {
   }
 
   let fetchImage: () async throws -> RestoreImage
-  let url: URL?
+
   @State var restoreImageResult: Result<RestoreImage, Error>?
 
   var body: some View {

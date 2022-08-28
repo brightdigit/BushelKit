@@ -16,7 +16,7 @@ struct WelcomeTitleView: View {
         Spacer()
         Image("Logo").resizable().aspectRatio(contentMode: .fit).frame(width: 150)
         Text("Welcome to Bushel").font(.custom("Raleway", size: 42.0)).fontWeight(.medium)
-        Text("Version 0.1 alpha (0000001)").font(.custom("Raleway", size: 14.0)).fontWeight(.medium).foregroundColor(.secondary)
+        Text("Version \(Configuration.applicationMarketingVersionText) (\(Configuration.applicationBuildFormatted))").font(.custom("Raleway", size: 14.0)).fontWeight(.medium).foregroundColor(.secondary)
 
         Spacer(minLength: 20.0)
         VStack(alignment: .leading) {

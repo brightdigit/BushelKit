@@ -1,14 +1,14 @@
 //
 // BushelScene.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/12/22.
+// Created by Leo Dion on 8/28/22.
 //
 
 import BushelMachine
 import BushelMachineMacOS
 import SwiftUI
 
-public struct BushelScene: Scene {
+struct BushelScene: Scene {
   static let imageManagers = [
     VirtualizationImageManager.self
   ]
@@ -18,8 +18,8 @@ public struct BushelScene: Scene {
     try! AnyImageManagers.load(Self.imageManagers)
   }
 
-  public var body: some Scene {
-    WindowGroup {
+  var body: some Scene {
+    attemptSingleWindowFor("Welcome to Bushel", id: "welcome") {
       WelcomeView().environmentObject(recentDocumentsObject).frame(width: 950, height: 450).presentedWindowStyle(.hiddenTitleBar).presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
     }.windowsHandle(BasicWindowOpenHandle.welcome).windowStyle(.hiddenTitleBar).disableResizability()
     DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
@@ -55,7 +55,7 @@ public struct BushelScene: Scene {
     DocumentGroup(viewing: RestoreImageDocument.self) { file in
       RestoreImageDocumentView(document: file.document, manager: VirtualizationImageManager(), url: file.fileURL)
     }
-    WindowGroup(Text("Remote Restore Images"), id: "Remote Restore Images") {
+    attemptSingleWindowFor("macOS Images", id: "rris-collection") {
       RrisCollectionView()
     }.windowsHandle(BasicWindowOpenHandle.remoteSources)
     WindowGroup {

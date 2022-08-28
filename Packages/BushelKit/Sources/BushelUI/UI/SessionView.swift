@@ -1,7 +1,7 @@
 //
 // SessionView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
+// Created by Leo Dion on 8/28/22.
 //
 
 import BushelMachine
@@ -19,14 +19,6 @@ class SessionObject: NSObject, ObservableObject, MachineSessionDelegate {
   func session(_: BushelMachine.MachineSession, didStopWithError _: Error) {}
 
   func session(_: BushelMachine.MachineSession, device _: BushelMachine.MachineNetworkDevice, attachmentWasDisconnectedWithError _: Error) {}
-
-  @Published var session: MachineSession? {
-    didSet {
-      if var session = session {
-        session.delegate = self
-      }
-    }
-  }
 
   override init() {
     super.init()

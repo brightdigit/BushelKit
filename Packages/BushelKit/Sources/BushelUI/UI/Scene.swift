@@ -1,7 +1,7 @@
 //
 // Scene.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
+// Created by Leo Dion on 8/28/22.
 //
 
 import SwiftUI
@@ -13,6 +13,24 @@ extension Scene {
 
   func windowsHandle<HandleType: InstanceConditionalHandle>(_ handle: HandleType) -> some Scene {
     handlesExternalEvents(matching: .init(handle.conditions))
+  }
+
+  func attemptSingleWindowFor<Content: View>(_ title: String, id: String, @ViewBuilder content: @escaping () -> Content) -> some Scene {
+    #if swift(>=5.7)
+      if #available(macOS 13.0, *) {
+        return Window(title, id: id) {
+          content()
+        }
+      } else {
+        return WindowGroup(title, id: id) {
+          content()
+        }
+      }
+    #else
+      return WindowGroup(title, id: id) {
+        content()
+      }
+    #endif
   }
 
   public func disableResizability() -> some Scene {
