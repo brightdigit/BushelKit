@@ -1,7 +1,7 @@
 //
 // WindowOpenHandle.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
+// Created by Leo Dion on 8/21/22.
 //
 
 protocol WindowOpenHandle {
@@ -54,8 +54,9 @@ extension HostOnlyConditionalHandle where Self: StaticConditionalHandle {
   }
 }
 
-extension WindowOpenHandle {
-  var basic: BasicWindowOpenHandle.Type {
-    BasicWindowOpenHandle.self
-  }
-}
+//
+// extension WindowOpenHandle {
+//  var basic: BasicWindowOpenHandle.Type {
+//    BasicWindowOpenHandle.self
+//  }
+// }

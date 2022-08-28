@@ -1,7 +1,7 @@
 //
 // MachineDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
+// Created by Leo Dion on 8/28/22.
 //
 
 import BushelMachine
@@ -36,16 +36,6 @@ struct MachineDocument: FileDocument, Identifiable {
       return
     }
     machine.rootFileAccessor = machine.rootFileAccessor?.updatingWithURL(url) ?? URLAccessor(url: url)
-  }
-
-  func session(fromMachine machine: Machine) throws -> MachineSession {
-    let manager = (machine.restoreImage?.metadata.vmSystem).flatMap(AnyImageManagers.imageManager(forSystem:))
-
-    guard let manager = manager else {
-      throw DocumentError.undefinedType("No available manager.", machine.restoreImage?.metadata.vmSystem)
-    }
-
-    return try manager.session(fromMachine: machine)
   }
 
   static let readableContentTypes: [UTType] = [.virtualMachine]

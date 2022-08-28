@@ -30,14 +30,6 @@ struct RestoreImageLibraryDocumentView: View {
     initialSelectedFile.flatMap(optionalBindingFor(_:))
   }
 
-  var firstLibraryFileBinding: Binding<RestoreImageLibraryItemFile>? {
-    guard document.library.items.count > 0 else {
-      return nil
-    }
-
-    return $document.library.items[0]
-  }
-
   func bindingFor(_ file: RestoreImageLibraryItemFile) -> Binding<RestoreImageLibraryItemFile> {
     guard let index = document.library.items.firstIndex(of: file) else {
       preconditionFailure()

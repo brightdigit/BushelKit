@@ -1,13 +1,14 @@
 //
 // Downloader.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/12/22.
+// Created by Leo Dion on 8/21/22.
 //
 
 #if canImport(Combine)
   import Combine
   import Foundation
 
+  // periphery:ignore
   public class Downloader: NSObject, ObservableObject, URLSessionDownloadDelegate {
     struct DownloadRequest {
       let downloadSourceURL: URL
@@ -41,9 +42,9 @@
       }
     }
 
-    var isActive: Bool {
-      isCompleted == nil && task != nil
-    }
+//    var isActive: Bool {
+//      isCompleted == nil && task != nil
+//    }
 
     internal init(configuration: URLSessionConfiguration? = nil, queue: OperationQueue? = nil) {
       super.init()
@@ -79,18 +80,24 @@
 
     public func begin(from downloadSourceURL: URL, to destinationFileURL: URL) {
       requestSubject.send(.init(downloadSourceURL: downloadSourceURL, destinationFileURL: destinationFileURL))
-      // task.resume()
     }
 
+    // periphery:ignore
     public func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
       locationURLSubject.send(location)
     }
 
+    // periphery:ignore
     public func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didWriteData _: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
       DispatchQueue.main.async {
         self.totalBytesWritten = totalBytesWritten
         self.totalBytesExpectedToWrite = totalBytesExpectedToWrite
       }
+    }
+
+    deinit {
+      self.cancellable?.cancel()
+      self.cancellable = nil
     }
   }
 #endif
