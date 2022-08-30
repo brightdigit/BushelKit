@@ -1,7 +1,6 @@
 //
 // RestoreImageLibraryView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -9,7 +8,12 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct RestoreImageLibraryDocumentView: View {
-  internal init(document: Binding<RestoreImageLibraryDocument>, url: URL?, activeImports: [ActiveRestoreImageImport] = .init(), selected: RestoreImageLibraryItemFile? = nil) {
+  internal init(
+    document: Binding<RestoreImageLibraryDocument>,
+    url: URL?,
+    activeImports: [ActiveRestoreImageImport] = .init(),
+    selected: RestoreImageLibraryItemFile? = nil
+  ) {
     _url = .init(initialValue: url)
     _document = document
     _window = .init(wrappedValue: NSApplication.shared.keyWindow)
@@ -195,7 +199,11 @@ struct RestoreImageLibraryDocumentView: View {
               }
             } label: {
               HStack {
-                Image(systemName: "filemenu.and.selection").resizable().aspectRatio(1.0, contentMode: .fit).foregroundColor(.accentColor).frame(height: 24.0)
+                Image(systemName: "filemenu.and.selection")
+                  .resizable()
+                  .aspectRatio(1.0, contentMode: .fit)
+                  .foregroundColor(.accentColor)
+                  .frame(height: 24.0)
                 Spacer().frame(width: 12.0)
                 Text("Select a Restore Image").font(.custom("Raleway", size: 24.0))
               }
@@ -217,8 +225,35 @@ struct RestoreImageLibraryDocumentView: View {
 
 struct RestoreImageLibraryDocumentView_Previews: PreviewProvider {
   static var previews: some View {
-    RestoreImageLibraryDocumentView(document: .constant(RestoreImageLibraryDocument(library: .init(items: Self.data))), url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"), activeImports: [.init(sourceURL: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))], selected: .init(id: .init(), name: "Ventura Beta 3", metadata: .Previews.venturaBeta3, fileAccessor: URLAccessor(url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))))
+    RestoreImageLibraryDocumentView(
+      document: .constant(RestoreImageLibraryDocument(
+        library: .init(items: Self.data))
+      ),
+      url: .init(
+        fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"
+      ),
+      activeImports: [
+        .init(sourceURL: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))
+      ],
+      selected: .init(
+        id: .init(),
+        name: "Ventura Beta 3",
+        metadata: .Previews.venturaBeta3,
+        fileAccessor: URLAccessor(
+          url: .init(
+            fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"
+          )
+        )
+      )
+    )
 
-    RestoreImageLibraryDocumentView(document: .constant(RestoreImageLibraryDocument()), url: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"), activeImports: [], selected: nil)
+    RestoreImageLibraryDocumentView(
+      document: .constant(RestoreImageLibraryDocument()),
+      url: .init(
+        fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"
+      ),
+      activeImports: [],
+      selected: nil
+    )
   }
 }
