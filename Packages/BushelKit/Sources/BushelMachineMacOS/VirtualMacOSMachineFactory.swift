@@ -1,7 +1,6 @@
 //
 // VirtualMacOSMachineFactory.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/21/22.
 //
 
 import BushelMachine
@@ -71,8 +70,8 @@ class VirtualMacOSMachineFactory: VirtualMachineFactory {
     installer.install { result in
       self.setState(atPhase: .completed(result.map { machineConfigurationURL }), withPercentCompleted: installer.progress.fractionCompleted)
     }
-    progressObserver = installer.progress.observe(\.fractionCompleted, options: [.initial, .new]) {
-      progress, _ in
+    progressObserver = installer.progress.observe(\.fractionCompleted,
+                                                  options: [.initial, .new]) { progress, _ in
       self.setState(atPhase: .installing, withPercentCompleted: progress.fractionCompleted)
     }
   }

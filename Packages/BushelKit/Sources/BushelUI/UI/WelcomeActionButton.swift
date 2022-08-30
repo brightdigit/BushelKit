@@ -1,7 +1,6 @@
 //
 // WelcomeActionButton.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/21/22.
 //
 
 import SwiftUI
@@ -28,6 +27,10 @@ struct WelcomeActionButton: View {
 
 struct WelcomeActionButton_Previews: PreviewProvider {
   static var previews: some View {
-    WelcomeActionButton(imageSystemName: "plus.app", title: "Create a new Machine", description: "Create a new Virtual Machine for Testing Your App") {}
+    WelcomeActionButton(
+      imageSystemName: "plus.app",
+      title: "Create a new Machine",
+      description: "Create a new Virtual Machine for Testing Your App"
+    ) {}
   }
 }

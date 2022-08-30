@@ -1,12 +1,19 @@
 //
 // ImageMetadata.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/21/22.
 //
 
 import Foundation
 public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
-  public init(isImageSupported: Bool, buildVersion: String, operatingSystemVersion: OperatingSystemVersion, contentLength: Int, lastModified: Date, fileExtension: String, vmSystem: VMSystemID) {
+  public init(
+    isImageSupported: Bool,
+    buildVersion: String,
+    operatingSystemVersion: OperatingSystemVersion,
+    contentLength: Int,
+    lastModified: Date,
+    fileExtension: String,
+    vmSystem: VMSystemID
+  ) {
     self.isImageSupported = isImageSupported
     self.buildVersion = buildVersion
     self.operatingSystemVersion = operatingSystemVersion
@@ -25,6 +32,7 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
   public let fileExtension: String
 
   public var debugDescription: String {
+    // swiftlint:disable:next line_length
     "\(Self.self)(isImageSupported: \(isImageSupported), buildVersion: \"\(buildVersion)\", operatingSystemVersion: \(operatingSystemVersion.debugDescription), contentLength: \(contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(lastModified.timeIntervalSinceReferenceDate))"
   }
 }
