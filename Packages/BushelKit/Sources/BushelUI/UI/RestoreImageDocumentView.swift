@@ -1,7 +1,6 @@
 //
 // RestoreImageDocumentView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/28/22.
 //
 
 import BushelMachine

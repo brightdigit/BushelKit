@@ -1,7 +1,6 @@
 //
 // Configuration.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/28/22.
 //
 
 import Foundation
@@ -17,6 +16,7 @@ enum Configuration {
 
   static let prereleaseLabel: String? = "alpha"
 
+  // swiftlint:disable:next force_cast
   static let applicationMarketingVersionValue: String = Bundle.main.object(forInfoDictionaryKey: cfBundleShortVersionString) as! String
 
   static let applicationMarketingVersionText: String = {
@@ -27,6 +27,7 @@ enum Configuration {
     return "\(applicationMarketingVersionValue) \(prereleaseLabel) \(applicationBuildNumber)"
   }()
 
+  // swiftlint:disable:next force_cast
   static let applicationBuildString: String = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
 
   static let applicationBuildNumber: Int = .init(applicationBuildString)!
@@ -35,4 +36,10 @@ enum Configuration {
     var hexString = String(applicationBuildNumber, radix: 16)
     return String(String(repeating: "0", count: 8).appending(hexString).suffix(8))
   }()
+
+  enum URLs {
+    static let privacyPolicy: URL = .init(string: "https://getbushel.app/privacy-policy")!
+    static let termsOfUse: URL = .init(string: "https://getbushel.app/terms-of-use")!
+    static let help: URL = .init(string: "https://getbushel.app/help")!
+  }
 }

@@ -1,7 +1,6 @@
 //
 // Downloader.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/21/22.
 //
 
 #if canImport(Combine)
@@ -88,7 +87,12 @@
     }
 
     // periphery:ignore
-    public func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didWriteData _: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    public func urlSession(
+      _: URLSession, downloadTask _: URLSessionDownloadTask,
+      didWriteData _: Int64,
+      totalBytesWritten: Int64,
+      totalBytesExpectedToWrite: Int64
+    ) {
       DispatchQueue.main.async {
         self.totalBytesWritten = totalBytesWritten
         self.totalBytesExpectedToWrite = totalBytesExpectedToWrite

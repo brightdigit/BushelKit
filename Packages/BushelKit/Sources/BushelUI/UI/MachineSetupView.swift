@@ -1,7 +1,6 @@
 //
 // MachineSetupView.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/13/22.
 //
 
 import BushelMachine
@@ -75,6 +74,7 @@ struct MachineSetupView: View {
         self.machineRestoreImage = document.machine.restoreImage.map(MachineRestoreImage.init(file:))
       }
     }
+
     .sheet(item: self.$installationObject.phaseProgress, onDismiss: {
       DispatchQueue.main.async {
         // self.document.osInstallationCompleted()
@@ -82,9 +82,9 @@ struct MachineSetupView: View {
         self.showSaveProgress = true
       }
 
-    }) { phase in
+    }, content: { phase in
       MachineFactoryView(phaseProgress: phase)
-    }.sheet(isPresented: self.$showSaveProgress) {
+    }).sheet(isPresented: self.$showSaveProgress) {
       ProgressView {
         Text("Saving New Machine...")
       }

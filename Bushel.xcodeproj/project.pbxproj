@@ -101,10 +101,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B301F261286402160038E9F7 /* Build configuration list for PBXNativeTarget "Bushel" */;
 			buildPhases = (
+				B34D33E428A9CC4C007637E6 /* Lint and Format */,
 				B301F248286402160038E9F7 /* Sources */,
 				B301F249286402160038E9F7 /* Frameworks */,
 				B301F24A286402160038E9F7 /* Resources */,
-				B34D33E428A9CC4C007637E6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -166,7 +166,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B34D33E428A9CC4C007637E6 /* ShellScript */ = {
+		B34D33E428A9CC4C007637E6 /* Lint and Format */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -176,13 +176,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Lint and Format";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " cd Packages/BushelKit\n ~/.mint/bin/periphery scan  --skip-build \n";
+			shellScript = " pushd Packages/BushelKit\n swiftlint autocorrect\n swiftformat . \n swiftlint\n swiftformat . --lint\n popd\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -213,7 +214,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bushel/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright (c) 2022 BrightDigit";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -242,7 +243,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bushel/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright (c) 2022 BrightDigit";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
