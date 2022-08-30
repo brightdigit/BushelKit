@@ -1,7 +1,6 @@
 //
 // BushelScene.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/28/22.
 //
 
 import BushelMachine
@@ -9,18 +8,25 @@ import BushelMachineMacOS
 import SwiftUI
 
 struct BushelScene: Scene {
+  @Environment(\.openURL) private var openURL: OpenURLAction
+
   static let imageManagers = [
     VirtualizationImageManager.self
   ]
   let recentDocumentsObject = RecentDocumentsObject()
 
   init() {
+    // swiftlint:disable:next force_try
     try! AnyImageManagers.load(Self.imageManagers)
   }
 
   var body: some Scene {
-    attemptSingleWindowFor("Welcome to Bushel", id: "welcome") {
-      WelcomeView().environmentObject(recentDocumentsObject).frame(width: 950, height: 450).presentedWindowStyle(.hiddenTitleBar).presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
+    WindowGroup {
+      WelcomeView()
+        .environmentObject(recentDocumentsObject)
+        .frame(width: 950, height: 450)
+        .presentedWindowStyle(.hiddenTitleBar)
+        .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
     }.windowsHandle(BasicWindowOpenHandle.welcome).windowStyle(.hiddenTitleBar).disableResizability()
     DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
       RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
@@ -51,15 +57,29 @@ struct BushelScene: Scene {
           Windows.openWindow(withHandle: BasicWindowOpenHandle.welcome)
         }
       }
+      CommandGroup(replacing: .help) {
+        Button("Bushel Help") {
+          openURL(Configuration.URLs.help)
+        }
+      }
     }
     DocumentGroup(viewing: RestoreImageDocument.self) { file in
       RestoreImageDocumentView(document: file.document, manager: VirtualizationImageManager(), url: file.fileURL)
     }
-    attemptSingleWindowFor("macOS Images", id: "rris-collection") {
+    WindowGroup(Text("Remote Restore Images"), id: "Remote Restore Images") {
       RrisCollectionView()
     }.windowsHandle(BasicWindowOpenHandle.remoteSources)
     WindowGroup {
       SessionView()
     }.windowsHandle(MachineSessionWindowHandle.self)
+    Settings {
+      SettingsView()
+    }
+    WindowGroup {
+      OnboardingView()
+    }.windowsHandle(BasicWindowOpenHandle.onboarding)
+    WindowGroup {
+      PurchaseView()
+    }.windowsHandle(BasicWindowOpenHandle.purchase)
   }
 }

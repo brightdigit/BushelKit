@@ -1,7 +1,6 @@
 //
 // VirtualizationMacOSRestoreImage.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/21/22.
 //
 
 import BushelMachine
@@ -46,6 +45,11 @@ public struct VirtualizationMacOSRestoreImage: ImageContainer {
       throw MissingError.needDefinition((headers, "Last-Modified"))
     }
 
-    self.init(contentLength: contentLength, lastModified: lastModified, vzRestoreImage: vzRestoreImage, location: fileAccessor.map(ImageLocation.file) ?? .remote(vzRestoreImage.url))
+    self.init(
+      contentLength: contentLength,
+      lastModified: lastModified,
+      vzRestoreImage: vzRestoreImage,
+      location: fileAccessor.map(ImageLocation.file) ?? .remote(vzRestoreImage.url)
+    )
   }
 }

@@ -1,7 +1,6 @@
 //
 // RestoreImageLibraryDocument.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/21/22.
 //
 
 import BushelMachine
@@ -111,7 +110,10 @@ struct RestoreImageLibraryDocument: FileDocument, BlankFileDocument {
     let restoreImages = await withTaskGroup(of: RestoreImage?.self) { group -> [RestoreImage?] in
       for (name, imageWrapper) in imageWrappers {
         let fileName = imageWrapper.filename ?? name
-        let accessor = FileWrapperAccessor(fileWrapper: imageWrapper, url: url?.appendingPathComponent("Restore Images").appendingPathComponent(fileName))
+        let accessor = FileWrapperAccessor(
+          fileWrapper: imageWrapper,
+          url: url?.appendingPathComponent("Restore Images").appendingPathComponent(fileName)
+        )
         let imageManagers = AnyImageManagers.all
         group.addTask {
           for manager in imageManagers {

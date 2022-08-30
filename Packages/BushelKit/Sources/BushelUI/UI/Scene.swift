@@ -1,7 +1,6 @@
 //
 // Scene.swift
 // Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/28/22.
 //
 
 import SwiftUI
@@ -15,6 +14,7 @@ extension Scene {
     handlesExternalEvents(matching: .init(handle.conditions))
   }
 
+  @available(*, deprecated)
   func attemptSingleWindowFor<Content: View>(_ title: String, id: String, @ViewBuilder content: @escaping () -> Content) -> some Scene {
     #if swift(>=5.7)
       if #available(macOS 13.0, *) {
