@@ -175,12 +175,6 @@ struct RestoreImageView: View {
           }
         }
       })
-
-      .onAppear {
-        #if DEBUG
-          debugPrint(self.image.metadata)
-        #endif
-      }
     }
   }
 }
