@@ -7,6 +7,7 @@ import BushelMachine
 import SwiftUI
 
 struct MachineSetupView: View {
+  @Environment(\.dismiss) var dismiss: DismissAction
   @State var machineRestoreImage: MachineRestoreImage?
   @State var showSaveProgress: Bool = false
   @State var isReadyToSave: Bool = false
@@ -27,21 +28,29 @@ struct MachineSetupView: View {
           }
         }.padding()
       }
-      Button {
-        Task {
-          let factory: VirtualMachineFactory
-          do {
-            factory = try await document.machine.build()
-          } catch {
-            dump(error)
-            return
-          }
-          installationObject.setupInstaller(factory)
-          factory.beginBuild()
-        }
+      HStack {
+        Button {
+          dismiss()
 
-      } label: {
-        Text("Build Machine")
+        } label: {
+          Text("Cancel")
+        }
+        Button {
+          Task {
+            let factory: VirtualMachineFactory
+            do {
+              factory = try await document.machine.build()
+            } catch {
+              dump(error)
+              return
+            }
+            installationObject.setupInstaller(factory)
+            factory.beginBuild()
+          }
+
+        } label: {
+          Text("Build Machine")
+        }
       }
 
     }.onReceive(self.installationObject.$phaseProgress, perform: { phase in

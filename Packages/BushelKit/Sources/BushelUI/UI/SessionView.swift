@@ -8,30 +8,58 @@ import Combine
 import SwiftUI
 
 struct SessionView: View {
+  @Environment(\.dismiss) var dismiss: DismissAction
   @StateObject var sessionManager = SessionObject()
+
   var body: some View {
     Group {
-      switch (self.sessionManager.sessionStartResult, self.sessionManager.sessionResult) {
-      case let (.success, .success(session)):
+      switch (self.sessionManager.lastError, self.sessionManager.machineState, self.sessionManager.session) {
+      case let (.some(error), _, _):
+        Text(error.localizedDescription)
+      case let (.none, _, .some(session)):
         session.view
-      case let (.failure(error), _):
-        Text(error.localizedDescription)
-      case let (_, .failure(error)):
-        Text(error.localizedDescription)
-
-      case (_, .none):
+      case (.none, _, .none):
         ProgressView {
           Text("Creating Session...")
         }
+      }
+    }.toolbar {
+      ToolbarItemGroup {
+        Button {
+          self.sessionManager.beginPause()
+        } label: {
+          Image(systemName: "pause.fill")
+        }
 
-      case (.none, .some(.success)):
-        ProgressView {
-          Text("Starting Session...")
+        Button {
+          self.sessionManager.beginResume()
+        } label: {
+          Image(systemName: "playpause.fill")
+        }
+        Button {
+          self.sessionManager.requestStop()
+        } label: {
+          Image(systemName: "stop.fill")
+        }
+
+        Button {
+          if self.sessionManager.externalURL == nil {
+            dismiss()
+          } else if self.sessionManager.machineState == nil {
+            dismiss()
+          } else if self.sessionManager.machineState == .stopped {
+            dismiss()
+          } else {
+            self.sessionManager.beginStop()
+          }
+
+        } label: {
+          Image(systemName: "xmark.square.fill")
         }
       }
-    }.onOpenURL { externalURL in
+    }
+    .onOpenURL { externalURL in
       self.sessionManager.externalURL = externalURL
-      dump(externalURL)
     }
   }
 }

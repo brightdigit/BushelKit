@@ -7,9 +7,17 @@
   import SwiftUI
 #endif
 
-public protocol MachineSession {
+public protocol MachineSession: AnyObject {
+  var state: MachineState { get }
   func begin() async throws
+  func requestShutdown() throws
   var delegate: MachineSessionDelegate? { get set }
+
+  func stop() async throws
+  func pause() async throws
+  func resume() async throws
+
+  var allowedStateAction: StateAction { get }
   #if canImport(SwiftUI)
     var view: AnyView { get }
   #endif
