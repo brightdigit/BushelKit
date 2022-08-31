@@ -69,9 +69,15 @@ struct BushelScene: Scene {
     WindowGroup(Text("Remote Restore Images"), id: "Remote Restore Images") {
       RrisCollectionView()
     }.windowsHandle(BasicWindowOpenHandle.remoteSources)
-    WindowGroup {
+    WindowGroup(id: MachineSessionWindowHandle.host) {
       SessionView()
-    }.windowsHandle(MachineSessionWindowHandle.self)
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { _ in
+          self.hideMiniButton()
+        })
+        .presentedWindowStyle(.hiddenTitleBar)
+        .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
+
+    }.windowsHandle(MachineSessionWindowHandle.self).windowStyle(.hiddenTitleBar)
     Settings {
       SettingsView()
     }
@@ -81,5 +87,13 @@ struct BushelScene: Scene {
     WindowGroup {
       PurchaseView()
     }.windowsHandle(BasicWindowOpenHandle.purchase)
+  }
+
+  func hideMiniButton() {
+    for window in NSApplication.shared.windows {
+      if window.identifier?.rawValue.hasPrefix(MachineSessionWindowHandle.host) == true {
+        window.standardWindowButton(NSWindow.ButtonType.closeButton)?.isEnabled = false
+      }
+    }
   }
 }
