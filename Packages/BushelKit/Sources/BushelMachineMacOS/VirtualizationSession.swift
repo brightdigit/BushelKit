@@ -9,6 +9,31 @@ import SwiftUI
 import Virtualization
 
 class VirtualizationSession: NSObject, MachineSession, VZVirtualMachineDelegate {
+  @MainActor
+  var state: BushelMachine.MachineState {
+    .init(vzMachineState: machine.state)
+  }
+
+  @MainActor
+  func stop() async throws {
+    try await machine.stop()
+  }
+
+  @MainActor
+  func pause() async throws {
+    try await machine.pause()
+  }
+
+  @MainActor
+  func resume() async throws {
+    try await machine.resume()
+  }
+
+  @MainActor
+  var allowedStateAction: StateAction {
+    .init(machine: machine)
+  }
+
   internal init(delegate: MachineSessionDelegate? = nil, machine: VZVirtualMachine) {
     self.delegate = delegate
     self.machine = machine
@@ -18,7 +43,8 @@ class VirtualizationSession: NSObject, MachineSession, VZVirtualMachineDelegate 
 
   weak var delegate: BushelMachine.MachineSessionDelegate?
 
-  let machine: VZVirtualMachine
+  @MainActor let machine: VZVirtualMachine
+
   @MainActor
   public func begin() async throws {
     try await withCheckedThrowingContinuation { continuation in
@@ -29,8 +55,25 @@ class VirtualizationSession: NSObject, MachineSession, VZVirtualMachineDelegate 
     }
   }
 
+  @MainActor
+  func requestShutdown() throws {
+    try machine.requestStop()
+  }
+
   public var view: AnyView {
     AnyView(VirtualizationMachineView(virtualMachine: machine))
+  }
+
+  func virtualMachine(_: VZVirtualMachine, didStopWithError error: Error) {
+    delegate?.session(self, didStopWithError: error)
+  }
+
+  func virtualMachine(_: VZVirtualMachine, networkDevice: VZNetworkDevice, attachmentWasDisconnectedWithError error: Error) {
+    delegate?.session(self, device: networkDevice, attachmentWasDisconnectedWithError: error)
+  }
+
+  func guestDidStop(_: VZVirtualMachine) {
+    delegate?.sessionDidStop(self)
   }
 }
 

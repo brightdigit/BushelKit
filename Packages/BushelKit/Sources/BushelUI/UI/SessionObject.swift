@@ -10,38 +10,126 @@ import SwiftUI
 class SessionObject: NSObject, ObservableObject, MachineSessionDelegate {
   @Published var externalURL: URL?
   @Published var machineFileURL: URL?
-  @Published var sessionResult: Result<MachineSession, Error>?
-  @Published var sessionStartResult: Result<Void, Error>?
+  @Published var session: MachineSession?
 
-  func sessionDidStop(_: BushelMachine.MachineSession) {}
+  @Published var machineState: MachineState?
+  @Published var machineAllowedStateActions = StateAction()
 
-  func session(_: BushelMachine.MachineSession, didStopWithError _: Error) {}
+  @Published var lastError: Error?
 
-  func session(_: BushelMachine.MachineSession, device _: BushelMachine.MachineNetworkDevice, attachmentWasDisconnectedWithError _: Error) {}
+  private var cancellables = [AnyCancellable]()
+
+  func updateState(fromSession session: MachineSession?, withError error: Error?) {
+    DispatchQueue.main.async {
+      self.machineState = session?.state
+      self.machineAllowedStateActions = session?.allowedStateAction ?? .init()
+      self.lastError = error
+    }
+  }
+
+  func sessionDidStop(_ session: BushelMachine.MachineSession) {
+    updateState(fromSession: session, withError: nil)
+  }
+
+  func session(_ session: BushelMachine.MachineSession, didStopWithError error: Error) {
+    updateState(fromSession: session, withError: error)
+  }
+
+  func session(_ session: BushelMachine.MachineSession,
+               device _: BushelMachine.MachineNetworkDevice,
+               attachmentWasDisconnectedWithError error: Error) {
+    updateState(fromSession: session, withError: error)
+  }
+
+  func requestStop() {
+    guard let session = session else {
+      updateState(fromSession: nil, withError: MachineError.undefinedType("no session available", nil))
+      return
+    }
+    do {
+      try session.requestShutdown()
+    } catch {
+      updateState(fromSession: session, withError: error)
+    }
+  }
+
+  func beginPause() {
+    guard let session = session else {
+      updateState(fromSession: nil, withError: MachineError.undefinedType("no session available", nil))
+      return
+    }
+    Task {
+      do {
+        try await session.pause()
+      } catch {
+        self.updateState(fromSession: session, withError: error)
+      }
+    }
+  }
+
+  func beginResume() {
+    guard let session = session else {
+      updateState(fromSession: nil, withError: MachineError.undefinedType("no session available", nil))
+      return
+    }
+    Task {
+      do {
+        try await session.resume()
+      } catch {
+        self.updateState(fromSession: session, withError: error)
+      }
+    }
+  }
+
+  func beginStop() {
+    guard let session = session else {
+      updateState(fromSession: nil, withError: MachineError.undefinedType("no session available", nil))
+      return
+    }
+    Task {
+      do {
+        try await session.stop()
+      } catch {
+        self.updateState(fromSession: session, withError: error)
+      }
+    }
+  }
+
+  func beginStart() {
+    guard let session = session else {
+      updateState(fromSession: nil, withError: MachineError.undefinedType("no session available", nil))
+      return
+    }
+    Task {
+      do {
+        try await session.begin()
+      } catch {
+        self.updateState(fromSession: session, withError: error)
+      }
+    }
+  }
+
+  func setupSession(_ session: MachineSession) {
+    self.session = session
+    session.delegate = self
+    beginStart()
+  }
 
   override init() {
     super.init()
     $externalURL.compactMap(\.?.relativePath).map(URL.init(fileURLWithPath:)).assign(to: &$machineFileURL)
 
-    $machineFileURL.compactMap { $0 }.tryMap(Machine.loadFromURL(_:)).tryMap {
-      try $0.createMachine()
-    }.map { session in
-      session.map(Result.success) ?? Result.failure(MachineError.undefinedType("no session", nil))
-    }.catch { error in
-      Just(Result.failure(error))
-    }.assign(to: &$sessionResult)
+    $machineFileURL.compactMap { $0 }
 
-    let sessionPublisher = $sessionResult.compactMap {
-      try? $0?.get()
-    }
-
-    sessionPublisher.map { (session: MachineSession) in
-
-      Future(operation: { () in
-
-        try await session.begin()
-
-      })
-    }.switchToLatest().map { $0 as Optional }.receive(on: DispatchQueue.main).assign(to: &$sessionStartResult)
+      .tryMap(Machine.loadFromURL(_:)).tryCompactMap {
+        try $0.createMachine()
+      }.result().sink { result in
+        switch result {
+        case let .failure(error):
+          self.updateState(fromSession: nil, withError: error)
+        case let .success(session):
+          self.setupSession(session)
+        }
+      }.store(in: &cancellables)
   }
 }

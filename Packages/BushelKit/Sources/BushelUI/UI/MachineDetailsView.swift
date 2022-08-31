@@ -18,7 +18,6 @@ struct MachineDetailsView: View {
   @Binding var document: MachineDocument
   var body: some View {
     VStack {
-      Text("hello world")
       switch self.validationResult {
       case .success:
         Button("Start") {

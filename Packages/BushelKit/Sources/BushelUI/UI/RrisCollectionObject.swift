@@ -14,7 +14,7 @@ class RrisCollectionObject: ObservableObject {
   @Published var imageListResult: Result<[RestoreImage], Error>?
 
   init() {
-    $selectedSource.share().print().map { _ in nil }.receive(on: DispatchQueue.main).assign(to: &$imageListResult)
+    $selectedSource.share().map { _ in nil }.receive(on: DispatchQueue.main).assign(to: &$imageListResult)
 
     $imageListResult.combineLatest($selectedSource).compactMap { imageListResult, source in
       imageListResult == nil ? self.sources.first(where: { $0.id == source }) : nil

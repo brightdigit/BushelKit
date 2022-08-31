@@ -36,21 +36,18 @@ enum Windows {
   }
 
   static func openDocumentAtURL(_ url: URL, andDisplay display: Bool = true) {
-    print("start:", url)
     let documentController = NSDocumentController.shared
 
     documentController.openDocument(withContentsOf: url, display: display) { document, alreadyDisplayed, error in
-      print("document:", url)
+
       if let document = document {
-        print("isdocument:", url)
         guard !alreadyDisplayed else {
           return
         }
-        print("adddocument:", url)
+
         documentController.addDocument(document)
         document.makeWindowControllers()
-        // document.showWindows()
-        print("windows:", url)
+
       } else {
         dump(error)
       }
