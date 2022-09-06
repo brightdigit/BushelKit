@@ -7,7 +7,7 @@ settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "0.0.1"
-  CURRENT_PROJECT_VERSION: "1"
+  CURRENT_PROJECT_VERSION: 25
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
 packages:
@@ -24,6 +24,7 @@ targets:
     info:
       path: Support/macOS/Info.plist
       properties:
+        CFBundlePackageType: APPL
         ITSAppUsesNonExemptEncryption: false
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -31,20 +32,20 @@ targets:
         LSApplicationCategoryType: public.app-category.developer-tools
         ATSApplicationFontsPath: .
         CFBundleDocumentTypes:
-            - { CFBundleTypeName: 'macOS Restore Image', CFBundleTypeRole: Viewer, LSHandlerRank: Alternate, LSItemContentTypes: [com.apple.iphone.ipsw, com.apple.itunes.ipsw] }
-            - { CFBundleTypeName: 'Bushel Virtual Machine', CFBundleTypeRole: Editor, LSHandlerRank: Owner, LSItemContentTypes: [com.brightdigit.bushel-vm], NSUbiquitousDocumentUserActivityType: $(PRODUCT_BUNDLE_IDENTIFIER).bushel-vm }
-            - { CFBundleTypeName: 'Bushel Image Library', CFBundleTypeRole: Editor, LSHandlerRank: Owner, LSItemContentTypes: [com.brightdigit.bushel-rilib], NSUbiquitousDocumentUserActivityType: $(PRODUCT_BUNDLE_IDENTIFIER).bushel-rilib }
+          - {CFBundleTypeName: 'macOS Restore Image', CFBundleTypeRole: Viewer, LSHandlerRank: Alternate, LSItemContentTypes: [com.apple.iphone.ipsw, com.apple.itunes.ipsw]}
+          - {CFBundleTypeName: 'Bushel Virtual Machine', CFBundleTypeRole: Editor, LSHandlerRank: Owner, LSItemContentTypes: [com.brightdigit.bushel-vm], NSUbiquitousDocumentUserActivityType: $(PRODUCT_BUNDLE_IDENTIFIER).bushel-vm}
+          - {CFBundleTypeName: 'Bushel Image Library', CFBundleTypeRole: Editor, LSHandlerRank: Owner, LSItemContentTypes: [com.brightdigit.bushel-rilib], NSUbiquitousDocumentUserActivityType: $(PRODUCT_BUNDLE_IDENTIFIER).bushel-rilib}
         CFBundleURLTypes:
-            - { CFBundleURLSchemes: [bushel] }
+          - {CFBundleURLSchemes: [bushel]}
         UIAppFonts:
-            - Raleway-VariableFont_wght.ttf
-            - Raleway-Italic-VariableFont_wght.ttf
+          - Raleway-VariableFont_wght.ttf
+          - Raleway-Italic-VariableFont_wght.ttf
         UTExportedTypeDeclarations:
-            - { UTTypeConformsTo: [com.apple.package], UTTypeDescription: 'Bushel Virtual Machine', UTTypeIcons: { UTTypeIconBackgroundName: Machine-Fill, UTTypeIconBadgeName: Machine-Icon, UTTypeIconText: machine }, UTTypeIdentifier: com.brightdigit.bushel-vm, UTTypeTagSpecification: { public.filename-extension: [bshvm] } }
-            - { UTTypeConformsTo: [com.apple.package], UTTypeDescription: 'Bushel Image Library', UTTypeIcons: { UTTypeIconBackgroundName: ImageLibrary-Fill, UTTypeIconBadgeName: ImageLibrary-Icon, UTTypeIconText: images }, UTTypeIdentifier: com.brightdigit.bushel-rilib, UTTypeTagSpecification: { public.filename-extension: [bshrilib] } }
+          - {UTTypeConformsTo: [com.apple.package], UTTypeDescription: 'Bushel Virtual Machine', UTTypeIcons: {UTTypeIconBackgroundName: Machine-Fill, UTTypeIconBadgeName: Machine-Icon, UTTypeIconText: machine}, UTTypeIdentifier: com.brightdigit.bushel-vm, UTTypeTagSpecification: {public.filename-extension: [bshvm]}}
+          - {UTTypeConformsTo: [com.apple.package], UTTypeDescription: 'Bushel Image Library', UTTypeIcons: {UTTypeIconBackgroundName: ImageLibrary-Fill, UTTypeIconBadgeName: ImageLibrary-Icon, UTTypeIconText: images}, UTTypeIdentifier: com.brightdigit.bushel-rilib, UTTypeTagSpecification: {public.filename-extension: [bshrilib]}}
         UTImportedTypeDeclarations:
-            - { UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.iphone.ipsw, UTTypeTagSpecification: { public.filename-extension: [ipsw] } }
-            - { UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.itunes.ipsw, UTTypeTagSpecification: { public.filename-extension: [ipsw] } }
+          - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.iphone.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
+          - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.itunes.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
     sources:
       - path: "Support/macOS"
         name: macOS
@@ -70,6 +71,7 @@ targets:
         com.apple.security.files.user-selected.read-write: true
         com.apple.security.network.client: true
         com.apple.security.virtualization: true
+        com.apple.vm.networking: true
   Bushel-UITests:
     type: bundle.ui-testing
     platform: macOS
@@ -83,4 +85,3 @@ targets:
     settings:
       TEST_TARGET_NAME: Bushel
       GENERATE_INFOPLIST_FILE: true
-
