@@ -3,35 +3,39 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import BushelMachine
-import SwiftUI
+#if canImport(SwiftUI)
+  import BushelMachine
+  import SwiftUI
 
-struct SourceImageCollectionView: View {
-  internal init(source: Rris) {
-    _collectionObject = StateObject(wrappedValue: RrisImageCollectionObject(source: source))
-  }
+  struct SourceImageCollectionView: View {
+    internal init(source: Rris) {
+      _collectionObject = StateObject(wrappedValue: RrisImageCollectionObject(source: source))
+    }
 
-  @StateObject var collectionObject: RrisImageCollectionObject
-  var body: some View {
-    Group {
-      switch self.collectionObject.imageListResult {
-      case let .success(images):
-        ForEach(images) { image in
-          RestoreImageView(image: image)
+    @StateObject var collectionObject: RrisImageCollectionObject
+    var body: some View {
+      Group {
+        switch self.collectionObject.imageListResult {
+        case let .success(images):
+          ForEach(images) { image in
+            RestoreImageView(image: image)
+          }
+        case let .failure(error):
+          Text(error.localizedDescription)
+        case .none:
+          ProgressView().padding(20.0)
         }
-      case let .failure(error):
-        Text(error.localizedDescription)
-      case .none:
-        ProgressView().padding(20.0)
+      }.onAppear {
+        self.collectionObject.loadImages()
       }
-    }.onAppear {
-      self.collectionObject.loadImages()
     }
   }
-}
 
-struct SourceImageCollectionView_Previews: PreviewProvider {
-  static var previews: some View {
-    SourceImageCollectionView(source: .apple)
-  }
-}
+  #if canImport(Virtualization) && arch(arm64)
+    struct SourceImageCollectionView_Previews: PreviewProvider {
+      static var previews: some View {
+        SourceImageCollectionView(source: .apple)
+      }
+    }
+  #endif
+#endif

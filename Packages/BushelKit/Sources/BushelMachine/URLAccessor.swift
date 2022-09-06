@@ -3,8 +3,7 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import SwiftUI
-import UniformTypeIdentifiers
+import Foundation
 
 public struct URLAccessor: FileAccessor {
   public init(url: URL) {
