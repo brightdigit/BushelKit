@@ -30,8 +30,16 @@ let package = Package(
       name: "BushelMachine"
     ),
     .testTarget(
-      name: "BushelKitTests",
+      name: "BushelUITests",
       dependencies: ["BushelUI"]
+    ),
+    .testTarget(
+      name: "BushelMachineMacOSTests",
+      dependencies: ["BushelMachineMacOS"]
+    ),
+    .testTarget(
+      name: "BushelMachineTests",
+      dependencies: ["BushelMachine"]
     )
   ]
 )

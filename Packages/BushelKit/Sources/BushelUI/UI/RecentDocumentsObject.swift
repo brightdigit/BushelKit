@@ -3,23 +3,26 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import SwiftUI
+#if canImport(AppKit) && canImport(SwiftUI)
+  import AppKit
+  import Foundation
 
-class RecentDocumentsObject: ObservableObject {
-  init(recentDocumentURLs _: [URL] = [], isPreview: Bool = false) {
-    recentDocumentURLs = []
+  class RecentDocumentsObject: ObservableObject {
+    init(recentDocumentURLs _: [URL] = [], isPreview: Bool = false) {
+      recentDocumentURLs = []
 
-    guard !isPreview else {
-      return
+      guard !isPreview else {
+        return
+      }
+      DispatchQueue.main.async {
+        let controller = NSDocumentController.shared
+        self.controller = controller
+        self.recentDocumentURLs = controller.recentDocumentURLs
+        controller.publisher(for: \.recentDocumentURLs).receive(on: DispatchQueue.main).assign(to: &self.$recentDocumentURLs)
+      }
     }
-    DispatchQueue.main.async {
-      let controller = NSDocumentController.shared
-      self.controller = controller
-      self.recentDocumentURLs = controller.recentDocumentURLs
-      controller.publisher(for: \.recentDocumentURLs).receive(on: DispatchQueue.main).assign(to: &self.$recentDocumentURLs)
-    }
+
+    @Published var recentDocumentURLs: [URL]
+    var controller: NSDocumentController!
   }
-
-  @Published var recentDocumentURLs: [URL]
-  var controller: NSDocumentController!
-}
+#endif

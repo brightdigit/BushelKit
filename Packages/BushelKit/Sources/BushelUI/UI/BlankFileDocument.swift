@@ -3,11 +3,11 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import AppKit
-import SwiftUI
-import UniformTypeIdentifiers
+#if canImport(UniformTypeIdentifiers)
+  import UniformTypeIdentifiers
 
-protocol BlankFileDocument {
-  static var allowedContentTypes: [UTType] { get }
-  static func saveBlankDocumentAt(_ url: URL) throws
-}
+  protocol BlankFileDocument {
+    static var allowedContentTypes: [UTType] { get }
+    static func saveBlankDocumentAt(_ url: URL) throws
+  }
+#endif

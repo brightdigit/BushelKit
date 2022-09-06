@@ -1,0 +1,57 @@
+stages:
+  - build
+  - deploy
+
+.build_spm_template: &build_spm_template
+  stage: build
+  script:
+    - cd Packages/BushelKit
+    - swift build
+    - swift test
+    #- swift run swiftformat --lint .
+    #- swift run swiftlint
+
+build spm macos:
+  tags:
+      - macos
+  <<: *build_spm_template
+
+build spm linux 5.6.2:
+  image: swift:5.6.2
+  <<: *build_spm_template
+
+build spm linux 5.7:
+  image: swiftlang/swift:nightly-5.7-jammy
+  <<: *build_spm_template
+
+deploy:
+  stage: deploy
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  tags:
+    - macos  
+  # only:
+  #   - main
+  #   - /^release\/*/
+  #   - feature/fix-ci
+  # variables:
+  #   SNAPSHOT_PW: $SNAPSHOT_PW
+  script:
+    - rbenv rehash
+    ##- rbenv exec bundle config set path 'vendor/ruby'
+    - rbenv exec bundle install
+    # - speculid process Assets/Speculid/AppIcon.speculid
+    # - speculid process Assets/Speculid/Logo.speculid
+    - xcodegen
+    - rbenv exec bundle exec fastlane beta
+    # - CURRENT=$(yq eval '.settings .CURRENT_PROJECT_VERSION' project.yml)
+    # - ((CURRENT++))
+    # - yq eval ".settings.CURRENT_PROJECT_VERSION = \"${CURRENT}\"" -i project.yml
+    # - git remote set-url --push origin git@gitlab.com:BrightDigit/Heartwitch/SwiftApp.git
+    # - git add project.yml
+    # - git commit -m "updating project number to $CURRENT [skip ci]"
+    # - git push origin HEAD:$CI_COMMIT_REF_NAME

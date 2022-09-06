@@ -14,6 +14,14 @@ enum Configuration {
     return components
   }()
 
+  #if os(Linux)
+    static let bundleVersionKey: String = "CFBundleVersion"
+  #else
+
+    static let bundleVersionKey: String = kCFBundleVersionKey as String
+
+  #endif
+
   static let prereleaseLabel: String? = "alpha"
 
   // swiftlint:disable:next force_cast
@@ -28,7 +36,7 @@ enum Configuration {
   }()
 
   // swiftlint:disable:next force_cast
-  static let applicationBuildString: String = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
+  static let applicationBuildString: String = Bundle.main.object(forInfoDictionaryKey: bundleVersionKey) as! String
 
   static let applicationBuildNumber: Int = .init(applicationBuildString)!
 

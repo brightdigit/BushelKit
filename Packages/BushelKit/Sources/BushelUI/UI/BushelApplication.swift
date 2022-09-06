@@ -3,14 +3,16 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import SwiftUI
+#if canImport(SwiftUI)
+  import SwiftUI
 
-// periphery:ignore
-public protocol BushelApplication: App {}
+  // periphery:ignore
+  public protocol BushelApplication: App {}
 
-// periphery:ignore
-public extension BushelApplication {
-  var body: some Scene {
-    BushelScene()
+  // periphery:ignore
+  public extension BushelApplication {
+    var body: some Scene {
+      BushelScene()
+    }
   }
-}
+#endif
