@@ -3,14 +3,16 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import BushelMachine
-import Foundation
-import SwiftUI
+#if canImport(SwiftUI)
+  import BushelMachine
+  import Foundation
+  import SwiftUI
 
-extension Image {
-  init(operatingSystemVersion: OperatingSystemVersion) {
-    let codeName = OperatingSystemCodeName(operatingSystemVersion: operatingSystemVersion)
-    let imageName = codeName?.name
-    self.init(imageName ?? "Big Sur")
+  extension Image {
+    init(operatingSystemVersion: OperatingSystemVersion) {
+      let codeName = OperatingSystemCodeName(operatingSystemVersion: operatingSystemVersion)
+      let imageName = codeName?.name
+      self.init(imageName ?? "Big Sur")
+    }
   }
-}
+#endif

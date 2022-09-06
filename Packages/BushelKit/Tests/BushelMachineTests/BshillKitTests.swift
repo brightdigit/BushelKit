@@ -3,7 +3,7 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-@testable import BshillKit
+@testable import BushelMachine
 import XCTest
 
 final class BshillKitTests: XCTestCase {
@@ -11,6 +11,6 @@ final class BshillKitTests: XCTestCase {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct
     // results.
-    XCTAssertEqual(BshillKit().text, "Hello, World!")
+    // XCTAssertEqual(BshillKit().text, "Hello, World!")
   }
 }
