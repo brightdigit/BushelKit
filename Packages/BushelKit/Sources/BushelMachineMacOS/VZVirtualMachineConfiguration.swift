@@ -3,7 +3,7 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-#if arch(arm64)
+#if arch(arm64) && canImport(Virtualization)
   import BushelMachine
   import Virtualization
 

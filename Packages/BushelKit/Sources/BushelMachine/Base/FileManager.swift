@@ -51,6 +51,14 @@ public extension FileManager {
       #endif
       return tempFile
     }
+  #else
+    func createTemporaryFile(withPathExtension pathExtension: String) -> URL {
+      let tempFile: URL
+
+      tempFile = temporaryDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension(pathExtension)
+
+      return tempFile
+    }
   #endif
 }
 

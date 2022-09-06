@@ -3,11 +3,13 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-import BushelMachine
-import Virtualization
+#if canImport(Virtualization)
+  import BushelMachine
+  import Virtualization
 
-extension MachineState {
-  init(vzMachineState: VZVirtualMachine.State) {
-    self.init(rawValue: vzMachineState.rawValue)!
+  extension MachineState {
+    init(vzMachineState: VZVirtualMachine.State) {
+      self.init(rawValue: vzMachineState.rawValue)!
+    }
   }
-}
+#endif
