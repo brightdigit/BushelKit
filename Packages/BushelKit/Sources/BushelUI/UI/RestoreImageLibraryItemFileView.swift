@@ -14,7 +14,12 @@
       VStack(alignment: .leading) {
         TextField("Name", text: self.$file.name).font(.largeTitle)
         HStack {
-          Image(operatingSystemVersion: file.metadata.operatingSystemVersion).resizable().aspectRatio(1.0, contentMode: .fit).frame(height: 80.0).mask {
+          Image(
+            operatingSystemVersion: file.metadata.operatingSystemVersion
+          )
+          .resizable()
+          .aspectRatio(1.0, contentMode: .fit)
+          .frame(height: 80.0).mask {
             Circle()
           }.overlay {
             Circle().stroke()

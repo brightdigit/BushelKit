@@ -92,7 +92,12 @@
 
     var body: some View {
       VStack {
-        Image(operatingSystemVersion: image.metadata.operatingSystemVersion).resizable().aspectRatio(1.0, contentMode: .fit).frame(height: 80.0).mask {
+        Image(
+          operatingSystemVersion: image.metadata.operatingSystemVersion
+        )
+        .resizable()
+        .aspectRatio(1.0, contentMode: .fit)
+        .frame(height: 80.0).mask {
           Circle()
         }.overlay {
           Circle().stroke()

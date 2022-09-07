@@ -62,7 +62,7 @@
         }
         CommandGroup(replacing: .help) {
           Button("Bushel Help") {
-            openURL(Configuration.URLs.help)
+            openURL(Configuration.URLs.support)
           }
         }
       }
@@ -95,10 +95,8 @@
     }
 
     func hideMiniButton() {
-      for window in NSApplication.shared.windows {
-        if window.identifier?.rawValue.hasPrefix(MachineSessionWindowHandle.host) == true {
-          window.standardWindowButton(NSWindow.ButtonType.closeButton)?.isEnabled = false
-        }
+      for window in NSApplication.shared.windows where window.identifier?.rawValue.hasPrefix(MachineSessionWindowHandle.host) == true {
+        window.standardWindowButton(NSWindow.ButtonType.closeButton)?.isEnabled = false
       }
     }
   }

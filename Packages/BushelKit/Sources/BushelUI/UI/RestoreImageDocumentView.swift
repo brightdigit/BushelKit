@@ -13,7 +13,12 @@
       self.fetchImage = fetchImage
     }
 
-    internal init(document: RestoreImageDocument, manager: ImageManagerType, url: URL? = nil, loader: RestoreImageLoader = FileRestoreImageLoader()) {
+    internal init(
+      document: RestoreImageDocument,
+      manager: ImageManagerType,
+      url: URL? = nil,
+      loader: RestoreImageLoader = FileRestoreImageLoader()
+    ) {
       let accessor = FileWrapperAccessor(fileWrapper: document.fileWrapper, url: url)
       self.init(url: url, manager: manager) {
         try await loader.load(from: accessor, using: manager)
