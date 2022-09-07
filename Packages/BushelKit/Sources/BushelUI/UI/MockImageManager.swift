@@ -14,7 +14,10 @@
     }
 
     func containerFor(image _: Void, fileAccessor: BushelMachine.FileAccessor?) async throws -> BushelMachine.ImageContainer {
-      MockImageContainer(location: fileAccessor.map(ImageLocation.file) ?? .remote(.init(forHandle: BasicWindowOpenHandle.machine)), metadata: metadata)
+      MockImageContainer(
+        location: fileAccessor.map(ImageLocation.file) ?? .remote(.init(forHandle: BasicWindowOpenHandle.machine)),
+        metadata: metadata
+      )
     }
 
     func restoreImage(from _: BushelMachine.FileAccessor) async throws {

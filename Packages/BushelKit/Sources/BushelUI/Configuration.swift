@@ -48,6 +48,6 @@ enum Configuration {
   enum URLs {
     static let privacyPolicy: URL = .init(string: "https://getbushel.app/privacy-policy")!
     static let termsOfUse: URL = .init(string: "https://getbushel.app/terms-of-use")!
-    static let help: URL = .init(string: "https://getbushel.app/help")!
+    static let support: URL = .init(string: "https://getbushel.app/support")!
   }
 }
