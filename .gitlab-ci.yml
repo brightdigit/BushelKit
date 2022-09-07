@@ -34,25 +34,14 @@ deploy:
       - vendor/ruby
   tags:
     - macos  
-  # only:
-  #   - main
-  #   - /^release\/*/
-  #   - feature/fix-ci
-  # variables:
-  #   SNAPSHOT_PW: $SNAPSHOT_PW
+  only:
+    - main
+    - /^release\/*/
   script:
     - rbenv rehash
-    ##- rbenv exec bundle config set path 'vendor/ruby'
     - rbenv exec bundle install
     # - speculid process Assets/Speculid/AppIcon.speculid
     # - speculid process Assets/Speculid/Logo.speculid
     - xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane beta
-    # - CURRENT=$(yq eval '.settings .CURRENT_PROJECT_VERSION' project.yml)
-    # - ((CURRENT++))
-    # - yq eval ".settings.CURRENT_PROJECT_VERSION = \"${CURRENT}\"" -i project.yml
-    # - git remote set-url --push origin git@gitlab.com:BrightDigit/Heartwitch/SwiftApp.git
-    # - git add project.yml
-    # - git commit -m "updating project number to $CURRENT [skip ci]"
-    # - git push origin HEAD:$CI_COMMIT_REF_NAME
