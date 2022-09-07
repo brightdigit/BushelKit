@@ -1,0 +1,55 @@
+stages:
+  - build
+  - deploy
+
+.build_spm_template: &build_spm_template
+  stage: build
+  script:
+    - cd Packages/BushelKit
+    - swift build
+    - swift test
+    #- swift run swiftformat --lint .
+    #- swift run swiftlint
+
+build spm macos:
+  only:
+    - branches
+  tags:
+      - macos
+  <<: *build_spm_template
+
+build spm linux 5.6.2:
+  only:
+    - merge_requests
+    - main
+    - /^release\/*/
+  image: swift:5.6.2
+  <<: *build_spm_template
+
+build spm linux 5.7:
+  only:
+    - merge_requests
+  image: swiftlang/swift:nightly-5.7-jammy
+  <<: *build_spm_template
+
+deploy:
+  stage: deploy
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  tags:
+    - macos  
+  only:
+    - main
+    - /^release\/*/
+  script:
+    - rbenv rehash
+    - rbenv exec bundle install
+    # - speculid process Assets/Speculid/AppIcon.speculid
+    # - speculid process Assets/Speculid/Logo.speculid
+    - xcodegen
+    - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
+    - rbenv exec bundle exec fastlane beta

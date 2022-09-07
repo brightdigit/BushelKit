@@ -1,0 +1,56 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:mac)
+
+platform :mac do  
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    api_key = app_store_connect_api_key(
+      key_id: ENV['SPACESHIP_CONNECT_API_KEY_ID'],
+      issuer_id: ENV['SPACESHIP_CONNECT_API_ISSUER_ID'],
+      key_content: ENV['SPACESHIP_CONNECT_API_KEY_CONTENT']
+    )
+    version = get_version_number()
+    build_number = `yq eval '.settings .CURRENT_PROJECT_VERSION' ../project.yml`.strip.to_i
+    tag = "v#{version}-build.#{build_number}"
+    remote_branch = ENV["CI_COMMIT_REF_NAME"]
+    
+    match(type: "appstore", additional_cert_types: "mac_installer_distribution", readonly: is_ci)
+    build_app(
+      output_directory: "public",
+      build_path: "public",
+      scheme: "Bushel",
+      export_options: {
+        provisioningProfiles: { 
+          "com.brightdigit.Bushel" => "match AppStore com.brightdigit.Bushel macos"
+        },
+        installer_cert_name: "Mac Installer Distribution: BRIGHT DIGIT LLC (MLT7M394S7)",
+      }
+    )
+    upload_to_testflight(skip_waiting_for_build_processing: true)  
+    
+    add_git_tag(tag: tag)     
+    system "yq eval \".settings.CURRENT_PROJECT_VERSION = \"#{build_number+1}\"\" -i ../project.yml"
+    git_commit(path: ["project.yml"], message: "Increment Build Number to #{build_number+1} [ci skip]", skip_git_hooks: true)
+    push_to_git_remote(local_branch: "HEAD", remote_branch: remote_branch)      
+    
+    upload_to_app_store(
+      force: true, 
+      skip_binary_upload: true,
+      precheck_include_in_app_purchases: false
+    )    
+  end
+end
