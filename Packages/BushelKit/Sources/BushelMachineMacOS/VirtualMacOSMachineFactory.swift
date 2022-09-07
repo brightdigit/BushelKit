@@ -50,7 +50,11 @@
       setState(atPhase: .building)
       do {
         machineConfigurationURL = try getMachineConfigurationURL()
-        machineConfiguration = try VZVirtualMachineConfiguration(toDirectory: machineConfigurationURL, basedOn: machine, withRestoreImage: restoreImage)
+        machineConfiguration = try VZVirtualMachineConfiguration(
+          toDirectory: machineConfigurationURL,
+          basedOn: machine,
+          withRestoreImage: restoreImage
+        )
         try machineConfiguration.validate()
       } catch {
         DispatchQueue.main.async {
