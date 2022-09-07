@@ -40,16 +40,17 @@ platform :mac do
         installer_cert_name: "Mac Installer Distribution: BRIGHT DIGIT LLC (MLT7M394S7)",
       }
     )
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(skip_waiting_for_build_processing: true)  
+    
+    add_git_tag(tag: tag)     
+    system "yq eval \".settings.CURRENT_PROJECT_VERSION = \"#{build_number+1}\"\" -i ../project.yml"
+    git_commit(path: ["project.yml"], message: "Increment Build Number to #{build_number+1} [ci skip]", skip_git_hooks: true)
+    push_to_git_remote(local_branch: "HEAD", remote_branch: remote_branch)      
+    
     upload_to_app_store(
       force: true, 
       skip_binary_upload: true,
       precheck_include_in_app_purchases: false
     )    
-    
-    add_git_tag(tag: tag)     
-    system "yq eval \".settings.CURRENT_PROJECT_VERSION = \"#{build_number+1}\"\" -i ../project.yml"
-    git_commit(path: ["project.yml"], message: "Increment Build Number to #{build_number+1} [ci skip]", skip_git_hooks: true)
-    push_to_git_remote(local_branch: "HEAD", remote_branch: remote_branch)    
   end
 end
