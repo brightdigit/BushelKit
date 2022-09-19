@@ -17,7 +17,7 @@
 
     public let metadata: ImageMetadata
     // public let fileAccessor: FileAccessor?
-    public var location: BushelMachine.ImageLocation
+    public var location: BushelMachine.ImageLocation?
 
     let vzRestoreImage: VZMacOSRestoreImage
 

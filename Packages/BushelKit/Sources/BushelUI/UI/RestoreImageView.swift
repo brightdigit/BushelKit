@@ -79,7 +79,7 @@
         try RestoreImageLibraryDocument.saveBlankDocumentAt(url)
       }
 
-      let destinationURL = restoreImagesSubdirectoryURL.appendingPathComponent(fileID.uuidString).appendingPathExtension(url.pathExtension)
+      let destinationURL = restoreImagesSubdirectoryURL.appendingPathComponent(fileID.uuidString).appendingPathExtension("ipsw")
 
       restoreImageDownload = .library(url, fileID)
       downloader.begin(from: sourceURL, to: destinationURL)

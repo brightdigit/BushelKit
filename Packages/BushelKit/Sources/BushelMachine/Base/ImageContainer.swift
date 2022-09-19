@@ -6,5 +6,5 @@
 import Foundation
 public protocol ImageContainer {
   var metadata: ImageMetadata { get }
-  var location: ImageLocation { get }
+  var location: ImageLocation? { get }
 }
