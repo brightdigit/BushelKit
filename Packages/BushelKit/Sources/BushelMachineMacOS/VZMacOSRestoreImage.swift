@@ -10,7 +10,7 @@
 
   extension VZMacOSRestoreImage {
     var isImageSupported: Bool {
-      #if swift(>=5.7)
+      #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           return self.isSupported
         } else {
