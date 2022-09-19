@@ -46,7 +46,7 @@
         buildVersion: "21F79",
         operatingSystemVersion: OperatingSystemVersion(majorVersion: 12, minorVersion: 4, patchVersion: 0),
         contentLength: 0,
-        lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959953),
+        lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959_953),
         fileExtension: "ipsw",
         vmSystem: .macOS
       )

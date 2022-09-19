@@ -1,5 +1,6 @@
 stages:
   - build
+  - lint
   - deploy
 
 .build_spm_template: &build_spm_template
@@ -22,16 +23,33 @@ build spm linux 5.6.2:
   only:
     - merge_requests
     - main
-    - /^release\/*/
+    - /^v\/*/
   image: swift:5.6.2
   <<: *build_spm_template
 
-build spm linux 5.7:
+build spm linux 5.7.0:
+  only:
+    - merge_requests
+  image: swift:5.7-jammy
+  <<: *build_spm_template
+
+build spm linux 5.7.1:
   only:
     - merge_requests
   image: swiftlang/swift:nightly-5.7-jammy
   <<: *build_spm_template
-
+  
+lint:
+  only:
+    - merge_requests
+    - main
+    - /^v\/*/
+  stage: lint
+  tags:
+    - macos
+  script:
+    - ./scripts/lint.sh
+  
 deploy:
   stage: deploy
   cache:
@@ -44,7 +62,6 @@ deploy:
     - macos  
   only:
     - main
-    - /^release\/*/
   script:
     - rbenv rehash
     - rbenv exec bundle install

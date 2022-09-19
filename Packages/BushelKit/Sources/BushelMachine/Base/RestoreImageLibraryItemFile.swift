@@ -9,13 +9,13 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
   public func updatingWithURL(_ url: URL, andFileAccessor newFileAccessor: FileAccessor?) -> RestoreImageLibraryItemFile {
     let fileAccessor: FileAccessor
 
-      if let newFileAccessor = newFileAccessor {
-          fileAccessor = newFileAccessor
-      } else if let oldFileAccessor = self.fileAccessor {
-          fileAccessor = oldFileAccessor.updatingWithURL(url)
-      } else {
-          fileAccessor = URLAccessor(url: url)
-      }
+    if let newFileAccessor = newFileAccessor {
+      fileAccessor = newFileAccessor
+    } else if let oldFileAccessor = self.fileAccessor {
+      fileAccessor = oldFileAccessor.updatingWithURL(url)
+    } else {
+      fileAccessor = URLAccessor(url: url)
+    }
 
     return RestoreImageLibraryItemFile(id: id, name: name, metadata: metadata, fileAccessor: fileAccessor)
   }
@@ -49,7 +49,7 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
   public var fileAccessor: FileAccessor?
 
   public var location: ImageLocation? {
-      self.fileAccessor.map(ImageLocation.file)
+    fileAccessor.map(ImageLocation.file)
   }
 
   enum CodingKeys: String, CodingKey {

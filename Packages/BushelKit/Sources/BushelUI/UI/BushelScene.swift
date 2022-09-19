@@ -81,7 +81,6 @@
           })
           .presentedWindowStyle(.hiddenTitleBar)
           .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
-
       }.windowsHandle(MachineSessionWindowHandle.self).windowStyle(.hiddenTitleBar)
       Settings {
         SettingsView()
