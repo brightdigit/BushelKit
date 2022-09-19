@@ -14,7 +14,7 @@
       let auxiliaryStorageURL = machineDirectory.appendingPathComponent("auxiliary.storage")
       let hardwareModelURL = machineDirectory.appendingPathComponent("hardware.model.bin")
       let machineIdentifierURL = machineDirectory.appendingPathComponent("machine.identifier.bin")
-      #if swift(>=5.7)
+      #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
         } else {

@@ -40,7 +40,7 @@ public extension FileManager {
     func createTemporaryFile(for type: UTType) -> URL {
       let tempFile: URL
       //
-      #if swift(>=5.7)
+      #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           tempFile = self.temporaryDirectory.appending(path: UUID().uuidString).appendingPathExtension(for: type)
         } else {
