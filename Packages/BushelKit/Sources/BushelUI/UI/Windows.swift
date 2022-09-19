@@ -40,7 +40,6 @@
       let documentController = NSDocumentController.shared
 
       documentController.openDocument(withContentsOf: url, display: display) { document, alreadyDisplayed, error in
-
         if let document = document {
           guard !alreadyDisplayed else {
             return
@@ -48,7 +47,6 @@
 
           documentController.addDocument(document)
           document.makeWindowControllers()
-
         } else {
           dump(error)
         }

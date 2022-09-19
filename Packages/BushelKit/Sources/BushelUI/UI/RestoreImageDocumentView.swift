@@ -34,8 +34,10 @@
         switch self.restoreImageResult {
         case .none:
           ProgressView()
+
         case let .success(image):
           RestoreImageView(image: image).fixedSize()
+
         default:
           EmptyView()
         }

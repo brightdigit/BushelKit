@@ -21,6 +21,7 @@
           rootView = .green
         case "red":
           rootView = .red
+
         default:
           rootView = .blue
         }

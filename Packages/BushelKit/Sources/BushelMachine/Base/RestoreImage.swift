@@ -24,10 +24,9 @@ public struct RestoreImage: Identifiable, Hashable, RestoreImagable {
   }
 
   public init?(imageContainer: ImageContainer) {
-      guard let location = imageContainer.location  else{
-          return nil
-      }
-          self.init(metadata: imageContainer.metadata, location: location)
-      
+    guard let location = imageContainer.location else {
+      return nil
+    }
+    self.init(metadata: imageContainer.metadata, location: location)
   }
 }

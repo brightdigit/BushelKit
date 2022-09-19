@@ -130,6 +130,7 @@
           switch result {
           case let .failure(error):
             self.updateState(fromSession: nil, withError: error)
+
           case let .success(session):
             self.setupSession(session)
           }

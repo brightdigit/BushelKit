@@ -32,7 +32,6 @@
         HStack {
           Button {
             dismiss()
-
           } label: {
             Text("Cancel")
           }
@@ -48,12 +47,10 @@
               installationObject.setupInstaller(factory)
               factory.beginBuild()
             }
-
           } label: {
             Text("Build Machine")
           }
         }
-
       }.onReceive(self.installationObject.$phaseProgress, perform: { phase in
         guard case let .completed(result) = phase?.phase else {
           return
@@ -91,7 +88,6 @@
           self.isReadyToSave = true
           self.showSaveProgress = true
         }
-
       }, content: { phase in
         MachineFactoryView(phaseProgress: phase)
       }).sheet(isPresented: self.$showSaveProgress) {

@@ -32,7 +32,6 @@
         }
         Button {
           self.newMachine = MachineDocument(machine: .init(restoreImage: file))
-
         } label: {
           Image(systemName: "hammer.fill")
           Text("Build Machine")

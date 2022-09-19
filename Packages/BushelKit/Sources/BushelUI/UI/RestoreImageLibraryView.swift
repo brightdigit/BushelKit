@@ -116,7 +116,6 @@
               }
               Section {
                 ForEach(self.document.library.items) { item in
-
                   NavigationLink(tag: item.id, selection: self.$selectedFileID) {
                     VStack {
                       RestoreImageLibraryItemFileView(file: bindingFor(item)).padding()
@@ -149,7 +148,6 @@
               Image(systemName: "plus").padding(.leading, 8.0)
             }.fileImporter(isPresented: self.$addRestoreImageToLibraryIsVisible, allowedContentTypes:
               UTType.ipswTypes) { result in
-
                 self.importingURL = try? result.get()
               }.fileExporter(isPresented: $shouldSaveFile, document: self.document, contentType: .restoreImageLibrary) { result in
                 dump(self.window)
@@ -210,10 +208,8 @@
                 }
               }.padding(8.0)
             }
-
           }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.primary)
         }
-
       }.task(id: self.importingURL) {
         await importRestoreImage()
       }.onChange(of: self.url) { _ in

@@ -78,7 +78,6 @@
 //    }
 
       let restoreImages = library.items.map { file -> RestoreImageLibraryItemFile in
-
         let fileWrapper = imageWrappers[file.fileName]
         let fileName = fileWrapper?.filename ?? file.fileName
         let url = url.appendingPathComponent("Restore Images").appendingPathComponent(fileName)
@@ -128,7 +127,6 @@
         return await group.reduce(into: [RestoreImage?]()) { images, image in
           images.append(image)
         }
-
       }.compactMap { $0 }.compactMap(RestoreImageLibraryItemFile.init(loadFromImage:))
       library = .init(items: restoreImages)
     }

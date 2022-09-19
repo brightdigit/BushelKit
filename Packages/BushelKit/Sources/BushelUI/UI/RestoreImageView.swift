@@ -24,6 +24,7 @@
         panel.nameFieldStringValue = image.metadata.defaultName
         panel.allowedContentTypes = UTType.ipswTypes
         panel.isExtensionHidden = true
+
       case .library:
         panel.nameFieldLabel = "Save to Library:"
         panel.allowedContentTypes = [UTType.restoreImageLibrary]
@@ -37,6 +38,7 @@
         switch downloadRequest.destination {
         case .ipswFile:
           self.beginDownload(from: downloadRequest.sourceURL, to: fileURL)
+
         case .library:
           do {
             try self.beginDownload(from: downloadRequest.sourceURL, toLibraryAt: fileURL)
@@ -131,6 +133,7 @@
                 Text("Download Image (\(byteFormatter.string(fromByteCount: Int64(image.metadata.contentLength))))")
               }
             }
+
           case .file:
 
             Button {} label: {
@@ -140,9 +143,7 @@
               }
             }
           }
-
         }.padding().sheet(item: self.$sourceURL) { url in
-
           Button("Save to an IPSW File") {
             self.downloadRequest = .init(sourceURL: url, destination: .ipswFile)
           }
@@ -164,8 +165,10 @@
           switch (isCompletedResult, restoreImageDownload) {
           case let (.failure(error), _):
             dump(error)
+
           case let (.success, .file(url)):
             NSWorkspace.shared.open(url.deletingLastPathComponent())
+
           case let (.success, .library(url, fileID)):
             let decoder = JSONDecoder()
             let encoder = JSONEncoder()

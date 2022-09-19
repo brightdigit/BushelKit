@@ -10,6 +10,7 @@ settings:
   CURRENT_PROJECT_VERSION: 27
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
+  DEAD_CODE_STRIPING: true
 packages:
   BushelUI:
     path: ./Packages/BushelKit
@@ -72,6 +73,9 @@ targets:
         com.apple.security.network.client: true
         com.apple.security.virtualization: true
         com.apple.vm.networking: true
+    postBuildScripts:
+        - path: scripts/lint.sh
+          name: Lint
   Bushel-UITests:
     type: bundle.ui-testing
     platform: macOS

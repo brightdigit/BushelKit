@@ -18,8 +18,10 @@
         switch (self.sessionManager.lastError, self.sessionManager.machineState, self.sessionManager.session) {
         case let (.some(error), _, _):
           Text(error.localizedDescription)
+
         case let (.none, _, .some(session)):
           session.view
+
         case (.none, _, .none):
           ProgressView {
             Text("Creating Session...")
@@ -54,7 +56,6 @@
             } else {
               self.sessionManager.beginStop()
             }
-
           } label: {
             Image(systemName: "xmark.square.fill")
           }
