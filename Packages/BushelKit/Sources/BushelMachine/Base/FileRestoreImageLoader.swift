@@ -14,10 +14,10 @@ public class FileRestoreImageLoader: RestoreImageLoader {
 
     let imageContainer = try await manager.containerFor(image: vzMacOSRestoreImage, fileAccessor: file)
 
-      guard let image =  RestoreImage(imageContainer: imageContainer) else {
-          throw MachineError.undefinedType("missing location", imageContainer)
-      }
-      return image
+    guard let image = RestoreImage(imageContainer: imageContainer) else {
+      throw MachineError.undefinedType("missing location", imageContainer)
+    }
+    return image
   }
 
   public init() {}

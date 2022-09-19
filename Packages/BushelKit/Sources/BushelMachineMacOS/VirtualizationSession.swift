@@ -51,7 +51,6 @@
     @MainActor
     public func begin() async throws {
       try await withCheckedThrowingContinuation { continuation in
-
         machine.start { result in
           continuation.resume(with: result)
         }

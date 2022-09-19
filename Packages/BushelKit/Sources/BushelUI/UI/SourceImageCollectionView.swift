@@ -20,8 +20,10 @@
           ForEach(images) { image in
             RestoreImageView(image: image)
           }
+
         case let .failure(error):
           Text(error.localizedDescription)
+
         case .none:
           ProgressView().padding(20.0)
         }
