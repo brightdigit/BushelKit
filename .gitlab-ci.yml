@@ -9,8 +9,14 @@ stages:
     - cd Packages/BushelKit
     - swift build
     - swift test
-    #- swift run swiftformat --lint .
-    #- swift run swiftlint
+
+.lint_template: &lint_template
+  stage: lint
+  tags:
+    - macos
+  stage: lint
+  script:
+    - STRICT_MODE=$STRICT_MODE ./scripts/lint.sh    
 
 build spm macos:
   only:
@@ -22,8 +28,6 @@ build spm macos:
 build spm linux 5.6.2:
   only:
     - merge_requests
-    - main
-    - /^v\/*/
   image: swift:5.6.2
   <<: *build_spm_template
 
@@ -36,20 +40,24 @@ build spm linux 5.7.0:
 build spm linux 5.7.1:
   only:
     - merge_requests
+    - main
+    - /^v\/*/
   image: swiftlang/swift:nightly-5.7-jammy
   <<: *build_spm_template
   
-lint:
+lint lenient:
   only:
     - merge_requests
+  <<: *lint_template
+
+lint strict:
+  only:
     - main
     - /^v\/*/
-  stage: lint
-  tags:
-    - macos
-  script:
-    - ./scripts/lint.sh
-  
+  variables:
+    STRICT_MODE: "true"
+  <<: *lint_template  
+
 deploy:
   stage: deploy
   cache:

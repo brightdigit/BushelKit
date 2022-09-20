@@ -7,13 +7,30 @@ else
 	PACKAGE_DIR="${SRCROOT}/Packages/BushelKit" 	
 fi
 
+echo $STRICT_MODE
+
+if [ "$STRICT_MODE" == "true" ]; then
+	set -e
+	SWIFTFORMAT_OPTIONS=""
+	SWIFTLINT_OPTIONS="--strict"
+	STRINGSLINT_OPTIONS="--config .strict.stringslint.yml"
+else 
+	SWIFTFORMAT_OPTIONS=""
+	SWIFTLINT_OPTIONS=""
+	STRINGSLINT_OPTIONS="--config .stringslint.yml"
+fi
+
 pushd $PACKAGE_DIR
 swift package resolve
 
-swift run swiftformat .
-swift run swiftlint --autocorrect
+if [ -z "$CI" ]; then
+	swift run swiftformat .
+	swift run swiftlint --autocorrect
+else 
+	set -e
+fi
 
-swift run stringslint lint --path Sources
-swift run swiftformat --lint .
-swift run swiftlint lint
+swift run stringslint lint $STRINGSLINT_OPTIONS
+swift run swiftformat --lint $SWIFTFORMAT_OPTIONS .
+swift run swiftlint lint $SWIFTLINT_OPTIONS
 popd
