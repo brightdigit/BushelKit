@@ -24,8 +24,9 @@ enum Configuration {
 
   static let prereleaseLabel: String? = "alpha"
 
-  // swiftlint:disable:next force_cast
-  static let applicationMarketingVersionValue: String = Bundle.main.object(forInfoDictionaryKey: cfBundleShortVersionString) as! String
+  static let applicationMarketingVersionValue = Bundle.main
+    // swiftlint:disable:next force_cast
+    .object(forInfoDictionaryKey: cfBundleShortVersionString) as! String
 
   static let applicationMarketingVersionText: String = {
     guard let prereleaseLabel = prereleaseLabel else {
@@ -35,9 +36,11 @@ enum Configuration {
     return "\(applicationMarketingVersionValue) \(prereleaseLabel) \(applicationBuildNumber)"
   }()
 
-  // swiftlint:disable:next force_cast
-  static let applicationBuildString: String = Bundle.main.object(forInfoDictionaryKey: bundleVersionKey) as! String
+  static let applicationBuildString: String = Bundle.main
+    // swiftlint:disable:next force_cast
+    .object(forInfoDictionaryKey: bundleVersionKey) as! String
 
+  // swiftlint:disable:next force_unwrapping
   static let applicationBuildNumber: Int = .init(applicationBuildString)!
 
   static let applicationBuildFormatted: String = {
@@ -46,8 +49,8 @@ enum Configuration {
   }()
 
   enum URLs {
-    static let privacyPolicy: URL = .init(string: "https://getbushel.app/privacy-policy")!
-    static let termsOfUse: URL = .init(string: "https://getbushel.app/terms-of-use")!
-    static let support: URL = .init(string: "https://getbushel.app/support")!
+    static let privacyPolicy: URL = .init("https://getbushel.app/privacy-policy")
+    static let termsOfUse: URL = .init("https://getbushel.app/terms-of-use")
+    static let support: URL = .init("https://getbushel.app/support")
   }
 }

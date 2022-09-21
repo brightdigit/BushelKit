@@ -9,6 +9,7 @@
 
   extension MachineState {
     init(vzMachineState: VZVirtualMachine.State) {
+      // swiftlint:disable:next force_unwrapping
       self.init(rawValue: vzMachineState.rawValue)!
     }
   }

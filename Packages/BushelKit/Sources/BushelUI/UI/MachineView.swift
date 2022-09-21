@@ -14,7 +14,12 @@
     var body: some View {
       Group {
         if document.machine.operatingSystem == nil {
-          MachineSetupView(document: self.$document, url: self.url, restoreImageChoices: restoreImageChoices, onCompleted: nil)
+          MachineSetupView(
+            document: self.$document,
+            url: self.url,
+            restoreImageChoices: restoreImageChoices,
+            onCompleted: nil
+          )
         } else if let url = self.url {
           MachineDetailsView(document: self.$document, url: url)
         }

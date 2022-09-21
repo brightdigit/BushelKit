@@ -15,7 +15,11 @@
 
     var body: some View {
       Group {
-        switch (self.sessionManager.lastError, self.sessionManager.machineState, self.sessionManager.session) {
+        switch (
+          self.sessionManager.lastError,
+          self.sessionManager.machineState,
+          self.sessionManager.session
+        ) {
         case let (.some(error), _, _):
           Text(error.localizedDescription)
 
@@ -24,7 +28,7 @@
 
         case (.none, _, .none):
           ProgressView {
-            Text("Creating Session...")
+            Text(.creatingSession)
           }
         }
       }.toolbar {

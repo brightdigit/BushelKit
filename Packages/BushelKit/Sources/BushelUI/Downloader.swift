@@ -18,6 +18,7 @@
     @Published var totalBytesExpectedToWrite: Int64?
     @Published var isCompleted: Result<Void, Error>?
     var task: URLSessionDownloadTask?
+    // swiftlint:disable:next implicitly_unwrapped_optional
     var session: URLSession!
     var cancellable: AnyCancellable?
     let requestSubject = PassthroughSubject<DownloadRequest, Never>()
@@ -41,27 +42,43 @@
       }
     }
 
-//    var isActive: Bool {
-//      isCompleted == nil && task != nil
-//    }
+    public var localizedProgress: String? {
+      guard let prettyBytesTotal = prettyBytesTotal else {
+        return nil
+      }
+      return "\(prettyBytesWritten) / \(prettyBytesTotal)"
+    }
 
-    internal init(configuration: URLSessionConfiguration? = nil, queue: OperationQueue? = nil) {
+    // swiftlint:disable:next function_body_length
+    internal init(
+      configuration: URLSessionConfiguration? = nil,
+      queue: OperationQueue? = nil
+    ) {
       super.init()
-      let session = URLSession(configuration: configuration ?? .default, delegate: self, delegateQueue: queue)
+      let session = URLSession(
+        configuration: configuration ?? .default,
+        delegate: self,
+        delegateQueue: queue
+      )
       self.session = session
 
       let destinationFileURLPublisher = requestSubject.share().map(\.destinationFileURL)
-      cancellable = requestSubject.share().map { downloadRequest -> URLSessionDownloadTask in
-        let task = self.session.downloadTask(with: downloadRequest.downloadSourceURL)
-        task.resume()
-        return task
-      }.assign(to: \.task, on: self)
-
-      Publishers.CombineLatest(locationURLSubject, destinationFileURLPublisher).map { sourceURL, destinationURL in
-        Result {
-          try FileManager.default.moveItem(at: sourceURL, to: destinationURL)
+      cancellable = requestSubject.share()
+        .map { downloadRequest -> URLSessionDownloadTask in
+          let task = self.session.downloadTask(with: downloadRequest.downloadSourceURL)
+          task.resume()
+          return task
         }
-      }.receive(on: DispatchQueue.main).assign(to: &$isCompleted)
+        .assign(to: \.task, on: self)
+
+      Publishers.CombineLatest(locationURLSubject, destinationFileURLPublisher)
+        .map { sourceURL, destinationURL in
+          Result {
+            try FileManager.default.moveItem(at: sourceURL, to: destinationURL)
+          }
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$isCompleted)
     }
 
     public func cancel() {
@@ -78,17 +95,24 @@
     }
 
     public func begin(from downloadSourceURL: URL, to destinationFileURL: URL) {
-      requestSubject.send(.init(downloadSourceURL: downloadSourceURL, destinationFileURL: destinationFileURL))
+      requestSubject.send(
+        .init(downloadSourceURL: downloadSourceURL, destinationFileURL: destinationFileURL)
+      )
     }
 
     // periphery:ignore
-    public func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+    public func urlSession(
+      _: URLSession,
+      downloadTask _: URLSessionDownloadTask,
+      didFinishDownloadingTo location: URL
+    ) {
       locationURLSubject.send(location)
     }
 
     // periphery:ignore
     public func urlSession(
-      _: URLSession, downloadTask _: URLSessionDownloadTask,
+      _: URLSession,
+      downloadTask _: URLSessionDownloadTask,
       didWriteData _: Int64,
       totalBytesWritten: Int64,
       totalBytesExpectedToWrite: Int64

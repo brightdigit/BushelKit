@@ -24,14 +24,19 @@ public extension RestoreImageDownloadDestination {
 
     let restoreImagesSubdirectoryURL = url.appendingPathComponent("Restore Images")
 
-    let restoreImageSubdirectoryExists = FileManager.default.directoryExists(at: restoreImagesSubdirectoryURL)
+    let restoreImageSubdirectoryExists = FileManager.default.directoryExists(
+      at: restoreImagesSubdirectoryURL
+    )
 
     guard restoreImageSubdirectoryExists != .fileExists else {
       throw MissingError.needDefinition("Invalid Library")
     }
 
     if restoreImageSubdirectoryExists == .notExists {
-      try FileManager.default.createDirectory(at: restoreImagesSubdirectoryURL, withIntermediateDirectories: true)
+      try FileManager.default.createDirectory(
+        at: restoreImagesSubdirectoryURL,
+        withIntermediateDirectories: true
+      )
     }
 
     return restoreImagesSubdirectoryURL.appendingPathComponent(url.lastPathComponent)

@@ -6,5 +6,8 @@
 import Foundation
 
 public protocol VirtualMachineFactoryDelegate: AnyObject {
-  func factory(_ factory: VirtualMachineFactory, didChangeState state: VirtualMachineBuildingProgress)
+  func factory(
+    _ factory: VirtualMachineFactory,
+    didChangeState state: VirtualMachineBuildingProgress
+  )
 }
