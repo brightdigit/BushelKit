@@ -39,6 +39,7 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
 
 public extension ImageMetadata {
   var defaultName: String {
+    // swiftlint:disable:next force_unwrapping
     AnyImageManagers.imageManager(forSystem: vmSystem)!.defaultName(for: self)
   }
 }

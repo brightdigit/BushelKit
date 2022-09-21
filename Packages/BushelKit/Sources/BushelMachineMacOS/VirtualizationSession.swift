@@ -37,7 +37,7 @@
       .init(machine: machine)
     }
 
-    internal init(delegate: MachineSessionDelegate? = nil, machine: VZVirtualMachine) {
+    internal init(machine: VZVirtualMachine, delegate: MachineSessionDelegate? = nil) {
       self.delegate = delegate
       self.machine = machine
       super.init()
@@ -49,7 +49,7 @@
     @MainActor let machine: VZVirtualMachine
 
     @MainActor
-    public func begin() async throws {
+    func begin() async throws {
       try await withCheckedThrowingContinuation { continuation in
         machine.start { result in
           continuation.resume(with: result)
@@ -63,7 +63,7 @@
     }
 
     #if canImport(SwiftUI)
-      public var view: AnyView {
+      var view: AnyView {
         AnyView(VirtualizationMachineView(virtualMachine: machine))
       }
     #endif
@@ -72,8 +72,16 @@
       delegate?.session(self, didStopWithError: error)
     }
 
-    func virtualMachine(_: VZVirtualMachine, networkDevice: VZNetworkDevice, attachmentWasDisconnectedWithError error: Error) {
-      delegate?.session(self, device: networkDevice, attachmentWasDisconnectedWithError: error)
+    func virtualMachine(
+      _: VZVirtualMachine,
+      networkDevice: VZNetworkDevice,
+      attachmentWasDisconnectedWithError error: Error
+    ) {
+      delegate?.session(
+        self,
+        device: networkDevice,
+        attachmentWasDisconnectedWithError: error
+      )
     }
 
     func guestDidStop(_: VZVirtualMachine) {
@@ -83,13 +91,17 @@
 
   extension VirtualizationSession {
     convenience init(fromConfigurationURL configurationURL: URL) throws {
-      let configuration = try VZVirtualMachineConfiguration(contentsOfDirectory: configurationURL)
+      let configuration = try VZVirtualMachineConfiguration(
+        contentsOfDirectory: configurationURL
+      )
       try configuration.validate()
       self.init(machine: VZVirtualMachine(configuration: configuration))
     }
 
     static func validate(fromConfigurationURL configurationURL: URL) throws {
-      let configuration = try VZVirtualMachineConfiguration(contentsOfDirectory: configurationURL)
+      let configuration = try VZVirtualMachineConfiguration(
+        contentsOfDirectory: configurationURL
+      )
       try configuration.validate()
     }
   }

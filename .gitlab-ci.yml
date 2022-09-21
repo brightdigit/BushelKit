@@ -2,6 +2,15 @@ stages:
   - build
   - lint
   - deploy
+  
+cache:
+  key: 
+    files:
+      - Package.resolved
+  paths:
+    - Packages/BushelKit/.build
+    - ~/.swiftpm
+
 
 .build_spm_template: &build_spm_template
   stage: build

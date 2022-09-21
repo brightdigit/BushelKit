@@ -6,7 +6,11 @@
 import Foundation
 
 public struct OperatingSystemDetails: Codable {
-  public init(type: OperatingSystemDetails.System, version: OperatingSystemVersion, buildVersion: String) {
+  public init(
+    type: OperatingSystemDetails.System,
+    version: OperatingSystemVersion,
+    buildVersion: String
+  ) {
     self.type = type
     self.version = version
     self.buildVersion = buildVersion

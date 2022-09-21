@@ -14,12 +14,12 @@
 
     var body: some View {
       TabView {
-        Text("General Settings")
+        Text(.generalSettings)
           .tabItem {
             Label("General", systemImage: "gear")
           }
           .tag(Tabs.general)
-        Text("Advanced Settings")
+        Text(.advancedSettings)
           .tabItem {
             Label("Advanced", systemImage: "star")
           }
@@ -36,9 +36,12 @@
           Button("Purchase Screen") {
             Windows.openWindow(withHandle: BasicWindowOpenHandle.purchase)
           }
-        }.padding(20.0).tabItem {
+        }
+        .padding(20.0)
+        .tabItem {
           Label("Test Panel", systemImage: "capsule.portrait.bottomhalf.filled")
-        }.tag(Tabs.tests)
+        }
+        .tag(Tabs.tests)
       }
       .padding(20)
       .frame(width: 375, height: 150)

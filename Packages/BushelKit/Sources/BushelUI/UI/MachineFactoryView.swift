@@ -13,12 +13,12 @@
       VStack {
         HStack {
           Image(systemName: phaseProgress.phase == .building ? "play.fill" : "checkmark.circle.fill")
-          Text("Building Machine...")
+          Text(.buildingMachine)
         }
         HStack {
           Image(systemName: phaseProgress.phase == .installing ? "play.fill" : "checkmark.circle.fill")
           ProgressView(value: phaseProgress.percentCompleted ?? 0.0) {
-            Text("Installing Operating System...")
+            Text(.installingOS)
           }
         }
       }

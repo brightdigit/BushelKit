@@ -36,9 +36,11 @@
       updateState(fromSession: session, withError: error)
     }
 
-    func session(_ session: BushelMachine.MachineSession,
-                 device _: BushelMachine.MachineNetworkDevice,
-                 attachmentWasDisconnectedWithError error: Error) {
+    func session(
+      _ session: BushelMachine.MachineSession,
+      device _: BushelMachine.MachineNetworkDevice,
+      attachmentWasDisconnectedWithError error: Error
+    ) {
       updateState(fromSession: session, withError: error)
     }
 
@@ -116,17 +118,22 @@
       beginStart()
     }
 
+    // swiftlint:disable:next function_body_length
     override init() {
       super.init()
       $externalURL.compactMap(\.?.relativePath).map(URL.init(fileURLWithPath:)).assign(to: &$machineFileURL)
 
       $machineFileURL.compactMap { $0 }
 
-        .tryMap(Machine.loadFromURL(_:)).tryCompactMap {
+        .tryMap(Machine.loadFromURL(_:))
+        .tryCompactMap {
           try $0.createMachine()
-        }.map(Result.success).catch { error in
+        }
+        .map(Result.success)
+        .catch { error in
           Just(Result.failure(error))
-        }.sink { result in
+        }
+        .sink { result in
           switch result {
           case let .failure(error):
             self.updateState(fromSession: nil, withError: error)
@@ -134,7 +141,8 @@
           case let .success(session):
             self.setupSession(session)
           }
-        }.store(in: &cancellables)
+        }
+        .store(in: &cancellables)
     }
   }
 #endif

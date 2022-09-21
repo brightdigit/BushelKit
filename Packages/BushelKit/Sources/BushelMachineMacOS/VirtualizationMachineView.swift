@@ -11,7 +11,9 @@
   struct VirtualizationMachineView: NSViewRepresentable {
     let virtualMachine: VZVirtualMachine
     func makeNSView(context _: Context) -> VZVirtualMachineView {
-      let view = VZVirtualMachineView(frame: .init(origin: .zero, size: .init(width: 1920, height: 1080)))
+      let view = VZVirtualMachineView(
+        frame: .init(origin: .zero, size: .init(width: 1920, height: 1080))
+      )
       view.virtualMachine = virtualMachine
 
       return view

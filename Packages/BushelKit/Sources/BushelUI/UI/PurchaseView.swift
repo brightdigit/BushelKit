@@ -9,9 +9,10 @@
   struct PurchaseView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     @Environment(\.openURL) private var openURL: OpenURLAction
+
     var body: some View {
       VStack {
-        Text("Uprade to")
+        Text(.upgradePurchase)
         Text("Bushel Pro")
         HStack {
           Button {} label: {
@@ -52,28 +53,28 @@
             Text("Mauris quis vehicula quam, vitae.")
           }
         }
-        // swiftlint:disable:next line_length
-        Text("And much more: Configure windows visibility, minimized capturing window, access to all privacy actions and directories, custom touches color, custom color for captures, optimise for App Previews, optimise recordings for quality or speed, delete Derived Data globally and per app, clear Xcode Previews cache.")
+        Text(LocalizedStringID.proFeatures)
 
         HStack {
-          Button("Restore Purchases") {}
+          Button(.restorePurchases) {}
 
-          Button("Not yet, let's stay with basic") {
+          Button(.stayBasic) {
             dismiss()
           }
         }
 
         HStack {
-          Button("Terms of Use") {
+          Button(.termsOfUse) {
             openURL(Configuration.URLs.termsOfUse)
           }
 
-          Button("Privacy Policy") {
+          Button(.privacyPolicy) {
             openURL(Configuration.URLs.privacyPolicy)
           }
         }
       }.padding()
     }
+    // swiftlint:enable closure_body_length
   }
 
   struct PurchaseView_Previews: PreviewProvider {

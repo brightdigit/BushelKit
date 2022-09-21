@@ -11,6 +11,7 @@ settings:
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
+  STRICT_MODE: ${STRICT_MODE}
 packages:
   BushelUI:
     path: ./Packages/BushelKit
@@ -76,6 +77,7 @@ targets:
     postBuildScripts:
         - path: scripts/lint.sh
           name: Lint
+          basedOnDependencyAnalysis: false
   Bushel-UITests:
     type: bundle.ui-testing
     platform: macOS

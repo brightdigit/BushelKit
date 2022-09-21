@@ -9,7 +9,9 @@
   import UniformTypeIdentifiers
 
   enum Windows {
-    static func showNewSavedDocumentWindow<BlankDocumentType: BlankFileDocument>(ofType type: BlankDocumentType.Type) {
+    static func showNewSavedDocumentWindow<BlankDocumentType: BlankFileDocument>(
+      ofType type: BlankDocumentType.Type
+    ) {
       let panel = NSSavePanel()
       panel.allowedContentTypes = type.allowedContentTypes
       panel.isExtensionHidden = true
@@ -39,7 +41,10 @@
     static func openDocumentAtURL(_ url: URL, andDisplay display: Bool = true) {
       let documentController = NSDocumentController.shared
 
-      documentController.openDocument(withContentsOf: url, display: display) { document, alreadyDisplayed, error in
+      documentController.openDocument(
+        withContentsOf: url,
+        display: display
+      ) { document, alreadyDisplayed, error in
         if let document = document {
           guard !alreadyDisplayed else {
             return

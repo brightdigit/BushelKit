@@ -22,7 +22,8 @@
     mutating func validateSessionAt(_ url: URL) throws {
       updateFileAccessorURL(url)
 
-      let manager = (machine.restoreImage?.metadata.vmSystem).flatMap(AnyImageManagers.imageManager(forSystem:))
+      let manager = (machine.restoreImage?.metadata.vmSystem)
+        .flatMap(AnyImageManagers.imageManager(forSystem:))
 
       guard let manager = manager else {
         throw DocumentError.undefinedType("No available manager.", machine.restoreImage?.metadata.vmSystem)
@@ -60,6 +61,7 @@
       self.init(machine: machine)
     }
 
+    // swiftlint:disable:next function_body_length
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
       var rootFileWrapper: FileWrapper
 
