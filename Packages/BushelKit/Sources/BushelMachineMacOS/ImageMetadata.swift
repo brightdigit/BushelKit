@@ -1,5 +1,5 @@
 //
-// ImageMetadata.Virtualization.swift
+// ImageMetadata.swift
 // Copyright (c) 2022 BrightDigit.
 //
 

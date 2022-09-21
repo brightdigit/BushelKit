@@ -3,6 +3,7 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
+// swiftlint:disable all
 #if canImport(SwiftUI) && canImport(UniformTypeIdentifiers)
   import BushelMachine
   import SwiftUI

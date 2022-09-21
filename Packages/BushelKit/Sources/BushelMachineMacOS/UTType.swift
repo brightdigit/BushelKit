@@ -11,8 +11,11 @@
       UTType(exportedAs: "com.brightdigit.bushel-vm")
     }
 
+    // swiftlint:disable force_unwrapping
     static let iTunesIPSW: UTType = .init("com.apple.itunes.ipsw")!
     static let iPhoneIPSW: UTType = .init("com.apple.iphone.ipsw")!
+    static let bshvm: UTType = .init(filenameExtension: "bshvm")!
+    // swiftlint:enable force_unwrapping
 
     static let ipswTypes = [iTunesIPSW, iPhoneIPSW]
     static var restoreImageLibrary: UTType {

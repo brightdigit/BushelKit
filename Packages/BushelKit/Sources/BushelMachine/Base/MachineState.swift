@@ -3,6 +3,8 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
+// swiftlint:disable line_length
+
 import Foundation
 public enum MachineState: Int {
   /** Initial state before the virtual machine is started. */

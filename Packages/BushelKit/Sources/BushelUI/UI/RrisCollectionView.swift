@@ -17,7 +17,10 @@
       NavigationView {
         List {
           ForEach(self.selectedSourceObject.sources) { source in
-            NavigationLink(tag: source.id, selection: self.$selectedSourceObject.selectedSource) {
+            NavigationLink(
+              tag: source.id,
+              selection: self.$selectedSourceObject.selectedSource
+            ) {
               VStack {
                 SourceImageCollectionView(source: source).padding()
                 Spacer()

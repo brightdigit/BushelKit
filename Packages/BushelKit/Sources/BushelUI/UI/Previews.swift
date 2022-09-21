@@ -3,11 +3,8 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-//
-// Previews.swift
-// Copyright (c) 2022 BrightDigit.
-// Created by Leo Dion on 8/3/22.
-//
+// swiftlint:disable force_unwrapping line_length
+
 import BushelMachine
 import Foundation
 extension RestoreImage {

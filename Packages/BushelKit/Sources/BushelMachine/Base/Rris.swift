@@ -4,7 +4,11 @@
 //
 
 public struct Rris: Identifiable, Hashable {
-  public init(id: String, title: String, fetch: @escaping () async throws -> [RestoreImage]) {
+  public init(
+    id: String,
+    title: String,
+    fetch: @escaping () async throws -> [RestoreImage]
+  ) {
     self.id = id
     self.title = title
     self.fetch = fetch

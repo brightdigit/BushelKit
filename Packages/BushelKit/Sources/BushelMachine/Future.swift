@@ -22,7 +22,9 @@
   }
 
   public extension Future where Failure == Never {
-    convenience init<SuccessType>(operation: @escaping () async throws -> SuccessType) where Output == Result<SuccessType, Error> {
+    convenience init<SuccessType>(
+      operation: @escaping () async throws -> SuccessType
+    ) where Output == Result<SuccessType, Error> {
       self.init { promise in
         Task {
           do {
