@@ -16,7 +16,9 @@ public enum AnyImageManagers {
   #if canImport(UniformTypeIdentifiers)
     private static var contentTypeMap = [UTType: Int]()
 
-    public static func imageManager(forContentType contentType: UTType) -> AnyImageManager? {
+    public static func imageManager(
+      forContentType contentType: UTType
+    ) -> AnyImageManager? {
       contentTypeMap[contentType].flatMap { index in
         guard index < all.count, index >= 0 else {
           return nil

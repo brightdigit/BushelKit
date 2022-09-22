@@ -21,16 +21,18 @@
       VStack {
         switch self.validationResult {
         case .success:
-          Button("Start") {
+          Button(.startMachine) {
             Windows.openWindow(withHandle: MachineSessionWindowHandle(machineFilePath: url.path))
           }
+
         case let .failure(error):
           Button("Dump Error \(error.localizedDescription)") {
             dump(error)
           }
+
         case .none:
           ProgressView {
-            Text("Loading Machine...")
+            Text(.loadingMachine)
           }
         }
       }

@@ -17,7 +17,13 @@
             HStack {
               Image(nsImage: NSWorkspace.shared.icon(forFile: url.path))
               VStack(alignment: .leading) {
-                Text(url.deletingPathExtension().lastPathComponent).font(.custom("Raleway", size: 14.0)).fontWeight(.medium)
+                Text(
+                  url
+                    .deletingPathExtension()
+                    .lastPathComponent
+                )
+                .font(.custom("Raleway", size: 14.0))
+                .fontWeight(.medium)
                 Text(url.path).font(.custom("Raleway", size: 14.0)).fontWeight(.ultraLight)
               }.foregroundColor(.primary)
               Spacer()

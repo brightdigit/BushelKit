@@ -11,9 +11,15 @@ import Foundation
 public protocol AnyImageManager {
   init()
   func validateSession(fromMachine machine: Machine) throws
-  func load(from accessor: FileAccessor, using loader: RestoreImageLoader) async throws -> RestoreImage
+  func load(
+    from accessor: FileAccessor,
+    using loader: RestoreImageLoader
+  ) async throws -> RestoreImage
   func session(fromMachine machine: Machine) throws -> MachineSession
-  func buildMachine(_ machine: Machine, restoreImage: RestoreImage) async throws -> VirtualMachineFactory
+  func buildMachine(
+    _ machine: Machine,
+    restoreImage: RestoreImage
+  ) async throws -> VirtualMachineFactory
   func defaultName(for metadata: ImageMetadata) -> String
   static var systemID: VMSystemID { get }
   #if canImport(UniformTypeIdentifiers)
@@ -22,7 +28,10 @@ public protocol AnyImageManager {
 }
 
 public extension AnyImageManager {
-  func buildMachine(_ machine: Machine, restoreImageFile: RestoreImageLibraryItemFile) async throws -> VirtualMachineFactory {
+  func buildMachine(
+    _ machine: Machine,
+    restoreImageFile: RestoreImageLibraryItemFile
+  ) async throws -> VirtualMachineFactory {
     guard let fileAccessor = restoreImageFile.fileAccessor else {
       throw MachineError.undefinedType("missing file accessor", nil)
     }

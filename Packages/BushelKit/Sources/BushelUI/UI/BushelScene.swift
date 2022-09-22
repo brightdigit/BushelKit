@@ -30,7 +30,10 @@
           .frame(width: 950, height: 450)
           .presentedWindowStyle(.hiddenTitleBar)
           .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
-      }.windowsHandle(BasicWindowOpenHandle.welcome).windowStyle(.hiddenTitleBar).disableResizability()
+      }
+      .windowsHandle(BasicWindowOpenHandle.welcome)
+      .windowStyle(.hiddenTitleBar)
+      .disableResizability()
       DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
         RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
       }
@@ -38,51 +41,58 @@
         MachineView(document: file.$document, url: file.fileURL, restoreImageChoices: [])
       }.commands {
         CommandGroup(replacing: .newItem) {
-          Menu("New") {
-            Button("New Machine") {
+          Menu(.menuNew) {
+            Button(.menuNewMachine) {
               Windows.showNewDocumentWindow(ofType: .virtualMachine)
             }
-            Button("New Image Library") {
+            Button(.menuNewImageLibrary) {
               Windows.showNewSavedDocumentWindow(ofType: RestoreImageLibraryDocument.self)
             }
           }
-          Menu("Open Recent") {
+          Menu(.menuOpenRecent) {
             RecentDocumentsMenuContent().environmentObject(recentDocumentsObject)
           }
         }
         CommandGroup(after: .newItem) {
-          Button("Download Restore Image...") {
+          Button(.menuNewDownloadRestoreImage) {
             Windows.openWindow(withHandle: BasicWindowOpenHandle.remoteSources)
           }
         }
         CommandGroup(after: .windowArrangement) {
-          Button("Welcome to Bushel") {
+          Button(.menuWindowWelcomeToBushel) {
             Windows.openWindow(withHandle: BasicWindowOpenHandle.welcome)
           }
         }
         CommandGroup(replacing: .help) {
-          Button("Bushel Help") {
+          Button(.menuHelpBushel) {
             openURL(Configuration.URLs.support)
           }
         }
       }
       #if canImport(Virtualization) && arch(arm64)
         DocumentGroup(viewing: RestoreImageDocument.self) { file in
-          RestoreImageDocumentView(document: file.document, manager: VirtualizationImageManager(), url: file.fileURL)
+          RestoreImageDocumentView(
+            document: file.document,
+            manager: VirtualizationImageManager(),
+            url: file.fileURL
+          )
         }
       #endif
-      WindowGroup(Text("Remote Restore Images"), id: "Remote Restore Images") {
+      WindowGroup(Text(.remoteRestoreImages), id: "remote_restore_images") {
         RrisCollectionView()
       }.windowsHandle(BasicWindowOpenHandle.remoteSources)
       WindowGroup(id: MachineSessionWindowHandle.host) {
         SessionView()
-          .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { _ in
-            self.hideMiniButton()
-          })
+          .onReceive(
+            NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification),
+            perform: { _ in
+              self.hideMiniButton()
+            }
+          )
           .presentedWindowStyle(.hiddenTitleBar)
           .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
-
-      }.windowsHandle(MachineSessionWindowHandle.self).windowStyle(.hiddenTitleBar)
+      }
+      .windowsHandle(MachineSessionWindowHandle.self).windowStyle(.hiddenTitleBar)
       Settings {
         SettingsView()
       }
@@ -95,7 +105,8 @@
     }
 
     func hideMiniButton() {
-      for window in NSApplication.shared.windows where window.identifier?.rawValue.hasPrefix(MachineSessionWindowHandle.host) == true {
+      for window in NSApplication.shared.windows
+        where window.identifier?.rawValue.hasPrefix(MachineSessionWindowHandle.host) == true {
         window.standardWindowButton(NSWindow.ButtonType.closeButton)?.isEnabled = false
       }
     }

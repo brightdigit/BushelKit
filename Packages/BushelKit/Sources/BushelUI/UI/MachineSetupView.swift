@@ -10,8 +10,8 @@
   struct MachineSetupView: View {
     @Environment(\.dismiss) var dismiss: DismissAction
     @State var machineRestoreImage: MachineRestoreImage?
-    @State var showSaveProgress: Bool = false
-    @State var isReadyToSave: Bool = false
+    @State var showSaveProgress = false
+    @State var isReadyToSave = false
     @State var machineSavedURL: URL?
     @Binding var document: MachineDocument
     let url: URL?
@@ -32,9 +32,8 @@
         HStack {
           Button {
             dismiss()
-
           } label: {
-            Text("Cancel")
+            Text(.cancel)
           }
           Button {
             Task {
@@ -48,12 +47,10 @@
               installationObject.setupInstaller(factory)
               factory.beginBuild()
             }
-
           } label: {
-            Text("Build Machine")
+            Text(.buildMachine)
           }
         }
-
       }.onReceive(self.installationObject.$phaseProgress, perform: { phase in
         guard case let .completed(result) = phase?.phase else {
           return
@@ -68,48 +65,65 @@
           self.onCompleted?(error)
         }
         self.installationObject.cancel()
-      }).fileExporter(isPresented: self.$isReadyToSave, document: self.document, contentType: .virtualMachine, onCompletion: { result in
-        showSaveProgress = false
-        do {
-          let machineSavedURL = try result.get()
-          self.machineSavedURL = machineSavedURL
-          Windows.openDocumentAtURL(machineSavedURL)
-        } catch {
-          dump(error)
-        }
-        self.onCompleted?(nil)
       })
+      .fileExporter(
+        isPresented: self.$isReadyToSave,
+        document: self.document,
+        contentType: .virtualMachine,
+        onCompletion: { result in
+          showSaveProgress = false
+          do {
+            let machineSavedURL = try result.get()
+            self.machineSavedURL = machineSavedURL
+            Windows.openDocumentAtURL(machineSavedURL)
+          } catch {
+            dump(error)
+          }
+          self.onCompleted?(nil)
+        }
+      )
       .onAppear {
         DispatchQueue.main.async {
-          self.machineRestoreImage = document.machine.restoreImage.map(MachineRestoreImage.init(file:))
+          self.machineRestoreImage = document.machine.restoreImage
+            .map(MachineRestoreImage.init(file:))
         }
       }
 
-      .sheet(item: self.$installationObject.phaseProgress, onDismiss: {
-        DispatchQueue.main.async {
-          // self.document.osInstallationCompleted()
-          self.isReadyToSave = true
-          self.showSaveProgress = true
+      .sheet(
+        item: self.$installationObject.phaseProgress,
+        onDismiss: {
+          DispatchQueue.main.async {
+            // self.document.osInstallationCompleted()
+            self.isReadyToSave = true
+            self.showSaveProgress = true
+          }
+        }, content: { phase in
+          MachineFactoryView(phaseProgress: phase)
         }
-
-      }, content: { phase in
-        MachineFactoryView(phaseProgress: phase)
-      }).sheet(isPresented: self.$showSaveProgress) {
+      )
+      .sheet(isPresented: self.$showSaveProgress) {
         ProgressView {
-          Text("Saving New Machine...")
+          Text(.savingMachine)
         }
       }
     }
   }
 
+  // swiftlint:enable closure_body_length
+
   struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      MachineSetupView(document: .constant(MachineDocument()), url: nil, restoreImageChoices: [
-        MachineRestoreImage(name: "name"),
+      MachineSetupView(
+        document: .constant(MachineDocument()),
+        url: nil,
+        restoreImageChoices: [
+          MachineRestoreImage(name: "name"),
 
-        MachineRestoreImage(name: "test"),
-        MachineRestoreImage(name: "hello")
-      ], onCompleted: nil)
+          MachineRestoreImage(name: "test"),
+          MachineRestoreImage(name: "hello")
+        ],
+        onCompleted: nil
+      )
     }
   }
 #endif

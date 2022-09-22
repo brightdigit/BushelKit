@@ -1,14 +1,8 @@
 //
-// ImageMetadata.Previews.swift
+// ImageMetadata+Previews.swift
 // Copyright (c) 2022 BrightDigit.
 //
 
-//
-//  File.swift
-//
-//
-//  Created by Leo Dion on 7/31/22.
-//
 #if canImport(Virtualization) && arch(arm64) && canImport(SwiftUI)
   import BushelMachine
   import BushelMachineMacOS
@@ -46,7 +40,7 @@
         buildVersion: "21F79",
         operatingSystemVersion: OperatingSystemVersion(majorVersion: 12, minorVersion: 4, patchVersion: 0),
         contentLength: 0,
-        lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959953),
+        lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959_953),
         fileExtension: "ipsw",
         vmSystem: .macOS
       )
@@ -57,19 +51,21 @@
     static let data: [RestoreImageLibraryItemFile] = [
       .init(
         id: .init(),
-        name: "Ventura Beta 3",
         metadata: .Previews.venturaBeta3,
+        name: "Ventura Beta 3",
         fileAccessor: URLAccessor(url: URL(
-          string: "file:///var/folders/5d/8rl1m9ts5r96dxdh4rp_zx100000gn/T/com.brightdigit.BshIll/B6844821-A5C8-42B5-80C2-20F815FB920E.ipsw"
-        )!)
+          // swiftlint:disable:next line_length
+          "file:///var/folders/5d/8rl1m9ts5r96dxdh4rp_zx100000gn/T/com.brightdigit.BshIll/B6844821-A5C8-42B5-80C2-20F815FB920E.ipsw"
+        ))
       ),
       .init(
         id: .init(),
-        name: "Montery 12.4",
         metadata: .Previews.monterey,
+        name: "Montery 12.4",
         fileAccessor: URLAccessor(url: URL(
-          string: "file:///var/folders/5d/8rl1m9ts5r96dxdh4rp_zx100000gn/T/com.brightdigit.BshIll/B6844821-A5C8-42B5-80C2-20F815FB920E.ipsw"
-        )!)
+          // swiftlint:disable:next line_length
+          "file:///var/folders/5d/8rl1m9ts5r96dxdh4rp_zx100000gn/T/com.brightdigit.BshIll/B6844821-A5C8-42B5-80C2-20F815FB920E.ipsw"
+        ))
       )
     ]
   }

@@ -10,7 +10,7 @@
 
   extension VZMacOSRestoreImage {
     var isImageSupported: Bool {
-      #if swift(>=5.7)
+      #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           return self.isSupported
         } else {
@@ -21,7 +21,9 @@
       #endif
     }
 
-    func headers(withSession session: URLSession = .shared) async throws -> [AnyHashable: Any] {
+    func headers(
+      withSession session: URLSession = .shared
+    ) async throws -> [AnyHashable: Any] {
       var request = URLRequest(url: url)
       request.httpMethod = "HEAD"
       let (_, response) = try await session.data(for: request)

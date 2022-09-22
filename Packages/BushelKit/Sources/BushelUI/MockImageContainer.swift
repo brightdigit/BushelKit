@@ -6,7 +6,7 @@
 import BushelMachine
 
 struct MockImageContainer: ImageContainer {
-  let location: ImageLocation
+  let location: ImageLocation?
 
   let metadata: ImageMetadata
 }

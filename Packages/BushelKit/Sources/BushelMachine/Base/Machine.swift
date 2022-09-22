@@ -14,7 +14,11 @@ public struct Machine: Identifiable, Codable {
     return machine
   }
 
-  public init(id: UUID = .init(), restoreImage: RestoreImageLibraryItemFile? = nil, operatingSystem: OperatingSystemDetails? = nil) {
+  public init(
+    id: UUID = .init(),
+    restoreImage: RestoreImageLibraryItemFile? = nil,
+    operatingSystem: OperatingSystemDetails? = nil
+  ) {
     self.id = id
     self.restoreImage = restoreImage
     self.operatingSystem = operatingSystem
@@ -38,10 +42,14 @@ public struct Machine: Identifiable, Codable {
   }
 
   public func createMachine() throws -> MachineSession? {
-    let manager = (restoreImage?.metadata.vmSystem).flatMap(AnyImageManagers.imageManager(forSystem:))
+    let manager = (restoreImage?.metadata.vmSystem)
+      .flatMap(AnyImageManagers.imageManager(forSystem:))
 
     guard let manager = manager else {
-      throw MachineError.undefinedType("No available manager.", restoreImage?.metadata.vmSystem)
+      throw MachineError.undefinedType(
+        "No available manager.",
+        restoreImage?.metadata.vmSystem
+      )
     }
     return try manager.session(fromMachine: self)
   }
@@ -67,7 +75,11 @@ public struct Machine: Identifiable, Codable {
       return
     }
 
-    operatingSystem = .init(type: .macOS, version: metadata.operatingSystemVersion, buildVersion: metadata.buildVersion)
+    operatingSystem = .init(
+      type: .macOS,
+      version: metadata.operatingSystemVersion,
+      buildVersion: metadata.buildVersion
+    )
     machineFactoryResultURL = url
   }
 }

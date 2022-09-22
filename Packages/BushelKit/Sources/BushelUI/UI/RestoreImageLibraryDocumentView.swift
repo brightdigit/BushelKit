@@ -1,7 +1,9 @@
 //
-// RestoreImageLibraryView.swift
+// RestoreImageLibraryDocumentView.swift
 // Copyright (c) 2022 BrightDigit.
 //
+
+// swiftlint:disable file_length
 
 #if canImport(SwiftUI)
   import BushelMachine
@@ -24,7 +26,7 @@
 
     @State var window: NSWindow?
     @State var url: URL?
-    @State var shouldSaveFile: Bool = false
+    @State var shouldSaveFile = false
     @State var selectedFileID: UUID?
     let initialSelectedFile: RestoreImageLibraryItemFile?
     @State var importingURL: URL?
@@ -49,13 +51,17 @@
       return $document.library.items[index]
     }
 
-    @State var addRestoreImageToLibraryIsVisible: Bool = false
-    fileprivate func importRestoreImage() async {
+    @State var addRestoreImageToLibraryIsVisible = false
+
+    // swiftlint:disable:next function_body_length
+    func importRestoreImage() async {
       let imageManager = importingURL.flatMap { url in
         try? url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier
-      }.flatMap { typeID in
+      }
+      .flatMap { typeID in
         UTType(typeID)
-      }.flatMap { utType in
+      }
+      .flatMap { utType in
         AnyImageManagers.imageManager(forContentType: utType)
       }
       if let newImageURL = importingURL, let imageManager = imageManager {
@@ -87,7 +93,7 @@
       }
     }
 
-    fileprivate func invalidateURL() {
+    func invalidateURL() {
       if let url = url {
         document.updateBaseURL(url)
       } else {
@@ -97,18 +103,19 @@
       }
     }
 
+    // swiftlint:disable closure_body_length
     var body: some View {
       NavigationView {
         VStack {
-          if activeImports.count + self.document.library.items.count > 0 {
+          if !activeImports.isEmpty || !self.document.library.items.isEmpty {
             List {
-              if activeImports.count > 0 {
+              if !activeImports.isEmpty {
                 Section {
                   ScrollView {
                     ForEach(activeImports) { activeImport in
                       HStack {
                         ProgressView().scaleEffect(0.4)
-                        Text("Importing \(activeImport.sourceURL.lastPathComponent)...")
+                        Text(activeImport.localizedImportingMessage)
                       }.padding(-10.0)
                     }.font(.caption)
                   }
@@ -116,14 +123,16 @@
               }
               Section {
                 ForEach(self.document.library.items) { item in
-
-                  NavigationLink(tag: item.id, selection: self.$selectedFileID) {
+                  NavigationLink(
+                    tag: item.id,
+                    selection: self.$selectedFileID
+                  ) {
                     VStack {
                       RestoreImageLibraryItemFileView(file: bindingFor(item)).padding()
                       Spacer()
                     }
                   } label: {
-                    Text("\(item.name)")
+                    Text(item.name)
                   }
                 }
               }
@@ -133,7 +142,7 @@
               self.addRestoreImageToLibraryIsVisible = true
             } label: {
               Image(systemName: "plus")
-              Text("Import First Image")
+              Text(.importFirstImage)
             }.padding().buttonStyle(LinkButtonStyle())
           }
           Spacer()
@@ -147,18 +156,25 @@
               }
             } label: {
               Image(systemName: "plus").padding(.leading, 8.0)
-            }.fileImporter(isPresented: self.$addRestoreImageToLibraryIsVisible, allowedContentTypes:
-              UTType.ipswTypes) { result in
-
-                self.importingURL = try? result.get()
-              }.fileExporter(isPresented: $shouldSaveFile, document: self.document, contentType: .restoreImageLibrary) { result in
-                dump(self.window)
-                self.window?.close()
-                self.window = nil
-                if let url = try? result.get() {
-                  Windows.openDocumentAtURL(url)
-                }
+            }
+            .fileImporter(
+              isPresented: self.$addRestoreImageToLibraryIsVisible,
+              allowedContentTypes: UTType.ipswTypes
+            ) { result in
+              self.importingURL = try? result.get()
+            }
+            .fileExporter(
+              isPresented: $shouldSaveFile,
+              document: self.document,
+              contentType: .restoreImageLibrary
+            ) { result in
+              dump(self.window)
+              self.window?.close()
+              self.window = nil
+              if let url = try? result.get() {
+                Windows.openDocumentAtURL(url)
               }
+            }
             Divider().padding(.vertical, -6.0).opacity(0.75)
             Button {} label: {
               Image(systemName: "minus")
@@ -173,7 +189,11 @@
             }
             Divider().padding(.vertical, -6.0).opacity(0.75)
             Spacer()
-          }.buttonStyle(.borderless).padding(.vertical, 4.0).fixedSize(horizontal: false, vertical: true).offset(x: 0.0, y: -2.0)
+          }
+          .buttonStyle(.borderless)
+          .padding(.vertical, 4.0)
+          .fixedSize(horizontal: false, vertical: true)
+          .offset(x: 0.0, y: -2.0)
         }
         .frame(minWidth: 200, maxWidth: 500)
 
@@ -187,9 +207,13 @@
               }
             } label: {
               HStack {
-                Image(systemName: "plus").resizable().aspectRatio(1.0, contentMode: .fit).foregroundColor(.accentColor).frame(height: 24.0)
+                Image(systemName: "plus")
+                  .resizable()
+                  .aspectRatio(1.0, contentMode: .fit)
+                  .foregroundColor(.accentColor)
+                  .frame(height: 24.0)
                 Spacer().frame(width: 12.0)
-                Text("Import a Restore Image").font(.custom("Raleway", size: 24.0))
+                Text(.importRestoreImage).font(.custom("Raleway", size: 24.0))
               }
             }.padding(8.0)
 
@@ -206,41 +230,50 @@
                     .foregroundColor(.accentColor)
                     .frame(height: 24.0)
                   Spacer().frame(width: 12.0)
-                  Text("Select a Restore Image").font(.custom("Raleway", size: 24.0))
+                  Text(.selectRestoreImage).font(.custom("Raleway", size: 24.0))
                 }
               }.padding(8.0)
             }
-
           }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.primary)
         }
-
-      }.task(id: self.importingURL) {
+      }
+      .task(id: self.importingURL) {
         await importRestoreImage()
-      }.onChange(of: self.url) { _ in
+      }
+      .onChange(of: self.url) { _ in
         self.invalidateURL()
-      }.onAppear {
+      }
+      .onAppear {
         self.invalidateURL()
       }
     }
   }
 
+  // swiftlint:enable closure_body_length
+
   #if canImport(Virtualization) && arch(arm64)
     struct RestoreImageLibraryDocumentView_Previews: PreviewProvider {
       static var previews: some View {
         RestoreImageLibraryDocumentView(
-          document: .constant(RestoreImageLibraryDocument(
-            library: .init(items: Self.data))
+          document: .constant(
+            RestoreImageLibraryDocument(
+              library: .init(items: Self.data)
+            )
           ),
           url: .init(
             fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"
           ),
           activeImports: [
-            .init(sourceURL: .init(fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"))
+            .init(
+              sourceURL: .init(
+                fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"
+              )
+            )
           ],
           selected: .init(
             id: .init(),
-            name: "Ventura Beta 3",
             metadata: .Previews.venturaBeta3,
+            name: "Ventura Beta 3",
             fileAccessor: URLAccessor(
               url: .init(
                 fileURLWithPath: "/Users/leo/Documents/Restore Images/RestoreImage.ipsw"

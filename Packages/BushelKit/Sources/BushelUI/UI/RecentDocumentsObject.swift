@@ -18,11 +18,19 @@
         let controller = NSDocumentController.shared
         self.controller = controller
         self.recentDocumentURLs = controller.recentDocumentURLs
-        controller.publisher(for: \.recentDocumentURLs).receive(on: DispatchQueue.main).assign(to: &self.$recentDocumentURLs)
+        controller.publisher(
+          for: \.recentDocumentURLs
+        )
+        .receive(
+          on: DispatchQueue.main
+        )
+        .assign(to: &self.$recentDocumentURLs)
       }
     }
 
     @Published var recentDocumentURLs: [URL]
+
+    // swiftlint:disable:next implicitly_unwrapped_optional
     var controller: NSDocumentController!
   }
 #endif

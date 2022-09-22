@@ -6,16 +6,26 @@
 import Foundation
 
 public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, ImageContainer {
-  public func updatingWithURL(_ url: URL, andFileAccessor newFileAccessor: FileAccessor?) -> RestoreImageLibraryItemFile {
+  public func updatingWithURL(
+    _ url: URL,
+    andFileAccessor newFileAccessor: FileAccessor?
+  ) -> RestoreImageLibraryItemFile {
     let fileAccessor: FileAccessor
 
     if let newFileAccessor = newFileAccessor {
       fileAccessor = newFileAccessor
+    } else if let oldFileAccessor = self.fileAccessor {
+      fileAccessor = oldFileAccessor.updatingWithURL(url)
     } else {
-      fileAccessor = self.fileAccessor.updatingWithURL(url)
+      fileAccessor = URLAccessor(url: url)
     }
 
-    return RestoreImageLibraryItemFile(id: id, name: name, metadata: metadata, fileAccessor: fileAccessor)
+    return RestoreImageLibraryItemFile(
+      id: id,
+      metadata: metadata,
+      name: name,
+      fileAccessor: fileAccessor
+    )
   }
 
   public func hash(into hasher: inout Hasher) {
@@ -24,7 +34,10 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     hasher.combine(metadata)
   }
 
-  public static func == (lhs: RestoreImageLibraryItemFile, rhs: RestoreImageLibraryItemFile) -> Bool {
+  public static func == (
+    lhs: RestoreImageLibraryItemFile,
+    rhs: RestoreImageLibraryItemFile
+  ) -> Bool {
     lhs.id == rhs.id
   }
 
@@ -34,7 +47,7 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     let name = try container.decode(String.self, forKey: .name)
     let metadata = try container.decode(ImageMetadata.self, forKey: .metadata)
 
-    self.init(id: id, name: name, metadata: metadata)
+    self.init(id: id, metadata: metadata, name: name)
   }
 
   public var fileName: String {
@@ -44,10 +57,10 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
   public var name: String
   public let id: UUID
   public let metadata: ImageMetadata
-  public var fileAccessor: FileAccessor!
+  public var fileAccessor: FileAccessor?
 
-  public var location: ImageLocation {
-    .file(fileAccessor)
+  public var location: ImageLocation? {
+    fileAccessor.map(ImageLocation.file)
   }
 
   enum CodingKeys: String, CodingKey {
@@ -56,14 +69,12 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     case metadata
   }
 
-  private init(id: UUID, name: String? = nil, metadata: ImageMetadata) {
-    self.id = id
-    self.name = name ?? metadata.defaultName
-    self.metadata = metadata
-    fileAccessor = nil
-  }
-
-  public init(id: UUID, name: String? = nil, metadata: ImageMetadata, fileAccessor: FileAccessor) {
+  public init(
+    id: UUID,
+    metadata: ImageMetadata,
+    name: String? = nil,
+    fileAccessor: FileAccessor? = nil
+  ) {
     self.id = id
     self.name = name ?? metadata.defaultName
     self.metadata = metadata

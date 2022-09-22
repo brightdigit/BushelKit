@@ -12,7 +12,10 @@ extension OperatingSystemVersion: CustomStringConvertible, Codable, Hashable, Cu
     patchVersion.hash(into: &hasher)
   }
 
-  public static func == (lhs: OperatingSystemVersion, rhs: OperatingSystemVersion) -> Bool {
+  public static func == (
+    lhs: OperatingSystemVersion,
+    rhs: OperatingSystemVersion
+  ) -> Bool {
     lhs.majorVersion == rhs.majorVersion &&
       lhs.minorVersion == rhs.minorVersion &&
       lhs.patchVersion == rhs.patchVersion
@@ -41,7 +44,11 @@ extension OperatingSystemVersion: CustomStringConvertible, Codable, Hashable, Cu
       throw Self.Error.invalidFormatString(string)
     }
 
-    self.init(majorVersion: components[0], minorVersion: components[1], patchVersion: components.count == 3 ? components[2] : 0)
+    self.init(
+      majorVersion: components[0],
+      minorVersion: components[1],
+      patchVersion: components.count == 3 ? components[2] : 0
+    )
   }
 
   public var description: String {
@@ -49,6 +56,7 @@ extension OperatingSystemVersion: CustomStringConvertible, Codable, Hashable, Cu
   }
 
   public var debugDescription: String {
+    // swiftlint:disable:next line_length
     "OperatingSystemVersion(majorVersion: \(majorVersion), minorVersion: \(minorVersion), patchVersion: \(patchVersion)"
   }
 }

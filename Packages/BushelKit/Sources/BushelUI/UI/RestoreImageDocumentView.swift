@@ -9,7 +9,11 @@
   import UniformTypeIdentifiers
 
   struct RestoreImageDocumentView<ImageManagerType: ImageManager>: View {
-    internal init(url _: URL?, manager _: ImageManagerType, _ fetchImage: @escaping () async throws -> RestoreImage) {
+    internal init(
+      url _: URL?,
+      manager _: ImageManagerType,
+      _ fetchImage: @escaping () async throws -> RestoreImage
+    ) {
       self.fetchImage = fetchImage
     }
 
@@ -34,8 +38,10 @@
         switch self.restoreImageResult {
         case .none:
           ProgressView()
+
         case let .success(image):
           RestoreImageView(image: image).fixedSize()
+
         default:
           EmptyView()
         }

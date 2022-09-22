@@ -9,22 +9,16 @@
   import UniformTypeIdentifiers
   import Virtualization
 
-  public extension VMSystemID {
-    static let macOS: VMSystemID = "macOSApple"
-  }
-
-  public extension AnyImageManagers {
-    static let vzMacOS: AnyImageManager = VirtualizationImageManager()
-  }
-
   public struct VirtualizationImageManager: ImageManager {
     static let defaultNamePrefix = "macOS"
 
     public func defaultName(for metadata: BushelMachine.ImageMetadata) -> String {
-      guard let codeName = OperatingSystemCodeName(operatingSystemVersion: metadata.operatingSystemVersion) else {
+      guard let codeName = OperatingSystemCodeName(
+        operatingSystemVersion: metadata.operatingSystemVersion
+      ) else {
         return "\(Self.defaultNamePrefix) \(metadata.operatingSystemVersion) (\(metadata.buildVersion))"
       }
-
+      // swiftlint:disable:next line_length
       return "\(Self.defaultNamePrefix) \(codeName.name) \(metadata.operatingSystemVersion) (\(metadata.buildVersion))"
     }
 
@@ -33,12 +27,20 @@
 
     public init() {}
 
-    public func loadFromAccessor(_ accessor: FileAccessor) async throws -> VZMacOSRestoreImage {
+    public func loadFromAccessor(
+      _ accessor: FileAccessor
+    ) async throws -> VZMacOSRestoreImage {
       try await VZMacOSRestoreImage.loadFromURL(accessor.getURL())
     }
 
-    public func containerFor(image: VZMacOSRestoreImage, fileAccessor: FileAccessor?) async throws -> ImageContainer {
-      try await VirtualizationMacOSRestoreImage(vzRestoreImage: image, fileAccessor: fileAccessor)
+    public func containerFor(
+      image: VZMacOSRestoreImage,
+      fileAccessor: FileAccessor?
+    ) async throws -> ImageContainer {
+      try await VirtualizationMacOSRestoreImage(
+        vzRestoreImage: image,
+        fileAccessor: fileAccessor
+      )
     }
 
     public func validateSession(fromMachine machine: Machine) throws {
@@ -57,11 +59,16 @@
       return try VirtualizationSession(fromConfigurationURL: configurationURL)
     }
 
-    public func buildMachine(_ machine: Machine, restoreImage: VZMacOSRestoreImage) -> VirtualMachineFactory {
+    public func buildMachine(
+      _ machine: Machine,
+      restoreImage: VZMacOSRestoreImage
+    ) -> VirtualMachineFactory {
       VirtualMacOSMachineFactory(machine: machine, restoreImage: restoreImage)
     }
 
-    public func restoreImage(from fileAccessor: FileAccessor) async throws -> VZMacOSRestoreImage {
+    public func restoreImage(
+      from fileAccessor: FileAccessor
+    ) async throws -> VZMacOSRestoreImage {
       try await VZMacOSRestoreImage.loadFromURL(fileAccessor.getURL())
     }
   }

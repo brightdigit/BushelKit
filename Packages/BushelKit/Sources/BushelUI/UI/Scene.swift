@@ -7,17 +7,25 @@
   import SwiftUI
 
   extension Scene {
-    func windowsHandle<HandleType: StaticConditionalHandle>(_ handle: HandleType.Type) -> some Scene {
+    func windowsHandle<HandleType: StaticConditionalHandle>(
+      _ handle: HandleType.Type
+    ) -> some Scene {
       handlesExternalEvents(matching: .init(handle.conditions))
     }
 
-    func windowsHandle<HandleType: InstanceConditionalHandle>(_ handle: HandleType) -> some Scene {
+    func windowsHandle<HandleType: InstanceConditionalHandle>(
+      _ handle: HandleType
+    ) -> some Scene {
       handlesExternalEvents(matching: .init(handle.conditions))
     }
 
     @available(*, deprecated)
-    func attemptSingleWindowFor<Content: View>(_ title: String, id: String, @ViewBuilder content: @escaping () -> Content) -> some Scene {
-      #if swift(>=5.7)
+    func attemptSingleWindowFor<Content: View>(
+      _ title: String,
+      id: String,
+      @ViewBuilder content: @escaping () -> Content
+    ) -> some Scene {
+      #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           return Window(title, id: id) {
             content()
@@ -35,7 +43,7 @@
     }
 
     public func disableResizability() -> some Scene {
-      #if swift(>=5.7)
+      #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           return self.windowResizability(.contentSize)
         } else {

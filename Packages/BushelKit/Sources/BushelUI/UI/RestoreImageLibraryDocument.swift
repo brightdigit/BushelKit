@@ -8,6 +8,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
+  // swiftlint:disable all
   struct RestoreImageLibraryDocument: FileDocument, BlankFileDocument {
     static let allowedContentTypes: [UTType] = [.restoreImageLibrary]
 
@@ -37,7 +38,10 @@
           let restoreImageDirURL = sourceURL.appendingPathComponent("Restore Images")
           let destinationFileURL = restoreImageDirURL.appendingPathComponent(file.fileName)
           do {
-            try FileManager.default.createDirectory(at: restoreImageDirURL, withIntermediateDirectories: true)
+            try FileManager.default.createDirectory(
+              at: restoreImageDirURL,
+              withIntermediateDirectories: true
+            )
             try FileManager.default.copyItem(at: sourceFileURL, to: destinationFileURL)
           } catch {
             dump(error)
@@ -65,20 +69,8 @@
       guard let imageWrappers = imageDirectoryWrapper.fileWrappers, imageDirectoryWrapper.isDirectory else {
         return
       }
-//    let libraryItemSHAsMaps = library.items.map {
-//      ($0.metadata.url.lastPathComponent, $0.metadata.sha256)
-//    }
-//    let libraryItemShas: [String: SHA256] = Dictionary(grouping: libraryItemSHAsMaps) { element in
-//      element.0
-//    }.compactMapValues { items in
-//      guard items.count == 1 else {
-//        return nil
-//      }
-//      return items.first?.1
-//    }
 
       let restoreImages = library.items.map { file -> RestoreImageLibraryItemFile in
-
         let fileWrapper = imageWrappers[file.fileName]
         let fileName = fileWrapper?.filename ?? file.fileName
         let url = url.appendingPathComponent("Restore Images").appendingPathComponent(fileName)
@@ -128,7 +120,6 @@
         return await group.reduce(into: [RestoreImage?]()) { images, image in
           images.append(image)
         }
-
       }.compactMap { $0 }.compactMap(RestoreImageLibraryItemFile.init(loadFromImage:))
       library = .init(items: restoreImages)
     }
@@ -150,37 +141,50 @@
       }
 
       for (index, item) in library.items.enumerated() {
-        if let fileWrapper = configuration.file.fileWrappers?["Restore Images"]?.fileWrappers?[item.id.uuidString] {
+        if let fileWrapper = configuration.file
+          .fileWrappers?["Restore Images"]?
+          .fileWrappers?[item.id.uuidString] {
           library.items[index].fileAccessor = FileWrapperAccessor(fileWrapper: fileWrapper, url: nil)
         }
       }
       self.init(library: library, sourceFileWrapper: configuration.file)
     }
 
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-      let fileWrapper: FileWrapper = configuration.existingFile ?? .init(directoryWithFileWrappers: [String: FileWrapper]())
+    func fileWrapper(
+      configuration: WriteConfiguration
+    ) throws -> FileWrapper {
+      let fileWrapper: FileWrapper =
+        configuration.existingFile ??
+        .init(directoryWithFileWrappers: [String: FileWrapper]())
 
-      let existingImageDirectoryFileWrapper = configuration.existingFile?.fileWrappers?["Restore Images"]?.fileWrappers
-      // let sourceImageDirectoryFileWrapper = sourceFileWrapper?.fileWrappers?["Restore Images"]?.fileWrappers
-      let imageFileWrappers = try library.items.compactMap { file -> FileWrapper? in
-        if let fileWrapper = existingImageDirectoryFileWrapper?[file.fileName] {
-          return fileWrapper
-        } else if let sourceFileURL = try? file.fileAccessor?.getURL() {
-          if let expectedDestinationURL = self.sourceURL?.appendingPathComponent("Restore Images").appendingPathComponent(file.fileName) {
-            if FileManager.default.fileExists(atPath: expectedDestinationURL.path) {
-              return nil
+      let existingImageDirectoryFileWrapper = configuration.existingFile?
+        .fileWrappers?["Restore Images"]?
+        .fileWrappers
+
+      let imageFileWrappers = try library.items
+        .compactMap { file -> FileWrapper? in
+          if let fileWrapper = existingImageDirectoryFileWrapper?[file.fileName] {
+            return fileWrapper
+          } else if let sourceFileURL = try? file.fileAccessor?.getURL() {
+            if let expectedDestinationURL = self.sourceURL?
+              .appendingPathComponent("Restore Images")
+              .appendingPathComponent(file.fileName) {
+              if FileManager.default.fileExists(atPath: expectedDestinationURL.path) {
+                return nil
+              }
             }
+            return try FileWrapper(url: sourceFileURL)
+          } else {
+            return nil
           }
-          return try FileWrapper(url: sourceFileURL)
-        } else {
-          return nil
         }
-      }
 
       let encoder = JSONEncoder()
       let data = try encoder.encode(library)
-      if imageFileWrappers.count > 0 {
-        let imagesDirectoryFileWrapper = configuration.existingFile?.fileWrappers?["Restore Images"] ?? FileWrapper(directoryWithFileWrappers: [:])
+      if !imageFileWrappers.isEmpty {
+        let imagesDirectoryFileWrapper =
+          configuration.existingFile?.fileWrappers?["Restore Images"] ??
+          FileWrapper(directoryWithFileWrappers: [:])
         if imagesDirectoryFileWrapper.preferredFilename == nil {
           imagesDirectoryFileWrapper.preferredFilename = "Restore Images"
         }

@@ -10,17 +10,24 @@
   struct PageView: NSViewControllerRepresentable {
     let data = ["green", "blue", "red"]
     class Controller: NSPageController, NSPageControllerDelegate {
-      func pageController(_: NSPageController, identifierFor object: Any) -> NSPageController.ObjectIdentifier {
+      func pageController(
+        _: NSPageController,
+        identifierFor object: Any
+      ) -> NSPageController.ObjectIdentifier {
         (object as? String) ?? "green"
       }
 
-      func pageController(_: NSPageController, viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier) -> NSViewController {
+      func pageController(
+        _: NSPageController,
+        viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier
+      ) -> NSViewController {
         let rootView: Color
         switch identifier {
         case "green":
           rootView = .green
         case "red":
           rootView = .red
+
         default:
           rootView = .blue
         }

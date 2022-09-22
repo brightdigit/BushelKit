@@ -23,7 +23,10 @@ public struct RestoreImage: Identifiable, Hashable, RestoreImagable {
     self.location = location
   }
 
-  public init(imageContainer: ImageContainer) {
-    self.init(metadata: imageContainer.metadata, location: imageContainer.location)
+  public init?(imageContainer: ImageContainer) {
+    guard let location = imageContainer.location else {
+      return nil
+    }
+    self.init(metadata: imageContainer.metadata, location: location)
   }
 }

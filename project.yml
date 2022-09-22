@@ -6,10 +6,12 @@ options:
 settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
-  MARKETING_VERSION: "0.0.1"
+  MARKETING_VERSION: "1.0.0"
   CURRENT_PROJECT_VERSION: 27
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
+  DEAD_CODE_STRIPING: true
+  STRICT_MODE: ${STRICT_MODE}
 packages:
   BushelUI:
     path: ./Packages/BushelKit
@@ -72,6 +74,10 @@ targets:
         com.apple.security.network.client: true
         com.apple.security.virtualization: true
         com.apple.vm.networking: true
+    postBuildScripts:
+        - path: scripts/lint.sh
+          name: Lint
+          basedOnDependencyAnalysis: false
   Bushel-UITests:
     type: bundle.ui-testing
     platform: macOS

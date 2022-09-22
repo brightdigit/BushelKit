@@ -26,23 +26,31 @@
       state = .init(id: machine.id, percentCompleted: nil, phase: .notStarted)
     }
 
-    func setState(atPhase phase: VirtualMachineBuildingPhase, withPercentCompleted percentCompleted: Double? = nil) {
+    func setState(
+      atPhase phase: VirtualMachineBuildingPhase,
+      withPercentCompleted percentCompleted: Double? = nil
+    ) {
       let id = machine.id
       DispatchQueue.main.async {
         self.state = .init(id: id, percentCompleted: percentCompleted, phase: phase)
       }
     }
 
-    fileprivate func getMachineConfigurationURL() throws -> URL {
+    func getMachineConfigurationURL() throws -> URL {
       if let url = try machine.getMachineConfigurationURL() {
         return url
       } else {
-        let temporaryURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
-        try FileManager.default.createDirectory(at: temporaryURL, withIntermediateDirectories: true)
+        let temporaryURL = FileManager.default.temporaryDirectory
+          .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+          at: temporaryURL,
+          withIntermediateDirectories: true
+        )
         return temporaryURL
       }
     }
 
+    // swiftlint:disable:next function_body_length
     func beginBuild() {
       let machineConfigurationURL: URL
       let machineConfiguration: VZVirtualMachineConfiguration
@@ -67,17 +75,33 @@
 
       let virtualMachine = VZVirtualMachine(configuration: machineConfiguration)
 
-      let installer = VZMacOSInstaller(virtualMachine: virtualMachine, restoringFromImageAt: restoreImage.url)
-      setState(atPhase: .installing, withPercentCompleted: installer.progress.fractionCompleted)
+      let installer = VZMacOSInstaller(
+        virtualMachine: virtualMachine,
+        restoringFromImageAt: restoreImage.url
+      )
+      setState(
+        atPhase: .installing,
+        withPercentCompleted: installer.progress.fractionCompleted
+      )
 
       self.installer = installer
       installer.install { result in
-        self.setState(atPhase: .completed(result.map { machineConfigurationURL }), withPercentCompleted: installer.progress.fractionCompleted)
+        self.setState(
+          atPhase: .completed(result.map { machineConfigurationURL }),
+          withPercentCompleted: installer.progress.fractionCompleted
+        )
       }
-      progressObserver = installer.progress.observe(\.fractionCompleted,
-                                                    options: [.initial, .new]) { progress, _ in
-        self.setState(atPhase: .installing, withPercentCompleted: progress.fractionCompleted)
-      }
+      progressObserver = installer.progress
+        .observe(
+          \.fractionCompleted,
+
+          options: [.initial, .new]
+        ) { progress, _ in
+          self.setState(
+            atPhase: .installing,
+            withPercentCompleted: progress.fractionCompleted
+          )
+        }
     }
   }
 #endif
