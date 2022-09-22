@@ -18,7 +18,7 @@
         HStack {
           Image(systemName: phaseProgress.phase == .installing ? "play.fill" : "checkmark.circle.fill")
           ProgressView(value: phaseProgress.percentCompleted ?? 0.0) {
-            Text(.installingOS)
+            Text(.installingOs)
           }
         }
       }

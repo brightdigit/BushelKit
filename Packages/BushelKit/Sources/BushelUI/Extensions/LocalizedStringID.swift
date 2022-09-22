@@ -14,7 +14,7 @@ enum LocalizedStringID: String {
   case startMachine
   case buildMachine
   case buildingMachine
-  case installingOS
+  case installingOs
   case importFirstImage
   case importRestoreImage
   case selectRestoreImage
