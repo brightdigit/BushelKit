@@ -44,7 +44,9 @@
           Text(.buildMachine)
         }
       }.padding().sheet(item: self.$newMachine) { machine in
+        let mri = MachineRestoreImage(file: self.file)
         MachineSetupView(
+          machineRestoreImage: mri,
           document: .init(
             get: {
               machine
@@ -54,7 +56,7 @@
             }
           ),
           url: nil,
-          restoreImageChoices: [],
+          restoreImageChoices: [mri],
           onCompleted: { _ in
             self.newMachine = nil
           }

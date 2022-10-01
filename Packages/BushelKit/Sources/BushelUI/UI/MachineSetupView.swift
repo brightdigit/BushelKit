@@ -25,7 +25,7 @@
         if document.machine.operatingSystem == nil {
           Picker("Restore Image", selection: self.$machineRestoreImage) {
             ForEach(restoreImageChoices) { choice in
-              Text(choice.name)
+              Text(choice.name).tag(choice as MachineRestoreImage?)
             }
           }.padding()
         }
@@ -83,9 +83,17 @@
         }
       )
       .onAppear {
+        guard let restoreImageID = document.machine.restoreImage?.id else {
+          return
+        }
+        let machineRestoreImage = self.restoreImageChoices.first {
+          $0.id == restoreImageID
+        }
+        guard let machineRestoreImage = machineRestoreImage else {
+          return
+        }
         DispatchQueue.main.async {
-          self.machineRestoreImage = document.machine.restoreImage
-            .map(MachineRestoreImage.init(file:))
+          self.machineRestoreImage = machineRestoreImage
         }
       }
 
