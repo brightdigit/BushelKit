@@ -101,7 +101,6 @@
         item: self.$installationObject.phaseProgress,
         onDismiss: {
           DispatchQueue.main.async {
-            // self.document.osInstallationCompleted()
             self.isReadyToSave = true
             self.showSaveProgress = true
           }
@@ -109,11 +108,11 @@
           MachineFactoryView(phaseProgress: phase)
         }
       )
-      .sheet(isPresented: self.$showSaveProgress) {
-        ProgressView {
-          Text(.savingMachine)
-        }
-      }
+//      .sheet(isPresented: self.$showSaveProgress) {
+//        ProgressView {
+//          Text(.savingMachine)
+//        }
+//      }
     }
   }
 

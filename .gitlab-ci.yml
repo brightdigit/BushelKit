@@ -25,7 +25,7 @@ cache:
     - macos
   stage: lint
   script:
-    - STRICT_MODE=$STRICT_MODE ./scripts/lint.sh    
+    - LINT_MODE=$LINT_MODE ./scripts/lint.sh    
 
 build spm macos:
   only:
@@ -64,7 +64,7 @@ lint strict:
     - main
     - /^v\/*/
   variables:
-    STRICT_MODE: "true"
+    LINT_MODE: "STRICT"
   <<: *lint_template  
 
 deploy:

@@ -142,7 +142,7 @@
           RestoreImageLibraryItemFileView(file: binding)
         } else {
           EmptyRestoreLibraryView(
-            selectableFileID: self.selectedFileID,
+            selectableFileID: self.selectableFileID,
             onImportAction: {
               DispatchQueue.main.async {
                 self.addRestoreImageToLibraryIsVisible = true
@@ -157,7 +157,9 @@
         }
       }
       .task(id: self.importingURL) {
-        await importRestoreImage()
+        if importingURL != nil {
+          await importRestoreImage()
+        }
       }
       .onChange(of: self.url) { _ in
         self.invalidateURL()

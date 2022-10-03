@@ -160,7 +160,9 @@
       }
       let restoreImageDirectoryURL = url?.appendingPathComponent("Restore Images")
       let restoreImages = await sourceFileWrapper.loadRestoreImageFiles(fromDirectoryURL: restoreImageDirectoryURL, using: loader)
-      library = .init(items: restoreImages)
+      DispatchQueue.main.async {
+        self.library = .init(items: restoreImages)
+      }      
     }
   }
 
