@@ -35,7 +35,7 @@
       .windowStyle(.hiddenTitleBar)
       .disableResizability()
       DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
-        RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
+        RestoreImageLibraryDocumentView(document: file.document, url: file.fileURL)
       }
       DocumentGroup(newDocument: MachineDocument()) { file in
         MachineView(document: file.$document, url: file.fileURL, restoreImageChoices: [])

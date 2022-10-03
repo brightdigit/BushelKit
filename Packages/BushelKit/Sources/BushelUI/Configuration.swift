@@ -3,6 +3,7 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
+import enum BushelMachine.JSON
 import Foundation
 
 enum Configuration {
@@ -53,4 +54,6 @@ enum Configuration {
     static let termsOfUse: URL = .init("https://getbushel.app/terms-of-use")
     static let support: URL = .init("https://getbushel.app/support")
   }
+
+  typealias JSON = BushelMachine.JSON
 }
