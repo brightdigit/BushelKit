@@ -88,3 +88,12 @@ public struct RestoreImageLibraryItemFile: Codable, Identifiable, Hashable, Imag
     self.init(id: .init(), metadata: restoreImage.metadata, fileAccessor: accessor)
   }
 }
+
+public extension RestoreImageLibraryItemFile {
+  func getURL() throws -> URL {
+    guard let url = try fileAccessor?.getURL() else {
+      throw MachineError.undefinedType("no url to return", fileAccessor)
+    }
+    return url
+  }
+}

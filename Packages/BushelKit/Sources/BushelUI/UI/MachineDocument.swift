@@ -48,10 +48,10 @@
       guard let data = machineFileWrapper.regularFileContents else {
         throw DocumentError.undefinedType("No contents of machine.json file.", machineFileWrapper)
       }
-      let decoder = JSONDecoder()
+
       var machine: Machine
       do {
-        machine = try decoder.decode(Machine.self, from: data)
+        machine = try Configuration.JSON.tryDecoding(data)
       } catch {
         dump(error)
         throw DocumentError.undefinedType("Decoding error for machine.json file.", error)
@@ -87,8 +87,8 @@
         rootFileWrapper.addFileWrapper(machineDataWrapper)
       }
 
-      let encoder = JSONEncoder()
-      let data = try encoder.encode(machine)
+      let data = try Configuration.JSON.encoder.encode(machine)
+
       if let metdataFileWrapper = configuration.existingFile?.fileWrappers?["machine.json"] {
         let temporaryURL = FileManager.default.createTemporaryFile(for: .json)
         try data.write(to: temporaryURL)

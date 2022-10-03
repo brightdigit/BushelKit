@@ -8,6 +8,12 @@
 // Copyright (c) 2022 BrightDigit.
 // Created by Leo Dion on 8/2/22.
 //
+
+#if canImport(os)
+  import os
+#else
+  import Logging
+#endif
 #if canImport(UniformTypeIdentifiers)
   import UniformTypeIdentifiers
 #endif
@@ -50,6 +56,8 @@ public enum AnyImageManagers {
       }
     #endif
   }
+
+  public static let logger = Logger.forCategory(.imageManagers)
 }
 
 public extension AnyImageManagers {
@@ -62,4 +70,30 @@ public extension AnyImageManagers {
       try load(type.init())
     }
   }
+
+  static func restoreImageFrom(accessor: FileAccessor, using loader: RestoreImageLoader) async -> RestoreImage? {
+    for manager in all {
+      if let image = try? await manager.load(from: accessor, using: loader) {
+        return image
+      }
+    }
+    return nil
+  }
+
+  #if canImport(UniformTypeIdentifiers)
+    static func imageManager(
+      forURL url: URL
+    ) -> AnyImageManager? {
+      let typeIdentifier: String?
+      do {
+        typeIdentifier = try url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier
+      } catch {
+        logger.warning("error from url \(url): \(error.localizedDescription)")
+        return nil
+      }
+      return typeIdentifier
+        .flatMap(UTType.init)
+        .flatMap(imageManager(forContentType:))
+    }
+  #endif
 }
