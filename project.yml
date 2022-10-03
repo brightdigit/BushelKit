@@ -11,7 +11,7 @@ settings:
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
-  STRICT_MODE: ${STRICT_MODE}
+  LINT_MODE: ${LINT_MODE}
 packages:
   BushelUI:
     path: ./Packages/BushelKit
