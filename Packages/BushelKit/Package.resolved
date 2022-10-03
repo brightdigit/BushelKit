@@ -30,10 +30,10 @@
     {
       "identity" : "stringslint",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/brightdigit/StringsLint.git",
+      "location" : "https://github.com/Faire/StringsLint.git",
       "state" : {
-        "revision" : "5cf640e1ab4e1f625211f210dc76bdfb38937db6",
-        "version" : "0.1.6"
+        "revision" : "2872a9216f172a59b1eaf7afc706536f145c3989",
+        "version" : "0.1.7"
       }
     },
     {
@@ -43,6 +43,15 @@
       "state" : {
         "revision" : "9f39744e025c7d377987f30b03770805dcb0bcd1",
         "version" : "1.1.4"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log.git",
+      "state" : {
+        "revision" : "6fe203dc33195667ce1759bf0182975e4653ba1c",
+        "version" : "1.4.4"
       }
     },
     {
