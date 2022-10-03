@@ -26,8 +26,8 @@ import BushelMachine
 
   class RestoreImagesObject: ObservableObject {
     internal init(
-      userDefaults: UserDefaults = .standard,
       recentDocuments: RecentDocumentsObject,
+      userDefaults: UserDefaults = .standard,
       applicationContext: ApplicationContext = .init()
     ) {
       self.userDefaults = userDefaults
