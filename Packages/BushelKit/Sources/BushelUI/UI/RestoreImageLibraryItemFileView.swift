@@ -9,7 +9,6 @@
 
   struct RestoreImageLibraryItemFileView: View {
     @Binding var file: RestoreImageLibraryItemFile
-    @State var newMachine: MachineDocument?
     var body: some View {
       VStack(alignment: .leading) {
         TextField("Name", text: self.$file.name).font(.largeTitle)
@@ -38,30 +37,24 @@
           }
         }
         Button {
-          self.newMachine = MachineDocument(machine: .init(restoreImage: file))
+          guard let fileAccessor = file.fileAccessor else {
+            Self.logger.error("invalid restore image for machine \(file.name)")
+            return
+          }
+          let restoreImagePath: MachineSetupWindowHandle.RestoreImagePath
+          do {
+            let url = try fileAccessor.getURL()
+            restoreImagePath = try MachineSetupWindowHandle.externalURL(fromActualURL: url)
+          } catch {
+            Self.logger.error("unable to get restore image path: \(error.localizedDescription)")
+            return
+          }
+          Windows.openWindow(withHandle: MachineSetupWindowHandle(restoreImagePath: restoreImagePath))
         } label: {
           Image(systemName: "hammer.fill")
           Text(.buildMachine)
         }
-      }.padding().sheet(item: self.$newMachine) { machine in
-        let mri = MachineRestoreImage(file: self.file)
-        MachineSetupView(
-          machineRestoreImage: mri,
-          document: .init(
-            get: {
-              machine
-            },
-            set: { document in
-              self.newMachine = document
-            }
-          ),
-          url: nil,
-          restoreImageChoices: [mri],
-          onCompleted: { _ in
-            self.newMachine = nil
-          }
-        )
-      }
+      }.padding()
     }
   }
 
