@@ -22,7 +22,10 @@
           }
         }
         HStack {
-          Image(systemName: phaseProgress.phase.hasSavedSuccessfully ? "play.fill" : "checkmark.circle.fill")
+          Image(
+            systemName:
+            phaseProgress.phase.hasSavedSuccessfully ? "play.fill" : "checkmark.circle.fill"
+          )
           Text(.savingMachine)
         }
       }
