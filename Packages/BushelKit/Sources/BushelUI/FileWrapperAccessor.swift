@@ -42,4 +42,14 @@ import Foundation
 
     let url: URL?
   }
+
+  extension FileWrapperAccessor {
+    init(fileWrapper: FileWrapper, directoryURL: URL?, name: String) {
+      let fileName = fileWrapper.filename ?? name
+      self.init(
+        fileWrapper: fileWrapper,
+        url: directoryURL?.appendingPathComponent(fileName)
+      )
+    }
+  }
 #endif

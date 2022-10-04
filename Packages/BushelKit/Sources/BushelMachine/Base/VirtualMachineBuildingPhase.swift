@@ -20,7 +20,7 @@ public enum VirtualMachineBuildingPhase: Equatable {
     case (.installing, .installing):
       return true
 
-    case let (.completed(lhsResult), .completed(rhsResult)):
+    case let (.savedAt(lhsResult), .savedAt(rhsResult)):
       return (try? lhsResult.get()) == (try? rhsResult.get())
 
     default:
@@ -31,5 +31,15 @@ public enum VirtualMachineBuildingPhase: Equatable {
   case notStarted
   case building
   case installing
-  case completed(Result<URL, Error>)
+  case savedAt(Result<URL, Error>)
+
+  public var hasSavedSuccessfully: Bool {
+    switch self {
+    case .savedAt(.success):
+      return true
+
+    default:
+      return false
+    }
+  }
 }

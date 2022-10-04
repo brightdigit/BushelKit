@@ -3,70 +3,148 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
-#if canImport(SwiftUI) && canImport(UniformTypeIdentifiers)
+#if canImport(SwiftUI)
   import BushelMachine
   import SwiftUI
   import UniformTypeIdentifiers
 
-  // swiftlint:disable all
-  struct RestoreImageLibraryDocument: FileDocument, BlankFileDocument {
+  class RestoreImageLibraryDocument: BushelDocument, BlankFileDocument {
+    let sourceFileWrapper: FileWrapper?
+    var sourceURL: URL?
+    @Published var library: RestoreImageLibrary
+    @Published var trashedRestoreImages = Set<UUID>()
+
+    func trashRestoreImage(withID id: UUID) {
+      DispatchQueue.main.async {
+        self.trashedRestoreImages.formUnion([id])
+      }
+    }
+
+    func putBackRestoreImage(withID id: UUID) {
+      DispatchQueue.main.async {
+        self.trashedRestoreImages.remove(id)
+      }
+    }
+
+    var filteredItems: [RestoreImageLibraryItemFile] {
+      library.items.filter {
+        !trashedRestoreImages.contains($0.id)
+      }
+    }
+
     static let allowedContentTypes: [UTType] = [.restoreImageLibrary]
+    func snapshot(contentType _: UTType) throws -> RestoreImageLibrary {
+      library
+    }
 
     static func saveBlankDocumentAt(_ url: URL) throws {
       let library = RestoreImageLibrary()
-      let encoder = JSONEncoder()
-      let data = try encoder.encode(library)
+      let data = try Configuration.JSON.encoder.encode(library)
       let restoreLibrariesDir = url.appendingPathComponent("Restore Images")
       let metadataFileURL = url.appendingPathComponent("metadata.json")
       try FileManager.default.createDirectory(at: restoreLibrariesDir, withIntermediateDirectories: true)
       FileManager.default.createFile(atPath: metadataFileURL.path, contents: data)
     }
 
-    let sourceFileWrapper: FileWrapper?
+    func fileWrapper(
+      snapshot: RestoreImageLibrary,
+      configuration: WriteConfiguration
+    ) throws -> FileWrapper {
+      let fileWrapper: FileWrapper =
+        configuration.existingFile ??
+        .init(directoryWithFileWrappers: [String: FileWrapper]())
 
-    var library: RestoreImageLibrary
-    var sourceURL: URL?
+      let existingImageDirectoryFileWrapper = configuration.existingFile?
+        .fileWrappers?["Restore Images"]?
+        .fileWrappers
+
+      let imageFileWrappers = try snapshot.items
+        .compactMap { file -> FileWrapper? in
+          try FileWrapper.fromResourceImageLibraryFile(
+            file,
+            directoryChildren: existingImageDirectoryFileWrapper,
+            sourceURL: self.sourceURL
+          )
+        }
+      fileWrapper.addImages(imageFileWrappers, fromExistingFile: configuration.existingFile)
+
+      try fileWrapper.addMetadata(forRestoreLibrary: snapshot, fromExistingFile: configuration.existingFile)
+
+      return fileWrapper
+    }
+
+    typealias Snapshot = RestoreImageLibrary
+
+    static let readableContentTypes: [UTType] = [.restoreImageLibrary]
 
     init(library: RestoreImageLibrary = .init(), sourceFileWrapper: FileWrapper? = nil) {
       self.library = library
       self.sourceFileWrapper = sourceFileWrapper
     }
 
-    mutating func importFile(_ file: RestoreImageLibraryItemFile) {
-      if let sourceURL = sourceURL {
-        if let sourceFileURL = try? file.fileAccessor?.getURL() {
-          let restoreImageDirURL = sourceURL.appendingPathComponent("Restore Images")
-          let destinationFileURL = restoreImageDirURL.appendingPathComponent(file.fileName)
-          do {
-            try FileManager.default.createDirectory(
-              at: restoreImageDirURL,
-              withIntermediateDirectories: true
-            )
-            try FileManager.default.copyItem(at: sourceFileURL, to: destinationFileURL)
-          } catch {
-            dump(error)
-            return
-          }
+    static func restoreImageLibrary(
+      fromFileWrapper rootFileWrapper: FileWrapper
+    ) throws -> RestoreImageLibrary {
+      if let data = rootFileWrapper.fileWrappers?["metadata.json"]?.regularFileContents {
+        do {
+          return try Configuration.JSON.tryDecoding(data)
+        } catch {
+          throw error
+        }
+      } else {
+        return .init()
+      }
+    }
+
+    required convenience init(configuration: ReadConfiguration) throws {
+      Self.logger.log("opening file at \(configuration.file.description)")
+
+      var library: RestoreImageLibrary = try Self.restoreImageLibrary(fromFileWrapper: configuration.file)
+
+      for (index, item) in library.items.enumerated() {
+        if let fileWrapper = configuration.file
+          .fileWrappers?["Restore Images"]?
+          .fileWrappers?[item.id.uuidString] {
+          library.items[index].fileAccessor = FileWrapperAccessor(fileWrapper: fileWrapper, url: nil)
         }
       }
+      self.init(library: library, sourceFileWrapper: configuration.file)
+    }
+
+    // swiftlint:disable:next function_body_length
+    func importFile(_ file: RestoreImageLibraryItemFile) {
+      Self.logger.log("importing file \(file.fileName)")
+      let sourceFileURL: URL
+      guard let sourceURL = sourceURL else {
+        Self.logger.error("can't importing file \(file.fileName); no sourceURL")
+        return
+      }
+      do {
+        sourceFileURL = try file.getURL()
+      } catch {
+        // swiftlint:disable:next line_length
+        Self.logger.error("can't importing file \(file.fileName); failure to get url from file: \(error.localizedDescription)")
+        return
+      }
+      do {
+        try FileManager.default.copyRestoreImage(
+          at: sourceFileURL,
+          toLibraryAt: sourceURL,
+          withName: file.fileName
+        )
+      } catch {
+        // swiftlint:disable:next line_length
+        Self.logger.error("can't importing file \(file.fileName); failure to get copy file: \(error.localizedDescription)")
+        return
+      }
+
       library.items.append(file)
     }
 
-    mutating func updateBaseURL(_ url: URL) {
+    func updateBaseURL(_ url: URL) {
       sourceURL = url
-      guard let fileWrapper = sourceFileWrapper else {
-        return
-      }
-      guard fileWrapper.isDirectory else {
-        return
-      }
-      guard let childWrappers = fileWrapper.fileWrappers else {
-        return
-      }
-      guard let imageDirectoryWrapper = childWrappers["Restore Images"] else {
-        return
-      }
-      guard let imageWrappers = imageDirectoryWrapper.fileWrappers, imageDirectoryWrapper.isDirectory else {
+
+      guard let imageWrappers = sourceFileWrapper?.imageWrappers else {
         return
       }
 
@@ -83,125 +161,30 @@
       library = .init(items: restoreImages)
     }
 
-    mutating func beginReload(fromURL url: URL?) async {
+    func beginReload(fromURL url: URL?) async {
       let loader = FileRestoreImageLoader()
-      guard let fileWrapper = sourceFileWrapper else {
+
+      guard let sourceFileWrapper = sourceFileWrapper else {
         return
       }
-      guard fileWrapper.isDirectory else {
-        return
+      let restoreImageDirectoryURL = url?.appendingPathComponent("Restore Images")
+      let restoreImages = await sourceFileWrapper.loadRestoreImageFiles(
+        fromDirectoryURL: restoreImageDirectoryURL,
+        using: loader
+      )
+      DispatchQueue.main.async {
+        self.library = .init(items: restoreImages)
       }
-      guard let childWrappers = fileWrapper.fileWrappers else {
-        return
-      }
-      guard let imageDirectoryWrapper = childWrappers["Restore Images"] else {
-        return
-      }
-      guard let imageWrappers = imageDirectoryWrapper.fileWrappers, imageDirectoryWrapper.isDirectory else {
-        return
-      }
-      let restoreImages = await withTaskGroup(of: RestoreImage?.self) { group -> [RestoreImage?] in
-        for (name, imageWrapper) in imageWrappers {
-          let fileName = imageWrapper.filename ?? name
-          let accessor = FileWrapperAccessor(
-            fileWrapper: imageWrapper,
-            url: url?.appendingPathComponent("Restore Images").appendingPathComponent(fileName)
-          )
-          let imageManagers = AnyImageManagers.all
-          group.addTask {
-            for manager in imageManagers {
-              if let image = try? await manager.load(from: accessor, using: loader) {
-                return image
-              }
-            }
-            return nil
-          }
-        }
-        return await group.reduce(into: [RestoreImage?]()) { images, image in
-          images.append(image)
-        }
-      }.compactMap { $0 }.compactMap(RestoreImageLibraryItemFile.init(loadFromImage:))
-      library = .init(items: restoreImages)
+    }
+  }
+
+  extension ObservedObject: RestoreLibraryItemsListable where ObjectType == RestoreImageLibraryDocument {
+    var listItems: [RestoreImageLibraryItemFile] {
+      wrappedValue.filteredItems
     }
 
-    static let readableContentTypes: [UTType] = [.restoreImageLibrary]
-
-    init(configuration: ReadConfiguration) throws {
-      let decoder = JSONDecoder()
-      var library: RestoreImageLibrary
-      if let data = configuration.file.fileWrappers?["metadata.json"]?.regularFileContents {
-        do {
-          library = try decoder.decode(RestoreImageLibrary.self, from: data)
-        } catch {
-          dump(error)
-          throw error
-        }
-      } else {
-        library = .init()
-      }
-
-      for (index, item) in library.items.enumerated() {
-        if let fileWrapper = configuration.file
-          .fileWrappers?["Restore Images"]?
-          .fileWrappers?[item.id.uuidString] {
-          library.items[index].fileAccessor = FileWrapperAccessor(fileWrapper: fileWrapper, url: nil)
-        }
-      }
-      self.init(library: library, sourceFileWrapper: configuration.file)
-    }
-
-    func fileWrapper(
-      configuration: WriteConfiguration
-    ) throws -> FileWrapper {
-      let fileWrapper: FileWrapper =
-        configuration.existingFile ??
-        .init(directoryWithFileWrappers: [String: FileWrapper]())
-
-      let existingImageDirectoryFileWrapper = configuration.existingFile?
-        .fileWrappers?["Restore Images"]?
-        .fileWrappers
-
-      let imageFileWrappers = try library.items
-        .compactMap { file -> FileWrapper? in
-          if let fileWrapper = existingImageDirectoryFileWrapper?[file.fileName] {
-            return fileWrapper
-          } else if let sourceFileURL = try? file.fileAccessor?.getURL() {
-            if let expectedDestinationURL = self.sourceURL?
-              .appendingPathComponent("Restore Images")
-              .appendingPathComponent(file.fileName) {
-              if FileManager.default.fileExists(atPath: expectedDestinationURL.path) {
-                return nil
-              }
-            }
-            return try FileWrapper(url: sourceFileURL)
-          } else {
-            return nil
-          }
-        }
-
-      let encoder = JSONEncoder()
-      let data = try encoder.encode(library)
-      if !imageFileWrappers.isEmpty {
-        let imagesDirectoryFileWrapper =
-          configuration.existingFile?.fileWrappers?["Restore Images"] ??
-          FileWrapper(directoryWithFileWrappers: [:])
-        if imagesDirectoryFileWrapper.preferredFilename == nil {
-          imagesDirectoryFileWrapper.preferredFilename = "Restore Images"
-        }
-        _ = imageFileWrappers.map(imagesDirectoryFileWrapper.addFileWrapper)
-        fileWrapper.addFileWrapper(imagesDirectoryFileWrapper)
-      }
-
-      if let metdataFileWrapper = configuration.existingFile?.fileWrappers?["metadata.json"] {
-        let temporaryURL = FileManager.default.createTemporaryFile(for: .json)
-        try data.write(to: temporaryURL)
-        try metdataFileWrapper.read(from: temporaryURL)
-      } else {
-        let metdataFileWrapper = FileWrapper(regularFileWithContents: data)
-        metdataFileWrapper.preferredFilename = "metadata.json"
-        fileWrapper.addFileWrapper(metdataFileWrapper)
-      }
-      return fileWrapper
+    func bindingFor(_ file: RestoreImageLibraryItemFile) -> Binding<RestoreImageLibraryItemFile> {
+      projectedValue.library.bindingFor(file)
     }
   }
 #endif

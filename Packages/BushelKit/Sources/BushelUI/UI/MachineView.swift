@@ -16,8 +16,8 @@
         if document.machine.operatingSystem == nil {
           MachineSetupView(
             document: self.$document,
-            url: self.url,
             restoreImageChoices: restoreImageChoices,
+            url: self.url,
             onCompleted: nil
           )
         } else if let url = self.url {
