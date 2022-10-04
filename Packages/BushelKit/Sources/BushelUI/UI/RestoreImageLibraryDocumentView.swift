@@ -40,7 +40,7 @@
     @State var addRestoreImageToLibraryIsVisible = false
 
     @MainActor
-    fileprivate func importFile(_ file: RestoreImageLibraryItemFile, fromURL newImageURL: URL) {
+    func importFile(_ file: RestoreImageLibraryItemFile, fromURL newImageURL: URL) {
       document.importFile(file)
       importingURL = nil
       activeImports.removeAll { activeImport in

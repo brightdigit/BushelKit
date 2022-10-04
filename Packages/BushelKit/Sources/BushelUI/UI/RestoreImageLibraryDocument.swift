@@ -162,7 +162,7 @@
       let restoreImages = await sourceFileWrapper.loadRestoreImageFiles(fromDirectoryURL: restoreImageDirectoryURL, using: loader)
       DispatchQueue.main.async {
         self.library = .init(items: restoreImages)
-      }      
+      }
     }
   }
 

@@ -26,8 +26,8 @@
           }
 
         case let .failure(error):
-          Button("Dump Error \(error.localizedDescription)") {
-            dump(error)
+          EmptyView().onAppear {
+            Self.logger.error("failure gettings machine: \(error.localizedDescription)")
           }
 
         case .none:
