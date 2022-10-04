@@ -53,7 +53,6 @@
       do {
         machine = try Configuration.JSON.tryDecoding(data)
       } catch {
-        dump(error)
         throw DocumentError.undefinedType("Decoding error for machine.json file.", error)
       }
       machine.rootFileAccessor = FileWrapperAccessor(fileWrapper: configuration.file, url: nil)

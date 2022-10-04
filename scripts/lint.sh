@@ -21,16 +21,15 @@ fi
 
 pushd $PACKAGE_DIR
 swift package resolve
-swift build -c release
 
 if [ -z "$CI" ]; then
-	swift run -c release swiftformat .
-	swift run -c release swiftlint --autocorrect
+	swift run --skip-build -c release swiftformat .
+	swift run --skip-build -c release swiftlint --autocorrect
 else 
 	set -e
 fi
 
-swift run -c release stringslint lint $STRINGSLINT_OPTIONS
-swift run -c release swiftformat --lint $SWIFTFORMAT_OPTIONS .
-swift run -c release swiftlint lint $SWIFTLINT_OPTIONS
+swift run --skip-build -c release stringslint lint $STRINGSLINT_OPTIONS
+swift run --skip-build  -c release swiftformat --lint $SWIFTFORMAT_OPTIONS .
+swift run --skip-build -c release swiftlint lint $SWIFTLINT_OPTIONS
 popd
