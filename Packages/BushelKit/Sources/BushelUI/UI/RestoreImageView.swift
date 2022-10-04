@@ -47,7 +47,7 @@
           do {
             try self.beginDownload(from: downloadRequest.sourceURL, toLibraryAt: fileURL)
           } catch {
-            dump(error)
+            Self.logger.error("failure downloading image: \(error.localizedDescription)")
           }
         }
       }
@@ -200,14 +200,13 @@
             self.reset()
             switch (isCompletedResult, restoreImageDownload) {
             case let (.failure(error), _):
-              dump(error)
+              Self.logger.error("failure downloading image: \(error.localizedDescription)")
 
             case let (.success, .file(url)):
               NSWorkspace.shared.open(url.deletingLastPathComponent())
 
             case let (.success, .library(url, fileID)):
-              let decoder = JSONDecoder()
-              let encoder = JSONEncoder()
+
               let metadataJSON = url.appendingPathComponent("metadata.json")
               let fileURL = url
                 .appendingPathComponent("Restore Images")
@@ -219,14 +218,13 @@
                 fileAccessor: URLAccessor(url: fileURL)
               )
               do {
-                var library = try decoder.decode(
-                  RestoreImageLibrary.self,
-                  from: .init(contentsOf: metadataJSON)
+                var library: RestoreImageLibrary = try Configuration.JSON.tryDecoding(
+                  .init(contentsOf: metadataJSON)
                 )
                 library.items.append(newFile)
-                try encoder.encode(library).write(to: metadataJSON)
+                try Configuration.JSON.encoder.encode(library).write(to: metadataJSON)
               } catch {
-                dump(error)
+                Self.logger.error("failure creating library: \(error.localizedDescription)")
               }
             }
         }

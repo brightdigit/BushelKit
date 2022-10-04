@@ -66,7 +66,7 @@
         try machineConfiguration.validate()
       } catch {
         DispatchQueue.main.async {
-          self.setState(atPhase: .completed(.failure(error)))
+          self.setState(atPhase: .savedAt(.failure(error)))
           self.installer = nil
           self.progressObserver = nil
         }
@@ -87,7 +87,7 @@
       self.installer = installer
       installer.install { result in
         self.setState(
-          atPhase: .completed(result.map { machineConfigurationURL }),
+          atPhase: .savedAt(result.map { machineConfigurationURL }),
           withPercentCompleted: installer.progress.fractionCompleted
         )
       }

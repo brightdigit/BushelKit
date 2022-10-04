@@ -3,9 +3,15 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
+import enum BushelMachine.JSON
 import Foundation
 
 enum Configuration {
+  struct PrereleaseLabel {
+    let label: String
+    let baseNumber: Int
+  }
+
   static let scheme = "bushel"
   static let cfBundleShortVersionString = "CFBundleShortVersionString"
   static let baseURLComponents: URLComponents = {
@@ -22,7 +28,7 @@ enum Configuration {
 
   #endif
 
-  static let prereleaseLabel: String? = "alpha"
+  static let prereleaseLabel: PrereleaseLabel? = .init(label: "alpha", baseNumber: 25)
 
   static let applicationMarketingVersionValue = Bundle.main
     // swiftlint:disable:next force_cast
@@ -33,7 +39,7 @@ enum Configuration {
       return applicationMarketingVersionValue
     }
 
-    return "\(applicationMarketingVersionValue) \(prereleaseLabel) \(applicationBuildNumber)"
+    return "\(applicationMarketingVersionValue) \(prereleaseLabel.label) \(applicationBuildNumber - prereleaseLabel.baseNumber)"
   }()
 
   static let applicationBuildString: String = Bundle.main
@@ -53,4 +59,6 @@ enum Configuration {
     static let termsOfUse: URL = .init("https://getbushel.app/terms-of-use")
     static let support: URL = .init("https://getbushel.app/support")
   }
+
+  typealias JSON = BushelMachine.JSON
 }

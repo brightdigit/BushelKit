@@ -39,4 +39,13 @@ public extension AnyImageManager {
     let restoreImage = try await load(from: fileAccessor, using: FileRestoreImageLoader())
     return try await buildMachine(machine, restoreImage: restoreImage)
   }
+
+  func restoreLibraryItem(_ newImageURL: URL) async throws -> RestoreImageLibraryItemFile {
+    let accessor = URLAccessor(url: newImageURL)
+    let restoreImage = try await load(from: accessor, using: FileRestoreImageLoader())
+    guard let restoreImageFile = RestoreImageLibraryItemFile(loadFromImage: restoreImage) else {
+      throw MachineError.undefinedType("invalid restore image", restoreImage)
+    }
+    return restoreImageFile
+  }
 }

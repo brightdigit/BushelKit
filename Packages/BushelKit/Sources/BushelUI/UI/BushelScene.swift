@@ -35,7 +35,7 @@
       .windowStyle(.hiddenTitleBar)
       .disableResizability()
       DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
-        RestoreImageLibraryDocumentView(document: file.$document, url: file.fileURL)
+        RestoreImageLibraryDocumentView(document: file.document, url: file.fileURL)
       }
       DocumentGroup(newDocument: MachineDocument()) { file in
         MachineView(document: file.$document, url: file.fileURL, restoreImageChoices: [])
@@ -81,6 +81,9 @@
       WindowGroup(Text(.remoteRestoreImages), id: "remote_restore_images") {
         RrisCollectionView()
       }.windowsHandle(BasicWindowOpenHandle.remoteSources)
+      WindowGroup(id: MachineSetupWindowHandle.host) {
+        NewMachineView()
+      }.windowsHandle(MachineSetupWindowHandle.self)
       WindowGroup(id: MachineSessionWindowHandle.host) {
         SessionView()
           .onReceive(
