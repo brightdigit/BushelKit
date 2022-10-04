@@ -82,7 +82,9 @@
       self.sourceFileWrapper = sourceFileWrapper
     }
 
-    static func restoreImageLibrary(fromFileWrapper rootFileWrapper: FileWrapper) throws -> RestoreImageLibrary {
+    static func restoreImageLibrary(
+      fromFileWrapper rootFileWrapper: FileWrapper
+    ) throws -> RestoreImageLibrary {
       if let data = rootFileWrapper.fileWrappers?["metadata.json"]?.regularFileContents {
         do {
           return try Configuration.JSON.tryDecoding(data)
@@ -109,6 +111,7 @@
       self.init(library: library, sourceFileWrapper: configuration.file)
     }
 
+    // swiftlint:disable:next function_body_length
     func importFile(_ file: RestoreImageLibraryItemFile) {
       Self.logger.log("importing file \(file.fileName)")
       let sourceFileURL: URL
@@ -119,12 +122,18 @@
       do {
         sourceFileURL = try file.getURL()
       } catch {
+        // swiftlint:disable:next line_length
         Self.logger.error("can't importing file \(file.fileName); failure to get url from file: \(error.localizedDescription)")
         return
       }
       do {
-        try FileManager.default.copyRestoreImage(at: sourceFileURL, toLibraryAt: sourceURL, withName: file.fileName)
+        try FileManager.default.copyRestoreImage(
+          at: sourceFileURL,
+          toLibraryAt: sourceURL,
+          withName: file.fileName
+        )
       } catch {
+        // swiftlint:disable:next line_length
         Self.logger.error("can't importing file \(file.fileName); failure to get copy file: \(error.localizedDescription)")
         return
       }
@@ -159,7 +168,10 @@
         return
       }
       let restoreImageDirectoryURL = url?.appendingPathComponent("Restore Images")
-      let restoreImages = await sourceFileWrapper.loadRestoreImageFiles(fromDirectoryURL: restoreImageDirectoryURL, using: loader)
+      let restoreImages = await sourceFileWrapper.loadRestoreImageFiles(
+        fromDirectoryURL: restoreImageDirectoryURL,
+        using: loader
+      )
       DispatchQueue.main.async {
         self.library = .init(items: restoreImages)
       }

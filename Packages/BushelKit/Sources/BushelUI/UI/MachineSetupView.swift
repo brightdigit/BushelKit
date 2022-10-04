@@ -9,19 +9,27 @@
 
   struct MachineSetupView: View {
     internal init(
+      document: Binding<MachineDocument>,
+      restoreImageChoices: [MachineRestoreImage],
       machineRestoreImage: MachineRestoreImage? = nil,
       isReadyToSave: Bool = false,
       machineSavedURL: URL? = nil,
-      document: Binding<MachineDocument>,
       url: URL? = nil,
-      restoreImageChoices: [MachineRestoreImage],
       onCompleted: ((Error?) -> Void)? = nil
     ) {
       _document = document
       self.url = url
-      self.restoreImageChoices = restoreImageChoices.isEmpty ? [MachineSetupView.unavailableRestoreImageChoice] : restoreImageChoices
+      self.restoreImageChoices =
+        restoreImageChoices.isEmpty ?
+        [MachineSetupView.unavailableRestoreImageChoice] :
+        restoreImageChoices
       self.onCompleted = onCompleted
-      _machineRestoreImage = .init(initialValue: machineRestoreImage ?? restoreImageChoices.first ?? MachineSetupView.unavailableRestoreImageChoice)
+      _machineRestoreImage =
+        .init(
+          initialValue:
+          machineRestoreImage ??
+            restoreImageChoices.first ?? MachineSetupView.unavailableRestoreImageChoice
+        )
       self.isReadyToSave = isReadyToSave
       self.machineSavedURL = machineSavedURL
     }
@@ -130,14 +138,15 @@
   struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
       MachineSetupView(
-        machineRestoreImage: MachineRestoreImage(name: "test"), document: .constant(MachineDocument()),
-        url: nil,
+        document: .constant(MachineDocument()),
         restoreImageChoices: [
           MachineRestoreImage(name: "name"),
 
           MachineRestoreImage(name: "test"),
           MachineRestoreImage(name: "hello")
         ],
+        machineRestoreImage: MachineRestoreImage(name: "test"),
+        url: nil,
         onCompleted: nil
       )
     }

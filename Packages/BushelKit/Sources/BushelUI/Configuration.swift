@@ -39,6 +39,7 @@ enum Configuration {
       return applicationMarketingVersionValue
     }
 
+    // swiftlint:disable:next line_length
     return "\(applicationMarketingVersionValue) \(prereleaseLabel.label) \(applicationBuildNumber - prereleaseLabel.baseNumber)"
   }()
 

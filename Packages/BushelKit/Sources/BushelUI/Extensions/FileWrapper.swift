@@ -8,7 +8,11 @@
   import Foundation
 
   extension FileWrapper {
-    static func fromResourceImageLibraryFile(_ file: RestoreImageLibraryItemFile, directoryChildren: [String: FileWrapper]?, sourceURL: URL?) throws -> FileWrapper? {
+    static func fromResourceImageLibraryFile(
+      _ file: RestoreImageLibraryItemFile,
+      directoryChildren: [String: FileWrapper]?,
+      sourceURL: URL?
+    ) throws -> FileWrapper? {
       if let fileWrapper = directoryChildren?[file.fileName] {
         return fileWrapper
       } else if let sourceFileURL = try? file.fileAccessor?.getURL() {
@@ -25,7 +29,10 @@
       }
     }
 
-    func addMetadata(forRestoreLibrary snapshot: RestoreImageLibrary, fromExistingFile existingFile: FileWrapper?) throws {
+    func addMetadata(
+      forRestoreLibrary snapshot: RestoreImageLibrary,
+      fromExistingFile existingFile: FileWrapper?
+    ) throws {
       let data = try Configuration.JSON.encoder.encode(snapshot)
       if let metdataFileWrapper = existingFile?.fileWrappers?["metadata.json"] {
         let temporaryURL = FileManager.default.createTemporaryFile(for: .json)
@@ -67,7 +74,11 @@
       return imageWrappers
     }
 
-    func loadRestoreImageFiles(fromDirectoryURL directoryURL: URL?, using loader: RestoreImageLoader) async -> [RestoreImageLibraryItemFile] {
+    // swiftlint:disable:next function_body_length
+    func loadRestoreImageFiles(
+      fromDirectoryURL directoryURL: URL?,
+      using loader: RestoreImageLoader
+    ) async -> [RestoreImageLibraryItemFile] {
       guard let imageWrappers = imageWrappers else {
         return []
       }
