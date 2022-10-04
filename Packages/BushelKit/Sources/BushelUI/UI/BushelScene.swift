@@ -81,6 +81,9 @@
       WindowGroup(Text(.remoteRestoreImages), id: "remote_restore_images") {
         RrisCollectionView()
       }.windowsHandle(BasicWindowOpenHandle.remoteSources)
+      WindowGroup(id: MachineSetupWindowHandle.host) {
+        NewMachineView()
+      }.windowsHandle(MachineSetupWindowHandle.self)
       WindowGroup(id: MachineSessionWindowHandle.host) {
         SessionView()
           .onReceive(
