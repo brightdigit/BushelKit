@@ -71,7 +71,10 @@ public extension AnyImageManagers {
     }
   }
 
-  static func restoreImageFrom(accessor: FileAccessor, using loader: RestoreImageLoader) async -> RestoreImage? {
+  static func restoreImageFrom(
+    accessor: FileAccessor,
+    using loader: RestoreImageLoader
+  ) async -> RestoreImage? {
     for manager in all {
       if let image = try? await manager.load(from: accessor, using: loader) {
         return image

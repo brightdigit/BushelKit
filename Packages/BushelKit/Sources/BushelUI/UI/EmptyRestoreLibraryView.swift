@@ -19,10 +19,18 @@
 
     var body: some View {
       VStack(alignment: .leading) {
-        EmptyLibraryActionButton(imageSystemName: "plus", titleID: .importRestoreImage, action: self.onImportAction).padding(8.0)
+        EmptyLibraryActionButton(
+          imageSystemName: "plus",
+          titleID: .importRestoreImage,
+          action: self.onImportAction
+        ).padding(8.0)
 
         if let fileID = selectableFileID {
-          EmptyLibraryActionButton(imageSystemName: "filemenu.and.selection", titleID: .selectRestoreImage, action: self.onSelectionAction(fileID)).padding(8.0)
+          EmptyLibraryActionButton(
+            imageSystemName: "filemenu.and.selection",
+            titleID: .selectRestoreImage,
+            action: self.onSelectionAction(fileID)
+          ).padding(8.0)
         }
       }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.primary)
     }

@@ -3,6 +3,8 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
+// swiftlint:disable file_length
+
 #if canImport(SwiftUI)
   import BushelMachine
   import SwiftUI
@@ -48,6 +50,7 @@
       }
     }
 
+    // swiftlint:disable:next function_body_length
     func importRestoreImage() async {
       let oldLibrary = document.library
       guard let newImageURL = importingURL else {
@@ -66,7 +69,9 @@
       do {
         file = try await imageManager.restoreLibraryItem(newImageURL)
       } catch {
-        Self.logger.error("unable to create restore Library item for \(newImageURL): \(error.localizedDescription) ")
+        Self.logger.error(
+          "unable to create restore Library item for \(newImageURL): \(error.localizedDescription)"
+        )
         activeImports.removeAll { activeImport in
           activeImport.sourceURL == newImageURL
         }

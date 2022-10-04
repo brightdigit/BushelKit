@@ -28,7 +28,10 @@ struct MachineSetupWindowHandle: StaticConditionalHandle, HostOnlyConditionalHan
       throw DocumentError.undefinedType("invalid id", idString)
     }
 
-    let actualURL = restoreLibraryURL.appendingPathComponent("Restore Images", isDirectory: true).appendingPathComponent(id.uuidString).appendingPathExtension("ipsw")
+    let actualURL = restoreLibraryURL
+      .appendingPathComponent("Restore Images", isDirectory: true)
+      .appendingPathComponent(id.uuidString)
+      .appendingPathExtension("ipsw")
     return .init(fileURLWithPath: actualURL.path)
   }
 

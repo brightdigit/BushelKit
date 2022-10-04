@@ -14,9 +14,11 @@
     @State var machineRestoreImage: MachineRestoreImage?
     var body: some View {
       MachineSetupView(
-        machineRestoreImage: self.machineRestoreImage,
         document: self.$document,
-        url: nil, restoreImageChoices: [machineRestoreImage].compactMap { $0 }, onCompleted: { error in
+        restoreImageChoices: [machineRestoreImage].compactMap { $0 },
+        machineRestoreImage: self.machineRestoreImage,
+        url: nil,
+        onCompleted: { error in
           if let error = error {
             Self.logger.error("machine setup error: \(error.localizedDescription)")
           }
@@ -41,11 +43,15 @@
               self.requestedRestoreImageURL = actualURL
             }
           }
-        }.task(id: self.requestedRestoreImageURL) {
+        }
+        .task(id: self.requestedRestoreImageURL) {
           guard let url = requestedRestoreImageURL else {
             return
           }
-          let restoreImage = await AnyImageManagers.restoreImageFrom(accessor: URLAccessor(url: url), using: FileRestoreImageLoader())
+          let restoreImage = await AnyImageManagers.restoreImageFrom(
+            accessor: URLAccessor(url: url),
+            using: FileRestoreImageLoader()
+          )
           guard let restoreImage = restoreImage else {
             return
           }
