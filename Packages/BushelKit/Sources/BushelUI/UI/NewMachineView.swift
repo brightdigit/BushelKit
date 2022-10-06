@@ -15,8 +15,7 @@
     var body: some View {
       MachineSetupView(
         document: self.$document,
-        restoreImageChoices: [machineRestoreImage].compactMap { $0 },
-        machineRestoreImage: self.machineRestoreImage,
+        machineRestoreImage: self.machineRestoreImage.map(RestoreImageContextChoice.image),
         url: nil,
         onCompleted: { error in
           if let error = error {
