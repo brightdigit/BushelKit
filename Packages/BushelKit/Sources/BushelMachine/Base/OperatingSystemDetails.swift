@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct OperatingSystemDetails: Codable {
+public struct OperatingSystemDetails: Codable, Equatable, Hashable {
   public init(
     type: OperatingSystemDetails.System,
     version: OperatingSystemVersion,

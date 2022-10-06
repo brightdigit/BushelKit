@@ -7,6 +7,8 @@ import enum BushelMachine.JSON
 import Foundation
 
 enum Configuration {
+  // swiftlint:disable:next force_unwrapping
+  static let userDefaults = UserDefaults(suiteName: "group.com.brightdigit.Bushel")!
   struct PrereleaseLabel {
     let label: String
     let baseNumber: Int

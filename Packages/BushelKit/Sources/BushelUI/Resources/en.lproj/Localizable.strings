@@ -112,6 +112,8 @@
 /* Bushel Help Menu Button */
 "menu_help_bushel" = "Bushel Help";
 
+"menu_clear" = "Clear Menu";
+
 /* Welcome Action Button title for creating new machine */
 "welcome_new_machine_title" = "Create a new Machine";
 
