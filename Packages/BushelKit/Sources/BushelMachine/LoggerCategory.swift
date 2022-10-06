@@ -7,6 +7,7 @@ import Foundation
 public enum LoggerCategory: String, CaseIterable {
   case document
   case imageManagers
+  case reactive
   // swiftlint:disable:next identifier_name
   case ui
 }

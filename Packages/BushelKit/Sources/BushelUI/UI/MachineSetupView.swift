@@ -10,8 +10,7 @@
   struct MachineSetupView: View {
     internal init(
       document: Binding<MachineDocument>,
-      restoreImageChoices: [MachineRestoreImage],
-      machineRestoreImage: MachineRestoreImage? = nil,
+      machineRestoreImage: RestoreImageContextChoice? = nil,
       isReadyToSave: Bool = false,
       machineSavedURL: URL? = nil,
       url: URL? = nil,
@@ -19,40 +18,42 @@
     ) {
       _document = document
       self.url = url
-      self.restoreImageChoices =
-        restoreImageChoices.isEmpty ?
-        [MachineSetupView.unavailableRestoreImageChoice] :
-        restoreImageChoices
       self.onCompleted = onCompleted
       _machineRestoreImage =
         .init(
           initialValue:
-          machineRestoreImage ??
-            restoreImageChoices.first ?? MachineSetupView.unavailableRestoreImageChoice
+          machineRestoreImage?.id ??
+            RestoreImageContextChoice.none.id
         )
       self.isReadyToSave = isReadyToSave
       self.machineSavedURL = machineSavedURL
     }
 
-    static let unavailableRestoreImageChoice = MachineRestoreImage(name: "No Available Restore Image")
-
     @Environment(\.dismiss) var dismiss: DismissAction
-    @State var machineRestoreImage: MachineRestoreImage
+    @State var machineRestoreImage: UUID = RestoreImageContextChoice.none.id
     @State var isReadyToSave = false
     @State var machineSavedURL: URL?
     @Binding var document: MachineDocument
     let url: URL?
-    let restoreImageChoices: [MachineRestoreImage]
+    @EnvironmentObject var appContext: ApplicationContext
     @StateObject var installationObject = MachineInstallationObject()
 
     let onCompleted: ((Error?) -> Void)?
+
+    var restoreImageChoices: [RestoreImageContextChoice] {
+      var choices = appContext.images.map(
+        RestoreImageContextChoice.init
+      )
+      choices.insert(.none, at: 0)
+      return choices
+    }
 
     var body: some View {
       VStack {
         if document.machine.operatingSystem == nil {
           Picker("Restore Image", selection: self.$machineRestoreImage) {
             ForEach(restoreImageChoices) { choice in
-              Text(choice.name).tag(choice)
+              Text(choice.name ?? "No Restore Image Available").tag(choice.id)
             }
           }.padding()
         }
@@ -98,14 +99,8 @@
         guard let restoreImageID = document.machine.restoreImage?.id else {
           return
         }
-        let machineRestoreImage = self.restoreImageChoices.first {
-          $0.id == restoreImageID
-        }
-        guard let machineRestoreImage = machineRestoreImage else {
-          return
-        }
         DispatchQueue.main.async {
-          self.machineRestoreImage = machineRestoreImage
+          self.machineRestoreImage = restoreImageID
         }
       }
 
@@ -139,13 +134,7 @@
     static var previews: some View {
       MachineSetupView(
         document: .constant(MachineDocument()),
-        restoreImageChoices: [
-          MachineRestoreImage(name: "name"),
-
-          MachineRestoreImage(name: "test"),
-          MachineRestoreImage(name: "hello")
-        ],
-        machineRestoreImage: MachineRestoreImage(name: "test"),
+        machineRestoreImage: .image(.init(name: "test")),
         url: nil,
         onCompleted: nil
       )
