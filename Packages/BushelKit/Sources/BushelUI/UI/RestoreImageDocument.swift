@@ -15,6 +15,7 @@
 
     init(configuration: ReadConfiguration) throws {
       fileWrapper = configuration.file
+      ApplicationContext.shared.refreshRecentDocuments()
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {

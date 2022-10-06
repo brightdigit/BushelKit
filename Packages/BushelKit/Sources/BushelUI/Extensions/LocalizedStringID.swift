@@ -38,6 +38,7 @@ enum LocalizedStringID: String {
   case menuNewDownloadRestoreImage
   case menuWindowWelcomeToBushel
   case menuHelpBushel
+  case menuClear
   case welcomeNewMachineTitle
   case welcomeNewMachineDescription
   case welcomeExistingMachineTitle

@@ -47,7 +47,7 @@
             }
             .fileImporter(
               isPresented: self.$openDocumentIsVisible,
-              allowedContentTypes: [UTType.bshvm]
+              allowedContentTypes: [UTType.virtualMachine]
             ) { result in
               if let url = try? result.get() {
                 Windows.openDocumentAtURL(url)
