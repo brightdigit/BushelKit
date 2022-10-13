@@ -3,19 +3,37 @@
 // Copyright (c) 2022 BrightDigit.
 //
 
+import BushelMachine
+import Foundation
+import HarvesterKit
+
 #if canImport(Combine)
   import Combine
 
-  extension Publisher {
-    func tryMap<T>(_ transform: @escaping (Self.Output) throws -> T, onFailure failure: @escaping (Self.Output, Error) -> Void) -> Publishers.CompactMap<Self, T> {
-      compactMap { output in
-        do {
-          return try transform(output)
-        } catch {
-          failure(output, error)
-          return nil
-        }
-      }
+  public extension Publisher {
+    func map<OutputType: DocumentContextual>(
+      _: OutputType.Type,
+      onFailure failure: @escaping (URL, Error) -> Void
+    ) -> Publishers.MapDocumentContext<Self, OutputType>
+      where Self.Output == DocumentURL {
+      filter({ $0.type == OutputType.type }, map: \.url)
+        .tryMap(OutputType.fromURL, onFailure: failure)
+    }
+
+    func encodeResult<Coder: TopLevelEncoder, ElementType: UserDefaultsCodable>(
+      encoder: Coder = Configuration.Defaults.encoder
+    ) ->
+      // swiftlint:disable line_length
+      Publishers.AsResultSet<
+        Publishers.Map<Publishers.SharedCompactMapOnlySuccess<Publishers.Encode<Self, Coder>>, UserDefaultData>,
+        Publishers.SharedCompactMapOnlyFailure<Publishers.Encode<Self, Coder>>
+      >
+      // swiftlint:enable line_length
+      where Self.Output: Collection, Coder.Output == Data, Self.Output.Element == ElementType {
+      encode(encoder: encoder)
+        .asResultSet()
+        .map(ElementType.key.data(_:))
     }
   }
+
 #endif
