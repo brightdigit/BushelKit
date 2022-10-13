@@ -23,7 +23,7 @@ let package = Package(
   targets: [
     .target(
       name: "BushelUI",
-      dependencies: ["BushelMachine", "BushelMachineMacOS", "HarvesterKit"]
+      dependencies: ["BushelMachine", "BushelMachineMacOS"]
     ),
     .target(
       name: "BushelMachineMacOS",
@@ -33,11 +33,6 @@ let package = Package(
       name: "BushelMachine",
       dependencies: [
         .product(name: "Logging", package: "swift-log", condition: .when(platforms: [.linux]))
-      ]
-    ),
-    .target(
-      name: "HarvesterKit",
-      dependencies: [
       ]
     ),
     .testTarget(

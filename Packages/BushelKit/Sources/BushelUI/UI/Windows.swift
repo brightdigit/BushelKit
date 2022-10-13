@@ -5,12 +5,10 @@
 
 #if canImport(SwiftUI) && canImport(AppKit) && canImport(UniformTypeIdentifiers)
   import AppKit
-  import BushelMachine
   import SwiftUI
   import UniformTypeIdentifiers
 
-  enum Windows: LoggerCategorized {
-    static let loggingCategory = LoggerCategory.ui
+  enum Windows {
     static func showNewSavedDocumentWindow<BlankDocumentType: BlankFileDocument>(
       ofType type: BlankDocumentType.Type
     ) {
@@ -24,31 +22,20 @@
         do {
           try type.saveBlankDocumentAt(fileURL)
         } catch {
-          Self.logger.error("unable to save blank doc at \(fileURL.path): \(error.localizedDescription)")
+          dump(error)
           return
         }
         self.openDocumentAtURL(fileURL)
       }
-      ApplicationContext.shared.refreshRecentDocuments()
     }
 
     static func showNewDocumentWindow(ofType type: UTType) {
       let documentController = NSDocumentController.shared
-      let newDocument: NSDocument
-      do {
-        newDocument = try documentController.makeUntitledDocument(ofType: type.identifier)
-      } catch {
-        Self.logger.error(
-          "unable to make untitled document of type \(type.description): \(error.localizedDescription)"
-        )
-        return
+      if let newDocument = try? documentController.makeUntitledDocument(ofType: type.identifier) {
+        documentController.addDocument(newDocument)
+        newDocument.makeWindowControllers()
+        newDocument.showWindows()
       }
-
-      documentController.addDocument(newDocument)
-      newDocument.makeWindowControllers()
-      newDocument.showWindows()
-
-      ApplicationContext.shared.refreshRecentDocuments()
     }
 
     static func openDocumentAtURL(_ url: URL, andDisplay display: Bool = true) {
@@ -66,10 +53,9 @@
           documentController.addDocument(document)
           document.makeWindowControllers()
         } else {
-          Self.logger.error("unable to open doc at \(url.path): \(error?.localizedDescription ?? "")")
+          dump(error)
         }
       }
-      ApplicationContext.shared.refreshRecentDocuments()
     }
 
     static func openWindow<HandleType: WindowOpenHandle>(withHandle handle: HandleType) {

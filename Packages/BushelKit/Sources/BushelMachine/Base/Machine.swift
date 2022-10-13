@@ -6,11 +6,11 @@
 import Foundation
 
 public struct Machine: Identifiable, Codable {
-  public init(loadFrom url: URL) throws {
+  public static func loadFromURL(_ url: URL) throws -> Self {
     let data = try Data(contentsOf: url.appendingPathComponent("machine.json"))
     var machine: Self = try JSON.tryDecoding(data)
     machine.rootFileAccessor = URLAccessor(url: url)
-    self = machine
+    return machine
   }
 
   public init(

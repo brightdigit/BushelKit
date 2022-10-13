@@ -74,8 +74,6 @@ targets:
         com.apple.security.network.client: true
         com.apple.security.virtualization: true
         com.apple.vm.networking: true
-        com.apple.security.application-groups:
-          - group.com.brightdigit.Bushel
     postBuildScripts:
       - path: scripts/lint.sh
         name: Lint
