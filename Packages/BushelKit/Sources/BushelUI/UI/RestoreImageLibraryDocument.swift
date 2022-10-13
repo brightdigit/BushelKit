@@ -109,6 +109,7 @@
         }
       }
       self.init(library: library, sourceFileWrapper: configuration.file)
+      ApplicationContext.shared.refreshRecentDocuments()
     }
 
     // swiftlint:disable:next function_body_length
