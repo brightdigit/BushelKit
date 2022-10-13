@@ -10,7 +10,7 @@ import Foundation
   import Logging
 #endif
 
-public protocol LoggerCategorized: Loggable {
+public protocol LoggerCategorized {
   static var loggingCategory: LoggerCategory {
     get
   }

@@ -5,24 +5,20 @@
 
 import Foundation
 
-public struct RestoreImageContext: Codable, Hashable, Identifiable, UserDefaultsCodable {
-  internal init(name: String, id: UUID, metadata: ImageMetadata, library: RestoreImageLibraryContext) {
-    self.name = name
-    self.id = id
-    self.metadata = metadata
-    self.library = library
-  }
+public struct MachineContext: Codable {
+  public let url: URL
+  public let id: UUID
+  public var restoreImageID: UUID
+  public var operatingSystem: OperatingSystemDetails
+}
 
+public struct RestoreImageLibraryContext: Codable {
+  public let url: URL
+}
+
+public struct RestoreImageContext: Codable {
   public let name: String
   public let id: UUID
   public let metadata: ImageMetadata
-  public let library: RestoreImageLibraryContext
-
-  public init(library: RestoreImageLibraryContext, file: RestoreImageLibraryItemFile) {
-    self.init(name: file.name, id: file.id, metadata: file.metadata, library: library)
-  }
-
-  public static var key: UserDefaultsKey {
-    .images
-  }
+  public let url: URL
 }
