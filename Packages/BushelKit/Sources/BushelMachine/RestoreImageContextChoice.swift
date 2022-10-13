@@ -20,12 +20,18 @@ public enum RestoreImageContextChoice: Identifiable, Hashable {
   public init(context: RestoreImageContext) {
     self = .image(MachineRestoreImage(context: context))
   }
+}
 
-  public var name: String? {
+public extension RestoreImageContextChoice {
+  var machineRestoreImage: MachineRestoreImage? {
     guard case let .image(restoreImageContext) = self else {
       return nil
     }
 
-    return restoreImageContext.name
+    return restoreImageContext
+  }
+
+  var name: String? {
+    machineRestoreImage?.name
   }
 }

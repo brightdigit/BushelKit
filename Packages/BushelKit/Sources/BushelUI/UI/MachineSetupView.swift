@@ -44,8 +44,21 @@
       var choices = appContext.images.map(
         RestoreImageContextChoice.init
       )
-      choices.insert(.none, at: 0)
+      if choices.isEmpty {
+        choices.insert(.none, at: 0)
+      }
       return choices
+    }
+
+    var selectedRestoreImageFile: RestoreImageLibraryItemFile? {
+      let restoreImageChoice = restoreImageChoices.first { $0.id == self.machineRestoreImage
+      }
+
+      guard let restoreImage = restoreImageChoice?.machineRestoreImage?.image else {
+        return nil
+      }
+
+      return RestoreImageLibraryItemFile(loadFromImage: restoreImage)
     }
 
     var body: some View {
@@ -64,6 +77,11 @@
             Text(.cancel)
           }
           Button {
+            #warning("observable state for building machine")
+            guard let selectedRestoreImageFile = selectedRestoreImageFile else {
+              return
+            }
+            self.document.machine.restoreImage = selectedRestoreImageFile
             Task {
               let factory: VirtualMachineFactory
               do {
@@ -79,6 +97,7 @@
             Text(.buildMachine)
           }
         }
+        #warning("handle button pressed")
       }.onReceive(self.installationObject.$phaseProgress, perform: { phase in
         guard case let .savedAt(result) = phase?.phase else {
           return
@@ -96,7 +115,8 @@
       })
 
       .onAppear {
-        guard let restoreImageID = document.machine.restoreImage?.id else {
+        let restoreImageID = document.machine.restoreImage?.id ?? self.restoreImageChoices.first?.id
+        guard let restoreImageID = restoreImageID else {
           return
         }
         DispatchQueue.main.async {

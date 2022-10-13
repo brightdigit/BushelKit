@@ -46,18 +46,16 @@
           EmptyView()
         }
       }
-      .onAppear {
-        Task {
-          let restoreImageResult: Result<RestoreImage, Error>
-          do {
-            let image = try await self.fetchImage()
-            restoreImageResult = .success(image)
-          } catch {
-            restoreImageResult = .failure(error)
-          }
-          DispatchQueue.main.async {
-            self.restoreImageResult = restoreImageResult
-          }
+      .task {
+        let restoreImageResult: Result<RestoreImage, Error>
+        do {
+          let image = try await self.fetchImage()
+          restoreImageResult = .success(image)
+        } catch {
+          restoreImageResult = .failure(error)
+        }
+        DispatchQueue.main.async {
+          self.restoreImageResult = restoreImageResult
         }
       }
     }
