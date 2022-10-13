@@ -38,7 +38,9 @@
       do {
         newDocument = try documentController.makeUntitledDocument(ofType: type.identifier)
       } catch {
-        Self.logger.error("unable to make untitled document of type \(type.description): \(error.localizedDescription)")
+        Self.logger.error(
+          "unable to make untitled document of type \(type.description): \(error.localizedDescription)"
+        )
         return
       }
 

@@ -5,7 +5,11 @@
 
 import Foundation
 
-public struct MachineContext: Codable, Hashable {
+public struct MachineContext: Codable, Hashable, UserDefaultsCodable, DocumentContextual {
+  public static func fromURL(_ url: URL) throws -> MachineContext {
+    try .init(machineFrom: url)
+  }
+
   public init(url: URL, id: UUID, restoreImageID: UUID, operatingSystem: OperatingSystemDetails) {
     self.url = url
     self.id = id
@@ -36,5 +40,19 @@ public struct MachineContext: Codable, Hashable {
       restoreImageID: restoreImageID,
       operatingSystem: operatingSystem
     )
+  }
+
+  public static var key: UserDefaultsKey {
+    .machines
+  }
+
+  public static var type: DocumentURL.DocumentType {
+    .machine
+  }
+}
+
+public extension MachineContext {
+  init(machineFrom url: URL) throws {
+    try self.init(machine: .init(loadFrom: url))
   }
 }

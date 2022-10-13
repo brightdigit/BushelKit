@@ -63,5 +63,17 @@ enum Configuration {
     static let support: URL = .init("https://getbushel.app/support")
   }
 
+  enum Defaults {
+    static let encoder: JSONEncoder = {
+      let value = JSONEncoder()
+      return value
+    }()
+
+    static let decoder: JSONDecoder = {
+      let value = JSONDecoder()
+      return value
+    }()
+  }
+
   typealias JSON = BushelMachine.JSON
 }

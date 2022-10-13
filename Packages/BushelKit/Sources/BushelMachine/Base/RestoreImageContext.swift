@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct RestoreImageContext: Codable, Hashable, Identifiable {
+public struct RestoreImageContext: Codable, Hashable, Identifiable, UserDefaultsCodable {
   internal init(name: String, id: UUID, metadata: ImageMetadata, library: RestoreImageLibraryContext) {
     self.name = name
     self.id = id
@@ -20,5 +20,9 @@ public struct RestoreImageContext: Codable, Hashable, Identifiable {
 
   public init(library: RestoreImageLibraryContext, file: RestoreImageLibraryItemFile) {
     self.init(name: file.name, id: file.id, metadata: file.metadata, library: library)
+  }
+
+  public static var key: UserDefaultsKey {
+    .images
   }
 }

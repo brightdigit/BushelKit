@@ -21,18 +21,22 @@
 
     // swiftlint:disable:next function_body_length
     func beginDownloadRequest(_ downloadRequest: RestoreImageDownloadRequest) {
-      let panel = NSSavePanel()
+      let panel: NSSavePanel
       switch downloadRequest.destination {
       case .ipswFile:
-        panel.nameFieldLabel = "Save Restore Image as:"
-        panel.nameFieldStringValue = image.metadata.defaultName
-        panel.allowedContentTypes = UTType.ipswTypes
-        panel.isExtensionHidden = true
+        let savePanel = NSSavePanel()
+        savePanel.nameFieldLabel = "Save Restore Image as:"
+        savePanel.nameFieldStringValue = image.metadata.defaultName
+        savePanel.allowedContentTypes = UTType.ipswTypes
+        savePanel.isExtensionHidden = true
+        panel = savePanel
 
       case .library:
-        panel.nameFieldLabel = "Save to Library:"
-        panel.allowedContentTypes = [UTType.restoreImageLibrary]
-        panel.isExtensionHidden = true
+        let openPanel = NSOpenPanel()
+        openPanel.nameFieldLabel = "Save to Library:"
+        openPanel.allowedContentTypes = [UTType.restoreImageLibrary]
+        openPanel.isExtensionHidden = true
+        panel = openPanel
       }
       panel.begin { response in
         guard let fileURL = panel.url, response == .OK else {
