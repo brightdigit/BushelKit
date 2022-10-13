@@ -58,6 +58,7 @@
       machine.rootFileAccessor = FileWrapperAccessor(fileWrapper: configuration.file, url: nil)
 
       self.init(machine: machine)
+      ApplicationContext.shared.refreshRecentDocuments()
     }
 
     // swiftlint:disable:next function_body_length
