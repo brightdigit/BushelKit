@@ -17,10 +17,11 @@
     @Published var totalBytesWritten: Int64 = 0
     @Published var totalBytesExpectedToWrite: Int64?
     @Published var isCompleted: Result<Void, Error>?
+    let resumeDataSubject = PassthroughSubject<Data, Never>()
     var task: URLSessionDownloadTask?
     // swiftlint:disable:next implicitly_unwrapped_optional
     var session: URLSession!
-    var cancellable: AnyCancellable?
+    var cancellables = [AnyCancellable]()
     let requestSubject = PassthroughSubject<DownloadRequest, Never>()
     let locationURLSubject = PassthroughSubject<URL, Never>()
 
@@ -63,13 +64,22 @@
       self.session = session
 
       let destinationFileURLPublisher = requestSubject.share().map(\.destinationFileURL)
-      cancellable = requestSubject.share()
+      requestSubject.share()
         .map { downloadRequest -> URLSessionDownloadTask in
           let task = self.session.downloadTask(with: downloadRequest.downloadSourceURL)
           task.resume()
           return task
         }
         .assign(to: \.task, on: self)
+        .store(in: &cancellables)
+
+      resumeDataSubject.map { resumeData in
+        let task = self.session.downloadTask(withResumeData: resumeData)
+        task.resume()
+        return task
+      }
+      .assign(to: \.task, on: self)
+      .store(in: &cancellables)
 
       Publishers.CombineLatest(locationURLSubject, destinationFileURLPublisher)
         .map { sourceURL, destinationURL in
@@ -123,9 +133,20 @@
       }
     }
 
+    public func urlSession(_: URLSession, task _: URLSessionTask, didCompleteWithError error: Error?) {
+      guard let error = error else {
+        // Handle success case.
+        return
+      }
+      let userInfo = (error as NSError).userInfo
+      if let resumeData = userInfo[NSURLSessionDownloadTaskResumeData] as? Data {
+        resumeDataSubject.send(resumeData)
+      }
+    }
+
     deinit {
-      self.cancellable?.cancel()
-      self.cancellable = nil
+      self.cancellables.forEach { $0.cancel() }
+      self.cancellables.removeAll()
     }
   }
 #endif
