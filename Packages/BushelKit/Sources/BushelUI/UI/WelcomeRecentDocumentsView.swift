@@ -7,10 +7,10 @@
   import SwiftUI
 
   struct WelcomeRecentDocumentsView: View {
-    @EnvironmentObject var object: ApplicationContext
+    @EnvironmentObject var object: RecentDocumentsObject
     var body: some View {
       List {
-        ForEach(object.recentDocumentURLs, id: \.id) { url in
+        ForEach(object.recentDocumentURLs, id: \.self) { url in
           Button {
             Windows.openDocumentAtURL(url)
           } label: {
@@ -36,7 +36,7 @@
 
   struct WelcomeRecentDocumentsView_Previews: PreviewProvider {
     static var previews: some View {
-      WelcomeRecentDocumentsView().environmentObject(ApplicationContext(recentDocumentURLs: [
+      WelcomeRecentDocumentsView().environmentObject(RecentDocumentsObject(recentDocumentURLs: [
         .init(fileURLWithPath: "/Volumes/Media/hello copy.bshvm"),
         .init(fileURLWithPath: "/Volumes/Media/RestoreImages.bshrilib")
       ], isPreview: true))

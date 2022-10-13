@@ -7,7 +7,7 @@
   import SwiftUI
 
   struct RecentDocumentsMenuContent: View {
-    @EnvironmentObject var object: ApplicationContext
+    @EnvironmentObject var object: RecentDocumentsObject
 
     var body: some View {
       ForEach(object.recentDocumentURLs, id: \.self) { url in
@@ -18,16 +18,12 @@
           Image(nsImage: NSWorkspace.shared.icon(forFile: url.path))
         }
       }
-      Divider()
-      Button(.menuClear) {
-        object.clearRecentDocuments()
-      }
     }
   }
 
   struct RecentDocumentsMenuContent_Previews: PreviewProvider {
     static var previews: some View {
-      RecentDocumentsMenuContent().environmentObject(ApplicationContext(recentDocumentURLs: [
+      RecentDocumentsMenuContent().environmentObject(RecentDocumentsObject(recentDocumentURLs: [
         .init(fileURLWithPath: "/Volumes/Media/hello copy.bshvm"),
         .init(fileURLWithPath: "/Volumes/Media/RestoreImages.bshrilib")
       ], isPreview: true))

@@ -125,7 +125,7 @@
 
       $machineFileURL.compactMap { $0 }
 
-        .tryMap(Machine.init(loadFrom:))
+        .tryMap(Machine.loadFromURL(_:))
         .tryCompactMap {
           try $0.createMachine()
         }

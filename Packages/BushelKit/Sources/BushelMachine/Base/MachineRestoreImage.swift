@@ -18,16 +18,6 @@ public struct MachineRestoreImage: Hashable, Identifiable {
     self.image = image
   }
 
-  public init(context: RestoreImageContext) {
-    let imageURL = context.library.url
-      .appendingPathComponent("Restore Images", isDirectory: true)
-      .appendingPathComponent(context.id.uuidString)
-      .appendingPathExtension("ipsw")
-
-    let image = RestoreImage(metadata: context.metadata, location: .file(URLAccessor(url: imageURL)))
-    self.init(name: context.name, id: context.id, image: image)
-  }
-
   public let name: String
   public let id: UUID
 

@@ -16,7 +16,7 @@
     #else
       static let imageManagers: [AnyImageManager.Type] = []
     #endif
-    let applicationContext = ApplicationContext()
+    let recentDocumentsObject = RecentDocumentsObject()
 
     init() {
       // swiftlint:disable:next force_try
@@ -26,7 +26,7 @@
     var body: some Scene {
       WindowGroup {
         WelcomeView()
-          .environmentObject(applicationContext)
+          .environmentObject(recentDocumentsObject)
           .frame(width: 950, height: 450)
           .presentedWindowStyle(.hiddenTitleBar)
           .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
@@ -35,13 +35,10 @@
       .windowStyle(.hiddenTitleBar)
       .disableResizability()
       DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
-        RestoreImageLibraryDocumentView(
-          document: file.document,
-          url: file.fileURL
-        ).environmentObject(applicationContext)
+        RestoreImageLibraryDocumentView(document: file.document, url: file.fileURL)
       }
       DocumentGroup(newDocument: MachineDocument()) { file in
-        MachineView(document: file.$document, url: file.fileURL).environmentObject(applicationContext)
+        MachineView(document: file.$document, url: file.fileURL, restoreImageChoices: [])
       }.commands {
         CommandGroup(replacing: .newItem) {
           Menu(.menuNew) {
@@ -53,7 +50,7 @@
             }
           }
           Menu(.menuOpenRecent) {
-            RecentDocumentsMenuContent().environmentObject(applicationContext)
+            RecentDocumentsMenuContent().environmentObject(recentDocumentsObject)
           }
         }
         CommandGroup(after: .newItem) {
@@ -85,7 +82,7 @@
         RrisCollectionView()
       }.windowsHandle(BasicWindowOpenHandle.remoteSources)
       WindowGroup(id: MachineSetupWindowHandle.host) {
-        NewMachineView().environmentObject(applicationContext)
+        NewMachineView()
       }.windowsHandle(MachineSetupWindowHandle.self)
       WindowGroup(id: MachineSessionWindowHandle.host) {
         SessionView()
