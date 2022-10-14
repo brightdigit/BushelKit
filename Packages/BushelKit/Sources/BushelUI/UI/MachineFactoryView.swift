@@ -10,24 +10,29 @@
   struct MachineFactoryView: View {
     let phaseProgress: VirtualMachineBuildingProgress
     let onCancel: () -> Void
+    func imageSystemNameBasedOn(_ value: Bool) -> String {
+      value ? "play.fill" : "checkmark.circle.fill"
+    }
+
     var body: some View {
       VStack {
         HStack {
-          Image(systemName: phaseProgress.phase == .building ? "play.fill" : "checkmark.circle.fill").frame(width: 15, alignment: .leading)
+          Image(systemName: self.imageSystemNameBasedOn(phaseProgress.phase == .building))
+            .frame(width: 15, alignment: .leading)
 
           Text(.buildingMachine)
           Spacer()
         }.padding(.vertical, 8.0)
         HStack {
-          Image(systemName: phaseProgress.phase == .installing ? "play.fill" : "checkmark.circle.fill").frame(width: 15, alignment: .leading)
+          Image(systemName: self.imageSystemNameBasedOn(phaseProgress.phase == .installing))
+            .frame(width: 15, alignment: .leading)
           ProgressView(value: phaseProgress.percentCompleted ?? 0.0) {
             Text(.installingOs)
           }
         }.padding(.vertical, 8.0)
         HStack {
           Image(
-            systemName:
-            phaseProgress.phase.hasSavedSuccessfully ? "play.fill" : "checkmark.circle.fill"
+            systemName: self.imageSystemNameBasedOn(phaseProgress.phase.hasSavedSuccessfully)
           ).frame(width: 15, alignment: .leading)
           Text(.savingMachine)
           Spacer()
@@ -43,7 +48,10 @@
 
   struct MachineFactoryView_Previews: PreviewProvider {
     static var previews: some View {
-      MachineFactoryView(phaseProgress: .init(id: .init(), percentCompleted: nil, phase: .building), onCancel: {}).previewLayout(.fixed(width: 300, height: 500))
+      MachineFactoryView(
+        phaseProgress: .init(id: .init(), percentCompleted: nil, phase: .building),
+        onCancel: {}
+      ).previewLayout(.fixed(width: 300, height: 500))
     }
   }
 #endif

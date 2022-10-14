@@ -11,6 +11,7 @@
       UTType(exportedAs: "com.brightdigit.bushel-vm")
     }
 
+    // swiftlint:disable:next force_unwrapping
     static let bshvm: UTType = .init(filenameExtension: "bshvm")!
 
     static var restoreImageLibrary: UTType {

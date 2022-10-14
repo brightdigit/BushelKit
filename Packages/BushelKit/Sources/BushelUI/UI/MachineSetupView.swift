@@ -126,16 +126,10 @@
           DispatchQueue.main.async {
             self.machine.installationCompletedAt(machineConfigurationURL)
 
-            let calcMachineConfigURL = self.machineSavedURL?.appendingPathComponent("data")
-
             guard let machineSavedURL = self.machineSavedURL else {
               Self.logger.error("missing machine url")
               return
             }
-//            guard let calcMachineConfigURL == machineConfigurationURL else {
-//              Self.logger.error("urls don't match \(machineSavedURL?.path ?? "") != \(calcMachineConfigURL?.path ?? "")")
-//              return
-//            }
             let machineURL = machineSavedURL.appendingPathComponent("machine.json")
             do {
               try Configuration.JSON.encoder.encode(self.machine).write(to: machineURL)
@@ -146,8 +140,6 @@
 
             Windows.openDocumentAtURL(machineSavedURL)
             self.dismiss()
-
-            // self.isReadyToSave = true
           }
 
         case let .failure(error):
@@ -169,22 +161,6 @@
         item: self.$installationObject.phaseProgress,
         content: { phase in
           MachineFactoryView(phaseProgress: phase, onCancel: self.buildingCancelled)
-//            .fileExporter(
-//              isPresented: self.$isReadyToSave,
-//              document: self.document,
-//              contentType: .virtualMachine,
-//              onCompletion: { result in
-//                do {
-//                  self.installationObject.cancel()
-//                  let machineSavedURL = try result.get()
-//                  self.machineSavedURL = machineSavedURL
-//                  Windows.openDocumentAtURL(machineSavedURL)
-//                } catch {
-//                  Self.logger.error("failure saving machine: \(error.localizedDescription)")
-//                }
-//                self.onCompleted?(nil)
-//              }
-//            )
         }
       )
     }
