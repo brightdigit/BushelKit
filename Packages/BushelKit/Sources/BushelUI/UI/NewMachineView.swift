@@ -14,7 +14,6 @@
     @State var machineRestoreImage: MachineRestoreImage?
     var body: some View {
       MachineSetupView(
-        document: self.$document,
         machineRestoreImage: self.machineRestoreImage.map(RestoreImageContextChoice.image),
         url: nil,
         onCompleted: { error in

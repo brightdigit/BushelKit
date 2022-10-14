@@ -9,8 +9,6 @@ import Foundation
   import Combine
 
   public extension Publishers {
-    typealias MapDocumentContext<Upstream: Publisher, OutputType: DocumentContextual> =
-      Publishers.CompactMap<FilterMap<Upstream, URL>, OutputType>
     typealias Union<Upstream: Publisher, OutputElementType: Hashable> =
       Map<Upstream, Set<OutputElementType>>
 
