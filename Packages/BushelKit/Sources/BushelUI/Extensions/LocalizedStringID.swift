@@ -34,6 +34,7 @@ enum LocalizedStringID: String {
   case menuNew
   case menuNewMachine
   case menuNewImageLibrary
+  case menuOpen
   case menuOpenRecent
   case menuNewDownloadRestoreImage
   case menuWindowWelcomeToBushel

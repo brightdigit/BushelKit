@@ -8,7 +8,11 @@
   import BushelMachine
   import Combine
   import Foundation
-  class SessionObject: NSObject, ObservableObject, MachineSessionDelegate {
+  class SessionObject: NSObject, ObservableObject, MachineSessionDelegate, LoggerCategorized {
+    static var loggingCategory: LoggerCategory {
+      .reactive
+    }
+
     @Published var externalURL: URL?
     @Published var machineFileURL: URL?
     @Published var session: MachineSession?
@@ -21,6 +25,9 @@
     private var cancellables = [AnyCancellable]()
 
     func updateState(fromSession session: MachineSession?, withError error: Error?) {
+      if let error = error {
+        Self.logger.error("Session error: \(error.localizedDescription)")
+      }
       DispatchQueue.main.async {
         self.machineState = session?.state
         self.machineAllowedStateActions = session?.allowedStateAction ?? .init()
@@ -133,6 +140,7 @@
         .catch { error in
           Just(Result.failure(error))
         }
+        .receive(on: DispatchQueue.main)
         .sink { result in
           switch result {
           case let .failure(error):

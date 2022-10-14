@@ -35,7 +35,8 @@
               titleID: .welcomeNewMachineTitle,
               descriptionID: .welcomeNewMachineDescription
             ) {
-              Windows.showNewDocumentWindow(ofType: .virtualMachine)
+              Windows.openWindow(withHandle: BasicWindowOpenHandle.machineFactory)
+              // Windows.showNewDocumentWindow(ofType: .virtualMachine)
             }
 
             WelcomeActionButton(
@@ -47,7 +48,7 @@
             }
             .fileImporter(
               isPresented: self.$openDocumentIsVisible,
-              allowedContentTypes: [UTType.virtualMachine]
+              allowedContentTypes: [.virtualMachine, .bshvm]
             ) { result in
               if let url = try? result.get() {
                 Windows.openDocumentAtURL(url)
