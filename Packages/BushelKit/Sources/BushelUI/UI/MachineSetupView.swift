@@ -9,50 +9,71 @@
 
   struct MachineSetupView: View {
     internal init(
-      document: Binding<MachineDocument>,
-      restoreImageChoices: [MachineRestoreImage],
-      machineRestoreImage: MachineRestoreImage? = nil,
-      isReadyToSave: Bool = false,
+      // document: Binding<MachineDocument>,
+      machineRestoreImage: RestoreImageContextChoice? = nil,
+      // isReadyToSave: Bool = false,
       machineSavedURL: URL? = nil,
       url: URL? = nil,
       onCompleted: ((Error?) -> Void)? = nil
     ) {
-      _document = document
+      // _document = document
       self.url = url
-      self.restoreImageChoices =
-        restoreImageChoices.isEmpty ?
-        [MachineSetupView.unavailableRestoreImageChoice] :
-        restoreImageChoices
       self.onCompleted = onCompleted
       _machineRestoreImage =
         .init(
           initialValue:
-          machineRestoreImage ??
-            restoreImageChoices.first ?? MachineSetupView.unavailableRestoreImageChoice
+          machineRestoreImage?.id ??
+            RestoreImageContextChoice.none.id
         )
-      self.isReadyToSave = isReadyToSave
+      // self.isReadyToSave = isReadyToSave
       self.machineSavedURL = machineSavedURL
     }
 
-    static let unavailableRestoreImageChoice = MachineRestoreImage(name: "No Available Restore Image")
-
     @Environment(\.dismiss) var dismiss: DismissAction
-    @State var machineRestoreImage: MachineRestoreImage
-    @State var isReadyToSave = false
+    @State var machineRestoreImage: UUID = RestoreImageContextChoice.none.id
+    // @State var isReadyToSave = false
     @State var machineSavedURL: URL?
-    @Binding var document: MachineDocument
+    // @Binding var document: MachineDocument
+    @State var machine = Machine()
     let url: URL?
-    let restoreImageChoices: [MachineRestoreImage]
+    @EnvironmentObject var appContext: ApplicationContext
     @StateObject var installationObject = MachineInstallationObject()
 
     let onCompleted: ((Error?) -> Void)?
 
+    func buildingCancelled() {
+      DispatchQueue.main.async {
+        self.installationObject.cancel()
+      }
+    }
+
+    var restoreImageChoices: [RestoreImageContextChoice] {
+      var choices = appContext.images.map(
+        RestoreImageContextChoice.init
+      )
+      if choices.isEmpty {
+        choices.insert(.none, at: 0)
+      }
+      return choices
+    }
+
+    var selectedRestoreImageFile: RestoreImageLibraryItemFile? {
+      let restoreImageChoice = restoreImageChoices.first { $0.id == self.machineRestoreImage
+      }
+
+      guard let restoreImage = restoreImageChoice?.machineRestoreImage?.image else {
+        return nil
+      }
+
+      return RestoreImageLibraryItemFile(loadFromImage: restoreImage)
+    }
+
     var body: some View {
       VStack {
-        if document.machine.operatingSystem == nil {
+        if machine.operatingSystem == nil {
           Picker("Restore Image", selection: self.$machineRestoreImage) {
             ForEach(restoreImageChoices) { choice in
-              Text(choice.name).tag(choice)
+              Text(choice.name ?? "No Restore Image Available").tag(choice.id)
             }
           }.padding()
         }
@@ -63,16 +84,34 @@
             Text(.cancel)
           }
           Button {
-            Task {
-              let factory: VirtualMachineFactory
-              do {
-                factory = try await document.machine.build()
-              } catch {
-                Self.logger.error("failure building machine: \(error.localizedDescription)")
+            guard let selectedRestoreImageFile = selectedRestoreImageFile else {
+              return
+            }
+            self.machine.restoreImage = selectedRestoreImageFile
+            let savePanel = NSSavePanel()
+            savePanel.nameFieldLabel = "Save Restore Image as:"
+
+            savePanel.allowedContentTypes = [.virtualMachine]
+            savePanel.isExtensionHidden = true
+
+            savePanel.begin { response in
+              guard let fileURL = savePanel.url, response == .OK else {
                 return
               }
-              installationObject.setupInstaller(factory)
-              factory.beginBuild()
+
+              let dataURL = fileURL.appendingPathComponent("data")
+              Task {
+                let factory: VirtualMachineFactory
+                do {
+                  factory = try await machine.build()
+                } catch {
+                  Self.logger.error("failure building machine: \(error.localizedDescription)")
+                  return
+                }
+                installationObject.setupInstaller(factory)
+                factory.beginBuild(at: dataURL)
+              }
+              self.machineSavedURL = fileURL
             }
           } label: {
             Text(.buildMachine)
@@ -85,8 +124,22 @@
         switch result {
         case let .success(machineConfigurationURL):
           DispatchQueue.main.async {
-            self.document.machine.installationCompletedAt(machineConfigurationURL)
-            self.isReadyToSave = true
+            self.machine.installationCompletedAt(machineConfigurationURL)
+
+            guard let machineSavedURL = self.machineSavedURL else {
+              Self.logger.error("missing machine url")
+              return
+            }
+            let machineURL = machineSavedURL.appendingPathComponent("machine.json")
+            do {
+              try Configuration.JSON.encoder.encode(self.machine).write(to: machineURL)
+            } catch {
+              Self.logger.error("unable to save machine at: \(error.localizedDescription)")
+            }
+            self.installationObject.cancel()
+
+            Windows.openDocumentAtURL(machineSavedURL)
+            self.dismiss()
           }
 
         case let .failure(error):
@@ -95,41 +148,19 @@
       })
 
       .onAppear {
-        guard let restoreImageID = document.machine.restoreImage?.id else {
-          return
-        }
-        let machineRestoreImage = self.restoreImageChoices.first {
-          $0.id == restoreImageID
-        }
-        guard let machineRestoreImage = machineRestoreImage else {
+        let restoreImageID = machine.restoreImage?.id ?? self.restoreImageChoices.first?.id
+        guard let restoreImageID = restoreImageID else {
           return
         }
         DispatchQueue.main.async {
-          self.machineRestoreImage = machineRestoreImage
+          self.machineRestoreImage = restoreImageID
         }
       }
 
       .sheet(
         item: self.$installationObject.phaseProgress,
         content: { phase in
-          VStack {
-            MachineFactoryView(phaseProgress: phase).fileExporter(
-              isPresented: self.$isReadyToSave,
-              document: self.document,
-              contentType: .virtualMachine,
-              onCompletion: { result in
-                do {
-                  self.installationObject.cancel()
-                  let machineSavedURL = try result.get()
-                  self.machineSavedURL = machineSavedURL
-                  Windows.openDocumentAtURL(machineSavedURL)
-                } catch {
-                  Self.logger.error("failure saving machine: \(error.localizedDescription)")
-                }
-                self.onCompleted?(nil)
-              }
-            )
-          }
+          MachineFactoryView(phaseProgress: phase, onCancel: self.buildingCancelled)
         }
       )
     }
@@ -138,14 +169,7 @@
   struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
       MachineSetupView(
-        document: .constant(MachineDocument()),
-        restoreImageChoices: [
-          MachineRestoreImage(name: "name"),
-
-          MachineRestoreImage(name: "test"),
-          MachineRestoreImage(name: "hello")
-        ],
-        machineRestoreImage: MachineRestoreImage(name: "test"),
+        machineRestoreImage: .image(.init(name: "test")),
         url: nil,
         onCompleted: nil
       )

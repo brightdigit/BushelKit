@@ -100,6 +100,9 @@
 /* New Image Library Menu Button */
 "menu_new_image_library" = "New Image Library";
 
+/* Open Menu Button */
+"menu_open" = "Open...";
+
 /* Open Recent Menu Button */
 "menu_open_recent" = "Open Recent";
 
@@ -111,6 +114,9 @@
 
 /* Bushel Help Menu Button */
 "menu_help_bushel" = "Bushel Help";
+
+/* Clear Menu Button */
+"menu_clear" = "Clear Menu";
 
 /* Welcome Action Button title for creating new machine */
 "welcome_new_machine_title" = "Create a new Machine";

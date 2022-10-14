@@ -51,15 +51,13 @@
     }
 
     // swiftlint:disable:next function_body_length
-    func beginBuild() {
-      let machineConfigurationURL: URL
+    func beginBuild(at url: URL) {
       let machineConfiguration: VZVirtualMachineConfiguration
 
       setState(atPhase: .building)
       do {
-        machineConfigurationURL = try getMachineConfigurationURL()
         machineConfiguration = try VZVirtualMachineConfiguration(
-          toDirectory: machineConfigurationURL,
+          toDirectory: url,
           basedOn: machine,
           withRestoreImage: restoreImage
         )
@@ -87,7 +85,7 @@
       self.installer = installer
       installer.install { result in
         self.setState(
-          atPhase: .savedAt(result.map { machineConfigurationURL }),
+          atPhase: .savedAt(result.map { url }),
           withPercentCompleted: installer.progress.fractionCompleted
         )
       }

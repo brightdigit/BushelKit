@@ -27,6 +27,7 @@
 
     public init() {}
 
+    @MainActor
     public func loadFromAccessor(
       _ accessor: FileAccessor
     ) async throws -> VZMacOSRestoreImage {

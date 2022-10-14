@@ -16,7 +16,7 @@
     #else
       static let imageManagers: [AnyImageManager.Type] = []
     #endif
-    let recentDocumentsObject = RecentDocumentsObject()
+    let applicationContext = ApplicationContext()
 
     init() {
       // swiftlint:disable:next force_try
@@ -26,7 +26,7 @@
     var body: some Scene {
       WindowGroup {
         WelcomeView()
-          .environmentObject(recentDocumentsObject)
+          .environmentObject(applicationContext)
           .frame(width: 950, height: 450)
           .presentedWindowStyle(.hiddenTitleBar)
           .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
@@ -35,25 +35,40 @@
       .windowStyle(.hiddenTitleBar)
       .disableResizability()
       DocumentGroup(viewing: RestoreImageLibraryDocument.self) { file in
-        RestoreImageLibraryDocumentView(document: file.document, url: file.fileURL)
+        RestoreImageLibraryDocumentView(
+          document: file.document,
+          url: file.fileURL
+        ).environmentObject(applicationContext)
       }
-      DocumentGroup(newDocument: MachineDocument()) { file in
-        MachineView(document: file.$document, url: file.fileURL, restoreImageChoices: [])
+      DocumentGroup(viewing: MachineDocument.self) { configuration in
+        MachineView(document: configuration.$document, url: configuration.fileURL)
       }.commands {
         CommandGroup(replacing: .newItem) {
           Menu(.menuNew) {
             Button(.menuNewMachine) {
-              Windows.showNewDocumentWindow(ofType: .virtualMachine)
+              Windows.openWindow(withHandle: BasicWindowOpenHandle.machineFactory)
             }
             Button(.menuNewImageLibrary) {
               Windows.showNewSavedDocumentWindow(ofType: RestoreImageLibraryDocument.self)
             }
           }
-          Menu(.menuOpenRecent) {
-            RecentDocumentsMenuContent().environmentObject(recentDocumentsObject)
-          }
         }
         CommandGroup(after: .newItem) {
+          Button(.menuOpen) {
+            let openPanel = NSOpenPanel()
+            openPanel.allowedContentTypes = [.restoreImageLibrary, .bshvm, .virtualMachine]
+            openPanel.isExtensionHidden = true
+            openPanel.begin { response in
+              guard let fileURL = openPanel.url, response == .OK else {
+                return
+              }
+              Windows.openDocumentAtURL(fileURL)
+            }
+          }
+          Menu(.menuOpenRecent) {
+            RecentDocumentsMenuContent().environmentObject(applicationContext)
+          }
+          Divider()
           Button(.menuNewDownloadRestoreImage) {
             Windows.openWindow(withHandle: BasicWindowOpenHandle.remoteSources)
           }
@@ -78,11 +93,14 @@
           )
         }
       #endif
+      WindowGroup {
+        MachineSetupView().environmentObject(applicationContext)
+      }.windowsHandle(BasicWindowOpenHandle.machineFactory)
       WindowGroup(Text(.remoteRestoreImages), id: "remote_restore_images") {
         RrisCollectionView()
       }.windowsHandle(BasicWindowOpenHandle.remoteSources)
       WindowGroup(id: MachineSetupWindowHandle.host) {
-        NewMachineView()
+        NewMachineView().environmentObject(applicationContext)
       }.windowsHandle(MachineSetupWindowHandle.self)
       WindowGroup(id: MachineSessionWindowHandle.host) {
         SessionView()
@@ -96,15 +114,17 @@
           .presentedWindowToolbarStyle(.unifiedCompact(showsTitle: false))
       }
       .windowsHandle(MachineSessionWindowHandle.self).windowStyle(.hiddenTitleBar)
-      Settings {
-        SettingsView()
+      Group {
+        Settings {
+          SettingsView()
+        }
+        WindowGroup {
+          OnboardingView()
+        }.windowsHandle(BasicWindowOpenHandle.onboarding)
+        WindowGroup {
+          PurchaseView()
+        }.windowsHandle(BasicWindowOpenHandle.purchase)
       }
-      WindowGroup {
-        OnboardingView()
-      }.windowsHandle(BasicWindowOpenHandle.onboarding)
-      WindowGroup {
-        PurchaseView()
-      }.windowsHandle(BasicWindowOpenHandle.purchase)
     }
 
     func hideMiniButton() {

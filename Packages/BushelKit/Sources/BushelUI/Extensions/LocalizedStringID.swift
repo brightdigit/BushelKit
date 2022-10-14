@@ -34,10 +34,12 @@ enum LocalizedStringID: String {
   case menuNew
   case menuNewMachine
   case menuNewImageLibrary
+  case menuOpen
   case menuOpenRecent
   case menuNewDownloadRestoreImage
   case menuWindowWelcomeToBushel
   case menuHelpBushel
+  case menuClear
   case welcomeNewMachineTitle
   case welcomeNewMachineDescription
   case welcomeExistingMachineTitle
