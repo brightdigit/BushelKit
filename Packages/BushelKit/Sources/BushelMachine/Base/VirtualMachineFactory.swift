@@ -6,7 +6,7 @@
 import Foundation
 
 public protocol VirtualMachineFactory: AnyObject {
-  func beginBuild()
+  func beginBuild(at url: URL)
   var state: VirtualMachineBuildingProgress { get }
   var delegate: VirtualMachineFactoryDelegate? { get set }
 }

@@ -23,7 +23,6 @@ cache:
   stage: lint
   tags:
     - macos
-  stage: lint
   script:
     - LINT_MODE=$LINT_MODE ./scripts/lint.sh    
 

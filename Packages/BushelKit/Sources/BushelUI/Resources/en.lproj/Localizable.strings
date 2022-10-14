@@ -100,6 +100,9 @@
 /* New Image Library Menu Button */
 "menu_new_image_library" = "New Image Library";
 
+/* Open Menu Button */
+"menu_open" = "Open...";
+
 /* Open Recent Menu Button */
 "menu_open_recent" = "Open Recent";
 
