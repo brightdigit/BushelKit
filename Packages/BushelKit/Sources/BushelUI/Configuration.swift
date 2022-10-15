@@ -31,6 +31,7 @@ enum Configuration {
   #endif
 
   static let prereleaseLabel: PrereleaseLabel? = .init(label: "alpha", baseNumber: 25)
+  static let prerelaseOffset = 2
 
   static let applicationMarketingVersionValue = Bundle.main
     // swiftlint:disable:next force_cast
@@ -42,7 +43,7 @@ enum Configuration {
     }
 
     // swiftlint:disable:next line_length
-    return "\(applicationMarketingVersionValue) \(prereleaseLabel.label) \(applicationBuildNumber - prereleaseLabel.baseNumber)"
+    return "\(applicationMarketingVersionValue) \(prereleaseLabel.label) \(applicationBuildNumber - prereleaseLabel.baseNumber - prerelaseOffset)"
   }()
 
   static let applicationBuildString: String = Bundle.main
