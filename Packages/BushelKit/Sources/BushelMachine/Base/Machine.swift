@@ -7,7 +7,7 @@ import Foundation
 
 public struct Machine: Identifiable, Codable {
   public init(loadFrom url: URL) throws {
-    let data = try Data(contentsOf: url.appendingPathComponent("machine.json"))
+    let data = try Data(contentsOf: url.appendingPathComponent(Paths.machineJSONFileName))
     var machine: Self = try JSON.tryDecoding(data)
     machine.rootFileAccessor = URLAccessor(url: url)
     self = machine
@@ -16,28 +16,37 @@ public struct Machine: Identifiable, Codable {
   public init(
     id: UUID = .init(),
     restoreImage: RestoreImageLibraryItemFile? = nil,
-    operatingSystem: OperatingSystemDetails? = nil
+    operatingSystem: OperatingSystemDetails? = nil,
+    snapshots: [MachineSnapshot] = [],
+    specification: MachineSpecification
   ) {
     self.id = id
     self.restoreImage = restoreImage
     self.operatingSystem = operatingSystem
+
+    self.snapshots = snapshots
+    self.specification = specification
   }
 
   public let id: UUID
+  public var specification: MachineSpecification
   public var restoreImage: RestoreImageLibraryItemFile?
   public var operatingSystem: OperatingSystemDetails?
   public var rootFileAccessor: FileAccessor?
   public var machineFactoryResultURL: URL?
+  public var snapshots: [MachineSnapshot]
 
   public func getMachineConfigurationURL() throws -> URL? {
-    try rootFileAccessor?.getURL().appendingPathComponent("data")
+    try rootFileAccessor?.getURL().appendingPathComponent(Paths.machineDataDirectoryName)
   }
 
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(id, forKey: .id)
-    try container.encodeIfPresent(restoreImage, forKey: .restoreImage)
     try container.encodeIfPresent(operatingSystem, forKey: .operatingSystem)
+    try container.encodeIfPresent(snapshots, forKey: .snapshots)
+    try container.encodeIfPresent(restoreImage, forKey: .restoreImage)
+    try container.encode(specification, forKey: .specification)
   }
 
   public func createMachine() throws -> MachineSession? {
@@ -65,9 +74,9 @@ public struct Machine: Identifiable, Codable {
     case id
     case restoreImage
     case operatingSystem
+    case snapshots
+    case specification
   }
-
-  mutating func osInstallationCompleted() {}
 
   public mutating func installationCompletedAt(_ url: URL) {
     guard let metadata = restoreImage?.metadata else {

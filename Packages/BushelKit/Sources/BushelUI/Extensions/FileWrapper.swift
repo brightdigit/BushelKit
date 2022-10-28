@@ -17,7 +17,7 @@
         return fileWrapper
       } else if let sourceFileURL = try? file.fileAccessor?.getURL() {
         if let expectedDestinationURL = sourceURL?
-          .appendingPathComponent("Restore Images")
+          .appendingPathComponent(Paths.restoreImagesDirectoryName)
           .appendingPathComponent(file.fileName) {
           if FileManager.default.fileExists(atPath: expectedDestinationURL.path) {
             return nil
@@ -34,13 +34,13 @@
       fromExistingFile existingFile: FileWrapper?
     ) throws {
       let data = try Configuration.JSON.encoder.encode(snapshot)
-      if let metdataFileWrapper = existingFile?.fileWrappers?["metadata.json"] {
+      if let metdataFileWrapper = existingFile?.fileWrappers?[Paths.restoreLibraryJSONFileName] {
         let temporaryURL = FileManager.default.createTemporaryFile(for: .json)
         try data.write(to: temporaryURL)
         try metdataFileWrapper.read(from: temporaryURL)
       } else {
         let metdataFileWrapper = FileWrapper(regularFileWithContents: data)
-        metdataFileWrapper.preferredFilename = "metadata.json"
+        metdataFileWrapper.preferredFilename = Paths.restoreLibraryJSONFileName
         addFileWrapper(metdataFileWrapper)
       }
     }
@@ -48,10 +48,10 @@
     func addImages(_ imageFileWrappers: [FileWrapper], fromExistingFile existingFile: FileWrapper?) {
       if !imageFileWrappers.isEmpty {
         let imagesDirectoryFileWrapper =
-          existingFile?.fileWrappers?["Restore Images"] ??
+          existingFile?.fileWrappers?[Paths.restoreImagesDirectoryName] ??
           FileWrapper(directoryWithFileWrappers: [:])
         if imagesDirectoryFileWrapper.preferredFilename == nil {
-          imagesDirectoryFileWrapper.preferredFilename = "Restore Images"
+          imagesDirectoryFileWrapper.preferredFilename = Paths.restoreImagesDirectoryName
         }
         _ = imageFileWrappers.map(imagesDirectoryFileWrapper.addFileWrapper)
         addFileWrapper(imagesDirectoryFileWrapper)
@@ -65,7 +65,7 @@
       guard let childWrappers = fileWrappers else {
         return nil
       }
-      guard let imageDirectoryWrapper = childWrappers["Restore Images"] else {
+      guard let imageDirectoryWrapper = childWrappers[Paths.restoreImagesDirectoryName] else {
         return nil
       }
       guard let imageWrappers = imageDirectoryWrapper.fileWrappers, imageDirectoryWrapper.isDirectory else {

@@ -41,9 +41,8 @@
 
     @State var addRestoreImageToLibraryIsVisible = false
 
-    @MainActor
-    func importFile(_ file: RestoreImageLibraryItemFile, fromURL newImageURL: URL) {
-      document.importFile(file)
+    func importFile(_ file: RestoreImageLibraryItemFile, fromURL newImageURL: URL) async {
+      await document.importFile(file)
       importingURL = nil
       activeImports.removeAll { activeImport in
         activeImport.sourceURL == newImageURL
@@ -77,9 +76,9 @@
         }
         return
       }
-      await MainActor.run {
+      await
         importFile(file, fromURL: newImageURL)
-      }
+
       undoManager?.registerUndo(withTarget: document, handler: { document in
         DispatchQueue.main.async {
           document.library = oldLibrary

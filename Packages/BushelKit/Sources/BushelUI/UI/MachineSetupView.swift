@@ -9,31 +9,23 @@
 
   struct MachineSetupView: View {
     internal init(
-      // document: Binding<MachineDocument>,
-      machineRestoreImage: RestoreImageContextChoice? = nil,
-      // isReadyToSave: Bool = false,
+      machineRestoreImageID: Binding<UUID>,
       machineSavedURL: URL? = nil,
       url: URL? = nil,
       onCompleted: ((Error?) -> Void)? = nil
     ) {
-      // _document = document
       self.url = url
       self.onCompleted = onCompleted
-      _machineRestoreImage =
-        .init(
-          initialValue:
-          machineRestoreImage?.id ??
-            RestoreImageContextChoice.none.id
-        )
-      // self.isReadyToSave = isReadyToSave
+      _machineRestoreImageID = machineRestoreImageID
       self.machineSavedURL = machineSavedURL
     }
 
     @Environment(\.dismiss) var dismiss: DismissAction
-    @State var machineRestoreImage: UUID = RestoreImageContextChoice.none.id
-    // @State var isReadyToSave = false
+    @Binding var machineRestoreImageID: UUID
+
+    @State var shouldDisplayError = false
+    @State var machineSetupError: Error?
     @State var machineSavedURL: URL?
-    // @Binding var document: MachineDocument
     @State var machine = Machine()
     let url: URL?
     @EnvironmentObject var appContext: ApplicationContext
@@ -58,7 +50,7 @@
     }
 
     var selectedRestoreImageFile: RestoreImageLibraryItemFile? {
-      let restoreImageChoice = restoreImageChoices.first { $0.id == self.machineRestoreImage
+      let restoreImageChoice = restoreImageChoices.first { $0.id == self.machineRestoreImageID
       }
 
       guard let restoreImage = restoreImageChoice?.machineRestoreImage?.image else {
@@ -70,8 +62,8 @@
 
     var body: some View {
       VStack {
-        if machine.operatingSystem == nil {
-          Picker("Restore Image", selection: self.$machineRestoreImage) {
+        if machine.operatingSystem == nil, !self.restoreImageChoices.isEmpty, self.machineRestoreImageID != RestoreImageContextChoice.none.id {
+          Picker("Restore Image", selection: self.$machineRestoreImageID) {
             ForEach(restoreImageChoices) { choice in
               Text(choice.name ?? "No Restore Image Available").tag(choice.id)
             }
@@ -99,7 +91,7 @@
                 return
               }
 
-              let dataURL = fileURL.appendingPathComponent("data")
+              let dataURL = fileURL.appendingPathComponent(Paths.machineDataDirectoryName)
               Task {
                 let factory: VirtualMachineFactory
                 do {
@@ -130,7 +122,7 @@
               Self.logger.error("missing machine url")
               return
             }
-            let machineURL = machineSavedURL.appendingPathComponent("machine.json")
+            let machineURL = machineSavedURL.appendingPathComponent(Paths.machineJSONFileName)
             do {
               try Configuration.JSON.encoder.encode(self.machine).write(to: machineURL)
             } catch {
@@ -143,6 +135,9 @@
           }
 
         case let .failure(error):
+          DispatchQueue.main.async {
+            self.installationObject.cancel()
+          }
           self.onCompleted?(error)
         }
       })
@@ -153,7 +148,7 @@
           return
         }
         DispatchQueue.main.async {
-          self.machineRestoreImage = restoreImageID
+          self.machineRestoreImageID = restoreImageID
         }
       }
 
@@ -169,7 +164,7 @@
   struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
       MachineSetupView(
-        machineRestoreImage: .image(.init(name: "test")),
+        machineRestoreImageID: .constant(UUID()),
         url: nil,
         onCompleted: nil
       )

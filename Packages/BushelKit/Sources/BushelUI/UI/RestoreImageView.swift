@@ -73,8 +73,8 @@
         throw MissingError.needDefinition("Invalid Library")
       }
 
-      let restoreImagesSubdirectoryURL = url.appendingPathComponent("Restore Images")
-      let metadataURL = url.appendingPathComponent("metadata.json")
+      let restoreImagesSubdirectoryURL = url.appendingPathComponent(Paths.restoreImagesDirectoryName)
+      let metadataURL = url.appendingPathComponent(Paths.restoreLibraryJSONFileName)
 
       let alreadyExists =
         FileManager.default.fileExists(atPath: metadataURL.path) &&
@@ -114,6 +114,7 @@
     var body: some View {
       VStack {
         Image(
+          system: image.metadata.vmSystem,
           operatingSystemVersion: image.metadata.operatingSystemVersion
         )
         .resizable()
@@ -127,8 +128,7 @@
         }
 
         Text(
-          // swiftlint:disable:next line_length
-          "macOS \(OperatingSystemCodeName(operatingSystemVersion: image.metadata.operatingSystemVersion)?.name ?? "")"
+          "macOS \(image.metadata.defaultName)"
         ).font(.title)
         Text(image.metadata.localizedVersionString)
 
@@ -211,9 +211,9 @@
 
             case let (.success, .library(url, fileID)):
 
-              let metadataJSON = url.appendingPathComponent("metadata.json")
+              let metadataJSON = url.appendingPathComponent(Paths.restoreLibraryJSONFileName)
               let fileURL = url
-                .appendingPathComponent("Restore Images")
+                .appendingPathComponent(Paths.restoreImagesDirectoryName)
                 .appendingPathComponent(fileID.uuidString)
                 .appendingPathExtension("ipsw")
               let newFile = RestoreImageLibraryItemFile(

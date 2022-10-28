@@ -14,6 +14,7 @@
         TextField("Name", text: self.$file.name).font(.largeTitle)
         HStack {
           Image(
+            system: file.metadata.vmSystem,
             operatingSystemVersion: file.metadata.operatingSystemVersion
           )
           .resizable()
@@ -28,7 +29,7 @@
           VStack(alignment: .leading) {
             Text(
               // swiftlint:disable:next line_length
-              "macOS \(OperatingSystemCodeName(operatingSystemVersion: file.metadata.operatingSystemVersion)?.name ?? "")"
+              "macOS \(file.metadata.defaultName)"
             )
             .font(.title)
 

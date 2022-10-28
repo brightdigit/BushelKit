@@ -65,8 +65,10 @@
 
           documentController.addDocument(document)
           document.makeWindowControllers()
+        } else if let error = error {
+          Self.logger.error("unable to open doc at \(url.path): \(error)")
         } else {
-          Self.logger.error("unable to open doc at \(url.path): \(error?.localizedDescription ?? "")")
+          Self.logger.error("unable to open doc at \(url.path)")
         }
       }
       ApplicationContext.shared.refreshRecentDocuments()
