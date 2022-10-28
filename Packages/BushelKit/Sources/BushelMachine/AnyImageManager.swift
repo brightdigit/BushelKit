@@ -20,11 +20,14 @@ public protocol AnyImageManager {
     _ machine: Machine,
     restoreImage: RestoreImage
   ) async throws -> VirtualMachineFactory
-  func defaultName(for metadata: ImageMetadata) -> String
   static var systemID: VMSystemID { get }
   #if canImport(UniformTypeIdentifiers)
     static var restoreImageContentTypes: [UTType] { get }
   #endif
+  func defaultSpecifications() -> MachineSpecification
+  var supportedSystems: [OperatingSystemDetails.System] { get }
+  func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String
+  func imageNameFor(operatingSystemVersion: OperatingSystemVersion) -> String?
 }
 
 public extension AnyImageManager {
@@ -47,5 +50,9 @@ public extension AnyImageManager {
       throw MachineError.undefinedType("invalid restore image", restoreImage)
     }
     return restoreImageFile
+  }
+
+  func defaultName(for metadata: BushelMachine.ImageMetadata) -> String {
+    codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)
   }
 }

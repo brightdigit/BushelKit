@@ -8,13 +8,11 @@ enum BasicWindowOpenHandle: String, CaseIterable, InstanceConditionalHandle {
     nil
   }
 
-  // case machine
   case localImages
   case remoteSources
   case welcome
   case onboarding
   case purchase
-  case machineFactory
 
   var host: String {
     rawValue

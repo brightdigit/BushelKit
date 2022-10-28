@@ -40,8 +40,8 @@
     static func saveBlankDocumentAt(_ url: URL) throws {
       let library = RestoreImageLibrary()
       let data = try Configuration.JSON.encoder.encode(library)
-      let restoreLibrariesDir = url.appendingPathComponent("Restore Images")
-      let metadataFileURL = url.appendingPathComponent("metadata.json")
+      let restoreLibrariesDir = url.appendingPathComponent(Paths.restoreImagesDirectoryName)
+      let metadataFileURL = url.appendingPathComponent(Paths.restoreLibraryJSONFileName)
       try FileManager.default.createDirectory(at: restoreLibrariesDir, withIntermediateDirectories: true)
       FileManager.default.createFile(atPath: metadataFileURL.path, contents: data)
     }
@@ -55,7 +55,7 @@
         .init(directoryWithFileWrappers: [String: FileWrapper]())
 
       let existingImageDirectoryFileWrapper = configuration.existingFile?
-        .fileWrappers?["Restore Images"]?
+        .fileWrappers?[Paths.restoreImagesDirectoryName]?
         .fileWrappers
 
       let imageFileWrappers = try snapshot.items
@@ -85,7 +85,7 @@
     static func restoreImageLibrary(
       fromFileWrapper rootFileWrapper: FileWrapper
     ) throws -> RestoreImageLibrary {
-      if let data = rootFileWrapper.fileWrappers?["metadata.json"]?.regularFileContents {
+      if let data = rootFileWrapper.fileWrappers?[Paths.restoreLibraryJSONFileName]?.regularFileContents {
         do {
           return try Configuration.JSON.tryDecoding(data)
         } catch {
@@ -103,7 +103,7 @@
 
       for (index, item) in library.items.enumerated() {
         if let fileWrapper = configuration.file
-          .fileWrappers?["Restore Images"]?
+          .fileWrappers?[Paths.restoreImagesDirectoryName]?
           .fileWrappers?[item.id.uuidString] {
           library.items[index].fileAccessor = FileWrapperAccessor(fileWrapper: fileWrapper, url: nil)
         }
@@ -113,9 +113,10 @@
     }
 
     // swiftlint:disable:next function_body_length
-    func importFile(_ file: RestoreImageLibraryItemFile) {
+    func importFile(_ file: RestoreImageLibraryItemFile) async {
       Self.logger.log("importing file \(file.fileName)")
       let sourceFileURL: URL
+
       guard let sourceURL = sourceURL else {
         Self.logger.error("can't importing file \(file.fileName); no sourceURL")
         return
@@ -127,19 +128,27 @@
         Self.logger.error("can't importing file \(file.fileName); failure to get url from file: \(error.localizedDescription)")
         return
       }
-      do {
-        try FileManager.default.copyRestoreImage(
-          at: sourceFileURL,
-          toLibraryAt: sourceURL,
-          withName: file.fileName
-        )
-      } catch {
-        // swiftlint:disable:next line_length
-        Self.logger.error("can't importing file \(file.fileName); failure to get copy file: \(error.localizedDescription)")
-        return
-      }
 
-      library.items.append(file)
+      await withCheckedContinuation { continuation in
+        let newURL: URL
+        do {
+          newURL = try FileManager.default.copyRestoreImage(
+            at: sourceFileURL,
+            toLibraryAt: sourceURL,
+            withName: file.fileName
+          )
+        } catch {
+          // swiftlint:disable:next line_length
+          Self.logger.error("can't importing file \(file.fileName); failure to get copy file: \(error.localizedDescription)")
+          continuation.resume()
+          return
+        }
+
+        library.items.append(
+          file.updatingWithURL(newURL, andFileAccessor: nil)
+        )
+        continuation.resume()
+      }
     }
 
     func updateBaseURL(_ url: URL) {
@@ -152,7 +161,7 @@
       let restoreImages = library.items.map { file -> RestoreImageLibraryItemFile in
         let fileWrapper = imageWrappers[file.fileName]
         let fileName = fileWrapper?.filename ?? file.fileName
-        let url = url.appendingPathComponent("Restore Images").appendingPathComponent(fileName)
+        let url = url.appendingPathComponent(Paths.restoreImagesDirectoryName).appendingPathComponent(fileName)
         let fileWrapperAccessor = fileWrapper.map {
           FileWrapperAccessor(fileWrapper: $0, url: url)
         }
@@ -168,7 +177,7 @@
       guard let sourceFileWrapper = sourceFileWrapper else {
         return
       }
-      let restoreImageDirectoryURL = url?.appendingPathComponent("Restore Images")
+      let restoreImageDirectoryURL = url?.appendingPathComponent(Paths.restoreImagesDirectoryName)
       let restoreImages = await sourceFileWrapper.loadRestoreImageFiles(
         fromDirectoryURL: restoreImageDirectoryURL,
         using: loader

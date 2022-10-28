@@ -19,11 +19,17 @@
 /* "When the machine is being built" */
 "building_machine" = "Building Machine...";
 
+/* "When the machine building failed" */
+"building_machine_failure" = "Building Machine Failure";
+
 /* "When the operating system is being installed on the machine" */
 "installing_os" = "Installing Operating System...";
 
 /* Button for starting VM */
 "start_machine" = "Start Machine";
+
+/* Button for taking snapshots of VM */
+"snapshot_machine" = "Take Snapshot";
 
 /* "When the machine is being saved" */
 "saving_machine" = "Saving New Machine...";
@@ -141,3 +147,24 @@
 
 /* Welcome Action Button description for downloading an image */
 "welcome_download_image_description" = "Download a new version of macOS.";
+
+/* Machine Details Chip Field Label */
+"machine_details_chip" = "Chip";
+
+/* Machine Details Memory Field Label */
+"machine_details_memory" = "Memory";
+
+/* Machine Details Storage Field Label */
+"machine_details_storage" = "Storage";
+
+/* Machine Details Display Field Label */
+"machine_details_display" = "Display";
+
+/* Machine Details Network Field Label */
+"machine_details_network" = "Network";
+
+/* Machine Details Network NAT Value */
+"machine_details_network_nat" = "NAT";
+
+/* Machine Details Display Value */
+"%d x %d %dppi" = "%d x %d %dppi";

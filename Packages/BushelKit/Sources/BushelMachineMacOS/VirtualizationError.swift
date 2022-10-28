@@ -5,6 +5,14 @@
 
 import Foundation
 
-enum VirtualizationError: Error {
+enum VirtualizationError: Error, LocalizedError {
   case undefinedType(String, Any?)
+
+  var errorDescription: String? {
+    guard case let .undefinedType(string, any) = self else {
+      return nil
+    }
+
+    return string
+  }
 }

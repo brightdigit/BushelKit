@@ -53,12 +53,11 @@
     // swiftlint:disable:next function_body_length
     func beginBuild(at url: URL) {
       let machineConfiguration: VZVirtualMachineConfiguration
-
       setState(atPhase: .building)
       do {
         machineConfiguration = try VZVirtualMachineConfiguration(
           toDirectory: url,
-          basedOn: machine,
+          basedOn: machine.specification,
           withRestoreImage: restoreImage
         )
         try machineConfiguration.validate()

@@ -22,7 +22,7 @@ public extension RestoreImageDownloadDestination {
       throw MissingError.needDefinition("Invalid Library")
     }
 
-    let restoreImagesSubdirectoryURL = url.appendingPathComponent("Restore Images")
+    let restoreImagesSubdirectoryURL = url.appendingPathComponent(Paths.restoreImagesDirectoryName)
 
     let restoreImageSubdirectoryExists = FileManager.default.directoryExists(
       at: restoreImagesSubdirectoryURL

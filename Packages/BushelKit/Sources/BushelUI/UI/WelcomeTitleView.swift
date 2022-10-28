@@ -35,8 +35,7 @@
               titleID: .welcomeNewMachineTitle,
               descriptionID: .welcomeNewMachineDescription
             ) {
-              Windows.openWindow(withHandle: BasicWindowOpenHandle.machineFactory)
-              // Windows.showNewDocumentWindow(ofType: .virtualMachine)
+              Windows.openWindow(withHandle: MachineSetupWindowHandle(restoreImagePath: nil))
             }
 
             WelcomeActionButton(

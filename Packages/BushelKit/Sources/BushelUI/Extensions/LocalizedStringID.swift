@@ -12,8 +12,10 @@ enum LocalizedStringID: String {
   case version
   case savingMachine
   case startMachine
+  case snapshotMachine
   case buildMachine
   case buildingMachine
+  case buildingMachineFailure
   case installingOs
   case importFirstImage
   case importRestoreImage
@@ -48,6 +50,13 @@ enum LocalizedStringID: String {
   case welcomeStartLibraryDescription
   case welcomeDownloadImageTitle
   case welcomeDownloadImageDescription
+
+  case machineDetailsChip
+  case machineDetailsMemory
+  case machineDetailsStorage
+  case machineDetailsDisplay
+  case machineDetailsNetwork
+  case machineDetailsNetworkNat
 
   var keyValue: String {
     rawValue.camelCaseTosnake_case()
