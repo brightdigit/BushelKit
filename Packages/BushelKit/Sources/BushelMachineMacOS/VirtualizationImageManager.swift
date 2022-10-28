@@ -10,17 +10,28 @@
   import Virtualization
 
   public struct VirtualizationImageManager: ImageManager {
-    static let defaultNamePrefix = "macOS"
-
-    public func defaultName(for metadata: BushelMachine.ImageMetadata) -> String {
-      guard let codeName = OperatingSystemCodeName(
-        operatingSystemVersion: metadata.operatingSystemVersion
-      ) else {
-        return "\(Self.defaultNamePrefix) \(metadata.operatingSystemVersion) (\(metadata.buildVersion))"
-      }
-      // swiftlint:disable:next line_length
-      return "\(Self.defaultNamePrefix) \(codeName.name) \(metadata.operatingSystemVersion) (\(metadata.buildVersion))"
+    public func imageNameFor(operatingSystemVersion: OperatingSystemVersion) -> String? {
+      Self.codeNames[operatingSystemVersion.majorVersion]?.prepending("OSVersions/")
     }
+
+    public let supportedSystems: [OperatingSystemDetails.System] = [.macOS]
+
+    public static let codeNames: [Int: String] = [
+      11: "Big Sur",
+      12: "Monterey",
+      13: "Ventura"
+    ]
+    public func defaultSpecifications() -> BushelMachine.MachineSpecification {
+      .init(
+        cpuCount: VZVirtualMachineConfiguration.computeCPUCount(),
+        memorySize: VZVirtualMachineConfiguration.computeMemorySize(),
+        storageDevices: [.init(id: .init(), size: VZVirtualMachineConfiguration.minimumHardDiskSize)],
+        networkConfigurations: [.init(attachment: .nat)],
+        graphicsConfigurations: [.init(displays: [.init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)])]
+      )
+    }
+
+    static let defaultNamePrefix = "macOS"
 
     public static let restoreImageContentTypes = UTType.ipswTypes
     public static var systemID = VMSystemID.macOS
@@ -48,16 +59,16 @@
       guard let configurationURL = try machine.getMachineConfigurationURL() else {
         throw VirtualizationError.undefinedType("Missing configurationURL for session", self)
       }
-
-      try VirtualizationSession.validate(fromConfigurationURL: configurationURL)
+      let specifications = machine.specification
+      try VirtualizationSession.validate(fromConfigurationURL: configurationURL, basedOn: specifications)
     }
 
     public func session(fromMachine machine: Machine) throws -> MachineSession {
       guard let configurationURL = try machine.getMachineConfigurationURL() else {
         throw VirtualizationError.undefinedType("Missing configurationURL for session", self)
       }
-
-      return try VirtualizationSession(fromConfigurationURL: configurationURL)
+      let specifications = machine.specification
+      return try VirtualizationSession(fromConfigurationURL: configurationURL, basedOn: specifications)
     }
 
     public func buildMachine(
@@ -71,6 +82,10 @@
       from fileAccessor: FileAccessor
     ) async throws -> VZMacOSRestoreImage {
       try await VZMacOSRestoreImage.loadFromURL(fileAccessor.getURL())
+    }
+
+    public func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
+      Self.codeNames[operatingSystemVersion.majorVersion] ?? operatingSystemVersion.majorVersion.description
     }
   }
 #endif

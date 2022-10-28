@@ -10,6 +10,22 @@
   import UniformTypeIdentifiers
 
   struct MockImageManager: ImageManager {
+    func imageNameFor(operatingSystemVersion _: OperatingSystemVersion) -> String? {
+      "OSVersions/Big Sur"
+    }
+
+    var supportedSystems: [BushelMachine.OperatingSystemDetails.System] {
+      []
+    }
+
+    func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
+      operatingSystemVersion.majorVersion.description
+    }
+
+    func defaultSpecifications() -> BushelMachine.MachineSpecification {
+      AnyImageManagers.imageManager(forSystem: .macOS)!.defaultSpecifications()
+    }
+
     func defaultName(for _: BushelMachine.ImageMetadata) -> String {
       "Windows Vista"
     }

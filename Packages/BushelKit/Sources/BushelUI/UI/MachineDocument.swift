@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI) && canImport(UniformTypeIdentifiers)
+#if canImport(SwiftUI) && canImport(UniformTypeIdentifiers) && os(macOS)
   import BushelMachine
   import SwiftUI
   import UniformTypeIdentifiers
@@ -42,7 +42,7 @@
     static let readableContentTypes: [UTType] = [.virtualMachine]
 
     init(configuration: ReadConfiguration) throws {
-      guard let machineFileWrapper = configuration.file.fileWrappers?["machine.json"] else {
+      guard let machineFileWrapper = configuration.file.fileWrappers?[Paths.machineJSONFileName] else {
         throw DocumentError.undefinedType("No machine.json file.", configuration.file)
       }
       guard let data = machineFileWrapper.regularFileContents else {
@@ -53,7 +53,7 @@
       do {
         machine = try Configuration.JSON.tryDecoding(data)
       } catch {
-        throw DocumentError.undefinedType("Decoding error for machine.json file.", error)
+        throw DocumentError.innerError(error, "Decoding error for machine.json file.", nil)
       }
       machine.rootFileAccessor = FileWrapperAccessor(fileWrapper: configuration.file, url: nil)
 
@@ -83,23 +83,39 @@
 
       if let machineFactoryResultURL = machineFactoryResultURL {
         let machineDataWrapper = try FileWrapper(url: machineFactoryResultURL)
-        machineDataWrapper.preferredFilename = "data"
+        machineDataWrapper.preferredFilename = Paths.machineDataDirectoryName
         rootFileWrapper.addFileWrapper(machineDataWrapper)
       }
 
       let data = try Configuration.JSON.encoder.encode(machine)
 
-      if let metdataFileWrapper = configuration.existingFile?.fileWrappers?["machine.json"] {
+      if let metdataFileWrapper = configuration.existingFile?.fileWrappers?[Paths.machineJSONFileName] {
         let temporaryURL = FileManager.default.createTemporaryFile(for: .json)
         try data.write(to: temporaryURL)
         try metdataFileWrapper.read(from: temporaryURL)
       } else {
         let metdataFileWrapper = FileWrapper(regularFileWithContents: data)
-        metdataFileWrapper.preferredFilename = "machine.json"
+        metdataFileWrapper.preferredFilename = Paths.machineJSONFileName
         rootFileWrapper.addFileWrapper(metdataFileWrapper)
       }
 
       return rootFileWrapper
+    }
+
+    mutating func addSnapshot(isDiscardable: Bool = false) throws {
+      guard let url = try machine.rootFileAccessor?.getURL() else {
+        throw DocumentError.undefinedType("Missing URL for Versioning", nil)
+      }
+      let version: NSFileVersion
+      do {
+        version = try NSFileVersion.addOfItem(at: url, withContentsOf: url, options: [])
+      } catch {
+        throw DocumentError.innerError(error, "Couldn't create file version", url)
+      }
+      if isDiscardable {
+        version.isDiscardable = true
+      }
+      try machine.snapshots.append(.init(fileVersion: version))
     }
   }
 #endif

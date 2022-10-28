@@ -9,10 +9,24 @@
   import SwiftUI
 
   extension Image {
-    init(operatingSystemVersion: OperatingSystemVersion) {
-      let codeName = OperatingSystemCodeName(operatingSystemVersion: operatingSystemVersion)
-      let imageName = codeName?.name
-      self.init(imageName ?? "Big Sur")
+    init(system: VMSystemID, operatingSystemVersion: OperatingSystemVersion) {
+      if let name = AnyImageManagers.imageManager(forSystem: system)?.imageNameFor(operatingSystemVersion: operatingSystemVersion) {
+        self.init(name, bundle: .module)
+      } else if let icon = Icons.California.allCases.randomElement() {
+        self.init(icon: icon)
+      } else {
+        preconditionFailure()
+      }
+    }
+
+    init(operatingSystemDetails: OperatingSystemDetails) {
+      if let name = AnyImageManagers.imageManager(forOperatingSystem: operatingSystemDetails.type)?.imageNameFor(operatingSystemVersion: operatingSystemDetails.version) {
+        self.init(name, bundle: .module)
+      } else if let icon = Icons.California.allCases.randomElement() {
+        self.init(icon: icon)
+      } else {
+        preconditionFailure()
+      }
     }
   }
 #endif

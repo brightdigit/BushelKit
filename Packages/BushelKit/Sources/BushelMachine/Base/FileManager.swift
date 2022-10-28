@@ -82,8 +82,8 @@ public extension FileManager {
     return .init(fileExists: fileExists, isDirectory: isDirectory.boolValue)
   }
 
-  func copyRestoreImage(at sourceFileURL: URL, toLibraryAt sourceURL: URL, withName name: String) throws {
-    let restoreImageDirURL = sourceURL.appendingPathComponent("Restore Images")
+  func copyRestoreImage(at sourceFileURL: URL, toLibraryAt sourceURL: URL, withName name: String) throws -> URL {
+    let restoreImageDirURL = sourceURL.appendingPathComponent(Paths.restoreImagesDirectoryName)
     let destinationFileURL = restoreImageDirURL.appendingPathComponent(name)
 
     try FileManager.default.createDirectory(
@@ -91,5 +91,6 @@ public extension FileManager {
       withIntermediateDirectories: true
     )
     try FileManager.default.copyItem(at: sourceFileURL, to: destinationFileURL)
+    return destinationFileURL
   }
 }

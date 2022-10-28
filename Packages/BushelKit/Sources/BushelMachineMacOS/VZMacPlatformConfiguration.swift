@@ -51,13 +51,13 @@
     // swiftlint:disable:next function_body_length
     convenience init(
       toDirectory machineDirectory: URL,
-      basedOn _: Machine,
+      basedOn _: MachineSpecification,
       withRestoreImage restoreImage: VZMacOSRestoreImage
     ) throws {
       self.init()
 
       guard let configuration = restoreImage.mostFeaturefulSupportedConfiguration else {
-        throw NSError()
+        throw VirtualizationError.undefinedType("This image contains no valid machine configuration.", restoreImage)
       }
 
       try FileManager.default.createDirectory(

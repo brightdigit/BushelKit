@@ -90,17 +90,19 @@
   }
 
   extension VirtualizationSession {
-    convenience init(fromConfigurationURL configurationURL: URL) throws {
+    convenience init(fromConfigurationURL configurationURL: URL, basedOn specifications: MachineSpecification) throws {
       let configuration = try VZVirtualMachineConfiguration(
-        contentsOfDirectory: configurationURL
+        contentsOfDirectory: configurationURL,
+        basedOn: specifications
       )
       try configuration.validate()
       self.init(machine: VZVirtualMachine(configuration: configuration))
     }
 
-    static func validate(fromConfigurationURL configurationURL: URL) throws {
+    static func validate(fromConfigurationURL configurationURL: URL, basedOn specifications: MachineSpecification) throws {
       let configuration = try VZVirtualMachineConfiguration(
-        contentsOfDirectory: configurationURL
+        contentsOfDirectory: configurationURL,
+        basedOn: specifications
       )
       try configuration.validate()
     }

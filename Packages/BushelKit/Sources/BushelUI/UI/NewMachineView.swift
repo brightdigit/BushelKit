@@ -8,69 +8,84 @@
   import SwiftUI
 
   struct NewMachineView: View {
+    internal init(machineRestoreImageID: UUID) {
+      _machineRestoreImageID = .init(initialValue: machineRestoreImageID)
+    }
+
+    @State var shouldDisplayError = false
+    @State var machineSetupError: Error?
     @State var isDisabled = false
-    @State var requestedRestoreImageURL: URL?
+    @State var restoreImagePath: MachineSetupWindowHandle.RestoreImagePath?
     @State var document = MachineDocument()
-    @State var machineRestoreImage: MachineRestoreImage?
+    @State var machineRestoreImageID: UUID
+
     var body: some View {
       MachineSetupView(
-        machineRestoreImage: self.machineRestoreImage.map(RestoreImageContextChoice.image),
+        machineRestoreImageID: self.$machineRestoreImageID,
         url: nil,
         onCompleted: { error in
           if let error = error {
             Self.logger.error("machine setup error: \(error.localizedDescription)")
           }
-        }
-      ).disabled(self.isDisabled)
-        .onOpenURL { externalURL in
-          Task {
-            await MainActor.run {
-              self.isDisabled = true
-            }
-          }
-
-          let actualURL: URL
-          do {
-            actualURL = try MachineSetupWindowHandle.actualURL(fromExternalURL: externalURL)
-          } catch {
-            Self.logger.error("invalid externalURL: \(externalURL): \(error.localizedDescription)")
-            return
-          }
-          Task {
-            await MainActor.run {
-              self.requestedRestoreImageURL = actualURL
-            }
+          DispatchQueue.main.async {
+            self.machineSetupError = error
+            self.shouldDisplayError = error != nil
           }
         }
-        .task(id: self.requestedRestoreImageURL) {
-          guard let url = requestedRestoreImageURL else {
-            return
-          }
-          let restoreImage = await AnyImageManagers.restoreImageFrom(
-            accessor: URLAccessor(url: url),
-            using: FileRestoreImageLoader()
-          )
-          guard let restoreImage = restoreImage else {
-            return
-          }
+      )
 
-          guard let file =
-            RestoreImageLibraryItemFile(loadFromImage: restoreImage) else {
-            return
-          }
-
+      .alert(
+        Text(.buildingMachineFailure), isPresented: self.$shouldDisplayError, presenting: self.machineSetupError, actions: { _ in
+          Button("OK") {}
+        }, message: { error in
+          Text(error.localizedDescription)
+        }
+      )
+      .disabled(self.isDisabled)
+      .onOpenURL { externalURL in
+        Task {
           await MainActor.run {
-            self.machineRestoreImage = MachineRestoreImage(file: file)
-            self.document.machine.restoreImage = file
-            self.isDisabled = false
+            self.isDisabled = true
           }
         }
+
+        let restoreImagePath: MachineSetupWindowHandle.RestoreImagePath
+        do {
+          guard let riPath = try MachineSetupWindowHandle.RestoreImagePath(externalURL: externalURL) else {
+            Task {
+              await MainActor.run {
+                self.isDisabled = false
+              }
+            }
+            return
+          }
+          restoreImagePath = riPath
+        } catch {
+          Self.logger.error("invalid externalURL: \(externalURL): \(error.localizedDescription)")
+          return
+        }
+        Task {
+          await MainActor.run {
+            self.restoreImagePath = restoreImagePath
+          }
+        }
+      }
+      .task(id: self.restoreImagePath) {
+        guard let restoreImagePath = restoreImagePath else {
+          return
+        }
+
+        await MainActor.run {
+          self.machineRestoreImageID = restoreImagePath.imageID
+          self.isDisabled = false
+        }
+      }
     }
   }
 
   struct NewMachineView_Previews: PreviewProvider {
     static var previews: some View {
-      NewMachineView()
+      NewMachineView(machineRestoreImageID: .init())
     }
   }
 #endif

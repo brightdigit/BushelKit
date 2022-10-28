@@ -19,6 +19,7 @@
 #endif
 public enum AnyImageManagers {
   private static var idMap = [VMSystemID: Int]()
+  private static var osMap = [OperatingSystemDetails.System: Int]()
   #if canImport(UniformTypeIdentifiers)
     private static var contentTypeMap = [UTType: Int]()
 
@@ -35,6 +36,15 @@ public enum AnyImageManagers {
   #endif
   public private(set) static var all: [AnyImageManager] = []
 
+  public static func imageManager(forOperatingSystem system: OperatingSystemDetails.System) -> AnyImageManager? {
+    osMap[system].flatMap { index in
+      guard index < all.count, index >= 0 else {
+        return nil
+      }
+      return all[index]
+    }
+  }
+
   public static func imageManager(forSystem system: VMSystemID) -> AnyImageManager? {
     idMap[system].flatMap { index in
       guard index < all.count, index >= 0 else {
@@ -48,6 +58,11 @@ public enum AnyImageManagers {
     let index = all.count
     let type = type(of: imageManager)
     all.append(imageManager)
+    osMap.merge(imageManager.supportedSystems.map {
+      ($0, index)
+    }) {
+      $1
+    }
     idMap[type.systemID] = index
     #if canImport(UniformTypeIdentifiers)
       let contentTypes = type.restoreImageContentTypes

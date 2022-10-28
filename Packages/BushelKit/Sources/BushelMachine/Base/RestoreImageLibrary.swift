@@ -15,7 +15,7 @@ public struct RestoreImageLibrary: Codable {
 
 public extension RestoreImageLibrary {
   init(loadFrom url: URL) throws {
-    let data = try Data(contentsOf: url.appendingPathComponent("metadata.json"))
+    let data = try Data(contentsOf: url.appendingPathComponent(Paths.restoreLibraryJSONFileName))
     self = try JSON.tryDecoding(data)
   }
 }

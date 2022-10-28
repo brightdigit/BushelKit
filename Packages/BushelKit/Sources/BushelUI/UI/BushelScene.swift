@@ -46,7 +46,7 @@
         CommandGroup(replacing: .newItem) {
           Menu(.menuNew) {
             Button(.menuNewMachine) {
-              Windows.openWindow(withHandle: BasicWindowOpenHandle.machineFactory)
+              Windows.openWindow(withHandle: MachineSetupWindowHandle(restoreImagePath: nil))
             }
             Button(.menuNewImageLibrary) {
               Windows.showNewSavedDocumentWindow(ofType: RestoreImageLibraryDocument.self)
@@ -93,14 +93,15 @@
           )
         }
       #endif
-      WindowGroup {
-        MachineSetupView().environmentObject(applicationContext)
-      }.windowsHandle(BasicWindowOpenHandle.machineFactory)
       WindowGroup(Text(.remoteRestoreImages), id: "remote_restore_images") {
         RrisCollectionView()
       }.windowsHandle(BasicWindowOpenHandle.remoteSources)
       WindowGroup(id: MachineSetupWindowHandle.host) {
-        NewMachineView().environmentObject(applicationContext)
+        if let id = applicationContext.images.randomElement()?.id {
+          NewMachineView(machineRestoreImageID: id).environmentObject(applicationContext)
+        } else {
+          EmptyView()
+        }
       }.windowsHandle(MachineSetupWindowHandle.self)
       WindowGroup(id: MachineSessionWindowHandle.host) {
         SessionView()

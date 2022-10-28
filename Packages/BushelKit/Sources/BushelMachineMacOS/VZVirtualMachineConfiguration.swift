@@ -8,6 +8,7 @@
   import Virtualization
 
   extension VZVirtualMachineConfiguration {
+    static let minimumHardDiskSize = UInt64(64 * 1024 * 1024 * 1024)
     static func computeCPUCount() -> Int {
       let totalAvailableCPUs = ProcessInfo.processInfo.processorCount
 
@@ -36,8 +37,9 @@
     }
 
     // swiftlint:disable:next function_body_length
-    func defaultConfiguration(
+    func configurationAt(
       _ machineDirectory: URL,
+      withSpecifications specifications: MachineSpecification,
       createDisks: Bool
     ) throws {
       cpuCount = Self.computeCPUCount()
@@ -47,62 +49,65 @@
         .appendingPathComponent("disks", isDirectory: true)
       try FileManager.default
         .createDirectory(at: disksDirectory, withIntermediateDirectories: true)
-      let diskImageURL = disksDirectory
-        .appendingPathComponent("macOS")
-        .appendingPathExtension("img")
-      if createDisks {
-        try FileManager.default
-          .createFile(
-            atPath: diskImageURL.path,
-            withSize: Int64(64 * 1024 * 1024 * 1024)
-          )
+
+      storageDevices = try specifications.storageDevices.map { specification in
+        try VZVirtioBlockDeviceConfiguration(
+          specification: specification,
+          createDisk: createDisks,
+          parentDirectoryURL: disksDirectory,
+          readOnly: false
+        )
       }
-      let diskAttachment = try VZDiskImageStorageDeviceAttachment(
-        url: diskImageURL,
-        readOnly: false
-      )
-      storageDevices = [VZVirtioBlockDeviceConfiguration(attachment: diskAttachment)]
 
-      let networkDevice = VZVirtioNetworkDeviceConfiguration()
-      networkDevice.attachment = VZNATNetworkDeviceAttachment()
-      networkDevices = [networkDevice]
+      networkDevices = specifications.networkConfigurations.map { _ in
+        let networkDevice = VZVirtioNetworkDeviceConfiguration()
+        networkDevice.attachment = VZNATNetworkDeviceAttachment()
+        return networkDevice
+      }
 
-      let displayConfig = VZMacGraphicsDeviceConfiguration()
-      displayConfig.displays = [
-        .init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)
-      ]
-      graphicsDevices = [
-        displayConfig
-      ]
-      storageDevices = storageDevices
+      graphicsDevices = specifications.graphicsConfigurations.map { config in
+        let displayConfig = VZMacGraphicsDeviceConfiguration()
+        displayConfig.displays = config.displays.map { _ in
+          .init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)
+        }
+        return displayConfig
+      }
       networkDevices = networkDevices
       bootLoader = VZMacOSBootLoader()
       pointingDevices = [VZUSBScreenCoordinatePointingDeviceConfiguration()]
+
+      if #available(macOS 13.0, *) {
+        pointingDevices.append(VZMacTrackpadConfiguration())
+      }
       keyboards = [VZUSBKeyboardConfiguration()]
     }
 
     convenience init(
       toDirectory machineDirectory: URL,
-      basedOn machine: Machine,
+      basedOn specification: MachineSpecification,
       withRestoreImage restoreImage: VZMacOSRestoreImage
     ) throws {
       self.init()
 
       let platform = try VZMacPlatformConfiguration(
         toDirectory: machineDirectory,
-        basedOn: machine,
+        basedOn: specification,
         withRestoreImage: restoreImage
       )
       self.platform = platform
-      try defaultConfiguration(machineDirectory, createDisks: true)
+
+      try configurationAt(machineDirectory, withSpecifications: specification, createDisks: true)
     }
 
-    convenience init(contentsOfDirectory directoryURL: URL) throws {
+    convenience init(
+      contentsOfDirectory directoryURL: URL,
+      basedOn specification: MachineSpecification
+    ) throws {
       self.init()
 
       let platform = try VZMacPlatformConfiguration(fromDirectory: directoryURL)
       self.platform = platform
-      try defaultConfiguration(directoryURL, createDisks: false)
+      try configurationAt(directoryURL, withSpecifications: specification, createDisks: false)
     }
   }
 #endif
