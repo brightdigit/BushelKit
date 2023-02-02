@@ -1,6 +1,6 @@
 //
 // Previews.swift
-// Copyright (c) 2022 BrightDigit.
+// Copyright (c) 2023 BrightDigit.
 //
 
 // swiftlint:disable force_unwrapping line_length

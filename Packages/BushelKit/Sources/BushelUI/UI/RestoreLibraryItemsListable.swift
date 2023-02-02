@@ -1,6 +1,6 @@
 //
 // RestoreLibraryItemsListable.swift
-// Copyright (c) 2022 BrightDigit.
+// Copyright (c) 2023 BrightDigit.
 //
 
 #if canImport(SwiftUI)
