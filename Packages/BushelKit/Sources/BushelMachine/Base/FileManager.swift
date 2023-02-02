@@ -1,6 +1,6 @@
 //
 // FileManager.swift
-// Copyright (c) 2022 BrightDigit.
+// Copyright (c) 2023 BrightDigit.
 //
 
 import Foundation

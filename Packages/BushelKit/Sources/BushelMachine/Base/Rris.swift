@@ -1,6 +1,6 @@
 //
 // Rris.swift
-// Copyright (c) 2022 BrightDigit.
+// Copyright (c) 2023 BrightDigit.
 //
 
 public struct Rris: Identifiable, Hashable {

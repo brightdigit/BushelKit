@@ -1,6 +1,6 @@
 //
 // BasicWindowOpenHandle.swift
-// Copyright (c) 2022 BrightDigit.
+// Copyright (c) 2023 BrightDigit.
 //
 
 enum BasicWindowOpenHandle: String, CaseIterable, InstanceConditionalHandle {
