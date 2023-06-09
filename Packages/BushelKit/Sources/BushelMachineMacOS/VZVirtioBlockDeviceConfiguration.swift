@@ -1,14 +1,20 @@
 //
 // VZVirtioBlockDeviceConfiguration.swift
-// Copyright (c) 2022 BrightDigit.
+// Copyright (c) 2023 BrightDigit.
 //
 
 #if arch(arm64) && canImport(Virtualization)
-  import BushelMachine
+  import BushelVirtualization
   import Virtualization
 
   extension VZVirtioBlockDeviceConfiguration {
-    convenience init(specification: MachineStorageSpecification, createDisk: Bool, parentDirectoryURL: URL, readOnly: Bool, using fileManager: FileManager = .default) throws {
+    convenience init(
+      specification: MachineStorageSpecification,
+      createDisk: Bool,
+      parentDirectoryURL: URL,
+      readOnly: Bool,
+      using fileManager: FileManager = .default
+    ) throws {
       try self.init(attachment:
         VZDiskImageStorageDeviceAttachment(
           specification: specification,

@@ -8,6 +8,7 @@ import Foundation
 #if canImport(Combine)
   import Combine
 
+  @available(*, deprecated, message: "Use CombineExt")
   public extension Publisher {
     func tryMap<T>(
       _ transform: @escaping (Self.Output) throws -> T,

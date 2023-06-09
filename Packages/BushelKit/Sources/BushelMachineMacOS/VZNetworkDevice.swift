@@ -4,7 +4,7 @@
 //
 
 #if canImport(Virtualization)
-  import BushelMachine
+  import BushelVirtualization
   import Virtualization
 
   extension VZNetworkDevice: MachineNetworkDevice {}

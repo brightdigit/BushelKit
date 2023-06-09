@@ -4,6 +4,7 @@
 //
 
 import BushelMachine
+import FelinePine
 
 #if canImport(SwiftUI)
   import AppKit
@@ -16,6 +17,45 @@ import BushelMachine
     static let loggingCategory = LoggerCategory.reactive
     // swiftlint:disable:next implicitly_unwrapped_optional
     static var shared: ApplicationContext!
+
+    @Published var images: Set<RestoreImageContext>
+    @Published var machines: Set<MachineContext>
+    @Published var libraries: Set<RestoreImageLibraryContext>
+    let userDefaults: UserDefaults
+    @Published var recentDocumentURLs: [URL]
+    @Published var allDocuments = Set<URL>()
+
+    var documentController: NSDocumentController?
+    var cancellables = [AnyCancellable]()
+
+    let refreshSubject = PassthroughSubject<Void, Never>()
+
+    internal init(
+      userDefaults: UserDefaults = Configuration.userDefaults,
+      recentDocumentURLs: [URL] = [],
+      isPreview: Bool = false,
+      images: [RestoreImageContext]? = nil,
+      machines: [MachineContext]? = nil,
+      libraries: [RestoreImageLibraryContext]? = nil
+    ) {
+      self.images = Set(userDefaults.decode(from: Self.self, override: images))
+      self.machines = Set(userDefaults.decode(from: Self.self, override: machines))
+      self.libraries = Set(userDefaults.decode(from: Self.self, override: libraries))
+
+      self.userDefaults = userDefaults
+      self.recentDocumentURLs = recentDocumentURLs
+
+      guard !isPreview else {
+        return
+      }
+
+      precondition(Self.shared == nil)
+      Self.shared = self
+
+      beginListeningDocumentController()
+
+      setupPublishers()
+    }
 
     // swiftlint:disable:next function_body_length
     func assignDocumentURLs<Upstream: Publisher>(
@@ -95,6 +135,7 @@ import BushelMachine
     }
 
     func beginListeningDocumentController() {
+      #warning("Swap for MainActor")
       DispatchQueue.main.async {
         let documentController = NSDocumentController.shared
         documentController
@@ -105,45 +146,6 @@ import BushelMachine
         self.documentController = documentController
       }
     }
-
-    internal init(
-      userDefaults: UserDefaults = Configuration.userDefaults,
-      recentDocumentURLs: [URL] = [],
-      isPreview: Bool = false,
-      images: [RestoreImageContext]? = nil,
-      machines: [MachineContext]? = nil,
-      libraries: [RestoreImageLibraryContext]? = nil
-    ) {
-      self.images = Set(userDefaults.decode(from: Self.self, override: images))
-      self.machines = Set(userDefaults.decode(from: Self.self, override: machines))
-      self.libraries = Set(userDefaults.decode(from: Self.self, override: libraries))
-
-      self.userDefaults = userDefaults
-      self.recentDocumentURLs = recentDocumentURLs
-
-      guard !isPreview else {
-        return
-      }
-
-      precondition(Self.shared == nil)
-      Self.shared = self
-
-      beginListeningDocumentController()
-
-      setupPublishers()
-    }
-
-    @Published var images: Set<RestoreImageContext>
-    @Published var machines: Set<MachineContext>
-    @Published var libraries: Set<RestoreImageLibraryContext>
-    let userDefaults: UserDefaults
-    @Published var recentDocumentURLs: [URL]
-    @Published var allDocuments = Set<URL>()
-
-    var documentController: NSDocumentController?
-    var cancellables = [AnyCancellable]()
-
-    let refreshSubject = PassthroughSubject<Void, Never>()
 
     func clearRecentDocuments() {
       documentController?.clearRecentDocuments(self)

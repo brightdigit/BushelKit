@@ -4,11 +4,16 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelMachine
+  import BushelVirtualization
   import Foundation
   import Virtualization
 
-  public struct VirtualizationMacOSRestoreImage: ImageContainer {
+  struct VirtualizationMacOSRestoreImage: ImageContainer {
+    public let metadata: ImageMetadata
+    // public let fileAccessor: FileAccessor?
+    public var location: ImageLocation?
+
+    let vzRestoreImage: VZMacOSRestoreImage
     init(
       contentLength: Int,
       lastModified: Date,
@@ -23,12 +28,6 @@
       self.vzRestoreImage = vzRestoreImage
       self.location = location
     }
-
-    public let metadata: ImageMetadata
-    // public let fileAccessor: FileAccessor?
-    public var location: BushelMachine.ImageLocation?
-
-    let vzRestoreImage: VZMacOSRestoreImage
 
     // swiftlint:disable:next function_body_length
     public init(
@@ -74,15 +73,15 @@
       fileAccessor: FileAccessor?
     ) throws {
       guard let contentLengthString = headers["Content-Length"] as? String else {
-        throw MissingError.needDefinition((headers, "Content-Lenght"))
+        throw ManagerError.undefinedType("Content-Lenght", headers)
       }
       guard let contentLength = Int(contentLengthString) else {
-        throw MissingError.needDefinition((headers, "Content-Lenght"))
+        throw ManagerError.undefinedType("Content-Lenght", headers)
       }
       guard let lastModified =
         (headers["Last-Modified"] as? String)
           .flatMap(Formatters.lastModifiedDateFormatter.date(from:)) else {
-        throw MissingError.needDefinition((headers, "Last-Modified"))
+        throw ManagerError.undefinedType("Last-Modified", headers)
       }
 
       self.init(

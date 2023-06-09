@@ -3,16 +3,37 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-import enum BushelMachine.JSON
+import enum BushelVirtualization.JSON
 import Foundation
 
-enum Configuration {
-  // swiftlint:disable:next force_unwrapping
-  static let userDefaults = UserDefaults(suiteName: "group.com.brightdigit.Bushel")!
+public enum Configuration {
+  typealias JSON = BushelVirtualization.JSON
+
+  enum URLs {
+    static let privacyPolicy: URL = .init("https://getbushel.app/privacy-policy")
+    static let termsOfUse: URL = .init("https://getbushel.app/terms-of-use")
+    static let support: URL = .init("https://getbushel.app/support")
+  }
+
+  public enum Defaults {
+    public static let encoder: JSONEncoder = {
+      let value = JSONEncoder()
+      return value
+    }()
+
+    static let decoder: JSONDecoder = {
+      let value = JSONDecoder()
+      return value
+    }()
+  }
+
   struct PrereleaseLabel {
     let label: String
     let baseNumber: Int
   }
+
+  // swiftlint:disable:next force_unwrapping
+  static let userDefaults = UserDefaults(suiteName: "group.com.brightdigit.Bushel")!
 
   static let scheme = "bushel"
   static let cfBundleShortVersionString = "CFBundleShortVersionString"
@@ -57,24 +78,4 @@ enum Configuration {
     var hexString = String(applicationBuildNumber, radix: 16)
     return String(String(repeating: "0", count: 8).appending(hexString).suffix(8))
   }()
-
-  enum URLs {
-    static let privacyPolicy: URL = .init("https://getbushel.app/privacy-policy")
-    static let termsOfUse: URL = .init("https://getbushel.app/terms-of-use")
-    static let support: URL = .init("https://getbushel.app/support")
-  }
-
-  enum Defaults {
-    static let encoder: JSONEncoder = {
-      let value = JSONEncoder()
-      return value
-    }()
-
-    static let decoder: JSONDecoder = {
-      let value = JSONDecoder()
-      return value
-    }()
-  }
-
-  typealias JSON = BushelMachine.JSON
 }

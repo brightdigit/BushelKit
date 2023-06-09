@@ -76,6 +76,9 @@
 /* Cancel button */
 "cancel" = "Cancel";
 
+/* Download button */
+"download" = "Download";
+
 /* Import image button */
 "import_image" = "Import Image";
 
@@ -168,3 +171,6 @@
 
 /* Machine Details Display Value */
 "%d x %d %dppi" = "%d x %d %dppi";
+
+/* Snapshot Restoration Error */
+"There was an error restoring the snapshot: %@" = "There was an error restoring the snapshot: %@";

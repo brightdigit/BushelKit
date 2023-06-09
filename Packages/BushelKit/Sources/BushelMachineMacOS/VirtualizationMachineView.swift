@@ -9,6 +9,7 @@
   import Virtualization
 
   struct VirtualizationMachineView: NSViewRepresentable {
+    typealias NSViewType = VZVirtualMachineView
     let virtualMachine: VZVirtualMachine
     func makeNSView(context _: Context) -> VZVirtualMachineView {
       let view = VZVirtualMachineView(
@@ -20,7 +21,5 @@
     }
 
     func updateNSView(_: VZVirtualMachineView, context _: Context) {}
-
-    typealias NSViewType = VZVirtualMachineView
   }
 #endif
