@@ -4,14 +4,14 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelMachine
+  import BushelVirtualization
   import Virtualization
 
   class VirtualMacOSMachineFactory: VirtualMachineFactory {
     let machine: Machine
     let restoreImage: VZMacOSRestoreImage
     var installer: VZMacOSInstaller?
-    var state: BushelMachine.VirtualMachineBuildingProgress {
+    var state: VirtualMachineBuildingProgress {
       didSet {
         delegate?.factory(self, didChangeState: state)
       }
@@ -31,22 +31,9 @@
       withPercentCompleted percentCompleted: Double? = nil
     ) {
       let id = machine.id
+      #warning("Swap for MainActor")
       DispatchQueue.main.async {
         self.state = .init(id: id, percentCompleted: percentCompleted, phase: phase)
-      }
-    }
-
-    func getMachineConfigurationURL() throws -> URL {
-      if let url = try machine.getMachineConfigurationURL() {
-        return url
-      } else {
-        let temporaryURL = FileManager.default.temporaryDirectory
-          .appendingPathComponent(UUID().uuidString, isDirectory: true)
-        try FileManager.default.createDirectory(
-          at: temporaryURL,
-          withIntermediateDirectories: true
-        )
-        return temporaryURL
       }
     }
 
@@ -62,6 +49,7 @@
         )
         try machineConfiguration.validate()
       } catch {
+        #warning("Swap for MainActor")
         DispatchQueue.main.async {
           self.setState(atPhase: .savedAt(.failure(error)))
           self.installer = nil

@@ -5,6 +5,7 @@
 
 #if canImport(Virtualization) && arch(arm64)
   import BushelMachine
+  import BushelVirtualization
   import Foundation
   import Virtualization
 

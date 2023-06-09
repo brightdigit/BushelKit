@@ -1,7 +1,7 @@
 included: # paths to include during linting. `--path` is ignored if present.
 - Sources
 excluded:
-- Sources/BushelUI/UI/PurchaseView.swift
+- Sources/BushelUI/Welcome/PurchaseView.swift
 # Customize specific rules
 missing:
   severity: error

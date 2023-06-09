@@ -1,5 +1,19 @@
 #!/bin/sh
 
+export MINT_PATH="$PWD/.mint"
+MINT_ARGS="-n -m ../../Mintfile --silent"
+MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
+
+/opt/homebrew/bin/mint bootstrap
+
+if [ -z "$SRCROOT" ]; then
+	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+	PACKAGE_DIR="${SCRIPT_DIR}/../Packages/BushelKit"
+else
+	PACKAGE_DIR="${SRCROOT}/Packages/BushelKit" 	
+fi
+
+
 if [ "$LINT_MODE" == "NONE" ]; then
 	exit
 elif [ "$LINT_MODE" == "STRICT" ]; then
@@ -12,24 +26,21 @@ else
 	STRINGSLINT_OPTIONS="--config .stringslint.yml"
 fi
 
-if [ -z "$SRCROOT" ]; then
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-	PACKAGE_DIR="${SCRIPT_DIR}/../Packages/BushelKit"
-else
-	PACKAGE_DIR="${SRCROOT}/Packages/BushelKit" 	
-fi
+pushd $PACKAGE_DIR
 
 pushd $PACKAGE_DIR
 swift package resolve
 
 if [ -z "$CI" ]; then
-	swift run -c release swiftformat .
-	swift run -c release swiftlint --autocorrect
+	$MINT_RUN swiftformat .
+	$MINT_RUN swiftlint autocorrect
 else 
 	set -e
 fi
 
-swift run -c release stringslint lint $STRINGSLINT_OPTIONS
-swift run -c release swiftformat --lint $SWIFTFORMAT_OPTIONS .
-swift run -c release swiftlint lint $SWIFTLINT_OPTIONS
+$MINT_RUN periphery scan 
+$MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
+$MINT_RUN swiftformat --lint $SWIFTFORMAT_OPTIONS .
+$MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
+
 popd

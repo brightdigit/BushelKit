@@ -3,22 +3,22 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-import BushelMachine
+import BushelVirtualization
 import Foundation
 
 #if !os(Linux)
 
   struct FileWrapperAccessor: FileAccessor {
-    func getData() -> Data? {
-      fileWrapper.regularFileContents
-    }
+//    func getData() -> Data? {
+//      fileWrapper.regularFileContents
+//    }
 
     func getURL(createIfNotExists: Bool) throws -> URL {
       if let url = url {
         return url
       }
       guard createIfNotExists else {
-        throw MachineError.undefinedType("url doesn't exists", self)
+        throw ManagerError.undefinedType("url doesn't exists", self)
       }
       #if canImport(UniformTypeIdentifiers)
         let tempFileURL = FileManager.default.createTemporaryFile(for: .iTunesIPSW)

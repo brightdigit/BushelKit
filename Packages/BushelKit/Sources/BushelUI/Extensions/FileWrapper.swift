@@ -5,6 +5,7 @@
 
 #if !os(Linux)
   import BushelMachine
+  import BushelVirtualization
   import Foundation
 
   extension FileWrapper {

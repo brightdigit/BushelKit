@@ -4,7 +4,7 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelMachine
+  import BushelVirtualization
   import Virtualization
 
   extension ImageMetadata {
