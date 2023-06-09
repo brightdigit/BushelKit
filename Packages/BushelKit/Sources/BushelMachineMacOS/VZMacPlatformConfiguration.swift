@@ -4,7 +4,7 @@
 //
 
 #if canImport(Virtualization) && canImport(Combine) && arch(arm64)
-  import BushelMachine
+  import BushelVirtualization
   import Combine
   import Virtualization
 
@@ -57,7 +57,17 @@
       self.init()
 
       guard let configuration = restoreImage.mostFeaturefulSupportedConfiguration else {
-        throw VirtualizationError.undefinedType("This image contains no valid machine configuration.", restoreImage)
+        if restoreImage.isImageSupported {
+          throw VirtualizationError.undefinedType(
+            "This image contains no valid machine configuration.",
+            restoreImage
+          )
+        } else {
+          throw VirtualizationError.undefinedType(
+            "This image is not supported.",
+            restoreImage
+          )
+        }
       }
 
       try FileManager.default.createDirectory(

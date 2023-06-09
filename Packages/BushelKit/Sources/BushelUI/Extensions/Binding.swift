@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelMachine
+  import BushelVirtualization
   import SwiftUI
 
   extension Binding where Value == RestoreImageLibrary {

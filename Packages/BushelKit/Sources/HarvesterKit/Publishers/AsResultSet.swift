@@ -9,16 +9,6 @@ import Foundation
   import Combine
 
   public extension Publishers.AsResultSet {
-    func eraseToAnyPublisher()
-      -> Publishers.AnyResultSet<SuccessPublisher.Output, FailurePublisher.Output> {
-      .init(self)
-    }
-
-    func map<NewSuccessType>(_ transform: @escaping (SuccessPublisher.Output) -> (NewSuccessType))
-      -> Publishers.AsResultSet<Publishers.Map<SuccessPublisher, NewSuccessType>, FailurePublisher> {
-      Publishers.AsResultSet(success: success.map(transform), failure: failure)
-    }
-
     init<Upstream: Publisher>(fromMapResult upstream: Publishers.MapResult<Upstream>)
       where
 
@@ -36,6 +26,16 @@ import Foundation
       SuccessPublisher == Publishers.SharedCompactMapOnlySuccess<Upstream>,
       FailurePublisher == Publishers.SharedCompactMapOnlyFailure<Upstream> {
       self.init(fromMapResult: upstream.mapResult())
+    }
+
+    func eraseToAnyPublisher()
+      -> Publishers.AnyResultSet<SuccessPublisher.Output, FailurePublisher.Output> {
+      .init(self)
+    }
+
+    func map<NewSuccessType>(_ transform: @escaping (SuccessPublisher.Output) -> (NewSuccessType))
+      -> Publishers.AsResultSet<Publishers.Map<SuccessPublisher, NewSuccessType>, FailurePublisher> {
+      Publishers.AsResultSet(success: success.map(transform), failure: failure)
     }
   }
 

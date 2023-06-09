@@ -1,0 +1,279 @@
+//
+// RestoreImageView.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+// swiftlint:disable file_length
+
+extension URL {
+  func replaceDirectoryURLForDestination(_ destination: RestoreImageDownloadDestination) -> URL {
+    // if destination is library
+    guard destination == .library else {
+      return self
+    }
+
+    // if directory
+    guard FileManager.default.directoryExists(at: self) == .directoryExists else {
+      return self
+    }
+
+    // create new directory with same name and return it
+
+    return appendingPathComponent(lastPathComponent).appendingPathExtension(UTType.restoreImageLibrary.preferredFilenameExtension!)
+  }
+}
+
+#if canImport(SwiftUI) && canImport(UniformTypeIdentifiers)
+  import BushelMachine
+  import BushelReactive
+  import BushelVirtualization
+  import SwiftUI
+  import UniformTypeIdentifiers
+
+  // swiftlint:disable closure_body_length
+  struct RestoreImageView: View {
+    let byteFormatter: ByteCountFormatter = .init()
+    let image: RestoreImagable
+    @StateObject var downloader = Downloader()
+    @State var downloadRequest: RestoreImageDownloadRequest?
+    @State var sourceURL: URL?
+    @State var restoreImageDownload: RestoreImageDownload?
+
+//    fileprivate func RestoreImageDownloadView(_ url: URL) -> some View {
+//      Group {
+//        Button(.saveToIpsw) {
+//          self.downloadRequest = .init(sourceURL: url, destination: .ipswFile)
+//        }
+//        Button(.saveToLibrary) {
+//          self.downloadRequest = .init(sourceURL: url, destination: .library)
+//        }
+//      }
+//    }
+
+    var body: some View {
+      VStack {
+        Image(
+          system: image.metadata.vmSystem,
+          operatingSystemVersion: image.metadata.operatingSystemVersion
+        )
+        .resizable()
+        .aspectRatio(1.0, contentMode: .fit)
+        .frame(height: 80.0)
+        .mask {
+          Circle()
+        }
+        .overlay {
+          Circle().stroke()
+        }
+
+        Text(
+          "macOS \(image.metadata.defaultName)"
+        ).font(.title)
+        Text(image.metadata.localizedVersionString)
+
+        VStack(alignment: .leading) {
+          switch self.image.location {
+          case let .remote(url):
+
+            if
+              let localizedProgress = downloader.localizedProgress,
+              let percentCompleted = downloader.percentCompleted {
+              Button {
+                downloader.cancel()
+                downloader.reset()
+                self.downloadRequest = nil
+              } label: {
+                Text(.cancel)
+              }
+              ProgressView(
+                value: percentCompleted
+              ) {
+                Text(.downloading).font(.caption)
+              }
+              currentValueLabel: {
+                Text(localizedProgress)
+              }
+            } else {
+              Button {
+                self.sourceURL = url
+              } label: {
+                Image(systemName: "icloud.and.arrow.down")
+                Text(
+                  .key(.downloadImage),
+                  .text(
+                    "(\(byteFormatter.string(fromByteCount: Int64(image.metadata.contentLength))))"
+                  )
+                )
+              }
+            }
+
+          case .file:
+
+            Button {} label: {
+              HStack {
+                Image(systemName: "square.and.arrow.down.fill")
+                Text(.importImage)
+              }
+            }
+          }
+        }
+        .padding()
+        .sheet(item: self.$sourceURL) { url in
+          RestoreImageDownloadView(url: url, downloadRequest: self.$downloadRequest) {
+            self.sourceURL = nil
+          }
+        }
+        .onChange(of: downloadRequest) { newValue in
+          guard let downloadRequest = newValue else {
+            return
+          }
+          self.beginDownloadRequest(downloadRequest)
+          self.sourceURL = nil
+        }
+        .onReceive(
+          self.downloader.$isCompleted) { isCompletedResult in
+          guard
+            let isCompletedResult = isCompletedResult,
+            let restoreImageDownload = self.restoreImageDownload else {
+            return
+          }
+          self.reset()
+          switch (isCompletedResult, restoreImageDownload) {
+          case let (.failure(error), _):
+            Self.logger.error("failure downloading image: \(error.localizedDescription)")
+
+          case let (.success, .file(url)):
+            NSWorkspace.shared.open(url.deletingLastPathComponent())
+
+          case let (.success, .library(url, fileID)):
+
+            let metadataJSON = url.appendingPathComponent(Paths.restoreLibraryJSONFileName)
+            let fileURL = url
+              .appendingPathComponent(Paths.restoreImagesDirectoryName)
+              .appendingPathComponent(fileID.uuidString)
+              .appendingPathExtension("ipsw")
+            let newFile = RestoreImageLibraryItemFile(
+              id: fileID,
+              metadata: self.image.metadata,
+              fileAccessor: URLAccessor(url: fileURL)
+            )
+            do {
+              var library: RestoreImageLibrary = try Configuration.JSON.tryDecoding(
+                .init(contentsOf: metadataJSON)
+              )
+              library.items.append(newFile)
+              try Configuration.JSON.encoder.encode(library).write(to: metadataJSON)
+            } catch {
+              Self.logger.error("failure creating library: \(error.localizedDescription)")
+            }
+          }
+        }
+      }
+    }
+
+    // swiftlint:disable:next function_body_length
+    func beginDownloadRequest(_ downloadRequest: RestoreImageDownloadRequest) {
+      let panel: NSSavePanel
+      switch downloadRequest.destination {
+      case .ipswFile:
+        let savePanel = NSSavePanel()
+        savePanel.nameFieldLabel = "Save Restore Image as:"
+        savePanel.nameFieldStringValue = image.metadata.defaultName
+        savePanel.allowedContentTypes = UTType.ipswTypes
+        savePanel.isExtensionHidden = true
+        panel = savePanel
+
+      case .library:
+        let openPanel = NSOpenPanel()
+        openPanel.nameFieldLabel = "Save to Library:"
+        openPanel.allowedContentTypes = [UTType.restoreImageLibrary, UTType.directory]
+        openPanel.isExtensionHidden = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseDirectories = true
+        panel = openPanel
+      }
+      panel.begin { response in
+        guard let fileURL = panel.url?.replaceDirectoryURLForDestination(downloadRequest.destination), response == .OK else {
+          Task { @MainActor in
+            self.downloadRequest = nil
+          }
+          return
+        }
+
+        switch downloadRequest.destination {
+        case .ipswFile:
+          self.beginDownload(from: downloadRequest.sourceURL, to: fileURL)
+
+        case .library:
+          do {
+            try self.beginDownload(from: downloadRequest.sourceURL, toLibraryAt: fileURL)
+          } catch {
+            Self.logger.error("failure downloading image: \(error.localizedDescription)")
+          }
+        }
+      }
+    }
+
+    func reset() {
+      downloader.reset()
+      sourceURL = nil
+      downloadRequest = nil
+
+      restoreImageDownload = nil
+    }
+
+    // swiftlint:disable:next function_body_length
+    func beginDownload(from sourceURL: URL, toLibraryAt url: URL) throws {
+      let fileID = UUID()
+      let libraryDirectoryExists = FileManager.default.directoryExists(at: url)
+      guard libraryDirectoryExists != .fileExists else {
+        throw ManagerError.undefinedType("Invalid Library", nil)
+      }
+
+      let restoreImagesSubdirectoryURL = url.appendingPathComponent(Paths.restoreImagesDirectoryName)
+      let metadataURL = url.appendingPathComponent(Paths.restoreLibraryJSONFileName)
+
+      let alreadyExists =
+        FileManager.default.fileExists(atPath: metadataURL.path) &&
+        libraryDirectoryExists == .directoryExists
+      if alreadyExists {
+        let restoreImageSubdirectoryExists = FileManager.default.directoryExists(
+          at: restoreImagesSubdirectoryURL
+        )
+
+        guard restoreImageSubdirectoryExists != .fileExists else {
+          throw DocumentError.undefinedType("Invalid Library", nil)
+        }
+
+        if restoreImageSubdirectoryExists == .notExists {
+          try FileManager.default.createDirectory(
+            at: restoreImagesSubdirectoryURL,
+            withIntermediateDirectories: true
+          )
+        }
+      } else {
+        try RestoreImageLibraryDocument.saveBlankDocumentAt(url)
+      }
+
+      let destinationURL = restoreImagesSubdirectoryURL
+        .appendingPathComponent(fileID.uuidString)
+        .appendingPathExtension("ipsw")
+
+      restoreImageDownload = .library(url, fileID)
+      downloader.begin(from: sourceURL, to: destinationURL)
+    }
+
+    func beginDownload(from sourceURL: URL, to fileURL: URL) {
+      restoreImageDownload = .file(fileURL)
+      downloader.begin(from: sourceURL, to: fileURL)
+    }
+  }
+
+  #if canImport(Virtualization) && arch(arm64)
+    struct RestoreImageView_Previews: PreviewProvider {
+      static var previews: some View {
+        RestoreImageView(image: RestoreImage.Previews.usingMetadata(.Previews.venturaBeta3))
+      }
+    }
+  #endif
+#endif

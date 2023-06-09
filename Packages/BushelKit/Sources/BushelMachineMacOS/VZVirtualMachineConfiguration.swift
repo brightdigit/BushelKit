@@ -4,11 +4,40 @@
 //
 
 #if arch(arm64) && canImport(Virtualization)
-  import BushelMachine
+  import BushelVirtualization
   import Virtualization
 
   extension VZVirtualMachineConfiguration {
     static let minimumHardDiskSize = UInt64(64 * 1024 * 1024 * 1024)
+
+    convenience init(
+      toDirectory machineDirectory: URL,
+      basedOn specification: MachineSpecification,
+      withRestoreImage restoreImage: VZMacOSRestoreImage
+    ) throws {
+      self.init()
+
+      let platform = try VZMacPlatformConfiguration(
+        toDirectory: machineDirectory,
+        basedOn: specification,
+        withRestoreImage: restoreImage
+      )
+      self.platform = platform
+
+      try configurationAt(machineDirectory, withSpecifications: specification, createDisks: true)
+    }
+
+    convenience init(
+      contentsOfDirectory directoryURL: URL,
+      basedOn specification: MachineSpecification
+    ) throws {
+      self.init()
+
+      let platform = try VZMacPlatformConfiguration(fromDirectory: directoryURL)
+      self.platform = platform
+      try configurationAt(directoryURL, withSpecifications: specification, createDisks: false)
+    }
+
     static func computeCPUCount() -> Int {
       let totalAvailableCPUs = ProcessInfo.processInfo.processorCount
 
@@ -80,34 +109,6 @@
         pointingDevices.append(VZMacTrackpadConfiguration())
       }
       keyboards = [VZUSBKeyboardConfiguration()]
-    }
-
-    convenience init(
-      toDirectory machineDirectory: URL,
-      basedOn specification: MachineSpecification,
-      withRestoreImage restoreImage: VZMacOSRestoreImage
-    ) throws {
-      self.init()
-
-      let platform = try VZMacPlatformConfiguration(
-        toDirectory: machineDirectory,
-        basedOn: specification,
-        withRestoreImage: restoreImage
-      )
-      self.platform = platform
-
-      try configurationAt(machineDirectory, withSpecifications: specification, createDisks: true)
-    }
-
-    convenience init(
-      contentsOfDirectory directoryURL: URL,
-      basedOn specification: MachineSpecification
-    ) throws {
-      self.init()
-
-      let platform = try VZMacPlatformConfiguration(fromDirectory: directoryURL)
-      self.platform = platform
-      try configurationAt(directoryURL, withSpecifications: specification, createDisks: false)
     }
   }
 #endif

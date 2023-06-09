@@ -4,37 +4,23 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelMachine
+  import BushelVirtualization
   import Foundation
   import UniformTypeIdentifiers
   import Virtualization
 
   public struct VirtualizationImageManager: ImageManager {
-    public func imageNameFor(operatingSystemVersion: OperatingSystemVersion) -> String? {
-      Self.codeNames[operatingSystemVersion.majorVersion]?.prepending("OSVersions/")
-    }
-
-    public let supportedSystems: [OperatingSystemDetails.System] = [.macOS]
-
     public static let codeNames: [Int: String] = [
       11: "Big Sur",
       12: "Monterey",
       13: "Ventura"
     ]
-    public func defaultSpecifications() -> BushelMachine.MachineSpecification {
-      .init(
-        cpuCount: VZVirtualMachineConfiguration.computeCPUCount(),
-        memorySize: VZVirtualMachineConfiguration.computeMemorySize(),
-        storageDevices: [.init(id: .init(), size: VZVirtualMachineConfiguration.minimumHardDiskSize)],
-        networkConfigurations: [.init(attachment: .nat)],
-        graphicsConfigurations: [.init(displays: [.init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)])]
-      )
-    }
 
-    static let defaultNamePrefix = "macOS"
+    // static let defaultNamePrefix = "macOS"
 
     public static let restoreImageContentTypes = UTType.ipswTypes
     public static var systemID = VMSystemID.macOS
+    public let supportedSystems: [OperatingSystemDetails.System] = [.macOS]
 
     public init() {}
 
@@ -86,6 +72,22 @@
 
     public func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
       Self.codeNames[operatingSystemVersion.majorVersion] ?? operatingSystemVersion.majorVersion.description
+    }
+
+    public func imageNameFor(operatingSystemVersion: OperatingSystemVersion) -> String? {
+      Self.codeNames[operatingSystemVersion.majorVersion]?.prepending("OSVersions/")
+    }
+
+    public func defaultSpecifications() -> MachineSpecification {
+      .init(
+        cpuCount: VZVirtualMachineConfiguration.computeCPUCount(),
+        memorySize: VZVirtualMachineConfiguration.computeMemorySize(),
+        storageDevices: [.init(id: .init(), label: "macOS System", size: VZVirtualMachineConfiguration.minimumHardDiskSize)],
+        networkConfigurations: [.init(attachment: .nat)],
+        graphicsConfigurations: [
+          .init(displays: [.init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)])
+        ]
+      )
     }
   }
 #endif

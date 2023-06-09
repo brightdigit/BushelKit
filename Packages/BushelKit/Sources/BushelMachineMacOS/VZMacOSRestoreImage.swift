@@ -21,20 +21,6 @@
       #endif
     }
 
-    func headers(
-      withSession session: URLSession = .shared
-    ) async throws -> [AnyHashable: Any] {
-      var request = URLRequest(url: url)
-      request.httpMethod = "HEAD"
-      let (_, response) = try await session.data(for: request)
-
-      guard let response = response as? HTTPURLResponse else {
-        throw MissingError.needDefinition(response)
-      }
-
-      return response.allHeaderFields
-    }
-
     static func fetchLatestSupported() async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
         self.fetchLatestSupported { result in
@@ -47,6 +33,20 @@
       try await withCheckedThrowingContinuation { continuation in
         self.load(from: url, completionHandler: continuation.resume(with:))
       }
+    }
+
+    func headers(
+      withSession session: URLSession = .shared
+    ) async throws -> [AnyHashable: Any] {
+      var request = URLRequest(url: url)
+      request.httpMethod = "HEAD"
+      let (_, response) = try await session.data(for: request)
+
+      guard let response = response as? HTTPURLResponse else {
+        throw VirtualizationError.undefinedType("not valid HTTPURLResponse", response)
+      }
+
+      return response.allHeaderFields
     }
   }
 #endif

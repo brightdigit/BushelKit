@@ -4,13 +4,17 @@ stages:
   - deploy
   
 cache:
-  key: 
-    files:
-      - Package.resolved
-  paths:
-    - Packages/BushelKit/.build
-    - ~/.swiftpm
-
+  - key: 
+      files:
+        - Package.resolved
+    paths:
+      - Packages/BushelKit/.build
+      - ~/.swiftpm
+  - key:
+      files: 
+        - Mintfile
+    paths:
+      - .mint
 
 .build_spm_template: &build_spm_template
   stage: build
@@ -24,6 +28,7 @@ cache:
   tags:
     - macos
   script:
+    - brew install mint
     - LINT_MODE=$LINT_MODE ./scripts/lint.sh    
 
 build spm macos:

@@ -10,20 +10,33 @@ let package = Package(
     .library(
       name: "BushelUI",
       targets: ["BushelUI"]
+    ),
+
+    .library(
+      name: "BushelVirtualization",
+      targets: ["BushelVirtualization"]
     )
   ],
   dependencies: [
-    .package(url: "https://github.com/Faire/StringsLint.git", from: "0.1.7"), // dev
-    // .package(url: "https://github.com/shibapm/Komondor", from: "1.1.2"), // dev
-    .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.47.0"), // dev
-    .package(url: "https://github.com/realm/SwiftLint", from: "0.41.0"), // dev
-    // .package(url: "https://github.com/shibapm/Rocket", from: "1.2.0") // dev
-    .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0")
+    .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
+    .package(url: "https://github.com/CombineCommunity/CombineExt.git", from: "1.0.0")
   ],
   targets: [
     .target(
       name: "BushelUI",
-      dependencies: ["BushelMachine", "BushelMachineMacOS", "HarvesterKit"]
+      dependencies: ["BushelMachine", "BushelMachineMacOS", "BushelWax", "BushelReactive"]
+    ),
+    .target(
+      name: "BushelReactive",
+      dependencies: ["BushelMachine", "BushelMachineMacOS", "HarvesterKit", "BushelWax", "CombineExt"]
+    ),
+    .target(
+      name: "BushelWax",
+      dependencies: ["BushelVirtualization"]
+    ),
+    .target(
+      name: "BushelVirtualization",
+      dependencies: ["FelinePine"]
     ),
     .target(
       name: "BushelMachineMacOS",
@@ -31,6 +44,10 @@ let package = Package(
     ),
     .target(
       name: "BushelMachine",
+      dependencies: ["BushelVirtualization"]
+    ),
+    .target(
+      name: "FelinePine",
       dependencies: [
         .product(name: "Logging", package: "swift-log", condition: .when(platforms: [.linux]))
       ]
@@ -41,16 +58,8 @@ let package = Package(
       ]
     ),
     .testTarget(
-      name: "BushelUITests",
-      dependencies: ["BushelUI"]
-    ),
-    .testTarget(
-      name: "BushelMachineMacOSTests",
-      dependencies: ["BushelMachineMacOS"]
-    ),
-    .testTarget(
-      name: "BushelMachineTests",
-      dependencies: ["BushelMachine"]
+      name: "BushelVirtualizationTests",
+      dependencies: ["BushelVirtualization", "BushelWax"]
     )
   ]
 )

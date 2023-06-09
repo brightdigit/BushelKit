@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-import BushelMachine
+import BushelVirtualization
 import Foundation
 
 public extension VMSystemID {
@@ -11,8 +11,8 @@ public extension VMSystemID {
 }
 
 public extension MachineSpecification {
-  static var `default`: MachineSpecification {
-    guard let imageManager = AnyImageManagers.imageManager(forSystem: .macOS) else {
+  static func defaultForSystem(_ system: VMSystemID = .macOS) -> MachineSpecification {
+    guard let imageManager = AnyImageManagers.imageManager(forSystem: system) else {
       preconditionFailure()
     }
     return imageManager.defaultSpecifications()
@@ -20,7 +20,7 @@ public extension MachineSpecification {
 }
 
 public extension Machine {
-  init() {
-    self.init(specification: .default)
+  init(system: VMSystemID = .macOS) {
+    self.init(specification: .defaultForSystem(system))
   }
 }
