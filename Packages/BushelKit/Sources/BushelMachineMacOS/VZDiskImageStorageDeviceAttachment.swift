@@ -4,8 +4,8 @@
 //
 
 #if arch(arm64) && canImport(Virtualization)
+  import BushelCore
   import BushelMachine
-  import BushelVirtualization
   import Foundation
   import Virtualization
 

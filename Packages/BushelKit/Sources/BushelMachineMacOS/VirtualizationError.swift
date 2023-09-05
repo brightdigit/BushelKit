@@ -5,6 +5,7 @@
 
 import Foundation
 
+@available(*, deprecated)
 enum VirtualizationError: Error, LocalizedError {
   case undefinedType(String, Any?)
 

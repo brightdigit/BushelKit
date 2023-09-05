@@ -1,0 +1,24 @@
+//
+// InstallerImage.Metadata.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import BushelCore
+import BushelLibrary
+import BushelLibraryEnvironment
+import BushelMachine
+import Foundation
+
+extension InstallerImage.Metadata {
+  init(labelName: String, imageMetadata: ImageMetadata, _ labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel) {
+    let label = labelProvider(imageMetadata.vmSystem, imageMetadata)
+    self.init(
+      longName: label.operatingSystemLongName,
+      defaultName: label.defaultName,
+      labelName: labelName,
+      operatingSystem: imageMetadata.operatingSystemVersion,
+      buildVersion: imageMetadata.buildVersion,
+      systemID: imageMetadata.vmSystem
+    )
+  }
+}
