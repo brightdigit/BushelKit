@@ -1,4 +1,4 @@
 targets:
-- BushelUI
-- BushelMachineMacOS
-- BushelMachine
+- BushelLibrary
+- BushelLibraryViews
+- BushelLogging

@@ -1,0 +1,125 @@
+//
+// OperatingSystemVersion.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebugStringConvertible, Codable {
+  fileprivate func encodeAsString(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+
+    try container.encode(self.description)
+  }
+
+  fileprivate func encodeAsComposite(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: Self.CodingKeys.self)
+    try container.encode(self.majorVersion, forKey: .majorVersion)
+    try container.encode(self.minorVersion, forKey: .minorVersion)
+    try container.encode(self.patchVersion, forKey: .patchVersion)
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    let throwingError: Swift.Error
+    do {
+      try encodeAsString(to: encoder)
+      return
+    } catch {
+      throwingError = error
+    }
+    do {
+      try encodeAsComposite(to: encoder)
+    } catch {
+      throw throwingError
+    }
+  }
+
+  public init(compositeFrom decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    let majorVersion: Int = try container.decode(Int.self, forKey: .majorVersion)
+    let minorVersion: Int = try container.decode(Int.self, forKey: .minorVersion)
+    let patchVersion: Int = try container.decode(Int.self, forKey: .patchVersion)
+    self.init(majorVersion: majorVersion, minorVersion: minorVersion, patchVersion: patchVersion)
+  }
+
+  static func singleStringDecodingContainer(from decoder: Decoder) -> SingleValueDecodingContainer? {
+    try? decoder.singleValueContainer()
+  }
+
+  public init(container: SingleValueDecodingContainer) throws {
+    let value = try container.decode(String.self)
+    try self.init(string: value)
+  }
+
+  public init(stringFrom decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    try self.init(container: container)
+  }
+
+  public init(from decoder: Decoder) throws {
+    let throwingError: Swift.Error?
+    if let container = Self.singleStringDecodingContainer(from: decoder) {
+      do {
+        try self.init(container: container)
+        return
+      } catch {
+        throwingError = error
+      }
+    } else {
+      throwingError = nil
+    }
+    do {
+      try self.init(compositeFrom: decoder)
+    } catch {
+      throw throwingError ?? error
+    }
+  }
+
+  enum CodingKeys: String, CodingKey {
+    case majorVersion
+    case minorVersion
+    case patchVersion
+  }
+
+  public enum Error: Swift.Error, Equatable {
+    case invalidFormatString(String)
+  }
+
+  public var description: String {
+    [majorVersion, minorVersion, patchVersion].map(String.init).joined(separator: ".")
+  }
+
+  public var debugDescription: String {
+    // swiftlint:disable:next line_length
+    "OperatingSystemVersion(majorVersion: \(majorVersion), minorVersion: \(minorVersion), patchVersion: \(patchVersion)"
+  }
+
+  public init(string: String) throws {
+    let components = string.components(separatedBy: ".").compactMap(Int.init)
+
+    guard components.count == 2 || components.count == 3 else {
+      throw Self.Error.invalidFormatString(string)
+    }
+
+    self.init(
+      majorVersion: components[0],
+      minorVersion: components[1],
+      patchVersion: components.count == 3 ? components[2] : 0
+    )
+  }
+
+  public static func == (
+    lhs: OperatingSystemVersion,
+    rhs: OperatingSystemVersion
+  ) -> Bool {
+    lhs.majorVersion == rhs.majorVersion &&
+      lhs.minorVersion == rhs.minorVersion &&
+      lhs.patchVersion == rhs.patchVersion
+  }
+
+  public func hash(into hasher: inout Hasher) {
+    majorVersion.hash(into: &hasher)
+    minorVersion.hash(into: &hasher)
+    patchVersion.hash(into: &hasher)
+  }
+}

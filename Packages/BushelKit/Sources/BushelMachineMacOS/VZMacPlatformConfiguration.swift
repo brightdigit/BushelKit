@@ -4,12 +4,10 @@
 //
 
 #if canImport(Virtualization) && canImport(Combine) && arch(arm64)
-  import BushelVirtualization
-  import Combine
+  import BushelMachine
   import Virtualization
 
   extension VZMacPlatformConfiguration {
-    // swiftlint:disable:next function_body_length
     convenience init(fromDirectory machineDirectory: URL) throws {
       self.init()
       let auxiliaryStorageURL = machineDirectory
@@ -28,8 +26,8 @@
         auxiliaryStorage = VZMacAuxiliaryStorage(contentsOf: auxiliaryStorageURL)
       #endif
 
-      guard let hardwareModel = VZMacHardwareModel(
-        dataRepresentation: try Data(contentsOf: hardwareModelURL)
+      guard let hardwareModel = try VZMacHardwareModel(
+        dataRepresentation: Data(contentsOf: hardwareModelURL)
       ) else {
         throw VirtualizationError.undefinedType(
           "Invalid hardware model url",
@@ -37,8 +35,8 @@
         )
       }
       self.hardwareModel = hardwareModel
-      guard let machineIdentifier = VZMacMachineIdentifier(
-        dataRepresentation: try .init(contentsOf: machineIdentifierURL)
+      guard let machineIdentifier = try VZMacMachineIdentifier(
+        dataRepresentation: .init(contentsOf: machineIdentifierURL)
       ) else {
         throw VirtualizationError.undefinedType(
           "Invalid machineIdentifierURL",
@@ -48,16 +46,15 @@
       self.machineIdentifier = machineIdentifier
     }
 
-    // swiftlint:disable:next function_body_length
     convenience init(
-      toDirectory machineDirectory: URL,
-      basedOn _: MachineSpecification,
+      toDirectory machineDirectory: URL?,
+      basedOn _: MachineConfiguration,
       withRestoreImage restoreImage: VZMacOSRestoreImage
     ) throws {
       self.init()
 
       guard let configuration = restoreImage.mostFeaturefulSupportedConfiguration else {
-        if restoreImage.isImageSupported {
+        if restoreImage.isSupported {
           throw VirtualizationError.undefinedType(
             "This image contains no valid machine configuration.",
             restoreImage
@@ -70,31 +67,33 @@
         }
       }
 
-      try FileManager.default.createDirectory(
-        at: machineDirectory,
-        withIntermediateDirectories: true
-      )
-      let auxiliaryStorageURL = machineDirectory
-        .appendingPathComponent("auxiliary.storage")
-      let hardwareModelURL = machineDirectory
-        .appendingPathComponent("hardware.model.bin")
-      let machineIdentifierURL = machineDirectory
-        .appendingPathComponent("machine.identifier.bin")
+      if let machineDirectory {
+        try FileManager.default.createDirectory(
+          at: machineDirectory,
+          withIntermediateDirectories: true
+        )
+        let auxiliaryStorageURL = machineDirectory
+          .appendingPathComponent("auxiliary.storage")
+        let hardwareModelURL = machineDirectory
+          .appendingPathComponent("hardware.model.bin")
+        let machineIdentifierURL = machineDirectory
+          .appendingPathComponent("machine.identifier.bin")
 
-      let auxiliaryStorage = try VZMacAuxiliaryStorage(
-        creatingStorageAt: auxiliaryStorageURL,
+        let auxiliaryStorage = try VZMacAuxiliaryStorage(
+          creatingStorageAt: auxiliaryStorageURL,
 
-        hardwareModel: configuration.hardwareModel,
+          hardwareModel: configuration.hardwareModel,
 
-        options: []
-      )
+          options: []
+        )
 
-      self.auxiliaryStorage = auxiliaryStorage
-      hardwareModel = configuration.hardwareModel
-      machineIdentifier = .init()
+        self.auxiliaryStorage = auxiliaryStorage
+        hardwareModel = configuration.hardwareModel
+        machineIdentifier = .init()
 
-      try hardwareModel.dataRepresentation.write(to: hardwareModelURL)
-      try machineIdentifier.dataRepresentation.write(to: machineIdentifierURL)
+        try hardwareModel.dataRepresentation.write(to: hardwareModelURL)
+        try machineIdentifier.dataRepresentation.write(to: machineIdentifierURL)
+      }
     }
   }
 #endif

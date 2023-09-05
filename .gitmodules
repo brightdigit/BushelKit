@@ -1,4 +1,0 @@
-[submodule "Packages/BushelKit"]
-	path = Packages/BushelKit
-	url = git@github.com:brightdigit/BushelKit.git
-  branch = release/0.0.1
