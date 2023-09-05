@@ -8,7 +8,7 @@ settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "1.0.0"
-  CURRENT_PROJECT_VERSION: 42
+  CURRENT_PROJECT_VERSION: 43
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
@@ -53,7 +53,7 @@ targetTemplates:
       - path: "Support/macOS"
         name: macOS
         group: Support
-        optional: true   
+        optional: true
       - path: Assets.xcassets
     settings:
       base:
@@ -68,7 +68,7 @@ targetTemplates:
         com.apple.security.virtualization: true
         com.apple.vm.networking: true
         com.apple.security.application-groups:
-          - group.com.brightdigit.Bushel 
+          - group.com.brightdigit.Bushel
     postBuildScripts:
       - path: scripts/lint.sh
         name: Lint
@@ -79,16 +79,16 @@ targetTemplates:
     templateAttributes:
       packageName: ${target_name}
       productName: ${target_name}
-    sources:      
-      - path: "Apps/${target_name}"  
-        group: Apps        
+    sources:
+      - path: "Apps/${target_name}"
+        group: Apps
 targets:
   Bushel:
     templates:
-      - Application 
+      - Application
     templateAttributes:
-      packageName: 
-      productName:    
+      packageName:
+      productName:
     sources:
       - path: "Sources/macOS"
         name: macOS
@@ -104,13 +104,13 @@ targets:
           CODE_SIGN_IDENTITY: iPhone Distribution
           PROVISIONING_PROFILE_SPECIFIER: match AppStore com.brightdigit.Bushel macos
   Library:
-    templates: 
+    templates:
       - Microapp
   Machine:
-    templates: 
+    templates:
       - Microapp
   Settings:
-    templates: 
+    templates:
       - Microapp
   Bushel-UITests:
     type: bundle.ui-testing
