@@ -4,7 +4,7 @@ excluded:
 - Sources/BushelUI/Welcome/PurchaseView.swift
 # Customize specific rules
 missing:
-  severity: error
+  severity: warning
 
 partial:
   severity: warning

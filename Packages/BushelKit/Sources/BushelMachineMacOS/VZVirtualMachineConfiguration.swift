@@ -4,7 +4,7 @@
 //
 
 #if arch(arm64) && canImport(Virtualization)
-  import BushelVirtualization
+  import BushelMachine
   import Virtualization
 
   extension VZVirtualMachineConfiguration {
@@ -12,7 +12,7 @@
 
     convenience init(
       toDirectory machineDirectory: URL,
-      basedOn specification: MachineSpecification,
+      basedOn specification: MachineConfiguration,
       withRestoreImage restoreImage: VZMacOSRestoreImage
     ) throws {
       self.init()
@@ -29,7 +29,7 @@
 
     convenience init(
       contentsOfDirectory directoryURL: URL,
-      basedOn specification: MachineSpecification
+      basedOn specification: MachineConfiguration
     ) throws {
       self.init()
 
@@ -65,10 +65,9 @@
       return memorySize
     }
 
-    // swiftlint:disable:next function_body_length
     func configurationAt(
       _ machineDirectory: URL,
-      withSpecifications specifications: MachineSpecification,
+      withSpecifications specifications: MachineConfiguration,
       createDisks: Bool
     ) throws {
       cpuCount = Self.computeCPUCount()
@@ -79,7 +78,7 @@
       try FileManager.default
         .createDirectory(at: disksDirectory, withIntermediateDirectories: true)
 
-      storageDevices = try specifications.storageDevices.map { specification in
+      storageDevices = try specifications.storage.map { specification in
         try VZVirtioBlockDeviceConfiguration(
           specification: specification,
           createDisk: createDisks,
@@ -105,9 +104,8 @@
       bootLoader = VZMacOSBootLoader()
       pointingDevices = [VZUSBScreenCoordinatePointingDeviceConfiguration()]
 
-      if #available(macOS 13.0, *) {
-        pointingDevices.append(VZMacTrackpadConfiguration())
-      }
+      pointingDevices.append(VZMacTrackpadConfiguration())
+
       keyboards = [VZUSBKeyboardConfiguration()]
     }
   }

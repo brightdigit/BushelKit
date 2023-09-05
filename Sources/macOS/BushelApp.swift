@@ -1,12 +1,13 @@
 //
-//  BshIllApp.swift
-//  BshIll
+//  BushelApp.swift
+//  Bushel
 //
-//  Created by Leo Dion on 6/22/22.
+//  Created by Leo Dion on 6/9/23.
 //
 
-import BushelUI
 import SwiftUI
+import BushelApp
 
 @main
-struct BushelApp: BushelApplication {}
+struct BushelApp: Application {
+}

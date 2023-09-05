@@ -3,8 +3,13 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
+//
+// VZVirtioBlockDeviceConfiguration.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
 #if arch(arm64) && canImport(Virtualization)
-  import BushelVirtualization
+  import BushelMachine
   import Virtualization
 
   extension VZVirtioBlockDeviceConfiguration {

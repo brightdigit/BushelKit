@@ -1,0 +1,176 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Leo Dion on 9/18/22.
+  
+*/
+
+
+/* Welcome window message */
+"welcome_to_bushel" = "Bushel";
+
+/* "Remote Restore Images Window Title" */
+"remote_restore_images" = "Remote Restore Images";
+
+/* "When the machine is being loaded" */
+"loading_machine" = "Loading Machine...";
+
+/* "When the machine is being built" */
+"building_machine" = "Building Machine...";
+
+/* "When the machine building failed" */
+"building_machine_failure" = "Building Machine Failure";
+
+/* "When the operating system is being installed on the machine" */
+"installing_os" = "Installing Operating System...";
+
+/* Button for starting VM */
+"start_machine" = "Start Machine";
+
+/* Button for taking snapshots of VM */
+"snapshot_machine" = "Take Snapshot";
+
+/* "When the machine is being saved" */
+"saving_machine" = "Saving New Machine...";
+
+/* Button label for when to build machine */
+"build_machine" = "Build Machine";
+
+/* Title for upgrading to "Bushel Pro" */
+"upgrade_purchase" = "Upgrade To";
+
+/* Restore Purchases button Title */
+"restore_purchases" = "Restore Purchases";
+
+/* Not accept purchase  */
+"stay_basic" = "Not yet, let's stay with basic";
+
+/* Terms of Use button Title */
+"terms_of_use" = "Terms of Use";
+
+/* Privacy Policy button Title */
+"privacy_policy" = "Privacy Policy";
+
+/* List of pro features. */
+"pro_features" = "And much more: Configure windows visibility, minimized capturing window, access to all privacy actions and directories, custom touches color, custom color for captures, optimise for App Previews, optimise recordings for quality or speed, delete Derived Data globally and per app, clear Xcode Previews cache.";
+
+/* Version name */
+"version" = "Version";
+
+/* Importing message prefix */
+"importing" = "Importing";
+
+/* Import first image message for restore library */
+"import_first_image" = "Import First Image";
+
+/* Import restore image button */
+"import_restore_image" = "Import a Restore Image";
+
+/* Select restore image button */
+"select_restore_image" = "Select a Restore Image";
+
+/* Downloading message */
+"downloading" = "Downloading";
+
+/* Cancel button */
+"cancel" = "Cancel";
+
+/* Download button */
+"download" = "Download";
+
+/* Import image button */
+"import_image" = "Import Image";
+
+/* Save as a separate ipsw file button */
+"save_to_ipsw" = "Save to an IPSW File";
+
+/* Save to a restore library button */
+"save_to_library" = "Save to a Library";
+
+/* Session view Creating Session message */
+"creating_session" = "Creating Session...";
+
+/* Settings - General Settings */
+"general_settings" = "General Settings";
+
+/* Settings - Advanced Settings */
+"advanced_settings" = "Advanced Settings";
+
+/* Restore Image - Download Image Button */
+"download_image" = "Download Image";
+
+/* New File Menu */
+"menu_new" = "New";
+
+/* New Machine Menu Button */
+"menu_new_machine" = "New Machine";
+
+/* New Image Library Menu Button */
+"menu_new_image_library" = "New Image Library";
+
+/* Open Menu Button */
+"menu_open" = "Open...";
+
+/* Open Recent Menu Button */
+"menu_open_recent" = "Open Recent";
+
+/* Download Restore Image Menu Button */
+"menu_new_download_restore_image" = "Download Restore Image...";
+
+/* "Welcome to Bushel" Menu Button */
+"menu_window_welcome_to_bushel" = "Welcome to Bushel";
+
+/* Bushel Help Menu Button */
+"menu_help_bushel" = "Bushel Help";
+
+/* Clear Menu Button */
+"menu_clear" = "Clear Menu";
+
+/* Welcome Action Button title for creating new machine */
+"welcome_new_machine_title" = "Create a new Machine";
+
+/* Welcome Action Button description for creating new machine */
+"welcome_new_machine_description" = "Create a new Virtual Machine for Testing Your App";
+
+/* Welcome Action Button title for opening a machine */
+"welcome_existing_machine_title" = "Open an existing Machine";
+
+/* Welcome Action Button description for opening a machine */
+"welcome_existing_machine_description" = "Open and Run an existing virtual machine.";
+
+/* Welcome Action Button title for starting a library */
+"welcome_start_library_title" = "Start an Image Library";
+
+/* Welcome Action Button description for starting a library */
+"welcome_start_library_description" = "Create a library for your Restore Images.";
+
+/* Welcome Action Button title for downloading an image */
+"welcome_download_image_title" = "Download a Restore Image";
+
+/* Welcome Action Button description for downloading an image */
+"welcome_download_image_description" = "Download a new version of macOS.";
+
+/* Machine Details Chip Field Label */
+"machine_details_chip" = "Chip";
+
+/* Machine Details Memory Field Label */
+"machine_details_memory" = "Memory";
+
+/* Machine Details Storage Field Label */
+"machine_details_storage" = "Storage";
+
+/* Machine Details Display Field Label */
+"machine_details_display" = "Display";
+
+/* Machine Details Network Field Label */
+"machine_details_network" = "Network";
+
+/* Machine Details Network NAT Value */
+"machine_details_network_nat" = "NAT";
+
+/* Machine Details Display Value */
+"%d x %d %dppi" = "%d x %d %dppi";
+
+/* Snapshot Restoration Error */
+"There was an error restoring the snapshot: %@" = "There was an error restoring the snapshot: %@";

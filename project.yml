@@ -1,27 +1,31 @@
 name: Bushel
 options:
+  preGenCommand: ./Scripts/package.sh
   bundleIdPrefix: com.brightdigit
   deploymentTarget:
-    macOS: 12.0
+    macOS: 14.0
 settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "1.0.0"
-  CURRENT_PROJECT_VERSION: 33
+  CURRENT_PROJECT_VERSION: 42
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
   LINT_MODE: ${LINT_MODE}
 packages:
-  BushelUI:
+  BushelKit:
     path: ./Packages/BushelKit
-targets:
-  Bushel:
+fileGroups:
+  - "Original/Packages/BushelKit/Archive"
+targetTemplates:
+  Application:
     type: application
     platform: macOS
     scheme: {}
     dependencies:
-      - package: BushelUI
+      - package: BushelKit
+        product: Bushel${packageName}App
       - sdk: Virtualization.framework
     info:
       path: Support/macOS/Info.plist
@@ -30,7 +34,7 @@ targets:
         ITSAppUsesNonExemptEncryption: false
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        NSHumanReadableCopyright: Copyright (c) 2022 BrightDigit
+        NSHumanReadableCopyright: Copyright (c) 2023 BrightDigit
         LSApplicationCategoryType: public.app-category.developer-tools
         ATSApplicationFontsPath: .
         CFBundleDocumentTypes:
@@ -39,9 +43,6 @@ targets:
           - {CFBundleTypeName: 'Bushel Image Library', CFBundleTypeRole: Editor, LSHandlerRank: Owner, LSItemContentTypes: [com.brightdigit.bushel-rilib], NSUbiquitousDocumentUserActivityType: $(PRODUCT_BUNDLE_IDENTIFIER).bushel-rilib}
         CFBundleURLTypes:
           - {CFBundleURLSchemes: [bushel]}
-        UIAppFonts:
-          - Raleway-VariableFont_wght.ttf
-          - Raleway-Italic-VariableFont_wght.ttf
         UTExportedTypeDeclarations:
           - {UTTypeConformsTo: [com.apple.package], UTTypeDescription: 'Bushel Virtual Machine', UTTypeIcons: {UTTypeIconBackgroundName: Machine-Fill, UTTypeIconBadgeName: Machine-Icon, UTTypeIconText: machine}, UTTypeIdentifier: com.brightdigit.bushel-vm, UTTypeTagSpecification: {public.filename-extension: [bshvm]}}
           - {UTTypeConformsTo: [com.apple.package], UTTypeDescription: 'Bushel Image Library', UTTypeIcons: {UTTypeIconBackgroundName: ImageLibrary-Fill, UTTypeIconBadgeName: ImageLibrary-Icon, UTTypeIconText: images}, UTTypeIdentifier: com.brightdigit.bushel-rilib, UTTypeTagSpecification: {public.filename-extension: [bshrilib]}}
@@ -52,10 +53,46 @@ targets:
       - path: "Support/macOS"
         name: macOS
         group: Support
+        optional: true   
+      - path: Assets.xcassets
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdPrefix}.Bushel${productName}
+    entitlements:
+      path: Support/macOS/macOS.entitlements
+      properties:
+        com.apple.security.files.bookmarks.app-scope: true
+        com.apple.security.app-sandbox: true
+        com.apple.security.files.user-selected.read-write: true
+        com.apple.security.network.client: true
+        com.apple.security.virtualization: true
+        com.apple.vm.networking: true
+        com.apple.security.application-groups:
+          - group.com.brightdigit.Bushel 
+    postBuildScripts:
+      - path: scripts/lint.sh
+        name: Lint
+        basedOnDependencyAnalysis: false
+  Microapp:
+    templates:
+      - Application
+    templateAttributes:
+      packageName: ${target_name}
+      productName: ${target_name}
+    sources:      
+      - path: "Apps/${target_name}"  
+        group: Apps        
+targets:
+  Bushel:
+    templates:
+      - Application 
+    templateAttributes:
+      packageName: 
+      productName:    
+    sources:
       - path: "Sources/macOS"
         name: macOS
         group: Sources
-      - path: Assets.xcassets
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdPrefix}.Bushel
@@ -66,20 +103,15 @@ targets:
         Release:
           CODE_SIGN_IDENTITY: iPhone Distribution
           PROVISIONING_PROFILE_SPECIFIER: match AppStore com.brightdigit.Bushel macos
-    entitlements:
-      path: Support/macOS/macOS.entitlements
-      properties:
-        com.apple.security.app-sandbox: true
-        com.apple.security.files.user-selected.read-write: true
-        com.apple.security.network.client: true
-        com.apple.security.virtualization: true
-        com.apple.vm.networking: true
-        com.apple.security.application-groups:
-          - group.com.brightdigit.Bushel
-    postBuildScripts:
-      - path: scripts/lint.sh
-        name: Lint
-        basedOnDependencyAnalysis: false
+  Library:
+    templates: 
+      - Microapp
+  Machine:
+    templates: 
+      - Microapp
+  Settings:
+    templates: 
+      - Microapp
   Bushel-UITests:
     type: bundle.ui-testing
     platform: macOS
