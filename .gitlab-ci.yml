@@ -53,13 +53,12 @@ build spm linux 5.9.0:
   
 lint lenient:
   only:
-    - main
+    - merge_requests
   <<: *lint_template
 
 lint strict:
   only:
     - /^v\d+\.\d+\.\d+(-\w+\.\d+)?$/
-    - merge_requests
     - /STRICT$/
   variables:
    LINT_MODE: "STRICT"
