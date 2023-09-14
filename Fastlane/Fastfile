@@ -23,10 +23,6 @@ platform :mac do
       issuer_id: ENV['SPACESHIP_CONNECT_API_ISSUER_ID'],
       key_content: ENV['SPACESHIP_CONNECT_API_KEY_CONTENT']
     )
-    version = get_version_number(target: "Bushel")
-    build_number = `yq eval '.settings .CURRENT_PROJECT_VERSION' ../project.yml`.strip.to_i
-    tag = "#{version}-build.#{build_number}"
-    remote_branch = ENV["CI_COMMIT_REF_NAME"]
     
     match(type: "appstore", additional_cert_types: "mac_installer_distribution", keychain_password: ENV['FASTLANE_KEYCHAIN_PASSWORD'])
     build_app(
@@ -44,6 +40,11 @@ platform :mac do
   
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    version = get_version_number(target: "Bushel")
+    build_number = `yq eval '.settings .CURRENT_PROJECT_VERSION' ../project.yml`.strip.to_i
+    tag = "#{version}-build.#{build_number}"
+    remote_branch = ENV["CI_COMMIT_REF_NAME"]
+    
     archive
     upload_to_testflight(skip_waiting_for_build_processing: true)  
     
