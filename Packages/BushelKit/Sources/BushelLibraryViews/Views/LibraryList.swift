@@ -21,7 +21,8 @@
               Image.resource(system.imageName(for: libraryItem.metadata))
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 80).mask {
+                .frame(width: 80)
+                .mask {
                   Circle()
                 }
                 .overlay {

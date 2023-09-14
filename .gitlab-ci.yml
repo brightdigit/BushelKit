@@ -22,7 +22,7 @@ cache:
     - macos
   script:
     - ./Scripts/package.sh
-    - git diff --exit-code --quiet
+    - git diff --exit-code
     - xcodes select 15
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
@@ -37,13 +37,14 @@ build spm macos:
     - xcodes select 15 
     - cd Packages/BushelKit
     - swift build
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0,name=iPhone 14"
 
 build spm linux 5.9.0:
   stage: build
   only:
     - merge_requests
     - main
-    - /^v\/*/
+    - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
   image: swiftlang/swift:nightly-5.9-jammy
   script:
     - cd Packages/BushelKit
@@ -52,15 +53,16 @@ build spm linux 5.9.0:
   
 lint lenient:
   only:
-    - merge_requests
+    - main
   <<: *lint_template
 
 lint strict:
   only:
-    - main
-    - /^v\/*/
-  #variables:
-  #  LINT_MODE: "STRICT"
+    - /^v\d+\.\d+\.\d+(-\w+\.\d+)?$/
+    - merge_requests
+    - /STRICT$/
+  variables:
+   LINT_MODE: "STRICT"
   <<: *lint_template  
 
 deploy:
@@ -75,10 +77,12 @@ deploy:
     - macos  
   only:
     - main
+    - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
   script:
+    - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
     - xcodes select 15
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
-    - rbenv exec bundle exec fastlane beta
+    - rbenv exec bundle exec fastlane $LANE_NAME

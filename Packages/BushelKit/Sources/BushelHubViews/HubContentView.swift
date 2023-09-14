@@ -11,16 +11,6 @@
   import SwiftUI
 
   struct HubContentView: View {
-    internal init(
-      hubID: String?,
-      images: [HubImage]?,
-      selectedImageID: Binding<HubImage.ID?>
-    ) {
-      self.hubID = hubID
-      self.images = images
-      self._selectedImageID = selectedImageID
-    }
-
     let hubID: String?
     let images: [HubImage]?
     @Environment(\.librarySystemManager) var librarySystemManager
@@ -38,6 +28,16 @@
       } else {
         ProgressView()
       }
+    }
+
+    internal init(
+      hubID: String?,
+      images: [HubImage]?,
+      selectedImageID: Binding<HubImage.ID?>
+    ) {
+      self.hubID = hubID
+      self.images = images
+      self._selectedImageID = selectedImageID
     }
   }
 #endif

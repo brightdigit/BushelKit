@@ -5,12 +5,15 @@
 
 import BushelCore
 import BushelLibrary
-import BushelLibraryEnvironment
 import BushelMachine
 import Foundation
 
 extension InstallerImage.Metadata {
-  init(labelName: String, imageMetadata: ImageMetadata, _ labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel) {
+  init(
+    labelName: String,
+    imageMetadata: ImageMetadata,
+    _ labelProvider: @escaping MetadataLabelProvider
+  ) {
     let label = labelProvider(imageMetadata.vmSystem, imageMetadata)
     self.init(
       longName: label.operatingSystemLongName,
@@ -18,6 +21,7 @@ extension InstallerImage.Metadata {
       labelName: labelName,
       operatingSystem: imageMetadata.operatingSystemVersion,
       buildVersion: imageMetadata.buildVersion,
+      imageResourceName: label.imageName,
       systemID: imageMetadata.vmSystem
     )
   }

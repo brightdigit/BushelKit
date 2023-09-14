@@ -1,0 +1,11 @@
+name: Bushel
+description: A package named Bushel created from scaffold
+procedures:
+- name: Target
+  description: An item named Target created from scaffold
+  items:
+  - Target/Target.yml
+- name: View
+  description: An item named View created from scaffold
+  items:
+  - View/View.yml

@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(Combine) && canImport(Observation) && os(macOS)
+#if canImport(Combine) && canImport(Observation) && (os(macOS) || os(iOS))
   import Combine
   import Foundation
 
@@ -21,10 +21,13 @@
 
     public private(set) var totalBytesWritten: Int64 = 0
     public private(set) var totalBytesExpectedToWrite: Int64?
-    let resumeDataSubject = PassthroughSubject<Data, Never>()
-    var task: URLSessionDownloadTask?
+
     // swiftlint:disable:next implicitly_unwrapped_optional
     var session: URLSession!
+
+    let resumeDataSubject = PassthroughSubject<Data, Never>()
+    var task: URLSessionDownloadTask?
+
     var cancellables = [AnyCancellable]()
     let requestSubject = PassthroughSubject<DownloadRequest, Never>()
     let locationURLSubject = PassthroughSubject<URL, Never>()
@@ -33,20 +36,14 @@
 
     let formatter = ByteCountFormatter()
 
-    func onCompletion(_ result: Result<Void, Error>) {
-      assert(completion != nil)
-      completion?(result)
-    }
-
     public var prettyBytesWritten: String {
       formatter.string(from: .init(value: .init(totalBytesWritten), unit: .bytes))
     }
 
-    // swiftlint:disable:next function_body_length
     public init(
+      totalBytesExpectedToWrite: (some BinaryInteger)?,
       configuration: URLSessionConfiguration? = nil,
-      queue: OperationQueue? = nil,
-      totalBytesExpectedToWrite: (some BinaryInteger)?
+      queue: OperationQueue? = nil
     ) {
       self.totalBytesExpectedToWrite = totalBytesExpectedToWrite.map(Int64.init(_:))
       super.init()
@@ -85,15 +82,32 @@
         .sink(receiveValue: self.onCompletion)
         .store(in: &cancellables)
 
-      downloadUpdate.share().map(\.totalBytesWritten).assign(to: \.totalBytesWritten, on: self).store(in: &cancellables)
-      downloadUpdate.share().map(\.totalBytesExpectedToWrite).assign(to: \.totalBytesExpectedToWrite, on: self).store(in: &cancellables)
+      let downloadUpdate = self.downloadUpdate.share()
+      downloadUpdate
+        .map(\.totalBytesWritten)
+        .assign(to: \.totalBytesWritten, on: self)
+        .store(in: &cancellables)
+      downloadUpdate
+        .map(\.totalBytesExpectedToWrite)
+        .assign(to: \.totalBytesExpectedToWrite, on: self)
+        .store(in: &cancellables)
+    }
+
+    func onCompletion(_ result: Result<Void, Error>) {
+      assert(completion != nil)
+      completion?(result)
     }
 
     public func cancel() {
       task?.cancel()
     }
 
-    public func begin(from downloadSourceURL: URL, to destinationFileURL: URL, _ completion: @escaping (Result<Void, Error>) -> Void) {
+    public func begin(
+      from downloadSourceURL: URL,
+      to destinationFileURL: URL,
+      _ completion: @escaping (Result<Void, Error>
+      ) -> Void
+    ) {
       assert(self.completion == nil)
       self.completion = completion
       requestSubject.send(
@@ -109,7 +123,6 @@
       locationURLSubject.send(location)
     }
 
-    // periphery:ignore
     public func urlSession(
       _: URLSession,
       downloadTask _: URLSessionDownloadTask,
@@ -117,7 +130,9 @@
       totalBytesWritten: Int64,
       totalBytesExpectedToWrite: Int64
     ) {
-      self.downloadUpdate.send(.init(totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite))
+      self.downloadUpdate.send(
+        .init(totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
+      )
     }
 
     public func urlSession(_: URLSession, task _: URLSessionTask, didCompleteWithError error: Error?) {

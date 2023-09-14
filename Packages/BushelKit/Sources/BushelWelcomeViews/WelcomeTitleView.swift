@@ -3,10 +3,11 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI) && canImport(UniformTypeIdentifiers)
+#if canImport(SwiftUI) && canImport(UniformTypeIdentifiers) && os(macOS)
   import BushelCore
   import BushelData
   import BushelLogging
+  import BushelMarketEnvironment
   import BushelUT
   import BushelViewsCore
   import SwiftUI
@@ -14,6 +15,7 @@
 
   struct WelcomeTitleView: View, LoggerCategorized {
     @State var openDocumentIsVisible = false
+    @Environment(\.marketplace) var marketplace
     @Environment(\.openWindow) var openWindow
     @Environment(\.openFileURL) var openFileURL
     @Environment(\.newLibrary) var newLibrary
@@ -26,13 +28,24 @@
         VStack {
           Spacer()
           Image.resource("Logo").resizable().aspectRatio(contentMode: .fit).frame(height: 120)
-          Text(.welcomeToBushel)
-            .font(.system(size: 36.0))
-            .fontWeight(.bold)
+          HStack {
+            Text(.welcomeToBushel)
+              .font(.system(size: 36.0))
+              .fontWeight(.bold)
+
+            if (marketplace.subscriptionEndDate ?? .distantPast) > .now {
+              Text("Pro")
+                .font(.system(size: 36.0))
+                .fontWeight(.bold)
+                .foregroundStyle(.tint)
+                .italic()
+            }
+          }
           Text(
             .key(.version),
             .text(
-              "\(Configuration.applicationMarketingVersionText) (\(Configuration.applicationBuildFormatted))"
+              // swiftlint:disable:next line_length
+              "\(Configuration.versionFormatted.marketingVersion) (\(Configuration.versionFormatted.buildNumberHex))"
             )
           )
           .font(.system(size: 12.0))

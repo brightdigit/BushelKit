@@ -18,16 +18,18 @@
     MachineFileType: FileTypeSpecification,
     LibraryFileType: InitializableFileTypeSpecification
   >: ApplicationConfiguration, LoggerCategorized {
-    internal init(@SystemBuilder _ systems: @escaping () -> [System]) {
-      self.systems = systems()
-    }
-
     static var loggingCategory: Loggers.Category {
       .application
     }
 
+    let systems: [BushelSystem.System]
+
     var schemas: [any PersistentModel.Type] {
       .all
+    }
+
+    internal init(@SystemBuilder _ systems: @escaping () -> [System]) {
+      self.systems = systems()
     }
 
     func installerImageRepository(_ context: ModelContext) -> BushelMachine.InstallerImageRepository {
@@ -44,8 +46,6 @@
         SceneConfiguration.logger.error("Unknown document type for: \(url)")
       }
     }
-
-    let systems: [BushelSystem.System]
 
     func hubView(_ image: Binding<InstallImage?>) -> some View {
       HubView(selectedHubImage: image)

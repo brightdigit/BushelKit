@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(Observation) && os(macOS)
+#if canImport(Observation) && (os(macOS) || os(iOS))
   import BushelCore
   import BushelLibrary
   import BushelProgressUI

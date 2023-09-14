@@ -6,7 +6,7 @@
 import Foundation
 
 protocol MockError: Equatable, Error {
-  associatedtype T: Equatable
+  associatedtype ErrorType: Equatable
 
-  var value: T { get }
+  var value: ErrorType { get }
 }

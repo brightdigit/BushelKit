@@ -128,3 +128,5 @@ file_name:
     severity: error
 fatal_error_message:
     severity: error
+disabled_rules:
+    - nesting

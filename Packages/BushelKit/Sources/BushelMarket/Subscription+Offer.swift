@@ -1,0 +1,30 @@
+//
+// Subscription+Offer.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import BushelCore
+import BushelLogging
+import Foundation
+
+public extension Subscription {
+  struct Offer {
+    public enum Kind {
+      case introductory
+
+      case promotional
+
+      case code
+
+      case unknown(rawValue: Int)
+    }
+
+    public init(type: Subscription.Offer.Kind, id: String) {
+      self.type = type
+      self.id = id
+    }
+
+    public let type: Kind
+    public let id: String
+  }
+}

@@ -12,28 +12,6 @@ import Foundation
 #endif
 
 public struct LibraryError: LocalizedError, LoggerCategorized {
-  public static var loggingCategory: BushelLogging.Loggers.Category {
-    .library
-  }
-
-  public typealias LoggersType = BushelLogging.Loggers
-
-  fileprivate init<TypedError: Error>(innerError: Error, as _: TypedError.Type, details: LibraryError.Details) throws {
-    guard let innerError = innerError as? TypedError else {
-      throw innerError
-    }
-    self.init(innerError: innerError, details: details)
-  }
-
-  fileprivate init(innerError: Error? = nil, details: LibraryError.Details) {
-    if let innerError = innerError as? LibraryError {
-      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
-      Self.logger.critical("Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)")
-    }
-    self.innerError = innerError
-    self.details = details
-  }
-
   struct ImageImportDetails {
     enum Phase {
       case copy
@@ -59,14 +37,14 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
 
     case bookmarkError
     case systemResolution
-    case accessDeniedLibrary(at: URL)
-    case imageCorrupted(at: URL)
-    case libraryCorrupted(at: URL)
-    case imageFolderInitialization(at: URL)
-    case updateMetadata(at: URL)
+    case accessDeniedLibraryAt(URL)
+    case imageCorruptedAt(URL)
+    case libraryCorruptedAt(URL)
+    case imageFolderInitializationAt(URL)
+    case updateMetadataAt(URL)
     case missingInitialization(for: InitializationProperty)
     case database
-    case copyImage(from: URL, to: URL)
+    case copyImage(source: URL, destination: URL)
 
     func errorDescription(fromError error: Error?) -> String {
       switch self {
@@ -80,23 +58,25 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
         let error = error ?? UnknownError.shared
         return "Unable to resolve new image: \(error)"
 
-      case let .accessDeniedLibrary(at: path):
-        let components: [String?] = ["There's an issue getting access to library at \(path)", error?.localizedDescription]
+      case let .accessDeniedLibraryAt(at: path):
+        let components: [String?] = [
+          "There's an issue getting access to library at \(path)", error?.localizedDescription
+        ]
         return components.compactMap { $0 }.joined(separator: ": ")
 
-      case let .imageCorrupted(at: importingURL):
+      case let .imageCorruptedAt(at: importingURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue getting the metadata for image at \(importingURL): \(error)"
-      case let .libraryCorrupted(at: libraryURL):
+      case let .libraryCorruptedAt(at: libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue reading the library at \(libraryURL): \(error)"
-      case let .imageFolderInitialization(at: libraryURL):
+      case let .imageFolderInitializationAt(at: libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue prepping the library at \(libraryURL): \(error)"
-      case let .updateMetadata(at: libraryURL):
+      case let .updateMetadataAt(at: libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "We were unable to update \(libraryURL): \(error)"
@@ -106,20 +86,21 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There was an issue syncing with the database: \(error)"
-      case let .copyImage(from: importingURL, to: libraryURL):
+      case let .copyImage(source: importingURL, destination: libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
-        return "There was an error copying the image at \(importingURL) to library at: \(libraryURL): \(error)"
+        return
+          "There was an error copying the image at \(importingURL) to library at: \(libraryURL): \(error)"
       }
     }
 
     func recoverySuggestion(fromError _: Error?) -> String? {
       switch self {
-      case .accessDeniedLibrary(at: _):
+      case .accessDeniedLibraryAt(at: _):
         return "Close and open the library again."
-      case let .imageCorrupted(at: imageURL):
+      case let .imageCorruptedAt(at: imageURL):
         return "Invalid Restore Image at \(imageURL)"
-      case .imageFolderInitialization(at: _):
+      case .imageFolderInitializationAt(at: _):
         return "Close and open the library again."
       case .missingInitialization(for: _):
         return "Close and open the library again."
@@ -133,19 +114,19 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
       case .bookmarkError:
         return false
 
-      case .accessDeniedLibrary(at: _):
+      case .accessDeniedLibraryAt(at: _):
         return false
 
-      case .imageCorrupted(at: _):
+      case .imageCorruptedAt(at: _):
         return true
 
-      case .libraryCorrupted(at: _):
+      case .libraryCorruptedAt(at: _):
         return false
 
-      case .imageFolderInitialization(at: _):
+      case .imageFolderInitializationAt(at: _):
         return false
 
-      case .updateMetadata(at: _):
+      case .updateMetadataAt(at: _):
         return false
 
       case .missingInitialization(for: _):
@@ -154,13 +135,17 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
       case .database:
         return false
 
-      case .copyImage(from: _, to: _):
+      case .copyImage:
         return true
 
       case .systemResolution:
         return false
       }
     }
+  }
+
+  public static var loggingCategory: BushelLogging.Loggers.Category {
+    .library
   }
 
   let innerError: Error?
@@ -177,6 +162,34 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
   public var isRecoverable: Bool {
     details.isRecoverable(fromError: innerError)
   }
+
+  fileprivate init<TypedError: Error>(
+    innerError: Error,
+    as _: TypedError.Type,
+    details: LibraryError.Details
+  ) throws {
+    guard let innerError = innerError as? TypedError else {
+      throw innerError
+    }
+    self.init(innerError: innerError, details: details)
+  }
+
+  fileprivate init(
+    innerError: Error? = nil,
+    details: LibraryError.Details
+  ) {
+    if let innerError = innerError as? LibraryError {
+      assertionFailure(
+        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)"
+      )
+      Self.logger.critical(
+        // swiftlint:disable:next line_length
+        "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"
+      )
+    }
+    self.innerError = innerError
+    self.details = details
+  }
 }
 
 public extension LibraryError {
@@ -185,19 +198,19 @@ public extension LibraryError {
   }
 
   static func accessDeniedError(_ error: Error?, at url: URL) -> LibraryError {
-    LibraryError(innerError: error, details: .accessDeniedLibrary(at: url))
+    LibraryError(innerError: error, details: .accessDeniedLibraryAt(url))
   }
 
   static func imageCorruptedError(_ error: Error, at url: URL) -> LibraryError {
-    LibraryError(innerError: error, details: .imageCorrupted(at: url))
+    LibraryError(innerError: error, details: .imageCorruptedAt(url))
   }
 
   static func libraryCorruptedError(_ error: Error, at url: URL) -> LibraryError {
-    LibraryError(innerError: error, details: .libraryCorrupted(at: url))
+    LibraryError(innerError: error, details: .libraryCorruptedAt(url))
   }
 
   static func imagesFolderError(_ error: Error, at url: URL) -> LibraryError {
-    LibraryError(innerError: error, details: .imageFolderInitialization(at: url))
+    LibraryError(innerError: error, details: .imageFolderInitializationAt(url))
   }
 
   static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError {
@@ -205,7 +218,7 @@ public extension LibraryError {
   }
 
   static func metadataUpdateError(_ error: Error, at url: URL) -> LibraryError {
-    LibraryError(innerError: error, details: .updateMetadata(at: url))
+    LibraryError(innerError: error, details: .updateMetadataAt(url))
   }
 
   static func fromDatabaseError(_ error: Error) -> LibraryError {
@@ -213,7 +226,7 @@ public extension LibraryError {
   }
 
   static func copyFrom(_ importingURL: URL, to libraryURL: URL, withError error: Error) -> LibraryError {
-    LibraryError(innerError: error, details: .copyImage(from: importingURL, to: libraryURL))
+    LibraryError(innerError: error, details: .copyImage(source: importingURL, destination: libraryURL))
   }
 
   static func systemResolutionError(_ error: Error) throws -> LibraryError {

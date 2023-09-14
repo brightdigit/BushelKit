@@ -16,12 +16,12 @@
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
 
-    public init() {}
-
     public var body: some Scene {
       WindowGroup(for: LibraryFile.self, content: { file in
         LibraryDocumentView(file: file)
       })
     }
+
+    public init() {}
   }
 #endif

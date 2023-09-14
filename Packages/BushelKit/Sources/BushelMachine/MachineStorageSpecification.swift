@@ -17,5 +17,8 @@ public struct MachineStorageSpecification: Codable, Identifiable {
 }
 
 public extension MachineStorageSpecification {
-  static let `default`: MachineStorageSpecification = .init(label: "macOS System", size: UInt64(64 * 1024 * 1024 * 1024))
+  static let `default`: MachineStorageSpecification = .init(
+    label: "macOS System",
+    size: UInt64(64 * 1024 * 1024 * 1024)
+  )
 }

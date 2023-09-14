@@ -12,7 +12,10 @@
   import SwiftData
 
   extension InstallerImage.Metadata {
-    init(entry: LibraryImageEntry, _ labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel) {
+    init(
+      entry: LibraryImageEntry,
+      _ labelProvider: @escaping MetadataLabelProvider
+    ) {
       let imageMetadata = ImageMetadata(entry: entry)
       self.init(labelName: entry.name, imageMetadata: imageMetadata, labelProvider)
     }

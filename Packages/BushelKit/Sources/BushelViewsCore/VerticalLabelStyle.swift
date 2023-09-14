@@ -7,6 +7,10 @@
   import SwiftUI
 
   public struct VerticalLabelStyle: LabeledContentStyle {
+    let alignment: HorizontalAlignment
+    let labelFont: Font
+    let labelPaddingEdgeInsets: EdgeInsets
+
     public init(
       alignment: HorizontalAlignment = .leading,
       labelFont: Font = .subheadline,
@@ -16,10 +20,6 @@
       self.labelFont = labelFont
       self.labelPaddingEdgeInsets = labelPaddingEdgeInsets
     }
-
-    let alignment: HorizontalAlignment
-    let labelFont: Font
-    let labelPaddingEdgeInsets: EdgeInsets
 
     public func makeBody(configuration: Configuration) -> some View {
       VStack(alignment: alignment) {

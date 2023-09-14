@@ -11,6 +11,10 @@ public struct MissingAttributeError: LocalizedError {
     case lastModified = "Last-Modified"
   }
 
+  public let attributeKey: FileAttributeKey
+  public let url: URL
+  public let headers: [AnyHashable: Any]?
+
   public init(_ headerName: HeaderName, from url: URL, headers: [AnyHashable: Any]? = nil) {
     self.attributeKey = .init(headerName: headerName)
     self.url = url
@@ -22,10 +26,6 @@ public struct MissingAttributeError: LocalizedError {
     self.url = url
     self.headers = headers
   }
-
-  public let attributeKey: FileAttributeKey
-  public let url: URL
-  public let headers: [AnyHashable: Any]?
 }
 
 extension FileAttributeKey {

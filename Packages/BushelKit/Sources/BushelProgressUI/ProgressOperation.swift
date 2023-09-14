@@ -7,9 +7,9 @@ import Foundation
 
 public protocol ProgressOperation<ValueType>: Identifiable where ID == URL {
   associatedtype ValueType: BinaryInteger
-  func execute() async throws
   var currentValue: ValueType { get }
   var totalValue: ValueType? { get }
+  func execute() async throws
 }
 
 public extension ProgressOperation {
@@ -21,6 +21,8 @@ public extension ProgressOperation {
     formatter.maximumFractionDigits = fractionDigits
     formatter.minimumFractionDigits = fractionDigits
     let ratioValue = Double(currentValue) / Double(totalValue) * 100.0
-    return formatter.string(from: .init(value: ratioValue))!
+    let string = formatter.string(from: .init(value: ratioValue))
+    assert(string != nil)
+    return string
   }
 }

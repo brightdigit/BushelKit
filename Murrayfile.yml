@@ -1,0 +1,13 @@
+date: 2023-09-10T00:30:21.166100979Z
+packages:
+- Murray/Bushel/Bushel.yml
+environment:
+  paths:
+    packageSources: '{{paths.package}}/Package/Sources'
+    package: Packages/BushelKit
+    packageTargets: '{{paths.packageSources}}/Targets'
+    sources: '{{paths.package}}/Sources'
+plugins:
+    shell:
+      after:
+      - xcodegen

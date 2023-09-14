@@ -7,10 +7,10 @@ import BushelCore
 import Foundation
 
 public protocol LibrarySystem {
-  func operatingSystemLongName(for metadata: ImageMetadata) -> String
-  func imageName(for metadata: ImageMetadata) -> String
   var id: VMSystemID { get }
   var allowedContentTypes: Set<FileType> { get }
+  func operatingSystemLongName(for metadata: ImageMetadata) -> String
+  func imageName(for metadata: ImageMetadata) -> String
   func metadata(fromURL url: URL) async throws -> ImageMetadata
   func defaultName(fromMetadata metadata: ImageMetadata) -> String
 }

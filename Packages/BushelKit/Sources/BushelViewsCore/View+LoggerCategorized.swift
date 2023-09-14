@@ -12,23 +12,17 @@
     static var loggingCategory: BushelLogging.Loggers.Category {
       .view
     }
-
-    typealias LoggersType = BushelLogging.Loggers
   }
 
   public extension Scene where Self: LoggerCategorized {
     static var loggingCategory: BushelLogging.Loggers.Category {
       .view
     }
-
-    typealias LoggersType = BushelLogging.Loggers
   }
 
   public extension Observable where Self: LoggerCategorized {
     static var loggingCategory: BushelLogging.Loggers.Category {
       .view
     }
-
-    typealias LoggersType = BushelLogging.Loggers
   }
 #endif

@@ -6,25 +6,41 @@
 import Foundation
 
 public struct FileType: Hashable, ExpressibleByStringLiteral {
-  public init(utIdentifier: String, isOwned: Bool, fileExtension: String? = nil) {
-    self.utIdentifier = utIdentifier
-    self.isOwned = isOwned
-    self.fileExtension = fileExtension
-  }
-
-  public init(stringLiteral utIdentifier: String) {
-    self.init(utIdentifier: utIdentifier, isOwned: false)
-  }
-
-  public static func exportedAs(_ utIdentifier: String, _ fileExtension: String) -> FileType {
-    .init(utIdentifier: utIdentifier, isOwned: true, fileExtension: fileExtension)
-  }
-
   public typealias StringLiteralType = String
 
   public let utIdentifier: String
   public let isOwned: Bool
   public let fileExtension: String?
+
+  public init(
+    utIdentifier: String,
+    isOwned: Bool,
+    fileExtension: String? = nil
+  ) {
+    self.utIdentifier = utIdentifier
+    self.isOwned = isOwned
+    self.fileExtension = fileExtension
+  }
+
+  public init(
+    stringLiteral utIdentifier: String
+  ) {
+    self.init(
+      utIdentifier: utIdentifier,
+      isOwned: false
+    )
+  }
+
+  public static func exportedAs(
+    _ utIdentifier: String,
+    _ fileExtension: String
+  ) -> FileType {
+    .init(
+      utIdentifier: utIdentifier,
+      isOwned: true,
+      fileExtension: fileExtension
+    )
+  }
 }
 
 public extension FileType {

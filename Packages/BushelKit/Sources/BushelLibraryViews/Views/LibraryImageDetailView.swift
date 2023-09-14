@@ -10,25 +10,20 @@
   import SwiftUI
 
   struct LibraryImageDetailView: View {
-    internal init(image: Bindable<LibraryImageObject>, system: LibrarySystem) {
-      self._image = image
-      self.system = system
-    }
-
     @Environment(\.openWindow) var openWindow
     @Bindable var image: LibraryImageObject
     let system: any LibrarySystem
+
     var body: some View {
       VStack {
         HStack(alignment: .top) {
           Image.resource(system.imageName(for: image.metadata))
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 80, height: 80).mask {
-              Circle()
-            }.overlay {
-              Circle().stroke()
-            }.padding(.horizontal)
+            .frame(width: 80, height: 80)
+            .mask { Circle() }
+            .overlay { Circle().stroke() }
+            .padding(.horizontal)
           VStack(alignment: .leading) {
             TextField("Name", text: self.$image.name).font(.largeTitle)
             Text(system.operatingSystemLongName(for: image.metadata)).lineLimit(1).font(.title)
@@ -39,10 +34,22 @@
           }
         }
         Button("Build") {
-          openWindow(value: MachineBuildRequest(restoreImage: .init(libraryID: .bookmarkID(image.library.entry.bookmarkDataID), imageID: image.entry.imageID)))
+          openWindow(
+            value: MachineBuildRequest(
+              restoreImage: .init(
+                imageID: image.entry.imageID,
+                libraryID: .bookmarkID(image.library.entry.bookmarkDataID)
+              )
+            )
+          )
         }
         Spacer()
       }.padding(.vertical)
+    }
+
+    internal init(image: Bindable<LibraryImageObject>, system: LibrarySystem) {
+      self._image = image
+      self.system = system
     }
   }
 #endif

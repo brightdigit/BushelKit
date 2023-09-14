@@ -3,21 +3,11 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
+  import BushelViewsCore
   import SwiftUI
 
-  struct WelcomeView: View {
-    struct Value: Codable, Hashable {
-      private init() {}
-      static let `default` = Value()
-    }
-
-    init() {}
-
-    init(_: Binding<Value>) {
-      self.init()
-    }
-
+  struct WelcomeView: SingleWindowView {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
@@ -34,6 +24,8 @@
       }.frame(width: 750, height: 440)
         .navigationTitle("Welcome to Bushel")
     }
+
+    init() {}
   }
 
   #Preview {

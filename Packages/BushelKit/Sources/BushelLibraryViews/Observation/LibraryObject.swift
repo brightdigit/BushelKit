@@ -20,11 +20,6 @@
 
   @Observable
   class LibraryObject: LoggerCategorized {
-    internal init(library: Library, entry: LibraryEntry) {
-      self.library = library
-      self.entry = entry
-    }
-
     @ObservationIgnored
     var modelContext: ModelContext?
 
@@ -34,6 +29,12 @@
     var library: Library
     var entry: LibraryEntry
 
+    internal init(library: Library, entry: LibraryEntry) {
+      self.library = library
+      self.entry = entry
+    }
+
+    // swiftlint:disable:next cyclomatic_complexity
     func save() throws {
       guard let modelContext else {
         throw LibraryError.missingInitializedProperty(.modelContext)
@@ -41,6 +42,14 @@
 
       guard let bookmarkData = entry.bookmarkData else {
         throw LibraryError.missingInitializedProperty(.bookmarkData)
+      }
+
+      defer {
+        do {
+          try bookmarkData.update(using: modelContext)
+        } catch {
+          assertionFailure(error: error)
+        }
       }
 
       let libraryURL: URL
@@ -81,11 +90,11 @@
       let entryChild = self.entry.images?.first(where: { $0.imageID == id })
       let entry: LibraryImageEntry?
       do {
-        entry = try entryChild ?? modelContext?.fetch(FetchDescriptor<LibraryImageEntry>(predicate:
-          #Predicate {
-            $0.imageID == id
-          }
-        )).first
+        entry = try entryChild ?? modelContext?.fetch(
+          FetchDescriptor<LibraryImageEntry>(
+            predicate: #Predicate { $0.imageID == id }
+          )
+        ).first
       } catch {
         Self.logger.error("Error fetching entry \(id) from database: \(error)")
         assertionFailure(error: error)
@@ -100,8 +109,12 @@
       return .init(LibraryImageObject(index: index, library: self, entry: entry))
     }
 
-    // swiftlint:disable:next function_body_length
-    func importRemoteImageAt(_ remoteURL: URL, metadata: ImageMetadata, setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void) async throws {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    func importRemoteImageAt(
+      _ remoteURL: URL,
+      metadata: ImageMetadata,
+      setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void
+    ) async throws {
       guard let modelContext else {
         throw LibraryError.missingInitializedProperty(.modelContext)
       }
@@ -112,6 +125,14 @@
 
       guard let bookmarkData = entry.bookmarkData else {
         throw LibraryError.missingInitializedProperty(.bookmarkData)
+      }
+
+      defer {
+        do {
+          try bookmarkData.update(using: modelContext)
+        } catch {
+          assertionFailure(error: error)
+        }
       }
 
       let libraryURL: URL
@@ -143,13 +164,22 @@
 
       let imagesFolderURL = libraryURL.appending(path: Paths.restoreImagesDirectoryName)
       do {
-        try FileManager.default.createEmptyDirectory(at: imagesFolderURL, withIntermediateDirectories: true, deleteExistingFile: true)
+        try FileManager.default.createEmptyDirectory(
+          at: imagesFolderURL,
+          withIntermediateDirectories: true,
+          deleteExistingFile: true
+        )
       } catch {
         throw LibraryError.imagesFolderError(error, at: libraryURL)
       }
 
-      let destinationURL = imagesFolderURL.appending(path: imageFile.id.uuidString).appendingPathExtension(remoteURL.pathExtension)
-      let progress = try FileManager.default.fileOperationProgress(from: remoteURL, to: destinationURL, totalValue: metadata.contentLength)
+      let destinationURL = imagesFolderURL.appending(path: imageFile.id.uuidString)
+        .appendingPathExtension(remoteURL.pathExtension)
+      let progress = try FileManager.default.fileOperationProgress(
+        from: remoteURL,
+        to: destinationURL,
+        totalValue: metadata.contentLength
+      )
       await setProgress(
         .init(system: system, metadata: metadata, operation: progress)
       )
@@ -178,8 +208,11 @@
       }
     }
 
-    // swiftlint:disable:next function_body_length
-    func importRestoreImageAt(_ importingURL: URL, setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void) async throws {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    func importRestoreImageAt(
+      _ importingURL: URL,
+      setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void
+    ) async throws {
       guard let modelContext else {
         throw LibraryError.missingInitializedProperty(.modelContext)
       }
@@ -197,6 +230,11 @@
       }
 
       defer {
+        do {
+          try bookmarkData.update(using: modelContext)
+        } catch {
+          assertionFailure(error: error)
+        }
         importingURL.stopAccessingSecurityScopedResource()
       }
 
@@ -233,13 +271,22 @@
 
       let imagesFolderURL = libraryURL.appending(path: Paths.restoreImagesDirectoryName)
       do {
-        try FileManager.default.createEmptyDirectory(at: imagesFolderURL, withIntermediateDirectories: true, deleteExistingFile: true)
+        try FileManager.default.createEmptyDirectory(
+          at: imagesFolderURL,
+          withIntermediateDirectories: true,
+          deleteExistingFile: true
+        )
       } catch {
         throw LibraryError.imagesFolderError(error, at: libraryURL)
       }
 
-      let destinationURL = imagesFolderURL.appending(path: imageFile.id.uuidString).appendingPathExtension(importingURL.pathExtension)
-      let progress = try FileManager.default.fileOperationProgress(from: importingURL, to: destinationURL, totalValue: nil)
+      let destinationURL = imagesFolderURL.appending(path: imageFile.id.uuidString)
+        .appendingPathExtension(importingURL.pathExtension)
+      let progress = try FileManager.default.fileOperationProgress(
+        from: importingURL,
+        to: destinationURL,
+        totalValue: nil
+      )
       await setProgress(
         .init(system: system, metadata: imageFile.metadata, operation: progress)
       )
@@ -270,9 +317,22 @@
   }
 
   extension LibraryObject {
-    convenience init(_ url: URL, withContext modelContext: ModelContext, using librarySystemManager: any LibrarySystemManaging) throws {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    convenience init(
+      _ url: URL,
+      withContext modelContext: ModelContext,
+      using librarySystemManager: any LibrarySystemManaging
+    ) throws {
       let bookmarkData: BookmarkData
       bookmarkData = try BookmarkData.resolveURL(url, with: modelContext)
+
+      defer {
+        do {
+          try bookmarkData.update(using: modelContext)
+        } catch {
+          assertionFailure(error: error)
+        }
+      }
 
       let bookmarkDataID = bookmarkData.bookmarkID
       var libraryPredicate = FetchDescriptor<LibraryEntry>(

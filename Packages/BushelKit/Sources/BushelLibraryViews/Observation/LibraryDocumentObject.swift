@@ -3,6 +3,8 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
+// swiftlint:disable file_length
+
 #warning("split file up")
 
 #if canImport(SwiftUI)
@@ -20,22 +22,6 @@
 
   @Observable
   class LibraryDocumentObject: LoggerCategorized {
-    internal init(
-      restoreImageImportProgress: ProgressOperationProperties? = nil,
-      error: LibraryError? = nil,
-      selectedItem: LibraryImageFile.ID? = nil,
-      presentFileImporter: Bool = false,
-      modelContext: ModelContext? = nil,
-      librarySystemManager: (any LibrarySystemManaging)? = nil
-    ) {
-      self._error = error
-      self._selectedItem = selectedItem
-      self._presentFileImporter = presentFileImporter
-      self.modelContext = modelContext
-      self.librarySystemManager = librarySystemManager
-      self.restoreImageImportProgress = restoreImageImportProgress
-    }
-
     var restoreImageImportProgress: ProgressOperationProperties?
     var object: LibraryObject?
     var error: LibraryError?
@@ -59,6 +45,22 @@
     @ObservationIgnored
     var librarySystemManager: (any LibrarySystemManaging)?
 
+    internal init(
+      restoreImageImportProgress: ProgressOperationProperties? = nil,
+      error: LibraryError? = nil,
+      selectedItem: LibraryImageFile.ID? = nil,
+      presentFileImporter: Bool = false,
+      modelContext: ModelContext? = nil,
+      librarySystemManager: (any LibrarySystemManaging)? = nil
+    ) {
+      self._error = error
+      self._selectedItem = selectedItem
+      self._presentFileImporter = presentFileImporter
+      self.modelContext = modelContext
+      self.librarySystemManager = librarySystemManager
+      self.restoreImageImportProgress = restoreImageImportProgress
+    }
+
     func onHubImageSelected() {
       guard let selectedHubImage else {
         return
@@ -71,7 +73,10 @@
         self.error = error
         return
       }
-      object.startImportRemoteImageAt(url, metadata: selectedHubImage.metadata) {
+      object.startImportRemoteImageAt(
+        url,
+        metadata: selectedHubImage.metadata
+      ) {
         self.restoreImageImportProgress = $0
       } onError: { error in
         Self.logger.error("Unable to import \(url): \(error)")
@@ -127,7 +132,9 @@
 
       case let (.success(url), .some(object)):
         Self.logger.debug("Importing Restore Image Selected: \(url)")
-        object.startImportRestoreImageAt(url) {
+        object.startImportRestoreImageAt(
+          url
+        ) {
           self.restoreImageImportProgress = $0
         } onError: { error in
           Self.logger.error("Unable to import \(url): \(error)")
@@ -138,13 +145,20 @@
       }
     }
 
-    func loadURL(_ url: URL?, withContext modelContext: ModelContext, using librarySystemManager: any LibrarySystemManaging) {
+    func loadURL(
+      _ url: URL?,
+      withContext modelContext: ModelContext,
+      using librarySystemManager: any LibrarySystemManaging
+    ) {
       self.modelContext = modelContext
       self.librarySystemManager = librarySystemManager
 
       if let url {
         do {
           object = try .init(url, withContext: modelContext, using: librarySystemManager)
+        } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(url) {
+          Self.logger.error("Could not open \(url, privacy: .public): no longer exists")
+          presentFileExporter = true
         } catch {
           Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
 
@@ -172,6 +186,7 @@
       }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {
         return
@@ -203,6 +218,9 @@
       }
       do {
         object = try .init(newValue, withContext: modelContext, using: librarySystemManager)
+      } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(newValue) {
+        Self.logger.error("Could not open \(newValue, privacy: .public): no longer exists")
+        presentFileExporter = true
       } catch {
         Self.logger.error("Could not open \(newValue, privacy: .public): \(error)")
         self.error = assertionFailure(error: error) { error in

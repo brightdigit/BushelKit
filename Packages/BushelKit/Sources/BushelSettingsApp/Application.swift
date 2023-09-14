@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
   import BushelSettingsViews
   import SwiftUI
 
@@ -14,7 +14,7 @@
   public extension Application {
     var body: some Scene {
       Group {
-        Settings()
+        Settings(purchaseScreenValue: 0)
       }
     }
   }

@@ -1,0 +1,10 @@
+//
+// Bushel{{name|firstUppercase}}.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+public struct Bushel{{name|firstUppercase}} {
+  
+}
