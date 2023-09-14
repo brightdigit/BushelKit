@@ -138,6 +138,7 @@ public extension URL {
   static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines).compactMap(URL.init(string:))
 
   static func randomHTTP() -> URL {
+    // swiftlint:disable:next force_unwrapping
     urls.randomElement()!
   }
 

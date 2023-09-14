@@ -1,0 +1,133 @@
+{
+  "identifier" : "504F4455",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1642807785",
+    "_developerTeamID" : "MLT7M394S7",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 715801441.49720204,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21016280",
+      "localizations" : [
+
+      ],
+      "name" : "Bushel Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "10.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "1643979682",
+          "introductoryOffer" : null,
+          "localizations" : [
+
+          ],
+          "productID" : "bushel.pro.monthly.22",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Bushel Pro Monthly",
+          "subscriptionGroupID" : "21016280",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+            {
+              "displayPrice" : "41.99",
+              "internalID" : "782358A6",
+              "numberOfPeriods" : 1,
+              "offerID" : "test.promo.offer.22",
+              "paymentMode" : "payUpFront",
+              "referenceName" : "Test Promo Offer",
+              "subscriptionPeriod" : "P1Y"
+            }
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "65.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "1643977347",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Pro Bushel Features",
+              "displayName" : "Bushel Pro Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "bushel.pro.yearly.22",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Bushel Pro Yearly",
+          "subscriptionGroupID" : "21016280",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

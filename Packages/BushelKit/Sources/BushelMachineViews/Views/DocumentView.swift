@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
   import BushelLogging
   import BushelMachine
+  import BushelMachineEnvironment
   import SwiftUI
 
   struct DocumentView: View {
@@ -26,13 +27,34 @@
         guard let newValue else {
           return
         }
-        self.object.loadURL(newValue, withContext: context, restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:), using: systemManager, metadataLabelProvider.callAsFunction(_:_:))
-      }.onAppear {
+        self.object
+          .loadURL(
+            newValue,
+            withContext: context,
+            restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
+            using: systemManager,
+            metadataLabelProvider.callAsFunction(_:_:)
+          )
+      }
+      .onAppear {
         guard let url = self.machineFile?.url else {
           return
         }
-        self.object.loadURL(url, withContext: context, restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:), using: systemManager, metadataLabelProvider.callAsFunction(_:_:))
-      }.navigationTitle(object.machineObject?.entry.name ?? object.url?.deletingPathExtension().lastPathComponent ?? "Loading Machine...")
+        self.object.loadURL(
+          url,
+          withContext: context,
+          restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
+          using: systemManager,
+          metadataLabelProvider.callAsFunction(_:_:)
+        )
+      }
+      .navigationTitle(
+        object.machineObject?.entry.name ??
+          object.url?
+          .deletingPathExtension()
+          .lastPathComponent ??
+          "Loading Machine..."
+      )
     }
   }
 

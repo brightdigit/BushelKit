@@ -14,21 +14,6 @@
     @Environment(\.dismiss) var dismiss
     @Binding var selectedHubImage: InstallImage?
     @State var object: HubObject
-
-    struct Value: Codable, Hashable {
-      private init() {}
-      static let `default` = Value()
-    }
-
-    init(selectedHubImage: Binding<InstallImage?>, object: HubObject) {
-      self._selectedHubImage = selectedHubImage
-      self._object = .init(wrappedValue: object)
-    }
-
-    public init(selectedHubImage: Binding<InstallImage?>) {
-      self.init(selectedHubImage: selectedHubImage, object: .init())
-    }
-
     public var body: some View {
       NavigationSplitView {
         HubMasterView(
@@ -44,20 +29,31 @@
         ).navigationSplitViewColumnWidth(250)
       } detail: {
         HubDetailView(image: self.object.selectedImage)
-      }.frame(width: 800, height: 400)
-        .toolbar(content: {
-          ToolbarItemGroup {
-            Button("Cancel") {
-              dismiss()
-            }
-            Button("Add Image") {
-              self.selectedHubImage = self.object.selectedImage
-              dismiss()
-            }.disabled(self.object.selectedImage == nil)
+      }
+      .frame(width: 800, height: 400)
+      .toolbar(content: {
+        ToolbarItemGroup {
+          Button("Cancel") {
+            dismiss()
           }
-        }).onAppear(perform: {
-          self.object.hubs = self.hubs
-        })
+          Button("Add Image") {
+            self.selectedHubImage = self.object.selectedImage
+            dismiss()
+          }.disabled(self.object.selectedImage == nil)
+        }
+      })
+      .onAppear(perform: {
+        self.object.hubs = self.hubs
+      })
+    }
+
+    init(selectedHubImage: Binding<InstallImage?>, object: HubObject) {
+      self._selectedHubImage = selectedHubImage
+      self._object = .init(wrappedValue: object)
+    }
+
+    public init(selectedHubImage: Binding<InstallImage?>) {
+      self.init(selectedHubImage: selectedHubImage, object: .init())
     }
   }
 #endif

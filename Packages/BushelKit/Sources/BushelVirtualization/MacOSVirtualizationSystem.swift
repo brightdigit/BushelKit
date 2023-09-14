@@ -14,14 +14,18 @@
   import BushelSystem
 
   public struct MacOSVirtualizationSystem: System, MacOSVirtualizationHubProvider {
-    public init() {}
-
-    public var library: LibrarySystem {
+    public var library: LibrarySystem? {
       MacOSVirtualizationLibrarySystem()
     }
 
-    public var machine: any MachineSystem {
+    public var machine: (any MachineSystem)? {
       MacOSVirtualizationMachineSystem()
     }
+
+    public var hubs: [Hub] {
+      macOSHubs
+    }
+
+    public init() {}
   }
 #endif

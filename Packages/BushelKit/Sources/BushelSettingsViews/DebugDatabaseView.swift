@@ -9,13 +9,6 @@
   import SwiftData
   import SwiftUI
 
-  extension LibraryImageEntry {
-    var libraryBookmarkIDString: String {
-      assert(self.library != nil)
-      return self.library?.bookmarkDataID.uuidString ?? ""
-    }
-  }
-
   struct DebugDatabaseView: View {
     @Query var bookmarks: [BookmarkData]
     @Query var libraries: [LibraryEntry]
@@ -32,14 +25,14 @@
             TableColumn("bookmarkID", value: \.bookmarkID.uuidString)
             TableColumn("path", value: \.path)
           }.padding().tabItem {
-            Image(systemName: "bookmark.fill") // .resource("UI/library").resizable().aspectRatio(contentMode: .fit)
+            Image(systemName: "bookmark.fill")
             Text("Bookmarks")
           }
           Table(self.libraries) {
             TableColumn("bookmarkID", value: \.bookmarkDataID.uuidString)
             TableColumn("images", value: \.imageCount.description)
           }.padding().tabItem {
-            Image(systemName: "books.vertical.fill") // .resource("UI/library").resizable().aspectRatio(contentMode: .fit)
+            Image(systemName: "books.vertical.fill")
             Text("Libraries")
           }
           Table(self.images) {
@@ -47,7 +40,7 @@
             TableColumn("libraryID", value: \.libraryBookmarkIDString)
             TableColumn("operatingSystem", value: \.operatingSystemVersion.description)
           }.padding().tabItem {
-            Image(systemName: "photo.artframe") // .resource("UI/library").resizable().aspectRatio(contentMode: .fit)
+            Image(systemName: "photo.artframe")
             Text("Images")
           }
           Table(self.machines) {
@@ -56,7 +49,7 @@
             TableColumn("Created At", value: \.createdAt.description)
             TableColumn("Last Opened", value: \.lastOpenedDescription)
           }.padding().tabItem {
-            Image(systemName: "server.rack") // .resource("UI/library").resizable().aspectRatio(contentMode: .fit)
+            Image(systemName: "server.rack")
             Text("Machines")
           }
           Table(self.snapshots) {
@@ -65,14 +58,16 @@
             TableColumn("Operating System", value: \.operatingSystemVersionDescription)
             TableColumn("Created At", value: \.createdAt.description)
           }.padding().tabItem {
-            Image(systemName: "camera.badge.clock.fill") // .resource("UI/library").resizable().aspectRatio(contentMode: .fit)
+            Image(systemName: "camera.badge.clock.fill")
             Text("Snapshots")
           }
         }
         Button("Done") {
           dismiss()
         }
-      }.padding().frame(minWidth: 800, minHeight: 400)
+      }
+      .padding()
+      .frame(minWidth: 800, minHeight: 400)
     }
   }
 

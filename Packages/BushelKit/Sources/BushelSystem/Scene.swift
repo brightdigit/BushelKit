@@ -24,8 +24,13 @@
       let (librarySystems, machineSystems, hubs) = systems.reduce(
         into: ([LibrarySystem](), [any MachineSystem](), [Hub]())
       ) { partialResult, system in
-        partialResult.0.append(system.library)
-        partialResult.1.append(system.machine)
+        if let library = system.library {
+          partialResult.0.append(library)
+        }
+        if let machine = system.machine {
+          partialResult.1.append(machine)
+        }
+
         partialResult.2.append(contentsOf: system.hubs)
       }
 

@@ -8,24 +8,25 @@
   import Foundation
   import SwiftUI
 
-  private struct HubViewKey: EnvironmentKey {
-    typealias Value = ViewValue
-
-    static var defaultValue: ViewValue = .init { _ in
-      EmptyView()
-    }
-  }
-
   public struct ViewValue {
+    let content: (Binding<InstallImage?>) -> AnyView
+
     public init(content: @escaping (Binding<InstallImage?>) -> some View) {
       self.content = { image in
         AnyView(content(image))
       }
     }
 
-    let content: (Binding<InstallImage?>) -> AnyView
     func callAsFunction(_ selectedHubImage: Binding<InstallImage?>) -> some View {
       content(selectedHubImage)
+    }
+  }
+
+  private struct HubViewKey: EnvironmentKey {
+    typealias Value = ViewValue
+
+    static var defaultValue: ViewValue = .init { _ in
+      EmptyView()
     }
   }
 
@@ -45,7 +46,12 @@
   }
 
   public extension View {
-    func sheet(isPresented: Binding<Bool>, selectedHubImage: Binding<InstallImage?>, onDismiss: (() -> Void)? = nil, _ viewValue: ViewValue) -> some View {
+    func sheet(
+      isPresented: Binding<Bool>,
+      selectedHubImage: Binding<InstallImage?>,
+      onDismiss: (() -> Void)? = nil,
+      _ viewValue: ViewValue
+    ) -> some View {
       self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
         viewValue(selectedHubImage)
       }

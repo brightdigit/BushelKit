@@ -12,11 +12,20 @@
   import SwiftData
 
   extension ModelContext: InstallerImageRepository {
+    public func installImages(
+      _ labelProvider: @escaping MetadataLabelProvider) throws -> [any InstallerImage] {
+      let imagePredicate = FetchDescriptor<LibraryImageEntry>()
+      let images = try self.fetch(imagePredicate)
+      return images.map { entry in
+        DataInstallerImage(entry: entry, context: self, labelProvider)
+      }
+    }
+
     public func installImage(
       withID id: UUID,
       library: LibraryIdentifier?,
-      _ labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel
-    ) throws -> InstallerImage? {
+      _ labelProvider: @escaping MetadataLabelProvider
+    ) throws -> (any InstallerImage)? {
       switch library {
       case let .bookmarkID(bookmarkDataID):
         var libraryPredicate = FetchDescriptor<LibraryEntry>(

@@ -9,45 +9,43 @@
   import SwiftUI
 
   struct HubMasterRow: View {
-    struct TextFieldButtonHeight: PreferenceKey {
-      static let defaultValue: CGFloat = 0
-
-      static func reduce(value: inout CGFloat,
-                         nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-      }
-    }
-
-    @State private var textFieldButtonHeight: CGFloat?
-
-    internal init(properties: HubMasterRow.Properties) {
-      self.properties = properties
-    }
-
-    let properties: Properties
-
     struct Properties {
       let text: String
       let count: Int?
       let image: () -> Image
     }
 
+    let properties: Properties
+
     var body: some View {
-      HStack {
-        self.properties.image().renderingMode(.template).resizable().aspectRatio(contentMode: .fit).frame(height: textFieldButtonHeight)
-        Text(properties.text).background(GeometryReader { geometry in
-          Color.clear.preference(
-            key: TextFieldButtonHeight.self,
-            value: geometry.size.height
-          )
-        })
-        if let count = properties.count {
-          Spacer()
-          ValueTextBubble(value: count)
+      PreferredLayoutView { value in
+        HStack {
+          self
+            .properties
+            .image()
+            .renderingMode(.template)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: value.get())
+          Text(properties.text).apply(\.size.height, with: value)
+          if let count = properties.count {
+            Spacer()
+            ValueTextBubble(value: count)
+          }
         }
-      }.onPreferenceChange(TextFieldButtonHeight.self) {
-        textFieldButtonHeight = $0
       }
+    }
+
+    internal init(
+      text: String,
+      count: Int?,
+      image: @escaping () -> Image
+    ) {
+      self.init(properties: .init(text: text, count: count, image: image))
+    }
+
+    internal init(properties: HubMasterRow.Properties) {
+      self.properties = properties
     }
   }
 #endif

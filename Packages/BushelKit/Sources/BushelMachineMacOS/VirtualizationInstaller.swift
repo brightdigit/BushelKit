@@ -14,16 +14,19 @@
       .machine
     }
 
-    typealias LoggersType = Loggers
-
     let url: URL
 
     var observations = [UUID: NSKeyValueObservation]()
 
     let installer: VZMacOSInstaller
 
+    init(url: URL, installer: VZMacOSInstaller) {
+      self.url = url
+      self.installer = installer
+    }
+
     @MainActor
-    public func build() async throws {
+    func build() async throws {
       try await withCheckedThrowingContinuation { continuation in
         Task { @MainActor in
           installer.install(completionHandler: continuation.resume(with:))
@@ -31,13 +34,11 @@
       }
     }
 
-    init(url: URL, installer: VZMacOSInstaller) {
-      self.url = url
-      self.installer = installer
-    }
-
-    public func observePercentCompleted(_ onUpdate: @escaping (Double) -> Void) -> UUID {
-      let observation = self.installer.progress.observe(\.fractionCompleted, options: [.new, .initial]) { progress, _ in
+    func observePercentCompleted(_ onUpdate: @escaping (Double) -> Void) -> UUID {
+      let observation = self.installer.progress.observe(
+        \.fractionCompleted,
+        options: [.new, .initial]
+      ) { progress, _ in
         Self.logger.debug("Installlation at \(progress.fractionCompleted)")
         onUpdate(progress.fractionCompleted)
       }

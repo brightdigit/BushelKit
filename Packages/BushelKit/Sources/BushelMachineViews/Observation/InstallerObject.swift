@@ -3,12 +3,21 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(Observation) && os(macOS)
+#if canImport(Observation) && (os(macOS) || os(iOS))
   import BushelMachine
   import Foundation
 
   @Observable
   class InstallerObject {
+    private let builder: MachineBuilder
+
+    var url: URL {
+      builder.url
+    }
+
+    private(set) var percentCompleted: Double = 0.0
+    var id: UUID?
+
     internal init(builder: MachineBuilder, percentCompleted: Double = 0.0) {
       self.builder = builder
       // self.result = result
@@ -19,17 +28,6 @@
         }
       }
     }
-
-    private let builder: MachineBuilder
-
-    var url: URL {
-      builder.url
-    }
-
-    // var result: Result<Void, Error>?
-
-    private(set) var percentCompleted: Double = 0.0
-    var id: UUID?
 
     @MainActor
     func build() async throws {

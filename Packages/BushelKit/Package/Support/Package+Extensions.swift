@@ -15,22 +15,31 @@ extension Package {
     } else {
       var pathComponents = #filePath.split(separator: "/")
       pathComponents.removeLast()
+      // swiftlint:disable:next force_unwrapping
       packageName = String(pathComponents.last!)
     }
     let allTestTargets = testTargets()
     let entries = entries()
     let products = entries.map(_PackageDescription_Product.entry)
     var targets = entries.flatMap(\.productTargets)
-    let dependencies = targets.flatMap { $0.allDependencies() } + allTestTargets.flatMap { $0.allDependencies() }
+    let allTargetsDependencies = targets.flatMap { $0.allDependencies() }
+    let allTestTargetsDependencies = allTestTargets.flatMap { $0.allDependencies() }
+    let dependencies = allTargetsDependencies + allTestTargetsDependencies
     let targetDependencies = dependencies.compactMap { $0 as? Target }
     let packageDependencies = dependencies.compactMap { $0 as? PackageDependency }
     targets += targetDependencies
     targets += allTestTargets.map { $0 as Target }
     assert(targetDependencies.count + packageDependencies.count == dependencies.count)
 
-    let packgeTargets = Dictionary(grouping: targets, by: { $0.name }).values.compactMap(\.first).map(_PackageDescription_Target.entry(_:))
+    let packgeTargets = Dictionary(
+      grouping: targets,
+      by: { $0.name }
+    ).values.compactMap(\.first).map(_PackageDescription_Target.entry(_:))
 
-    let packageDeps = Dictionary(grouping: packageDependencies, by: { $0.productName }).values.compactMap(\.first).map(\.dependency)
+    let packageDeps = Dictionary(
+      grouping: packageDependencies,
+      by: { $0.productName }
+    ).values.compactMap(\.first).map(\.dependency)
 
     self.init(name: packageName, products: products, dependencies: packageDeps, targets: packgeTargets)
   }

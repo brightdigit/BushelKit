@@ -14,6 +14,8 @@ public enum MacOSVirtualization {
     14: "Sonoma"
   ]
 
+  public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
+
   public static func operatingSystemLongName(for metadata: ImageMetadata) -> String {
     "\(operatingSystemShortName(for: metadata)) (\(metadata.buildVersion))"
   }
@@ -27,12 +29,11 @@ public enum MacOSVirtualization {
   }
 
   public static func operatingSystemShortName(for metadata: ImageMetadata) -> String {
+    // swiftlint:disable:next line_length
     "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
   public static func defaultName(fromMetadata metadata: ImageMetadata) -> String {
     operatingSystemShortName(for: metadata)
   }
-
-  public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
 }

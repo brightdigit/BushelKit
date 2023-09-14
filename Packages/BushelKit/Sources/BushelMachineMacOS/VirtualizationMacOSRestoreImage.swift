@@ -12,6 +12,16 @@
   import Foundation
   import Virtualization
 
+  public struct VirtualizationMacOSRestoreImage {
+    public let image: VZMacOSRestoreImage
+    public let url: URL
+
+    internal init(image: VZMacOSRestoreImage, url: URL) {
+      self.image = image
+      self.url = url
+    }
+  }
+
   extension VirtualizationMacOSRestoreImage {
     init(url: URL) async throws {
       let image = try await withCheckedThrowingContinuation { continuation in
@@ -21,13 +31,4 @@
     }
   }
 
-  public struct VirtualizationMacOSRestoreImage {
-    internal init(image: VZMacOSRestoreImage, url: URL) {
-      self.image = image
-      self.url = url
-    }
-
-    public let image: VZMacOSRestoreImage
-    public let url: URL
-  }
 #endif

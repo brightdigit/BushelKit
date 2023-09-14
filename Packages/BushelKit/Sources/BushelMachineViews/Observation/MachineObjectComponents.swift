@@ -13,17 +13,20 @@
 
   struct MachineObjectComponents {
     typealias Machine = BushelMachine.Machine
+
+    let machine: Machine
+    let restoreImage: OperatingSystemInstalled?
+
     internal init(machine: Machine, restoreImage: OperatingSystemInstalled?) {
       if restoreImage == nil {
-        MachineObject.logger.warning("Missing restore image with id: \(machine.configuration.restoreImageFile)")
+        MachineObject.logger.warning(
+          "Missing restore image with id: \(machine.configuration.restoreImageFile)"
+        )
       }
 
       self.machine = machine
       self.restoreImage = restoreImage
     }
-
-    let machine: Machine
-    let restoreImage: OperatingSystemInstalled?
 
     init(
       configuration: MachineObjectConfiguration,
@@ -48,7 +51,7 @@
         throw MachineError.corruptedError(error, at: newURL)
       }
 
-      let restoreImage: InstallerImage?
+      let restoreImage: (any InstallerImage)?
 
       do {
         restoreImage = try configuration.restoreImageDB.installImage(

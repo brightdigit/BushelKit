@@ -73,7 +73,8 @@
         let headers = try await vzRestoreImage.headers()
         try self.init(
           vzRestoreImage: vzRestoreImage,
-          headers: headers, from: url
+          headers: headers,
+          from: url
         )
       }
     }

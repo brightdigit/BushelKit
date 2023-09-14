@@ -24,13 +24,21 @@
     func configure(
       _ configuration: some ApplicationConfiguration
     ) -> some Scene {
-      self.modelContainer(configuration.modelContainer)
-        .hubView(configuration.hubView(_:))
-        .installerImageRepository(configuration.installerImageRepository)
-        .openFileURL(configuration.openFileURL(_:openWindow:))
-        .newLibrary(type(of: configuration).LibraryFileType)
-        .openMachine(type(of: configuration).MachineFileType)
-        .registerSystems(configuration.systems)
+      #if os(macOS)
+        self.modelContainer(configuration.modelContainer)
+          .hubView(configuration.hubView(_:))
+          .installerImageRepository(configuration.installerImageRepository)
+          .openFileURL(configuration.openFileURL(_:openWindow:))
+          .newLibrary(type(of: configuration).LibraryFileType)
+          .openMachine(type(of: configuration).MachineFileType)
+          .registerSystems(configuration.systems)
+      #else
+        self.modelContainer(configuration.modelContainer)
+          .hubView(configuration.hubView(_:))
+          .installerImageRepository(configuration.installerImageRepository)
+          .openFileURL(configuration.openFileURL(_:openWindow:))
+          .registerSystems(configuration.systems)
+      #endif
     }
   }
 #endif

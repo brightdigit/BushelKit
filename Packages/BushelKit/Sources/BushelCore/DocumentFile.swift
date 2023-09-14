@@ -6,11 +6,11 @@
 import Foundation
 
 public struct DocumentFile<FileType: FileTypeSpecification>: Codable, Hashable {
+  public let url: URL
+
   public init(url: URL) {
     self.url = url
   }
-
-  public let url: URL
 
   public func hash(into hasher: inout Hasher) {
     hasher.combine(url)

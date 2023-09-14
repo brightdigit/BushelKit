@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(Observation) && os(macOS)
+#if canImport(Observation) && (os(macOS) || os(iOS))
 
   import BushelCore
   import BushelHub
@@ -14,13 +14,6 @@
   class HubObject: LoggerCategorized {
     static var loggingCategory: Loggers.Category {
       .observation
-    }
-
-    internal init(hubs: [Hub] = [], selectedHub: Hub? = nil, selectedImage: HubImage? = nil, selectedImageID: HubImage.ID? = nil) {
-      self.hubs = hubs
-      self.selectedHub = selectedHub
-      self.selectedImage = selectedImage
-      self.selectedImageID = selectedImageID
     }
 
     var hubs: [Hub]
@@ -77,6 +70,18 @@
         }
         self.selectedImage = selectedImage
       }
+    }
+
+    internal init(
+      hubs: [Hub] = [],
+      selectedHub: Hub? = nil,
+      selectedImage: HubImage? = nil,
+      selectedImageID: HubImage.ID? = nil
+    ) {
+      self.hubs = hubs
+      self.selectedHub = selectedHub
+      self.selectedImage = selectedImage
+      self.selectedImageID = selectedImageID
     }
 
     func invalidate() {

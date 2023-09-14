@@ -12,4 +12,26 @@ public extension URL {
     }
     self = url
   }
+
+  #if !os(Linux)
+    init(resolvingSecurityScopeBookmarkData data: Data, bookmarkDataIsStale: inout Bool) throws {
+      #if os(macOS)
+        try self.init(
+          resolvingBookmarkData: data,
+          options: [.withSecurityScope],
+          bookmarkDataIsStale: &bookmarkDataIsStale
+        )
+      #else
+        try self.init(resolvingBookmarkData: data, bookmarkDataIsStale: &bookmarkDataIsStale)
+      #endif
+    }
+
+    func bookmarkDataWithSecurityScope() throws -> Data {
+      #if os(macOS)
+        return try bookmarkData(options: .withSecurityScope)
+      #else
+        return try self.bookmarkData()
+      #endif
+    }
+  #endif
 }

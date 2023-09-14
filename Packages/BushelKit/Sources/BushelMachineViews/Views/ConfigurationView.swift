@@ -13,50 +13,36 @@
   import SwiftUI
 
   public struct ConfigurationView: View {
-    struct TextFieldButtonHeight: PreferenceKey {
-      static let defaultValue: CGFloat = 0
-
-      static func reduce(value: inout CGFloat,
-                         nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-      }
-    }
-
     @Binding var buildRequest: MachineBuildRequest?
     @State var buildResult: Result<URL, BuildError>?
-    @State private var textFieldButtonHeight: CGFloat?
     @State var object: ConfigurationObject
 
     @Environment(\.modelContext) private var context
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.metadataLabelProvider) private var metadataLabelProvider
+    @Environment(\.machineSystemManager) private var systemManager
 
     var installerImageRepository: InstallerImageRepository {
       self.machineRestoreImageDBFrom(context)
     }
 
-    internal init(request: Binding<MachineBuildRequest?>, object: ConfigurationObject) {
-      self._buildRequest = request
-      self._object = .init(initialValue: object)
-    }
-
     public var restoreImageSectionContent: some View {
-      HStack {
-        TextField(text: .constant(self.object.restoreImageMetadata?.shortName ?? "")) {
-          Text("OS Name")
-        }.background(GeometryReader { geometry in
-          Color.clear.preference(
-            key: TextFieldButtonHeight.self,
-            value: geometry.size.height
-          )
-        }).disabled(true)
+      PreferredLayoutView { value in
+        HStack {
+          TextField(text: .constant(self.object.restoreImageMetadata?.shortName ?? "")) {
+            Text("OS Name")
+          }
+          .apply(\.size.height, with: value)
+          .disabled(true)
 
-        Button(action: {
-          self.object.presentImageSelection = true
-        }, label: {
-          Image.resource("UI/library").resizable().aspectRatio(contentMode: .fit).padding(4.0)
-        }).buttonStyle(.borderless).frame(height: textFieldButtonHeight).padding(.vertical, -8.0)
+          Button(action: {
+            self.object.presentImageSelection = true
+          }, label: {
+            Image.resource("UI/library").resizable().aspectRatio(contentMode: .fit).padding(4.0)
+          }).buttonStyle(.borderless).frame(height: value.get()).padding(.vertical, -8.0)
+        }
       }
     }
 
@@ -77,14 +63,21 @@
 
     public var memorySectionContent: some View {
       HStack {
-        Slider(value: self.$object.configuration.memory, in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)).layoutPriority(100)
+        Slider(
+          value: self.$object.configuration.memory,
+          in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
+        ).layoutPriority(100)
         TextField(
           value: self.$object.configuration.memory,
           formatter: ByteCountFormatter.memory
         ) {
           Text(LocalizedStringID.machineDetailsMemory)
         }.frame(minWidth: 70, idealWidth: 75, maxWidth: 100).multilineTextAlignment(.trailing)
-        Stepper(value: self.$object.configuration.memory, in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024), step: 1 * 1024 * 1024 * 1024) {
+        Stepper(
+          value: self.$object.configuration.memory,
+          in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
+          step: 1 * 1024 * 1024 * 1024
+        ) {
           Text(LocalizedStringID.machineDetailsMemory)
         }
       }
@@ -98,7 +91,9 @@
             dismiss()
           } label: {
             Text("Cancel").frame(minWidth: 0, maxWidth: .infinity)
-          }.keyboardShortcut(.cancelAction).frame(minWidth: 0, maxWidth: .infinity)
+          }
+          .keyboardShortcut(.cancelAction)
+          .frame(minWidth: 0, maxWidth: .infinity)
           Button {
             object.prepareBuild(using: self.installerImageRepository)
           } label: {
@@ -128,9 +123,6 @@
         label: {
           Text("macOS")
         }
-        .onPreferenceChange(TextFieldButtonHeight.self) {
-          textFieldButtonHeight = $0 + 8.0
-        }
 
         GroupLabeledContent {
           cpuSectionContent
@@ -158,14 +150,25 @@
           }
           LabeledContent {
             HStack {
-              Slider(value: self.$object.configuration.primaryStorageSizeFloat, in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)).layoutPriority(100)
+              Slider(
+                value: self.$object.configuration.primaryStorageSizeFloat,
+                in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
+              )
+              .layoutPriority(100)
               TextField(
                 value: self.$object.configuration.primaryStorageSizeFloat,
                 formatter: ByteCountFormatter.file
               ) {
                 Text(LocalizedStringID.machineDetailsMemory)
-              }.labelsHidden().frame(minWidth: 70, idealWidth: 75, maxWidth: 100).multilineTextAlignment(.trailing)
-              Stepper(value: self.$object.configuration.primaryStorageSizeFloat, in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024), step: 1 * 1024 * 1024 * 1024) {
+              }
+              .labelsHidden()
+              .frame(minWidth: 70, idealWidth: 75, maxWidth: 100)
+              .multilineTextAlignment(.trailing)
+              Stepper(
+                value: self.$object.configuration.primaryStorageSizeFloat,
+                in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
+                step: 1 * 1024 * 1024 * 1024
+              ) {
                 Text(LocalizedStringID.machineDetailsMemory)
               }
             }
@@ -181,7 +184,9 @@
       }
       .frame(width: 350)
       .padding()
-      .background(content: self.listenForExport)
+      .background {
+        self.listenForExport
+      }
       .onChange(of: self.buildRequest, self.object.onBuildRequestChange(from:to:))
       .onChange(of: self.object.configuration.restoreImageID, self.object.onRestoreImageChange(from:to:))
       .onChange(of: self.buildResult) { _, newValue in
@@ -189,16 +194,29 @@
           return
         }
         self.openWindow(value: MachineFile(url: machineURL))
+        self.dismiss()
       }
       .onAppear {
-        self.object.setupFrom(request: self.buildRequest, using: self.installerImageRepository)
+        self.object.setupFrom(
+          request: self.buildRequest,
+          systemManager: self.systemManager,
+          using: self.installerImageRepository,
+          labelProvider: metadataLabelProvider.callAsFunction
+        )
       }
       .sheet(item: self.$object.builder) { builder in
         InstallerView(buildResult: self.$buildResult, builder: builder.builder)
       }
+      .sheet(isPresented: self.$object.presentImageSelection) {
+        ImageListSelectionView(
+          selectedImageID: self.$object.sheetSelectedRestoreImageID,
+          images: self.object.images
+        )
+        .frame(width: 500, height: 200)
+      }
     }
 
-    func listenForExport() -> some View {
+    var listenForExport: some View {
       Group {
         if let machineConfiguration = object.machineConfiguration {
           Color.clear
@@ -214,6 +232,11 @@
           Color.clear
         }
       }
+    }
+
+    internal init(request: Binding<MachineBuildRequest?>, object: ConfigurationObject) {
+      self._buildRequest = request
+      self._object = .init(initialValue: object)
     }
   }
 

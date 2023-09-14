@@ -29,12 +29,10 @@ public extension InstallerImage where Self: LoggerCategorized {
   static var loggingCategory: BushelLogging.Loggers.Category {
     .library
   }
-
-  typealias LoggersType = BushelLogging.Loggers
 }
 
 extension InstallerImage {
   var indentifier: InstallerImageIdentifier {
-    InstallerImageIdentifier(libraryID: libraryID, imageID: imageID)
+    InstallerImageIdentifier(imageID: imageID, libraryID: libraryID)
   }
 }

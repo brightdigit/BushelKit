@@ -7,15 +7,15 @@
   import Foundation
 
   internal class KVNSObservation: KVObservation {
+    let observed: NSObject
+    let observer: NSObject
+    let keyPaths: [String]
+
     internal init(observed: NSObject, observer: NSObject, keyPaths: [String]) {
       self.observed = observed
       self.observer = observer
       self.keyPaths = keyPaths
     }
-
-    let observed: NSObject
-    let observer: NSObject
-    let keyPaths: [String]
 
     deinit {
       for keyPath in keyPaths {

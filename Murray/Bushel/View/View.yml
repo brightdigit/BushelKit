@@ -1,0 +1,11 @@
+name: View
+parameters:
+- name: "name"
+  isRequired: true
+- name: "module"
+  isRequired: true
+paths:
+- from: View.swift.stencil
+  to: '{{paths.sources}}/Bushel{{module|firstUppercase}}Views/{{name|firstUppercase}}View.swift'
+description: An item named View created from scaffold
+replacements: []

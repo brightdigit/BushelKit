@@ -3,16 +3,12 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(Observation) && os(macOS)
+#if canImport(Observation) && (os(macOS) || os(iOS))
   import Foundation
   import Observation
 
   @Observable
   public class FileOperationProgress<ValueType: BinaryInteger>: Identifiable {
-    public init(_ operation: any ProgressOperation<ValueType>) {
-      self.operation = operation
-    }
-
     let operation: any ProgressOperation<ValueType>
 
     public var id: URL {
@@ -33,6 +29,10 @@
 
     var totalValue: Double? {
       operation.totalValue.map(Double.init)
+    }
+
+    public init(_ operation: any ProgressOperation<ValueType>) {
+      self.operation = operation
     }
   }
 #endif

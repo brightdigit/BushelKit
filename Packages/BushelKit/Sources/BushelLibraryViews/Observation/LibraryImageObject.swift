@@ -15,13 +15,6 @@
 
   @Observable
   class LibraryImageObject: LoggerCategorized {
-    internal init(index: Int, library: LibraryObject, entry: LibraryImageEntry) {
-      self.index = index
-      self.library = library
-      self.entry = entry
-      self.name = _entry.name
-    }
-
     var library: LibraryObject
     var entry: LibraryImageEntry
     let index: Int
@@ -35,6 +28,13 @@
         self.library.library.items[index].name = self.name
         self.entry.name = self.name
       }
+    }
+
+    internal init(index: Int, library: LibraryObject, entry: LibraryImageEntry) {
+      self.index = index
+      self.library = library
+      self.entry = entry
+      self.name = _entry.name
     }
 
     deinit {

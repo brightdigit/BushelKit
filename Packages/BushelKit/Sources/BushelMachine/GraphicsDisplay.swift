@@ -12,15 +12,15 @@ public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConv
   public let heightInPixels: Int
   public let pixelsPerInch: Int
 
+  public var description: String {
+    "\(widthInPixels) x \(heightInPixels) (\(pixelsPerInch) ppi)"
+  }
+
   public init(id: UUID = .init(), widthInPixels: Int, heightInPixels: Int, pixelsPerInch: Int) {
     self.id = id
     self.widthInPixels = widthInPixels
     self.heightInPixels = heightInPixels
     self.pixelsPerInch = pixelsPerInch
-  }
-
-  public var description: String {
-    "\(widthInPixels) x \(heightInPixels) (\(pixelsPerInch) ppi)"
   }
 }
 

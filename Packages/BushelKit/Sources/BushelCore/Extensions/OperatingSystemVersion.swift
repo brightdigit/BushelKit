@@ -6,75 +6,6 @@
 import Foundation
 
 extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebugStringConvertible, Codable {
-  fileprivate func encodeAsString(to encoder: Encoder) throws {
-    var container = encoder.singleValueContainer()
-
-    try container.encode(self.description)
-  }
-
-  fileprivate func encodeAsComposite(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: Self.CodingKeys.self)
-    try container.encode(self.majorVersion, forKey: .majorVersion)
-    try container.encode(self.minorVersion, forKey: .minorVersion)
-    try container.encode(self.patchVersion, forKey: .patchVersion)
-  }
-
-  public func encode(to encoder: Encoder) throws {
-    let throwingError: Swift.Error
-    do {
-      try encodeAsString(to: encoder)
-      return
-    } catch {
-      throwingError = error
-    }
-    do {
-      try encodeAsComposite(to: encoder)
-    } catch {
-      throw throwingError
-    }
-  }
-
-  public init(compositeFrom decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: CodingKeys.self)
-    let majorVersion: Int = try container.decode(Int.self, forKey: .majorVersion)
-    let minorVersion: Int = try container.decode(Int.self, forKey: .minorVersion)
-    let patchVersion: Int = try container.decode(Int.self, forKey: .patchVersion)
-    self.init(majorVersion: majorVersion, minorVersion: minorVersion, patchVersion: patchVersion)
-  }
-
-  static func singleStringDecodingContainer(from decoder: Decoder) -> SingleValueDecodingContainer? {
-    try? decoder.singleValueContainer()
-  }
-
-  public init(container: SingleValueDecodingContainer) throws {
-    let value = try container.decode(String.self)
-    try self.init(string: value)
-  }
-
-  public init(stringFrom decoder: Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    try self.init(container: container)
-  }
-
-  public init(from decoder: Decoder) throws {
-    let throwingError: Swift.Error?
-    if let container = Self.singleStringDecodingContainer(from: decoder) {
-      do {
-        try self.init(container: container)
-        return
-      } catch {
-        throwingError = error
-      }
-    } else {
-      throwingError = nil
-    }
-    do {
-      try self.init(compositeFrom: decoder)
-    } catch {
-      throw throwingError ?? error
-    }
-  }
-
   enum CodingKeys: String, CodingKey {
     case majorVersion
     case minorVersion
@@ -108,6 +39,47 @@ extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebug
     )
   }
 
+  public init(compositeFrom decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    let majorVersion: Int = try container.decode(Int.self, forKey: .majorVersion)
+    let minorVersion: Int = try container.decode(Int.self, forKey: .minorVersion)
+    let patchVersion: Int = try container.decode(Int.self, forKey: .patchVersion)
+    self.init(majorVersion: majorVersion, minorVersion: minorVersion, patchVersion: patchVersion)
+  }
+
+  public init(container: SingleValueDecodingContainer) throws {
+    let value = try container.decode(String.self)
+    try self.init(string: value)
+  }
+
+  public init(stringFrom decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    try self.init(container: container)
+  }
+
+  public init(from decoder: Decoder) throws {
+    let throwingError: Swift.Error?
+    if let container = Self.singleStringDecodingContainer(from: decoder) {
+      do {
+        try self.init(container: container)
+        return
+      } catch {
+        throwingError = error
+      }
+    } else {
+      throwingError = nil
+    }
+    do {
+      try self.init(compositeFrom: decoder)
+    } catch {
+      throw throwingError ?? error
+    }
+  }
+
+  static func singleStringDecodingContainer(from decoder: Decoder) -> SingleValueDecodingContainer? {
+    try? decoder.singleValueContainer()
+  }
+
   public static func == (
     lhs: OperatingSystemVersion,
     rhs: OperatingSystemVersion
@@ -115,6 +87,34 @@ extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebug
     lhs.majorVersion == rhs.majorVersion &&
       lhs.minorVersion == rhs.minorVersion &&
       lhs.patchVersion == rhs.patchVersion
+  }
+
+  private func encodeAsString(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+
+    try container.encode(self.description)
+  }
+
+  private func encodeAsComposite(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: Self.CodingKeys.self)
+    try container.encode(self.majorVersion, forKey: .majorVersion)
+    try container.encode(self.minorVersion, forKey: .minorVersion)
+    try container.encode(self.patchVersion, forKey: .patchVersion)
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    let throwingError: Swift.Error
+    do {
+      try encodeAsString(to: encoder)
+      return
+    } catch {
+      throwingError = error
+    }
+    do {
+      try encodeAsComposite(to: encoder)
+    } catch {
+      throw throwingError
+    }
   }
 
   public func hash(into hasher: inout Hasher) {

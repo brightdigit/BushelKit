@@ -24,55 +24,26 @@ public enum Configuration {
     }()
   }
 
-  struct PrereleaseLabel {
-    let label: String
-    let baseNumber: Int
-  }
-
   // swiftlint:disable:next force_unwrapping
   static let userDefaults = UserDefaults(suiteName: "group.com.brightdigit.Bushel")!
 
   static let scheme = "bushel"
-  static let cfBundleShortVersionString = "CFBundleShortVersionString"
+  // static let cfBundleShortVersionString = "CFBundleShortVersionString"
   static let baseURLComponents: URLComponents = {
     var components = URLComponents()
     components.scheme = Self.scheme
     return components
   }()
 
-  #if os(Linux)
-    static let bundleVersionKey: String = "CFBundleVersion"
-  #else
-
-    static let bundleVersionKey: String = kCFBundleVersionKey as String
-
-  #endif
-
-  static let prereleaseLabel: PrereleaseLabel? = .init(label: "alpha", baseNumber: 25)
-  static let prerelaseOffset = 2
-
-  static let applicationMarketingVersionValue = Bundle.main
-    // swiftlint:disable:next force_cast
-    .object(forInfoDictionaryKey: cfBundleShortVersionString) as! String
-
-  public static let applicationMarketingVersionText: String = {
-    guard let prereleaseLabel else {
-      return applicationMarketingVersionValue
-    }
-
-    // swiftlint:disable:next line_length
-    return "\(applicationMarketingVersionValue) \(prereleaseLabel.label) \(applicationBuildNumber - prereleaseLabel.baseNumber - prerelaseOffset)"
-  }()
-
-  static let applicationBuildString: String = Bundle.main
-    // swiftlint:disable:next force_cast
-    .object(forInfoDictionaryKey: bundleVersionKey) as! String
-
   // swiftlint:disable:next force_unwrapping
-  static let applicationBuildNumber: Int = .init(applicationBuildString)!
+  public static let version: Version = .init()!
 
-  public static let applicationBuildFormatted: String = {
-    var hexString = String(applicationBuildNumber, radix: 16)
-    return String(String(repeating: "0", count: 8).appending(hexString).suffix(8))
-  }()
+  public static let versionFormatted: VersionFormatted = .init(version: Self.version)
+}
+
+public extension Configuration {
+  enum Marketplace {
+    #warning("Put this in a plist")
+    public static let groupID = "21016280"
+  }
 }

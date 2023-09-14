@@ -10,11 +10,11 @@ import Foundation
 #endif
 
 public struct InvalidResponseError: LocalizedError {
+  public let response: URLResponse
+  public let url: URL
+
   public init(_ response: URLResponse, from url: URL) {
     self.response = response
     self.url = url
   }
-
-  public let response: URLResponse
-  public let url: URL
 }

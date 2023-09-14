@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
   import BushelLogging
   import BushelMachine
   import BushelMachineEnvironment
@@ -55,13 +55,6 @@
       }
 
       .toolbar(content: {
-//          ToolbarItem(placement: .status) {
-//            Label {
-//              Text(self.object.state.sfSystemName)
-//            } icon: {
-//              Image(systemName: self.object.state.sfSystemName)
-//            }
-//          }
         ToolbarItemGroup {
           self.startPauseResume.tint(.primary)
 
@@ -74,7 +67,10 @@
           }.disabled(!self.object.canRequestStop).tint(.primary)
         }
       })
-      .alert("Shutdown Machine", isPresented: self.$object.presentConfirmCloseAlert) {
+      .alert(
+        "Shutdown Machine",
+        isPresented: self.$object.presentConfirmCloseAlert
+      ) {
         Button {
           closeOnShutdown = true
           self.object.beginShutdown()
@@ -141,7 +137,10 @@
       )
     }
 
-    static func navigationTitle(from machineObject: MachineObject?, default defaultValue: String) -> String {
+    static func navigationTitle(
+      from machineObject: MachineObject?,
+      default defaultValue: String
+    ) -> String {
       machineObject.map(Self.navigationTitle(from:)) ?? defaultValue
     }
 

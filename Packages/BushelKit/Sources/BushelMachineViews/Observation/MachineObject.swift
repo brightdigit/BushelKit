@@ -16,23 +16,6 @@
 
   @Observable
   class MachineObject: LoggerCategorized {
-    internal init(
-      machine: MachineObject.Machine,
-      entry: MachineEntry,
-      modelContext: ModelContext? = nil,
-      systemManager: MachineSystemManaging? = nil
-    ) {
-      self.machine = machine
-      self.entry = entry
-      self.modelContext = modelContext
-      self.systemManager = systemManager
-
-      self.observationID = machine.beginObservation(self.machineUpdated(_:))
-      Task { @MainActor in
-        self.machineUpdated(machine)
-      }
-    }
-
     typealias Machine = BushelMachine.Machine
 
     var machine: Machine {
@@ -40,7 +23,11 @@
         machine.removeObservation(withID: observationID)
       }
       didSet {
-        self.observationID = machine.beginObservation(self.machineUpdated)
+        self.observationID = machine.beginObservation { change in
+          Task { @MainActor in
+            self.machineUpdated(change)
+          }
+        }
 
         Task { @MainActor in
           self.machineUpdated(machine)
@@ -60,6 +47,38 @@
     var canResume: Bool = false
     var canRequestStop: Bool = false
 
+    var entry: MachineEntry
+
+    @ObservationIgnored
+    var observationID: UUID?
+
+    @ObservationIgnored
+    var modelContext: ModelContext?
+
+    @ObservationIgnored
+    var systemManager: (any MachineSystemManaging)?
+
+    internal init(
+      machine: MachineObject.Machine,
+      entry: MachineEntry,
+      modelContext: ModelContext? = nil,
+      systemManager: MachineSystemManaging? = nil
+    ) {
+      self.machine = machine
+      self.entry = entry
+      self.modelContext = modelContext
+      self.systemManager = systemManager
+
+      self.observationID = machine.beginObservation { change in
+        Task { @MainActor in
+          self.machineUpdated(change)
+        }
+      }
+      Task { @MainActor in
+        self.machineUpdated(machine)
+      }
+    }
+
     @MainActor
     func machineUpdated(_ update: MachineChange) {
       self.machineUpdated(update.source)
@@ -75,17 +94,6 @@
       self.canRequestStop = source.canRequestStop
     }
 
-    var entry: MachineEntry
-
-    @ObservationIgnored
-    var observationID: UUID?
-
-    @ObservationIgnored
-    var modelContext: ModelContext?
-
-    @ObservationIgnored
-    var systemManager: (any MachineSystemManaging)?
-
     deinit {
       self.machine.removeObservation(withID: observationID)
     }
@@ -97,6 +105,14 @@
     ) throws {
       let bookmarkData: BookmarkData
       bookmarkData = try BookmarkData.resolveURL(configuration.url, with: configuration.modelContext)
+
+      defer {
+        do {
+          try bookmarkData.update(using: configuration.modelContext)
+        } catch {
+          assertionFailure(error: error)
+        }
+      }
 
       let bookmarkDataID = bookmarkData.bookmarkID
       var machinePredicate = FetchDescriptor<MachineEntry>(
@@ -117,7 +133,11 @@
       )
       if let item = items.first {
         do {
-          try item.synchronizeWith(components.machine, osInstalled: components.restoreImage, using: configuration.modelContext)
+          try item.synchronizeWith(
+            components.machine,
+            osInstalled: components.restoreImage,
+            using: configuration.modelContext
+          )
         } catch {
           throw MachineError.fromDatabaseError(error)
         }
@@ -139,7 +159,12 @@
           throw MachineError.fromDatabaseError(error)
         }
       }
-      self.init(machine: components.machine, entry: entry, modelContext: configuration.modelContext, systemManager: configuration.systemManager)
+      self.init(
+        machine: components.machine,
+        entry: entry,
+        modelContext: configuration.modelContext,
+        systemManager: configuration.systemManager
+      )
     }
   }
 

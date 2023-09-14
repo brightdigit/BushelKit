@@ -12,6 +12,7 @@ import BushelCore
       if fileType.isOwned {
         self.init(exportedAs: fileType.utIdentifier)
       } else {
+        // swiftlint:disable:next force_unwrapping
         self.init(fileType.utIdentifier)!
       }
     }

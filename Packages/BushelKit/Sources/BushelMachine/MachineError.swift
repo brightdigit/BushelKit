@@ -12,27 +12,7 @@ import Foundation
 #endif
 
 public struct MachineError: LocalizedError, LoggerCategorized {
-  public static var loggingCategory: BushelLogging.Loggers.Category {
-    .library
-  }
-
   public typealias LoggersType = BushelLogging.Loggers
-
-  fileprivate init<TypedError: Error>(innerError: Error, as _: TypedError.Type, details: MachineError.Details) throws {
-    guard let innerError = innerError as? TypedError else {
-      throw innerError
-    }
-    self.init(innerError: innerError, details: details)
-  }
-
-  fileprivate init(innerError: Error? = nil, details: MachineError.Details) {
-    if let innerError = innerError as? MachineError {
-      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
-      Self.logger.critical("Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)")
-    }
-    self.innerError = innerError
-    self.details = details
-  }
 
   enum Details {
     private struct UnknownError: Error {
@@ -43,8 +23,8 @@ public struct MachineError: LocalizedError, LoggerCategorized {
     case bookmarkError
     case systemResolution
     case missingRestoreImageWithID(InstallerImageIdentifier)
-    case accessDeniedLibrary(at: URL)
-    case corrupted(at: URL)
+    case accessDeniedLibraryAt(URL)
+    case corruptedAt(URL)
     case database
 
     func errorDescription(fromError error: Error?) -> String {
@@ -59,11 +39,13 @@ public struct MachineError: LocalizedError, LoggerCategorized {
         let error = error ?? UnknownError.shared
         return "Unable to resolve new image: \(error)"
 
-      case let .accessDeniedLibrary(at: path):
-        let components: [String?] = ["There's an issue getting access to library at \(path)", error?.localizedDescription]
+      case let .accessDeniedLibraryAt(path):
+        let components: [String?] = [
+          "There's an issue getting access to library at \(path)", error?.localizedDescription
+        ]
         return components.compactMap { $0 }.joined(separator: ": ")
 
-      case let .corrupted(at: libraryURL):
+      case let .corruptedAt(libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue reading the library at \(libraryURL): \(error)"
@@ -79,34 +61,38 @@ public struct MachineError: LocalizedError, LoggerCategorized {
 
     func recoverySuggestion(fromError _: Error?) -> String? {
       switch self {
-      case .accessDeniedLibrary(at: _):
-        return "Close and open the library again."
+      case .accessDeniedLibraryAt:
+        "Close and open the library again."
       default:
-        return nil
+        nil
       }
     }
 
     func isRecoverable(fromError _: Error?) -> Bool {
       switch self {
       case .bookmarkError:
-        return false
+        false
 
-      case .accessDeniedLibrary(at: _):
-        return false
+      case .accessDeniedLibraryAt:
+        false
 
-      case .corrupted(at: _):
-        return false
+      case .corruptedAt:
+        false
 
       case .database:
-        return false
+        false
 
       case .systemResolution:
-        return false
+        false
 
       case .missingRestoreImageWithID:
-        return true
+        true
       }
     }
+  }
+
+  public static var loggingCategory: BushelLogging.Loggers.Category {
+    .library
   }
 
   let innerError: Error?
@@ -123,6 +109,29 @@ public struct MachineError: LocalizedError, LoggerCategorized {
   public var isRecoverable: Bool {
     details.isRecoverable(fromError: innerError)
   }
+
+  fileprivate init<TypedError: Error>(
+    innerError: Error,
+    as _: TypedError.Type,
+    details: MachineError.Details
+  ) throws {
+    guard let innerError = innerError as? TypedError else {
+      throw innerError
+    }
+    self.init(details: details, innerError: innerError)
+  }
+
+  fileprivate init(details: MachineError.Details, innerError: Error? = nil) {
+    if let innerError = innerError as? MachineError {
+      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
+      Self.logger.critical(
+        // swiftlint:disable:next line_length
+        "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"
+      )
+    }
+    self.innerError = innerError
+    self.details = details
+  }
 }
 
 public extension MachineError {
@@ -131,14 +140,14 @@ public extension MachineError {
   }
 
   static func accessDeniedError(_ error: Error?, at url: URL) -> MachineError {
-    MachineError(innerError: error, details: .accessDeniedLibrary(at: url))
+    MachineError(details: .accessDeniedLibraryAt(url), innerError: error)
   }
 
   static func corruptedError(_ error: Error, at url: URL) -> MachineError {
-    MachineError(innerError: error, details: .corrupted(at: url))
+    MachineError(details: .corruptedAt(url), innerError: error)
   }
 
   static func fromDatabaseError(_ error: Error) -> MachineError {
-    MachineError(innerError: error, details: .database)
+    MachineError(details: .database, innerError: error)
   }
 }

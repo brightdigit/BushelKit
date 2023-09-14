@@ -54,7 +54,12 @@ public extension FileManager {
   }
 
   @discardableResult
-  func createEmptyDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, deleteExistingFile: Bool, attributes _: [FileAttributeKey: Any]? = nil) throws -> DirectoryExists {
+  func createEmptyDirectory(
+    at url: URL,
+    withIntermediateDirectories createIntermediates: Bool,
+    deleteExistingFile: Bool,
+    attributes: [FileAttributeKey: Any]? = nil
+  ) throws -> DirectoryExists {
     let directoryExistsStatus = self.directoryExists(at: url)
 
     switch directoryExistsStatus {
@@ -68,7 +73,11 @@ public extension FileManager {
       fallthrough
 
     case .notExists:
-      try FileManager.default.createDirectory(at: url, withIntermediateDirectories: createIntermediates)
+      try FileManager.default.createDirectory(
+        at: url,
+        withIntermediateDirectories: createIntermediates,
+        attributes: attributes
+      )
     }
 
     return directoryExistsStatus

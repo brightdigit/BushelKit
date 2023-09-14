@@ -5,8 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelData
   import BushelMachine
+  import BushelMachineData
   import BushelMachineMacOS
   import BushelMachineViews
   import BushelViewsCore

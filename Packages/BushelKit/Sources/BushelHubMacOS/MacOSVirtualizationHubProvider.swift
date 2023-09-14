@@ -13,6 +13,10 @@
   public protocol MacOSVirtualizationHubProvider {}
 
   private extension MacOSVirtualization {
+    static let hubs: [Hub] = [
+      Hub(title: "Apple", id: "apple", count: 1, Self.hubImages)
+    ]
+
     static func hubImages() async throws -> [HubImage] {
       let restoreImage = try await VZMacOSRestoreImage.fetchLatestSupported()
       let imageMetadata = try await ImageMetadata(vzRestoreImage: restoreImage, url: restoreImage.url)
@@ -25,14 +29,10 @@
         )
       ]
     }
-
-    static let hubs: [Hub] = [
-      Hub(title: "Apple", id: "apple", count: 1, Self.hubImages)
-    ]
   }
 
   public extension MacOSVirtualizationHubProvider {
-    var hubs: [Hub] {
+    var macOSHubs: [Hub] {
       MacOSVirtualization.hubs
     }
   }
