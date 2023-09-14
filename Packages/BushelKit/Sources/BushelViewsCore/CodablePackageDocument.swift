@@ -15,17 +15,22 @@
       case missingConfigurationAtKey(String)
     }
 
-    public init(configuration: T) {
-      self.configuration = configuration
-    }
-
-    let configuration: T
     public static var readableContentTypes: [UTType] {
       T.readableContentTypes.map(UTType.init)
     }
 
+    let configuration: T
+
+    public init(configuration: T) {
+      self.configuration = configuration
+    }
+
     public init(configuration: ReadConfiguration) throws {
-      guard let configJSONWrapperData = configuration.file.fileWrappers?[T.configurationFileWrapperKey]?.regularFileContents else {
+      let regularFileContents = configuration
+        .file
+        .fileWrappers?[T.configurationFileWrapperKey]?
+        .regularFileContents
+      guard let configJSONWrapperData = regularFileContents else {
         throw ReadError.missingConfigurationAtKey(T.configurationFileWrapperKey)
       }
 

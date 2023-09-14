@@ -3,61 +3,77 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
+  import BushelCore
   import BushelLocalization
+  import BushelMarketEnvironment
   import StoreKit
   import SwiftUI
 
-  public struct PreferencesView: View {
-    public init() {}
+  public struct PreferencesView<PurchaseScreenValue: Codable & Hashable>:
+    View {
     private enum Tabs: Hashable {
-      case general, advanced, tests
+      case general, advanced, tests, about
     }
+
+    @Environment(\.openWindow) var openWindow
+    @Environment(\.marketplace) var marketplace
+
+    let purchaseScreenValue: PurchaseScreenValue
 
     public var body: some View {
       TabView {
-        Text(.generalSettings)
+        GeneralSettingsView()
           .tabItem {
             Label("General", systemImage: "gear")
           }
           .tag(Tabs.general)
+
         AdvancedSettingsView()
           .tabItem {
-            Label("Advanced", systemImage: "star")
+            Label("Advanced", systemImage: "wrench.and.screwdriver.fill")
           }
           .tag(Tabs.advanced)
-        VStack {
-          Button("Onboarding Screen") {
-//            Windows.openWindow(withHandle: BasicWindowOpenHandle.onboarding)
-          }
 
-          Button("Review Request") {
-            SKStoreReviewController.requestReview()
+        DebuggingView(purchaseScreenValue: purchaseScreenValue)
+          .tabItem {
+            Label("Test Panel", systemImage: "ladybug.fill")
           }
+          .tag(Tabs.tests)
 
-          Button("Purchase Screen") {
-//            Windows.openWindow(withHandle: BasicWindowOpenHandle.purchase)
-          }
-        }
-        .padding(20.0)
+        AboutView(
+          version: Configuration.version,
+          subscriptionEndDate: self.marketplace.subscriptionEndDate,
+          purchaseScreenValue: self.purchaseScreenValue
+        )
         .tabItem {
-          Label("Test Panel", systemImage: "capsule.portrait.bottomhalf.filled")
+          Label {
+            Text("About")
+          } icon: {
+            Image.resource("Logo-Monochrome").resizable().padding()
+          }
         }
-        .tag(Tabs.tests)
+        .tag(Tabs.about)
       }
       .padding(20)
-      .frame(width: 375, height: 150)
+      .frame(minWidth: 900, minHeight: 450)
+    }
+
+    public init(purchaseScreenValue: PurchaseScreenValue) {
+      self.purchaseScreenValue = purchaseScreenValue
     }
   }
 
   #Preview() {
-    PreferencesView()
+    PreferencesView<Int>(purchaseScreenValue: 0)
   }
 
   public extension Settings {
-    init() where Content == PreferencesView {
+    init<PurchaseScreenValue: Codable & Hashable>(
+      purchaseScreenValue: PurchaseScreenValue
+    ) where Content == PreferencesView<PurchaseScreenValue> {
       self.init {
-        PreferencesView()
+        PreferencesView(purchaseScreenValue: purchaseScreenValue)
       }
     }
   }

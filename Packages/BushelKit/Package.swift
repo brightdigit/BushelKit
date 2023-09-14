@@ -87,22 +87,31 @@ extension Package {
     } else {
       var pathComponents = #filePath.split(separator: "/")
       pathComponents.removeLast()
+      // swiftlint:disable:next force_unwrapping
       packageName = String(pathComponents.last!)
     }
     let allTestTargets = testTargets()
     let entries = entries()
     let products = entries.map(_PackageDescription_Product.entry)
     var targets = entries.flatMap(\.productTargets)
-    let dependencies = targets.flatMap { $0.allDependencies() } + allTestTargets.flatMap { $0.allDependencies() }
+    let allTargetsDependencies = targets.flatMap { $0.allDependencies() }
+    let allTestTargetsDependencies = allTestTargets.flatMap { $0.allDependencies() }
+    let dependencies = allTargetsDependencies + allTestTargetsDependencies
     let targetDependencies = dependencies.compactMap { $0 as? Target }
     let packageDependencies = dependencies.compactMap { $0 as? PackageDependency }
     targets += targetDependencies
     targets += allTestTargets.map { $0 as Target }
     assert(targetDependencies.count + packageDependencies.count == dependencies.count)
 
-    let packgeTargets = Dictionary(grouping: targets, by: { $0.name }).values.compactMap(\.first).map(_PackageDescription_Target.entry(_:))
+    let packgeTargets = Dictionary(
+      grouping: targets,
+      by: { $0.name }
+    ).values.compactMap(\.first).map(_PackageDescription_Target.entry(_:))
 
-    let packageDeps = Dictionary(grouping: packageDependencies, by: { $0.productName }).values.compactMap(\.first).map(\.dependency)
+    let packageDeps = Dictionary(
+      grouping: packageDependencies,
+      by: { $0.productName }
+    ).values.compactMap(\.first).map(\.dependency)
 
     self.init(name: packageName, products: products, dependencies: packageDeps, targets: packgeTargets)
   }
@@ -260,11 +269,17 @@ enum SupportedPlatformBuilder {
     first
   }
 
-  static func buildPartialBlock(accumulated: any SupportedPlatforms, next: any SupportedPlatforms) -> any SupportedPlatforms {
+  static func buildPartialBlock(
+    accumulated: any SupportedPlatforms,
+    next: any SupportedPlatforms
+  ) -> any SupportedPlatforms {
     accumulated.appending(next)
   }
 
-  static func buildPartialBlock(accumulated: any SupportedPlatforms, next: SupportedPlatform) -> any SupportedPlatforms {
+  static func buildPartialBlock(
+    accumulated: any SupportedPlatforms,
+    next: SupportedPlatform
+  ) -> any SupportedPlatforms {
     accumulated.appending([next])
   }
 }
@@ -441,7 +456,7 @@ import PackageDescription
 
 struct FelinePine: PackageDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/FelinePine.git", from: "0.1.0-alpha.3")
+    .package(url: "https://github.com/brightdigit/FelinePine.git", from: "0.1.0-alpha.4")
   }
 }
 //
@@ -474,6 +489,8 @@ struct BushelApp: Product, Target {
     BushelData()
     BushelHub()
     BushelFactory()
+    BushelMarket()
+    BushelWax()
   }
 }
 //
@@ -696,6 +713,7 @@ struct BushelLibraryViews: Target {
   var dependencies: any Dependencies {
     BushelLibrary()
     BushelLibraryData()
+    BushelLibraryEnvironment()
     BushelLogging()
     BushelUT()
     BushelViewsCore()
@@ -795,6 +813,57 @@ struct BushelMachineViews: Target {
   }
 }
 //
+// BushelMarket.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+struct BushelMarket: Target {
+  var dependencies: any Dependencies {
+    BushelViewsCore()
+  }
+}
+//
+// BushelMarketEnvironment.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelMarketEnvironment: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMarket()
+  }
+}
+//
+// BushelMarketStore.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelMarketStore: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMarket()
+  }
+}
+//
+// BushelMarketViews.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelMarketViews: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMarket()
+    BushelMarketStore()
+    BushelMarketEnvironment()
+    BushelViewsCore()
+  }
+}
+//
 // BushelProgressUI.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -818,6 +887,7 @@ struct BushelSettingsViews: Target {
   var dependencies: any Dependencies {
     BushelData()
     BushelLocalization()
+    BushelMarketEnvironment()
   }
 }
 //
@@ -859,6 +929,7 @@ struct BushelViews: Target {
     BushelSettingsViews()
     BushelWelcomeViews()
     BushelHubViews()
+    BushelMarketViews()
   }
 }
 //
@@ -883,6 +954,20 @@ struct BushelVirtualization: Target {
     BushelMachineMacOS()
     BushelHubMacOS()
     BushelSystem()
+  }
+}
+//
+// BushelWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+struct BushelWax: Target {
+  var dependencies: any Dependencies {
+    BushelHub()
+    BushelSystem()
+    BushelMacOSCore()
   }
 }
 //

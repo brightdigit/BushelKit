@@ -15,8 +15,6 @@ public extension MachineSystemManaging where Self: LoggerCategorized {
   static var loggingCategory: BushelLogging.Loggers.Category {
     .library
   }
-
-  typealias LoggersType = BushelLogging.Loggers
 }
 
 public extension MachineSystemManaging {

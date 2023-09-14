@@ -12,28 +12,6 @@
 
   @Model
   public final class LibraryImageEntry {
-    internal init(
-      name: String,
-      id: UUID,
-      isImageSupported: Bool,
-      buildVersion: String,
-      operatingSystemVersion: OperatingSystemVersion,
-      contentLength: Int,
-      lastModified: Date,
-      vmSystem: VMSystemID,
-      fileExtension: String
-    ) {
-      self.name = name
-      imageID = id
-      self.isImageSupported = isImageSupported
-      self.buildVersion = buildVersion
-      self.operatingSystemVersionString = operatingSystemVersion.description
-      self.contentLength = contentLength
-      self.lastModified = lastModified
-      self.vmSystemID = vmSystem.rawValue
-      self.fileExtension = fileExtension
-    }
-
     public var library: LibraryEntry?
     public var name: String
     @Attribute(.unique)
@@ -65,6 +43,28 @@
     }
 
     public var fileExtension: String
+
+    internal init(
+      name: String,
+      id: UUID,
+      isImageSupported: Bool,
+      buildVersion: String,
+      operatingSystemVersion: OperatingSystemVersion,
+      contentLength: Int,
+      lastModified: Date,
+      vmSystem: VMSystemID,
+      fileExtension: String
+    ) {
+      self.name = name
+      imageID = id
+      self.isImageSupported = isImageSupported
+      self.buildVersion = buildVersion
+      self.operatingSystemVersionString = operatingSystemVersion.description
+      self.contentLength = contentLength
+      self.lastModified = lastModified
+      self.vmSystemID = vmSystem.rawValue
+      self.fileExtension = fileExtension
+    }
   }
 
   extension LibraryImageEntry {
@@ -85,7 +85,11 @@
       try context.save()
     }
 
-    func syncronizeFile(_ file: LibraryImageFile, withLibrary _: LibraryEntry, using _: ModelContext) throws {
+    func syncronizeFile(
+      _ file: LibraryImageFile,
+      withLibrary library: LibraryEntry,
+      using context: ModelContext
+    ) throws {
       name = file.name
       imageID = file.id
       isImageSupported = file.metadata.isImageSupported
@@ -95,6 +99,8 @@
       lastModified = file.metadata.lastModified
       vmSystem = file.metadata.vmSystem
       fileExtension = file.metadata.fileExtension
+      self.library = library
+      try context.save()
     }
   }
 

@@ -13,31 +13,6 @@
 
   @Model
   public final class MachineEntry: LoggerCategorized {
-    internal init(
-      bookmarkData: BookmarkData,
-      machine: Machine,
-      osInstalled: OperatingSystemInstalled?,
-      restoreImageID: UUID,
-      name: String,
-      createdAt: Date,
-      lastOpenedAt: Date? = nil
-    ) {
-      bookmarkDataID = bookmarkData.bookmarkID
-      _bookmarkData = bookmarkData
-      self.name = name
-      self.restoreImageID = restoreImageID
-      self.storage = machine.configuration.storage
-      self.cpuCount = machine.configuration.cpuCount
-      self.memory = machine.configuration.memory
-      self.networkConfigurations = machine.configuration.networkConfigurations
-      self.graphicsConfigurations = machine.configuration.graphicsConfigurations
-      self.vmSystemID = machine.configuration.vmSystem.rawValue
-      self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
-      self.buildVersion = osInstalled?.buildVersion
-      self.createdAt = createdAt
-      self.lastOpenedAt = lastOpenedAt
-    }
-
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 
@@ -100,6 +75,31 @@
 
     @Relationship(deleteRule: .cascade, inverse: \SnapshotEntry.machine)
     public private(set) var snapshots: [SnapshotEntry]?
+
+    internal init(
+      bookmarkData: BookmarkData,
+      machine: Machine,
+      osInstalled: OperatingSystemInstalled?,
+      restoreImageID: UUID,
+      name: String,
+      createdAt: Date,
+      lastOpenedAt: Date? = nil
+    ) {
+      bookmarkDataID = bookmarkData.bookmarkID
+      _bookmarkData = bookmarkData
+      self.name = name
+      self.restoreImageID = restoreImageID
+      self.storage = machine.configuration.storage
+      self.cpuCount = machine.configuration.cpuCount
+      self.memory = machine.configuration.memory
+      self.networkConfigurations = machine.configuration.networkConfigurations
+      self.graphicsConfigurations = machine.configuration.graphicsConfigurations
+      self.vmSystemID = machine.configuration.vmSystem.rawValue
+      self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
+      self.buildVersion = osInstalled?.buildVersion
+      self.createdAt = createdAt
+      self.lastOpenedAt = lastOpenedAt
+    }
   }
 
   public extension MachineEntry {
@@ -111,15 +111,25 @@
       self.operatingSystemVersionString ?? ""
     }
 
-    convenience init(bookmarkData: BookmarkData,
-                     machine: Machine,
-                     osInstalled: OperatingSystemInstalled?,
-                     restoreImageID: UUID,
-                     name: String,
-                     createdAt: Date,
-                     lastOpenedAt: Date? = nil,
-                     withContext context: ModelContext) throws {
-      self.init(bookmarkData: bookmarkData, machine: machine, osInstalled: osInstalled, restoreImageID: restoreImageID, name: name, createdAt: createdAt, lastOpenedAt: lastOpenedAt)
+    convenience init(
+      bookmarkData: BookmarkData,
+      machine: Machine,
+      osInstalled: OperatingSystemInstalled?,
+      restoreImageID: UUID,
+      name: String,
+      createdAt: Date,
+      lastOpenedAt: Date? = nil,
+      withContext context: ModelContext
+    ) throws {
+      self.init(
+        bookmarkData: bookmarkData,
+        machine: machine,
+        osInstalled: osInstalled,
+        restoreImageID: restoreImageID,
+        name: name,
+        createdAt: createdAt,
+        lastOpenedAt: lastOpenedAt
+      )
       context.insert(self)
       try context.save()
       try machine.configuration.snapshots.forEach {
@@ -128,9 +138,11 @@
       try context.save()
     }
 
-    func synchronizeWith(_ machine: Machine,
-                         osInstalled: OperatingSystemInstalled?,
-                         using context: ModelContext) throws {
+    func synchronizeWith(
+      _ machine: Machine,
+      osInstalled: OperatingSystemInstalled?,
+      using context: ModelContext
+    ) throws {
       let entryMap: [UUID: SnapshotEntry] = .init(uniqueKeysWithValues: snapshots?.map {
         ($0.snapshotID, $0)
       } ?? [])

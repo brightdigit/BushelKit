@@ -6,9 +6,9 @@
 import Foundation
 
 public struct MachineBuildRequest: Codable, Hashable {
+  public let restoreImage: InstallerImageIdentifier?
+
   public init(restoreImage: InstallerImageIdentifier? = nil) {
     self.restoreImage = restoreImage
   }
-
-  public let restoreImage: InstallerImageIdentifier?
 }

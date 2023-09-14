@@ -7,6 +7,15 @@ import BushelCore
 import Foundation
 
 public struct MachineConfiguration: Codable {
+  public let restoreImageFile: InstallerImageIdentifier
+  public var storage: [MachineStorageSpecification]
+  public var cpuCount: Float = 1
+  public var memory: Float = (128 * 1024 * 1024 * 1024)
+  public var networkConfigurations: [NetworkConfiguration]
+  public var graphicsConfigurations: [GraphicsConfiguration]
+  public let vmSystem: VMSystemID
+  public var snapshots: [Snapshot]
+
   public init(
     restoreImageFile: InstallerImageIdentifier,
     systemID: VMSystemID,
@@ -26,19 +35,10 @@ public struct MachineConfiguration: Codable {
     self.graphicsConfigurations = graphicsConfigurations
     self.snapshots = snapshots
   }
-
-  public let restoreImageFile: InstallerImageIdentifier
-  public var storage: [MachineStorageSpecification]
-  public var cpuCount: Float = 1
-  public var memory: Float = (128 * 1024 * 1024 * 1024)
-  public var networkConfigurations: [NetworkConfiguration]
-  public var graphicsConfigurations: [GraphicsConfiguration]
-  public let vmSystem: VMSystemID
-  public var snapshots: [Snapshot]
 }
 
 public extension MachineConfiguration {
-  init(setup: MachineSetupConfiguration, restoreImageFile: InstallerImage) {
+  init(setup: MachineSetupConfiguration, restoreImageFile: any InstallerImage) {
     self.init(
       restoreImageFile: restoreImageFile.indentifier,
       systemID: restoreImageFile.metadata.systemID,

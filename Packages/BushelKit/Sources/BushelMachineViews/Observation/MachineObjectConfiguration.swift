@@ -12,12 +12,18 @@
   import SwiftData
 
   struct MachineObjectConfiguration {
+    let url: URL
+    let restoreImageDB: InstallerImageRepository
+    let modelContext: ModelContext
+    let systemManager: MachineSystemManaging
+    let labelProvider: MetadataLabelProvider
+
     internal init(
       url: URL,
       restoreImageDB: InstallerImageRepository,
       modelContext: ModelContext,
       systemManager: MachineSystemManaging,
-      labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel
+      labelProvider: @escaping MetadataLabelProvider
     ) {
       self.url = url
       self.restoreImageDB = restoreImageDB
@@ -25,19 +31,23 @@
       self.systemManager = systemManager
       self.labelProvider = labelProvider
     }
-
-    let url: URL
-    let restoreImageDB: InstallerImageRepository
-    let modelContext: ModelContext
-    let systemManager: MachineSystemManaging
-    let labelProvider: (VMSystemID, ImageMetadata) -> MetadataLabel
   }
 
   extension MachineObjectConfiguration {
-    init(url: URL, modelContext: ModelContext, systemManager: MachineSystemManaging,
-         installerImageRepositoryFrom: @escaping (ModelContext) -> InstallerImageRepository,
-         labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel) {
-      self.init(url: url, restoreImageDB: installerImageRepositoryFrom(modelContext), modelContext: modelContext, systemManager: systemManager, labelProvider: labelProvider)
+    init(
+      url: URL,
+      modelContext: ModelContext,
+      systemManager: MachineSystemManaging,
+      installerImageRepositoryFrom: @escaping (ModelContext) -> InstallerImageRepository,
+      labelProvider: @escaping MetadataLabelProvider
+    ) {
+      self.init(
+        url: url,
+        restoreImageDB: installerImageRepositoryFrom(modelContext),
+        modelContext: modelContext,
+        systemManager: systemManager,
+        labelProvider: labelProvider
+      )
     }
   }
 

@@ -5,16 +5,10 @@
 
 import FelinePine
 
-#if canImport(os)
-  import os
-#elseif canImport(Logging)
-  import Logging
-#endif
-
 public protocol LoggerCategorized: FelinePine.LoggerCategorized where LoggersType == Loggers {}
 
 public enum Loggers: FelinePine.Loggers {
-  public static let loggers: [Category: Logger] = Self._loggers
+  public typealias LoggerCategory = Category
 
   public enum Category: String, CaseIterable {
     case library
@@ -23,7 +17,8 @@ public enum Loggers: FelinePine.Loggers {
     case machine
     case application
     case observation
+    case market
   }
 
-  public typealias LoggerCategory = Category
+  public static let loggers: [Category: Logger] = Self._loggers
 }

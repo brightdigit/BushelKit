@@ -1,5 +1,5 @@
 //
-// MetadataLabelProvider.swift
+// MetadataLabelProviderAction.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -10,21 +10,23 @@
   import SwiftUI
 
   private struct MetadataLabelProviderKey: EnvironmentKey {
-    typealias Value = MetadataLabelProvider
+    typealias Value = MetadataLabelProviderAction
 
-    static var defaultValue: MetadataLabelProvider = .default
+    static var defaultValue: MetadataLabelProviderAction = .default
   }
 
-  public struct MetadataLabelProvider {
-    static let `default` = MetadataLabelProvider(closure: { _, _ in .init(operatingSystemLongName: "", defaultName: "", imageName: "") })
-    let closure: (VMSystemID, ImageMetadata) -> MetadataLabel
+  public struct MetadataLabelProviderAction {
+    static let `default` = MetadataLabelProviderAction(
+      closure: { _, _ in .init(operatingSystemLongName: "", defaultName: "", imageName: "") }
+    )
+    let closure: BushelCore.MetadataLabelProvider
     public func callAsFunction(_ systemID: VMSystemID, _ metadata: ImageMetadata) -> MetadataLabel {
       closure(systemID, metadata)
     }
   }
 
   public extension EnvironmentValues {
-    var metadataLabelProvider: MetadataLabelProvider {
+    var metadataLabelProvider: MetadataLabelProviderAction {
       get { self[MetadataLabelProviderKey.self] }
       set { self[MetadataLabelProviderKey.self] = newValue }
     }
@@ -32,7 +34,7 @@
 
   public extension Scene {
     func metadataLabelProvider(
-      _ closure: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel
+      _ closure: @escaping BushelCore.MetadataLabelProvider
     ) -> some Scene {
       self.environment(\.metadataLabelProvider, .init(closure: closure))
     }

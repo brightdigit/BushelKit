@@ -6,13 +6,8 @@
 import Foundation
 
 struct BuildError: Error, Hashable {
-  static func == (lhs: BuildError, rhs: BuildError) -> Bool {
-    lhs.id == rhs.id
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
-  }
+  let id: UUID
+  let innerError: Error
 
   internal init(innerError: Error) {
     self.init(innerError: innerError, id: .init())
@@ -23,6 +18,12 @@ struct BuildError: Error, Hashable {
     self.innerError = innerError
   }
 
-  let id: UUID
-  let innerError: Error
+  #warning("Add error for DFU issue.")
+  static func == (lhs: BuildError, rhs: BuildError) -> Bool {
+    lhs.id == rhs.id
+  }
+
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
 }

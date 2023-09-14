@@ -6,13 +6,14 @@
 import Foundation
 
 public struct BookmarkError: Error {
-  let innerError: Error
-  let details: Details
-
-  enum Details: Equatable {
+  public enum Details: Equatable {
     case database
     case accessDeniedAt(URL)
+    case fileDoesNotExistAt(URL)
   }
+
+  public let innerError: Error
+  public let details: Details
 }
 
 public extension BookmarkError {
@@ -21,6 +22,11 @@ public extension BookmarkError {
   }
 
   static func accessDeniedError(_ error: Error, at url: URL) -> BookmarkError {
-    BookmarkError(innerError: error, details: .accessDeniedAt(url))
+    let nsError = error as NSError
+    if nsError.code == NSFileReadNoSuchFileError {
+      return BookmarkError(innerError: error, details: .fileDoesNotExistAt(url))
+    } else {
+      return BookmarkError(innerError: error, details: .accessDeniedAt(url))
+    }
   }
 }

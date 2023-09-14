@@ -13,5 +13,7 @@ struct BushelApp: Product, Target {
     BushelData()
     BushelHub()
     BushelFactory()
+    BushelMarket()
+    BushelWax()
   }
 }

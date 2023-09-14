@@ -11,11 +11,6 @@ import Foundation
 #endif
 
 public struct MachineChange {
-  public init(source: any Machine, event: MachineChange.Event) {
-    self.event = event
-    self.source = source
-  }
-
   public enum Property: String {
     case state
     case canStart
@@ -56,6 +51,10 @@ public struct MachineChange {
 
   public let event: Event
   public let source: any Machine
+  public init(source: any Machine, event: MachineChange.Event) {
+    self.event = event
+    self.source = source
+  }
 }
 
 public extension MachineChange.PropertyChange {

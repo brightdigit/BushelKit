@@ -3,17 +3,16 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
 
   import BushelCore
   import Foundation
   import SwiftUI
 
+  public typealias NewLibraryAction = OpenWindowWithAction
   private struct NewLibraryKey: EnvironmentKey {
     static let defaultValue: NewLibraryAction = .default
   }
-
-  public typealias NewLibraryAction = OpenWindowWithAction
 
   public extension EnvironmentValues {
     var newLibrary: NewLibraryAction {

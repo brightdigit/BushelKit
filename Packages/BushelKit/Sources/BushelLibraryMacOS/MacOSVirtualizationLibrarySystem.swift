@@ -12,20 +12,22 @@
   import Virtualization
 
   public struct MacOSVirtualizationLibrarySystem: LibrarySystem {
-    public func operatingSystemLongName(for metadata: ImageMetadata) -> String {
-      MacOSVirtualization.operatingSystemLongName(for: metadata)
-    }
-
-    public func imageName(for metadata: ImageMetadata) -> String {
-      MacOSVirtualization.imageName(for: metadata)
-    }
-
     public var id: BushelCore.VMSystemID {
       .macOS
     }
 
     public var allowedContentTypes: Set<BushelCore.FileType> {
       MacOSVirtualization.allowedContentTypes
+    }
+
+    public init() {}
+
+    public func operatingSystemLongName(for metadata: ImageMetadata) -> String {
+      MacOSVirtualization.operatingSystemLongName(for: metadata)
+    }
+
+    public func imageName(for metadata: ImageMetadata) -> String {
+      MacOSVirtualization.imageName(for: metadata)
     }
 
     public func defaultName(fromMetadata metadata: BushelCore.ImageMetadata) -> String {
@@ -36,8 +38,6 @@
       let image = try await VZMacOSRestoreImage.loadFromURL(url)
       return try await ImageMetadata(vzRestoreImage: image, url: url)
     }
-
-    public init() {}
   }
 
 #endif

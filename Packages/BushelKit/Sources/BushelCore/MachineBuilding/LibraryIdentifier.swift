@@ -6,6 +6,9 @@
 import Foundation
 
 public enum LibraryIdentifier: CustomStringConvertible, Hashable {
+  case url(URL)
+  case bookmarkID(UUID)
+
   public var description: String {
     switch self {
     case let .bookmarkID(id):
@@ -15,9 +18,6 @@ public enum LibraryIdentifier: CustomStringConvertible, Hashable {
       return url.path
     }
   }
-
-  case url(URL)
-  case bookmarkID(UUID)
 
   public init(string: String) {
     if let id = UUID(uuidString: string) {

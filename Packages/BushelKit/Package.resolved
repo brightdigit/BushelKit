@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/FelinePine.git",
       "state" : {
-        "revision" : "265866c7f4a23250adaf38dc343213da7d7ea714",
-        "version" : "0.1.0-alpha.3"
+        "revision" : "6ac5dea79a14f460c4ac557df8d0c99c24d7d3bf",
+        "version" : "0.1.0-alpha.4"
       }
     },
     {

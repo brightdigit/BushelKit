@@ -50,6 +50,7 @@ final class OperatingSystemVersionTests: XCTestCase {
   func testDecodeFromVersionString() throws {
     let version = "13.5.1"
 
+    // swiftlint:disable:next force_unwrapping
     let data = "\"\(version)\"".data(using: .utf8)!
 
     let sut = try JSONDecoder().decode(OperatingSystemVersion.self, from: data)
@@ -70,7 +71,9 @@ final class OperatingSystemVersionTests: XCTestCase {
       "minorVersion": \(minorVersion),
       "patchVersion": \(patchVersion)
     }
-    """.data(using: .utf8)!
+    """
+    // swiftlint:disable:next force_unwrapping
+    .data(using: .utf8)!
 
     let sut = try JSONDecoder().decode(OperatingSystemVersion.self, from: data)
 

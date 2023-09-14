@@ -10,14 +10,6 @@
 
   @Model
   public final class SnapshotEntry {
-    internal init(snapshotID: UUID, createdAt: Date, fileLength: Int, buildVersion: String?, operatingSystemVersion: OperatingSystemVersion?) {
-      self.snapshotID = snapshotID
-      self.createdAt = createdAt
-      self.fileLength = fileLength
-      self.buildVersion = buildVersion
-      self.operatingSystemVersion = operatingSystemVersion
-    }
-
     public var snapshotID: UUID
     public var createdAt: Date
     public var fileLength: Int
@@ -28,7 +20,6 @@
     private var operatingSystemVersionString: String?
     public var operatingSystemVersion: OperatingSystemVersion? {
       get {
-        // swiftlint:disable:next force_try
         operatingSystemVersionString.flatMap {
           try? OperatingSystemVersion(string: $0)
         }
@@ -37,6 +28,20 @@
         self.operatingSystemVersionString = newValue?.description
       }
     }
+
+    internal init(
+      snapshotID: UUID,
+      createdAt: Date,
+      fileLength: Int,
+      buildVersion: String?,
+      operatingSystemVersion: OperatingSystemVersion?
+    ) {
+      self.snapshotID = snapshotID
+      self.createdAt = createdAt
+      self.fileLength = fileLength
+      self.buildVersion = buildVersion
+      self.operatingSystemVersion = operatingSystemVersion
+    }
   }
 
   public extension SnapshotEntry {
@@ -44,7 +49,12 @@
       self.operatingSystemVersionString ?? ""
     }
 
-    convenience init(machine: MachineEntry, snapshot: Snapshot, osInstalled: OperatingSystemInstalled?, using context: ModelContext) throws {
+    convenience init(
+      machine: MachineEntry,
+      snapshot: Snapshot,
+      osInstalled: OperatingSystemInstalled?,
+      using context: ModelContext
+    ) throws {
       self.init(
         snapshotID: snapshot.id,
         createdAt: snapshot.createdAt,
@@ -57,12 +67,19 @@
       try context.save()
     }
 
-    func syncronizeSnapshot(_ snapshot: Snapshot, machine _: MachineEntry, osInstalled: OperatingSystemInstalled?, using _: ModelContext) throws {
+    func syncronizeSnapshot(
+      _ snapshot: Snapshot,
+      machine: MachineEntry,
+      osInstalled: OperatingSystemInstalled?,
+      using context: ModelContext
+    ) throws {
       self.snapshotID = snapshot.id
       self.createdAt = snapshot.createdAt
       self.fileLength = snapshot.fileLength
       self.buildVersion = osInstalled?.buildVersion ?? self.buildVersion
       self.operatingSystemVersion = osInstalled?.operatingSystemVersion ?? self.operatingSystemVersion
+      self.machine = machine
+      try context.save()
     }
   }
 

@@ -6,6 +6,9 @@
 import Foundation
 
 extension ByteCountFormatter {
+  public static let memory: ByteCountFormatter = .init(countStyle: .memory)
+  public static let file: ByteCountFormatter = .init(countStyle: .file)
+
   convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
     self.init()
     modifications(self)
@@ -16,7 +19,4 @@ extension ByteCountFormatter {
       $0.countStyle = countStyle
     }
   }
-
-  public static let memory: ByteCountFormatter = .init(countStyle: .memory)
-  public static let file: ByteCountFormatter = .init(countStyle: .file)
 }

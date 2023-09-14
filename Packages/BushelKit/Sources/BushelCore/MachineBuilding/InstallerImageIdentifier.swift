@@ -6,24 +6,17 @@
 import Foundation
 
 public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashable {
-  public init(libraryID: LibraryIdentifier? = nil, imageID: UUID) {
+  public let libraryID: LibraryIdentifier?
+  public let imageID: UUID
+
+  public var description: String {
+    let values: [String?] = [libraryID?.description, imageID.uuidString]
+    return values.compactMap { $0 }.joined(separator: ":")
+  }
+
+  public init(imageID: UUID, libraryID: LibraryIdentifier? = nil) {
     self.libraryID = libraryID
     self.imageID = imageID
-  }
-
-  public init(from decoder: Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    let string = try container.decode(String.self)
-    let value = Self(string: string)
-    guard let value else {
-      throw DecodingError.dataCorruptedError(in: container, debugDescription: "Could not parse")
-    }
-    self = value
-  }
-
-  public func encode(to encoder: Encoder) throws {
-    var container = encoder.singleValueContainer()
-    try container.encode(self.description)
   }
 
   public init?(string: String) {
@@ -41,14 +34,21 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
     } else {
       libraryID = nil
     }
-    self.init(libraryID: libraryID, imageID: imageID)
+    self.init(imageID: imageID, libraryID: libraryID)
   }
 
-  public var description: String {
-    let values: [String?] = [libraryID?.description, imageID.uuidString]
-    return values.compactMap { $0 }.joined(separator: ":")
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    let string = try container.decode(String.self)
+    let value = Self(string: string)
+    guard let value else {
+      throw DecodingError.dataCorruptedError(in: container, debugDescription: "Could not parse")
+    }
+    self = value
   }
 
-  public let libraryID: LibraryIdentifier?
-  public let imageID: UUID
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(self.description)
+  }
 }

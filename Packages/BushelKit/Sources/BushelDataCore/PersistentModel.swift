@@ -12,7 +12,5 @@
     static var loggingCategory: BushelLogging.Loggers.Category {
       .data
     }
-
-    typealias LoggersType = BushelLogging.Loggers
   }
 #endif

@@ -8,17 +8,15 @@ import BushelLogging
 import Foundation
 
 public protocol LibrarySystemManaging: LoggerCategorized {
+  var allAllowedFileTypes: [FileType] { get }
   func resolve(_ id: VMSystemID) -> any LibrarySystem
   func resolveSystemFor(url: URL) -> VMSystemID?
-  var allAllowedFileTypes: [FileType] { get }
 }
 
 public extension LibrarySystemManaging where Self: LoggerCategorized {
   static var loggingCategory: BushelLogging.Loggers.Category {
     .library
   }
-
-  typealias LoggersType = BushelLogging.Loggers
 }
 
 public extension LibrarySystemManaging {

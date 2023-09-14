@@ -63,7 +63,7 @@
       withContext modelContext: ModelContext,
       restoreImageDBfrom: @escaping (ModelContext) -> InstallerImageRepository,
       using systemManager: any MachineSystemManaging,
-      labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel
+      labelProvider: @escaping MetadataLabelProvider
     ) {
       do {
         self.machineObject = try MachineObject(

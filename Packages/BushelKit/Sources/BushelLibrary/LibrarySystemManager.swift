@@ -10,8 +10,16 @@ import Foundation
 public class LibrarySystemManager: LibrarySystemManaging, LoggerCategorized {
   public let fileTypeBasedOnURL: (URL) -> FileType?
 
+  let fileTypeMap: [FileType: VMSystemID]
+  let implementations: [VMSystemID: any LibrarySystem]
+
+  public var allAllowedFileTypes: [FileType] {
+    implementations.values.flatMap(\.allowedContentTypes)
+  }
+
   public init(_ implementations: [any LibrarySystem], fileTypeBasedOnURL: @escaping (URL) -> FileType?) {
-    self.implementations = .init(uniqueKeysWithValues:
+    self.implementations = .init(
+      uniqueKeysWithValues:
       implementations.map {
         ($0.id, $0)
       }
@@ -19,7 +27,8 @@ public class LibrarySystemManager: LibrarySystemManaging, LoggerCategorized {
 
     fileTypeMap = self.implementations.mapValues {
       $0.allowedContentTypes
-    }.reduce(into: [FileType: VMSystemID]()) { partialResult, pair in
+    }
+    .reduce(into: [FileType: VMSystemID]()) { partialResult, pair in
       for value in pair.value {
         partialResult[value] = pair.key
       }
@@ -28,9 +37,6 @@ public class LibrarySystemManager: LibrarySystemManaging, LoggerCategorized {
     self.fileTypeBasedOnURL = fileTypeBasedOnURL
   }
 
-  let fileTypeMap: [FileType: VMSystemID]
-  let implementations: [VMSystemID: any LibrarySystem]
-
   public func resolveSystemFor(url: URL) -> VMSystemID? {
     guard let type = self.fileTypeBasedOnURL(url) else {
       Self.logger.error("Unknown path extension: \(url.pathExtension)")
@@ -38,10 +44,6 @@ public class LibrarySystemManager: LibrarySystemManaging, LoggerCategorized {
     }
 
     return fileTypeMap[type]
-  }
-
-  public var allAllowedFileTypes: [FileType] {
-    implementations.values.flatMap(\.allowedContentTypes)
   }
 
   public func resolve(_ id: VMSystemID) -> any LibrarySystem {

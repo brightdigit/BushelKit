@@ -9,10 +9,6 @@
   import SwiftUI
 
   public struct HubContentRow: View {
-    internal init(label: MetadataLabel) {
-      self.label = label
-    }
-
     let label: MetadataLabel
 
     public var body: some View {
@@ -24,6 +20,10 @@
           Text(label.operatingSystemLongName).font(.system(size: 11)).lineLimit(1)
         }
       }
+    }
+
+    internal init(label: MetadataLabel) {
+      self.label = label
     }
   }
 

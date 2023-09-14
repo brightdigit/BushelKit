@@ -27,7 +27,7 @@ final class InstallerImageIdentifierTests: XCTestCase {
     let expectedIdentifier = String.restoreImageIdentiferSample
 
     guard let sut = InstallerImageIdentifier(string: expectedIdentifier) else {
-      return XCTFail("Expected initlization of MachineRestoreImageIdentifier from string identifier: \(expectedIdentifier)")
+      return XCTFail("Expected initlization from string identifier: \(expectedIdentifier)")
     }
 
     let actualIdentifier = sut.description
@@ -39,7 +39,7 @@ final class InstallerImageIdentifierTests: XCTestCase {
     let expectedLibraryID = LibraryIdentifier.sampleBookmarkID
     let expectedImageID = UUID.sampleImageID
 
-    let sut = InstallerImageIdentifier(libraryID: expectedLibraryID, imageID: expectedImageID)
+    let sut = InstallerImageIdentifier(imageID: expectedImageID, libraryID: expectedLibraryID)
 
     XCTAssertEqual(sut.libraryID, expectedLibraryID)
     XCTAssertEqual(sut.imageID, expectedImageID)
@@ -49,7 +49,7 @@ final class InstallerImageIdentifierTests: XCTestCase {
     let restoreImageIdentifier = String.restoreImageIdentiferSample
 
     guard let sut = InstallerImageIdentifier(string: restoreImageIdentifier) else {
-      return XCTFail("Expected initlization of MachineRestoreImageIdentifier from string identifier: \(restoreImageIdentifier)")
+      return XCTFail("Expected initlization from string identifier: \(restoreImageIdentifier)")
     }
 
     let encodedData = try JSONEncoder().encode(sut)
@@ -62,6 +62,7 @@ final class InstallerImageIdentifierTests: XCTestCase {
 
   func testDecodeFromJsonString() throws {
     let restoreImageIdentifier = String.restoreImageIdentiferSample
+    // swiftlint:disable:next force_unwrapping
     let sut = "\"\(restoreImageIdentifier)\"".data(using: .utf8)!
 
     XCTAssertNoThrow(try JSONDecoder().decode(InstallerImageIdentifier.self, from: sut))

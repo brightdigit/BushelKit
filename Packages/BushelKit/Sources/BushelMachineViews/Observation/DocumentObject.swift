@@ -27,14 +27,19 @@
       withContext modelContext: ModelContext,
       restoreImageDBfrom: @escaping (ModelContext) -> InstallerImageRepository,
       using systemManager: any MachineSystemManaging,
-      _ labelProvider: @escaping (VMSystemID, ImageMetadata) -> MetadataLabel
+      _ labelProvider: @escaping MetadataLabelProvider
     ) {
       self.modelContext = modelContext
       self.systemManager = systemManager
       do {
         self.machineObject = try MachineObject(
-          configuration: .init(url: url, modelContext: modelContext, systemManager: systemManager, installerImageRepositoryFrom: restoreImageDBfrom, labelProvider: labelProvider)
-          // url: url, modelContext: modelContext, installerImageRepositoryFrom: restoreImageDBfrom, systemManager: systemManager, labelProvider: labelProvider
+          configuration: .init(
+            url: url,
+            modelContext: modelContext,
+            systemManager: systemManager,
+            installerImageRepositoryFrom: restoreImageDBfrom,
+            labelProvider: labelProvider
+          )
         )
         self.url = url
       } catch {

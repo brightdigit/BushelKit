@@ -13,11 +13,6 @@
 
   @Model
   public final class LibraryEntry: LoggerCategorized {
-    private init(bookmarkData: BookmarkData) {
-      bookmarkDataID = bookmarkData.bookmarkID
-      _bookmarkData = bookmarkData
-    }
-
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 
@@ -43,6 +38,11 @@
 
     @Relationship(deleteRule: .cascade, inverse: \LibraryImageEntry.library)
     public private(set) var images: [LibraryImageEntry]?
+
+    private init(bookmarkData: BookmarkData) {
+      bookmarkDataID = bookmarkData.bookmarkID
+      _bookmarkData = bookmarkData
+    }
   }
 
   public extension LibraryEntry {
@@ -50,7 +50,11 @@
       self.images?.count ?? 0
     }
 
-    convenience init(bookmarkData: BookmarkData, library: Library, withContext context: ModelContext) throws {
+    convenience init(
+      bookmarkData: BookmarkData,
+      library: Library,
+      withContext context: ModelContext
+    ) throws {
       self.init(bookmarkData: bookmarkData)
       context.insert(self)
       try context.save()

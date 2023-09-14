@@ -25,7 +25,7 @@ public func assertionFailure<NewFailure: LocalizedError>(
     unknownError(error)
     return nil
   }
-  assertionFailure(error: newError, file: file, line: line)
+  BushelCore.assertionFailure(error: newError, file: file, line: line)
   return newError
 }
 

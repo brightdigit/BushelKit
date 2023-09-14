@@ -7,24 +7,15 @@
   import AppKit
   import SwiftUI
 
-  class NSWindowDelegateAdaptor: NSObject, NSWindowDelegate {
-    internal init(onWindowShouldClose: ((NSWindow) -> Bool)?) {
-      self.onWindowShouldClose = onWindowShouldClose
-    }
-
-    let onWindowShouldClose: ((NSWindow) -> Bool)?
-
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-      onWindowShouldClose?(sender) ?? true
-    }
-  }
-
   private struct NSWindowDelegateAdaptorModifier: ViewModifier {
     @Binding var binding: NSWindowDelegate?
     // swiftlint:disable:next weak_delegate
     let delegate: NSWindowDelegate
 
-    internal init(binding: Binding<NSWindowDelegate?>, delegate: @autoclosure () -> NSWindowDelegate) {
+    init(
+      binding: Binding<NSWindowDelegate?>,
+      delegate: @autoclosure () -> NSWindowDelegate
+    ) {
       self._binding = binding
       self.delegate = binding.wrappedValue ?? delegate()
 
@@ -40,13 +31,41 @@
     }
   }
 
-  extension View {
-    func nsWindowDelegateAdaptor(_ binding: Binding<NSWindowDelegate?>, _ delegate: @autoclosure () -> NSWindowDelegate) -> some View {
-      self.modifier(NSWindowDelegateAdaptorModifier(binding: binding, delegate: delegate()))
+  class NSWindowDelegateAdaptor: NSObject, NSWindowDelegate {
+    let onWindowShouldClose: ((NSWindow) -> Bool)?
+
+    internal init(onWindowShouldClose: ((NSWindow) -> Bool)?) {
+      self.onWindowShouldClose = onWindowShouldClose
     }
 
-    public func onCloseButton(_ delegate: Binding<NSWindowDelegate?>, _ closure: @escaping (NSWindow) -> Bool) -> some View {
-      self.nsWindowDelegateAdaptor(delegate, NSWindowDelegateAdaptor(onWindowShouldClose: closure))
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+      onWindowShouldClose?(sender) ?? true
+    }
+  }
+
+  extension View {
+    func nsWindowDelegateAdaptor(
+      _ binding: Binding<NSWindowDelegate?>,
+      _ delegate: @autoclosure () -> NSWindowDelegate
+    ) -> some View {
+      self.modifier(
+        NSWindowDelegateAdaptorModifier(
+          binding: binding,
+          delegate: delegate()
+        )
+      )
+    }
+
+    public func onCloseButton(
+      _ delegate: Binding<NSWindowDelegate?>,
+      _ closure: @escaping (NSWindow) -> Bool
+    ) -> some View {
+      self.nsWindowDelegateAdaptor(
+        delegate,
+        NSWindowDelegateAdaptor(
+          onWindowShouldClose: closure
+        )
+      )
     }
   }
 #endif

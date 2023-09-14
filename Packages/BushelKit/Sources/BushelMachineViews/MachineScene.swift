@@ -12,22 +12,34 @@
   import SwiftUI
 
   public struct MachineScene: Scene, LoggerCategorized {
-    public init() {}
-
     public var body: some Scene {
       WindowGroup("New Machine...", for: MachineBuildRequest.self) { request in
-        ConfigurationView(request: request).presentedWindowStyle(.hiddenTitleBar)
+        #if os(macOS)
+          ConfigurationView(request: request).presentedWindowStyle(.hiddenTitleBar)
+        #else
+          ConfigurationView(request: request)
+        #endif
       }
       WindowGroup(for: MachineFile.self) { file in
-        DocumentView(machineFile: file).nsWindowAdaptor {
-          $0?.isRestorable = false
-        }.presentedWindowToolbarStyle(.expanded)
+        #if os(macOS)
+          DocumentView(machineFile: file).nsWindowAdaptor {
+            $0?.isRestorable = false
+          }
+          .presentedWindowToolbarStyle(.expanded)
+        #else
+          DocumentView(machineFile: file)
+        #endif
       }
-      WindowGroup(for: SessionRequest.self) { request in
-        SessionView(request: request).nsWindowAdaptor {
-          $0?.isRestorable = false
+      #if os(macOS)
+        WindowGroup(for: SessionRequest.self) { request in
+          SessionView(request: request).nsWindowAdaptor {
+            $0?.isRestorable = false
+          }
         }
-      }
+      #endif
     }
+
+    public init() {}
   }
+
 #endif

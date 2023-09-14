@@ -3,17 +3,16 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
 
   import BushelCore
   import Foundation
   import SwiftUI
 
+  public typealias OpenMachineAction = OpenWindowWithAction
   private struct OpenMachineKey: EnvironmentKey {
     static let defaultValue: OpenMachineAction = .default
   }
-
-  public typealias OpenMachineAction = OpenWindowWithAction
 
   public extension EnvironmentValues {
     var openMachine: OpenMachineAction {
@@ -37,4 +36,5 @@
       openMachine(OpenFilePanel<FileType>().callAsFunction(with:))
     }
   }
+
 #endif

@@ -3,24 +3,21 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import BushelLogging
+  import BushelViewsCore
   import Foundation
   import SwiftData
   import SwiftUI
 
   public struct WelcomeScene: Scene {
-    public init() {}
-
     public var body: some Scene {
-      WindowGroup { value in
-        WelcomeView(value)
-      } defaultValue: {
-        WelcomeView.Value.default
-      }
-      .windowStyle(.hiddenTitleBar)
-      .windowResizability(.contentSize)
+      WindowGroup(singleOf: WelcomeView.self)
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentSize)
     }
+
+    public init() {}
   }
 #endif

@@ -136,13 +136,9 @@
       guard let keyPath else {
         return
       }
-      Self.logger.debug("Observed keyPath \(keyPath)")
-
       guard let propertyUpdate = MachineChange.PropertyChange(keyPath: keyPath, new: change?[.newKey], old: change?[.oldKey]) else {
         return
       }
-
-      Self.logger.debug("Observed property \(propertyUpdate)")
 
       notifyObservers(.property(propertyUpdate))
     }

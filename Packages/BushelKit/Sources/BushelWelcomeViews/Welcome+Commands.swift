@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
   import SwiftUI
 
   public enum Welcome {

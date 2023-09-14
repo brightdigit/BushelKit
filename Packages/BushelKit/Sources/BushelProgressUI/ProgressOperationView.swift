@@ -10,16 +10,6 @@
   private let previewURL: URL = .init(string: "https://updates.cdn-apple.com/2023SummerFCS/fullrestores/042-25658/2D6BE8DB-5549-4F85-8C54-39FC23BABC68/UniversalMac_13.5.1_22G90_Restore.ipsw")!
 
   public struct ProgressOperationView<Icon: View>: View {
-    public init(indicator: any ProgressOperation<Int>, text: any StringProtocol, icon: @escaping () -> Icon) {
-      self.init(progress: .init(indicator), text: text, icon: icon)
-    }
-
-    public init(progress: FileOperationProgress<Int>, text: any StringProtocol, icon: @escaping () -> Icon) {
-      self.progress = progress
-      self.text = text
-      self.icon = icon
-    }
-
     let progress: FileOperationProgress<Int>
     let text: any StringProtocol
     let icon: () -> Icon
@@ -55,6 +45,24 @@
         }
       }.padding()
     }
+
+    public init(
+      indicator: any ProgressOperation<Int>,
+      text: any StringProtocol,
+      icon: @escaping () -> Icon
+    ) {
+      self.init(progress: .init(indicator), text: text, icon: icon)
+    }
+
+    public init(
+      progress: FileOperationProgress<Int>,
+      text: any StringProtocol,
+      icon: @escaping () -> Icon
+    ) {
+      self.progress = progress
+      self.text = text
+      self.icon = icon
+    }
   }
 
   #Preview {
@@ -68,9 +76,11 @@
         .frame(width: 80, height: 80)
         .mask {
           Circle()
-        }.overlay {
+        }
+        .overlay {
           Circle().stroke()
-        }.padding(.horizontal)
+        }
+        .padding(.horizontal)
     }
   }
 #endif
