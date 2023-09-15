@@ -14,7 +14,10 @@
       [
         IdentifiableView(
           first
-            .labeledContentStyle(.vertical()))
+            .labeledContentStyle(
+              .vertical()
+            )
+        )
       ]
     }
 

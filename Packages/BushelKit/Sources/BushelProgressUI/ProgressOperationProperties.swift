@@ -25,8 +25,12 @@
   #if canImport(SwiftUI)
     public extension ProgressOperationView {
       typealias Properties = ProgressOperationProperties
-      init(_ properties: Properties, _ image: @escaping (String) -> Icon) {
-        self.init(progress: properties.progress, text: properties.text) {
+      init(
+        _ properties: Properties,
+        text: @escaping (FileOperationProgress<Int>) -> ProgressText,
+        image: @escaping (String) -> Icon
+      ) {
+        self.init(progress: properties.progress, title: properties.text, text: text) {
           image(properties.imageName)
         }
       }

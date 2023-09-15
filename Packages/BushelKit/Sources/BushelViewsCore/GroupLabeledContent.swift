@@ -37,21 +37,9 @@
       @ViewBuilder label: @escaping () -> Label
     ) {
       self.init({
-        LabeledContent(content: content, label: label)
+        LabeledContent(content: content, label: group)
       }, label: label)
     }
   }
 
-//  #Preview {
-//    GroupLabeledContent {
-//      LabeledContent("Test") {
-//        Text("hello")
-//      }
-//      LabeledContent("Test") {
-//        Text("hello")
-//      }
-//    } label: {
-//      Text("hello")
-//    }
-//  }
 #endif

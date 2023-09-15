@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
   import BushelLibrary
   import BushelLibraryEnvironment
+  import BushelLocalization
   import BushelLogging
   import BushelProgressUI
   import BushelViewsCore
@@ -62,8 +63,8 @@
           self.hubView
         )
         .sheet(item: self.$object.restoreImageImportProgress) { request in
-          ProgressOperationView(request) { imageName in
-            Image.resource(imageName)
+          ProgressOperationView(request) {
+            Image.resource($0)
               .resizable()
               .aspectRatio(contentMode: .fill)
               .frame(width: 80, height: 80)
@@ -85,7 +86,7 @@
           let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystem)
           LibraryImageDetailView(image: image, system: system)
         } else {
-          Text("Select an Image")
+          Text(.selectImage)
         }
       }
       .alert(
@@ -100,7 +101,7 @@
               return
             }
           } label: {
-            Text("OK")
+            Text(.ok)
           }
         }, message: { error in
           Text(error.localizedDescription)

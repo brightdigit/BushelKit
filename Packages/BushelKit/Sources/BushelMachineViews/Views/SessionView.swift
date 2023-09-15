@@ -75,11 +75,11 @@
           closeOnShutdown = true
           self.object.beginShutdown()
         } label: {
-          Text("Press Power Button")
+          Text(.sessionPressPowerButton)
         }
 
         Button {} label: {
-          Text("Save State and Turn Off")
+          Text(.sessionSaveAndTurnOff)
         }.disabled(true)
 
         Button {
@@ -88,10 +88,10 @@
             try await machine.stop()
           }
         } label: {
-          Text("Turn Off")
+          Text(.sessionTurnOff)
         }
       } message: {
-        Text("How would you like to shutdown your machine?")
+        Text(.sessionShutdownAlert)
       }
       .onCloseButton(self.$object.windowClose, self.object.shouldCloseWindow(_:))
       .onChange(of: request?.url) { _, newValue in

@@ -16,6 +16,8 @@
       .macOS
     }
 
+    public let shortName = "macOS"
+
     public var allowedContentTypes: Set<BushelCore.FileType> {
       MacOSVirtualization.allowedContentTypes
     }

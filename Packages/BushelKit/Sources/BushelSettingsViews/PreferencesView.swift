@@ -25,19 +25,19 @@
       TabView {
         GeneralSettingsView()
           .tabItem {
-            Label("General", systemImage: "gear")
+            Label(.settingsGeneralTab, systemImage: "gear")
           }
           .tag(Tabs.general)
 
         AdvancedSettingsView()
           .tabItem {
-            Label("Advanced", systemImage: "wrench.and.screwdriver.fill")
+            Label(.settingsAdvancedTab, systemImage: "wrench.and.screwdriver.fill")
           }
           .tag(Tabs.advanced)
 
         DebuggingView(purchaseScreenValue: purchaseScreenValue)
           .tabItem {
-            Label("Test Panel", systemImage: "ladybug.fill")
+            Label(.settingsTestTab, systemImage: "ladybug.fill")
           }
           .tag(Tabs.tests)
 
@@ -48,7 +48,7 @@
         )
         .tabItem {
           Label {
-            Text("About")
+            Text(.settingsAboutTab)
           } icon: {
             Image.resource("Logo-Monochrome").resizable().padding()
           }

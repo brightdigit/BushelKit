@@ -33,9 +33,6 @@
             Button("Debug View") {
               self.presentDebugDatabaseView = true
             }
-            if let error {
-              Text("\(error.localizedDescription)")
-            }
           }
         }
       }.sheet(isPresented: self.$presentDebugDatabaseView, content: {

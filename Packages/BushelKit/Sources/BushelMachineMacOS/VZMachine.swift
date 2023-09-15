@@ -18,7 +18,15 @@
       .machine
     }
 
+    let url: URL
+    let configuration: MachineConfiguration
+    let machine: VZVirtualMachine
+    // swiftlint:disable:next implicitly_unwrapped_optional
+    var observation: KVObservation!
+    var observers = [UUID: (MachineChange) -> Void]()
+
     var state: BushelMachine.MachineState {
+      // swiftlint:disable:next force_unwrapping
       .init(rawValue: machine.state.rawValue)!
     }
 
@@ -45,6 +53,23 @@
     @MainActor
     var canRequestStop: Bool {
       self.machine.canRequestStop
+    }
+
+    internal init(url: URL, configuration: MachineConfiguration, machine: VZVirtualMachine) {
+      self.url = url
+      self.configuration = configuration
+      self.machine = machine
+
+      super.init()
+
+      self.machine.delegate = self
+      self.observation = self.machine.addObserver(self, options: [.initial, .new, .old])
+
+      guard url.startAccessingSecurityScopedResource() else {
+        Self.logger.error("Couldn't start accessing resource at \(url)")
+        assertionFailure("Couldn't start accessing resource at \(url)")
+        return
+      }
     }
 
     @MainActor
@@ -83,37 +108,7 @@
       }
     }
 
-    internal init(url: URL, configuration: MachineConfiguration, machine: VZVirtualMachine) {
-      self.url = url
-      self.configuration = configuration
-      self.machine = machine
-
-      super.init()
-
-      self.machine.delegate = self
-      self.observation = self.machine.addObserver(self, options: [.initial, .new, .old])
-
-      guard url.startAccessingSecurityScopedResource() else {
-        Self.logger.error("Couldn't start accessing resource at \(url)")
-        assertionFailure("Couldn't start accessing resource at \(url)")
-        return
-      }
-    }
-
-    deinit {
-      self.observers.removeAll()
-      self.observation = nil
-
-      url.stopAccessingSecurityScopedResource()
-    }
-
-    let url: URL
-    let configuration: MachineConfiguration
-    let machine: VZVirtualMachine
-    var observation: KVObservation!
-    var observers = [UUID: (MachineChange) -> Void]()
-
-    fileprivate func notifyObservers(_ event: MachineChange.Event) {
+    private func notifyObservers(_ event: MachineChange.Event) {
       let update = MachineChange(source: self, event: event)
       for value in observers.values {
         value(update)
@@ -132,11 +127,20 @@
       return id
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of _: Any?, change: [NSKeyValueChangeKey: Any]?, context _: UnsafeMutableRawPointer?) {
+    override func observeValue(
+      forKeyPath keyPath: String?,
+      of _: Any?,
+      change: [NSKeyValueChangeKey: Any]?,
+      context _: UnsafeMutableRawPointer?
+    ) {
       guard let keyPath else {
         return
       }
-      guard let propertyUpdate = MachineChange.PropertyChange(keyPath: keyPath, new: change?[.newKey], old: change?[.oldKey]) else {
+      guard let propertyUpdate = MachineChange.PropertyChange(
+        keyPath: keyPath,
+        new: change?[.newKey],
+        old: change?[.oldKey]
+      ) else {
         return
       }
 
@@ -169,6 +173,13 @@
      */
     func virtualMachine(_: VZVirtualMachine, networkDevice _: VZNetworkDevice, attachmentWasDisconnectedWithError error: Error) {
       notifyObservers(.networkDetatchedWithError(error))
+    }
+
+    deinit {
+      self.observers.removeAll()
+      self.observation = nil
+
+      url.stopAccessingSecurityScopedResource()
     }
   }
 
