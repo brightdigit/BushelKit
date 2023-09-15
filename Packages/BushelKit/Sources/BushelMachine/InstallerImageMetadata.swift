@@ -13,6 +13,7 @@ public struct InstallerImageMetadata {
   public let operatingSystem: OperatingSystemVersion
   public let buildVersion: String
   public let imageResourceName: String
+  public let systemName: String
   public let systemID: VMSystemID
 
   public var shortName: String {
@@ -26,6 +27,7 @@ public struct InstallerImageMetadata {
     operatingSystem: OperatingSystemVersion,
     buildVersion: String,
     imageResourceName: String,
+    systemName: String,
     systemID: VMSystemID
   ) {
     self.longName = longName
@@ -34,6 +36,7 @@ public struct InstallerImageMetadata {
     self.operatingSystem = operatingSystem
     self.buildVersion = buildVersion
     self.imageResourceName = imageResourceName
+    self.systemName = systemName
     self.systemID = systemID
   }
 }

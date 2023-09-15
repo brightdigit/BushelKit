@@ -24,7 +24,7 @@
       Group {
         if let recentDocuments = object.recentDocuments {
           if recentDocuments.isEmpty {
-            Text("No Recent Machines").opacity(0.5)
+            Text(.welcomeNoRecentDocuments).opacity(0.5)
           } else {
             List {
               ForEach(recentDocuments) { document in
@@ -33,7 +33,7 @@
             }.listStyle(SidebarListStyle()).padding(-20)
           }
         } else {
-          Text("Updating")
+          Text(.welcomeUpdatingRecentDocuments)
         }
       }
       .onChange(of: self.bookmarks) { _, _ in

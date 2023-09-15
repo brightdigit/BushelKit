@@ -9,7 +9,7 @@ partial:
   severity: error
 
 unused:
-  severity: warning
+  severity: none
 
 missing_comment:
   severity: error

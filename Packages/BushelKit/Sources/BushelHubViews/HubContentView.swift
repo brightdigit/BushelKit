@@ -18,7 +18,7 @@
 
     var body: some View {
       if self.hubID == nil {
-        Text("None Selected")
+        Text(.hubNoneSelected)
       } else if let images {
         List(selection: self.$selectedImageID) {
           ForEach(images) { image in

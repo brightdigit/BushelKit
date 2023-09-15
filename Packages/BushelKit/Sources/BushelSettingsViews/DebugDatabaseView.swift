@@ -26,14 +26,14 @@
             TableColumn("path", value: \.path)
           }.padding().tabItem {
             Image(systemName: "bookmark.fill")
-            Text("Bookmarks")
+            Text(.databaseBookmarks)
           }
           Table(self.libraries) {
             TableColumn("bookmarkID", value: \.bookmarkDataID.uuidString)
             TableColumn("images", value: \.imageCount.description)
           }.padding().tabItem {
             Image(systemName: "books.vertical.fill")
-            Text("Libraries")
+            Text(.databaseLibraries)
           }
           Table(self.images) {
             TableColumn("id", value: \.imageID.uuidString)
@@ -41,7 +41,7 @@
             TableColumn("operatingSystem", value: \.operatingSystemVersion.description)
           }.padding().tabItem {
             Image(systemName: "photo.artframe")
-            Text("Images")
+            Text(.databaseImages)
           }
           Table(self.machines) {
             TableColumn("Name", value: \.name)
@@ -50,7 +50,7 @@
             TableColumn("Last Opened", value: \.lastOpenedDescription)
           }.padding().tabItem {
             Image(systemName: "server.rack")
-            Text("Machines")
+            Text(.databaseMachines)
           }
           Table(self.snapshots) {
             TableColumn("ID", value: \.snapshotID.description)
@@ -59,7 +59,7 @@
             TableColumn("Created At", value: \.createdAt.description)
           }.padding().tabItem {
             Image(systemName: "camera.badge.clock.fill")
-            Text("Snapshots")
+            Text(.databaseSnapshots)
           }
         }
         Button("Done") {

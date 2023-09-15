@@ -35,7 +35,8 @@ public extension LibrarySystemManaging {
     return .init(
       operatingSystemLongName: system.operatingSystemLongName(for: metadata),
       defaultName: system.defaultName(fromMetadata: metadata),
-      imageName: system.imageName(for: metadata)
+      imageName: system.imageName(for: metadata),
+      systemName: system.shortName
     )
   }
 }

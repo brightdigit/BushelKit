@@ -8,6 +8,7 @@ import Foundation
 
 public protocol LibrarySystem {
   var id: VMSystemID { get }
+  var shortName: String { get }
   var allowedContentTypes: Set<FileType> { get }
   func operatingSystemLongName(for metadata: ImageMetadata) -> String
   func imageName(for metadata: ImageMetadata) -> String

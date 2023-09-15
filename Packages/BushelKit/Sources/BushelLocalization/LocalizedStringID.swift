@@ -3,29 +3,27 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-public enum LocalizedStringID: String {
+public enum LocalizedStringID: String, CaseIterable {
   case welcomeToBushel
-  case remoteRestoreImages
-  case loadingMachine
   case upgradePurchase
   case proFeatures
+  case aboutSubscriptionEndsAt
+  case aboutFeedback
+  case aboutFeedbackDetails
+  case copyrightBrightdigit
   case version
-  case savingMachine
+  case name
+  // swiftlint:disable:next identifier_name
+  case ok
   case startMachine
   case snapshotMachine
   case buildMachine
-  case buildingMachine
-  case buildingMachineFailure
-  case installingOs
-  case importFirstImage
-  case importRestoreImage
-  case selectRestoreImage
   case downloading
   case download
   case cancel
   case importImage
   case downloadImage
-  case saveToIpsw
+  case selectImage
   case saveToLibrary
   case creatingSession
   case generalSettings
@@ -35,29 +33,47 @@ public enum LocalizedStringID: String {
   case privacyPolicy
   case stayBasic
   case menuNew
-  case menuNewMachine
-  case menuNewImageLibrary
   case menuOpen
   case menuOpenRecent
-  case menuNewDownloadRestoreImage
   case menuWindowWelcomeToBushel
   case menuHelpBushel
   case menuClear
+  case welcomePro
   case welcomeNewMachineTitle
-  case welcomeNewMachineDescription
   case welcomeExistingMachineTitle
-  case welcomeExistingMachineDescription
   case welcomeStartLibraryTitle
-  case welcomeStartLibraryDescription
-  case welcomeDownloadImageTitle
-  case welcomeDownloadImageDescription
-
+  case welcomeNoRecentDocuments
+  case welcomeUpdatingRecentDocuments
+  case machineWillInstall
+  case machineDetailsOS
   case machineDetailsChip
-  case machineDetailsMemory
-  case machineDetailsStorage
+  case machineDetailsCPUName
+  case machineDetailsCPUCount
+  case machineDetailsMemoryName
+  case machineDetailsMemorySize
+  case machineDetailsStorageName
+  case machineDetailsStorageSize
   case machineDetailsDisplay
-  case machineDetailsNetwork
+  case machineDetailsNetworkName
   case machineDetailsNetworkNat
+  case hubImageSize
+  case hubLastModified
+  case hubURL
+  case hubNoneSelected
+  case sessionPressPowerButton
+  case sessionSaveAndTurnOff
+  case sessionTurnOff
+  case sessionShutdownAlert
+  case settingsGeneralTab
+  case settingsAdvancedTab
+  case settingsTestTab
+  case settingsAboutTab
+  case databaseBookmarks
+  case databaseLibraries
+  case databaseImages
+  case databaseMachines
+  case databaseSnapshots
+  case operationProgressText
 
   var keyValue: String {
     rawValue.camelCaseTosnake_case()
@@ -69,7 +85,8 @@ public enum LocalizedStringID: String {
 
   extension LocalizedStringID {
     var key: LocalizedStringKey {
-      LocalizedStringKey(keyValue)
+      Self.assert()
+      return LocalizedStringKey(keyValue)
     }
   }
 #endif

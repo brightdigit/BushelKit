@@ -23,23 +23,23 @@
             Text(label.operatingSystemLongName).font(.subheadline)
           }.padding(.vertical, 4)
           VStack(alignment: .leading) {
-            Text("Last Modified").fontWeight(.light)
+            Text(.hubLastModified).fontWeight(.light)
             Text(image.metadata.lastModified, style: .date)
           }
           VStack(alignment: .leading) {
-            Text("Size").fontWeight(.light)
+            Text(.hubImageSize).fontWeight(.light)
             Text(Int64(image.metadata.contentLength), format: .byteCount(style: .file)).font(.caption)
           }
 
           VStack(alignment: .leading) {
-            Text("URL").fontWeight(.light)
+            Text(.hubURL).fontWeight(.light)
 
             Text(image.url, format: .url).font(.caption2)
           }
           Spacer()
         }.padding()
       } else {
-        Text("None Selected")
+        Text(.hubNoneSelected)
       }
     }
   }

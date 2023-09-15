@@ -15,7 +15,12 @@
 
     var body: some View {
       VStack {
-        Image.resource("Logo-Monochrome").resizable().aspectRatio(contentMode: .fit).frame(width: 50.0).padding(20.0)
+        Image
+          .resource("Logo-Monochrome")
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 50.0)
+          .padding(20.0)
         ProgressView(value: installationObject.percentCompleted).tint(.white)
       }
       .padding(100.0)
@@ -47,8 +52,15 @@
       self.installationObject = installationObject
     }
 
-    init(buildResult: Binding<Result<URL, BuildError>?>, builder: MachineBuilder, percentCompleted: Double = 0.0) {
-      self.init(buildResult: buildResult, installationObject: .init(builder: builder, percentCompleted: percentCompleted))
+    init(
+      buildResult: Binding<Result<URL, BuildError>?>,
+      builder: MachineBuilder,
+      percentCompleted: Double = 0.0
+    ) {
+      self.init(
+        buildResult: buildResult,
+        installationObject: .init(builder: builder, percentCompleted: percentCompleted)
+      )
     }
   }
 
