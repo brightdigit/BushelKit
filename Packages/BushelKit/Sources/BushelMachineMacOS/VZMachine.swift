@@ -4,7 +4,6 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-
   import BushelCore
   import BushelLogging
   import BushelMachine
@@ -127,6 +126,7 @@
       return id
     }
 
+    // swiftlint:disable:next block_based_kvo
     override func observeValue(
       forKeyPath keyPath: String?,
       of _: Any?,
@@ -160,18 +160,23 @@
       notifyObservers(.stopWithError(error))
     }
 
-    /**
-     @abstract Invoked when a virtual machine's network attachment has been disconnected.
-     @discussion
-        This method is invoked every time that the network interface fails to start, resulting in the network attachment being disconnected. This can happen
-        in many situations such as initial boot, device reset, reboot, etc. Therefore, this method may be invoked several times during a virtual machine's life cycle.
-
-        The VZNetworkDevice.attachment property will be nil after the method is invoked.
-     @param virtualMachine The virtual machine invoking the delegate method.
-     @param networkDevice The network device whose attachment was disconnected.
-     @param error The error.
-     */
-    func virtualMachine(_: VZVirtualMachine, networkDevice _: VZNetworkDevice, attachmentWasDisconnectedWithError error: Error) {
+    /// Invoked when a virtual machine's network attachment has been disconnected.
+    ///
+    ///  This method is invoked every time that the network interface fails to start,
+    ///  resulting in the network attachment being disconnected. This can happen
+    ///  in many situations such as initial boot, device reset, reboot, etc.
+    ///  Therefore, this method may be invoked several times during a virtual machine's life cycle.
+    ///  The VZNetworkDevice.attachment property will be nil after the method is invoked.
+    ///
+    /// - Parameters:
+    ///   - _: The virtual machine invoking the delegate method.
+    ///   - _: The virtual machine invoking the delegate method.
+    ///   - error: The error.
+    func virtualMachine(
+      _: VZVirtualMachine,
+      networkDevice _: VZNetworkDevice,
+      attachmentWasDisconnectedWithError error: Error
+    ) {
       notifyObservers(.networkDetatchedWithError(error))
     }
 

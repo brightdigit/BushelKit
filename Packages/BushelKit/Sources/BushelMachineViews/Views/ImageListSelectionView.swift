@@ -7,7 +7,7 @@
   import SwiftUI
 
   struct ImageListSelectionView: View {
-    let images: [ConfigurationObject.Image]?
+    let images: [ConfigurationImage]?
 
     @State var currentSelectedImageID: UUID?
     @Binding var resultingSelectedImageID: UUID?
@@ -46,7 +46,7 @@
     internal init(
       selectedImageID: Binding<UUID?>,
 
-      images: [ConfigurationObject.Image]? = nil
+      images: [ConfigurationImage]? = nil
     ) {
       self.images = images
       self._resultingSelectedImageID = selectedImageID

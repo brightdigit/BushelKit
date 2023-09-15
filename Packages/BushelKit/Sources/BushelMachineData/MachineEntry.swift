@@ -118,7 +118,7 @@
       restoreImageID: UUID,
       name: String,
       createdAt: Date,
-      lastOpenedAt: Date? = nil,
+      lastOpenedAt: Date?,
       withContext context: ModelContext
     ) throws {
       self.init(

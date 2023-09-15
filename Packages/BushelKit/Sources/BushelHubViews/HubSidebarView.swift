@@ -1,5 +1,5 @@
 //
-// HubMasterView.swift
+// HubSidebarView.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -8,7 +8,7 @@
   import BushelHub
   import SwiftUI
 
-  struct HubMasterView: View {
+  struct HubSidebarView: View {
     @Binding var selectedHubID: String?
     let hubs: [Hub]
     let hubImages: [Hub.ID: [HubImage]]
@@ -17,7 +17,7 @@
       List(selection: self.$selectedHubID) {
         ForEach(hubs) { hub in
           NavigationLink(value: hub) {
-            HubMasterRow(text: hub.title, count: imageCount(forHub: hub), image: self.image(forHub: hub))
+            HubSidebarRow(text: hub.title, count: imageCount(forHub: hub), image: self.image(forHub: hub))
           }
         }
       }
