@@ -16,7 +16,7 @@
     @State var object: HubObject
     public var body: some View {
       NavigationSplitView {
-        HubMasterView(
+        HubSidebarView(
           selectedHubID: self.$object.selectedHubID,
           hubs: self.object.hubs,
           hubImages: self.object.hubImages

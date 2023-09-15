@@ -8,7 +8,7 @@
   import SwiftUI
 
   struct ImageListItem: View {
-    let image: ConfigurationObject.Image
+    let image: ConfigurationImage
 
     var body: some View {
       PreferredLayoutView { value in

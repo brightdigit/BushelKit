@@ -47,6 +47,30 @@
       )
     }
 
+    private static func creteNewBookmarkFromURL(
+      _ url: URL,
+      _ context: ModelContext
+    ) throws -> BookmarkData {
+      let bookmarkData: Data
+      do {
+        bookmarkData = try url.bookmarkDataWithSecurityScope()
+      } catch {
+        throw BookmarkError.accessDeniedError(error, at: url)
+      }
+
+      let bookmark = BookmarkData(url: url, bookmarkData: bookmarkData)
+      Self.logger.debug(
+        "Creating Bookmark for \(url, privacy: .public) with ID: \(bookmark.bookmarkID, privacy: .public)"
+      )
+      context.insert(bookmark)
+      do {
+        try context.save()
+      } catch {
+        throw BookmarkError.databaseError(error)
+      }
+      return bookmark
+    }
+
     public static func resolveURL(_ url: URL, with context: ModelContext) throws -> BookmarkData {
       let path = url.standardizedFileURL.path
       var predicate = FetchDescriptor<BookmarkData>(
@@ -69,24 +93,7 @@
 
         return item
       } else {
-        let bookmarkData: Data
-        do {
-          bookmarkData = try url.bookmarkDataWithSecurityScope()
-        } catch {
-          throw BookmarkError.accessDeniedError(error, at: url)
-        }
-
-        let bookmark = BookmarkData(url: url, bookmarkData: bookmarkData)
-        Self.logger.debug(
-          "Creating Bookmark for \(url, privacy: .public) with ID: \(bookmark.bookmarkID, privacy: .public)"
-        )
-        context.insert(bookmark)
-        do {
-          try context.save()
-        } catch {
-          throw BookmarkError.databaseError(error)
-        }
-        return bookmark
+        return try creteNewBookmarkFromURL(url, context)
       }
     }
 
