@@ -103,62 +103,10 @@
     convenience init(
       configuration: MachineObjectConfiguration
     ) throws {
-      let bookmarkData: BookmarkData
-      bookmarkData = try BookmarkData.resolveURL(configuration.url, with: configuration.modelContext)
-
-      defer {
-        do {
-          try bookmarkData.update(using: configuration.modelContext)
-        } catch {
-          assertionFailure(error: error)
-        }
-      }
-
-      let bookmarkDataID = bookmarkData.bookmarkID
-      var machinePredicate = FetchDescriptor<MachineEntry>(
-        predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID }
-      )
-
-      machinePredicate.fetchLimit = 1
-
-      let items: [MachineEntry]
-      do {
-        items = try configuration.modelContext.fetch(machinePredicate)
-      } catch {
-        throw MachineError.fromDatabaseError(error)
-      }
-      let entry: MachineEntry
       let components = try MachineObjectComponents(
-        configuration: configuration, bookmarkData: bookmarkData
+        configuration: configuration
       )
-      if let item = items.first {
-        do {
-          try item.synchronizeWith(
-            components.machine,
-            osInstalled: components.restoreImage,
-            using: configuration.modelContext
-          )
-        } catch {
-          throw MachineError.fromDatabaseError(error)
-        }
-        entry = item
-      } else {
-        do {
-          entry = try MachineEntry(
-            bookmarkData: bookmarkData,
-            machine: components.machine,
-            osInstalled: components.restoreImage,
-            restoreImageID: components.machine.configuration.restoreImageFile.imageID,
-            name: configuration.url.deletingPathExtension().lastPathComponent,
-            createdAt: Date(),
-            lastOpenedAt: Date(),
-            withContext: configuration.modelContext
-          )
-          try configuration.modelContext.save()
-        } catch {
-          throw MachineError.fromDatabaseError(error)
-        }
-      }
+      let entry: MachineEntry = try .basedOnComponents(components)
       self.init(
         machine: components.machine,
         entry: entry,

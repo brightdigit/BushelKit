@@ -19,8 +19,8 @@
       let totalBytesExpectedToWrite: Int64?
     }
 
-    public private(set) var totalBytesWritten: Int64 = 0
-    public private(set) var totalBytesExpectedToWrite: Int64?
+    public internal(set) var totalBytesWritten: Int64 = 0
+    public internal(set) var totalBytesExpectedToWrite: Int64?
 
     // swiftlint:disable:next implicitly_unwrapped_optional
     var session: URLSession!
@@ -40,57 +40,35 @@
       formatter.string(from: .init(value: .init(totalBytesWritten), unit: .bytes))
     }
 
+    public convenience init(
+      totalBytesExpectedToWrite: (some BinaryInteger)?,
+      setupPublishers: SetupPublishers = .init(),
+      configuration: URLSessionConfiguration? = nil,
+      queue: OperationQueue? = nil
+    ) {
+      self.init(
+        totalBytesExpectedToWrite: totalBytesExpectedToWrite,
+        setupPublishers: setupPublishers.callAsFunction(downloader:),
+        configuration: configuration,
+        queue: queue
+      )
+    }
+
     public init(
       totalBytesExpectedToWrite: (some BinaryInteger)?,
+      setupPublishers: @escaping (ObservableDownloader) -> [AnyCancellable],
       configuration: URLSessionConfiguration? = nil,
       queue: OperationQueue? = nil
     ) {
       self.totalBytesExpectedToWrite = totalBytesExpectedToWrite.map(Int64.init(_:))
       super.init()
-      let session = URLSession(
+      self.session = URLSession(
         configuration: configuration ?? .default,
         delegate: self,
         delegateQueue: queue
       )
-      self.session = session
 
-      let destinationFileURLPublisher = requestSubject.share().map(\.destinationFileURL)
-      requestSubject.share()
-        .map { downloadRequest -> URLSessionDownloadTask in
-          let task = self.session.downloadTask(with: downloadRequest.downloadSourceURL)
-          task.resume()
-          return task
-        }
-        .assign(to: \.task, on: self)
-        .store(in: &cancellables)
-
-      resumeDataSubject.map { resumeData in
-        let task = self.session.downloadTask(withResumeData: resumeData)
-        task.resume()
-        return task
-      }
-      .assign(to: \.task, on: self)
-      .store(in: &cancellables)
-
-      Publishers.CombineLatest(locationURLSubject, destinationFileURLPublisher)
-        .map { sourceURL, destinationURL in
-          Result {
-            try FileManager.default.moveItem(at: sourceURL, to: destinationURL)
-          }
-        }
-        .receive(on: DispatchQueue.main)
-        .sink(receiveValue: self.onCompletion)
-        .store(in: &cancellables)
-
-      let downloadUpdate = self.downloadUpdate.share()
-      downloadUpdate
-        .map(\.totalBytesWritten)
-        .assign(to: \.totalBytesWritten, on: self)
-        .store(in: &cancellables)
-      downloadUpdate
-        .map(\.totalBytesExpectedToWrite)
-        .assign(to: \.totalBytesExpectedToWrite, on: self)
-        .store(in: &cancellables)
+      self.cancellables = setupPublishers(self)
     }
 
     func onCompletion(_ result: Result<Void, Error>) {

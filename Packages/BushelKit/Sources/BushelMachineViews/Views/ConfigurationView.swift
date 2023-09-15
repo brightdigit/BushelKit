@@ -3,6 +3,8 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
+// swiftlint:disable file_length
+
 #if canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
@@ -109,7 +111,37 @@
       }
     }
 
-    public var body: some View {
+    public var storage: LabeledContent<some View, some View> {
+      LabeledContent {
+        HStack {
+          Slider(
+            value: self.$object.configuration.primaryStorageSizeFloat,
+            in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
+          )
+          .layoutPriority(100)
+          TextField(
+            value: self.$object.configuration.primaryStorageSizeFloat,
+            formatter: ByteCountFormatter.file
+          ) {
+            Text(LocalizedStringID.machineDetailsMemoryName)
+          }
+          .labelsHidden()
+          .frame(minWidth: 70, idealWidth: 75, maxWidth: 100)
+          .multilineTextAlignment(.trailing)
+          Stepper(
+            value: self.$object.configuration.primaryStorageSizeFloat,
+            in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
+            step: 1 * 1024 * 1024 * 1024
+          ) {
+            Text(LocalizedStringID.machineDetailsMemoryName)
+          }
+        }
+      } label: {
+        Text(.machineDetailsStorageSize)
+      }
+    }
+
+    public var form: some View {
       Form {
         GroupLabeledContent {
           restoreImageSectionContent
@@ -152,33 +184,7 @@
           } label: {
             Text(.name)
           }
-          LabeledContent {
-            HStack {
-              Slider(
-                value: self.$object.configuration.primaryStorageSizeFloat,
-                in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
-              )
-              .layoutPriority(100)
-              TextField(
-                value: self.$object.configuration.primaryStorageSizeFloat,
-                formatter: ByteCountFormatter.file
-              ) {
-                Text(LocalizedStringID.machineDetailsMemoryName)
-              }
-              .labelsHidden()
-              .frame(minWidth: 70, idealWidth: 75, maxWidth: 100)
-              .multilineTextAlignment(.trailing)
-              Stepper(
-                value: self.$object.configuration.primaryStorageSizeFloat,
-                in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
-                step: 1 * 1024 * 1024 * 1024
-              ) {
-                Text(LocalizedStringID.machineDetailsMemoryName)
-              }
-            }
-          } label: {
-            Text(.machineDetailsStorageSize)
-          }
+          storage
         } label: {
           Text(.machineDetailsStorageName)
         }
@@ -186,38 +192,42 @@
         .padding(.vertical, 8.0)
         formFooter
       }
-      .frame(width: 350)
-      .padding()
-      .background {
-        self.listenForExport
-      }
-      .onChange(of: self.buildRequest, self.object.onBuildRequestChange(from:to:))
-      .onChange(of: self.object.configuration.restoreImageID, self.object.onRestoreImageChange(from:to:))
-      .onChange(of: self.buildResult) { _, newValue in
-        guard let machineURL = try? newValue?.get() else {
-          return
+    }
+
+    public var body: some View {
+      form
+        .frame(width: 350)
+        .padding()
+        .background {
+          self.listenForExport
         }
-        self.openWindow(value: MachineFile(url: machineURL))
-        self.dismiss()
-      }
-      .onAppear {
-        self.object.setupFrom(
-          request: self.buildRequest,
-          systemManager: self.systemManager,
-          using: self.installerImageRepository,
-          labelProvider: metadataLabelProvider.callAsFunction
-        )
-      }
-      .sheet(item: self.$object.builder) { builder in
-        InstallerView(buildResult: self.$buildResult, builder: builder.builder)
-      }
-      .sheet(isPresented: self.$object.presentImageSelection) {
-        ImageListSelectionView(
-          selectedImageID: self.$object.sheetSelectedRestoreImageID,
-          images: self.object.images
-        )
-        .frame(width: 500, height: 200)
-      }
+        .onChange(of: self.buildRequest, self.object.onBuildRequestChange(from:to:))
+        .onChange(of: self.object.configuration.restoreImageID, self.object.onRestoreImageChange(from:to:))
+        .onChange(of: self.buildResult) { _, newValue in
+          guard let machineURL = try? newValue?.get() else {
+            return
+          }
+          self.openWindow(value: MachineFile(url: machineURL))
+          self.dismiss()
+        }
+        .onAppear {
+          self.object.setupFrom(
+            request: self.buildRequest,
+            systemManager: self.systemManager,
+            using: self.installerImageRepository,
+            labelProvider: metadataLabelProvider.callAsFunction
+          )
+        }
+        .sheet(item: self.$object.builder) { builder in
+          InstallerView(buildResult: self.$buildResult, builder: builder.builder)
+        }
+        .sheet(isPresented: self.$object.presentImageSelection) {
+          ImageListSelectionView(
+            selectedImageID: self.$object.sheetSelectedRestoreImageID,
+            images: self.object.images
+          )
+          .frame(width: 500, height: 200)
+        }
     }
 
     var listenForExport: some View {

@@ -8,6 +8,7 @@ import Foundation
 public struct NetworkConfiguration: Codable, Identifiable {
   public let id: UUID
   public let attachment: NetworkingConfigurationAttachment
+  // swiftlint:disable:next function_default_parameter_at_end
   public init(id: UUID = .init(), attachment: NetworkingConfigurationAttachment) {
     self.id = id
     self.attachment = attachment
