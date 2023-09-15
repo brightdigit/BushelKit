@@ -20,7 +20,8 @@
       readOnly: Bool,
       using fileManager: FileManager = .default
     ) throws {
-      try self.init(attachment:
+      try self.init(
+        attachment:
         VZDiskImageStorageDeviceAttachment(
           specification: specification,
           createDisk: createDisk,

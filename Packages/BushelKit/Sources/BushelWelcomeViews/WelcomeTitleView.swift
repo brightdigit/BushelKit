@@ -34,7 +34,7 @@
               .fontWeight(.bold)
 
             if (marketplace.subscriptionEndDate ?? .distantPast) > .now {
-              Text("Pro")
+              Text(.welcomePro)
                 .font(.system(size: 36.0))
                 .fontWeight(.bold)
                 .foregroundStyle(.tint)
@@ -56,8 +56,7 @@
           VStack(alignment: .leading) {
             WelcomeActionButton(
               imageSystemName: "plus.app",
-              titleID: .welcomeNewMachineTitle,
-              descriptionID: .welcomeNewMachineDescription
+              titleID: .welcomeNewMachineTitle
             ) {
               // newMachine()
               openWindow(value: MachineBuildRequest())
@@ -65,8 +64,7 @@
 
             WelcomeActionButton(
               imageSystemName: "square.and.arrow.down",
-              titleID: .welcomeExistingMachineTitle,
-              descriptionID: .welcomeExistingMachineDescription
+              titleID: .welcomeExistingMachineTitle
             ) {
               openMachine(with: openWindow)
             }
@@ -89,8 +87,7 @@
 
             WelcomeActionButton(
               imageSystemName: "server.rack",
-              titleID: .welcomeStartLibraryTitle,
-              descriptionID: .welcomeStartLibraryDescription
+              titleID: .welcomeStartLibraryTitle
             ) {
               newLibrary(with: openWindow)
             }

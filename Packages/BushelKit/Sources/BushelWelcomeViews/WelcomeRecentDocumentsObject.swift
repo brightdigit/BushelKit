@@ -33,7 +33,7 @@
       self.bookmarks = bookmarks
     }
 
-    fileprivate func invalidate() {
+    private func invalidate() {
       guard let context else {
         assertionFailure()
         return

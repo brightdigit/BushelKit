@@ -15,5 +15,17 @@
       let text = strings.map { $0.asString() }.joined(separator: separator)
       self.init(text)
     }
+
+    init(localizedUsingID id: LocalizedStringID, arguments: CVarArg...) {
+      self.init(
+        String(localizedUsingID: id, arguments: arguments)
+      )
+    }
+  }
+
+  public extension Label where Title == Text, Icon == Image {
+    init(_ id: LocalizedStringID, systemImage: String) {
+      self.init(id.key, systemImage: systemImage)
+    }
   }
 #endif

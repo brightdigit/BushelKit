@@ -28,7 +28,7 @@
               .frame(height: value.get())
             VStack(alignment: .leading, spacing: 16) {
               VStack(alignment: .leading) {
-                Text("Bushel").font(.system(size: 36)).fontWeight(.black)
+                Text(.welcomeToBushel).font(.system(size: 36)).fontWeight(.black)
                 Text(
                   .text(
                     "\(version.description) (\(version.buildNumberHex(withLength: 3)))"
@@ -37,22 +37,24 @@
               }
               VStack(alignment: .leading) {
                 if let subscriptionEndDate {
-                  Text("PRO Subscription ends at:").font(.system(.caption))
+                  Text(.aboutSubscriptionEndsAt).font(.system(.caption))
                   Text(subscriptionEndDate, style: .date)
                 } else {
-                  Button("GO PRO") {}.buttonStyle(.borderedProminent).fontWeight(.bold)
-                  Text("Proin scelerisque cursus lacus, consequat tincidunt ex portti.")
+                  Button(.upgradePurchase) {
+                    openWindow(value: purchaseScreenValue)
+                  }.buttonStyle(.borderedProminent).fontWeight(.bold)
+                  Text(.proFeatures)
                     .font(.system(size: 11.0))
                 }
               }
-              Text("© BrightDigit, LLC 2023").font(.system(.caption))
+              Text(.copyrightBrightdigit).font(.system(.caption))
             }.apply(\.size.height, with: value)
           }
         }
         Divider()
         VStack(alignment: .leading) {
-          Text("Feedback & Issues").fontWeight(.bold)
-          Text("Etiam non dictum nisi, in rhoncus nulla. Aenean eget nulla nec sem ultrices ornare vitae finibus ex. Maecenas hendrerit, felis.")
+          Text(.aboutFeedback).fontWeight(.bold)
+          Text(.aboutFeedbackDetails)
         }
         Spacer()
       }
@@ -66,13 +68,4 @@
       self.purchaseScreenValue = purchaseScreenValue
     }
   }
-
-//  #Preview {
-//    About
-//    AboutView(shortVersion: "1.0.0", buildNumber: 42, subscriptionEndDate: nil, purchaseScreenValue: 0)
-//  }
-//
-//  #Preview {
-//    AboutView(shortVersion: "1.0.0", buildNumber: 42, subscriptionEndDate: .init(timeIntervalSinceNow: 1_000_000), purchaseScreenValue: 0)
-//  }
 #endif

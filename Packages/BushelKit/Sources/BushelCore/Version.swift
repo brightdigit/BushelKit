@@ -6,7 +6,7 @@
 import Foundation
 
 public struct Version: CustomStringConvertible {
-  fileprivate enum Key: String {
+  private enum Key: String {
     case marketingVersion = "CFBundleShortVersionString"
     case bundleVersion = "CFBundleVersion"
     case prelease = "BrightDigitPrereleaseInfo"
