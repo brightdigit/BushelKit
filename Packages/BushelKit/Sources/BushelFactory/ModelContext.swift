@@ -12,7 +12,7 @@
   import SwiftData
 
   extension ModelContext: InstallerImageRepository {
-    public func installImages(
+    public func image(
       _ labelProvider: @escaping MetadataLabelProvider) throws -> [any InstallerImage] {
       let imagePredicate = FetchDescriptor<LibraryImageEntry>()
       let images = try self.fetch(imagePredicate)
@@ -21,7 +21,7 @@
       }
     }
 
-    public func installImage(
+    public func image(
       withID id: UUID,
       library: LibraryIdentifier?,
       _ labelProvider: @escaping MetadataLabelProvider
