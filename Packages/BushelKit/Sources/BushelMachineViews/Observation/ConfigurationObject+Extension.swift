@@ -35,7 +35,7 @@
       }
       guard
         let labelProvider,
-        let installImage = try database.installImage(
+        let image = try database.image(
           withID: restoreImageID,
           library: configuration.libraryID,
           labelProvider
@@ -47,7 +47,7 @@
         assertionFailure(error: error)
         throw error
       }
-      return .init(setup: configuration, restoreImageFile: installImage)
+      return .init(setup: configuration, restoreImageFile: image)
     }
 
     func beginBuildRequest(for result: Result<URL, Error>, using database: InstallerImageRepository) {
@@ -69,7 +69,7 @@
         do {
           let builder = try await parameters.manager.createBuilder(
             for: configuration,
-            image: parameters.installImage,
+            image: parameters.image,
             at: url.appendingPathComponent(Paths.machineDataDirectoryName)
           )
           self.builder = .init(builder: builder)

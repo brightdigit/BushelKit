@@ -72,7 +72,7 @@
       let restoreImage: (any InstallerImage)?
 
       do {
-        restoreImage = try configuration.restoreImageDB.installImage(
+        restoreImage = try configuration.restoreImageDB.image(
           withID: machine.configuration.restoreImageFile.imageID,
           library: machine.configuration.restoreImageFile.libraryID,
           configuration.labelProvider

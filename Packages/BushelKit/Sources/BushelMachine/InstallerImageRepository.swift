@@ -9,11 +9,11 @@ import Foundation
 public protocol InstallerImageRepository {
   typealias Error = InstallerImageError
 
-  func installImages(
+  func image(
     _ labelProvider: @escaping MetadataLabelProvider
   ) throws -> [any InstallerImage]
 
-  func installImage(
+  func image(
     withID id: UUID,
     library: LibraryIdentifier?,
     _ labelProvider: @escaping MetadataLabelProvider
