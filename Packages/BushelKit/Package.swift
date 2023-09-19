@@ -908,6 +908,12 @@ struct BushelSystem: Target {
   }
 }
 //
+// BushelTestsCore.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelTestsCore: Target {}
+//
 // BushelUT.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -991,6 +997,18 @@ struct BushelWelcomeViews: Target {
 struct BushelCoreTests: TestTarget {
   var dependencies: any Dependencies {
     BushelCore()
+    BushelTestsCore()
+  }
+}
+//
+// BushelMachineTests.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelMachineTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelMachine()
+    BushelTestsCore()
   }
 }
 //
@@ -1009,6 +1027,7 @@ let package = Package {
 }
 testTargets: {
   BushelCoreTests()
+  BushelMachineTests()
 }
 .supportedPlatforms {
   WWDC2023()

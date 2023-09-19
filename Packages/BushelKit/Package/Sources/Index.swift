@@ -14,6 +14,7 @@ let package = Package {
 }
 testTargets: {
   BushelCoreTests()
+  BushelMachineTests()
 }
 .supportedPlatforms {
   WWDC2023()

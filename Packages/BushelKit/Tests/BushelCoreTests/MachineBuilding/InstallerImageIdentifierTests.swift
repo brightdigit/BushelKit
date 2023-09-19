@@ -36,8 +36,8 @@ final class InstallerImageIdentifierTests: XCTestCase {
   }
 
   func testInitializeFromLibraryIDAndImageID() {
-    let expectedLibraryID = LibraryIdentifier.sampleBookmarkID
-    let expectedImageID = UUID.sampleImageID
+    let expectedLibraryID = LibraryIdentifier.sampleLibraryID
+    let expectedImageID = UUID.imageIDSample
 
     let sut = InstallerImageIdentifier(imageID: expectedImageID, libraryID: expectedLibraryID)
 
