@@ -11,7 +11,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled {
   public let restoreImageFile: InstallerImageIdentifier
 
   /// System ID
-  public let systemID: VMSystemID
+  public let vmSystem: VMSystemID
   public var operatingSystemVersion: OperatingSystemVersion
   public var buildVersion: String?
 
@@ -31,7 +31,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled {
 
   public init(
     restoreImageFile: InstallerImageIdentifier,
-    systemID: VMSystemID,
+    vmSystem: VMSystemID,
     operatingSystemVersion: OperatingSystemVersion,
     buildVersion: String? = nil,
     storage: [MachineStorageSpecification] = [.default],
@@ -42,7 +42,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled {
     snapshots: [Snapshot] = []
   ) {
     self.restoreImageFile = restoreImageFile
-    self.systemID = systemID
+    self.vmSystem = vmSystem
     self.operatingSystemVersion = operatingSystemVersion
     self.buildVersion = buildVersion
     self.storage = storage
@@ -58,7 +58,7 @@ public extension MachineConfiguration {
   init(setup: MachineSetupConfiguration, restoreImageFile: any InstallerImage) {
     self.init(
       restoreImageFile: restoreImageFile.indentifier,
-      systemID: restoreImageFile.metadata.systemID,
+      vmSystem: restoreImageFile.metadata.systemID,
       operatingSystemVersion: restoreImageFile.operatingSystemVersion,
       buildVersion: restoreImageFile.buildVersion,
       storage: setup.storage,

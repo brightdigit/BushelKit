@@ -6,7 +6,7 @@
 import Foundation
 
 public enum LocalizedText {
-  case key(LocalizedStringID)
+  case key(LocalizedID)
   case text(String)
 
   func asString() -> String {
@@ -17,5 +17,9 @@ public enum LocalizedText {
     case let .text(value):
       return value
     }
+  }
+
+  func key(_ stringID: LocalizedStringID) -> LocalizedText {
+    .key(stringID)
   }
 }

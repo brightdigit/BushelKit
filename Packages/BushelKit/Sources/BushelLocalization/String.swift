@@ -12,7 +12,7 @@ extension String {
     options: []
   )
 
-  public init(localizedUsingID id: LocalizedStringID, arguments: CVarArg...) {
+  public init(localizedUsingID id: LocalizedID, arguments: CVarArg...) {
     self.init(format: LocalizedText.key(id).asString(), arguments: arguments)
   }
 
