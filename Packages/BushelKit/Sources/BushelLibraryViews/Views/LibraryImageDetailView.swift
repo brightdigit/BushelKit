@@ -13,11 +13,12 @@
     @Environment(\.openWindow) var openWindow
     @Bindable var image: LibraryImageObject
     let system: any LibrarySystem
+    @State var metadataLabel: MetadataLabel
 
     var body: some View {
       VStack {
         HStack(alignment: .top) {
-          Image.resource(system.imageName(for: image.metadata))
+          Image.resource(metadataLabel.imageName)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 80, height: 80)
@@ -26,7 +27,7 @@
             .padding(.horizontal)
           VStack(alignment: .leading) {
             TextField("Name", text: self.$image.name).font(.largeTitle)
-            Text(system.operatingSystemLongName(for: image.metadata)).lineLimit(1).font(.title)
+            Text(metadataLabel.operatingSystemLongName).lineLimit(1).font(.title)
             Text(
               Int64(image.metadata.contentLength), format: .byteCount(style: .file)
             ).font(.title2)
@@ -44,12 +45,19 @@
           )
         }
         Spacer()
-      }.padding(.vertical)
+      }
+      .padding(.vertical)
+      .onChange(of: self.image.metadata) { _, newValue in
+        self.metadataLabel = system.label(fromMetadata: newValue)
+      }
     }
 
     internal init(image: Bindable<LibraryImageObject>, system: LibrarySystem) {
       self._image = image
       self.system = system
+
+      let initialValue = system.label(fromMetadata: image.wrappedValue.metadata)
+      self._metadataLabel = State(initialValue: initialValue)
     }
   }
 #endif

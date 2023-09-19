@@ -11,9 +11,10 @@
 
   public extension ProgressOperationProperties {
     init(system: LibrarySystem, metadata: ImageMetadata, operation: any ProgressOperation<Int>) {
+      let label = system.label(fromMetadata: metadata)
       self.init(
-        imageName: system.imageName(for: metadata),
-        text: system.operatingSystemLongName(for: metadata),
+        imageName: label.imageName,
+        text: label.operatingSystemLongName,
         progress: .init(operation)
       )
     }

@@ -20,7 +20,7 @@ public extension InstallerImage {
     metadata.operatingSystem
   }
 
-  var buildVersion: String {
+  var buildVersion: String? {
     metadata.buildVersion
   }
 }

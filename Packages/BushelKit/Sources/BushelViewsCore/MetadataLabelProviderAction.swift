@@ -18,18 +18,27 @@
   public struct MetadataLabelProviderAction {
     static let `default` = MetadataLabelProviderAction(closure: MetadataLabel.init)
     let closure: BushelCore.MetadataLabelProvider
-    public func callAsFunction(_ systemID: VMSystemID, _ metadata: ImageMetadata) -> MetadataLabel {
-      closure(systemID, metadata)
+    public func callAsFunction(
+      _ systemID: VMSystemID,
+      _ operatingSystemInfo: OperatingSystemInstalled
+    ) -> MetadataLabel {
+      closure(systemID, operatingSystemInfo)
     }
   }
 
   private extension MetadataLabel {
-    init(_: VMSystemID, _: ImageMetadata) {
+    init(_: VMSystemID, _: OperatingSystemInstalled) {
       self.init()
     }
 
     init() {
-      self.init(operatingSystemLongName: "", defaultName: "", imageName: "", systemName: "")
+      self.init(
+        operatingSystemLongName: "",
+        defaultName: "",
+        imageName: "",
+        systemName: "",
+        versionName: ""
+      )
     }
   }
 

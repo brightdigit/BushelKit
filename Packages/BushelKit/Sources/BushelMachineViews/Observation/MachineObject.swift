@@ -49,6 +49,8 @@
 
     var entry: MachineEntry
 
+    let label: MetadataLabel
+
     @ObservationIgnored
     var observationID: UUID?
 
@@ -61,11 +63,13 @@
     internal init(
       machine: MachineObject.Machine,
       entry: MachineEntry,
+      label: MetadataLabel,
       modelContext: ModelContext? = nil,
       systemManager: MachineSystemManaging? = nil
     ) {
       self.machine = machine
       self.entry = entry
+      self.label = label
       self.modelContext = modelContext
       self.systemManager = systemManager
 
@@ -110,6 +114,7 @@
       self.init(
         machine: components.machine,
         entry: entry,
+        label: components.label,
         modelContext: configuration.modelContext,
         systemManager: configuration.systemManager
       )
