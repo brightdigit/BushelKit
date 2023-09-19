@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelLocalization
   import SwiftUI
 
   struct MachineSpecView: View {
@@ -16,7 +17,7 @@
         Image(systemName: systemName).resizable().aspectRatio(contentMode: .fit).fixedSize()
         labelView.fontWeight(.bold).fixedSize()
         valueView.fixedSize()
-      }.fixedSize().font(.customFont("Raleway", size: fontSize)).lineLimit(1)
+      }.fixedSize().font(.system(size: fontSize)).lineLimit(1)
     }
 
     internal init(
@@ -34,12 +35,12 @@
 
   struct MachineSpecView_Previews: PreviewProvider {
     static var previews: some View {
-      MachineSpecView(systemName: "cpu.fill") {
-        Text(.machineDetailsChip)
+      MachineSpecView(
+        systemName: "cpu.fill"
+      ) {
+        Text(LocalizedStringID.machineDetailsChip)
       } value: {
-        Text(
-          String(
-            format: NSLocalizedString("%d CPUS", bundle: .module, comment: "")))
+        Text(localizedUsingID: LocalizedDictionaryID.cpuCount, arguments: 4)
       }
     }
   }

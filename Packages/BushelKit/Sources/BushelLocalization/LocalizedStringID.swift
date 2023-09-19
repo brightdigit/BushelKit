@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-public enum LocalizedStringID: String, CaseIterable {
+public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case welcomeToBushel
   case upgradePurchase
   case proFeatures
@@ -45,6 +45,7 @@ public enum LocalizedStringID: String, CaseIterable {
   case welcomeNoRecentDocuments
   case welcomeUpdatingRecentDocuments
   case machineWillInstall
+  case machineDetailsSystemTab
   case machineDetailsOS
   case machineDetailsChip
   case machineDetailsCPUName
@@ -75,18 +76,7 @@ public enum LocalizedStringID: String, CaseIterable {
   case databaseSnapshots
   case operationProgressText
 
-  var keyValue: String {
+  public var keyValue: String {
     rawValue.camelCaseTosnake_case()
   }
 }
-
-#if canImport(SwiftUI)
-  import SwiftUI
-
-  extension LocalizedStringID {
-    var key: LocalizedStringKey {
-      Self.assert()
-      return LocalizedStringKey(keyValue)
-    }
-  }
-#endif

@@ -43,14 +43,16 @@
             )
           }
         }.tabItem {
-          Label("System", image: "list.bullet.rectangle.fill")
+          Label(LocalizedStringID.machineDetailsSystemTab, systemImage: "list.bullet.rectangle.fill")
         }
         //        SnapshotListView(
         //                    document: self.$document,
         //          snapshots: document.machine.snapshots).tabItem {
         //          Label("Snapshots", image: "camera")
         //        }
-      }.toolbar {
+      }
+      .padding()
+      .toolbar {
         ToolbarItemGroup {
           Button {
             do {

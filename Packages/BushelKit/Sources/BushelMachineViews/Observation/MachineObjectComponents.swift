@@ -81,7 +81,7 @@
         throw MachineError.fromDatabaseError(error)
       }
 
-      let label = configuration.labelProvider(machine.configuration.systemID, machine.configuration)
+      let label = configuration.labelProvider(machine.configuration.vmSystem, machine.configuration)
 
       self.init(
         machine: machine,
