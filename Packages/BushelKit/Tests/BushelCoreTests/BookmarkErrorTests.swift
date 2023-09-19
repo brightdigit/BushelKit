@@ -20,7 +20,7 @@ final class BookmarkErrorTests: XCTestCase {
 
   func testAccessDeniedError() {
     let expectedError = BushelCoreTestError.accessDenied
-    let expectedURL = URL.bushelapp
+    let expectedURL = URL.bushelappURL
 
     let sut = BookmarkError.accessDeniedError(expectedError, at: expectedURL)
 

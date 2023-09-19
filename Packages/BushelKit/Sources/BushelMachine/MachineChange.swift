@@ -27,6 +27,10 @@ public struct MachineChange {
   }
 
   public struct PropertyChange: CustomStringConvertible {
+    public let property: Property
+    public let new: Any?
+    public let old: Any?
+
     public var description: String {
       "\(property): \(String(describing: old)) -> \(String(describing: new))"
     }
@@ -36,10 +40,6 @@ public struct MachineChange {
       self.new = new
       self.old = old
     }
-
-    public let property: Property
-    public let new: Any?
-    public let old: Any?
   }
 
   public enum Event {
@@ -51,6 +51,7 @@ public struct MachineChange {
 
   public let event: Event
   public let source: any Machine
+
   public init(source: any Machine, event: MachineChange.Event) {
     self.event = event
     self.source = source

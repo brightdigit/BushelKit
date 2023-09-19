@@ -4,6 +4,7 @@
 //
 
 @testable import BushelCore
+import BushelTestsCore
 import XCTest
 
 internal final class DocumentFileTests: XCTestCase {

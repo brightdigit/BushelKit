@@ -6,14 +6,22 @@
 import BushelCore
 import Foundation
 
+/// Metadata attached to a machine
 public struct MachineConfiguration: Codable {
   public let restoreImageFile: InstallerImageIdentifier
+  /// Storage specifications
   public var storage: [MachineStorageSpecification]
+  /// CPU Count
   public var cpuCount: Float = 1
+  /// Amount of Memory
   public var memory: Float = (128 * 1024 * 1024 * 1024)
+  /// Netwoking Configuration
   public var networkConfigurations: [NetworkConfiguration]
+  /// Graphics Configuration
   public var graphicsConfigurations: [GraphicsConfiguration]
+  /// System ID
   public let vmSystem: VMSystemID
+  /// Snapshot of the machine
   public var snapshots: [Snapshot]
 
   public init(

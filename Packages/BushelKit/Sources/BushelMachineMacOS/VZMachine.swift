@@ -151,11 +151,10 @@
       notifyObservers(.guestDidStop)
     }
 
-    /**
-     @abstract Invoked when a virtual machine is stopped due to an error.
-     @param virtualMachine The virtual machine invoking the delegate method.
-     @param error The error.
-     */
+    /// Invoked when a virtual machine is stopped due to an error.
+    /// - Parameters:
+    ///   - virtualMachine The virtual machine invoking the delegate method.
+    ///   - error The error
     func virtualMachine(_: VZVirtualMachine, didStopWithError error: Error) {
       notifyObservers(.stopWithError(error))
     }
