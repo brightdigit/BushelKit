@@ -111,7 +111,7 @@ public protocol Machine {
   /// - Returns: true if the request was made successfully.
   func requestStop() async throws
 
-  func beginObservation(_ update: @escaping (MachineChange) -> Void) -> UUID
+  func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID
 
   @discardableResult
   func removeObservation(withID id: UUID) -> Bool

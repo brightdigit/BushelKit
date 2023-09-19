@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelLocalization
   import BushelMarketEnvironment
   import SwiftUI
 
@@ -25,7 +26,7 @@
         }
       }
       Text(
-        .key(.version),
+        .key(LocalizedStringID.version),
         .text(
           // swiftlint:disable:next line_length
           "\(Configuration.versionFormatted.marketingVersion) (\(Configuration.versionFormatted.buildNumberHex))"
