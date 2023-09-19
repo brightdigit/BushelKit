@@ -9,10 +9,10 @@
   import Foundation
   struct BuilderParameters {
     let manager: any MachineSystem
-    let installImage: any InstallerImage
-    internal init(manager: any MachineSystem, installImage: any InstallerImage) {
+    let image: any InstallerImage
+    internal init(manager: any MachineSystem, image: any InstallerImage) {
       self.manager = manager
-      self.installImage = installImage
+      self.image = image
     }
 
     internal init(object: ConfigurationObject, using database: InstallerImageRepository) throws {
@@ -30,7 +30,7 @@
 
       guard
         let labelProvider = object.labelProvider,
-        let installImage = try database.installImage(
+        let image = try database.image(
           withID: restoreImageID,
           library: object.configuration.libraryID,
           labelProvider
@@ -42,8 +42,8 @@
         assertionFailure(error: error)
         throw error
       }
-      let manager = systemManager.resolve(installImage.metadata.systemID)
-      self.init(manager: manager, installImage: installImage)
+      let manager = systemManager.resolve(image.metadata.systemID)
+      self.init(manager: manager, image: image)
     }
   }
 #endif

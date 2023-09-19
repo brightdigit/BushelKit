@@ -48,7 +48,7 @@
         }
         do {
           self.images = try database
-            .installImages(labelProvider)
+            .image(labelProvider)
             .map(ConfigurationImage.init(installerImage:))
         } catch {
           assertionFailure(error: error)
@@ -117,7 +117,7 @@
       }
       let image: (any InstallerImage)?
       do {
-        image = try database.installImage(
+        image = try database.image(
           withID: restoreImageID,
           library: self.configuration.libraryID,
           labelProvider
