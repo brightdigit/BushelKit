@@ -16,11 +16,11 @@ public enum MacOSVirtualization {
 
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
 
-  public static func operatingSystemLongName(for metadata: ImageMetadata) -> String {
+  public static func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
     "\(operatingSystemShortName(for: metadata)) (\(metadata.buildVersion))"
   }
 
-  public static func imageName(for metadata: ImageMetadata) -> String {
+  public static func imageName(for metadata: OperatingSystemInstalled) -> String {
     "OSVersions/".appending(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion))
   }
 
@@ -28,12 +28,12 @@ public enum MacOSVirtualization {
     Self.codeNames[operatingSystemVersion.majorVersion] ?? operatingSystemVersion.majorVersion.description
   }
 
-  public static func operatingSystemShortName(for metadata: ImageMetadata) -> String {
+  public static func operatingSystemShortName(for metadata: OperatingSystemInstalled) -> String {
     // swiftlint:disable:next line_length
     "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
-  public static func defaultName(fromMetadata metadata: ImageMetadata) -> String {
+  public static func defaultName(fromMetadata metadata: OperatingSystemInstalled) -> String {
     operatingSystemShortName(for: metadata)
   }
 }

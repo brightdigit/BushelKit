@@ -10,11 +10,19 @@ public struct MetadataLabel {
   public let defaultName: String
   public let imageName: String
   public let systemName: String
+  public let versionName: String
 
-  public init(operatingSystemLongName: String, defaultName: String, imageName: String, systemName: String) {
+  public init(
+    operatingSystemLongName: String,
+    defaultName: String,
+    imageName: String,
+    systemName: String,
+    versionName: String
+  ) {
     self.operatingSystemLongName = operatingSystemLongName
     self.defaultName = defaultName
     self.imageName = imageName
     self.systemName = systemName
+    self.versionName = versionName
   }
 }

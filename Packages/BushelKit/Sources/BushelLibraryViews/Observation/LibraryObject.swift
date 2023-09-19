@@ -159,7 +159,7 @@
         throw try LibraryError.systemResolutionError(error)
       }
 
-      let name = system.defaultName(fromMetadata: metadata)
+      let name = system.label(fromMetadata: metadata).defaultName
       let imageFile = LibraryImageFile(metadata: metadata, name: name)
 
       let imagesFolderURL = libraryURL.appending(path: Paths.restoreImagesDirectoryName)

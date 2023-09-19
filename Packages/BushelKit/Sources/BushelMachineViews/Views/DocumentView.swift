@@ -4,12 +4,13 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelLocalization
   import BushelLogging
   import BushelMachine
   import BushelMachineEnvironment
   import SwiftUI
 
-  struct DocumentView: View {
+  struct DocumentView: View, LoggerCategorized {
     @State var object = DocumentObject()
     @Environment(\.machineSystemManager) var systemManager
     @Environment(\.openWindow) var openWindow
@@ -18,9 +19,60 @@
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
     @Binding var machineFile: MachineFile?
     var body: some View {
-      Button("start machine") {
-        if let url = object.url {
-          openWindow(value: SessionRequest(url: url))
+      TabView {
+        HStack {
+          Image(icon: Icons.Machine.desktop01).resizable().aspectRatio(contentMode: .fit).padding(80.0)
+          GeometryReader { proxy in
+            Group {
+              if let machineObject = object.machineObject {
+                SpecificationsView(
+                  label: machineObject.label,
+                  configuration: machineObject.machine.configuration
+                )
+              }
+              //                MachineSpecListView(
+              //                  specification: document.machine.specification,
+              //                  operatingSystem: operatingSystem,
+              //                  previewImageManager: nil
+              //                )
+            }
+            .frame(
+              minWidth: proxy.size.width / 2.0,
+              minHeight: proxy.size.height,
+              alignment: .center
+            )
+          }
+        }.tabItem {
+          Label("System", image: "list.bullet.rectangle.fill")
+        }
+        //        SnapshotListView(
+        //                    document: self.$document,
+        //          snapshots: document.machine.snapshots).tabItem {
+        //          Label("Snapshots", image: "camera")
+        //        }
+      }.toolbar {
+        ToolbarItemGroup {
+          Button {
+            do {
+              if object.machineObject != nil {
+                // try machineObject.addSnapshot()
+                throw NSError()
+              }
+            } catch {
+              Self.logger.error("couldn't take a snapshot: \(error.localizedDescription)")
+            }
+          } label: {
+            Image(systemName: "camera")
+            Text(.snapshotMachine)
+          }
+          Button {
+            if let url = object.url {
+              openWindow(value: SessionRequest(url: url))
+            }
+          } label: {
+            Image(systemName: "play")
+            Text(.startMachine)
+          }
         }
       }
       .onChange(of: self.machineFile?.url) { _, newValue in

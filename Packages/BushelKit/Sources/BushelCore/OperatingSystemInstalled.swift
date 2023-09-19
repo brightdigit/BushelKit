@@ -6,6 +6,6 @@
 import Foundation
 
 public protocol OperatingSystemInstalled {
-  var buildVersion: String { get }
+  var buildVersion: String? { get }
   var operatingSystemVersion: OperatingSystemVersion { get }
 }
