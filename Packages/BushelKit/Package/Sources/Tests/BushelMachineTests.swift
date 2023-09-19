@@ -1,11 +1,11 @@
 //
-// BushelCoreTests.swift
+// BushelMachineTests.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
-struct BushelCoreTests: TestTarget {
+struct BushelMachineTests: TestTarget {
   var dependencies: any Dependencies {
-    BushelCore()
+    BushelMachine()
     BushelTestsCore()
   }
 }

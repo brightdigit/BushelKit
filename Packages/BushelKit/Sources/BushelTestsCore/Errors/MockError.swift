@@ -1,11 +1,11 @@
 //
-// MockLocalizedError.swift
+// MockError.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
 import Foundation
 
-protocol MockLocalizedError: Equatable, LocalizedError {
+public protocol MockError: Error, Equatable {
   associatedtype ErrorType: Equatable
 
   var value: ErrorType { get }

@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension URL {
+public extension URL {
   // swiftlint:disable:next force_unwrapping
-  static let bushelapp: URL = .init(string: "https://getbushel.app")!
+  static let bushelappURL: URL = .init(string: "https://getbushel.app")!
 }

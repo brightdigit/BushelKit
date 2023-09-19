@@ -4,23 +4,27 @@
 //
 
 import BushelCore
-//
-// BushelMachine.swift
-// Copyright (c) 2023 BrightDigit.
-//
 import Foundation
 
+/// Writable configuration used for setting up and configuring a new machine.
 public struct MachineSetupConfiguration {
+  /// Identifier to access the install image
   public var libraryID: LibraryIdentifier?
+  /// Optional identifier to the restore library
   public var restoreImageID: UUID?
+  /// Storage specifications
   public var storage: [MachineStorageSpecification]
+  /// CPU Count
   public var cpuCount: Float = 1
+  /// Amount of Memory
   public var memory: Float = (128 * 1024 * 1024 * 1024)
+  /// Netwoking Configuration
   public var networkConfigurations: [NetworkConfiguration]
+  /// Graphics Configuration
   public var graphicsConfigurations: [GraphicsConfiguration]
 
   public init(
-    libraryID _: LibraryIdentifier? = nil,
+    libraryID: LibraryIdentifier? = nil,
     restoreImageID: UUID? = nil,
     storage: [MachineStorageSpecification] = [.default],
     cpuCount: Float = 1,
@@ -28,7 +32,7 @@ public struct MachineSetupConfiguration {
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()]
   ) {
-    // self.libraryID = libraryID
+    self.libraryID = libraryID
     self.restoreImageID = restoreImageID
     self.storage = storage
     self.cpuCount = cpuCount
@@ -58,7 +62,10 @@ public extension MachineSetupConfiguration {
   }
 
   init(request: MachineBuildRequest?) {
-    self.init(libraryID: request?.restoreImage?.libraryID, restoreImageID: request?.restoreImage?.imageID)
+    self.init(
+      libraryID: request?.restoreImage?.libraryID,
+      restoreImageID: request?.restoreImage?.imageID
+    )
   }
 
   mutating func updating(forRequest request: MachineBuildRequest?) {
