@@ -22,6 +22,7 @@ extension InstallerImage.Metadata {
       operatingSystem: imageMetadata.operatingSystemVersion,
       buildVersion: imageMetadata.buildVersion,
       imageResourceName: label.imageName,
+      systemName: label.systemName,
       systemID: imageMetadata.vmSystem
     )
   }

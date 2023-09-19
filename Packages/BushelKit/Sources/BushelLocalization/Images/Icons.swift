@@ -5,9 +5,9 @@
 
 import Foundation
 
-enum Icons {
-  enum Machine: String, Icon {
-    static let namespace: String = "Icons/Machines"
+public enum Icons {
+  public enum Machine: String, Icon {
+    public static let namespace: String = "Icons/Machines"
     case desktop01 = "001-desktop"
     case computer = "002-computer"
     case desktopComputer = "003-desktop-computer"

@@ -5,10 +5,12 @@
 
 import Foundation
 
-public struct MachineStorageSpecification: Codable, Identifiable {
+public struct MachineStorageSpecification: Codable, Identifiable, Equatable {
   public let id: UUID
   public var size: UInt64
   public var label: String
+
+  // swiftlint:disable:next function_default_parameter_at_end
   public init(id: UUID = .init(), label: String, size: UInt64) {
     self.id = id
     self.label = label

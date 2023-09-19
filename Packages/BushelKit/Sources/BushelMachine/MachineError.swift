@@ -17,6 +17,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
   enum Details {
     private struct UnknownError: Error {
       private init() {}
+      // swiftlint:disable:next strict_fileprivate
       fileprivate static let shared = UnknownError()
     }
 
@@ -110,7 +111,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
     details.isRecoverable(fromError: innerError)
   }
 
-  fileprivate init<TypedError: Error>(
+  private init<TypedError: Error>(
     innerError: Error,
     as _: TypedError.Type,
     details: MachineError.Details
@@ -121,7 +122,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
     self.init(details: details, innerError: innerError)
   }
 
-  fileprivate init(details: MachineError.Details, innerError: Error? = nil) {
+  private init(details: MachineError.Details, innerError: Error? = nil) {
     if let innerError = innerError as? MachineError {
       assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
       Self.logger.critical(

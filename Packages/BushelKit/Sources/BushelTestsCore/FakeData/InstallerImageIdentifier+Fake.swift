@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-extension InstallerImageIdentifier {
+public extension InstallerImageIdentifier {
   // swiftlint:disable:next force_unwrapping
   static let sample: Self = .init(string: .restoreImageIdentiferSample)!
 }

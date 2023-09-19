@@ -30,12 +30,8 @@ public extension LibrarySystemManaging {
     return resolve(systemID)
   }
 
-  func labelForSystem(_ id: VMSystemID, metadata: ImageMetadata) -> MetadataLabel {
+  func labelForSystem(_ id: VMSystemID, metadata: OperatingSystemInstalled) -> MetadataLabel {
     let system = self.resolve(id)
-    return .init(
-      operatingSystemLongName: system.operatingSystemLongName(for: metadata),
-      defaultName: system.defaultName(fromMetadata: metadata),
-      imageName: system.imageName(for: metadata)
-    )
+    return system.label(fromMetadata: metadata)
   }
 }

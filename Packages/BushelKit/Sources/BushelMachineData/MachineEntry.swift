@@ -94,7 +94,7 @@
       self.memory = machine.configuration.memory
       self.networkConfigurations = machine.configuration.networkConfigurations
       self.graphicsConfigurations = machine.configuration.graphicsConfigurations
-      self.vmSystemID = machine.configuration.vmSystem.rawValue
+      self.vmSystemID = machine.configuration.systemID.rawValue
       self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
       self.buildVersion = osInstalled?.buildVersion
       self.createdAt = createdAt
@@ -118,7 +118,7 @@
       restoreImageID: UUID,
       name: String,
       createdAt: Date,
-      lastOpenedAt: Date? = nil,
+      lastOpenedAt: Date?,
       withContext context: ModelContext
     ) throws {
       self.init(

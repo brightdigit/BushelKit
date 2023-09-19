@@ -12,7 +12,6 @@
     let imageSystemName: String
 
     let titleID: LocalizedStringID
-    let descriptionID: LocalizedStringID
     let action: () -> Void
     var body: some View {
       Button(action: self.action, label: self.label).buttonStyle(.plain)
@@ -33,9 +32,9 @@
         }.padding(8.0)
         RoundedRectangle(cornerRadius: 8.0)
           .background(
-            colorScheme == .dark ?
-              Color.white :
-              Color.black).opacity(0.025)
+            colorScheme == .dark ? Color.white : Color.black
+          )
+          .opacity(0.025)
       }
     }
   }
@@ -45,8 +44,7 @@
       // swiftlint:disable multiline_arguments_brackets
       WelcomeActionButton(
         imageSystemName: "plus.app",
-        titleID: .welcomeNewMachineTitle,
-        descriptionID: .welcomeNewMachineDescription
+        titleID: .welcomeNewMachineTitle
       ) {}
       // swiftlint:enable multiline_arguments_brackets
     }

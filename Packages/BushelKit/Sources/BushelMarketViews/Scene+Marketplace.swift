@@ -11,8 +11,8 @@
 
   public extension Scene {
     func marketplace(
-      for groupIDs: [String] = [Configuration.Marketplace.groupID],
-      onChangeOf scenePhase: ScenePhase
+      onChangeOf scenePhase: ScenePhase,
+      for groupIDs: [String] = [Configuration.Marketplace.groupID]
     ) -> some Scene {
       self.marketplace(for: groupIDs, listener: StoreListener(), onChangeOf: scenePhase)
     }

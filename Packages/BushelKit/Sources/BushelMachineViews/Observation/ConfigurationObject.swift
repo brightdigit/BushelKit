@@ -12,28 +12,6 @@
 
   @Observable
   final class ConfigurationObject: LoggerCategorized {
-    struct Image: Identifiable {
-      let installerImage: any InstallerImage
-
-      var id: UUID {
-        installerImage.imageID
-      }
-
-      var libraryID: LibraryIdentifier? {
-        installerImage.libraryID
-      }
-
-      var metadata: InstallerImageMetadata {
-        installerImage.metadata
-      }
-    }
-
-    enum ConfigurationError: Error {
-      case missingRestoreImageID
-      case missingSystemManager
-      case restoreImageNotFound(UUID, library: LibraryIdentifier?)
-    }
-
     var sheetSelectedRestoreImageID: UUID? {
       didSet {
         self.configuration.restoreImageID = sheetSelectedRestoreImageID
@@ -46,16 +24,16 @@
     }
 
     var configuration: MachineSetupConfiguration
-    var restoreImageMetadata: InstallerImage.Metadata?
+    internal private(set) var restoreImageMetadata: InstallerImage.Metadata?
     var builder: MachineBuilderActivity?
-    var machineConfiguration: MachineConfiguration?
+    internal private(set) var machineConfiguration: MachineConfiguration?
     var error: Error?
 
     @ObservationIgnored
-    var systemManager: MachineSystemManaging?
+    internal private(set) var systemManager: MachineSystemManaging?
 
     @ObservationIgnored
-    var labelProvider: MetadataLabelProvider?
+    internal private(set) var labelProvider: MetadataLabelProvider?
 
     var presentFileExporter: Bool = false
     var presentImageSelection: Bool = false {
@@ -69,7 +47,9 @@
           return
         }
         do {
-          self.images = try database.installImages(labelProvider).map(Image.init(installerImage:))
+          self.images = try database
+            .installImages(labelProvider)
+            .map(ConfigurationImage.init(installerImage:))
         } catch {
           assertionFailure(error: error)
           self.error = error
@@ -77,7 +57,7 @@
       }
     }
 
-    var images: [Image]?
+    internal private(set) var images: [ConfigurationImage]?
 
     var isBuildable: Bool {
       self.configuration.restoreImageID != nil
@@ -92,7 +72,7 @@
     }
 
     @ObservationIgnored
-    var database: InstallerImageRepository?
+    internal private(set) var database: InstallerImageRepository?
 
     internal init(
       configuration: MachineSetupConfiguration,
@@ -103,8 +83,6 @@
       self._builder = builder
       self._error = error
     }
-
-    func verify() {}
 
     func setupFrom(
       request: MachineBuildRequest?,
@@ -123,7 +101,11 @@
       self.updateMetadataAt(basedOn: restoreImageID)
     }
 
-    private func updateMetadataAt(basedOn restoreImageID: UUID) {
+    func updateMetadataAt(basedOn restoreImageID: UUID?) {
+      guard let restoreImageID else {
+        self.restoreImageMetadata = nil
+        return
+      }
       guard let labelProvider else {
         assertionFailure("Missing label Provider")
         return
@@ -148,25 +130,6 @@
       self.restoreImageMetadata = image?.metadata
     }
 
-    func onRestoreImageChange(from _: UUID?, to newRestoreImageID: UUID?) {
-      assert(newRestoreImageID == self.configuration.restoreImageID)
-      guard let restoreImageID = self.configuration.restoreImageID else {
-        self.restoreImageMetadata = nil
-        return
-      }
-
-      self.updateMetadataAt(basedOn: restoreImageID)
-    }
-
-    func onBuildRequestChange(from _: MachineBuildRequest?, to request: MachineBuildRequest?) {
-      self.configuration.updating(forRequest: request)
-
-      guard let restoreImageID = request?.restoreImage?.imageID else {
-        return
-      }
-      self.updateMetadataAt(basedOn: restoreImageID)
-    }
-
     func prepareBuild(using database: InstallerImageRepository) {
       let machineConfiguration: MachineConfiguration
       do {
@@ -177,84 +140,6 @@
       }
       self.machineConfiguration = machineConfiguration
       self.presentFileExporter = true
-    }
-
-    func machineConfiguration(using database: InstallerImageRepository) throws -> MachineConfiguration {
-      guard let restoreImageID = configuration.restoreImageID else {
-        let error = ConfigurationError.missingRestoreImageID
-        assertionFailure(error: error)
-        throw error
-      }
-      guard
-        let labelProvider,
-        let installImage = try database.installImage(
-          withID: restoreImageID,
-          library: configuration.libraryID,
-          labelProvider
-        ) else {
-        let error = ConfigurationError.restoreImageNotFound(
-          restoreImageID,
-          library: configuration.libraryID
-        )
-        assertionFailure(error: error)
-        throw error
-      }
-      return .init(setup: configuration, restoreImageFile: installImage)
-    }
-
-    func beginBuildRequest(for result: Result<URL, Error>, using database: InstallerImageRepository) {
-      do {
-        try result.flatMap { url in
-          Result {
-            try self.beginCreateBuilder(url, using: database)
-          }
-        }
-        .get()
-      } catch {
-        self.error = error
-      }
-    }
-
-    func beginCreateBuilder(_ url: URL, using database: InstallerImageRepository) throws {
-      guard let systemManager else {
-        let error = ConfigurationError.missingSystemManager
-        assertionFailure(error: error)
-        throw error
-      }
-      guard let restoreImageID = configuration.restoreImageID else {
-        let error = ConfigurationError.missingRestoreImageID
-        assertionFailure(error: error)
-        throw error
-      }
-
-      guard
-        let labelProvider,
-        let installImage = try database.installImage(
-          withID: restoreImageID,
-          library: configuration.libraryID,
-          labelProvider
-        ) else {
-        let error = ConfigurationError.restoreImageNotFound(
-          restoreImageID,
-          library: configuration.libraryID
-        )
-        assertionFailure(error: error)
-        throw error
-      }
-      let manager = systemManager.resolve(installImage.metadata.systemID)
-      Task {
-        do {
-          let builder = try await manager.createBuilder(
-            for: configuration,
-            image: installImage,
-            at: url.appendingPathComponent(Paths.machineDataDirectoryName)
-          )
-          self.builder = .init(builder: builder)
-        } catch {
-          Self.logger.error("Unable to create builder: \(error)")
-          self.error = error
-        }
-      }
     }
   }
 

@@ -9,11 +9,11 @@ import XCTest
 
 final class LibraryIdentifierTests: XCTestCase {
   func testBookmarkIDFromString() {
-    let bookmarkID = LibraryIdentifier.bookmarkID(.sampleBookmarkID)
+    let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
 
     let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
 
-    XCTAssertEqual(sut.description, bookmarkID.description)
+    XCTAssertEqual(sut.description, expectedID.description)
   }
 
   func testURLFromString() {

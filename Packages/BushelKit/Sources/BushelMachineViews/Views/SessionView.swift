@@ -24,27 +24,29 @@
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
 
     var startPauseResume: some View {
-      if self.object.canStart {
-        Button {
-          self.object.begin { try await $0.start() }
-        } label: {
-          Image(systemName: "play.fill")
-        }
-      } else if self.object.canPause {
-        Button {
-          self.object.begin { try await $0.pause() }
-        } label: {
-          Image(systemName: "pause.fill")
-        }
-      } else if self.object.canResume {
-        Button {
-          self.object.begin { try await $0.resume() }
-        } label: {
-          Image(systemName: "play")
-        }
-      } else {
-        Button {} label: {
-          Image(systemName: "questionmark.app.dashed")
+      Group {
+        if self.object.canStart {
+          Button {
+            self.object.begin { try await $0.start() }
+          } label: {
+            Image(systemName: "play.fill")
+          }
+        } else if self.object.canPause {
+          Button {
+            self.object.begin { try await $0.pause() }
+          } label: {
+            Image(systemName: "pause.fill")
+          }
+        } else if self.object.canResume {
+          Button {
+            self.object.begin { try await $0.resume() }
+          } label: {
+            Image(systemName: "play")
+          }
+        } else {
+          Button {} label: {
+            Image(systemName: "questionmark.app.dashed")
+          }
         }
       }
     }
@@ -75,11 +77,11 @@
           closeOnShutdown = true
           self.object.beginShutdown()
         } label: {
-          Text("Press Power Button")
+          Text(.sessionPressPowerButton)
         }
 
         Button {} label: {
-          Text("Save State and Turn Off")
+          Text(.sessionSaveAndTurnOff)
         }.disabled(true)
 
         Button {
@@ -88,10 +90,10 @@
             try await machine.stop()
           }
         } label: {
-          Text("Turn Off")
+          Text(.sessionTurnOff)
         }
       } message: {
-        Text("How would you like to shutdown your machine?")
+        Text(.sessionShutdownAlert)
       }
       .onCloseButton(self.$object.windowClose, self.object.shouldCloseWindow(_:))
       .onChange(of: request?.url) { _, newValue in

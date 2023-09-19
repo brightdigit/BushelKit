@@ -29,6 +29,7 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable {
     self.init(id: id, metadata: metadata, name: name)
   }
 
+  // swiftlint:disable:next function_default_parameter_at_end
   public init(
     id: UUID = UUID(),
     metadata: ImageMetadata,

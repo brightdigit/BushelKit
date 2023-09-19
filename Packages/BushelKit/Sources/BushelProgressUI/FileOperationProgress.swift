@@ -9,17 +9,17 @@
 
   @Observable
   public class FileOperationProgress<ValueType: BinaryInteger>: Identifiable {
-    let operation: any ProgressOperation<ValueType>
+    public let operation: any ProgressOperation<ValueType>
 
     public var id: URL {
       operation.id
     }
 
-    var totalValueBytes: Int64? {
+    public var totalValueBytes: Int64? {
       operation.totalValue.map(Int64.init)
     }
 
-    var currentValueBytes: Int64 {
+    public var currentValueBytes: Int64 {
       Int64(operation.currentValue)
     }
 

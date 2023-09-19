@@ -1,5 +1,5 @@
 //
-// HubMasterRow.swift
+// HubSidebarRow.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -8,7 +8,7 @@
   import Foundation
   import SwiftUI
 
-  struct HubMasterRow: View {
+  struct HubSidebarRow: View {
     struct Properties {
       let text: String
       let count: Int?
@@ -44,7 +44,7 @@
       self.init(properties: .init(text: text, count: count, image: image))
     }
 
-    internal init(properties: HubMasterRow.Properties) {
+    internal init(properties: HubSidebarRow.Properties) {
       self.properties = properties
     }
   }

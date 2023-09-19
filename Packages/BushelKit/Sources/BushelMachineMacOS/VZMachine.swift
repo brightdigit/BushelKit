@@ -4,7 +4,6 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-
   import BushelCore
   import BushelLogging
   import BushelMachine
@@ -18,7 +17,15 @@
       .machine
     }
 
+    let url: URL
+    let configuration: MachineConfiguration
+    let machine: VZVirtualMachine
+    // swiftlint:disable:next implicitly_unwrapped_optional
+    var observation: KVObservation!
+    var observers = [UUID: (MachineChange) -> Void]()
+
     var state: BushelMachine.MachineState {
+      // swiftlint:disable:next force_unwrapping
       .init(rawValue: machine.state.rawValue)!
     }
 
@@ -45,6 +52,23 @@
     @MainActor
     var canRequestStop: Bool {
       self.machine.canRequestStop
+    }
+
+    internal init(url: URL, configuration: MachineConfiguration, machine: VZVirtualMachine) {
+      self.url = url
+      self.configuration = configuration
+      self.machine = machine
+
+      super.init()
+
+      self.machine.delegate = self
+      self.observation = self.machine.addObserver(self, options: [.initial, .new, .old])
+
+      guard url.startAccessingSecurityScopedResource() else {
+        Self.logger.error("Couldn't start accessing resource at \(url)")
+        assertionFailure("Couldn't start accessing resource at \(url)")
+        return
+      }
     }
 
     @MainActor
@@ -83,37 +107,7 @@
       }
     }
 
-    internal init(url: URL, configuration: MachineConfiguration, machine: VZVirtualMachine) {
-      self.url = url
-      self.configuration = configuration
-      self.machine = machine
-
-      super.init()
-
-      self.machine.delegate = self
-      self.observation = self.machine.addObserver(self, options: [.initial, .new, .old])
-
-      guard url.startAccessingSecurityScopedResource() else {
-        Self.logger.error("Couldn't start accessing resource at \(url)")
-        assertionFailure("Couldn't start accessing resource at \(url)")
-        return
-      }
-    }
-
-    deinit {
-      self.observers.removeAll()
-      self.observation = nil
-
-      url.stopAccessingSecurityScopedResource()
-    }
-
-    let url: URL
-    let configuration: MachineConfiguration
-    let machine: VZVirtualMachine
-    var observation: KVObservation!
-    var observers = [UUID: (MachineChange) -> Void]()
-
-    fileprivate func notifyObservers(_ event: MachineChange.Event) {
+    private func notifyObservers(_ event: MachineChange.Event) {
       let update = MachineChange(source: self, event: event)
       for value in observers.values {
         value(update)
@@ -132,11 +126,21 @@
       return id
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of _: Any?, change: [NSKeyValueChangeKey: Any]?, context _: UnsafeMutableRawPointer?) {
+    // swiftlint:disable:next block_based_kvo
+    override func observeValue(
+      forKeyPath keyPath: String?,
+      of _: Any?,
+      change: [NSKeyValueChangeKey: Any]?,
+      context _: UnsafeMutableRawPointer?
+    ) {
       guard let keyPath else {
         return
       }
-      guard let propertyUpdate = MachineChange.PropertyChange(keyPath: keyPath, new: change?[.newKey], old: change?[.oldKey]) else {
+      guard let propertyUpdate = MachineChange.PropertyChange(
+        keyPath: keyPath,
+        new: change?[.newKey],
+        old: change?[.oldKey]
+      ) else {
         return
       }
 
@@ -147,28 +151,39 @@
       notifyObservers(.guestDidStop)
     }
 
-    /**
-     @abstract Invoked when a virtual machine is stopped due to an error.
-     @param virtualMachine The virtual machine invoking the delegate method.
-     @param error The error.
-     */
+    /// Invoked when a virtual machine is stopped due to an error.
+    /// - Parameters:
+    ///   - virtualMachine The virtual machine invoking the delegate method.
+    ///   - error The error
     func virtualMachine(_: VZVirtualMachine, didStopWithError error: Error) {
       notifyObservers(.stopWithError(error))
     }
 
-    /**
-     @abstract Invoked when a virtual machine's network attachment has been disconnected.
-     @discussion
-        This method is invoked every time that the network interface fails to start, resulting in the network attachment being disconnected. This can happen
-        in many situations such as initial boot, device reset, reboot, etc. Therefore, this method may be invoked several times during a virtual machine's life cycle.
-
-        The VZNetworkDevice.attachment property will be nil after the method is invoked.
-     @param virtualMachine The virtual machine invoking the delegate method.
-     @param networkDevice The network device whose attachment was disconnected.
-     @param error The error.
-     */
-    func virtualMachine(_: VZVirtualMachine, networkDevice _: VZNetworkDevice, attachmentWasDisconnectedWithError error: Error) {
+    /// Invoked when a virtual machine's network attachment has been disconnected.
+    ///
+    ///  This method is invoked every time that the network interface fails to start,
+    ///  resulting in the network attachment being disconnected. This can happen
+    ///  in many situations such as initial boot, device reset, reboot, etc.
+    ///  Therefore, this method may be invoked several times during a virtual machine's life cycle.
+    ///  The VZNetworkDevice.attachment property will be nil after the method is invoked.
+    ///
+    /// - Parameters:
+    ///   - _: The virtual machine invoking the delegate method.
+    ///   - _: The virtual machine invoking the delegate method.
+    ///   - error: The error.
+    func virtualMachine(
+      _: VZVirtualMachine,
+      networkDevice _: VZNetworkDevice,
+      attachmentWasDisconnectedWithError error: Error
+    ) {
       notifyObservers(.networkDetatchedWithError(error))
+    }
+
+    deinit {
+      self.observers.removeAll()
+      self.observation = nil
+
+      url.stopAccessingSecurityScopedResource()
     }
   }
 
