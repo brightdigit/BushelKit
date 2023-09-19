@@ -7,10 +7,17 @@ import BushelCore
 import Foundation
 
 /// Metadata attached to a machine
-public struct MachineConfiguration: Codable {
+public struct MachineConfiguration: Codable, OperatingSystemInstalled {
   public let restoreImageFile: InstallerImageIdentifier
+
+  /// System ID
+  public let systemID: VMSystemID
+  public var operatingSystemVersion: OperatingSystemVersion
+  public var buildVersion: String?
+
   /// Storage specifications
   public var storage: [MachineStorageSpecification]
+
   /// CPU Count
   public var cpuCount: Float = 1
   /// Amount of Memory
@@ -19,14 +26,14 @@ public struct MachineConfiguration: Codable {
   public var networkConfigurations: [NetworkConfiguration]
   /// Graphics Configuration
   public var graphicsConfigurations: [GraphicsConfiguration]
-  /// System ID
-  public let vmSystem: VMSystemID
   /// Snapshot of the machine
   public var snapshots: [Snapshot]
 
   public init(
     restoreImageFile: InstallerImageIdentifier,
     systemID: VMSystemID,
+    operatingSystemVersion: OperatingSystemVersion,
+    buildVersion: String? = nil,
     storage: [MachineStorageSpecification] = [.default],
     cpuCount: Float = 1,
     memory: Float = (128 * 1024 * 1024 * 1024),
@@ -35,7 +42,9 @@ public struct MachineConfiguration: Codable {
     snapshots: [Snapshot] = []
   ) {
     self.restoreImageFile = restoreImageFile
-    self.vmSystem = systemID
+    self.systemID = systemID
+    self.operatingSystemVersion = operatingSystemVersion
+    self.buildVersion = buildVersion
     self.storage = storage
     self.cpuCount = cpuCount
     self.memory = memory
@@ -50,6 +59,8 @@ public extension MachineConfiguration {
     self.init(
       restoreImageFile: restoreImageFile.indentifier,
       systemID: restoreImageFile.metadata.systemID,
+      operatingSystemVersion: restoreImageFile.operatingSystemVersion,
+      buildVersion: restoreImageFile.buildVersion,
       storage: setup.storage,
       cpuCount: setup.cpuCount,
       memory: setup.memory,

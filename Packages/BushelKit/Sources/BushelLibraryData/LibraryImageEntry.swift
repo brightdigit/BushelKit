@@ -17,7 +17,7 @@
     @Attribute(.unique)
     public var imageID: UUID
     public var isImageSupported: Bool
-    public var buildVersion: String
+    public var buildVersion: String?
     @Attribute(originalName: "operatingSystemVersion")
     private var operatingSystemVersionString: String
     public var operatingSystemVersion: OperatingSystemVersion {
@@ -48,7 +48,7 @@
       name: String,
       id: UUID,
       isImageSupported: Bool,
-      buildVersion: String,
+      buildVersion: String?,
       operatingSystemVersion: OperatingSystemVersion,
       contentLength: Int,
       lastModified: Date,

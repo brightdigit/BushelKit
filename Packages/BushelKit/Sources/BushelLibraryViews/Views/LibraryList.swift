@@ -17,8 +17,12 @@
         if let items {
           ForEach(items) { libraryItem in
             HStack {
-              let system = librarySystemManager.resolve(libraryItem.metadata.vmSystem)
-              Image.resource(system.imageName(for: libraryItem.metadata))
+              let label = librarySystemManager.labelForSystem(
+                libraryItem.metadata.vmSystem,
+                metadata: libraryItem.metadata
+              )
+
+              Image.resource(label.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 80)
@@ -30,7 +34,7 @@
                 }
               VStack(alignment: .leading) {
                 Text(libraryItem.name).font(.title)
-                Text(system.operatingSystemLongName(for: libraryItem.metadata))
+                Text(label.operatingSystemLongName)
               }
             }
           }

@@ -11,7 +11,7 @@ public struct InstallerImageMetadata {
   public let defaultName: String
   public let labelName: String
   public let operatingSystem: OperatingSystemVersion
-  public let buildVersion: String
+  public let buildVersion: String?
   public let imageResourceName: String
   public let systemName: String
   public let systemID: VMSystemID
@@ -25,7 +25,7 @@ public struct InstallerImageMetadata {
     defaultName: String,
     labelName: String,
     operatingSystem: OperatingSystemVersion,
-    buildVersion: String,
+    buildVersion: String?,
     imageResourceName: String,
     systemName: String,
     systemID: VMSystemID

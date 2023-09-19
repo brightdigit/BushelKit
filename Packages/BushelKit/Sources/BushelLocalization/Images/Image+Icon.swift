@@ -7,7 +7,7 @@
   import Foundation
   import SwiftUI
 
-  extension Image {
+  public extension Image {
     init(icon: Icon) {
       self.init(icon.name, bundle: .module)
     }

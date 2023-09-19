@@ -5,9 +5,9 @@
 
 import Foundation
 
-public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
+public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable, OperatingSystemInstalled {
   public let isImageSupported: Bool
-  public let buildVersion: String
+  public let buildVersion: String?
   public let operatingSystemVersion: OperatingSystemVersion
   public let contentLength: Int
   public let lastModified: Date
@@ -16,12 +16,12 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable {
 
   public var debugDescription: String {
     // swiftlint:disable:next line_length
-    "\(Self.self)(isImageSupported: \(isImageSupported), buildVersion: \"\(buildVersion)\", operatingSystemVersion: \(operatingSystemVersion.debugDescription), contentLength: \(contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(lastModified.timeIntervalSinceReferenceDate))"
+    "\(Self.self)(isImageSupported: \(isImageSupported), buildVersion: \"\(buildVersion ?? "")\", operatingSystemVersion: \(operatingSystemVersion.debugDescription), contentLength: \(contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(lastModified.timeIntervalSinceReferenceDate))"
   }
 
   public init(
     isImageSupported: Bool,
-    buildVersion: String,
+    buildVersion: String?,
     operatingSystemVersion: OperatingSystemVersion,
     contentLength: Int,
     lastModified: Date,

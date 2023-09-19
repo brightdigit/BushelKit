@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftData)
+  import BushelCore
   import BushelMachine
   import Foundation
   import SwiftData

@@ -20,13 +20,15 @@
     let restoreImage: OperatingSystemInstalled?
     let existingEntry: MachineEntry?
     let configuration: MachineObjectConfiguration
+    let label: MetadataLabel
 
     internal init(
       machine: Machine,
       restoreImage: OperatingSystemInstalled?,
       configuration: MachineObjectConfiguration,
       existingEntry: MachineEntry?,
-      bookmarkData: BookmarkData
+      bookmarkData: BookmarkData,
+      label: MetadataLabel
     ) {
       if restoreImage == nil {
         MachineObject.logger.warning(
@@ -39,6 +41,7 @@
       self.configuration = configuration
       self.existingEntry = existingEntry
       self.bookmarkData = bookmarkData
+      self.label = label
     }
 
     init(
@@ -58,6 +61,7 @@
       defer {
         newURL.stopAccessingSecurityScopedResource()
       }
+
       let machine: Machine
       do {
         machine = try configuration.systemManager.machine(contentOf: newURL)
@@ -77,12 +81,15 @@
         throw MachineError.fromDatabaseError(error)
       }
 
+      let label = configuration.labelProvider(machine.configuration.systemID, machine.configuration)
+
       self.init(
         machine: machine,
         restoreImage: restoreImage,
         configuration: configuration,
         existingEntry: existingEntry,
-        bookmarkData: bookmarkData
+        bookmarkData: bookmarkData,
+        label: label
       )
     }
 

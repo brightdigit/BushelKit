@@ -24,27 +24,29 @@
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
 
     var startPauseResume: some View {
-      if self.object.canStart {
-        Button {
-          self.object.begin { try await $0.start() }
-        } label: {
-          Image(systemName: "play.fill")
-        }
-      } else if self.object.canPause {
-        Button {
-          self.object.begin { try await $0.pause() }
-        } label: {
-          Image(systemName: "pause.fill")
-        }
-      } else if self.object.canResume {
-        Button {
-          self.object.begin { try await $0.resume() }
-        } label: {
-          Image(systemName: "play")
-        }
-      } else {
-        Button {} label: {
-          Image(systemName: "questionmark.app.dashed")
+      Group {
+        if self.object.canStart {
+          Button {
+            self.object.begin { try await $0.start() }
+          } label: {
+            Image(systemName: "play.fill")
+          }
+        } else if self.object.canPause {
+          Button {
+            self.object.begin { try await $0.pause() }
+          } label: {
+            Image(systemName: "pause.fill")
+          }
+        } else if self.object.canResume {
+          Button {
+            self.object.begin { try await $0.resume() }
+          } label: {
+            Image(systemName: "play")
+          }
+        } else {
+          Button {} label: {
+            Image(systemName: "questionmark.app.dashed")
+          }
         }
       }
     }
