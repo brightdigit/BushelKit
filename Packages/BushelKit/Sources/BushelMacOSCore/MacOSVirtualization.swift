@@ -17,7 +17,11 @@ public enum MacOSVirtualization {
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
 
   public static func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
-    "\(operatingSystemShortName(for: metadata)) (\(metadata.buildVersion))"
+    let shortName = operatingSystemShortName(for: metadata)
+    guard let buildVersion = metadata.buildVersion else {
+      return shortName
+    }
+    return shortName.appending(" (\(buildVersion))")
   }
 
   public static func imageName(for metadata: OperatingSystemInstalled) -> String {

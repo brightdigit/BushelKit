@@ -22,7 +22,7 @@
     let machine: VZVirtualMachine
     // swiftlint:disable:next implicitly_unwrapped_optional
     var observation: KVObservation!
-    var observers = [UUID: (MachineChange) -> Void]()
+    var observers = [UUID: @MainActor (MachineChange) -> Void]()
 
     var state: BushelMachine.MachineState {
       // swiftlint:disable:next force_unwrapping
@@ -110,7 +110,9 @@
     private func notifyObservers(_ event: MachineChange.Event) {
       let update = MachineChange(source: self, event: event)
       for value in observers.values {
-        value(update)
+        Task { @MainActor in
+          value(update)
+        }
       }
     }
 
@@ -119,7 +121,7 @@
       self.observers.removeValue(forKey: id) != nil
     }
 
-    func beginObservation(_ update: @escaping (MachineChange) -> Void) -> UUID {
+    func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID {
       let id = UUID()
       Self.logger.debug("Begin observations: \(id)")
       self.observers[id] = update

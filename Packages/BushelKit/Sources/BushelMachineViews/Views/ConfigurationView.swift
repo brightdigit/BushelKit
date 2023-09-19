@@ -34,7 +34,7 @@
       PreferredLayoutView { value in
         HStack {
           TextField(text: .constant(self.object.restoreImageMetadata?.shortName ?? "")) {
-            Text(.machineDetailsOS)
+            Text(LocalizedStringID.machineDetailsOS)
           }
           .apply(\.size.height, with: value)
           .disabled(true)
@@ -55,7 +55,7 @@
           value: self.$object.configuration.cpuCount,
           format: .number
         ) {
-          Text(.machineDetailsMemoryName)
+          Text(LocalizedStringID.machineDetailsMemoryName)
         }.frame(minWidth: 70, idealWidth: 75, maxWidth: 100).multilineTextAlignment(.trailing)
         Stepper(value: self.$object.configuration.cpuCount, in: 1 ... 4) {
           Text(.machineDetailsMemoryName)

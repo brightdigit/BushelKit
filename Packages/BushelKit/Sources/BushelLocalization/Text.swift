@@ -11,21 +11,19 @@
       self.init(source.key, bundle: .module)
     }
 
+    init(_ source: LocalizedID) {
+      self.init(source.key, bundle: .module)
+    }
+
     init(_ strings: LocalizedText..., joinedBy separator: String = " ") {
       let text = strings.map { $0.asString() }.joined(separator: separator)
       self.init(text)
     }
 
-    init(localizedUsingID id: LocalizedStringID, arguments: CVarArg...) {
+    init(localizedUsingID id: LocalizedID, arguments: CVarArg...) {
       self.init(
         String(localizedUsingID: id, arguments: arguments)
       )
-    }
-  }
-
-  public extension Label where Title == Text, Icon == Image {
-    init(_ id: LocalizedStringID, systemImage: String) {
-      self.init(id.key, systemImage: systemImage)
     }
   }
 #endif

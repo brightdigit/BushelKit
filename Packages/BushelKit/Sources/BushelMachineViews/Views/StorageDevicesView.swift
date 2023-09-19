@@ -4,14 +4,17 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelVirtualization
+  import BushelLocalization
+  import BushelMachine
   import SwiftUI
 
   struct StorageDevicesView: View {
     let storageDevice: MachineStorageSpecification
     var body: some View {
-      MachineSpecView(systemName: "internaldrive.fill") {
-        Text(.machineDetailsStorage)
+      MachineSpecView(
+        systemName: "internaldrive.fill"
+      ) {
+        Text(.machineDetailsStorageName)
       } value: {
         Text(
           ByteCountFormatStyle.FormatInput(storageDevice.size), format: .byteCount(style: .file)
@@ -23,8 +26,10 @@
   struct StorageDevicesView_Previews: PreviewProvider {
     static var previews: some View {
       StorageDevicesView(
-        storageDevice: .init(
-          id: .init(), label: "Lorem Ipsum",
+        storageDevice:
+        .init(
+          id: .init(),
+          label: "Lorem Ipsum",
           size: 256 * 1024 * 1024 * 1024
         )
       )
