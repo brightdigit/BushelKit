@@ -57,12 +57,18 @@
             Machine.NewCommands()
           }
           Divider()
-          #if os(macOS)
-            Menu("Open") {
-              Library.OpenCommands()
-              Machine.OpenCommands()
+          Welcome.OpenCommands()
+            .configure(
+              libraryFileType: LibraryFileSpecifications.self,
+              machineFileType: MachineFileTypeSpecification.self
+            ) {
+              #if arch(arm64) && os(macOS)
+                MacOSVirtualizationSystem()
+              #endif
+              #if WAX_FRUIT
+                MockSystem()
+              #endif
             }
-          #endif
         }
         #if os(macOS)
           CommandGroup(before: .singleWindowList) {

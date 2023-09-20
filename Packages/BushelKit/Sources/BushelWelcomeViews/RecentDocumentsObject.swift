@@ -1,5 +1,5 @@
 //
-// WelcomeRecentDocumentsObject.swift
+// RecentDocumentsObject.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -10,9 +10,10 @@
   import Foundation
   import Observation
   import SwiftData
+  import SwiftUI
 
   @Observable
-  class WelcomeRecentDocumentsObject: LoggerCategorized {
+  class RecentDocumentsObject: LoggerCategorized {
     static var loggingCategory: Loggers.Category {
       .view
     }
@@ -26,7 +27,13 @@
       }
     }
 
-    private(set) var recentDocuments: [RecentDocument]?
+    private(set) var recentDocuments: [RecentDocument]? {
+      didSet {
+        self.isEmpty = self.recentDocuments?.isEmpty ?? true
+      }
+    }
+
+    private(set) var isEmpty = true
 
     internal func updateBookmarks(_ bookmarks: [BookmarkData], using context: ModelContext) {
       self.context = context
@@ -41,6 +48,7 @@
       self.recentDocuments = self.bookmarks?.compactMap { bookmarkData in
         RecentDocument(bookmarkData: bookmarkData, logger: Self.logger, using: context)
       }
+
       self.lastUpdate = Date()
     }
   }

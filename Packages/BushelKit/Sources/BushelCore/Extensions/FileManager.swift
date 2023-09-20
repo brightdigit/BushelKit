@@ -53,6 +53,14 @@ public extension FileManager {
     return .init(fileExists: fileExists, isDirectory: isDirectory.boolValue)
   }
 
+  func relationship(of directory: FileManager.SearchPathDirectory,
+                    toItemAt url: URL,
+                    in domainMask: FileManager.SearchPathDomainMask = .allDomainsMask) throws -> URLRelationship {
+    var relationship: URLRelationship = .other
+    try self.getRelationship(&relationship, of: directory, in: domainMask, toItemAt: url)
+    return relationship
+  }
+
   @discardableResult
   func createEmptyDirectory(
     at url: URL,

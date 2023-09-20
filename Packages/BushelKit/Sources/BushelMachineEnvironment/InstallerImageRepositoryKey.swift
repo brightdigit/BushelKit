@@ -31,4 +31,12 @@
       self.environment(\.installerImageRepository, .init(database))
     }
   }
+
+  public extension View {
+    func installerImageRepository(
+      _ database: @escaping (ModelContext) -> InstallerImageRepository
+    ) -> some View {
+      self.environment(\.installerImageRepository, .init(database))
+    }
+  }
 #endif
