@@ -28,16 +28,16 @@
       .all
     }
 
+    var allowedOpenFileTypes: [FileType] {
+      [.virtualMachine, .restoreImageLibrary]
+    }
+
     internal init(@SystemBuilder _ systems: @escaping () -> [System]) {
       self.systems = systems()
     }
 
     func installerImageRepository(_ context: ModelContext) -> BushelMachine.InstallerImageRepository {
       context
-    }
-
-    var allowedOpenFileTypes: [FileType] {
-      [.virtualMachine, .restoreImageLibrary]
     }
 
     func openFileURL(_ url: URL, openWindow: OpenWindowAction) {

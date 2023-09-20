@@ -1,5 +1,5 @@
 //
-// RecentDocumentsListView.swift
+// RecentDocumentsList.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -8,14 +8,16 @@
   import SwiftData
   import SwiftUI
 
-  struct RecentDocumentsListView<ItemView: View>: View {
+  struct RecentDocumentsList<ItemView: View>: View {
     let recentDocumentsClearDate: Date?
+
     @Binding var isEmpty: Bool
     @Query var bookmarks: [BookmarkData]
     @Environment(\.modelContext) private var context
     @State var object = RecentDocumentsObject()
 
     let forEach: (RecentDocument) -> ItemView
+
     var body: some View {
       Group {
         if let recentDocuments = object.recentDocuments {
@@ -42,10 +44,8 @@
       object: RecentDocumentsObject = RecentDocumentsObject(),
       forEach: @escaping (RecentDocument) -> ItemView
     ) {
-      self._bookmarks = Self.queryBasedOn(
-        recentDocumentsClearDate: recentDocumentsClearDate,
-        overrideWith: bookmarksQuery
-      )
+      self._bookmarks = bookmarksQuery ??
+        Self.queryBasedOn(recentDocumentsClearDate: recentDocumentsClearDate)
       self.recentDocumentsClearDate = recentDocumentsClearDate
       self._isEmpty = isEmpty
       self._object = .init(wrappedValue: object)
@@ -53,18 +53,15 @@
     }
 
     static func queryBasedOn(
-      recentDocumentsClearDate: Date?,
-      overrideWith other: Query<Array<BookmarkData>.Element, [BookmarkData]>? = nil
+      recentDocumentsClearDate: Date?
     ) -> Query<Array<BookmarkData>.Element, [BookmarkData]> {
-      if let other {
-        return other
-      }
       let sort = \BookmarkData.updatedAt
       let order = SortOrder.reverse
 
-      let filter: Predicate<BookmarkData>? = recentDocumentsClearDate.map { date in
-        #Predicate { $0.updatedAt > date }
-      }
+      let filter: Predicate<BookmarkData>? = recentDocumentsClearDate
+        .map { date in
+          #Predicate { $0.updatedAt > date }
+        }
 
       return Query(filter: filter, sort: sort, order: order)
     }

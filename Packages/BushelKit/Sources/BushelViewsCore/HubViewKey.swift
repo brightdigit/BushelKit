@@ -45,6 +45,7 @@
     }
   }
 
+  @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func hubView(
       _ view: @escaping (Binding<InstallImage?>) -> some View
