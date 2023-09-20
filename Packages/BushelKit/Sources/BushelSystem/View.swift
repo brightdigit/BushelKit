@@ -1,5 +1,5 @@
 //
-// Scene.swift
+// View.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -17,12 +17,13 @@
   import SwiftData
   import SwiftUI
 
-  public extension Scene {
+  @available(*, deprecated, message: "Use on Scene instead.")
+  public extension View {
     func register(
       _ librarySystemManager: LibrarySystemManager,
       _ machineSystemManager: MachineSystemManager,
       _ hubs: [Hub]
-    ) -> some Scene {
+    ) -> some View {
       self
         .metadataLabelProvider(librarySystemManager.labelForSystem)
         .environment(
@@ -38,7 +39,7 @@
 
     func registerSystems(
       _ systems: [System]
-    ) -> some Scene {
+    ) -> some View {
       let (librarySystems, machineSystems, hubs) = systems.reduce(
         into: ([LibrarySystem](), [any MachineSystem](), [Hub]())
       ) { partialResult, system in
@@ -63,8 +64,9 @@
 
     func registerSystems(
       @SystemBuilder _ systems: @escaping () -> [System]
-    ) -> some Scene {
+    ) -> some View {
       self.registerSystems(systems())
     }
   }
+
 #endif

@@ -37,7 +37,12 @@
   }
 
   extension RecentDocument {
-    init?(bookmarkData: BookmarkData, logger: Logger, using context: ModelContext, fileManager: FileManager = .default) {
+    init?(
+      bookmarkData: BookmarkData,
+      logger: Logger,
+      using context: ModelContext,
+      fileManager: FileManager = .default
+    ) {
       guard let url = Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: context) else {
         return nil
       }

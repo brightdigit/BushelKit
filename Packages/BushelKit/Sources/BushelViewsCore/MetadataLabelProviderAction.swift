@@ -49,6 +49,7 @@
     }
   }
 
+  @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func metadataLabelProvider(
       _ closure: @escaping BushelCore.MetadataLabelProvider

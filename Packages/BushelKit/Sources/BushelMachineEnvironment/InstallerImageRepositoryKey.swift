@@ -32,6 +32,7 @@
     }
   }
 
+  @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func installerImageRepository(
       _ database: @escaping (ModelContext) -> InstallerImageRepository
