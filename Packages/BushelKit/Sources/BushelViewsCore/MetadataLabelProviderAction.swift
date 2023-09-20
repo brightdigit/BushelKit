@@ -49,6 +49,14 @@
     }
   }
 
+  public extension View {
+    func metadataLabelProvider(
+      _ closure: @escaping BushelCore.MetadataLabelProvider
+    ) -> some View {
+      self.environment(\.metadataLabelProvider, .init(closure: closure))
+    }
+  }
+
   public extension Scene {
     func metadataLabelProvider(
       _ closure: @escaping BushelCore.MetadataLabelProvider

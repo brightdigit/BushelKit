@@ -46,6 +46,14 @@
   }
 
   public extension View {
+    func hubView(
+      _ view: @escaping (Binding<InstallImage?>) -> some View
+    ) -> some View {
+      self.environment(\.hubView, .init(content: view))
+    }
+  }
+
+  public extension View {
     func sheet(
       isPresented: Binding<Bool>,
       selectedHubImage: Binding<InstallImage?>,

@@ -17,7 +17,68 @@
   import SwiftData
   import SwiftUI
 
+  public extension View {
+    fileprivate func register(_ librarySystemManager: LibrarySystemManager, _ machineSystemManager: MachineSystemManager, _ hubs: [Hub]) -> some View {
+      self
+        .metadataLabelProvider(librarySystemManager.labelForSystem)
+        .environment(
+          \.librarySystemManager,
+          librarySystemManager
+        )
+        .environment(
+          \.machineSystemManager,
+          machineSystemManager
+        )
+        .environment(\.hubs, hubs)
+    }
+
+    func registerSystems(
+      _ systems: [System]
+    ) -> some View {
+      let (librarySystems, machineSystems, hubs) = systems.reduce(
+        into: ([LibrarySystem](), [any MachineSystem](), [Hub]())
+      ) { partialResult, system in
+        if let library = system.library {
+          partialResult.0.append(library)
+        }
+        if let machine = system.machine {
+          partialResult.1.append(machine)
+        }
+
+        partialResult.2.append(contentsOf: system.hubs)
+      }
+
+      let machineSystemManager = MachineSystemManager(machineSystems)
+
+      let librarySystemManager = LibrarySystemManager(
+        librarySystems,
+        fileTypeBasedOnURL: FileType.init(url:)
+      )
+      return register(librarySystemManager, machineSystemManager, hubs)
+    }
+
+    func registerSystems(
+      @SystemBuilder _ systems: @escaping () -> [System]
+    ) -> some View {
+      self.registerSystems(systems())
+    }
+  }
+
   public extension Scene {
+    fileprivate func register(_ librarySystemManager: LibrarySystemManager, _ machineSystemManager: MachineSystemManager, _ hubs: [Hub]) -> some Scene {
+      self
+        .metadataLabelProvider(librarySystemManager.labelForSystem)
+        .environment(
+          \.librarySystemManager,
+          librarySystemManager
+        )
+        .environment(
+          \.machineSystemManager,
+          machineSystemManager
+        )
+        .environment(\.hubs, hubs)
+    }
+
     func registerSystems(
       _ systems: [System]
     ) -> some Scene {
@@ -40,17 +101,7 @@
         librarySystems,
         fileTypeBasedOnURL: FileType.init(url:)
       )
-      return self
-        .metadataLabelProvider(librarySystemManager.labelForSystem)
-        .environment(
-          \.librarySystemManager,
-          librarySystemManager
-        )
-        .environment(
-          \.machineSystemManager,
-          machineSystemManager
-        )
-        .environment(\.hubs, hubs)
+      return register(librarySystemManager, machineSystemManager, hubs)
     }
 
     func registerSystems(
