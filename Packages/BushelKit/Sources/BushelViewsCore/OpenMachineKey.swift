@@ -23,6 +23,20 @@
     }
   }
 
+  public extension View {
+    func openMachine(
+      _ closure: @escaping (OpenWindowAction) -> Void
+    ) -> some View {
+      environment(\.openMachine, .init(closure: closure))
+    }
+
+    func openMachine<FileType: FileTypeSpecification>(
+      _: FileType.Type
+    ) -> some View {
+      openMachine(OpenFilePanel<FileType>().callAsFunction(with:))
+    }
+  }
+
   public extension Scene {
     func openMachine(
       _ closure: @escaping (OpenWindowAction) -> Void

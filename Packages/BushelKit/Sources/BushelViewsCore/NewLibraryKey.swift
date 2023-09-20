@@ -23,6 +23,20 @@
     }
   }
 
+  public extension View {
+    func newLibrary(
+      _ closure: @escaping (OpenWindowAction) -> Void
+    ) -> some View {
+      environment(\.newLibrary, .init(closure: closure))
+    }
+
+    func newLibrary<FileType: InitializableFileTypeSpecification>(
+      _: FileType.Type
+    ) -> some View {
+      newLibrary(NewFilePanel<FileType>().callAsFunction(with:))
+    }
+  }
+
   public extension Scene {
     func newLibrary(
       _ closure: @escaping (OpenWindowAction) -> Void

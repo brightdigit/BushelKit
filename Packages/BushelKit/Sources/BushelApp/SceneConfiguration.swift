@@ -36,6 +36,10 @@
       context
     }
 
+    var allowedOpenFileTypes: [FileType] {
+      [.virtualMachine, .restoreImageLibrary]
+    }
+
     func openFileURL(_ url: URL, openWindow: OpenWindowAction) {
       if let file = MachineFile.documentFile(from: url) {
         openWindow(value: file)

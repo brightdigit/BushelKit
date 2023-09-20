@@ -1,5 +1,5 @@
 //
-// OpenFileURL.swift
+// OpenFileURLAction.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -10,17 +10,17 @@
   import SwiftUI
 
   private struct OpenFileURLKey: EnvironmentKey {
-    typealias Value = OpenFileURL
+    typealias Value = OpenFileURLAction
 
-    static let defaultValue: OpenFileURL = .default
+    static let defaultValue: OpenFileURLAction = .default
   }
 
   public typealias OpenWindowURLAction = OpenWindowWithValueAction<URL>
 
-  public typealias OpenFileURL = OpenWindowURLAction
+  public typealias OpenFileURLAction = OpenWindowURLAction
 
   public extension EnvironmentValues {
-    var openFileURL: OpenFileURL {
+    var openFileURL: OpenFileURLAction {
       get { self[OpenFileURLKey.self] }
       set { self[OpenFileURLKey.self] = newValue }
     }
@@ -30,6 +30,14 @@
     func openFileURL(
       _ closure: @escaping (URL, OpenWindowAction) -> Void
     ) -> some Scene {
+      self.environment(\.openFileURL, .init(closure: closure))
+    }
+  }
+
+  public extension View {
+    func openFileURL(
+      _ closure: @escaping (URL, OpenWindowAction) -> Void
+    ) -> some View {
       self.environment(\.openFileURL, .init(closure: closure))
     }
   }

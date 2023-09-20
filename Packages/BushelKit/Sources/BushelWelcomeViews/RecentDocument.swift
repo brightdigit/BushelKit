@@ -37,8 +37,18 @@
   }
 
   extension RecentDocument {
-    init?(bookmarkData: BookmarkData, logger: Logger, using context: ModelContext) {
+    init?(bookmarkData: BookmarkData, logger: Logger, using context: ModelContext, fileManager: FileManager = .default) {
       guard let url = Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: context) else {
+        return nil
+      }
+
+      do {
+        guard try fileManager.relationship(of: .trashDirectory, toItemAt: url) == .other else {
+          return nil
+        }
+      } catch {
+        logger.error("Unable to determine relationship for \(url): \(error.localizedDescription)")
+        assertionFailure(error: error)
         return nil
       }
 
