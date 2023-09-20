@@ -9,6 +9,7 @@
   import BushelSystem
   import SwiftUI
 
+  @available(*, deprecated, message: "Use on Scene only.")
   extension View {
     func configure<
       MachineFileType: FileTypeSpecification,

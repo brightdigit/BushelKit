@@ -59,7 +59,7 @@ lint lenient:
 lint strict:
   only:
     - /^v\d+\.\d+\.\d+(-\w+\.\d+)?$/
-    - /STRICT$/
+    - /STRICT/
   variables:
    LINT_MODE: "STRICT"
   <<: *lint_template  
@@ -77,6 +77,7 @@ deploy:
   only:
     - main
     - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
+    - /ARCHIVE/
   script:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash

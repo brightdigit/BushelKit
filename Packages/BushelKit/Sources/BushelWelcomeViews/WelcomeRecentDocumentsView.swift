@@ -20,22 +20,18 @@
 
     var body: some View {
       Group {
-        // if let recentDocuments = object.recentDocuments {
         if isEmpty {
           Text(.welcomeNoRecentDocuments).opacity(0.5)
         } else {
           List {
-            RecentDocumentsListView(recentDocumentsClearDate: recentDocumentsClearDate, isEmpty: self.$isEmpty) { document in
+            RecentDocumentsList(
+              recentDocumentsClearDate: recentDocumentsClearDate,
+              isEmpty: self.$isEmpty
+            ) { document in
               RecentDocumentItemButton(document: document)
             }
-//              ForEach(recentDocuments) { document in
-//                RecentDocumentItemButton(document: document)
-//              }
           }.listStyle(SidebarListStyle()).padding(-20)
         }
-//        } else {
-//          Text(.welcomeUpdatingRecentDocuments)
-//        }
       }
     }
   }

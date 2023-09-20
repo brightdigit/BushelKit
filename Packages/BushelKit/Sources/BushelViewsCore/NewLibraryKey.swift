@@ -23,6 +23,7 @@
     }
   }
 
+  @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func newLibrary(
       _ closure: @escaping (OpenWindowAction) -> Void

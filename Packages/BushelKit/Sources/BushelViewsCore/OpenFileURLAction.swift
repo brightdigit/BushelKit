@@ -34,6 +34,7 @@
     }
   }
 
+  @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func openFileURL(
       _ closure: @escaping (URL, OpenWindowAction) -> Void
