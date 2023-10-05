@@ -15,7 +15,7 @@
       if let image {
         VStack(alignment: .leading, spacing: 4.0) {
           let label = librarySystemManager.labelForSystem(
-            image.metadata.vmSystem,
+            image.metadata.vmSystemID,
             metadata: image.metadata
           )
           VStack(alignment: .leading) {

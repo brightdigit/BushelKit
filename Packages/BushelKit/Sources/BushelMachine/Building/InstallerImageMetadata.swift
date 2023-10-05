@@ -14,7 +14,7 @@ public struct InstallerImageMetadata {
   public let buildVersion: String?
   public let imageResourceName: String
   public let systemName: String
-  public let systemID: VMSystemID
+  public let vmSystemID: VMSystemID
 
   public var shortName: String {
     "\(labelName) (\(defaultName))"
@@ -37,6 +37,6 @@ public struct InstallerImageMetadata {
     self.buildVersion = buildVersion
     self.imageResourceName = imageResourceName
     self.systemName = systemName
-    self.systemID = systemID
+    self.vmSystemID = systemID
   }
 }

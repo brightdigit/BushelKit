@@ -41,6 +41,15 @@
             allowedContentTypes: librarySystemManager.allAllowedContentTypes,
             onCompletion: self.object.onFileImporterCompleted
           )
+          Button {
+            #warning("use queue and confirmation")
+            self.object.deleteSelectedItem()
+          } label: {
+            Image(systemName: "minus")
+          }
+          .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
+          .disabled(self.object.selectedItem == nil)
+
           Spacer()
         }
         .buttonStyle(.plain)
@@ -62,7 +71,7 @@
           onDismiss: self.object.onHubImageSelected,
           self.hubView
         )
-        .sheet(item: self.$object.restoreImageImportProgress) { request in
+        .sheet(item: self.$object.restoreImageImportProgress, content: { request in
           ProgressOperationView(request) {
             Image.resource($0)
               .resizable()
@@ -72,7 +81,7 @@
               .overlay { Circle().stroke() }
               .padding(.horizontal)
           }
-        }
+        })
         .fileExporter(
           isPresented: self.$object.presentFileExporter,
           document: CodablePackageDocument<Library>(),
@@ -83,7 +92,7 @@
         )
       } detail: {
         if let image = self.object.object?.bindableImage(withID: self.object.selectedItem) {
-          let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystem)
+          let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystemID)
           LibraryImageDetailView(image: image, system: system)
         } else {
           Text(.selectImage)

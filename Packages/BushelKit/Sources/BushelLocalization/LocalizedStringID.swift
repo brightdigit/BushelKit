@@ -75,6 +75,9 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case databaseMachines
   case databaseSnapshots
   case operationProgressText
+  case machineOperationSnapshotRestoring
+  case machineOperationSnapshotExporting
+  case machineOperationSnapshotSaving
 
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

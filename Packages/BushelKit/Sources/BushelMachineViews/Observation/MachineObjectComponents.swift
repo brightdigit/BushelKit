@@ -13,7 +13,7 @@
   import SwiftData
 
   struct MachineObjectComponents {
-    typealias Machine = BushelMachine.Machine
+    typealias Machine = (any BushelMachine.Machine)
 
     let bookmarkData: BookmarkData
     let machine: Machine
@@ -48,7 +48,7 @@
       configuration: MachineObjectConfiguration,
       bookmarkData: BookmarkData,
       existingEntry: MachineEntry?
-    ) throws {
+    ) async throws {
       let newURL: URL
       do {
         newURL = try bookmarkData.fetchURL(using: configuration.modelContext, withURL: configuration.url)
@@ -64,7 +64,7 @@
 
       let machine: Machine
       do {
-        machine = try configuration.systemManager.machine(contentOf: newURL)
+        machine = try await configuration.systemManager.machine(contentOf: newURL)
       } catch {
         throw MachineError.corruptedError(error, at: newURL)
       }
@@ -81,7 +81,7 @@
         throw MachineError.fromDatabaseError(error)
       }
 
-      let label = configuration.labelProvider(machine.configuration.vmSystem, machine.configuration)
+      let label = configuration.labelProvider(machine.configuration.vmSystemID, machine.configuration)
 
       self.init(
         machine: machine,
@@ -95,7 +95,7 @@
 
     init(
       configuration: MachineObjectConfiguration
-    ) throws {
+    ) async throws {
       let bookmarkData: BookmarkData
       bookmarkData = try BookmarkData.resolveURL(configuration.url, with: configuration.modelContext)
 
@@ -120,7 +120,7 @@
       } catch {
         throw MachineError.fromDatabaseError(error)
       }
-      try self.init(
+      try await self.init(
         configuration: configuration,
         bookmarkData: bookmarkData,
         existingEntry: items.first

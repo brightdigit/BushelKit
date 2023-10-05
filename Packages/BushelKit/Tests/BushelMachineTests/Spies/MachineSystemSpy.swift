@@ -38,7 +38,7 @@ internal final class MachineSystemSpy: MachineSystem {
   internal func machine(
     at _: URL,
     withConfiguration configuration: MachineConfiguration
-  ) throws -> Machine {
+  ) throws -> any Machine {
     isMachineAtURLCalled = true
 
     try handleResult()

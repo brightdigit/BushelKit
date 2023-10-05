@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
 
   import BushelCore
+  import BushelMachine
   import BushelSystem
   import SwiftUI
 
@@ -68,6 +69,7 @@
           .newLibrary(type(of: configuration).LibraryFileType)
           .openMachine(type(of: configuration).MachineFileType)
           .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
+          .snapshotProvider([FileVersionSnapshotterFactory()])
           .registerSystems(configuration.systems)
       #else
         self.modelContainer(configuration.modelContainer)

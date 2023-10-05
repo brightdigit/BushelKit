@@ -23,6 +23,8 @@ public struct MachineSetupConfiguration {
   /// Graphics Configuration
   public var graphicsConfigurations: [GraphicsConfiguration]
 
+  public var snapshotSystemID: SnapshotterID = "fileVersion"
+
   public init(
     libraryID: LibraryIdentifier? = nil,
     restoreImageID: UUID? = nil,

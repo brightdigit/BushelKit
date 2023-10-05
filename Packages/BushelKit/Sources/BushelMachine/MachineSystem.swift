@@ -31,7 +31,7 @@ public protocol MachineSystem {
   func machine(
     at url: URL,
     withConfiguration configuration: MachineConfiguration
-  ) throws -> any Machine
+  ) async throws -> any Machine
 
   /// Creates the nessecary restore image based on the installer image info.
   /// - Parameter restoreImage: The installer image to use.

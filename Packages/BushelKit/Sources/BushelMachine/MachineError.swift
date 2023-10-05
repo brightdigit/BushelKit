@@ -14,6 +14,12 @@ import Foundation
 public struct MachineError: LocalizedError, LoggerCategorized {
   public typealias LoggersType = BushelLogging.Loggers
 
+  public enum ObjectProperty {
+    case url
+    case machine
+    case snapshot
+  }
+
   enum Details {
     private struct UnknownError: Error {
       private init() {}
@@ -27,6 +33,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
     case accessDeniedLibraryAt(URL)
     case corruptedAt(URL)
     case database
+    case missingProperty(ObjectProperty)
 
     func errorDescription(fromError error: Error?) -> String {
       switch self {
@@ -57,6 +64,9 @@ public struct MachineError: LocalizedError, LoggerCategorized {
 
       case let .missingRestoreImageWithID(id):
         return "There's an issue finding referenced restore image: \(id)"
+
+      case let .missingProperty(property):
+        return "Missing object property: \(property)"
       }
     }
 
@@ -88,6 +98,9 @@ public struct MachineError: LocalizedError, LoggerCategorized {
 
       case .missingRestoreImageWithID:
         true
+
+      case .missingProperty:
+        false
       }
     }
   }
@@ -136,6 +149,14 @@ public struct MachineError: LocalizedError, LoggerCategorized {
 }
 
 public extension MachineError {
+  static func missingProperty(_ property: ObjectProperty) -> MachineError {
+    .init(details: .missingProperty(property))
+  }
+
+  static func bookmarkError(_ error: BookmarkError) -> MachineError {
+    .init(details: .bookmarkError, innerError: error)
+  }
+
   static func bookmarkError(_ error: Error) throws -> MachineError {
     try .init(innerError: error, as: BookmarkError.self, details: .bookmarkError)
   }

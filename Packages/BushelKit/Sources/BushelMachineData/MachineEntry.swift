@@ -41,20 +41,21 @@
     public var name: String
     public var restoreImageID: UUID?
     public var storage: [MachineStorageSpecification]
-    public var cpuCount: Float
-    public var memory: Float
+    public var cpuCount: Int
+    public var memory: Int
     public var networkConfigurations: [NetworkConfiguration]
     public var graphicsConfigurations: [GraphicsConfiguration]
 
-    private var vmSystemID: String
+    @Attribute(originalName: "vmSystemID")
+    private var vmSystemIDRawValue: String
 
     @Transient
-    public var vmSystem: VMSystemID {
+    public var vmSystemID: VMSystemID {
       get {
-        .init(stringLiteral: vmSystemID)
+        .init(stringLiteral: vmSystemIDRawValue)
       }
       set {
-        self.vmSystemID = newValue.rawValue
+        self.vmSystemIDRawValue = newValue.rawValue
       }
     }
 
@@ -80,7 +81,7 @@
 
     internal init(
       bookmarkData: BookmarkData,
-      machine: Machine,
+      machine: any Machine,
       osInstalled: OperatingSystemInstalled?,
       restoreImageID: UUID,
       name: String,
@@ -96,7 +97,7 @@
       self.memory = machine.configuration.memory
       self.networkConfigurations = machine.configuration.networkConfigurations
       self.graphicsConfigurations = machine.configuration.graphicsConfigurations
-      self.vmSystemID = machine.configuration.vmSystem.rawValue
+      self.vmSystemIDRawValue = machine.configuration.vmSystemID.rawValue
       self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
       self.buildVersion = osInstalled?.buildVersion
       self.createdAt = createdAt
@@ -115,7 +116,7 @@
 
     convenience init(
       bookmarkData: BookmarkData,
-      machine: Machine,
+      machine: any Machine,
       osInstalled: OperatingSystemInstalled?,
       restoreImageID: UUID,
       name: String,
@@ -135,13 +136,15 @@
       context.insert(self)
       try context.save()
       try machine.configuration.snapshots.forEach {
-        _ = try SnapshotEntry(machine: self, snapshot: $0, osInstalled: osInstalled, using: context)
+        _ = try SnapshotEntry($0, machine: self, osInstalled: osInstalled, using: context)
       }
       try context.save()
     }
 
+    #warning("Remove @MainActor")
+    @MainActor
     func synchronizeWith(
-      _ machine: Machine,
+      _ machine: any Machine,
       osInstalled: OperatingSystemInstalled?,
       using context: ModelContext
     ) throws {
@@ -171,8 +174,8 @@
 
       try libraryItemsToInsert.forEach {
         _ = try SnapshotEntry(
+          $0,
           machine: self,
-          snapshot: $0,
           osInstalled: osInstalled,
           using: context
         )

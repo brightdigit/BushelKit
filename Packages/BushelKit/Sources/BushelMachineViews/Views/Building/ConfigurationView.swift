@@ -218,16 +218,16 @@
             labelProvider: metadataLabelProvider.callAsFunction
           )
         }
-        .sheet(item: self.$object.builder) { builder in
+        .sheet(item: self.$object.builder, content: { builder in
           InstallerView(buildResult: self.$buildResult, builder: builder.builder)
-        }
-        .sheet(isPresented: self.$object.presentImageSelection) {
+        })
+        .sheet(isPresented: self.$object.presentImageSelection, content: {
           ImageListSelectionView(
             selectedImageID: self.$object.sheetSelectedRestoreImageID,
             images: self.object.images
           )
           .frame(width: 500, height: 200)
-        }
+        })
     }
 
     var listenForExport: some View {

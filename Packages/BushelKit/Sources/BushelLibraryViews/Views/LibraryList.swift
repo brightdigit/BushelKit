@@ -18,7 +18,7 @@
           ForEach(items) { libraryItem in
             HStack {
               let label = librarySystemManager.labelForSystem(
-                libraryItem.metadata.vmSystem,
+                libraryItem.metadata.vmSystemID,
                 metadata: libraryItem.metadata
               )
 

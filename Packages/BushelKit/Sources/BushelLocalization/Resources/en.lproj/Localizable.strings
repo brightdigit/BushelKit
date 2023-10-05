@@ -222,3 +222,12 @@
 
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
+
+/* Snapshot Machine Operation Restoring */
+"machine_operation_snapshot_restoring" = "Restoring";
+
+/* Snapshot Machine Operation Exporting */
+"machine_operation_snapshot_exporting" = "Exporting";
+
+/* Snapshot Machine Operation Exporting */
+"machine_operation_snapshot_saving" = "Saving";

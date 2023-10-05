@@ -12,13 +12,40 @@
   import SwiftUI
   import Virtualization
 
-  class VZMachine: NSObject, Machine, VZVirtualMachineDelegate, LoggerCategorized {
+  final class VZMachine: NSObject, Machine, VZVirtualMachineDelegate, LoggerCategorized {
+    func beginSnapshot() -> SnapshotPaths {
+      assert(url.startAccessingSecurityScopedResource())
+      return .init(machinePathURL: url)
+    }
+
+    func finishedWithSnapshot(_ snapshot: BushelMachine.Snapshot, by difference: SnapshotDifference) {
+      url.stopAccessingSecurityScopedResource()
+      switch difference {
+      case .append:
+        self.configuration.snapshots.append(snapshot)
+
+      case .remove:
+        let index = self.configuration.snapshots.firstIndex { $0.id == snapshot.id }
+        guard let index else {
+          assertionFailure()
+          return
+        }
+        self.configuration.snapshots.remove(at: index)
+
+      case .restored:
+        break
+
+      case .export:
+        break
+      }
+    }
+
     static var loggingCategory: BushelLogging.Loggers.Category {
       .machine
     }
 
     let url: URL
-    let configuration: MachineConfiguration
+    var configuration: MachineConfiguration
     let machine: VZVirtualMachine
     // swiftlint:disable:next implicitly_unwrapped_optional
     var observation: KVObservation!
@@ -54,6 +81,7 @@
       self.machine.canRequestStop
     }
 
+    @MainActor
     internal init(url: URL, configuration: MachineConfiguration, machine: VZVirtualMachine) {
       self.url = url
       self.configuration = configuration
@@ -99,6 +127,11 @@
     @MainActor
     func saveMachineStateTo(url saveFileURL: URL) async throws {
       try await self.machine.saveMachineStateTo(url: saveFileURL)
+    }
+
+    enum PreviousAction {
+      case pause
+      case start
     }
 
     func requestStop() async throws {

@@ -92,4 +92,58 @@ public extension FileManager {
 
     return directoryExistsStatus
   }
+
+  func write(
+    _ dataDictionary: [String: Data],
+    to directoryURL: URL
+  ) throws {
+    for (relativePath, data) in dataDictionary {
+      let fullURL = directoryURL.appendingPathComponent(relativePath)
+      let parentURL = fullURL.deletingLastPathComponent()
+      if self.directoryExists(at: parentURL) == .notExists {
+        try self.createEmptyDirectory(
+          at: parentURL,
+          withIntermediateDirectories: true,
+          deleteExistingFile: true
+        )
+      }
+      try data.write(to: fullURL)
+    }
+  }
+
+  func dataDictionary(
+    directoryAt directoryURL: URL
+  ) throws -> [String: Data] {
+    let keys: Set<URLResourceKey> = Set([.isDirectoryKey, .isRegularFileKey])
+    guard let enumerator = self.enumerator(
+      at: directoryURL,
+      includingPropertiesForKeys: Array(keys)
+    ) else {
+      throw .fileNotFound(at: directoryURL)
+    }
+
+    return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
+      guard let url = item as? URL else {
+        return
+      }
+      guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else {
+        return
+      }
+      assert(dictionary[url.lastPathComponent] == nil)
+      dictionary[url.lastPathComponent] = try Data(contentsOf: url)
+    }
+  }
+}
+
+internal extension Error where Self == NSError {
+  static func fileNotFound(at url: URL) -> NSError {
+    NSError(
+      domain: NSCocoaErrorDomain,
+      code: NSFileNoSuchFileError,
+      userInfo: [
+        NSFilePathErrorKey: url.path,
+        NSUnderlyingErrorKey: POSIXError(.ENOENT)
+      ]
+    )
+  }
 }

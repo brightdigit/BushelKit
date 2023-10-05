@@ -23,7 +23,7 @@ public struct MachineSystemStub: MachineSystem, Equatable {
   public func machine(
     at _: URL,
     withConfiguration configuration: MachineConfiguration
-  ) throws -> Machine {
+  ) throws -> any Machine {
     MachineStub(configuration: configuration, state: .starting)
   }
 
