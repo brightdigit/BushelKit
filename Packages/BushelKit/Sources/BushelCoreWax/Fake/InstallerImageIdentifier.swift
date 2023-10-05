@@ -1,5 +1,5 @@
 //
-// InstallerImageIdentifier+Fake.swift
+// InstallerImageIdentifier.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -8,5 +8,5 @@ import Foundation
 
 public extension InstallerImageIdentifier {
   // swiftlint:disable:next force_unwrapping
-  static let sample: Self = .init(string: .restoreImageIdentiferSample)!
+  static let sampleInstallerIdentifier: Self = .init(string: .restoreImageIdentiferSample)!
 }

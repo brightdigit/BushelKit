@@ -6,6 +6,7 @@
 struct BushelMachineTests: TestTarget {
   var dependencies: any Dependencies {
     BushelMachine()
-    BushelTestsCore()
+    BushelMachineWax()
+    BushelTestUtlities()
   }
 }

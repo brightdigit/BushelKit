@@ -1,5 +1,5 @@
 //
-// LibraryIdentifier+Fake.swift
+// LibraryIdentifier.swift
 // Copyright (c) 2023 BrightDigit.
 //
 

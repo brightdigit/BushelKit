@@ -23,17 +23,20 @@ public protocol MachineSystem {
     at url: URL
   ) throws -> MachineBuilder
 
-  /// Creates the nessecary restore image based on the installer image info.
-  /// - Parameter restoreImage: The installer image to use.
-  /// - Returns: An image to use for create a machine.
-  func restoreImage(from restoreImage: any InstallerImage) async throws -> RestoreImageType
-
   /// Creates a machine based on the url and configuration.
   /// - Parameters:
   ///   - url: URL of the machine bundle.
   ///   - configuration: The machine configuration.
   /// - Returns: A usable machine.
-  func machine(at url: URL, withConfiguration configuration: MachineConfiguration) throws -> any Machine
+  func machine(
+    at url: URL,
+    withConfiguration configuration: MachineConfiguration
+  ) throws -> any Machine
+
+  /// Creates the nessecary restore image based on the installer image info.
+  /// - Parameter restoreImage: The installer image to use.
+  /// - Returns: An image to use for create a machine.
+  func restoreImage(from restoreImage: any InstallerImage) async throws -> RestoreImageType
 }
 
 public extension MachineSystem {
@@ -49,7 +52,10 @@ public extension MachineSystem {
     at url: URL
   ) async throws -> MachineBuilder {
     let restoreImage = try await self.restoreImage(from: image)
-    let machineConfiguration = MachineConfiguration(setup: configuration, restoreImageFile: image)
+    let machineConfiguration = MachineConfiguration(
+      setup: configuration,
+      restoreImageFile: image
+    )
     let setupConfiguration = MachineBuildConfiguration(
       configuration: machineConfiguration,
       restoreImage: restoreImage

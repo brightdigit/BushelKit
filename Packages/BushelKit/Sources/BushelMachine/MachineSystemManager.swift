@@ -25,11 +25,11 @@ public class MachineSystemManager: MachineSystemManaging, LoggerCategorized {
   /// - Parameter id: id of the system to resolve.
   /// - Returns: The resulting ``MachineSystem``
   public func resolve(_ id: VMSystemID) -> any MachineSystem {
-    guard let implementations = implementations[id] else {
+    guard let implementation = implementations[id] else {
       Self.logger.critical("Unknown system: \(id.rawValue)")
       preconditionFailure("")
     }
 
-    return implementations
+    return implementation
   }
 }

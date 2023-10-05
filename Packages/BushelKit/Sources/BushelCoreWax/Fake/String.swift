@@ -1,5 +1,5 @@
 //
-// String+Fake.swift
+// String.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
