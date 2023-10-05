@@ -4,13 +4,13 @@
 //
 
 @testable import BushelCore
-import BushelTestsCore
+import BushelCoreWax
 import XCTest
 
 internal final class DocumentFileTests: XCTestCase {
   internal func testDocumentFileFromInvalidFileURLType() {
     let expectedDoc = DocumentFile<TestFileTypeSpecification>.documentFile(
-      from: .temporaryDirectory
+      from: .temporaryDir
     )
 
     XCTAssertNil(expectedDoc)
@@ -18,7 +18,7 @@ internal final class DocumentFileTests: XCTestCase {
 
   internal func testDocumentFileFromFileURLType() {
     let expectedDoc = DocumentFile<TestFileTypeSpecification>.documentFile(
-      from: .temporaryDirectory.appendingPathComponent("fake.test")
+      from: .temporaryDir.appendingPathComponent("fake.test")
     )
 
     XCTAssertNotNil(expectedDoc)

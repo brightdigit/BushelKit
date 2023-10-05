@@ -14,6 +14,7 @@ let package = Package {
 }
 testTargets: {
   BushelCoreTests()
+  BushelLibraryTests()
   BushelMachineTests()
 }
 .supportedPlatforms {

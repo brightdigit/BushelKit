@@ -561,6 +561,18 @@ struct BushelArgs: Target {
 
 struct BushelCore: Target {}
 //
+// BushelCoreWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+struct BushelCoreWax: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+  }
+}
+//
 // BushelData.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -721,6 +733,16 @@ struct BushelLibraryViews: Target {
   }
 }
 //
+// BushelLibraryWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelLibraryWax: Target {
+  var dependencies: any Dependencies {
+    BushelLibrary()
+  }
+}
+//
 // BushelLocalization.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -810,6 +832,19 @@ struct BushelMachineViews: Target {
     BushelViewsCore()
     BushelSessionUI()
     BushelMachineEnvironment()
+  }
+}
+//
+// BushelMachineWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+struct BushelMachineWax: Target {
+  var dependencies: any Dependencies {
+    BushelCoreWax()
+    BushelMachine()
   }
 }
 //
@@ -908,11 +943,13 @@ struct BushelSystem: Target {
   }
 }
 //
-// BushelTestsCore.swift
+// BushelTestUtlities.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
-struct BushelTestsCore: Target {}
+import Foundation
+
+struct BushelTestUtlities: Target {}
 //
 // BushelUT.swift
 // Copyright (c) 2023 BrightDigit.
@@ -997,7 +1034,21 @@ struct BushelWelcomeViews: Target {
 struct BushelCoreTests: TestTarget {
   var dependencies: any Dependencies {
     BushelCore()
-    BushelTestsCore()
+    BushelCoreWax()
+    BushelTestUtlities()
+  }
+}
+//
+// BushelLibraryTests.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelLibraryTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelLibrary()
+    BushelCoreWax()
+    BushelLibraryWax()
+    BushelTestUtlities()
   }
 }
 //
@@ -1008,7 +1059,8 @@ struct BushelCoreTests: TestTarget {
 struct BushelMachineTests: TestTarget {
   var dependencies: any Dependencies {
     BushelMachine()
-    BushelTestsCore()
+    BushelMachineWax()
+    BushelTestUtlities()
   }
 }
 //
@@ -1027,6 +1079,7 @@ let package = Package {
 }
 testTargets: {
   BushelCoreTests()
+  BushelLibraryTests()
   BushelMachineTests()
 }
 .supportedPlatforms {

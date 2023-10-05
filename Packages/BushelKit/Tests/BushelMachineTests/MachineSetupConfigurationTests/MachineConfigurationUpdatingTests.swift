@@ -9,7 +9,7 @@ import XCTest
 
 internal final class MachineConfigurationUpdatingTests: XCTestCase {
   internal func testUpdatingUsingBuildRequest() {
-    var sut = MachineSetupConfiguration(request: .sample)
+    var sut = MachineSetupConfiguration(request: .sampleBuildRequest)
 
     let request = MachineBuildRequest(
       restoreImage: .init(

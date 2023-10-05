@@ -14,7 +14,7 @@ final class MachineBuildRequestTests: XCTestCase {
   }
 
   func testNotNillMachineRestoreImageIdentifier() {
-    let restoreImage = InstallerImageIdentifier.sample
+    let restoreImage = InstallerImageIdentifier.sampleInstallerIdentifier
     let sut = MachineBuildRequest(restoreImage: restoreImage)
 
     XCTAssertNotNil(sut.restoreImage)
