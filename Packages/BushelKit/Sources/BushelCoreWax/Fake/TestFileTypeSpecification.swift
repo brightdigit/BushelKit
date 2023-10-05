@@ -1,5 +1,5 @@
 //
-// TestFileTypeSpecification+Fake.swift
+// TestFileTypeSpecification.swift
 // Copyright (c) 2023 BrightDigit.
 //
 

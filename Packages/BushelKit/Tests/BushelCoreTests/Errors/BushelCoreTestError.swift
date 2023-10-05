@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-import BushelTestsCore
+import BushelTestUtlities
 
 struct BushelCoreTestError: MockError {
   static let database = Self(value: "database")

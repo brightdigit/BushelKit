@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct MetadataLabel {
+public struct MetadataLabel: Equatable {
   public let operatingSystemLongName: String
   public let defaultName: String
   public let imageName: String

@@ -24,9 +24,11 @@
       if let bookmarkData = self._bookmarkData {
         return bookmarkData
       }
-      let descriptor = FetchDescriptor(predicate: #Predicate<BookmarkData> {
-        $0.bookmarkID == bookmarkDataID
-      })
+      let descriptor = FetchDescriptor(
+        predicate: #Predicate<BookmarkData> {
+          $0.bookmarkID == bookmarkDataID
+        }
+      )
       do {
         self._bookmarkData = try modelContext?.fetch(descriptor).first
       } catch {
