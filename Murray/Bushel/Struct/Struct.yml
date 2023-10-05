@@ -1,0 +1,11 @@
+name: Protocol
+parameters:
+  - name: "name"
+    isRequired: true
+  - name: "module"
+    isRequired: true
+paths:
+  - from: Struct.swift.stencil
+    to: '{{paths.sources}}/Bushel{{module|firstUppercase}}/{{name|firstUppercase}}.swift'
+description: An item named Struct created from scaffold
+replacements: []

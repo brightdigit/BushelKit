@@ -1,0 +1,12 @@
+//
+// {{name|firstUppercase}}Object.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+#if canImport(SwiftUI)
+  import SwiftUI
+
+  @Observable
+  class {{name|firstUppercase}}Object {    
+  }
+#endif

@@ -11,10 +11,14 @@
   import SwiftUI
 
   @Observable
-  class DocumentObject: LoggerCategorized {
+  class DocumentObject: LoggerCategorized, MachineObjectParent {
     var url: URL?
     var error: MachineError?
     var machineObject: MachineObject?
+
+    var canSaveSnapshot: Bool {
+      url != nil && machineObject != nil
+    }
 
     @ObservationIgnored
     var modelContext: ModelContext?
@@ -22,21 +26,66 @@
     @ObservationIgnored
     var systemManager: (any MachineSystemManaging)?
 
-    func loadURL(
-      _ url: URL,
+    var currentOperation: MachineOperation? {
+      get {
+        self.machineObject?.currentOperation
+      }
+      set {
+        assert(self.machineObject != nil)
+        self.machineObject?.currentOperation = newValue
+      }
+    }
+
+    var title: String {
+      self.machineObject?.entry.name ??
+        self.url?
+        .deletingPathExtension()
+        .lastPathComponent ??
+        "Loading Machine..."
+    }
+
+    func beginLoadingURL(
+      _ url: URL?,
       withContext modelContext: ModelContext,
       restoreImageDBfrom: @escaping (ModelContext) -> InstallerImageRepository,
+      snapshotFactory: SnapshotProvider,
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider
     ) {
+      guard let url else {
+        return
+      }
+      Task {
+        await self
+          .loadURL(
+            url,
+            withContext: modelContext,
+            restoreImageDBfrom: restoreImageDBfrom,
+            snapshotFactory: snapshotFactory,
+            using: systemManager,
+            labelProvider
+          )
+      }
+    }
+
+    private func loadURL(
+      _ url: URL,
+      withContext modelContext: ModelContext,
+      restoreImageDBfrom: @escaping (ModelContext) -> InstallerImageRepository,
+      snapshotFactory: SnapshotProvider,
+      using systemManager: any MachineSystemManaging,
+      _ labelProvider: @escaping MetadataLabelProvider
+    ) async {
       self.modelContext = modelContext
       self.systemManager = systemManager
       do {
-        self.machineObject = try MachineObject(
+        self.machineObject = try await MachineObject(
+          parent: self,
           configuration: .init(
             url: url,
             modelContext: modelContext,
             systemManager: systemManager,
+            snapshotterFactory: snapshotFactory,
             installerImageRepositoryFrom: restoreImageDBfrom,
             labelProvider: labelProvider
           )
@@ -49,6 +98,22 @@
           Self.logger.critical("Unknown error: \(error)")
         }
       }
+    }
+
+    func beginSavingSnapshot(_ request: SnapshotRequest) {
+      guard let url = self.url else {
+        let error = MachineError.missingProperty(.url)
+        assertionFailure(error: error)
+        self.error = error
+        return
+      }
+      guard let machine = self.machineObject else {
+        let error = MachineError.missingProperty(.machine)
+        assertionFailure(error: error)
+        self.error = error
+        return
+      }
+      machine.beginSavingSnapshot(request, at: url)
     }
   }
 

@@ -171,6 +171,28 @@
       }
     }
 
+    func deleteSelectedItem() {
+      guard let selectedItem else {
+        assertionFailure()
+        return
+      }
+
+      guard let object else {
+        assertionFailure()
+        return
+      }
+
+      do {
+        try object.deleteImage(withID: selectedItem)
+      } catch {
+        Self.logger.error("Unable to delete image: \(error)")
+        self.error = assertionFailure(error: error) { error in
+          Self.logger.critical("Unknown error: \(error)")
+        }
+      }
+      self.selectedItem = nil
+    }
+
     func onSelectionChange() {
       guard let object else {
         return

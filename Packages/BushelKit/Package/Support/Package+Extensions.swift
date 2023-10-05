@@ -7,7 +7,8 @@ extension Package {
   convenience init(
     name: String? = nil,
     @ProductsBuilder entries: @escaping () -> [Product],
-    @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [TestTarget]() }
+    @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [TestTarget]() },
+    @SwiftSettingsBuilder swiftSettings: @escaping () -> [SwiftSetting] = { [SwiftSetting]() }
   ) {
     let packageName: String
     if let name {
@@ -34,7 +35,10 @@ extension Package {
     let packgeTargets = Dictionary(
       grouping: targets,
       by: { $0.name }
-    ).values.compactMap(\.first).map(_PackageDescription_Target.entry(_:))
+    )
+    .values
+    .compactMap(\.first)
+    .map { _PackageDescription_Target.entry($0, swiftSettings: swiftSettings()) }
 
     let packageDeps = Dictionary(
       grouping: packageDependencies,

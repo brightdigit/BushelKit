@@ -22,7 +22,7 @@ struct MockSystem: System {
               contentLength: 123,
               lastModified: .now,
               fileExtension: "ipsw",
-              vmSystem: .macOS
+              vmSystemID: .macOS
             ),
             url: .init(
               "http://localhost:8080/UniversalMac_14.0_23A5337a_Restore.ipsw"

@@ -5,6 +5,12 @@
 
 protocol Target: _Depending, Dependency, _Named {
   var targetType: TargetType { get }
+
+  @SwiftSettingsBuilder
+  var swiftSettings: [SwiftSetting] { get }
+
+  @ResourcesBuilder
+  var resources: [Resource] { get }
 }
 
 extension Target {
@@ -14,5 +20,13 @@ extension Target {
 
   var targetDepenency: _PackageDescription_TargetDependency {
     .target(name: self.name)
+  }
+
+  var swiftSettings: [SwiftSetting] {
+    []
+  }
+
+  var resources: [Resource] {
+    []
   }
 }

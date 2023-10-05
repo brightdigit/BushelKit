@@ -8,6 +8,7 @@
   import SwiftUI
 
   private struct NSWindowDelegateAdaptorModifier: ViewModifier {
+    #warning("Modifying state during view update, this will cause undefined behavior.")
     @Binding var binding: NSWindowDelegate?
     // swiftlint:disable:next weak_delegate
     let delegate: NSWindowDelegate

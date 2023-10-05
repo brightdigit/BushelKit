@@ -14,7 +14,7 @@ extension InstallerImage.Metadata {
     imageMetadata: ImageMetadata,
     _ labelProvider: @escaping MetadataLabelProvider
   ) {
-    let label = labelProvider(imageMetadata.vmSystem, imageMetadata)
+    let label = labelProvider(imageMetadata.vmSystemID, imageMetadata)
     self.init(
       longName: label.operatingSystemLongName,
       defaultName: label.defaultName,
@@ -23,7 +23,7 @@ extension InstallerImage.Metadata {
       buildVersion: imageMetadata.buildVersion,
       imageResourceName: label.imageName,
       systemName: label.systemName,
-      systemID: imageMetadata.vmSystem
+      systemID: imageMetadata.vmSystemID
     )
   }
 }

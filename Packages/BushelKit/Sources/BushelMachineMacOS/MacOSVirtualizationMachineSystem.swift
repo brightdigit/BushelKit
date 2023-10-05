@@ -6,6 +6,7 @@
 #if canImport(Virtualization) && arch(arm64)
 
   import BushelCore
+  import BushelLogging
   import BushelMachine
   import BushelMacOSCore
   import Foundation
@@ -14,6 +15,10 @@
 
   public struct MacOSVirtualizationMachineSystem: MachineSystem {
     public typealias RestoreImageType = VirtualizationMacOSRestoreImage
+
+    public var repository: MachineRepository {
+      .shared
+    }
 
     public var id: VMSystemID {
       .macOS
@@ -24,15 +29,8 @@
     public func machine(
       at url: URL,
       withConfiguration configuration: MachineConfiguration
-    ) throws -> any BushelMachine.Machine {
-      let dataDirectory = url.appendingPathComponent(Paths.machineDataDirectoryName)
-      let vzMachineConfiguration = try VZVirtualMachineConfiguration(
-        contentsOfDirectory: dataDirectory,
-        basedOn: configuration
-      )
-      try vzMachineConfiguration.validate()
-      let vzMachine = VZVirtualMachine(configuration: vzMachineConfiguration)
-      return VZMachine(url: url, configuration: configuration, machine: vzMachine)
+    ) async throws -> any BushelMachine.Machine {
+      try await self.repository.machineAt(url, withConfiguration: configuration)
     }
 
     public func restoreImage(

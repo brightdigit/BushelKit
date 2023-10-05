@@ -18,7 +18,7 @@
   #endif
 
   @Observable
-  class SessionObject: LoggerCategorized {
+  class SessionObject: LoggerCategorized, MachineObjectParent {
     var url: URL?
     var presentConfirmCloseAlert: Bool = false
 
@@ -62,15 +62,19 @@
       _ url: URL,
       withContext modelContext: ModelContext,
       restoreImageDBfrom: @escaping (ModelContext) -> InstallerImageRepository,
+      snapshotFactory: SnapshotProvider,
       using systemManager: any MachineSystemManaging,
+
       labelProvider: @escaping MetadataLabelProvider
-    ) {
+    ) async {
       do {
-        self.machineObject = try MachineObject(
+        self.machineObject = try await MachineObject(
+          parent: self,
           configuration: .init(
             url: url,
             modelContext: modelContext,
             systemManager: systemManager,
+            snapshotterFactory: snapshotFactory,
             installerImageRepositoryFrom: restoreImageDBfrom,
             labelProvider: labelProvider
           )

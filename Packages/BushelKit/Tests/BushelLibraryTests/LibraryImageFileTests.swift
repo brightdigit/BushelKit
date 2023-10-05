@@ -18,7 +18,7 @@ internal final class LibraryImageFileTests: XCTestCase {
       "id" : "\(expectedImageFile.id.uuidString)",
       "name" : "\(expectedImageFile.name)",
       "metadata" : {
-        "vmSystem" : "\(expectedImageFile.metadata.vmSystem.rawValue)",
+        "vmSystemID" : "\(expectedImageFile.metadata.vmSystemID.rawValue)",
         "operatingSystemVersion" : "\(expectedImageFile.metadata.operatingSystemVersion.description)",
         "contentLength" : \(expectedImageFile.metadata.contentLength),
         "isImageSupported" : \(expectedImageFile.metadata.isImageSupported),
@@ -33,7 +33,7 @@ internal final class LibraryImageFileTests: XCTestCase {
 
     XCTAssertEqual(sut.id, expectedImageFile.id)
     XCTAssertEqual(sut.name, expectedImageFile.name)
-    XCTAssertEqual(sut.metadata.vmSystem, expectedImageFile.metadata.vmSystem)
+    XCTAssertEqual(sut.metadata.vmSystemID, expectedImageFile.metadata.vmSystemID)
     XCTAssertEqual(sut.metadata.operatingSystemVersion, expectedImageFile.metadata.operatingSystemVersion)
     XCTAssertEqual(sut.metadata.contentLength, expectedImageFile.metadata.contentLength)
     XCTAssertEqual(sut.metadata.buildVersion, expectedImageFile.metadata.buildVersion)

@@ -1,0 +1,7 @@
+//
+// {{name|firstUppercase}}.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+public protocol {{name|firstUppercase}} {
+}

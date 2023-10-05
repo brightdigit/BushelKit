@@ -15,7 +15,7 @@ extension ImageMetadata {
     contentLength: 12_893_555_341,
     lastModified: .now,
     fileExtension: "ipsw",
-    vmSystem: .init(stringLiteral: "macOSApple")
+    vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
   // swiftlint:disable:next identifier_name
@@ -26,7 +26,7 @@ extension ImageMetadata {
     contentLength: 13_893_555_341,
     lastModified: .now,
     fileExtension: "ipsw",
-    vmSystem: .init(stringLiteral: "macOSApple")
+    vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
   // swiftlint:disable:next identifier_name
@@ -37,7 +37,7 @@ extension ImageMetadata {
     contentLength: 14_893_555_341,
     lastModified: .now,
     fileExtension: "ipsw",
-    vmSystem: .init(stringLiteral: "macOSApple")
+    vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
   // swiftlint:disable:next identifier_name
@@ -48,6 +48,6 @@ extension ImageMetadata {
     contentLength: 14_893_555_341,
     lastModified: .now,
     fileExtension: "iso",
-    vmSystem: .init(stringLiteral: "LinuxUbuntu")
+    vmSystemID: .init(stringLiteral: "LinuxUbuntu")
   )
 }

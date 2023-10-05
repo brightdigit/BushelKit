@@ -6,17 +6,19 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelDataCore
+  import BushelLocalization
   import BushelLogging
   import BushelMachine
 
   import BushelMachineData
   import BushelSessionUI
+  import BushelViewsCore
   import SwiftData
   import SwiftUI
 
   @Observable
   class MachineObject: LoggerCategorized {
-    typealias Machine = BushelMachine.Machine
+    typealias Machine = (any BushelMachine.Machine)
 
     var machine: Machine {
       willSet {
@@ -32,6 +34,8 @@
         Task { @MainActor in
           self.machineUpdated(machine)
         }
+
+        self.refreshSnapshots()
       }
     }
 
@@ -47,31 +51,59 @@
     var canResume: Bool = false
     var canRequestStop: Bool = false
 
-    var entry: MachineEntry
+    var confirmingRemovingSnapshot: Snapshot?
+    var presentDeleteConfirmation = false
 
+    var confirmingRestoreSnapshot: Snapshot?
+    var presentRestoreConfirmation = false
+
+    var exportingSnapshot: (Snapshot, CodablePackageDocument<MachineConfiguration>)?
+    var presentExportingSnapshot = false
+
+    var entry: MachineEntry
+    var snapshotIDs = [Snapshot.ID]()
     let label: MetadataLabel
+
+    var currentOperation: MachineOperation?
 
     @ObservationIgnored
     var observationID: UUID?
 
-    @ObservationIgnored
-    var modelContext: ModelContext?
+    let modelContext: ModelContext
 
-    @ObservationIgnored
-    var systemManager: (any MachineSystemManaging)?
+    let systemManager: any MachineSystemManaging
+
+    let snapshotFactory: any SnapshotProvider
+
+    weak var parent: MachineObjectParent?
+
+    var error: MachineError? {
+      set {
+        assert(self.parent != nil)
+        self.parent?.error = newValue
+      }
+      get {
+        assert(self.parent != nil)
+        return self.parent?.error
+      }
+    }
 
     internal init(
+      parent: MachineObjectParent,
       machine: MachineObject.Machine,
       entry: MachineEntry,
       label: MetadataLabel,
-      modelContext: ModelContext? = nil,
-      systemManager: MachineSystemManaging? = nil
+      modelContext: ModelContext,
+      systemManager: MachineSystemManaging,
+      snapshotFactory: any SnapshotProvider
     ) {
+      self.parent = parent
       self.machine = machine
       self.entry = entry
       self.label = label
       self.modelContext = modelContext
       self.systemManager = systemManager
+      self.snapshotFactory = snapshotFactory
 
       self.observationID = machine.beginObservation { change in
         Task { @MainActor in
@@ -89,13 +121,20 @@
     }
 
     @MainActor
-    func machineUpdated(_ source: BushelMachine.Machine) {
+    func machineUpdated(_ source: Machine) {
       self.state = source.state
       self.canStart = source.canStart
       self.canStop = source.canStop
       self.canPause = source.canPause
       self.canResume = source.canResume
       self.canRequestStop = source.canRequestStop
+    }
+
+    func writeConfigurationAt(_ url: URL) throws {
+      let configuraton = machine.configuration
+      let data = try JSON.encoder.encode(configuraton)
+      let configurationFileURL = url.appendingPathComponent(Paths.machineJSONFileName)
+      try data.write(to: configurationFileURL)
     }
 
     deinit {
@@ -105,18 +144,21 @@
 
   extension MachineObject {
     convenience init(
+      parent: MachineObjectParent,
       configuration: MachineObjectConfiguration
-    ) throws {
-      let components = try MachineObjectComponents(
+    ) async throws {
+      let components = try await MachineObjectComponents(
         configuration: configuration
       )
-      let entry: MachineEntry = try .basedOnComponents(components)
+      let entry: MachineEntry = try await .basedOnComponents(components)
       self.init(
+        parent: parent,
         machine: components.machine,
         entry: entry,
         label: components.label,
         modelContext: configuration.modelContext,
-        systemManager: configuration.systemManager
+        systemManager: configuration.systemManager,
+        snapshotFactory: configuration.snapshotFactory
       )
     }
   }

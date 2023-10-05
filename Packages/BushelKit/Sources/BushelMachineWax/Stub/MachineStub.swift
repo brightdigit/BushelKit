@@ -56,4 +56,12 @@ public struct MachineStub: Machine {
   public func removeObservation(withID _: UUID) -> Bool {
     true
   }
+
+  public func beginSnapshot() -> BushelMachine.SnapshotPaths {
+    fatalError("Not implemented")
+  }
+
+  public func finishedWithSnapshot(_: BushelMachine.Snapshot, by _: BushelMachine.SnapshotDifference) {
+    fatalError("Not implemented")
+  }
 }

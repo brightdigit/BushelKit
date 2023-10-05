@@ -19,10 +19,10 @@
     static let `default` = MetadataLabelProviderAction(closure: MetadataLabel.init)
     let closure: BushelCore.MetadataLabelProvider
     public func callAsFunction(
-      _ systemID: VMSystemID,
+      _ vmSystemID: VMSystemID,
       _ operatingSystemInfo: OperatingSystemInstalled
     ) -> MetadataLabel {
-      closure(systemID, operatingSystemInfo)
+      closure(vmSystemID, operatingSystemInfo)
     }
   }
 

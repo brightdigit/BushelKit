@@ -17,12 +17,15 @@
     let modelContext: ModelContext
     let systemManager: MachineSystemManaging
     let labelProvider: MetadataLabelProvider
+    let snapshotFactory: SnapshotProvider
 
     internal init(
       url: URL,
       restoreImageDB: InstallerImageRepository,
       modelContext: ModelContext,
       systemManager: MachineSystemManaging,
+
+      snapshotFactory: SnapshotProvider,
       labelProvider: @escaping MetadataLabelProvider
     ) {
       self.url = url
@@ -30,6 +33,7 @@
       self.modelContext = modelContext
       self.systemManager = systemManager
       self.labelProvider = labelProvider
+      self.snapshotFactory = snapshotFactory
     }
   }
 
@@ -38,6 +42,7 @@
       url: URL,
       modelContext: ModelContext,
       systemManager: MachineSystemManaging,
+      snapshotterFactory: SnapshotProvider,
       installerImageRepositoryFrom: @escaping (ModelContext) -> InstallerImageRepository,
       labelProvider: @escaping MetadataLabelProvider
     ) {
@@ -46,6 +51,7 @@
         restoreImageDB: installerImageRepositoryFrom(modelContext),
         modelContext: modelContext,
         systemManager: systemManager,
+        snapshotFactory: snapshotterFactory,
         labelProvider: labelProvider
       )
     }
