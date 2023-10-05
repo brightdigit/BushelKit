@@ -16,8 +16,6 @@ settings:
 packages:
   BushelKit:
     path: ./Packages/BushelKit
-fileGroups:
-  - "Original/Packages/BushelKit/Archive"
 targetTemplates:
   Application:
     type: application

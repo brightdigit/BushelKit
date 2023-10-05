@@ -42,7 +42,7 @@
         assertionFailure(error: error)
         throw error
       }
-      let manager = systemManager.resolve(image.metadata.systemID)
+      let manager = systemManager.resolve(image.metadata.vmSystemID)
       self.init(manager: manager, image: image)
     }
   }

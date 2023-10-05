@@ -5,10 +5,14 @@
 
 import Foundation
 
-public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable {
+public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable {
   public typealias StringLiteralType = String
 
   public let rawValue: String
+  public init(rawValue value: String) {
+    rawValue = value
+  }
+
   public init(stringLiteral value: String) {
     rawValue = value
   }

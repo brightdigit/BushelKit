@@ -27,8 +27,8 @@
       entry.imageID
     }
 
-    var vmSystem: BushelCore.VMSystemID {
-      entry.vmSystem
+    var vmSystemID: BushelCore.VMSystemID {
+      entry.vmSystemID
     }
 
     internal init(

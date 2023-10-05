@@ -109,6 +109,16 @@
       return .init(LibraryImageObject(index: index, library: self, entry: entry))
     }
 
+    private func saveChangesTo(_ libraryURL: URL) throws {
+      let jsonFileURL = libraryURL.appending(path: Paths.restoreLibraryJSONFileName)
+      do {
+        let jsonData = try JSON.encoder.encode(library)
+        try jsonData.write(to: jsonFileURL)
+      } catch {
+        throw LibraryError.metadataUpdateError(error, at: jsonFileURL)
+      }
+    }
+
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func importRemoteImageAt(
       _ remoteURL: URL,
@@ -194,18 +204,58 @@
         throw LibraryError.copyFrom(remoteURL, to: libraryURL, withError: error)
       }
       library.items.append(imageFile)
-      let jsonFileURL = libraryURL.appending(path: Paths.restoreLibraryJSONFileName)
-      do {
-        let jsonData = try JSON.encoder.encode(library)
-        try jsonData.write(to: jsonFileURL)
-      } catch {
-        throw LibraryError.metadataUpdateError(error, at: jsonFileURL)
-      }
+      try saveChangesTo(libraryURL)
       do {
         try entry.appendImage(file: imageFile, using: modelContext)
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }
+    }
+
+    func deleteImage(withID id: UUID) throws {
+      guard let modelContext else {
+        throw LibraryError.missingInitializedProperty(.modelContext)
+      }
+
+      guard let librarySystemManager else {
+        throw LibraryError.missingInitializedProperty(.librarySystemManager)
+      }
+
+      guard let bookmarkData = entry.bookmarkData else {
+        throw LibraryError.missingInitializedProperty(.bookmarkData)
+      }
+
+      let libraryURL: URL
+      do {
+        libraryURL = try bookmarkData.fetchURL(using: modelContext, withURL: nil)
+      } catch {
+        throw try LibraryError.bookmarkError(error)
+      }
+
+      let canAccessFile = libraryURL.startAccessingSecurityScopedResource()
+      guard canAccessFile else {
+        throw LibraryError.accessDeniedError(nil, at: libraryURL)
+      }
+
+      defer {
+        libraryURL.stopAccessingSecurityScopedResource()
+      }
+
+      let imagesURL = libraryURL.appendingPathComponent(Paths.restoreImagesDirectoryName)
+
+      guard let index = self.library.items.firstIndex(where: { $0.id == id }) else {
+        assertionFailure()
+        return
+      }
+
+      let imageFile = library.items.remove(at: index)
+      let imageFileURL = imagesURL.appendingPathComponent(imageFile.fileName)
+      try FileManager.default.removeItem(at: imageFileURL)
+      try modelContext.delete(model: LibraryImageEntry.self, where: #Predicate {
+        $0.imageID == id
+      })
+      try saveChangesTo(libraryURL)
+      try modelContext.save()
     }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -301,13 +351,7 @@
         throw LibraryError.copyFrom(importingURL, to: libraryURL, withError: error)
       }
       library.items.append(imageFile)
-      let jsonFileURL = libraryURL.appending(path: Paths.restoreLibraryJSONFileName)
-      do {
-        let jsonData = try JSON.encoder.encode(library)
-        try jsonData.write(to: jsonFileURL)
-      } catch {
-        throw LibraryError.metadataUpdateError(error, at: jsonFileURL)
-      }
+      try saveChangesTo(libraryURL)
       do {
         try entry.appendImage(file: imageFile, using: modelContext)
       } catch {

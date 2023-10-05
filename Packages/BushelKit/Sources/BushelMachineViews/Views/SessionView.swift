@@ -21,6 +21,7 @@
     @Environment(\.machineSystemManager) var systemManager
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.snapshotProvider) private var snapshotProvider
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
 
     var startPauseResume: some View {
@@ -98,24 +99,28 @@
       .onCloseButton(self.$object.windowClose, self.object.shouldCloseWindow(_:))
       .onChange(of: request?.url) { _, newValue in
         if let url = newValue {
-          self.object.loadURL(
-            url,
-            withContext: context,
-            restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
-            using: systemManager,
-            labelProvider: self.labelProvider.callAsFunction(_:_:)
-          )
+          Task {
+            await self.object.loadURL(
+              url,
+              withContext: context,
+              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:), snapshotFactory: self.snapshotProvider,
+              using: systemManager,
+              labelProvider: self.labelProvider.callAsFunction(_:_:)
+            )
+          }
         }
       }
       .onAppear {
         if let url = self.request?.url {
-          self.object.loadURL(
-            url,
-            withContext: context,
-            restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
-            using: systemManager,
-            labelProvider: self.labelProvider.callAsFunction(_:_:)
-          )
+          Task {
+            await self.object.loadURL(
+              url,
+              withContext: context,
+              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:), snapshotFactory: self.snapshotProvider,
+              using: systemManager,
+              labelProvider: self.labelProvider.callAsFunction(_:_:)
+            )
+          }
         }
       }
       .onChange(of: self.object.canStart) { _, newValue in

@@ -9,7 +9,8 @@ import Foundation
 public extension MachineConfiguration {
   static let sampleMachineConfiguration: Self = .init(
     restoreImageFile: .sampleInstallerIdentifier,
-    vmSystem: .sampleVMSystemID,
+    vmSystemID: .sampleVMSystemID,
+    snapshotSystemID: .sampleSnapshotSystemID,
     operatingSystemVersion: .init(
       majorVersion: 1,
       minorVersion: 0,
