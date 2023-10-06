@@ -9,7 +9,7 @@
 
   struct WelcomeView: SingleWindowView {
     @Environment(\.colorScheme) var colorScheme
-
+    @AppStorage("recentDocumentsClearDate") private var recentDocumentsClearDate: Date?
     var body: some View {
       HStack {
         WelcomeTitleView()
@@ -20,7 +20,7 @@
               Color.white
           )
 
-        WelcomeRecentDocumentsView().frame(width: 280)
+        WelcomeRecentDocumentsView(recentDocumentsClearDate: recentDocumentsClearDate).frame(width: 280)
       }.frame(width: 750, height: 440)
         .navigationTitle("Welcome to Bushel")
     }

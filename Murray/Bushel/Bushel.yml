@@ -9,3 +9,15 @@ procedures:
   description: An item named View created from scaffold
   items:
   - View/View.yml
+- name: Observable
+  description: An item named Observable created from scaffold
+  items:
+  - Observable/Observable.yml
+- name: Protocol
+  description: An item named Protocol created from scaffold
+  items:
+  - Protocol/Protocol.yml
+- name: Struct
+  description: An item named Struct created from scaffold
+  items:
+  - Struct/Struct.yml

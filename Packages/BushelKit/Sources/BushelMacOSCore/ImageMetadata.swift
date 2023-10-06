@@ -42,7 +42,7 @@
         contentLength: contentLength,
         lastModified: lastModified,
         fileExtension: "ipsw",
-        vmSystem: VMSystemID.macOS
+        vmSystemID: VMSystemID.macOS
       )
     }
 

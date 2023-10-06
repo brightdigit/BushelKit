@@ -18,6 +18,8 @@
 
     var systems: [System] { get }
 
+    var allowedOpenFileTypes: [FileType] { get }
+
     var schemas: [any PersistentModel.Type] { get }
 
     func hubView(_ image: Binding<InstallImage?>) -> HubViewType

@@ -30,7 +30,7 @@
   extension HubContentRow {
     init(manager: any LibrarySystemManaging, metadata: ImageMetadata) {
       let label = manager.labelForSystem(
-        metadata.vmSystem,
+        metadata.vmSystemID,
         metadata: metadata
       )
       self.init(label: label)

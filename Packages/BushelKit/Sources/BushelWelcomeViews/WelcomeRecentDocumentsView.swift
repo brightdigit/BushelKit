@@ -12,35 +12,26 @@
   import SwiftUI
 
   struct WelcomeRecentDocumentsView: View, LoggerCategorized {
-    static let maxTimeIntervalSinceNow: TimeInterval = 5 * 60 * 60
-
-    @State var object = WelcomeRecentDocumentsObject()
-    @Query(sort: \BookmarkData.updatedAt, order: .reverse) var bookmarks: [BookmarkData]
+    let recentDocumentsClearDate: Date?
     @Environment(\.modelContext) private var context
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openFileURL) private var openFileURL
+    @State var isEmpty = false
 
     var body: some View {
       Group {
-        if let recentDocuments = object.recentDocuments {
-          if recentDocuments.isEmpty {
-            Text(.welcomeNoRecentDocuments).opacity(0.5)
-          } else {
-            List {
-              ForEach(recentDocuments) { document in
-                RecentDocumentItemButton(document: document)
-              }
-            }.listStyle(SidebarListStyle()).padding(-20)
-          }
+        if isEmpty {
+          Text(.welcomeNoRecentDocuments).opacity(0.5)
         } else {
-          Text(.welcomeUpdatingRecentDocuments)
+          List {
+            RecentDocumentsList(
+              recentDocumentsClearDate: recentDocumentsClearDate,
+              isEmpty: self.$isEmpty
+            ) { document in
+              RecentDocumentItemButton(document: document)
+            }
+          }.listStyle(SidebarListStyle()).padding(-20)
         }
-      }
-      .onChange(of: self.bookmarks) { _, _ in
-        object.updateBookmarks(self.bookmarks, using: self.context)
-      }
-      .onAppear {
-        object.updateBookmarks(self.bookmarks, using: self.context)
       }
     }
   }

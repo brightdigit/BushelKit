@@ -25,26 +25,10 @@
 
     var body: some View {
       NavigationSplitView {
-        HStack {
-          Menu {
-            Button("Import File...") {
-              self.object.presentFileImporter = true
-            }
-            Button("Download From Hub...") {
-              self.object.presentHubModal = true
-            }
-          } label: {
-            Image(systemName: "plus")
-          }
-          .fileImporter(
-            isPresented: self.$object.presentFileImporter,
-            allowedContentTypes: librarySystemManager.allAllowedContentTypes,
-            onCompletion: self.object.onFileImporterCompleted
-          )
-          Spacer()
-        }
-        .buttonStyle(.plain)
-        .padding()
+        ToolbarView(
+          allAllowedContentTypes: librarySystemManager.allAllowedContentTypes,
+          object: self.object
+        )
         LibraryList(
           items: object.object?.library.items,
           selectedItem: self.$object.selectedItem,
@@ -62,7 +46,7 @@
           onDismiss: self.object.onHubImageSelected,
           self.hubView
         )
-        .sheet(item: self.$object.restoreImageImportProgress) { request in
+        .sheet(item: self.$object.restoreImageImportProgress, content: { request in
           ProgressOperationView(request) {
             Image.resource($0)
               .resizable()
@@ -72,7 +56,7 @@
               .overlay { Circle().stroke() }
               .padding(.horizontal)
           }
-        }
+        })
         .fileExporter(
           isPresented: self.$object.presentFileExporter,
           document: CodablePackageDocument<Library>(),
@@ -83,7 +67,7 @@
         )
       } detail: {
         if let image = self.object.object?.bindableImage(withID: self.object.selectedItem) {
-          let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystem)
+          let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystemID)
           LibraryImageDetailView(image: image, system: system)
         } else {
           Text(.selectImage)
@@ -107,7 +91,6 @@
           Text(error.localizedDescription)
         }
       )
-
       .navigationSplitViewStyle(.balanced)
       .navigationTitle(self.file?.url.lastPathComponent ?? "Untitled")
     }

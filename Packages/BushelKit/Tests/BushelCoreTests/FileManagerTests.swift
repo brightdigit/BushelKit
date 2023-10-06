@@ -4,6 +4,7 @@
 //
 
 @testable import BushelCore
+import BushelCoreWax
 import XCTest
 
 final class FileManagerTests: XCTestCase {
@@ -20,7 +21,7 @@ final class FileManagerTests: XCTestCase {
   func testDirectoryExists() {
     let sut = FileManager.default
 
-    let dirURL = URL.temporaryDirectory
+    let dirURL = URL.temporaryDir
 
     XCTAssertEqual(sut.directoryExists(at: dirURL), .directoryExists)
   }
@@ -28,7 +29,7 @@ final class FileManagerTests: XCTestCase {
   func testNotExists() {
     let sut = FileManager.default
 
-    let fileURL = URL.temporaryDirectory.appendingPathComponent("file.txt")
+    let fileURL = URL.temporaryDir.appendingPathComponent("file.txt")
 
     XCTAssertEqual(sut.directoryExists(at: fileURL), .notExists)
   }

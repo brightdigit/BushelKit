@@ -31,4 +31,13 @@
       self.environment(\.installerImageRepository, .init(database))
     }
   }
+
+  @available(*, deprecated, message: "Use on Scene only.")
+  public extension View {
+    func installerImageRepository(
+      _ database: @escaping (ModelContext) -> InstallerImageRepository
+    ) -> some View {
+      self.environment(\.installerImageRepository, .init(database))
+    }
+  }
 #endif

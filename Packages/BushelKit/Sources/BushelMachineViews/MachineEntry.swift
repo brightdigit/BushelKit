@@ -9,6 +9,8 @@
   import Foundation
 
   extension MachineEntry {
+    #warning("Remove @MainActor")
+    @MainActor
     static func basedOnComponents(_ components: MachineObjectComponents) throws -> MachineEntry {
       if let item = components.existingEntry {
         do {

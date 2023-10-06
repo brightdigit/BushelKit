@@ -17,7 +17,7 @@ public extension ImageMetadata {
       contentLength: 16_000_000_000,
       lastModified: .init(),
       fileExtension: "ipsw",
-      vmSystem: "macOSApple"
+      vmSystemID: "macOSApple"
     )
 
     public static let venturaBeta3 = ImageMetadata(
@@ -29,7 +29,7 @@ public extension ImageMetadata {
       contentLength: 679_094_144,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_094_144.0),
       fileExtension: "ipsw",
-      vmSystem: "macOSApple"
+      vmSystemID: "macOSApple"
     )
 
     public static let monterey = ImageMetadata(
@@ -39,7 +39,7 @@ public extension ImageMetadata {
       contentLength: 679_276_356_959_953,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959_953),
       fileExtension: "ipsw",
-      vmSystem: "macOSApple"
+      vmSystemID: "macOSApple"
     )
   }
 }

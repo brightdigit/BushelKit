@@ -11,7 +11,7 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable, Op
   public let operatingSystemVersion: OperatingSystemVersion
   public let contentLength: Int
   public let lastModified: Date
-  public let vmSystem: VMSystemID
+  public let vmSystemID: VMSystemID
   public let fileExtension: String
 
   public var debugDescription: String {
@@ -26,7 +26,7 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable, Op
     contentLength: Int,
     lastModified: Date,
     fileExtension: String,
-    vmSystem: VMSystemID
+    vmSystemID: VMSystemID
   ) {
     self.isImageSupported = isImageSupported
     self.buildVersion = buildVersion
@@ -34,6 +34,6 @@ public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable, Op
     self.contentLength = contentLength
     self.lastModified = lastModified
     self.fileExtension = fileExtension
-    self.vmSystem = vmSystem
+    self.vmSystemID = vmSystemID
   }
 }

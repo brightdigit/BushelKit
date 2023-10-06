@@ -32,13 +32,13 @@
 
     public var contentLength: Int
     public var lastModified: Date
-    private var vmSystemID: String
-    public var vmSystem: VMSystemID {
+    private var vmSystemIDRawValue: String
+    public var vmSystemID: VMSystemID {
       get {
-        .init(stringLiteral: vmSystemID)
+        .init(stringLiteral: vmSystemIDRawValue)
       }
       set {
-        self.vmSystemID = newValue.rawValue
+        self.vmSystemIDRawValue = newValue.rawValue
       }
     }
 
@@ -52,7 +52,7 @@
       operatingSystemVersion: OperatingSystemVersion,
       contentLength: Int,
       lastModified: Date,
-      vmSystem: VMSystemID,
+      vmSystemID: VMSystemID,
       fileExtension: String
     ) {
       self.name = name
@@ -62,7 +62,7 @@
       self.operatingSystemVersionString = operatingSystemVersion.description
       self.contentLength = contentLength
       self.lastModified = lastModified
-      self.vmSystemID = vmSystem.rawValue
+      self.vmSystemIDRawValue = vmSystemID.rawValue
       self.fileExtension = fileExtension
     }
   }
@@ -77,10 +77,11 @@
         operatingSystemVersion: file.metadata.operatingSystemVersion,
         contentLength: file.metadata.contentLength,
         lastModified: file.metadata.lastModified,
-        vmSystem: file.metadata.vmSystem,
+        vmSystemID: file.metadata.vmSystemID,
         fileExtension: file.metadata.fileExtension
       )
       context.insert(self)
+      try context.save()
       self.library = library
       try context.save()
     }
@@ -97,7 +98,7 @@
       operatingSystemVersion = file.metadata.operatingSystemVersion
       contentLength = file.metadata.contentLength
       lastModified = file.metadata.lastModified
-      vmSystem = file.metadata.vmSystem
+      vmSystemID = file.metadata.vmSystemID
       fileExtension = file.metadata.fileExtension
       self.library = library
       try context.save()
@@ -113,7 +114,7 @@
         contentLength: entry.contentLength,
         lastModified: entry.lastModified,
         fileExtension: entry.fileExtension,
-        vmSystem: entry.vmSystem
+        vmSystemID: entry.vmSystemID
       )
     }
   }

@@ -25,10 +25,10 @@ public extension MachineSystemManaging {
   /// Resolves the ``MachineSystem`` and ``Machine`` based on the  bundle at the URL.
   /// - Parameter url: Machine bundle URL.
   /// - Returns: The resolved ``Machine``
-  func machine(contentOf url: URL) throws -> any Machine {
+  func machine(contentOf url: URL) async throws -> any Machine {
     let configuration: MachineConfiguration
     configuration = try MachineConfiguration(contentsOf: url)
-    let system = self.resolve(configuration.systemID)
-    return try system.machine(at: url, withConfiguration: configuration)
+    let system = self.resolve(configuration.vmSystemID)
+    return try await system.machine(at: url, withConfiguration: configuration)
   }
 }

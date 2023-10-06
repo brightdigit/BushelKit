@@ -18,6 +18,24 @@
   import SwiftUI
 
   public extension Scene {
+    func register(
+      _ librarySystemManager: LibrarySystemManager,
+      _ machineSystemManager: MachineSystemManager,
+      _ hubs: [Hub]
+    ) -> some Scene {
+      self
+        .metadataLabelProvider(librarySystemManager.labelForSystem)
+        .environment(
+          \.librarySystemManager,
+          librarySystemManager
+        )
+        .environment(
+          \.machineSystemManager,
+          machineSystemManager
+        )
+        .environment(\.hubs, hubs)
+    }
+
     func registerSystems(
       _ systems: [System]
     ) -> some Scene {
@@ -40,17 +58,7 @@
         librarySystems,
         fileTypeBasedOnURL: FileType.init(url:)
       )
-      return self
-        .metadataLabelProvider(librarySystemManager.labelForSystem)
-        .environment(
-          \.librarySystemManager,
-          librarySystemManager
-        )
-        .environment(
-          \.machineSystemManager,
-          machineSystemManager
-        )
-        .environment(\.hubs, hubs)
+      return register(librarySystemManager, machineSystemManager, hubs)
     }
 
     func registerSystems(

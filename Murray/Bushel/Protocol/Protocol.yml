@@ -1,0 +1,11 @@
+name: Protocol
+parameters:
+  - name: "name"
+    isRequired: true
+  - name: "module"
+    isRequired: true
+paths:
+  - from: Protocol.swift.stencil
+    to: '{{paths.sources}}/Bushel{{module|firstUppercase}}/{{name|firstUppercase}}.swift'
+description: An item named Protocol created from scaffold
+replacements: []

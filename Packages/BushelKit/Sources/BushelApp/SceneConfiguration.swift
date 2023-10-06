@@ -28,6 +28,10 @@
       .all
     }
 
+    var allowedOpenFileTypes: [FileType] {
+      [.virtualMachine, .restoreImageLibrary]
+    }
+
     internal init(@SystemBuilder _ systems: @escaping () -> [System]) {
       self.systems = systems()
     }

@@ -79,7 +79,8 @@ extension Package {
   convenience init(
     name: String? = nil,
     @ProductsBuilder entries: @escaping () -> [Product],
-    @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [TestTarget]() }
+    @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [TestTarget]() },
+    @SwiftSettingsBuilder swiftSettings: @escaping () -> [SwiftSetting] = { [SwiftSetting]() }
   ) {
     let packageName: String
     if let name {
@@ -106,7 +107,10 @@ extension Package {
     let packgeTargets = Dictionary(
       grouping: targets,
       by: { $0.name }
-    ).values.compactMap(\.first).map(_PackageDescription_Target.entry(_:))
+    )
+    .values
+    .compactMap(\.first)
+    .map { _PackageDescription_Target.entry($0, swiftSettings: swiftSettings()) }
 
     let packageDeps = Dictionary(
       grouping: packageDependencies,
@@ -138,12 +142,28 @@ extension Package {
 import PackageDescription
 
 protocol PackageDependency: Dependency {
+  var packageName: String { get }
   var dependency: _PackageDescription_PackageDependency { get }
 }
 
 extension PackageDependency {
   var productName: String {
     "\(Self.self)"
+  }
+
+  var packageName: String {
+    switch self.dependency.kind {
+    case let .sourceControl(name: name, location: location, requirement: _):
+      return name ?? location.packageName ?? productName
+
+    case let .fileSystem(name: name, path: path):
+      return name ?? path.packageName ?? productName
+
+    case let .registry(id: id, requirement: _):
+      return id
+    @unknown default:
+      return productName
+    }
   }
 
   var targetDepenency: _PackageDescription_TargetDependency {
@@ -239,6 +259,21 @@ enum ProductsBuilder {
   }
 }
 //
+// ResourcesBuilder.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+@resultBuilder
+enum ResourcesBuilder {
+  static func buildPartialBlock(first: Resource) -> [Resource] {
+    [first]
+  }
+
+  static func buildPartialBlock(accumulated: [Resource], next: Resource) -> [Resource] {
+    accumulated + [next]
+  }
+}
+//
 // String.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -294,12 +329,33 @@ protocol SupportedPlatforms: Sequence where Element == SupportedPlatform {
   func appending(_ platforms: any SupportedPlatforms) -> Self
 }
 //
+// SwiftSettingsBuilder.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+@resultBuilder
+enum SwiftSettingsBuilder {
+  static func buildPartialBlock(first: SwiftSetting) -> [SwiftSetting] {
+    [first]
+  }
+
+  static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting) -> [SwiftSetting] {
+    accumulated + [next]
+  }
+}
+//
 // Target.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
 protocol Target: _Depending, Dependency, _Named {
   var targetType: TargetType { get }
+
+  @SwiftSettingsBuilder
+  var swiftSettings: [SwiftSetting] { get }
+
+  @ResourcesBuilder
+  var resources: [Resource] { get }
 }
 
 extension Target {
@@ -309,6 +365,14 @@ extension Target {
 
   var targetDepenency: _PackageDescription_TargetDependency {
     .target(name: self.name)
+  }
+
+  var swiftSettings: [SwiftSetting] {
+    []
+  }
+
+  var resources: [Resource] {
+    []
   }
 }
 //
@@ -423,17 +487,32 @@ extension _PackageDescription_Product {
 //
 
 extension _PackageDescription_Target {
-  static func entry(_ entry: Target) -> _PackageDescription_Target {
+  static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = []) -> _PackageDescription_Target {
     let dependencies = entry.dependencies.map(\.targetDepenency)
     switch entry.targetType {
     case .executable:
-      return .executableTarget(name: entry.name, dependencies: dependencies)
+      return .executableTarget(
+        name: entry.name,
+        dependencies: dependencies,
+        resources: entry.resources,
+        swiftSettings: swiftSettings + entry.swiftSettings
+      )
 
     case .regular:
-      return .target(name: entry.name, dependencies: dependencies)
+      return .target(
+        name: entry.name,
+        dependencies: dependencies,
+        resources: entry.resources,
+        swiftSettings: swiftSettings + entry.swiftSettings
+      )
 
     case .test:
-      return .testTarget(name: entry.name, dependencies: dependencies)
+      return .testTarget(
+        name: entry.name,
+        dependencies: dependencies,
+        resources: entry.resources,
+        swiftSettings: swiftSettings + entry.swiftSettings
+      )
     }
   }
 }
@@ -560,6 +639,18 @@ struct BushelArgs: Target {
 //
 
 struct BushelCore: Target {}
+//
+// BushelCoreWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+struct BushelCoreWax: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+  }
+}
 //
 // BushelData.swift
 // Copyright (c) 2023 BrightDigit.
@@ -721,6 +812,16 @@ struct BushelLibraryViews: Target {
   }
 }
 //
+// BushelLibraryWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelLibraryWax: Target {
+  var dependencies: any Dependencies {
+    BushelLibrary()
+  }
+}
+//
 // BushelLocalization.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -810,6 +911,19 @@ struct BushelMachineViews: Target {
     BushelViewsCore()
     BushelSessionUI()
     BushelMachineEnvironment()
+  }
+}
+//
+// BushelMachineWax.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Foundation
+
+struct BushelMachineWax: Target {
+  var dependencies: any Dependencies {
+    BushelCoreWax()
+    BushelMachine()
   }
 }
 //
@@ -908,11 +1022,13 @@ struct BushelSystem: Target {
   }
 }
 //
-// BushelTestsCore.swift
+// BushelTestUtlities.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
-struct BushelTestsCore: Target {}
+import Foundation
+
+struct BushelTestUtlities: Target {}
 //
 // BushelUT.swift
 // Copyright (c) 2023 BrightDigit.
@@ -997,7 +1113,21 @@ struct BushelWelcomeViews: Target {
 struct BushelCoreTests: TestTarget {
   var dependencies: any Dependencies {
     BushelCore()
-    BushelTestsCore()
+    BushelCoreWax()
+    BushelTestUtlities()
+  }
+}
+//
+// BushelLibraryTests.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelLibraryTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelLibrary()
+    BushelCoreWax()
+    BushelLibraryWax()
+    BushelTestUtlities()
   }
 }
 //
@@ -1008,7 +1138,8 @@ struct BushelCoreTests: TestTarget {
 struct BushelMachineTests: TestTarget {
   var dependencies: any Dependencies {
     BushelMachine()
-    BushelTestsCore()
+    BushelMachineWax()
+    BushelTestUtlities()
   }
 }
 //
@@ -1018,17 +1149,28 @@ struct BushelMachineTests: TestTarget {
 
 import PackageDescription
 
-let package = Package {
-  BushelCommand()
-  BushelLibraryApp()
-  BushelMachineApp()
-  BushelSettingsApp()
-  BushelApp()
-}
-testTargets: {
-  BushelCoreTests()
-  BushelMachineTests()
-}
+let package = Package(
+  entries: {
+    BushelCommand()
+    BushelLibraryApp()
+    BushelMachineApp()
+    BushelSettingsApp()
+    BushelApp()
+  },
+  testTargets: {
+    BushelCoreTests()
+    BushelLibraryTests()
+    BushelMachineTests()
+  },
+  swiftSettings: {
+    SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
+    SwiftSetting.enableUpcomingFeature("ConciseMagicFile")
+    // .enableUpcomingFeature("ExistentialAny"),
+    SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
+    SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
+    SwiftSetting.enableUpcomingFeature("StrictConcurrency")
+  }
+)
 .supportedPlatforms {
   WWDC2023()
 }

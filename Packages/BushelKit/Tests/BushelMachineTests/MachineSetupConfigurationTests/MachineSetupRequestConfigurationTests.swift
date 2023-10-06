@@ -4,8 +4,9 @@
 //
 
 import BushelCore
+import BushelCoreWax
 @testable import BushelMachine
-import BushelTestsCore
+import BushelMachineWax
 import XCTest
 
 internal final class MachineSetupRequestConfigurationTests: XCTestCase {
@@ -17,7 +18,7 @@ internal final class MachineSetupRequestConfigurationTests: XCTestCase {
   }
 
   internal func testActualMachineBuildRequest() {
-    let request = MachineBuildRequest(restoreImage: .sample)
+    let request = MachineBuildRequest(restoreImage: .sampleInstallerIdentifier)
     let sut = MachineSetupConfiguration(request: request)
 
     XCTAssertEqual(sut.libraryID, request.restoreImage?.libraryID)

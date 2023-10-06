@@ -19,10 +19,10 @@
     static let `default` = MetadataLabelProviderAction(closure: MetadataLabel.init)
     let closure: BushelCore.MetadataLabelProvider
     public func callAsFunction(
-      _ systemID: VMSystemID,
+      _ vmSystemID: VMSystemID,
       _ operatingSystemInfo: OperatingSystemInstalled
     ) -> MetadataLabel {
-      closure(systemID, operatingSystemInfo)
+      closure(vmSystemID, operatingSystemInfo)
     }
   }
 
@@ -46,6 +46,15 @@
     var metadataLabelProvider: MetadataLabelProviderAction {
       get { self[MetadataLabelProviderKey.self] }
       set { self[MetadataLabelProviderKey.self] = newValue }
+    }
+  }
+
+  @available(*, deprecated, message: "Use on Scene only.")
+  public extension View {
+    func metadataLabelProvider(
+      _ closure: @escaping BushelCore.MetadataLabelProvider
+    ) -> some View {
+      self.environment(\.metadataLabelProvider, .init(closure: closure))
     }
   }
 

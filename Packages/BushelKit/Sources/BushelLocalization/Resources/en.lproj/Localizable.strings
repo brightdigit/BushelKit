@@ -115,6 +115,9 @@
 /* Machine Details Operating System Label */
 "name" = "Name";
 
+/* Machine Details System Tab */
+"machine_details_system_tab" = "System";
+
 /* Machine Details Operating System Label */
 "machine_details_o_s" = "OS Name";
 
@@ -126,7 +129,6 @@
 
 /* Machine Details CPU Field Label */
 "machine_details_c_p_u_name" = "CPU";
-
 
 /* Machine Details Memory Size Field Label */
 "machine_details_memory_size" = "Size";
@@ -220,3 +222,27 @@
 
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
+
+/* Snapshot Machine Operation Restoring */
+"machine_operation_snapshot_restoring" = "Restoring";
+
+/* Snapshot Machine Operation Exporting */
+"machine_operation_snapshot_exporting" = "Exporting";
+
+/* Snapshot Machine Operation Exporting */
+"machine_operation_snapshot_saving" = "Saving";
+
+/* Snapshot Machine Confirm Delete Snapshot Yes */
+"machine_confirm_delete_yes" = "Yes, delete snapshot";
+
+/* Snapshot Machine Confirm Delete Snapshot Cancel */
+"machine_confirm_delete_cancel" = "Cancel";
+
+/* Snapshot Machine Confirm Restore Snapshot with new Snapshot */
+"machine_confirm_restore_new" = "Yes, save current state";
+
+/* Snapshot Machine Confirm Restore Snapshot with no new Snapshot */
+"machine_confirm_restore_overwrite" = "No, just overwrite current state";
+
+/* Snapshot Machine Confirm Restore Snapshot Cancel */
+"machine_confirm_restore_cancel" = "Cancel, don't restore this snapshot";

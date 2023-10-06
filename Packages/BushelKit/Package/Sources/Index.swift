@@ -5,17 +5,28 @@
 
 import PackageDescription
 
-let package = Package {
-  BushelCommand()
-  BushelLibraryApp()
-  BushelMachineApp()
-  BushelSettingsApp()
-  BushelApp()
-}
-testTargets: {
-  BushelCoreTests()
-  BushelMachineTests()
-}
+let package = Package(
+  entries: {
+    BushelCommand()
+    BushelLibraryApp()
+    BushelMachineApp()
+    BushelSettingsApp()
+    BushelApp()
+  },
+  testTargets: {
+    BushelCoreTests()
+    BushelLibraryTests()
+    BushelMachineTests()
+  },
+  swiftSettings: {
+    SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
+    SwiftSetting.enableUpcomingFeature("ConciseMagicFile")
+    // .enableUpcomingFeature("ExistentialAny"),
+    SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
+    SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
+    SwiftSetting.enableUpcomingFeature("StrictConcurrency")
+  }
+)
 .supportedPlatforms {
   WWDC2023()
 }
