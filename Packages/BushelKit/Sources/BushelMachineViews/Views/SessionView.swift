@@ -70,7 +70,7 @@
           }.disabled(!self.object.canRequestStop).tint(.primary)
         }
       })
-      .alert(
+      .confirmationDialog(
         "Shutdown Machine",
         isPresented: self.$object.presentConfirmCloseAlert
       ) {
@@ -93,6 +93,8 @@
         } label: {
           Text(.sessionTurnOff)
         }
+
+        Button("Cancel", role: .cancel) {}
       } message: {
         Text(.sessionShutdownAlert)
       }
@@ -103,7 +105,8 @@
             await self.object.loadURL(
               url,
               withContext: context,
-              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:), snapshotFactory: self.snapshotProvider,
+              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
+              snapshotFactory: self.snapshotProvider,
               using: systemManager,
               labelProvider: self.labelProvider.callAsFunction(_:_:)
             )
@@ -116,7 +119,8 @@
             await self.object.loadURL(
               url,
               withContext: context,
-              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:), snapshotFactory: self.snapshotProvider,
+              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
+              snapshotFactory: self.snapshotProvider,
               using: systemManager,
               labelProvider: self.labelProvider.callAsFunction(_:_:)
             )

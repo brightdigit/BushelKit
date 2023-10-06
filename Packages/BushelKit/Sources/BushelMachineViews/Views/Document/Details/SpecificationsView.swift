@@ -98,7 +98,8 @@
       ),
       configuration: .init(
         restoreImageFile: .init(imageID: .init()),
-        vmSystemID: "cheese", snapshotSystemID: .init(stringLiteral: ""),
+        vmSystemID: "cheese",
+        snapshotSystemID: .init(stringLiteral: ""),
         operatingSystemVersion: .init(majorVersion: 15, minorVersion: 0, patchVersion: 1),
         buildVersion: "test"
       )

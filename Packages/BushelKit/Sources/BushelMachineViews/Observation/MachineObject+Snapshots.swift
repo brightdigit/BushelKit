@@ -5,8 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelData
   import BushelMachine
+  import BushelMachineData
   import BushelViewsCore
   import Foundation
 
@@ -123,7 +123,10 @@
           try await self.machine.restoreSnapshot(snapshot, using: self.snapshotFactory)
           try await self.entry.synchronizeWith(machine, osInstalled: nil, using: self.modelContext)
         } catch {
-          Self.logger.error("Could not restore snapshot \(snapshot.id) to \(url, privacy: .public): \(error, privacy: .public)")
+          Self.logger.error(
+            // swiftlint:disable:next line_length
+            "Could not restore snapshot \(snapshot.id) to \(url, privacy: .public): \(error, privacy: .public)"
+          )
 
           self.error = assertionFailure(error: error) { error in
             Self.logger.critical("Unknown error: \(error)")
@@ -162,9 +165,9 @@
     func exportSnapshot(_ snapshot: Snapshot, to url: URL) async {
       do {
         try await self.machine.exportSnapshot(snapshot, to: url, using: self.snapshotFactory)
-        let bookmark = try BookmarkData.resolveURL(url, with: modelContext)
+
         _ = try MachineEntry(
-          bookmarkData: bookmark,
+          url: url,
           machine: machine,
           osInstalled: nil,
           restoreImageID: machine.configuration.restoreImageFile.imageID,

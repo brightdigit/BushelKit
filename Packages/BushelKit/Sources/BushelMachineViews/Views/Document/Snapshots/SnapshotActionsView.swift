@@ -8,30 +8,6 @@
   import SwiftUI
 
   struct SnapshotActionsView: View {
-    internal init(
-      snapshot: Snapshot,
-      deleting: @escaping (Snapshot) -> Void,
-      exporting: @escaping (Snapshot) -> Void,
-      restoring: @escaping (Snapshot) -> Void
-    ) {
-      self.snapshot = snapshot
-      self.deleting = deleting
-      self.exporting = exporting
-      self.restoring = restoring
-    }
-
-    internal init(
-      snapshot: Snapshot,
-      agent: SnapshotActionsAgent
-    ) {
-      self.init(
-        snapshot: snapshot,
-        deleting: agent.queueDeletingSnapshot(_:),
-        exporting: agent.queueExportingSnapshot(_:),
-        restoring: agent.queueRestoringSnapshot(_:)
-      )
-    }
-
     let snapshot: Snapshot
     let deleting: (Snapshot) -> Void
     let exporting: (Snapshot) -> Void
@@ -55,6 +31,30 @@
           Image(systemName: "trash.fill")
         }
       }
+    }
+
+    internal init(
+      snapshot: Snapshot,
+      deleting: @escaping (Snapshot) -> Void,
+      exporting: @escaping (Snapshot) -> Void,
+      restoring: @escaping (Snapshot) -> Void
+    ) {
+      self.snapshot = snapshot
+      self.deleting = deleting
+      self.exporting = exporting
+      self.restoring = restoring
+    }
+
+    internal init(
+      snapshot: Snapshot,
+      agent: SnapshotActionsAgent
+    ) {
+      self.init(
+        snapshot: snapshot,
+        deleting: agent.queueDeletingSnapshot(_:),
+        exporting: agent.queueExportingSnapshot(_:),
+        restoring: agent.queueRestoringSnapshot(_:)
+      )
     }
   }
 #endif
