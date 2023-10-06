@@ -23,7 +23,7 @@
         }
         self.restore(snapshot, url, .init())
       } label: {
-        Text("Yes, save current state")
+        Text(.machineConfirmRestoreNew)
       }
       Button {
         guard let url = self.url else {
@@ -33,14 +33,16 @@
         }
         self.restore(snapshot, url, nil)
       } label: {
-        Text("No, just overwrite current state")
+        Text(.machineConfirmRestoreOverwrite)
       }
-
-      Button {
-        self.cancel(snapshot)
-      } label: {
-        Text("Cancel, don't restore this snapshot")
-      }
+      Button(
+        role: .cancel,
+        action: {
+          self.cancel(snapshot)
+        }, label: {
+          Text(.machineConfirmRestoreCancel)
+        }
+      )
     }
 
     internal init(

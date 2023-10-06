@@ -35,6 +35,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
     case database
     case missingProperty(ObjectProperty)
 
+    // swiftlint:disable:next cyclomatic_complexity
     func errorDescription(fromError error: Error?) -> String {
       switch self {
       case .bookmarkError:
@@ -79,6 +80,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
       }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func isRecoverable(fromError _: Error?) -> Bool {
       switch self {
       case .bookmarkError:

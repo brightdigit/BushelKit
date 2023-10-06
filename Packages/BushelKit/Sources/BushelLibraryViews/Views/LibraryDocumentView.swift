@@ -25,35 +25,10 @@
 
     var body: some View {
       NavigationSplitView {
-        HStack {
-          Menu {
-            Button("Import File...") {
-              self.object.presentFileImporter = true
-            }
-            Button("Download From Hub...") {
-              self.object.presentHubModal = true
-            }
-          } label: {
-            Image(systemName: "plus")
-          }
-          .fileImporter(
-            isPresented: self.$object.presentFileImporter,
-            allowedContentTypes: librarySystemManager.allAllowedContentTypes,
-            onCompletion: self.object.onFileImporterCompleted
-          )
-          Button {
-            #warning("use queue and confirmation")
-            self.object.deleteSelectedItem()
-          } label: {
-            Image(systemName: "minus")
-          }
-          .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
-          .disabled(self.object.selectedItem == nil)
-
-          Spacer()
-        }
-        .buttonStyle(.plain)
-        .padding()
+        ToolbarView(
+          allAllowedContentTypes: librarySystemManager.allAllowedContentTypes,
+          object: self.object
+        )
         LibraryList(
           items: object.object?.library.items,
           selectedItem: self.$object.selectedItem,
@@ -116,7 +91,6 @@
           Text(error.localizedDescription)
         }
       )
-
       .navigationSplitViewStyle(.balanced)
       .navigationTitle(self.file?.url.lastPathComponent ?? "Untitled")
     }

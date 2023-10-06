@@ -231,3 +231,18 @@
 
 /* Snapshot Machine Operation Exporting */
 "machine_operation_snapshot_saving" = "Saving";
+
+/* Snapshot Machine Confirm Delete Snapshot Yes */
+"machine_confirm_delete_yes" = "Yes, delete snapshot";
+
+/* Snapshot Machine Confirm Delete Snapshot Cancel */
+"machine_confirm_delete_cancel" = "Cancel";
+
+/* Snapshot Machine Confirm Restore Snapshot with new Snapshot */
+"machine_confirm_restore_new" = "Yes, save current state";
+
+/* Snapshot Machine Confirm Restore Snapshot with no new Snapshot */
+"machine_confirm_restore_overwrite" = "No, just overwrite current state";
+
+/* Snapshot Machine Confirm Restore Snapshot Cancel */
+"machine_confirm_restore_cancel" = "Cancel, don't restore this snapshot";

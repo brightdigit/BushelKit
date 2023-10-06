@@ -12,10 +12,6 @@ import Foundation
 #endif
 
 public protocol Machine: LoggerCategorized {
-  func beginSnapshot() -> SnapshotPaths
-
-  func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference)
-
   var configuration: MachineConfiguration { get }
 
   /// Execution state of the virtual machine.
@@ -62,6 +58,10 @@ public protocol Machine: LoggerCategorized {
   /// - Returns: true if the request was made successfully.
   func requestStop() async throws
 
+  func beginSnapshot() -> SnapshotPaths
+
+  func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference)
+
   func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID
 
   @discardableResult
@@ -69,7 +69,7 @@ public protocol Machine: LoggerCategorized {
 }
 
 public extension Machine {
-  static var loggingCategory: LoggersType.LoggerCategory {
+  static var loggingCategory: Loggers.LoggerCategory {
     .machine
   }
 
@@ -82,8 +82,15 @@ public extension Machine {
   }
 
   @discardableResult
-  func createNewSnapshot(request: SnapshotRequest, options: SnapshotOptions, using provider: SnapshotProvider) async throws -> Snapshot {
-    guard let snapshotter = provider.snapshotter(withID: self.configuration.snapshotSystemID, for: type(of: self)) else {
+  func createNewSnapshot(
+    request: SnapshotRequest,
+    options: SnapshotOptions,
+    using provider: SnapshotProvider
+  ) async throws -> Snapshot {
+    guard let snapshotter = provider.snapshotter(
+      withID: self.configuration.snapshotSystemID,
+      for: type(of: self)
+    ) else {
       Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
       preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
     }
@@ -91,8 +98,14 @@ public extension Machine {
     return try await snapshotter.createNewSnapshot(of: self, request: request, options: options)
   }
 
-  func deleteSnapshot(_ snapshot: Snapshot, using provider: SnapshotProvider) throws {
-    guard let snapshotter = provider.snapshotter(withID: self.configuration.snapshotSystemID, for: type(of: self)) else {
+  func deleteSnapshot(
+    _ snapshot: Snapshot,
+    using provider: SnapshotProvider
+  ) throws {
+    guard let snapshotter = provider.snapshotter(
+      withID: self.configuration.snapshotSystemID,
+      for: type(of: self)
+    ) else {
       Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
       preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
     }
@@ -100,8 +113,14 @@ public extension Machine {
     return try snapshotter.deleteSnapshot(snapshot, from: self)
   }
 
-  func restoreSnapshot(_ snapshot: Snapshot, using provider: SnapshotProvider) async throws {
-    guard let snapshotter = provider.snapshotter(withID: self.configuration.snapshotSystemID, for: type(of: self)) else {
+  func restoreSnapshot(
+    _ snapshot: Snapshot,
+    using provider: SnapshotProvider
+  ) async throws {
+    guard let snapshotter = provider.snapshotter(
+      withID: self.configuration.snapshotSystemID,
+      for: type(of: self)
+    ) else {
       Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
       preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
     }
@@ -109,8 +128,15 @@ public extension Machine {
     return try await snapshotter.restoreSnapshot(snapshot, to: self)
   }
 
-  func exportSnapshot(_ snapshot: Snapshot, to url: URL, using provider: SnapshotProvider) async throws {
-    guard let snapshotter = provider.snapshotter(withID: self.configuration.snapshotSystemID, for: type(of: self)) else {
+  func exportSnapshot(
+    _ snapshot: Snapshot,
+    to url: URL,
+    using provider: SnapshotProvider
+  ) async throws {
+    guard let snapshotter = provider.snapshotter(
+      withID: self.configuration.snapshotSystemID,
+      for: type(of: self)
+    ) else {
       Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
       preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
     }

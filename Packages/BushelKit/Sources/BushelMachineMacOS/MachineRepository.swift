@@ -19,14 +19,17 @@
 
     static let shared = MachineRepository()
 
+    var storage = [URL: VZMachine]()
+
     private init() {
       assert(!Self.alreadyCreated)
       Self.alreadyCreated = true
     }
 
-    var storage = [URL: VZMachine]()
-
-    internal func machineAt(_ url: URL, withConfiguration configuration: MachineConfiguration) async throws -> VZMachine {
+    internal func machineAt(
+      _ url: URL,
+      withConfiguration configuration: MachineConfiguration
+    ) async throws -> VZMachine {
       Self.logger.debug("finding machine at \(url)")
       if let machine = storage[url] {
         Self.logger.debug("found at \(url)")

@@ -15,7 +15,9 @@
     let cancel: (Snapshot?) -> Void
 
     var body: some View {
-      Button {
+      Button(
+        role: .destructive
+      ) {
         guard let url = self.url else {
           assertionFailure("Missing url for delete snapshot operation.")
           Self.logger.critical("Missing url for delete snapshot operation.")
@@ -23,13 +25,17 @@
         }
         self.delete(snapshot, url)
       } label: {
-        Text("Yes")
+        Text(.machineConfirmDeleteYes)
       }
-      Button {
-        self.cancel(snapshot)
-      } label: {
-        Text("No")
-      }
+      Button(
+        role: .cancel,
+        action: {
+          self.cancel(snapshot)
+        },
+        label: {
+          Text(.machineConfirmDeleteCancel)
+        }
+      )
     }
 
     internal init(

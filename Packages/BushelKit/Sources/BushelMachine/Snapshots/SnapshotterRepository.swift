@@ -6,6 +6,8 @@
 import BushelCore
 
 public struct SnapshotterRepository: SnapshotProvider {
+  private let dictionary: [SnapshotterID: any SnapshotterFactory]
+
   public init(factories: [any SnapshotterFactory] = []) {
     let uniqueKeysWithValues = factories.map {
       (type(of: $0).systemID, $0)
@@ -18,8 +20,10 @@ public struct SnapshotterRepository: SnapshotProvider {
     self.dictionary = dictionary
   }
 
-  private let dictionary: [SnapshotterID: any SnapshotterFactory]
-  public func snapshotter<MachineType: Machine>(withID id: SnapshotterID, for machineType: MachineType.Type) -> (any Snapshotter<MachineType>)? {
+  public func snapshotter<MachineType: Machine>(
+    withID id: SnapshotterID,
+    for machineType: MachineType.Type
+  ) -> (any Snapshotter<MachineType>)? {
     guard let anySnapshotter = dictionary[id] else {
       return nil
     }

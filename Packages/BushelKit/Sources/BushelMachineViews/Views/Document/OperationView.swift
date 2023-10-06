@@ -24,6 +24,16 @@
   }
 
   #Preview {
-    OperationView(operation: .exportingSnapshot(.init(name: "Hello", id: .init(), snapshotterID: "mock", createdAt: .init(), fileLength: .init())))
+    OperationView(
+      operation: .exportingSnapshot(
+        .init(
+          name: "Hello",
+          id: .init(),
+          snapshotterID: "mock",
+          createdAt: .init(),
+          fileLength: .init()
+        )
+      )
+    )
   }
 #endif

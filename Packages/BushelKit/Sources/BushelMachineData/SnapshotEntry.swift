@@ -73,6 +73,7 @@
       self.operatingSystemVersionString ?? ""
     }
 
+    // swiftlint:disable:next function_default_parameter_at_end
     convenience init(
       _ snapshot: Snapshot,
       machine: MachineEntry,
@@ -96,6 +97,7 @@
 
     #warning("Remove @MainActor")
     @MainActor
+    // swiftlint:disable:next function_default_parameter_at_end
     func syncronizeSnapshot(
       _ snapshot: Snapshot,
       machine: MachineEntry,

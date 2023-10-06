@@ -7,6 +7,14 @@ import BushelCore
 import Foundation
 
 public struct Snapshot: Codable, Identifiable {
+  public var name: String
+  public let id: UUID
+  public let snapshotterID: SnapshotterID
+  public let createdAt: Date
+  public let fileLength: Int
+  public var notes: String
+  public var operatingSystemVersion: OperatingSystemVersion?
+  public var buildVersion: String?
   public init(
     name: String,
     id: UUID,
@@ -26,13 +34,4 @@ public struct Snapshot: Codable, Identifiable {
     self.operatingSystemVersion = operatingSystemVersion
     self.buildVersion = buildVersion
   }
-
-  public var name: String
-  public let id: UUID
-  public let snapshotterID: SnapshotterID
-  public let createdAt: Date
-  public let fileLength: Int
-  public var notes: String
-  public var operatingSystemVersion: OperatingSystemVersion?
-  public var buildVersion: String?
 }
