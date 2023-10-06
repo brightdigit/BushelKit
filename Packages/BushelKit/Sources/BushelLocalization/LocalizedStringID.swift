@@ -78,6 +78,11 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case machineOperationSnapshotRestoring
   case machineOperationSnapshotExporting
   case machineOperationSnapshotSaving
+  case machineConfirmDeleteYes
+  case machineConfirmRestoreOverwrite
+  case machineConfirmDeleteCancel
+  case machineConfirmRestoreCancel
+  case machineConfirmRestoreNew
 
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

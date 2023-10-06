@@ -78,13 +78,13 @@
     weak var parent: MachineObjectParent?
 
     var error: MachineError? {
-      set {
-        assert(self.parent != nil)
-        self.parent?.error = newValue
-      }
       get {
         assert(self.parent != nil)
         return self.parent?.error
+      }
+      set {
+        assert(self.parent != nil)
+        self.parent?.error = newValue
       }
     }
 

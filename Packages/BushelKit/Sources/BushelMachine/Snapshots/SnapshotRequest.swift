@@ -6,11 +6,10 @@
 import Foundation
 
 public struct SnapshotRequest {
+  public let name: String
+  public let notes: String
   public init(name: String = "", notes: String = "") {
     self.name = name
     self.notes = notes
   }
-
-  public let name: String
-  public let notes: String
 }

@@ -5,10 +5,19 @@
 
 import Foundation
 
-public struct SnapshotterID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, CustomStringConvertible {
+public struct SnapshotterID: ExpressibleByStringInterpolation,
+  Codable,
+  Hashable,
+  RawRepresentable,
+  CustomStringConvertible {
   public typealias StringLiteralType = String
 
   public let rawValue: String
+
+  public var description: String {
+    rawValue
+  }
+
   public init(rawValue value: String) {
     rawValue = value
   }
@@ -25,9 +34,5 @@ public struct SnapshotterID: ExpressibleByStringInterpolation, Codable, Hashable
   public func encode(to encoder: Encoder) throws {
     var container = encoder.singleValueContainer()
     try container.encode(rawValue)
-  }
-
-  public var description: String {
-    rawValue
   }
 }

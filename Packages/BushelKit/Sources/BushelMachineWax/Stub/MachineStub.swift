@@ -57,10 +57,12 @@ public struct MachineStub: Machine {
     true
   }
 
+  // swiftlint:disable:next unavailable_function
   public func beginSnapshot() -> BushelMachine.SnapshotPaths {
     fatalError("Not implemented")
   }
 
+  // swiftlint:disable:next unavailable_function
   public func finishedWithSnapshot(_: BushelMachine.Snapshot, by _: BushelMachine.SnapshotDifference) {
     fatalError("Not implemented")
   }
