@@ -5,7 +5,6 @@
 
 #if canImport(SwiftUI) && canImport(Virtualization)
   import BushelLogging
-  import BushelViewsCore
   import Foundation
   import SwiftUI
   import Virtualization
@@ -14,7 +13,13 @@
   #warning("why not to print the frame and other settings of VZVirtualMachineView")
   struct VirtualizationMachineView: NSViewRepresentable, LoggerCategorized {
     typealias NSViewType = VZVirtualMachineView
+
+    static var loggingCategory: BushelLogging.Loggers.Category {
+      .view
+    }
+
     let virtualMachine: VZVirtualMachine
+
     func makeNSView(context _: Context) -> VZVirtualMachineView {
       let view = VZVirtualMachineView(
         frame: .init(origin: .zero, size: .init(width: 1920, height: 1080))
