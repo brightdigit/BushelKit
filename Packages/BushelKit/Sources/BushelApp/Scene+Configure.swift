@@ -7,8 +7,12 @@
 
   import BushelCore
   import BushelMachine
+  import BushelOnboardingCore
+  import BushelOnboardingViews
   import BushelSystem
+  import BushelViewsCore
   import SwiftUI
+  import TipKit
 
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {
@@ -40,9 +44,16 @@
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
-          .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
           .registerSystems(configuration.systems)
       #endif
+    }
+  }
+
+  public extension Scene {
+    func onboardingWindow<SingleWindowViewType: SingleWindowView>(
+      _ view: SingleWindowViewType.Type
+    ) -> some Scene where SingleWindowViewType.Value == OnboardingWindowValue {
+      self.environment(\.onboardingWindow, view.Value.default)
     }
   }
 
@@ -62,7 +73,8 @@
       _ configuration: some ApplicationConfiguration
     ) -> some Scene {
       #if os(macOS)
-        self.modelContainer(configuration.modelContainer)
+        return self.modelContainer(configuration.modelContainer)
+          .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
@@ -70,13 +82,14 @@
           .openMachine(type(of: configuration).MachineFileType)
           .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
           .snapshotProvider([FileVersionSnapshotterFactory()])
+
           .registerSystems(configuration.systems)
       #else
-        self.modelContainer(configuration.modelContainer)
+        return self.modelContainer(configuration.modelContainer)
+          .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
-          .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
           .registerSystems(configuration.systems)
       #endif
     }

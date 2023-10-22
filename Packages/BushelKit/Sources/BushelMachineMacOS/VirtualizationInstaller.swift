@@ -27,6 +27,7 @@
 
     @MainActor
     func build() async throws {
+      #warning("log the completionHandler before calling continuation")
       try await withCheckedThrowingContinuation { continuation in
         Task { @MainActor in
           installer.install(completionHandler: continuation.resume(with:))
@@ -47,6 +48,7 @@
       return id
     }
 
+    #warning("let's log here and observation is being removed")
     func removeObserver(_ id: UUID) -> Bool {
       self.observations.removeValue(forKey: id) != nil
     }

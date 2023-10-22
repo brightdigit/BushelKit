@@ -11,6 +11,7 @@
   struct ToolbarView: View {
     let url: URL?
     let canSaveSnapshot: Bool
+    let canStart: Bool
     let saveSnapshot: (SnapshotRequest) -> Void
 
     @Environment(\.openWindow) var openWindow
@@ -28,8 +29,13 @@
           openWindow(value: SessionRequest(url: url))
         }
       } label: {
-        Image(systemName: "play")
-        Text(.startMachine)
+        if canStart {
+          Image(systemName: "play")
+          Text(.startMachine)
+        } else {
+          Image(systemName: "display")
+          Text(.openMachine)
+        }
       }
       .disabled(self.url == nil)
     }

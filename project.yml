@@ -2,6 +2,7 @@ name: Bushel
 options:
   preGenCommand: ./Scripts/package.sh
   bundleIdPrefix: com.brightdigit
+  developmentLanguage: en
   deploymentTarget:
     macOS: 14.0
 settings:

@@ -12,6 +12,7 @@
   import BushelMachine
   import Virtualization
 
+  #warning("logging-note: thinking about how to log these information")
   extension VZVirtioBlockDeviceConfiguration {
     convenience init(
       specification: MachineStorageSpecification,

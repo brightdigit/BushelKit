@@ -39,6 +39,7 @@
 
     deinit {
       do {
+        #warning("logging-note: why not to log this too?")
         try self.library.save()
       } catch {
         assertionFailure(error: error)

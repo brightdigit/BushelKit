@@ -11,5 +11,6 @@ struct BushelViews: Target {
     BushelWelcomeViews()
     BushelHubViews()
     BushelMarketViews()
+    BushelOnboardingViews()
   }
 }

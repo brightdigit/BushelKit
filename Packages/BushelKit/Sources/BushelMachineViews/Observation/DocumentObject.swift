@@ -52,6 +52,7 @@
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider
     ) {
+      #warning("logging-note: would url ever be nil? if so to log useful message here")
       guard let url else {
         return
       }
@@ -100,6 +101,7 @@
       }
     }
 
+    #warning("logging-note: I am afraid the error is not handled by UI, can we log meaning error here too.")
     func beginSavingSnapshot(_ request: SnapshotRequest) {
       guard let url = self.url else {
         let error = MachineError.missingProperty(.url)

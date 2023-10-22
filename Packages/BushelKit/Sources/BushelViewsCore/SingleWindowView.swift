@@ -4,12 +4,9 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelCore
   import Foundation
   import SwiftUI
-
-  public protocol DefaultableViewValue: Codable, Hashable {
-    static var `default`: Self { get }
-  }
 
   public struct SingleWindowViewValue<ViewType: SingleWindowView>: DefaultableViewValue {
     public static var `default`: Self {

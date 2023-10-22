@@ -13,6 +13,9 @@
 /* Button for starting VM */
 "start_machine" = "Start Machine";
 
+/* Open Window for VM */
+"open_machine" = "Open Machine";
+
 /* Button for taking snapshots of VM */
 "snapshot_machine" = "Take Snapshot";
 
@@ -246,3 +249,54 @@
 
 /* Snapshot Machine Confirm Restore Snapshot Cancel */
 "machine_confirm_restore_cancel" = "Cancel, don't restore this snapshot";
+
+/* Onboarding done Message */
+"onboarding_done_button" = "Let's Go";
+
+/* Onboarding done Title */
+"onboarding_done_title" = "Title";
+
+/* Onboarding done Message */
+"onboarding_done_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
+
+/* hub */
+"onboarding_hub_title" = "Title";
+
+/* Onboarding done Title */
+"onboarding_hub_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
+
+/* Onboarding library Title */
+"onboarding_library_title" = "Start with a Library";
+
+/* Onboarding done Message */
+"onboarding_library_message" = "A **Bushel Library** is used to store various _restore images_ so you can easily install diffferent versions of **macOS** on your **virtual machine**.";
+
+/* Onboarding machine Title */
+"onboarding_machine_title" = "Build Your _Virtual_ Machine";
+
+/* Onboarding done Message */
+"onboarding_machine_message" = "Once you've imported an image into your first **library**, you can create a **machine** and install that version of **macOS**.";
+
+/* Onboarding snapshots Title */
+"onboarding_snapshots_title" = "Snapshot and Rewind";
+
+/* Onboarding done Message */
+"onboarding_snapshots_message" = "Take snapshots to try new things or just in case you break something, you can always rewind, restore and go back.";
+
+/* Onboarding welcome Title */
+"onboarding_welcome_title" = "Welcome to Bushel";
+
+/* Onboarding done Message */
+"onboarding_welcome_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
+
+/* Onboarding Next */
+"onboarding_next_button" = "Continue";
+
+/* Library Tip Title */
+"tip_library_title" = "Store your OS restore images";
+
+/* Library Tip Message */
+"tip_library_message" = "Before building a new virtual machine, let's create a library to store different restore images for each Operating System version.";
+
+/* Library Delete Image Confirmation */
+"library_delete_confirmation" = "Are you sure you want to delete %@?";

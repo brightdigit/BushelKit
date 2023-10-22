@@ -21,6 +21,7 @@
         .appendingPathComponent(specification.id.uuidString)
         .appendingPathExtension("img")
       if createDisk {
+        #warning("logging-note: this is like a hidden behavior, let's log this operations")
         try fileManager
           .createFile(
             atPath: diskImageURL.path,

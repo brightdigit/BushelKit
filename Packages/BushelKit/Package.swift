@@ -674,6 +674,17 @@ struct BushelDataCore: Target {
   }
 }
 //
+// BushelEnvironmentCore.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelEnvironmentCore: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+  }
+}
+//
 // BushelFactory.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -978,6 +989,44 @@ struct BushelMarketViews: Target {
   }
 }
 //
+// BushelOnboardingCore.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelOnboardingCore: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+  }
+}
+//
+// BushelOnboardingEnvironment.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelOnboardingEnvironment: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelEnvironmentCore()
+    BushelOnboardingCore()
+  }
+}
+//
+// BushelOnboardingViews.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelOnboardingViews: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelLocalization()
+    BushelViewsCore()
+    BushelOnboardingCore()
+  }
+}
+//
 // BushelProgressUI.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -1002,6 +1051,7 @@ struct BushelSettingsViews: Target {
     BushelData()
     BushelLocalization()
     BushelMarketEnvironment()
+    BushelOnboardingEnvironment()
   }
 }
 //
@@ -1052,6 +1102,7 @@ struct BushelViews: Target {
     BushelWelcomeViews()
     BushelHubViews()
     BushelMarketViews()
+    BushelOnboardingViews()
   }
 }
 //

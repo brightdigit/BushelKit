@@ -39,13 +39,24 @@ build spm macos:
     - swift build
     - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0,name=iPhone 14"
 
-build spm linux 5.9.0:
+build spm linux 5.9.0-nightly:
   stage: build
   only:
     - merge_requests
     - main
     - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
   image: swiftlang/swift:nightly-5.9-jammy
+  script:
+    - cd Packages/BushelKit
+    - swift build
+    - swift test
+build spm linux 5.9.0:
+  stage: build
+  only:
+    - merge_requests
+    - main
+    - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
+  image: swift:5.9.0-jammy
   script:
     - cd Packages/BushelKit
     - swift build

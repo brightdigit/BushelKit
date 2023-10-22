@@ -13,6 +13,7 @@ import BushelMachine
       return .init(machinePathURL: url)
     }
 
+    #warning("logging-note: I think we should log every step here")
     func finishedWithSnapshot(_ snapshot: BushelMachine.Snapshot, by difference: SnapshotDifference) {
       url.stopAccessingSecurityScopedResource()
       switch difference {
@@ -22,10 +23,13 @@ import BushelMachine
       case .remove:
         let index = self.configuration.snapshots.firstIndex { $0.id == snapshot.id }
         guard let index else {
+          #warning("logging-note: should we have descriptive failure instead?")
           assertionFailure()
           return
         }
         self.configuration.snapshots.remove(at: index)
+
+        #warning("logging-note: any logging recommended for these two ignored cases?")
 
       case .restored:
         break

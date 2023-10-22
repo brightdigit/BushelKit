@@ -17,6 +17,7 @@ public class LibrarySystemManager: LibrarySystemManaging, LoggerCategorized {
     implementations.values.flatMap(\.allowedContentTypes)
   }
 
+  #warning("logging-note: anything important here to note?")
   public init(_ implementations: [any LibrarySystem], fileTypeBasedOnURL: @escaping (URL) -> FileType?) {
     self.implementations = .init(
       uniqueKeysWithValues:

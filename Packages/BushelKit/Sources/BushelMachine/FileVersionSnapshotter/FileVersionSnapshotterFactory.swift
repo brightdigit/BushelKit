@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if !os(Linux)
+#if os(macOS)
   import BushelCore
   import Foundation
 

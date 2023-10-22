@@ -45,6 +45,7 @@
       self.restoring = restoring
     }
 
+    #warning("logging-note: should we log the call of queue methods of agent here?")
     internal init(
       snapshot: Snapshot,
       agent: SnapshotActionsAgent

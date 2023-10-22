@@ -10,13 +10,16 @@
     static func version(
       itemAt url: URL,
       forPersistentIdentifierData identifierData: Data
-    ) throws -> NSFileVersion? {
+    ) throws -> NSFileVersion {
       guard let persistentIdentifier = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(
         identifierData
       ) else {
-        throw NSError()
+        throw SnapshotError.unarchiveError(identifierData)
       }
-      return self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier)
+      guard let version = self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier) else {
+        throw SnapshotError.missingSnapshotVersionAt(url, forPersistentIdentifier: persistentIdentifier)
+      }
+      return version
     }
 
     static func version(
@@ -28,13 +31,10 @@
         .appendingPathExtension("bshsnapshot")
       let identifierData = try Data(contentsOf: identifierDataFileURL)
 
-      guard let fileVersion = try Self.version(
+      return try Self.version(
         itemAt: paths.snapshottingSourceURL,
         forPersistentIdentifierData: identifierData
-      ) else {
-        throw NSError()
-      }
-      return fileVersion
+      )
     }
   }
 

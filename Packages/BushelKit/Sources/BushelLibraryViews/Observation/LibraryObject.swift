@@ -46,6 +46,7 @@
 
       defer {
         do {
+          #warning("logging-note: a meaningful mesasge here")
           try bookmarkData.update(using: modelContext)
         } catch {
           assertionFailure(error: error)
@@ -72,6 +73,7 @@
       }
 
       do {
+        #warning("logging-note: a meaningful mesasge here")
         try modelContext.save()
       } catch {
         throw LibraryError.fromDatabaseError(error)
@@ -80,6 +82,7 @@
 
     func bindableImage(withID id: UUID?) -> Bindable<LibraryImageObject>? {
       guard let id else {
+        #warning("logging-note: a meaningful mesasge here like below guard statements")
         return nil
       }
       guard let index = library.items.firstIndex(where: { $0.id == id }) else {

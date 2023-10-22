@@ -14,6 +14,7 @@ public protocol InitializablePackage: CodablePackage {
 }
 
 public extension InitializablePackage {
+  #warning("logging-note: let's log what is going on here")
   #warning("Might want to add parameters for creating data and creating directory.")
   @discardableResult
   static func createAt(_ fileURL: URL) throws -> Self {

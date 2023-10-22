@@ -30,6 +30,20 @@
     var presentFileImporter = false
     var presentFileExporter = false
     var presentHubModal = false
+    var presentDeleteImageConfirmation = false
+    var queuedRemovalSelectedImageID: LibraryImageFile.ID?
+
+    var queuedRemovalSelectedImage: LibraryImageFile? {
+      guard let queuedRemovalSelectedImageID else {
+        return nil
+      }
+      let file = object?.library.items.first(where: {
+        $0.id == queuedRemovalSelectedImageID
+      })
+      assert(file != nil)
+      return file
+    }
+
     var presentErrorAlert: Bool {
       get {
         self.error != nil
@@ -145,6 +159,7 @@
       }
     }
 
+    #warning("logging-note: this called from onChange, so it would be better to log the call here")
     func loadURL(
       _ url: URL?,
       withContext modelContext: ModelContext,
@@ -171,7 +186,28 @@
       }
     }
 
-    func deleteSelectedItem() {
+    #warning("logging-note: all following assertions in this file needs a meaningful message")
+    func queueRemovalSelectedItem() {
+      guard let selectedItem else {
+        assertionFailure()
+        return
+      }
+
+      queuedRemovalSelectedImageID = selectedItem
+      self.presentDeleteImageConfirmation = true
+    }
+
+    func cancelRemovalSelectedItem(withID id: UUID) {
+      guard let selectedItem else {
+        assertionFailure()
+        return
+      }
+
+      assert(selectedItem == id)
+      self.queuedRemovalSelectedImageID = nil
+    }
+
+    func deleteSelectedItem(withID id: UUID) {
       guard let selectedItem else {
         assertionFailure()
         return
@@ -182,7 +218,9 @@
         return
       }
 
+      assert(selectedItem == id)
       do {
+        #warning("logging-note: we need to log this operation too, it is called by confirmationDialog")
         try object.deleteImage(withID: selectedItem)
       } catch {
         Self.logger.error("Unable to delete image: \(error)")
@@ -190,15 +228,18 @@
           Self.logger.critical("Unknown error: \(error)")
         }
       }
+      self.queuedRemovalSelectedImageID = nil
       self.selectedItem = nil
     }
 
     func onSelectionChange() {
       guard let object else {
+        #warning("logging-note: would logging here be useful")
         return
       }
 
       do {
+        #warning("logging-note: we need to log this operation too, it is called by confirmationDialog")
         try object.save()
       } catch {
         Self.logger.error("Unable to save library: \(error)")
@@ -211,15 +252,18 @@
     // swiftlint:disable:next cyclomatic_complexity
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {
+        #warning("logging-note: would logging here be useful")
         return
       }
 
       guard let newValue else {
+        #warning("logging-note: would logging here be useful")
         presentFileExporter = true
         return
       }
 
       guard object?.matchesURL(newValue) != true else {
+        #warning("logging-note: would logging here be useful")
         return
       }
 

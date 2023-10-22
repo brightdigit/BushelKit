@@ -6,13 +6,31 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  public struct IdentifiableView: Identifiable {
+  struct IdentifiableViewModifier: ViewModifier {
+    let id: UUID
+
+    func body(content: Content) -> some View {
+      IdentifiableView(content, id: id)
+    }
+  }
+
+  public struct IdentifiableView: Identifiable, View {
     let content: any View
     public let id: UUID
+
+    public var body: some View {
+      AnyView(content)
+    }
 
     internal init(_ content: any View, id: UUID = .init()) {
       self.content = content
       self.id = id
+    }
+  }
+
+  extension View {
+    func id(_ id: UUID) -> some View {
+      self.modifier(IdentifiableViewModifier(id: id))
     }
   }
 #endif

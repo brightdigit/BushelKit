@@ -65,6 +65,7 @@
       return memorySize
     }
 
+    #warning("logging-note: thinking about how to log these information")
     func configurationAt(
       _ machineDirectory: URL,
       withSpecifications specifications: MachineConfiguration,

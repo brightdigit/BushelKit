@@ -25,6 +25,7 @@ public struct SnapshotterRepository: SnapshotProvider {
     for machineType: MachineType.Type
   ) -> (any Snapshotter<MachineType>)? {
     guard let anySnapshotter = dictionary[id] else {
+      #warning("logging-note: should we log here?")
       return nil
     }
 
