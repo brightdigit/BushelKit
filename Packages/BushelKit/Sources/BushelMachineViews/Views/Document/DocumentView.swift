@@ -23,6 +23,8 @@
 
     @Binding var machineFile: MachineFile?
 
+    #warning("maybe to log changes of onChange")
+    #warning("make sure onAppear is printed so we be aware of what the machineFile.url was")
     var body: some View {
       TabView {
         DetailsView(machineObject: object.machineObject)
@@ -38,12 +40,15 @@
         ToolbarView(
           url: self.object.url,
           canSaveSnapshot: self.object.canSaveSnapshot,
+          canStart: self.object.machineObject?.canStart ?? false,
           saveSnapshot: self.object.beginSavingSnapshot
         )
       }
+      // here
       .onChange(of: self.machineFile?.url) {
         self.beginLoadingURL($1)
       }
+      // here
       .onAppear {
         self.beginLoadingURL(machineFile?.url)
       }

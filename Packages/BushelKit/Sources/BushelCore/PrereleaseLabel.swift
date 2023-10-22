@@ -25,6 +25,7 @@ public extension PrereleaseLabel {
     guard
       let label = dictionary[Keys.label.rawValue] as? String,
       let base = dictionary[Keys.base.rawValue] as? Int else {
+      #warning("shendy-note: let's have a message here for what was expected")
       assertionFailure()
       return nil
     }

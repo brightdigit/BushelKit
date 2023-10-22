@@ -36,6 +36,7 @@
         Button("Cancel") {
           dismiss()
         }
+        #warning("logging-note: to log a chosen image")
         Button("Choose") {
           self.resultingSelectedImageID = currentSelectedImageID
           dismiss()

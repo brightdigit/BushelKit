@@ -21,6 +21,7 @@
       openPanel.isExtensionHidden = true
       openPanel.begin { response in
         guard let fileURL = openPanel.url, response == .OK else {
+          #warning("logging-note: should we log something here?")
           return
         }
         let libraryFile = DocumentFile<FileType>(url: fileURL)

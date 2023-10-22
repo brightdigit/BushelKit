@@ -3,7 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if !os(Linux)
+#if os(macOS)
   import BushelCore
   import Foundation
 
@@ -22,6 +22,7 @@
       self.init(fileManager: fileManager)
     }
 
+    #warning("logging-note: any useful logging here")
     func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
       let paths = machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
@@ -47,17 +48,30 @@
       let snapshotFileNameKey = [snapshot.id.uuidString, "bshsnapshot"].joined(separator: ".")
 
       guard let identifierData = oldSnapshots[snapshotFileNameKey] else {
-        throw NSError()
+        throw SnapshotError.missingSnapshotFile(snapshot.id)
       }
 
-      guard let fileVersion = try NSFileVersion.version(
-        itemAt: paths.snapshottingSourceURL,
-        forPersistentIdentifierData: identifierData
-      ) else {
-        throw NSError()
+      let fileVersion = try Result {
+        try NSFileVersion.version(
+          itemAt: paths.snapshottingSourceURL,
+          forPersistentIdentifierData: identifierData
+        )
       }
-      try fileVersion.replaceItem(at: paths.snapshottingSourceURL)
-      try self.fileManager.write(oldSnapshots, to: paths.snapshotCollectionURL)
+      .mapError(
+        SnapshotError.inner(error:)
+      )
+      .unwrap(
+        or:
+        SnapshotError.missingSnapshotVersionID(snapshot.id)
+      )
+      .get()
+
+      do {
+        try fileVersion.replaceItem(at: paths.snapshottingSourceURL)
+        try self.fileManager.write(oldSnapshots, to: paths.snapshotCollectionURL)
+      } catch {
+        throw SnapshotError.inner(error: error)
+      }
       machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 
@@ -68,6 +82,7 @@
       machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
+    #warning("logging-note: I think we should log every step here")
     @discardableResult
     func createNewSnapshot(
       of machine: MachineType,

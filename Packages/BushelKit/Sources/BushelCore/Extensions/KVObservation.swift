@@ -8,6 +8,7 @@
 
   public protocol KVObservation: AnyObject {}
 
+  #warning("logging-note: what useful logging to do in this file?")
   extension NSObject {
     public static func getAllPropertyKeys() -> [String] {
       Self.getAllPropertyKeys(of: Self.self)

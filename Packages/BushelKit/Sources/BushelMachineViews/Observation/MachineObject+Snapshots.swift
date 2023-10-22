@@ -57,11 +57,11 @@
           Self.logger.error("Missing url: \(error)")
           throw error
         }
-        if snapshot.id != confirmingRestoreSnapshot?.id {
-          let confirmingRestoreSnapshotIDString = self.confirmingRestoreSnapshot?.id.uuidString ?? "null"
-          assertionFailure("\(snapshot.id) != \(confirmingRestoreSnapshotIDString)")
+        if snapshot.id != confirmingRemovingSnapshot?.id {
+          let confirmingRemovingSnapshotIDString = self.confirmingRemovingSnapshot?.id.uuidString ?? "null"
+          assertionFailure("\(snapshot.id) != \(confirmingRemovingSnapshotIDString)")
           Self.logger.error(
-            "Not matching snapshot ids: \(snapshot.id) != \(confirmingRestoreSnapshotIDString)"
+            "Not matching snapshot ids: \(snapshot.id) != \(confirmingRemovingSnapshotIDString)"
           )
         }
         try machine.deleteSnapshot(snapshot, using: self.snapshotFactory)
@@ -75,11 +75,13 @@
           Self.logger.critical("Unknown error: \(error)")
         }
       }
+      #warning("logging-note: should we log here?")
       self.refreshSnapshots()
       self.machine = machine
       self.confirmingRemovingSnapshot = nil
     }
 
+    #warning("logging-note: should we log here?")
     func cancelDeleteSnapshot(_ snapshot: Snapshot?) {
       assert(snapshot?.id == confirmingRemovingSnapshot?.id)
       self.confirmingRemovingSnapshot = nil

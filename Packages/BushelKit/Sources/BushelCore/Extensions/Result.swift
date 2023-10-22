@@ -13,4 +13,14 @@ public extension Result {
       self = .failure(error)
     }
   }
+
+  func unwrap<NewSuccess>(or failure: Failure) -> Result<NewSuccess, Failure> where Success == NewSuccess? {
+    self.flatMap { value in
+      if let value {
+        .success(value)
+      } else {
+        .failure(failure)
+      }
+    }
+  }
 }

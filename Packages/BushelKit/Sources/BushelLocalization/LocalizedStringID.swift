@@ -16,6 +16,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   // swiftlint:disable:next identifier_name
   case ok
   case startMachine
+  case openMachine
   case snapshotMachine
   case buildMachine
   case downloading
@@ -83,6 +84,23 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case machineConfirmDeleteCancel
   case machineConfirmRestoreCancel
   case machineConfirmRestoreNew
+  case onboardingDoneMessage
+  case onboardingMachineTitle
+  case onboardingHubTitle
+  case onboardingWelcomeMessage
+  case onboardingMachineMessage
+  case onboardingHubMessage
+  case onboardingSnapshotsMessage
+  case onboardingSnapshotsTitle
+  case onboardingLibraryTitle
+  case onboardingLibraryMessage
+  case onboardingDoneTitle
+  case onboardingWelcomeTitle
+  case onboardingDoneButton
+  case onboardingNextButton
+  case tipLibraryTitle
+  case tipLibraryMessage
+  case libraryDeleteConfirmation
 
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

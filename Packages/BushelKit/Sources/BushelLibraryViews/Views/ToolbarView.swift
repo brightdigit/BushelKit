@@ -29,10 +29,13 @@
           onCompletion: self.object.onFileImporterCompleted
         )
         Button {
-          #warning("use queue and confirmation")
-          self.object.deleteSelectedItem()
+          self.object.queueRemovalSelectedItem()
         } label: {
-          Image(systemName: "minus")
+          VStack {
+            Spacer()
+            Image(systemName: "minus")
+            Spacer()
+          }.frame(height: 12).contentShape(Rectangle())
         }
         .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
         .disabled(self.object.selectedItem == nil)

@@ -8,6 +8,7 @@
   import Observation
 
   public extension FileManager {
+    #warning("logging-note: let's log that a url is getting copied/downloaded")
     func fileOperationProgress(
       from sourceURL: URL,
       to destinationURL: URL,

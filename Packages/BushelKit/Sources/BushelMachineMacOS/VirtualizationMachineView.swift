@@ -4,11 +4,15 @@
 //
 
 #if canImport(SwiftUI) && canImport(Virtualization)
+  import BushelLogging
+  import BushelViewsCore
   import Foundation
   import SwiftUI
   import Virtualization
 
-  struct VirtualizationMachineView: NSViewRepresentable {
+  #warning("updateNSView to be called")
+  #warning("why not to print the frame and other settings of VZVirtualMachineView")
+  struct VirtualizationMachineView: NSViewRepresentable, LoggerCategorized {
     typealias NSViewType = VZVirtualMachineView
     let virtualMachine: VZVirtualMachine
     func makeNSView(context _: Context) -> VZVirtualMachineView {
@@ -17,6 +21,10 @@
       )
       view.virtualMachine = virtualMachine
 
+      Task { @MainActor in
+        Self.logger.debug("Making View First Responder")
+        view.window?.makeFirstResponder(view)
+      }
       return view
     }
 

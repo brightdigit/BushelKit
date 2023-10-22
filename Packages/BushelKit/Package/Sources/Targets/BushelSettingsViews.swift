@@ -8,5 +8,6 @@ struct BushelSettingsViews: Target {
     BushelData()
     BushelLocalization()
     BushelMarketEnvironment()
+    BushelOnboardingEnvironment()
   }
 }

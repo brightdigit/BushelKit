@@ -1,0 +1,247 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Ahmed Shendy on 11/10/2023.
+  
+*/
+
+/* Welcome window message */
+"welcome_to_bushel" = "Bushel";
+
+/* Button for starting VM */
+"start_machine" = "إبدأ الآلة";
+
+/* Button for taking snapshots of VM */
+"snapshot_machine" = "خذ لقطة";
+
+/* Button label for when to build machine */
+"build_machine" = "بناء";
+
+/* Title for upgrading to "Bushel Pro" */
+"upgrade_purchase" = "Go Pro";
+
+/* Restore Purchases button Title */
+"restore_purchases" = "استعادة المشتريات";
+
+/* Not accept purchase  */
+"stay_basic" = "ليس بعد، اريد البقاء على الخطة الحالية";
+
+/* Terms of Use button Title */
+"terms_of_use" = "شروط الاستخدام";
+
+/* Privacy Policy button Title */
+"privacy_policy" = "سياسة الخصوصية";
+
+/* List of pro features. */
+"pro_features" = "And much more: Configure windows visibility, minimized capturing window, access to all privacy actions and directories, custom touches color, custom color for captures, optimise for App Previews, optimise recordings for quality or speed, delete Derived Data globally and per app, clear Xcode Previews cache.";
+
+/* Pro Subscription Ends At */
+"about_subscription_ends_at" = "ينتهي اشتراك PRO في:";
+
+/* Feedback and Issues Title */
+"about_feedback" = "التعليقات والمشاكل";
+
+/* Feedback and Issues Details */
+"about_feedback_details" = "Etiam non dictum nisi, in rhoncus nulla. Aenean eget nulla nec sem ultrices ornare vitae finibus ex. Maecenas hendrerit, felis.";
+
+/* BrightDigit Copyright */
+"copyright_brightdigit" = "© BrightDigit, LLC 2023";
+
+/* Version name */
+"version" = "الإصدار";
+
+/* Downloading message */
+"downloading" = "جارى التحميل";
+
+/* Cancel button */
+"cancel" = "إلغاء";
+
+/* Download button */
+"download" = "تحميل";
+
+/* Import image button */
+"import_image" = "استيراد قرص إقلاع";
+
+/* Save to a restore library button */
+"save_to_library" = "احفظ ف المكتبة";
+
+/* Session view Creating Session message */
+"creating_session" = "إنشاء جلسة...";
+
+/* Settings - General Settings */
+"general_settings" = "إعدادات عامة";
+
+/* Settings - Advanced Settings */
+"advanced_settings" = "إعدادات متقدمة";
+
+/* Restore Image - Download Image Button */
+"download_image" = "تحميل قرص اقلاع";
+
+/* New File Menu */
+"menu_new" = "جديد";
+
+/* Open Menu Button */
+"menu_open" = "فتح...";
+
+/* Open Recent Menu Button */
+"menu_open_recent" = "فتح الأخير";
+
+/* "Welcome to Bushel" Menu Button */
+"menu_window_welcome_to_bushel" = "أهلا بك ف Bushel";
+
+/* Bushel Help Menu Button */
+"menu_help_bushel" = "مساعدة Bushel";
+
+/* Clear Menu Button */
+"menu_clear" = "امسح القائمة";
+
+/* Welcome Action Button title for creating new machine */
+"welcome_pro" = "Pro";
+
+/* Welcome Action Button title for creating new machine */
+"welcome_new_machine_title" = "انشئ جهاز جديد";
+
+/* Welcome Action Button title for opening a machine */
+"welcome_existing_machine_title" = "افتح جهاز سابق";
+
+/* Welcome Action Button title for starting a library */
+"welcome_start_library_title" = "ابدأ مكتبة لاقراص الاقلاع";
+
+/* Configuration Machine Will Install */
+"machine_will_install" = "سيتم تنصيب:";
+
+/* Machine Details Operating System Label */
+"name" = "الإسم";
+
+/* Machine Details System Tab */
+"machine_details_system_tab" = "النظام";
+
+/* Machine Details Operating System Label */
+"machine_details_o_s" = "إسم نظام التشغيل";
+
+/* Machine Details Chip Field Label */
+"machine_details_chip" = "بروسيسور";
+
+/* Machine Details CPU Count Field Label */
+"machine_details_c_p_u_count" = "العدد";
+
+/* Machine Details CPU Field Label */
+"machine_details_c_p_u_name" = "وحدة المعالة المركزية";
+
+/* Machine Details Memory Size Field Label */
+"machine_details_memory_size" = "الحجم";
+
+/* Machine Details Memory Field Label */
+"machine_details_memory_name" = "الذاكرة";
+
+/* Machine Details Storage Field Label */
+"machine_details_storage_name" = "قرص التخزين";
+
+/* Machine Details Storage Size Field Label */
+"machine_details_storage_size" = "الحجم";
+
+/* Machine Details Display Field Label */
+"machine_details_display" = "الشاشة";
+
+/* Machine Details Network Field Label */
+"machine_details_network_name" = "الشبكة";
+
+/* Machine Details Network NAT Value */
+"machine_details_network_nat" = "إعدادات ال NAT";
+
+/* Machine Details Display Value */
+"%d x %d %dppi" = "%d x %d %dppi";
+
+/* Snapshot Restoration Error */
+"There was an error restoring the snapshot: %@" = "حدث خطأ أثناء استعادة اللقطة: %@";
+
+/* Hub None Selected */
+"hub_none_selected" = "لم تحدد شئ";
+
+/* Welcome No Recent Documents */
+"welcome_no_recent_documents" = "لا توجد ملفات اخيرة";
+
+/* Select Image */
+"select_image" = "اختر قرص إقلاع";
+
+/* OK */
+"ok" = "حسنا";
+
+/* Updating Recent Documents */
+"welcome_updating_recent_documents" = "جارى التحديث...";
+
+/* Hub Image Size */
+"hub_image_size" = "الجحم";
+
+/* Hub Image URL */
+"hub_u_r_l" = "URL";
+
+/* Hub Image Last Modified */
+"hub_last_modified" = "اخر تعديل";
+
+/* Settings General Tab */
+"settings_general_tab" = "عام";
+
+/* Settings Test Tab */
+"settings_test_tab" = "Lab";
+
+/* Settings Advanced Tab */
+"settings_advanced_tab" = "متقدم";
+
+/* Settings About Tab */
+"settings_about_tab" = "حول";
+
+/* Database Libraries */
+"database_libraries" = "المكتبات";
+
+/* Database Snapshots */
+"database_snapshots" = "اللقطات";
+
+/* Database Machines */
+"database_machines" = "الاجهزة";
+
+/* Database Images */
+"database_images" = "أقراص الإقلاع";
+
+/* Database Bookmarks */
+"database_bookmarks" = "علامة مرجعية";
+
+/* session_shutdown_alert */
+"session_shutdown_alert" = "هل تريد ايقاف تشغيل هذا الجهاز؟";
+
+/* session_press_power_button */
+"session_press_power_button" = "اضغط على زر الطاقة";
+
+/* session_save_and_turn_off */
+"session_save_and_turn_off" = "حفظ الحالة وإنهاء الجلسة";
+
+/* session_turn_off */
+"session_turn_off" = "إنهاء الجلسة";
+
+/* Progress Operation Text */
+"operation_progress_text" = "%@/%@ (%@%%)";
+
+/* Snapshot Machine Operation Restoring */
+"machine_operation_snapshot_restoring" = "جارى الاستعادة";
+
+/* Snapshot Machine Operation Exporting */
+"machine_operation_snapshot_exporting" = "جارى التصدير";
+
+/* Snapshot Machine Operation Exporting */
+"machine_operation_snapshot_saving" = "جارى الحفظ";
+
+/* Snapshot Machine Confirm Delete Snapshot Yes */
+"machine_confirm_delete_yes" = "نعم، قم بحذف اللقطة";
+
+/* Snapshot Machine Confirm Delete Snapshot Cancel */
+"machine_confirm_delete_cancel" = "إلغاء";
+
+/* Snapshot Machine Confirm Restore Snapshot with new Snapshot */
+"machine_confirm_restore_new" = "نعم، قم بحفظ الحالة الحالية";
+
+/* Snapshot Machine Confirm Restore Snapshot with no new Snapshot */
+"machine_confirm_restore_overwrite" = "لا، فقط قم باستبدال الحالة الحالية";
+
+/* Snapshot Machine Confirm Restore Snapshot Cancel */
+"machine_confirm_restore_cancel" = "إلغى، ولا تقم بإستعادة هذة اللقطة";

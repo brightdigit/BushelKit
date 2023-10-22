@@ -20,6 +20,7 @@ private actor FileManagerActor {
     self.fileManager = fileManager().value
   }
 
+  #warning("logging-note: not sure what to log here")
   func reduce<T: Sendable>(
     _ keys: [URLResourceKey],
     directoryAt url: URL,

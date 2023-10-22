@@ -7,9 +7,11 @@
   import Combine
   import Foundation
 
+  #warning("logging-note: can we have some operators for logging the recieved stuff in these subscriptions")
   public struct SetupPublishers {
     public init() {}
 
+    #warning("shendy-note: let's fix setupDownloadPublsihers to setupDownloadPublishers")
     private func setupDownloadPublsihers(_ downloader: ObservableDownloader) -> [AnyCancellable] {
       var cancellables = [AnyCancellable]()
 

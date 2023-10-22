@@ -15,6 +15,7 @@
   import BushelMarketEnvironment
   import BushelMarketStore
   import BushelMarketViews
+  import BushelOnboardingViews
   import BushelSystem
   import BushelViews
   import BushelViewsCore
@@ -27,7 +28,6 @@
   #endif
 
   public protocol Application: App, LoggerCategorized {
-    // var appDelegate: AppDelegate { get }
     var scenePhase: ScenePhase { get }
   }
 
@@ -47,6 +47,7 @@
         MachineScene()
 
         MarketScene()
+        OnboardingScene()
       }
       .commands(content: {
         CommandGroup(replacing: .newItem) {
@@ -56,19 +57,21 @@
             #endif
             Machine.NewCommands()
           }
-          Divider()
-          Welcome.OpenCommands()
-            .configure(
-              libraryFileType: LibraryFileSpecifications.self,
-              machineFileType: MachineFileTypeSpecification.self
-            ) {
-              #if arch(arm64) && os(macOS)
-                MacOSVirtualizationSystem()
-              #endif
-              #if WAX_FRUIT
-                MockSystem()
-              #endif
-            }
+          #if os(macOS)
+            Divider()
+            Welcome.OpenCommands()
+              .configure(
+                libraryFileType: LibraryFileSpecifications.self,
+                machineFileType: MachineFileTypeSpecification.self
+              ) {
+                #if arch(arm64) && os(macOS)
+                  MacOSVirtualizationSystem()
+                #endif
+                #if WAX_FRUIT
+                  MockSystem()
+                #endif
+              }
+          #endif
         }
         #if os(macOS)
           CommandGroup(before: .singleWindowList) {

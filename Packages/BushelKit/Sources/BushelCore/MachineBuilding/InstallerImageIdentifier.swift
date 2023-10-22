@@ -19,6 +19,7 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
     self.imageID = imageID
   }
 
+  #warning("log meaningful message about else of guard statements here too")
   public init?(string: String) {
     let components = string.components(separatedBy: ":").filter { $0.isEmpty == false }
     guard components.count > 1, components.count < 4 else {
@@ -28,6 +29,7 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
       return nil
     }
 
+    #warning("what does a nullable libraryID mean, maybe this case needs to be logged")
     let libraryID: LibraryIdentifier?
     if components.count == 2 {
       libraryID = LibraryIdentifier(string: components[0])

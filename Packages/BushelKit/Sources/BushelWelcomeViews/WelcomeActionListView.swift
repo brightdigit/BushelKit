@@ -20,6 +20,7 @@
     #endif
     @Environment(\.modelContext) var modelContext
     @State var openDocumentIsVisible = false
+
     var body: some View {
       VStack(alignment: .leading) {
         WelcomeActionButton(
@@ -63,6 +64,8 @@
             newLibrary(with: openWindow)
           #endif
         }
+
+        // TipView(tip)
       }
     }
   }

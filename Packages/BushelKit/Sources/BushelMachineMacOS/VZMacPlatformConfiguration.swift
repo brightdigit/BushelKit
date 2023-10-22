@@ -26,6 +26,7 @@
         auxiliaryStorage = VZMacAuxiliaryStorage(contentsOf: auxiliaryStorageURL)
       #endif
 
+      #warning("logging-note: are the VirtualizationError thrown in this file printed somewhere?")
       guard let hardwareModel = try VZMacHardwareModel(
         dataRepresentation: Data(contentsOf: hardwareModelURL)
       ) else {
@@ -46,6 +47,7 @@
       self.machineIdentifier = machineIdentifier
     }
 
+    #warning("logging-note: to print what has been done here")
     convenience init(
       toDirectory machineDirectory: URL?,
       basedOn _: MachineConfiguration,

@@ -36,6 +36,7 @@
       }
     }
 
+    #warning("logging-note: let's log the else case of these guards")
     // swiftlint:disable:next block_based_kvo
     override func observeValue(
       forKeyPath keyPath: String?,

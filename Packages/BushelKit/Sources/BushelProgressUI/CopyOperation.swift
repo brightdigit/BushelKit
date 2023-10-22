@@ -69,11 +69,13 @@
     }
 
     public func execute() async throws {
+      self.logger?.debug("Starting Copy operating")
       await starTimer()
       return try await withCheckedThrowingContinuation { continuation in
         do {
           try self.fileManager.copyItem(at: self.sourceURL, to: self.destinationURL)
         } catch {
+          self.logger?.error("Error Copying: \(error)")
           self.killTimer()
           continuation.resume(throwing: error)
           return

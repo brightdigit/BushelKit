@@ -21,6 +21,7 @@
       }
     }
 
+    #warning("logging-note: what about all else of guard statements here, and the switch cases too")
     public func image(
       withID id: UUID,
       library: LibraryIdentifier?,

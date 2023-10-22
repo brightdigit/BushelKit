@@ -24,6 +24,7 @@
       self.percentCompleted = percentCompleted
       self.id = self.builder.observePercentCompleted { percentCompleted in
         Task { @MainActor in
+          #warning("logging-note: should we log here?")
           self.percentCompleted = percentCompleted
         }
       }
@@ -36,6 +37,7 @@
 
     deinit {
       if let id {
+        #warning("logging-note should we log here?")
         self.builder.removeObserver(id)
       }
     }
