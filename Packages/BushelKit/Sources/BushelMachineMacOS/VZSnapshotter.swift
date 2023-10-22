@@ -37,6 +37,7 @@ import Foundation
       machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 
+    #warning("logging-note: I think we should log every step here?")
     @MainActor
     func createNewSnapshot(
       of machine: MachineType,

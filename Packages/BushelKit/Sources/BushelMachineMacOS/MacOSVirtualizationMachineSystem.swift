@@ -40,6 +40,7 @@
       return try await .init(url: url)
     }
 
+    #warning("shendy-note: where this is used, I couldn't find its use somewhere")
     public func validateConfiguration(
       _ configuration: BushelMachine.MachineBuildConfiguration<VirtualizationMacOSRestoreImage>,
       to url: URL
@@ -66,6 +67,7 @@
       return machineConfiguration
     }
 
+    #warning("logging-note: why not mention that a configuration has been validated")
     @MainActor
     public func createBuilder(
       for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationMacOSRestoreImage>,

@@ -10,6 +10,7 @@
   import Foundation
   import SwiftData
 
+  #warning("I think we need to log the operations running for this entry")
   @Model
   public final class LibraryImageEntry {
     public var library: LibraryEntry?

@@ -97,11 +97,13 @@
       }
     }
 
+    #warning("logging-note: it woudl be nice logging here")
     public func update(using context: ModelContext, at updateAt: Date = Date()) throws {
       self.updatedAt = updateAt
       try context.save()
     }
 
+    #warning("logging-note: any useful logs here")
     private func updateURL(_ url: URL, withNewBookmarkData: Bool, using context: ModelContext) throws {
       if withNewBookmarkData {
         let accessingSecurityScopedResource = url.startAccessingSecurityScopedResource()

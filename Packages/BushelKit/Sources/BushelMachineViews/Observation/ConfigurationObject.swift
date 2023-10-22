@@ -96,6 +96,7 @@
       self.labelProvider = labelProvider
 
       guard let restoreImageID = request?.restoreImage?.imageID else {
+        #warning("logging-note: should we log here")
         return
       }
       self.updateMetadataAt(basedOn: restoreImageID)
@@ -104,6 +105,7 @@
     func updateMetadataAt(basedOn restoreImageID: UUID?) {
       guard let restoreImageID else {
         self.restoreImageMetadata = nil
+        #warning("logging-note: should we log here")
         return
       }
       guard let labelProvider else {

@@ -73,6 +73,31 @@
           Text(.selectImage)
         }
       }
+      .confirmationDialog(
+        "Delete Image",
+        isPresented: self.$object.presentDeleteImageConfirmation,
+        presenting: self.object.queuedRemovalSelectedImage,
+        actions: { image in
+          Button(
+            role: .destructive
+          ) {
+            self.object.deleteSelectedItem(withID: image.id)
+          } label: {
+            Text(.machineConfirmDeleteYes)
+          }
+          Button(
+            role: .cancel,
+            action: {
+              self.object.cancelRemovalSelectedItem(withID: image.id)
+            },
+            label: {
+              Text(.machineConfirmDeleteCancel)
+            }
+          )
+        }, message: { image in
+          Text(localizedUsingID: LocalizedStringID.libraryDeleteConfirmation, arguments: image.name)
+        }
+      )
       .alert(
         isPresented: self.$object.presentErrorAlert,
         error: self.object.error,

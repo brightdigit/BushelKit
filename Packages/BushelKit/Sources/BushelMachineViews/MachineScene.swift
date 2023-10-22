@@ -23,6 +23,8 @@
       WindowGroup(for: MachineFile.self) { file in
         #if os(macOS)
           DocumentView(machineFile: file).nsWindowAdaptor {
+            #warning("logging-note: not sure what is this, should we log something here?")
+            #warning("cont: SessionView down there have one too")
             $0?.isRestorable = false
           }
           .presentedWindowToolbarStyle(.expanded)

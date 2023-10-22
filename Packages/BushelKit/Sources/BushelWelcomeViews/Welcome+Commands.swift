@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelCore
   import BushelData
   import BushelViewsCore
   import SwiftData
@@ -24,7 +25,7 @@
     public struct OpenCommands: View {
       public init() {}
 
-      @AppStorage("recentDocumentsClearDate") private var recentDocumentsClearDate: Date?
+      @AppStorage(for: RecentDocumentsClearDate.self) private var recentDocumentsClearDate: Date?
       @Environment(\.openWindow) private var openWindow
       @Environment(\.openFileURL) private var openFileURL
       @Environment(\.allowedOpenFileTypes) private var allowedOpenFileTypes

@@ -45,9 +45,7 @@
             Image(systemName: "play")
           }
         } else {
-          Button {} label: {
-            Image(systemName: "questionmark.app.dashed")
-          }
+          ProgressView().scaleEffect(0.5)
         }
       }
     }

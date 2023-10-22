@@ -4,12 +4,18 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelCore
+  import BushelLogging
+  import BushelOnboardingEnvironment
   import BushelViewsCore
   import SwiftUI
 
-  struct WelcomeView: SingleWindowView {
+  struct WelcomeView: SingleWindowView, LoggerCategorized {
     @Environment(\.colorScheme) var colorScheme
-    @AppStorage("recentDocumentsClearDate") private var recentDocumentsClearDate: Date?
+    @Environment(\.openWindow) var openWindow
+    @Environment(\.onboardingWindow) var onboardingWindow
+    @AppStorage(for: RecentDocumentsClearDate.self) private var recentDocumentsClearDate
+    @AppStorage(for: OnboardingAlphaAt.self) private var onboardedAt
     var body: some View {
       HStack {
         WelcomeTitleView()
@@ -21,8 +27,23 @@
           )
 
         WelcomeRecentDocumentsView(recentDocumentsClearDate: recentDocumentsClearDate).frame(width: 280)
-      }.frame(width: 750, height: 440)
-        .navigationTitle("Welcome to Bushel")
+      }
+      .frame(width: 750, height: 440)
+      .task {
+        if false {
+          do {
+            try await Task.sleep(for: .seconds(0.5), tolerance: .seconds(0.25))
+          } catch {
+            Self.logger.error("Unable to wait for task")
+            return
+          }
+          if onboardedAt == nil, !EnvironmentConfiguration.shared.skipOnboarding {
+            Self.logger.debug("not onboarded, opening onboarding window")
+            openWindow(value: onboardingWindow)
+          }
+        }
+      }
+      .navigationTitle("Welcome to Bushel")
     }
 
     init() {}

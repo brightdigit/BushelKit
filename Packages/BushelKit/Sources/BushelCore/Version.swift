@@ -51,6 +51,7 @@ public extension Version {
     }
 
     guard let buildNumber = Int(buildNumberString) else {
+      #warning("logging-note: let's have a message here about what was expected")
       assertionFailure()
       return nil
     }
@@ -66,6 +67,7 @@ public extension Version {
     self.init(objectForInfoDictionaryKey: bundle.object(forInfoDictionaryKey:))
   }
 
+  #warning("logging-note: let's log message for each else of guard statement")
   private init?(objectForInfoDictionaryKey: @escaping (Key) -> Any?) {
     guard
       let marketingVersionText = objectForInfoDictionaryKey(.marketingVersion) as? String else {
@@ -100,6 +102,7 @@ public extension Version {
   func buildNumberHex(withLength length: Int? = 8) -> String {
     let hexString = String(buildNumber, radix: 16)
     guard let length else {
+      #warning("logging-note: not sure what guard-else mean, but can we log some message here?")
       return hexString
     }
     return String(String(repeating: "0", count: length).appending(hexString).suffix(length))

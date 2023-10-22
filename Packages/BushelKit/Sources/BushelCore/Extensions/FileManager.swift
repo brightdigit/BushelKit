@@ -72,6 +72,7 @@ public extension FileManager {
   ) throws -> DirectoryExists {
     let directoryExistsStatus = self.directoryExists(at: url)
 
+    #warning("logging-note: we could log each case for better debugging")
     switch directoryExistsStatus {
     case .directoryExists:
       break
@@ -122,6 +123,7 @@ public extension FileManager {
       throw .fileNotFound(at: directoryURL)
     }
 
+    #warning("logging-note: descriptive error/logging here might help some other developer in debugging")
     return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
       guard let url = item as? URL else {
         return
