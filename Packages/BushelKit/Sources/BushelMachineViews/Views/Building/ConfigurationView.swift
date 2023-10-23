@@ -111,7 +111,7 @@
       }
     }
 
-    public var storage: LabeledContent<some View, some View> {
+    public var storage: some View {
       LabeledContent {
         HStack {
           Slider(
@@ -138,53 +138,59 @@
         }
       } label: {
         Text(.machineDetailsStorageSize)
-      }
+      }.labeledContentStyle(.vertical())
     }
 
     public var form: some View {
       Form {
-        GroupLabeledContent {
-          restoreImageSectionContent
-        }
-        group: {
-          if let longName = self.object.restoreImageMetadata?.longName {
-            VStack(alignment: .leading) {
-              Text(.machineWillInstall)
-              Text(longName).fontWeight(.bold)
+        LabeledContent {
+          LabeledContent {
+            restoreImageSectionContent
+          } label: {
+            if let longName = self.object.restoreImageMetadata?.longName {
+              VStack(alignment: .leading) {
+                Text(.machineWillInstall)
+                Text(longName).fontWeight(.bold)
+              }
             }
-          }
-        }
-        label: {
+          }.labeledContentStyle(.vertical())
+        } label: {
           if let systemName = self.object.restoreImageMetadata?.systemName {
             Text(systemName)
           }
         }
 
-        GroupLabeledContent {
-          cpuSectionContent
-        } group: {
-          Text(.machineDetailsCPUCount)
+        LabeledContent {
+          LabeledContent {
+            cpuSectionContent
+          } label: {
+            Text(.machineDetailsCPUCount)
+          }.labeledContentStyle(.vertical())
         } label: {
           Text(.machineDetailsCPUName)
-        }.padding(.vertical, 8.0)
+        }
 
-        GroupLabeledContent {
-          memorySectionContent
-        } group: {
-          Text(.machineDetailsMemorySize)
+        LabeledContent {
+          LabeledContent {
+            memorySectionContent
+          } label: {
+            Text(.machineDetailsMemorySize)
+          }.labeledContentStyle(.vertical())
         } label: {
           Text(.machineDetailsMemoryName)
-        }.padding(.vertical, 8.0)
+        }
 
-        GroupLabeledContent {
-          LabeledContent {
-            TextField(text: self.$object.configuration.primaryStorage.label) {
+        LabeledContent {
+          VStack {
+            LabeledContent {
+              TextField(text: self.$object.configuration.primaryStorage.label) {
+                Text(.name)
+              }
+            } label: {
               Text(.name)
-            }
-          } label: {
-            Text(.name)
+            }.labeledContentStyle(.vertical())
+            storage
           }
-          storage
         } label: {
           Text(.machineDetailsStorageName)
         }
@@ -194,7 +200,6 @@
       }
     }
 
-    #warning("logging-note: should we print result of onChange(of..)?")
     public var body: some View {
       form
         .frame(width: 350)
@@ -206,14 +211,12 @@
         .onChange(of: self.object.configuration.restoreImageID, self.object.onRestoreImageChange(from:to:))
         .onChange(of: self.buildResult) { _, newValue in
           guard let machineURL = try? newValue?.get() else {
-            #warning("logging-note: should we log here?")
             return
           }
           self.openWindow(value: MachineFile(url: machineURL))
           self.dismiss()
         }
         .onAppear {
-          #warning("log some details about this setup, like details of buildRequest, systemManager, etc..")
           self.object.setupFrom(
             request: self.buildRequest,
             systemManager: self.systemManager,
@@ -225,7 +228,6 @@
           InstallerView(buildResult: self.$buildResult, builder: builder.builder)
         })
         .sheet(isPresented: self.$object.presentImageSelection, content: {
-          #warning("logging-note: should we log number of images somewhere?")
           ImageListSelectionView(
             selectedImageID: self.$object.sheetSelectedRestoreImageID,
             images: self.object.images
@@ -243,7 +245,6 @@
               document: CodablePackageDocument<MachineConfiguration>(configuration: machineConfiguration),
               defaultFilename: self.object.defaultFileName + ".bshvm",
               onCompletion: { result in
-                #warning("we should start logging every single step from here till the end of it")
                 self.object.beginBuildRequest(for: result, using: self.installerImageRepository)
               }
             )
