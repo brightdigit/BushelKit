@@ -36,8 +36,8 @@ targetTemplates:
         NSHumanReadableCopyright: Copyright (c) 2023 BrightDigit
         LSApplicationCategoryType: public.app-category.developer-tools
         BrightDigitPrereleaseInfo:
-          Label: alpha
-          Base: 27
+          Label: beta
+          Base: 48
         ATSApplicationFontsPath: .
         CFBundleDocumentTypes:
           - {CFBundleTypeName: 'macOS Restore Image', CFBundleTypeRole: Viewer, LSHandlerRank: Alternate, LSItemContentTypes: [com.apple.iphone.ipsw, com.apple.itunes.ipsw]}
