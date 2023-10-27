@@ -135,6 +135,18 @@ public extension FileManager {
       dictionary[url.lastPathComponent] = try Data(contentsOf: url)
     }
   }
+
+  func clearSavedApplicationState() throws {
+    let savedApplicationStates = self.urls(for: .libraryDirectory, in: .userDomainMask)
+      .map {
+        $0.appendingPathComponent("Saved Application State")
+      }
+      .filter {
+        self.directoryExists(at: $0) == .directoryExists
+      }
+
+    try savedApplicationStates.forEach(self.removeItem(at:))
+  }
 }
 
 internal extension Error where Self == NSError {

@@ -6,6 +6,7 @@
 #if canImport(SwiftUI) && canImport(UniformTypeIdentifiers) && os(macOS)
   import BushelCore
   import BushelData
+  import BushelLocalization
   import BushelLogging
   import BushelMarketEnvironment
   import BushelUT
@@ -19,8 +20,14 @@
         Spacer()
         VStack {
           Spacer()
-          Image.resource("Logo").resizable().aspectRatio(contentMode: .fit).frame(height: 120)
-          WelcomeLogoTitleLabelView()
+          VStack {
+            Image.resource("Logo").resizable().aspectRatio(contentMode: .fit).frame(height: 120)
+
+            WelcomeLogoTitleLabelView()
+          }
+          .accessibilityLabel(
+            String(localizedUsingID: LocalizedStringID.welcomeToBushel)
+          )
           Spacer(minLength: 10.0)
           WelcomeActionListView()
             .padding(20.0)

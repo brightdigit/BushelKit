@@ -28,6 +28,8 @@
 
         WelcomeRecentDocumentsView(recentDocumentsClearDate: recentDocumentsClearDate).frame(width: 280)
       }
+      .accessibilityElement(children: .contain)
+      .accessibilityLabel("Welcome View")
       .frame(width: 750, height: 440)
       .task {
         if false {
@@ -44,6 +46,7 @@
         }
       }
       .navigationTitle("Welcome to Bushel")
+      .accessibilityIdentifier("welcomeView")
     }
 
     init() {}

@@ -30,11 +30,15 @@
         }
 
         Button("Reset UserDefaults") {
-          guard let domainName = Bundle.main.bundleIdentifier else {
+          do {
+            try Bundle.main.clearUserDefaults()
+          } catch is Bundle.MissingIdentifierError {
             Self.logger.error("Couldn't find domain name or bundleIdentifier to clear.")
-            return
+            assertionFailure("Couldn't find domain name or bundleIdentifier to clear.")
+          } catch {
+            Self.logger.critical("Unknown error: \(error)")
+            assertionFailure("CUnknown error: \(error)")
           }
-          UserDefaults.standard.removePersistentDomain(forName: domainName)
         }
       }.padding(20.0)
     }

@@ -20,12 +20,7 @@
             Button("Clear All Documents") {
               #warning("Add confirmation")
               do {
-                try context.transaction {
-                  try [any PersistentModel.Type].all.forEach {
-                    try context.delete(model: $0)
-                  }
-                }
-                try context.save()
+                try self.context.clearDatabase()
               } catch {
                 self.error = error
               }

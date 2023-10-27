@@ -23,9 +23,14 @@
     @State var object: LibraryDocumentObject
     @Binding var file: LibraryFile?
 
+    var title: String {
+      self.file?.url.lastPathComponent ?? "Untitled"
+    }
+
     var body: some View {
       NavigationSplitView {
         ToolbarView(
+          title: self.title,
           allAllowedContentTypes: librarySystemManager.allAllowedContentTypes,
           object: self.object
         )
@@ -33,46 +38,53 @@
           items: object.object?.library.items,
           selectedItem: self.$object.selectedItem,
           librarySystemManager: librarySystemManager
-        )
-        .navigationSplitViewColumnWidth(min: 400, ideal: 400)
-        .onChange(of: self.file?.url, self.object.onURLChange(from:to:))
-        .onChange(of: self.object.selectedItem, self.object.onSelectionChange)
-        .onAppear(perform: {
-          self.object.loadURL(self.file?.url, withContext: self.context, using: self.librarySystemManager)
-        })
-        .sheet(
-          isPresented: self.$object.presentHubModal,
-          selectedHubImage: self.$object.selectedHubImage,
-          onDismiss: self.object.onHubImageSelected,
-          self.hubView
-        )
-        .sheet(item: self.$object.restoreImageImportProgress, content: { request in
-          ProgressOperationView(request) {
-            Image.resource($0)
-              .resizable()
-              .aspectRatio(contentMode: .fill)
-              .frame(width: 80, height: 80)
-              .mask { Circle() }
-              .overlay { Circle().stroke() }
-              .padding(.horizontal)
-          }
-        })
-        .fileExporter(
-          isPresented: self.$object.presentFileExporter,
-          document: CodablePackageDocument<Library>(),
-          defaultFilename: "Library.bshrilib",
-          onCompletion: { result in
-            self.file = self.object.restoreImageFileFrom(result: result)
-          }
-        )
+        ).accessibilityIdentifier("library:" + title + ":list")
+          .navigationSplitViewColumnWidth(min: 400, ideal: 400)
+          .onChange(of: self.file?.url, self.object.onURLChange(from:to:))
+          .onChange(of: self.object.selectedItem, self.object.onSelectionChange)
+          .onAppear(perform: {
+            self.object.loadURL(self.file?.url, withContext: self.context, using: self.librarySystemManager)
+          })
+          .sheet(
+            isPresented: self.$object.presentHubModal,
+            selectedHubImage: self.$object.selectedHubImage,
+            onDismiss: self.object.onHubImageSelected,
+            self.hubView
+          )
+          .sheet(item: self.$object.restoreImageImportProgress, content: { request in
+            ProgressOperationView(request) {
+              Image.resource($0)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 80, height: 80)
+                .mask { Circle() }
+                .overlay { Circle().stroke() }
+                .padding(.horizontal)
+            }
+          })
+          .fileExporter(
+            isPresented: self.$object.presentFileExporter,
+            document: CodablePackageDocument<Library>(),
+            defaultFilename: "Library.bshrilib",
+            onCompletion: { result in
+              self.file = self.object.restoreImageFileFrom(result: result)
+            }
+          )
       } detail: {
         if let image = self.object.object?.bindableImage(withID: self.object.selectedItem) {
           let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystemID)
-          LibraryImageDetailView(image: image, system: system)
+          LibraryImageDetailView(
+            image: image,
+            system: system
+          )
+          .accessibilityIdentifier("library:" + title + ":selected")
         } else {
+          #warning("If no image add buttons to add/download image.")
           Text(.selectImage)
         }
       }
+      .accessibilityIdentifier("library:" + title)
+      .accessibilityLabel("Library for \(title)")
       .confirmationDialog(
         "Delete Image",
         isPresented: self.$object.presentDeleteImageConfirmation,
@@ -117,7 +129,7 @@
         }
       )
       .navigationSplitViewStyle(.balanced)
-      .navigationTitle(self.file?.url.lastPathComponent ?? "Untitled")
+      .navigationTitle(title)
     }
 
     internal init(
