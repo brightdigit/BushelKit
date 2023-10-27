@@ -24,6 +24,8 @@
           ForEach(recentDocuments) { document in
             self.forEach(document)
           }
+        } else {
+          ProgressView()
         }
       }
       .onChange(of: self.bookmarks) { _, _ in
@@ -31,6 +33,7 @@
       }
       .onAppear {
         object.updateBookmarks(self.bookmarks, using: self.context)
+        self.isEmpty = object.isEmpty
       }
       .onChange(of: self.object.isEmpty) { _, newValue in
         self.isEmpty = newValue

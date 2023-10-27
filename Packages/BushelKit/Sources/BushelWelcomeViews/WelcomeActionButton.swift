@@ -12,9 +12,28 @@
     let imageSystemName: String
 
     let titleID: LocalizedStringID
+    let accessibilityIdentifier: String
     let action: () -> Void
     var body: some View {
-      Button(action: self.action, label: self.label).buttonStyle(.plain)
+      Button(
+        action: self.action,
+        label: self.label
+      )
+      .buttonStyle(.plain)
+      .accessibilityLabel(String(localizedUsingID: self.titleID))
+      .accessibilityIdentifier(self.titleID.rawValue)
+    }
+
+    init(
+      imageSystemName: String,
+      titleID: LocalizedStringID,
+      accessibilityIdentifier: String? = nil,
+      action: @escaping () -> Void
+    ) {
+      self.imageSystemName = imageSystemName
+      self.titleID = titleID
+      self.accessibilityIdentifier = accessibilityIdentifier ?? titleID.rawValue
+      self.action = action
     }
 
     func label() -> some View {

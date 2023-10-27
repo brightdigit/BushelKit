@@ -16,12 +16,15 @@
     @Environment(\.modelContext) private var context
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openFileURL) private var openFileURL
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
     @State var isEmpty = false
 
     var body: some View {
       Group {
         if isEmpty {
-          Text(.welcomeNoRecentDocuments).opacity(0.5)
+          Text(.welcomeNoRecentDocuments)
+            .opacity(colorSchemeContrast == .standard ? 0.75 : 1.0)
         } else {
           List {
             RecentDocumentsList(

@@ -249,7 +249,7 @@
       }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {
         #warning("logging-note: would logging here be useful")

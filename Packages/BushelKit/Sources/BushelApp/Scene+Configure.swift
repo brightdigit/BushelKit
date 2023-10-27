@@ -6,11 +6,13 @@
 #if canImport(SwiftUI)
 
   import BushelCore
+  import BushelLogging
   import BushelMachine
   import BushelOnboardingCore
   import BushelOnboardingViews
   import BushelSystem
   import BushelViewsCore
+  import SwiftData
   import SwiftUI
   import TipKit
 
@@ -72,6 +74,16 @@
     func configure(
       _ configuration: some ApplicationConfiguration
     ) -> some Scene {
+      if EnvironmentConfiguration.shared.resetApplication {
+        do {
+          try Bundle.main.clearUserDefaults()
+          try FileManager.default.clearSavedApplicationState()
+          try ModelContext(configuration.modelContainer).clearDatabase()
+        } catch {
+          Loggers.loggers[.view]?.error("Unable to reset application: \(error)")
+          assertionFailure(error: error)
+        }
+      }
       #if os(macOS)
         return self.modelContainer(configuration.modelContainer)
           .onboardingWindow(OnboardingView.self)

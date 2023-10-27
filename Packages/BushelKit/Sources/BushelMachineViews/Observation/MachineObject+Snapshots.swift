@@ -3,6 +3,8 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
+// swiftlint:disable file_length
+
 #if canImport(SwiftUI)
   import BushelCore
   import BushelMachine
