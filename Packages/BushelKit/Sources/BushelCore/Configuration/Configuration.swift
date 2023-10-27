@@ -24,11 +24,8 @@ public enum Configuration {
     }()
   }
 
-  // swiftlint:disable:next force_unwrapping
-  static let userDefaults = UserDefaults(suiteName: "group.com.brightdigit.Bushel")!
-
   static let scheme = "bushel"
-  // static let cfBundleShortVersionString = "CFBundleShortVersionString"
+
   static let baseURLComponents: URLComponents = {
     var components = URLComponents()
     components.scheme = Self.scheme

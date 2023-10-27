@@ -66,7 +66,7 @@
         }
 
         // TipView(tip)
-      }
+      }.accessibilityElement(children: .contain)
     }
   }
 
