@@ -12,6 +12,7 @@
   import SwiftData
 
   public extension MachineEntry {
+    @MainActor
     convenience init(
       url: URL,
       machine: any Machine,
@@ -35,6 +36,7 @@
       )
     }
 
+    @MainActor
     convenience init(
       bookmarkData: BookmarkData,
       machine: any Machine,

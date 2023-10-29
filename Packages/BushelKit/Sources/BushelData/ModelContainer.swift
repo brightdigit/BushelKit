@@ -18,7 +18,7 @@
       do {
         return try ModelContainer(for: Schema(forTypes))
       } catch {
-        if !EnvironmentConfiguration.shared.allowDatabaseRebuild {
+        if EnvironmentConfiguration.shared.disallowDatabaseRebuild {
           assertionFailure(error: error)
         }
         Self.logger.error("Unable to read database. Rebuilding the database.")

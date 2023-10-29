@@ -129,6 +129,7 @@
         snapshotterID: FileVersionSnapshotterFactory.systemID,
         createdAt: .init(),
         fileLength: contentLength,
+        isDiscardable: version.isDiscardable,
         notes: request.notes
       )
       machine.finishedWithSnapshot(snapshot, by: .append)

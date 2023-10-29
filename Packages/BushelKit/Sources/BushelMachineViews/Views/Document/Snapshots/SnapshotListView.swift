@@ -5,47 +5,46 @@
 
 #if canImport(SwiftUI)
   import BushelMachine
+  import BushelMarketEnvironment
   import BushelUT
   import SwiftUI
 
+  @available(iOS, unavailable)
   struct SnapshotListView: View {
-    static let snapshotDateFormatter = {
-      var formatter = DateFormatter()
-      formatter.dateStyle = .medium
-      formatter.timeStyle = .medium
-      return formatter
-    }()
-
     let url: URL?
+    @Environment(\.metadataLabelProvider) private var metadataLabelProvider
+    @Environment(\.marketplace) private var marketplace
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.purchaseWindow) private var purchaseWindow
     @Bindable var object: MachineObject
-    @State private var sortOrder = [
-      KeyPathComparator(\Snapshot.createdAt, order: .reverse)
-    ]
-    @State private var selectedSnapshot: Snapshot.ID?
 
+    #warning("Use query to stay in sync")
+    #warning("Add filter for discardable")
     var body: some View {
-      Table(
-        object.machine.configuration.snapshots,
-        selection: self.$selectedSnapshot,
-        sortOrder: self.$sortOrder
-      ) {
-        TableColumn("") { snapshot in
-          SnapshotActionsView(snapshot: snapshot, agent: self.object)
-        }
-        TableColumn("Name", value: \.name) { snapshot in
-          Text(snapshot.name)
-        }
-        TableColumn("Date", value: \.createdAt) { snapshot in
-          Text(snapshot.createdAt, formatter: Self.snapshotDateFormatter)
-        }
-
-        TableColumn("Size", value: \.fileLength) { snapshot in
-          Text(
-            ByteCountFormatStyle.FormatInput(snapshot.fileLength),
-            format: .byteCount(style: .file)
+      GeometryReader { geometry in
+        HSplitView {
+          SnapshotTableView(
+            selectedSnapshot: self.$object.selectedSnapshot,
+            snapshots: object.machine.configuration.snapshots,
+            agent: self.object
           )
-        }
-        TableColumn("Notes", value: \.notes).width(ideal: 160, max: 280)
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          SnapshotDetailsView(
+            snapshot:
+            self.object.bindableSnapshot(
+              usingLabelFrom: self.metadataLabelProvider.callAsFunction(_:_:),
+              fromConfigurationURL: self.url
+            ),
+            saveAction: self.object.beginSavingSnapshot
+          )
+          .padding()
+          .frame(
+            minWidth: 256,
+            idealWidth: 256,
+            maxWidth: min(512, geometry.size.width / 2.0),
+            maxHeight: .infinity
+          )
+        }.frame(width: geometry.size.width, height: geometry.size.height)
       }
 
       .fileExporter(

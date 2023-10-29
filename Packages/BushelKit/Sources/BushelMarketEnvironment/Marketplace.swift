@@ -94,5 +94,12 @@
     var subscriptionEndDate: Date? {
       self.subscriptions?.compactMap(\.renewalDate).max()
     }
+
+    var purchased: Bool {
+      guard let subscriptionEndDate else {
+        return false
+      }
+      return subscriptionEndDate > Date()
+    }
   }
 #endif
