@@ -6,10 +6,11 @@
 import Foundation
 
 public enum Configuration {
-  enum URLs {
-    static let privacyPolicy: URL = .init("https://getbushel.app/privacy-policy")
-    static let termsOfUse: URL = .init("https://getbushel.app/terms-of-use")
-    static let support: URL = .init("https://getbushel.app/support")
+  @available(*, deprecated, renamed: "URL.bushel", message: "Use URL.bushel")
+  public enum URLs {
+    public static let privacyPolicy: URL = .bushel.privacyPolicy
+    public static let termsOfUse: URL = .bushel.termsOfUse
+    public static let support: URL = .bushel.support
   }
 
   public enum Defaults {
@@ -36,11 +37,4 @@ public enum Configuration {
   public static let version: Version = .init()!
 
   public static let versionFormatted: VersionFormatted = .init(version: Self.version)
-}
-
-public extension Configuration {
-  enum Marketplace {
-    #warning("Put this in a plist")
-    public static let groupID = "21016280"
-  }
 }

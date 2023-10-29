@@ -101,8 +101,12 @@
       }
     }
 
-    #warning("logging-note: I am afraid the error is not handled by UI, can we log meaning error here too.")
     func beginSavingSnapshot(_ request: SnapshotRequest) {
+      self.beginSavingSnapshot(request, options: [])
+    }
+
+    #warning("logging-note: I am afraid the error is not handled by UI, can we log meaning error here too.")
+    func beginSavingSnapshot(_ request: SnapshotRequest, options: SnapshotOptions) {
       guard let url = self.url else {
         let error = MachineError.missingProperty(.url)
         assertionFailure(error: error)
@@ -115,7 +119,7 @@
         self.error = error
         return
       }
-      machine.beginSavingSnapshot(request, at: url)
+      machine.beginSavingSnapshot(request, options: options, at: url)
     }
   }
 

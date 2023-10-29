@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
+  @available(iOS, unavailable)
   struct SnapshotsView: View {
     let url: URL?
     var machineObject: MachineObject?

@@ -75,12 +75,14 @@
       _ configuration: some ApplicationConfiguration
     ) -> some Scene {
       if EnvironmentConfiguration.shared.resetApplication {
+        Loggers.loggers[.application]?.debug("Clearing application data")
         do {
           try Bundle.main.clearUserDefaults()
           try FileManager.default.clearSavedApplicationState()
           try ModelContext(configuration.modelContainer).clearDatabase()
+          Loggers.loggers[.application]?.debug("Clearing completed")
         } catch {
-          Loggers.loggers[.view]?.error("Unable to reset application: \(error)")
+          Loggers.loggers[.application]?.error("Unable to reset application: \(error)")
           assertionFailure(error: error)
         }
       }
