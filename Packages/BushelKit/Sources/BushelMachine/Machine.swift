@@ -62,6 +62,8 @@ public protocol Machine: LoggerCategorized {
 
   func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference)
 
+  func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int)
+
   func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID
 
   @discardableResult

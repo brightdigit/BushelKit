@@ -922,6 +922,7 @@ struct BushelMachineViews: Target {
     BushelViewsCore()
     BushelSessionUI()
     BushelMachineEnvironment()
+    BushelMarketEnvironment()
   }
 }
 //
@@ -959,6 +960,7 @@ struct BushelMarketEnvironment: Target {
     BushelCore()
     BushelLogging()
     BushelMarket()
+    BushelEnvironmentCore()
   }
 }
 //

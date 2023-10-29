@@ -69,6 +69,7 @@ import Foundation
         snapshotterID: Self.vmSystemID,
         createdAt: .init(),
         fileLength: contentLength ?? -1,
+        isDiscardable: false,
         notes: request.notes
       )
       machine.finishedWithSnapshot(snapshot, by: .append)

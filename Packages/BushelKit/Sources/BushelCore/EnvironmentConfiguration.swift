@@ -8,7 +8,7 @@ import Foundation
 public struct EnvironmentConfiguration {
   public enum Key: String {
     case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
-    case allowDatabaseRebuild = "ALLOW_DATABASE_REBUILD"
+    case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
     case skipOnboarding = "SKIP_ONBOARDING"
     case resetApplication = "RESET_APPLICATION"
   }
@@ -18,8 +18,8 @@ public struct EnvironmentConfiguration {
   @EnvironmentProperty(Key.disableAssertionFailureForError)
   public var disableAssertionFailureForError: Bool
 
-  @EnvironmentProperty(Key.allowDatabaseRebuild)
-  public var allowDatabaseRebuild: Bool
+  @EnvironmentProperty(Key.disallowDatabaseRebuild)
+  public var disallowDatabaseRebuild: Bool
 
   @EnvironmentProperty(Key.skipOnboarding)
   public var skipOnboarding: Bool

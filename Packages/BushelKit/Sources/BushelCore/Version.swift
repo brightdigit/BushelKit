@@ -5,6 +5,11 @@
 
 import Foundation
 
+#if canImport(os)
+  import os.log
+  public typealias Logger = os.Logger
+#endif
+
 public struct Version: CustomStringConvertible {
   private enum Key: String {
     case marketingVersion = "CFBundleShortVersionString"
@@ -33,6 +38,10 @@ public struct Version: CustomStringConvertible {
 }
 
 public extension Version {
+  #if canImport(os)
+    static let logger: Logger = .init(subsystem: Bundle.main.bundleIdentifier ?? "Bushel", category: "application")
+  #endif
+
   var description: String {
     guard let prereleaseLabel else {
       return self.marketingSemVer.description
@@ -51,7 +60,9 @@ public extension Version {
     }
 
     guard let buildNumber = Int(buildNumberString) else {
-      #warning("logging-note: let's have a message here about what was expected")
+      #if canImport(os)
+        Self.logger.critical("Invalid build number \(buildNumberString)")
+      #endif
       assertionFailure()
       return nil
     }
@@ -67,15 +78,20 @@ public extension Version {
     self.init(objectForInfoDictionaryKey: bundle.object(forInfoDictionaryKey:))
   }
 
-  #warning("logging-note: let's log message for each else of guard statement")
   private init?(objectForInfoDictionaryKey: @escaping (Key) -> Any?) {
     guard
       let marketingVersionText = objectForInfoDictionaryKey(.marketingVersion) as? String else {
+      #if canImport(os)
+        Self.logger.critical("Missing Marketing Version \(Key.marketingVersion.rawValue)")
+      #endif
       return nil
     }
 
     guard
       let buildNumberString = objectForInfoDictionaryKey(.bundleVersion) as? String else {
+      #if canImport(os)
+        Self.logger.critical("Missing Bundle Version \(Key.bundleVersion.rawValue)")
+      #endif
       return nil
     }
 
@@ -102,7 +118,6 @@ public extension Version {
   func buildNumberHex(withLength length: Int? = 8) -> String {
     let hexString = String(buildNumber, radix: 16)
     guard let length else {
-      #warning("logging-note: not sure what guard-else mean, but can we log some message here?")
       return hexString
     }
     return String(String(repeating: "0", count: length).appending(hexString).suffix(length))

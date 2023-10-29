@@ -31,7 +31,7 @@
           id: .init(),
           snapshotterID: "mock",
           createdAt: .init(),
-          fileLength: .init()
+          fileLength: .init(), isDiscardable: false
         )
       )
     )

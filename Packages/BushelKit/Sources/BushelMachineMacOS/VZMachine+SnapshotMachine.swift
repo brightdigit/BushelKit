@@ -13,6 +13,10 @@ import BushelMachine
       return .init(machinePathURL: url)
     }
 
+    func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int) {
+      self.configuration.snapshots[index] = snapshot
+    }
+
     #warning("logging-note: I think we should log every step here")
     func finishedWithSnapshot(_ snapshot: BushelMachine.Snapshot, by difference: SnapshotDifference) {
       url.stopAccessingSecurityScopedResource()
