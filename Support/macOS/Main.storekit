@@ -10,7 +10,7 @@
     "_applicationInternalID" : "1642807785",
     "_developerTeamID" : "MLT7M394S7",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 715801441.49720204,
+    "_lastSynchronizedDate" : 720125898.16911399,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -55,7 +55,10 @@
         "name" : "Refund Request Sheet"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 4,
+          "type" : "generic"
+        },
         "enabled" : false,
         "name" : "Offer Code Redeem Sheet"
       }
@@ -82,7 +85,11 @@
           "internalID" : "1643979682",
           "introductoryOffer" : null,
           "localizations" : [
-
+            {
+              "description" : "The Full Bushel of Pro Features for a month",
+              "displayName" : "Monthly",
+              "locale" : "en_US"
+            }
           ],
           "productID" : "bushel.pro.monthly.22",
           "recurringSubscriptionPeriod" : "P1M",
@@ -94,7 +101,7 @@
           "adHocOffers" : [
             {
               "displayPrice" : "41.99",
-              "internalID" : "782358A6",
+              "internalID" : "4007767C",
               "numberOfPeriods" : 1,
               "offerID" : "test.promo.offer.22",
               "paymentMode" : "payUpFront",
@@ -112,8 +119,8 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Pro Bushel Features",
-              "displayName" : "Bushel Pro Yearly",
+              "description" : "The Full Bushel of Pro Features for a year",
+              "displayName" : "Annual",
               "locale" : "en_US"
             }
           ],

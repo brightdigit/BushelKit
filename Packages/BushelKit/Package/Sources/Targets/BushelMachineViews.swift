@@ -12,5 +12,6 @@ struct BushelMachineViews: Target {
     BushelViewsCore()
     BushelSessionUI()
     BushelMachineEnvironment()
+    BushelMarketEnvironment()
   }
 }

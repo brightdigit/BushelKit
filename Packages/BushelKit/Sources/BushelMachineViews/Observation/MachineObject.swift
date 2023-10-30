@@ -51,6 +51,9 @@
     var canResume: Bool = false
     var canRequestStop: Bool = false
 
+    var selectedSnapshot: Snapshot.ID?
+    var updatingSnapshotMetadata = false
+
     var confirmingRemovingSnapshot: Snapshot?
     var presentDeleteConfirmation = false
 

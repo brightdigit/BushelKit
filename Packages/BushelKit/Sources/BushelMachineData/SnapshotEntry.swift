@@ -15,6 +15,7 @@
     public var snapshotID: UUID
     public var createdAt: Date
     public var fileLength: Int
+    public var isDiscardable: Bool
     public var notes: String
     public var machine: MachineEntry?
 
@@ -52,6 +53,7 @@
       snapshotterID: SnapshotterID,
       createdAt: Date,
       fileLength: Int,
+      isDiscardable: Bool,
       notes: String,
       operatingSystemVersion: OperatingSystemVersion? = nil,
       buildVersion: String? = nil
@@ -61,6 +63,7 @@
       self.snapshotterIDRawValue = snapshotterID.rawValue
       self.createdAt = createdAt
       self.fileLength = fileLength
+      self.isDiscardable = isDiscardable
       self.notes = notes
       self.machine = machine
       self.operatingSystemVersion = operatingSystemVersion
@@ -73,6 +76,7 @@
       self.operatingSystemVersionString ?? ""
     }
 
+    @MainActor
     // swiftlint:disable:next function_default_parameter_at_end
     convenience init(
       _ snapshot: Snapshot,
@@ -86,6 +90,7 @@
         snapshotterID: snapshot.snapshotterID,
         createdAt: snapshot.createdAt,
         fileLength: snapshot.fileLength,
+        isDiscardable: snapshot.isDiscardable,
         notes: snapshot.notes,
         operatingSystemVersion: osInstalled?.operatingSystemVersion ?? snapshot.operatingSystemVersion,
         buildVersion: osInstalled?.buildVersion ?? snapshot.buildVersion

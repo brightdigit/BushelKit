@@ -11,4 +11,11 @@ public enum Formatters {
     formatter.dateFormat = $0
     return formatter
   }("E, d MMM yyyy HH:mm:ss Z")
+
+  public static let snapshotDateFormatter = {
+    var formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .medium
+    return formatter
+  }()
 }

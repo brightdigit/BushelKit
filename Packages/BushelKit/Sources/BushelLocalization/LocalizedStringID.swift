@@ -63,6 +63,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case hubURL
   case hubNoneSelected
   case sessionPressPowerButton
+  case sessionUpgradeSaveAndTurnOff
   case sessionSaveAndTurnOff
   case sessionTurnOff
   case sessionShutdownAlert
@@ -96,11 +97,17 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case onboardingLibraryMessage
   case onboardingDoneTitle
   case onboardingWelcomeTitle
+  case onboardingFeatureListHeader
   case onboardingDoneButton
   case onboardingNextButton
   case tipLibraryTitle
   case tipLibraryMessage
   case libraryDeleteConfirmation
+  case snapshotDetailsPropertySize // "Size"
+  case snapshotDetailsPropertyDicardable // "Discardable"
+  case snapshotDetailsPropertyName // "Name"
+  case snapshotDetailsPropertyNotes // "Notes"
+  case snapshotDetailsPropertyCreated // "Created"
 
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

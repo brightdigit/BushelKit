@@ -4,17 +4,23 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelCore
+  import BushelLocalization
   import BushelLogging
   import BushelMachine
   import BushelMachineEnvironment
+  import BushelMarketEnvironment
   import BushelViewsCore
+  import StoreKit
   import SwiftUI
 
-  struct SessionView: View {
+  struct SessionView: View, LoggerCategorized {
+    let timer = Timer.publish(every: 5.0, on: .main, in: .common).autoconnect()
     @Binding var request: SessionRequest?
     @State var object = SessionObject()
     @State var hasIntialStarted = false
     @State var closeOnShutdown = false
+    @State var shouldDisplaySubscriptionStoreView = false
 
     var waitingForShutdown: Bool = false
     @Environment(\.metadataLabelProvider) var labelProvider
@@ -23,6 +29,9 @@
     @Environment(\.dismiss) private var dismiss
     @Environment(\.snapshotProvider) private var snapshotProvider
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
+    @Environment(\.marketplace) private var marketplace
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.purchaseWindow) private var purchaseWindow
 
     var startPauseResume: some View {
       Group {
@@ -57,10 +66,12 @@
 
       .toolbar(content: {
         ToolbarItemGroup {
+          Button {
+            self.object.startSnapshot(.init(), options: [])
+          } label: {
+            Image(systemName: "camera")
+          }
           self.startPauseResume.tint(.primary)
-
-          // Button("power off button") {} // save snapshot
-
           Button {
             self.object.beginShutdown()
           } label: {
@@ -79,15 +90,24 @@
           Text(.sessionPressPowerButton)
         }
 
-        Button {} label: {
-          Text(.sessionSaveAndTurnOff)
-        }.disabled(true)
+        Button {
+          if self.marketplace.purchased {
+            closeOnShutdown = true
+            self.object.stop(saveSnapshot: .init())
+          } else {
+            openWindow(value: self.purchaseWindow)
+          }
+        } label: {
+          if self.marketplace.purchased {
+            Text(LocalizedText.key(LocalizedStringID.sessionSaveAndTurnOff))
+          } else {
+            Text(LocalizedText.key(LocalizedStringID.sessionUpgradeSaveAndTurnOff))
+          }
+        }
 
         Button {
           closeOnShutdown = true
-          self.object.begin { machine in
-            try await machine.stop()
-          }
+          self.object.stop(saveSnapshot: nil)
         } label: {
           Text(.sessionTurnOff)
         }
@@ -97,6 +117,11 @@
         Text(.sessionShutdownAlert)
       }
       .onCloseButton(self.$object.windowClose, self.object.shouldCloseWindow(_:))
+      .onReceive(self.timer, perform: { _ in
+        if self.marketplace.purchased {
+          self.object.startSnapshot(.init(), options: .discardable)
+        }
+      })
       .onChange(of: request?.url) { _, newValue in
         if let url = newValue {
           Task {

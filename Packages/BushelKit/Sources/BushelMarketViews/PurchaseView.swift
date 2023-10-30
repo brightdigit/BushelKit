@@ -5,17 +5,28 @@
 
 #if canImport(StoreKit) && canImport(SwiftUI)
   import BushelCore
+  import BushelLocalization
+  import BushelMarket
   import BushelViewsCore
   import Foundation
   import StoreKit
   import SwiftUI
 
   public struct PurchaseView: SingleWindowView {
+    public typealias Value = PurchaseWindowValue
     @State var windowInitialized = false
     let groupID: String
 
     public var body: some View {
-      SubscriptionStoreView(groupID: groupID)
+      SubscriptionStoreView(groupID: groupID) {
+        PurchaseHeaderView()
+      }
+      .frame(idealWidth: 615, maxWidth: 700, minHeight: 960, alignment: .center)
+      .subscriptionStorePolicyDestination(url: .bushel.privacyPolicy, for: .privacyPolicy)
+      .subscriptionStorePolicyDestination(url: .bushel.termsOfUse, for: .termsOfService)
+      .storeButton(.visible, for: .restorePurchases, .policies)
+      .subscriptionStoreButtonLabel(.multiline)
+
       #if os(macOS)
         .nsWindowAdaptor(self.setupNSWindow(_:))
       #endif
@@ -28,7 +39,7 @@
     }
 
     public init() {
-      self.init(groupID: Configuration.Marketplace.groupID)
+      self.init(groupID: MarketplaceSettings.default.primaryGroupID)
     }
 
     #if os(macOS)

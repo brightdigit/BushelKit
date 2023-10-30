@@ -6,21 +6,26 @@
 import Foundation
 
 public struct EnvironmentConfiguration {
+  public enum Key: String {
+    case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
+    case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
+    case skipOnboarding = "SKIP_ONBOARDING"
+    case resetApplication = "RESET_APPLICATION"
+  }
+
   public static let shared: EnvironmentConfiguration = .init()
 
-  public let disableAssertionFailureForError: Bool
-  public let allowDatabaseRebuild: Bool
-  public let skipOnboarding: Bool
+  @EnvironmentProperty(Key.disableAssertionFailureForError)
+  public var disableAssertionFailureForError: Bool
 
-  #warning("logging-note: let's print these initialized values")
-  init(environment: [String: String] = ProcessInfo.processInfo.environment) {
-    self.disableAssertionFailureForError =
-      environment["DISABLE_ASSERTION_FAILURE_FOR_ERROR"].flatMap(Bool.init) == true
+  @EnvironmentProperty(Key.disallowDatabaseRebuild)
+  public var disallowDatabaseRebuild: Bool
 
-    self.allowDatabaseRebuild =
-      environment["ALLOW_DATABASE_REBUILD"].flatMap(Bool.init) == true
+  @EnvironmentProperty(Key.skipOnboarding)
+  public var skipOnboarding: Bool
 
-    self.skipOnboarding =
-      environment["SKIP_ONBOARDING"].flatMap(Bool.init) == true
-  }
+  @EnvironmentProperty(Key.resetApplication)
+  public var resetApplication: Bool
+
+  internal init() {}
 }

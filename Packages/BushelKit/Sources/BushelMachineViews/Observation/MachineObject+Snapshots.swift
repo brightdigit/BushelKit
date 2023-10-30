@@ -3,22 +3,159 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
+// swiftlint:disable file_length
+
 #if canImport(SwiftUI)
   import BushelCore
   import BushelMachine
   import BushelMachineData
   import BushelViewsCore
   import Foundation
+  import SwiftData
+  import SwiftUI
 
   extension MachineObject {
-    func saveSnapshot(_ request: SnapshotRequest, at url: URL) async throws {
+    struct SnapshotSelection {
+      internal init(id: Snapshot.ID, configurationURL: URL, index: Int) {
+        self.id = id
+        self.configurationURL = configurationURL
+        self.index = index
+      }
+
+      let id: Snapshot.ID
+      let configurationURL: URL
+      let index: Int
+
+      static var logger: Logger {
+        MachineObject.logger
+      }
+
+      init?(selectedSnapshot: UUID?, configurationURL: URL?, snapshots: [Snapshot]) {
+        guard let id = selectedSnapshot else {
+          Self.logger.error("No snapshot selected.")
+          return nil
+        }
+
+        guard let configurationURL else {
+          assertionFailure("Missing configuration url")
+          Self.logger.error("Missing configuration url for SnapshotObject")
+          return nil
+        }
+
+        guard let index = snapshots.firstIndex(where: { $0.id == id }) else {
+          Self.logger.error("Unable to find child image with id: \(id)")
+          assertionFailure("Unable to find child image with id: \(id)")
+          return nil
+        }
+
+        self.init(id: id, configurationURL: configurationURL, index: index)
+      }
+    }
+
+    func beginSavingSnapshot(_ object: SnapshotObject) {
+      Self.logger.debug("Begin saving snapshot")
+      Task {
+        do {
+          try await self.saveSnapshotObject(object)
+        } catch let error as SwiftDataError {
+          assertionFailure("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          Self.logger.error("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          self.error = .fromDatabaseError(error)
+        } catch let error as CocoaError {
+          assertionFailure("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          Self.logger.error("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          Self.logger.error("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          self.error = .accessDeniedError(error, at: object.machineConfigurationURL)
+        } catch let error as DecodingError {
+          assertionFailure("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          Self.logger.error("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          Self.logger.error("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
+          self.error = .corruptedError(error, at: object.machineConfigurationURL)
+        } catch {
+          assertionFailure(
+            "Unable to save snapshot \(object.initialSnapshot.id) with unknown error: \(error)"
+          )
+          Self.logger.critical(
+            "Unable to save snapshot \(object.initialSnapshot.id) with unknown error: \(error)"
+          )
+        }
+      }
+    }
+
+    func saveSnapshotObject(_ object: SnapshotObject) async throws {
+      Self.logger.debug("Saving snapshot")
+      self.updatingSnapshotMetadata = true
+      defer {
+        self.updatingSnapshotMetadata = false
+      }
+      self.machine.updatedMetadata(
+        forSnapshot: object.updatedSnapshot,
+        atIndex: object.index
+      )
+      try await object.entry.syncronizeSnapshot(
+        object.updatedSnapshot,
+        machine: self.entry,
+        using: modelContext
+      )
+
+      try writeConfigurationAt(object.machineConfigurationURL)
+      self.refreshSnapshots()
+      self.machine = machine
+
+      Self.logger.debug("Saving snapshot completed")
+    }
+
+    func bindableSnapshot(
+      usingLabelFrom labelProvider: MetadataLabelProvider,
+      fromConfigurationURL configurationURL: URL?
+    ) -> Bindable<SnapshotObject>? {
+      guard let selection = SnapshotSelection(
+        selectedSnapshot: selectedSnapshot,
+        configurationURL: configurationURL,
+        snapshots: machine.configuration.snapshots
+      ) else {
+        return nil
+      }
+      let id = selection.id
+      let entryChild = self.entry.snapshots?.first(where: { $0.snapshotID == selection.id })
+      let entry: SnapshotEntry?
+      do {
+        entry = try entryChild ?? modelContext.fetch(
+          FetchDescriptor<SnapshotEntry>(
+            predicate: #Predicate { $0.snapshotID == id }
+          )
+        ).first
+      } catch {
+        Self.logger.error("Error fetching entry \(selection.id) from database: \(error)")
+        assertionFailure(error: error)
+        return nil
+      }
+      guard let entry else {
+        Self.logger.error("No entry with \(selection.id) from database")
+        assertionFailure("No entry with \(selection.id) from database")
+        return nil
+      }
+
+      return .init(
+        SnapshotObject(
+          fromSnapshots: self.machine.configuration.snapshots,
+          atIndex: selection.index,
+          machineConfigurationURL: selection.configurationURL,
+          entry: entry,
+          vmSystemID: machine.configuration.vmSystemID,
+          using: labelProvider
+        )
+      )
+    }
+
+    func saveSnapshot(_ request: SnapshotRequest, options _: SnapshotOptions, at url: URL) async throws {
       let snapshot: Snapshot
       snapshot = try await machine.createNewSnapshot(
         request: request,
         options: .init(),
         using: self.snapshotFactory
       )
-      _ = try SnapshotEntry(snapshot, machine: self.entry, using: modelContext)
+      _ = try await SnapshotEntry(snapshot, machine: self.entry, using: modelContext)
 
       try writeConfigurationAt(url)
       self.refreshSnapshots()
@@ -64,37 +201,39 @@
             "Not matching snapshot ids: \(snapshot.id) != \(confirmingRemovingSnapshotIDString)"
           )
         }
+        if self.selectedSnapshot == snapshot.id {
+          self.selectedSnapshot = nil
+        }
         try machine.deleteSnapshot(snapshot, using: self.snapshotFactory)
         let snapshotID = snapshot.id
         try modelContext.delete(model: SnapshotEntry.self, where: #Predicate {
           $0.snapshotID == snapshotID
         })
         try writeConfigurationAt(url)
+        Self.logger.debug("Completed deleting snapshot \(snapshotID)")
       } catch {
         self.error = assertionFailure(error: error) { error in
           Self.logger.critical("Unknown error: \(error)")
         }
       }
-      #warning("logging-note: should we log here?")
       self.refreshSnapshots()
       self.machine = machine
       self.confirmingRemovingSnapshot = nil
     }
 
-    #warning("logging-note: should we log here?")
     func cancelDeleteSnapshot(_ snapshot: Snapshot?) {
       assert(snapshot?.id == confirmingRemovingSnapshot?.id)
       self.confirmingRemovingSnapshot = nil
     }
 
-    func beginSavingSnapshot(_ request: SnapshotRequest, at url: URL) {
+    func beginSavingSnapshot(_ request: SnapshotRequest, options: SnapshotOptions, at url: URL) {
       currentOperation = .savingSnapshot(request)
       Task {
         defer {
           currentOperation = nil
         }
         do {
-          try await self.saveSnapshot(request, at: url)
+          try await self.saveSnapshot(request, options: options, at: url)
         } catch {
           Self.logger.error(
             "Could not create snapshot at \(url, privacy: .public): \(error, privacy: .public)"
@@ -120,7 +259,7 @@
         }
         do {
           if let request {
-            try await self.saveSnapshot(request, at: url)
+            try await self.saveSnapshot(request, options: [], at: url)
           }
           try await self.machine.restoreSnapshot(snapshot, using: self.snapshotFactory)
           try await self.entry.synchronizeWith(machine, osInstalled: nil, using: self.modelContext)
@@ -168,7 +307,7 @@
       do {
         try await self.machine.exportSnapshot(snapshot, to: url, using: self.snapshotFactory)
 
-        _ = try MachineEntry(
+        _ = try await MachineEntry(
           url: url,
           machine: machine,
           osInstalled: nil,

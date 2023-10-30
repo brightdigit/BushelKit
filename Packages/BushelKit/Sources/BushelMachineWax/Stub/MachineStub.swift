@@ -66,4 +66,9 @@ public struct MachineStub: Machine {
   public func finishedWithSnapshot(_: BushelMachine.Snapshot, by _: BushelMachine.SnapshotDifference) {
     fatalError("Not implemented")
   }
+
+  // swiftlint:disable:next unavailable_function
+  public func updatedMetadata(forSnapshot _: BushelMachine.Snapshot, atIndex _: Int) {
+    fatalError("Not implemented")
+  }
 }

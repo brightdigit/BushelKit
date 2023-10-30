@@ -52,8 +52,8 @@
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider
     ) {
-      #warning("logging-note: would url ever be nil? if so to log useful message here")
       guard let url else {
+        Self.logger.info("No url to load.")
         return
       }
       Task {
@@ -77,6 +77,7 @@
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider
     ) async {
+      Self.logger.info("Loading Machine at \(url)")
       self.modelContext = modelContext
       self.systemManager = systemManager
       do {
@@ -101,21 +102,26 @@
       }
     }
 
-    #warning("logging-note: I am afraid the error is not handled by UI, can we log meaning error here too.")
     func beginSavingSnapshot(_ request: SnapshotRequest) {
+      self.beginSavingSnapshot(request, options: [])
+    }
+
+    func beginSavingSnapshot(_ request: SnapshotRequest, options: SnapshotOptions) {
       guard let url = self.url else {
         let error = MachineError.missingProperty(.url)
+        Self.logger.error("Missing url: \(error)")
         assertionFailure(error: error)
         self.error = error
         return
       }
       guard let machine = self.machineObject else {
         let error = MachineError.missingProperty(.machine)
+        Self.logger.error("Missing machine: \(error)")
         assertionFailure(error: error)
         self.error = error
         return
       }
-      machine.beginSavingSnapshot(request, at: url)
+      machine.beginSavingSnapshot(request, options: options, at: url)
     }
   }
 

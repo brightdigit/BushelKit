@@ -31,9 +31,11 @@
           .tabItem {
             Label(LocalizedStringID.machineDetailsSystemTab, systemImage: "list.bullet.rectangle.fill")
           }
-        SnapshotsView(url: object.url, machineObject: object.machineObject).tabItem {
-          Label("Snapshots", image: "camera")
-        }
+        #if os(macOS)
+          SnapshotsView(url: object.url, machineObject: object.machineObject).tabItem {
+            Label("Snapshots", image: "camera")
+          }
+        #endif
       }
       .padding()
       .toolbar {

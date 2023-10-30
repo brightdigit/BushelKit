@@ -25,7 +25,7 @@
             Text(document.text).font(.system(size: 10.0)).fontWeight(.ultraLight).lineLimit(1)
           }.foregroundColor(.primary)
           Spacer()
-        }
+        }.accessibilityLabel(document.name)
       }.buttonStyle(BorderlessButtonStyle())
     }
   }
