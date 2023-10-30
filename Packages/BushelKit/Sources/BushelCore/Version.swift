@@ -39,7 +39,10 @@ public struct Version: CustomStringConvertible {
 
 public extension Version {
   #if canImport(os)
-    static let logger: Logger = .init(subsystem: Bundle.main.bundleIdentifier ?? "Bushel", category: "application")
+    static let logger: Logger = .init(
+      subsystem: Bundle.main.bundleIdentifier ?? "Bushel",
+      category: "application"
+    )
   #endif
 
   var description: String {
@@ -121,5 +124,15 @@ public extension Version {
       return hexString
     }
     return String(String(repeating: "0", count: length).appending(hexString).suffix(length))
+  }
+}
+
+public extension Bundle {
+  // swiftlint:disable:next force_unwrapping
+  static let applicationVersion: Version = Bundle.main.version!
+  static let applicationVersionFormatted: VersionFormatted = .init(version: Bundle.applicationVersion)
+
+  var version: Version? {
+    .init(bundle: self)
   }
 }

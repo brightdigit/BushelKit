@@ -67,6 +67,7 @@ public struct MachineStub: Machine {
     fatalError("Not implemented")
   }
 
+  // swiftlint:disable:next unavailable_function
   public func updatedMetadata(forSnapshot _: BushelMachine.Snapshot, atIndex _: Int) {
     fatalError("Not implemented")
   }

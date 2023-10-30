@@ -292,6 +292,9 @@
 /* Onboarding done Message */
 "onboarding_welcome_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
 
+/* Onboarding Feature List Header */
+"onboarding_feature_list_header" = "What can you do with Bushel?";
+
 /* Onboarding Next */
 "onboarding_next_button" = "Continue";
 
@@ -303,3 +306,18 @@
 
 /* Library Delete Image Confirmation */
 "library_delete_confirmation" = "Are you sure you want to delete %@?";
+
+/* Snapshot Details Property Name */
+"snapshot_details_property_name" = "Name";
+
+/* Snapshot Details Property Discardable */
+"snapshot_details_property_dicardable" = "Discardable";
+
+/* Snapshot Details Property Size */
+"snapshot_details_property_Size" = "Size";
+
+/* Snapshot Details Property Created */
+"snapshot_details_property_created" = "Created";
+
+/* Snapshot Details Property Notes */
+"snapshot_details_property_notes" = "Notes";

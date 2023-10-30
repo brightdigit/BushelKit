@@ -5,9 +5,14 @@
 
 #if os(macOS)
   import BushelCore
+  import BushelLogging
   import Foundation
 
-  struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter {
+  struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, LoggerCategorized {
+    static var loggingCategory: Loggers.Category {
+      .machine
+    }
+
     let fileManager: FileManager
 
     init(fileManager: FileManager = .default) {
@@ -22,7 +27,6 @@
       self.init(fileManager: fileManager)
     }
 
-    #warning("logging-note: any useful logging here")
     func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
       let paths = machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
@@ -51,6 +55,7 @@
         throw SnapshotError.missingSnapshotFile(snapshot.id)
       }
 
+      Self.logger.debug("Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)")
       let fileVersion = try Result {
         try NSFileVersion.version(
           itemAt: paths.snapshottingSourceURL,
@@ -67,6 +72,9 @@
       .get()
 
       do {
+        Self.logger.debug(
+          "Replacing with snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)"
+        )
         try fileVersion.replaceItem(at: paths.snapshottingSourceURL)
         try self.fileManager.write(oldSnapshots, to: paths.snapshotCollectionURL)
       } catch {
@@ -82,7 +90,6 @@
       machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
-    #warning("logging-note: I think we should log every step here")
     @discardableResult
     func createNewSnapshot(
       of machine: MachineType,
@@ -104,24 +111,16 @@
           .appendingPathComponent(id.uuidString)
           .appendingPathExtension("bshsnapshot")
 
+      Self.logger.debug("Creating snapshot with id \(id)")
       let version = try NSFileVersion.addOfItem(
         at: paths.snapshottingSourceURL,
         withContentsOf: paths.snapshottingSourceURL,
-        options: .init(options: options)
+        options: options
       )
-
-      if options.contains(.discardable) {
-        version.isDiscardable = true
-      }
 
       let contentLength = try await self.fileManager.accumulateSizeFromDirectory(at: version.url)
 
-      let persistentIdentifierData = try NSKeyedArchiver.archivedData(
-        withRootObject: version.persistentIdentifier,
-        requiringSecureCoding: false
-      )
-
-      try persistentIdentifierData.write(to: snapshotFileURL)
+      try version.writePersistentIdentifier(to: snapshotFileURL)
 
       let snapshot = Snapshot(
         name: request.name,
@@ -132,8 +131,9 @@
         isDiscardable: version.isDiscardable,
         notes: request.notes
       )
-      machine.finishedWithSnapshot(snapshot, by: .append)
 
+      machine.finishedWithSnapshot(snapshot, by: .append)
+      Self.logger.debug("Completed new snapshot with id \(id)")
       return snapshot
     }
   }

@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelLocalization
   import SwiftUI
 
   struct FeaureListView: View {
@@ -11,7 +12,7 @@
     var body: some View {
       VStack(spacing: 8.0) {
         Spacer()
-        Text("What can you do with Bushel?").font(.largeTitle)
+        Text(.onboardingFeatureListHeader).font(.largeTitle)
         Spacer()
         FeatureItem(
           systemName: "questionmark.circle.fill",

@@ -42,7 +42,7 @@
           .tag(Tabs.tests)
 
         AboutView(
-          version: Configuration.version,
+          version: Bundle.applicationVersion,
           subscriptionEndDate: self.marketplace.subscriptionEndDate,
           purchaseScreenValue: self.purchaseScreenValue
         )

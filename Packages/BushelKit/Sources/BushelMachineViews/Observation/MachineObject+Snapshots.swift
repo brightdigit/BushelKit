@@ -15,6 +15,43 @@
   import SwiftUI
 
   extension MachineObject {
+    struct SnapshotSelection {
+      internal init(id: Snapshot.ID, configurationURL: URL, index: Int) {
+        self.id = id
+        self.configurationURL = configurationURL
+        self.index = index
+      }
+
+      let id: Snapshot.ID
+      let configurationURL: URL
+      let index: Int
+
+      static var logger: Logger {
+        MachineObject.logger
+      }
+
+      init?(selectedSnapshot: UUID?, configurationURL: URL?, snapshots: [Snapshot]) {
+        guard let id = selectedSnapshot else {
+          Self.logger.error("No snapshot selected.")
+          return nil
+        }
+
+        guard let configurationURL else {
+          assertionFailure("Missing configuration url")
+          Self.logger.error("Missing configuration url for SnapshotObject")
+          return nil
+        }
+
+        guard let index = snapshots.firstIndex(where: { $0.id == id }) else {
+          Self.logger.error("Unable to find child image with id: \(id)")
+          assertionFailure("Unable to find child image with id: \(id)")
+          return nil
+        }
+
+        self.init(id: id, configurationURL: configurationURL, index: index)
+      }
+    }
+
     func beginSavingSnapshot(_ object: SnapshotObject) {
       Self.logger.debug("Begin saving snapshot")
       Task {
@@ -35,8 +72,12 @@
           Self.logger.error("Unable to save snapshot \(object.initialSnapshot.id): \(error)")
           self.error = .corruptedError(error, at: object.machineConfigurationURL)
         } catch {
-          assertionFailure("Unable to save snapshot \(object.initialSnapshot.id) with unknown error: \(error)")
-          Self.logger.critical("Unable to save snapshot \(object.initialSnapshot.id) with unknown error: \(error)")
+          assertionFailure(
+            "Unable to save snapshot \(object.initialSnapshot.id) with unknown error: \(error)"
+          )
+          Self.logger.critical(
+            "Unable to save snapshot \(object.initialSnapshot.id) with unknown error: \(error)"
+          )
         }
       }
     }
@@ -47,8 +88,15 @@
       defer {
         self.updatingSnapshotMetadata = false
       }
-      self.machine.updatedMetadata(forSnapshot: object.updatedSnapshot, atIndex: object.index)
-      try await object.entry.syncronizeSnapshot(object.updatedSnapshot, machine: self.entry, using: modelContext)
+      self.machine.updatedMetadata(
+        forSnapshot: object.updatedSnapshot,
+        atIndex: object.index
+      )
+      try await object.entry.syncronizeSnapshot(
+        object.updatedSnapshot,
+        machine: self.entry,
+        using: modelContext
+      )
 
       try writeConfigurationAt(object.machineConfigurationURL)
       self.refreshSnapshots()
@@ -61,22 +109,15 @@
       usingLabelFrom labelProvider: MetadataLabelProvider,
       fromConfigurationURL configurationURL: URL?
     ) -> Bindable<SnapshotObject>? {
-      guard let id = selectedSnapshot else {
+      guard let selection = SnapshotSelection(
+        selectedSnapshot: selectedSnapshot,
+        configurationURL: configurationURL,
+        snapshots: machine.configuration.snapshots
+      ) else {
         return nil
       }
-
-      guard let configurationURL else {
-        assertionFailure("Missing configuration url")
-        Self.logger.error("Missing configuration url for SnapshotObject")
-        return nil
-      }
-
-      guard let index = machine.configuration.snapshots.firstIndex(where: { $0.id == id }) else {
-        Self.logger.error("Unable to find child image with id: \(id)")
-        assertionFailure("Unable to find child image with id: \(id)")
-        return nil
-      }
-      let entryChild = self.entry.snapshots?.first(where: { $0.snapshotID == id })
+      let id = selection.id
+      let entryChild = self.entry.snapshots?.first(where: { $0.snapshotID == selection.id })
       let entry: SnapshotEntry?
       do {
         entry = try entryChild ?? modelContext.fetch(
@@ -85,21 +126,21 @@
           )
         ).first
       } catch {
-        Self.logger.error("Error fetching entry \(id) from database: \(error)")
+        Self.logger.error("Error fetching entry \(selection.id) from database: \(error)")
         assertionFailure(error: error)
         return nil
       }
       guard let entry else {
-        Self.logger.error("No entry with \(id) from database")
-        assertionFailure("No entry with \(id) from database")
+        Self.logger.error("No entry with \(selection.id) from database")
+        assertionFailure("No entry with \(selection.id) from database")
         return nil
       }
 
       return .init(
         SnapshotObject(
           fromSnapshots: self.machine.configuration.snapshots,
-          atIndex: index,
-          machineConfigurationURL: configurationURL,
+          atIndex: selection.index,
+          machineConfigurationURL: selection.configurationURL,
           entry: entry,
           vmSystemID: machine.configuration.vmSystemID,
           using: labelProvider
@@ -169,18 +210,17 @@
           $0.snapshotID == snapshotID
         })
         try writeConfigurationAt(url)
+        Self.logger.debug("Completed deleting snapshot \(snapshotID)")
       } catch {
         self.error = assertionFailure(error: error) { error in
           Self.logger.critical("Unknown error: \(error)")
         }
       }
-      #warning("logging-note: should we log here?")
       self.refreshSnapshots()
       self.machine = machine
       self.confirmingRemovingSnapshot = nil
     }
 
-    #warning("logging-note: should we log here?")
     func cancelDeleteSnapshot(_ snapshot: Snapshot?) {
       assert(snapshot?.id == confirmingRemovingSnapshot?.id)
       self.confirmingRemovingSnapshot = nil

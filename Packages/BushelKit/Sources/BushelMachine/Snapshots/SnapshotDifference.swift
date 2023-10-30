@@ -4,7 +4,7 @@
 //
 
 import Foundation
-public enum SnapshotDifference {
+public enum SnapshotDifference: String {
   case append
   case remove
   case restored
