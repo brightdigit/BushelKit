@@ -133,12 +133,10 @@
       switch (newResult, object) {
       case let (.failure(error), _):
         Self.logger.error("Error importing restore image: \(error)")
-
         assertionFailure(error: error)
         self.error = error
 
       case (_, .none):
-        assertionFailure()
         Self.logger.error("Error missing library file.")
         let error = LibraryError.missingInitializedProperty(.bookmarkData)
         assertionFailure(error: error)
@@ -159,7 +157,6 @@
       }
     }
 
-    #warning("logging-note: this called from onChange, so it would be better to log the call here")
     func loadURL(
       _ url: URL?,
       withContext modelContext: ModelContext,
@@ -186,10 +183,10 @@
       }
     }
 
-    #warning("logging-note: all following assertions in this file needs a meaningful message")
     func queueRemovalSelectedItem() {
       guard let selectedItem else {
-        assertionFailure()
+        Self.logger.error("There is no selected item to queue.")
+        assertionFailure("There is no selected item to queue.")
         return
       }
 
@@ -199,7 +196,8 @@
 
     func cancelRemovalSelectedItem(withID id: UUID) {
       guard let selectedItem else {
-        assertionFailure()
+        Self.logger.error("There is no selected item to remove from queue.")
+        assertionFailure("There is no selected item to remove from queue.")
         return
       }
 
@@ -209,18 +207,20 @@
 
     func deleteSelectedItem(withID id: UUID) {
       guard let selectedItem else {
-        assertionFailure()
+        Self.logger.error("There is no selected item to delete.")
+        assertionFailure("There is no selected item to delete.")
         return
       }
 
       guard let object else {
-        assertionFailure()
+        Self.logger.error("There is object to delete from.")
+        assertionFailure("There is object to delete from.")
         return
       }
 
       assert(selectedItem == id)
       do {
-        #warning("logging-note: we need to log this operation too, it is called by confirmationDialog")
+        Self.logger.debug("Deleting \(selectedItem)")
         try object.deleteImage(withID: selectedItem)
       } catch {
         Self.logger.error("Unable to delete image: \(error)")
@@ -234,12 +234,12 @@
 
     func onSelectionChange() {
       guard let object else {
-        #warning("logging-note: would logging here be useful")
+        Self.logger.error("There is object to select from.")
+        assertionFailure("There is object to select from.")
         return
       }
 
       do {
-        #warning("logging-note: we need to log this operation too, it is called by confirmationDialog")
         try object.save()
       } catch {
         Self.logger.error("Unable to save library: \(error)")
@@ -252,18 +252,19 @@
     // swiftlint:disable:next cyclomatic_complexity function_body_length
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {
-        #warning("logging-note: would logging here be useful")
+        Self.logger.debug("New value is the same.")
+
         return
       }
 
       guard let newValue else {
-        #warning("logging-note: would logging here be useful")
+        Self.logger.debug("No new value to change to.")
         presentFileExporter = true
         return
       }
 
       guard object?.matchesURL(newValue) != true else {
-        #warning("logging-note: would logging here be useful")
+        Self.logger.debug("New value is the same url.")
         return
       }
 

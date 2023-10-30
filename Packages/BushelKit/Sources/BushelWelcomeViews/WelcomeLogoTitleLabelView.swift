@@ -29,7 +29,7 @@
         .key(LocalizedStringID.version),
         .text(
           // swiftlint:disable:next line_length
-          "\(Configuration.versionFormatted.marketingVersion) (\(Configuration.versionFormatted.buildNumberHex))"
+          "\(Bundle.applicationVersionFormatted.marketingVersion) (\(Bundle.applicationVersionFormatted.buildNumberHex))"
         )
       )
       .font(.system(size: 12.0))

@@ -7,6 +7,25 @@
   import Foundation
 
   extension NSFileVersion {
+    @available(iOS, unavailable)
+    static func addOfItem(
+      at url: URL,
+      withContentsOf contentsURL: URL,
+      options: SnapshotOptions
+    ) throws -> NSFileVersion {
+      let version = try NSFileVersion.addOfItem(
+        at: url,
+        withContentsOf: contentsURL,
+        options: .init(options: options)
+      )
+
+      if options.contains(.discardable) {
+        version.isDiscardable = true
+      }
+
+      return version
+    }
+
     static func version(
       itemAt url: URL,
       forPersistentIdentifierData identifierData: Data
@@ -35,6 +54,15 @@
         itemAt: paths.snapshottingSourceURL,
         forPersistentIdentifierData: identifierData
       )
+    }
+
+    func writePersistentIdentifier(to snapshotFileURL: URL) throws {
+      let persistentIdentifierData = try NSKeyedArchiver.archivedData(
+        withRootObject: self.persistentIdentifier,
+        requiringSecureCoding: false
+      )
+
+      try persistentIdentifierData.write(to: snapshotFileURL)
     }
   }
 
