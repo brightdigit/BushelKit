@@ -11,6 +11,19 @@
 
   @Observable
   class SnapshotObject {
+    let initialSnapshot: Snapshot
+    let entry: SnapshotEntry
+    let index: Int
+    let machineConfigurationURL: URL
+    let label: MetadataLabel?
+
+    var name: String
+    var notes: String
+
+    var updatedSnapshot: Snapshot {
+      initialSnapshot.updatingWith(name: name, notes: notes)
+    }
+
     init(
       entry: SnapshotEntry,
       index: Int,
@@ -28,37 +41,9 @@
       self.name = name ?? initialSnapshot.name
       self.notes = notes ?? initialSnapshot.notes
     }
-
-    let initialSnapshot: Snapshot
-    let entry: SnapshotEntry
-    let index: Int
-    let machineConfigurationURL: URL
-    let label: MetadataLabel?
-
-    var name: String
-    var notes: String
-
-    var updatedSnapshot: Snapshot {
-      initialSnapshot.updatingWith(name: name, notes: notes)
-    }
   }
 
   extension SnapshotObject {
-    convenience init(
-      fromSnapshots snapshots: [Snapshot],
-      atIndex index: Int,
-      machineConfigurationURL: URL,
-      entry: SnapshotEntry,
-      vmSystemID: VMSystemID,
-      using labelProvider: MetadataLabelProvider
-    ) {
-      let snapshot = snapshots[index]
-      let label = snapshot.operatingSystemInstalled.map {
-        labelProvider(vmSystemID, $0)
-      }
-      self.init(entry: entry, index: index, machineConfigurationURL: machineConfigurationURL, initialSnapshot: snapshot, label: label)
-    }
-
     var isDiscardable: Bool {
       initialSnapshot.isDiscardable
     }
@@ -73,6 +58,27 @@
 
     var hasChanges: Bool {
       self.initialSnapshot.name != self.name || self.initialSnapshot.notes != self.notes
+    }
+
+    convenience init(
+      fromSnapshots snapshots: [Snapshot],
+      atIndex index: Int,
+      machineConfigurationURL: URL,
+      entry: SnapshotEntry,
+      vmSystemID: VMSystemID,
+      using labelProvider: MetadataLabelProvider
+    ) {
+      let snapshot = snapshots[index]
+      let label = snapshot.operatingSystemInstalled.map {
+        labelProvider(vmSystemID, $0)
+      }
+      self.init(
+        entry: entry,
+        index: index,
+        machineConfigurationURL: machineConfigurationURL,
+        initialSnapshot: snapshot,
+        label: label
+      )
     }
   }
 #endif

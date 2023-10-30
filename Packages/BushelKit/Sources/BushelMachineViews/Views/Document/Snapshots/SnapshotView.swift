@@ -12,31 +12,25 @@
     @Environment(\.purchaseWindow) private var purchaseWindow
     @Environment(\.openWindow) private var openWindow
     @Environment(\.marketplace) private var marketplace
-    internal init(
-      snapshot: Bindable<SnapshotObject>,
-      saveAction: @escaping (SnapshotObject) -> Void
-    ) {
-      self._snapshot = snapshot
-      self.saveAction = saveAction
-    }
 
     @Bindable var snapshot: SnapshotObject
     let saveAction: (SnapshotObject) -> Void
     let timer = Timer.publish(every: 1.0, on: RunLoop.current, in: RunLoop.Mode.common).autoconnect()
 
     var body: some View {
-      Form(content: {
+      // swiftlint:disable:next closure_body_length
+      Form {
         Section {
           TextField("Name", text: self.$snapshot.name).labelsHidden().disabled(!marketplace.purchased)
         } header: {
           HStack {
-            Text("Name")
+            Text(.snapshotDetailsPropertyName)
             if !marketplace.purchased {
               Spacer()
               Button(action: {
                 openWindow(value: purchaseWindow)
               }, label: {
-                Text("GO PRO").foregroundStyle(Color.blue)
+                Text(.upgradePurchase).textCase(.uppercase).foregroundStyle(Color.blue)
               }).buttonStyle(.plain)
             }
           }.font(.subheadline)
@@ -44,12 +38,16 @@
 
         Section {
           HStack {
-            Text("Discardable").font(.subheadline)
+            Text(.snapshotDetailsPropertyDicardable).font(.subheadline)
             Toggle(
               "Discardable",
               systemImage: "trash.fill",
               isOn: .constant(self.snapshot.isDiscardable)
-            ).labelStyle(.titleOnly).opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/).allowsHitTesting(/*@START_MENU_TOKEN@*/false/*@END_MENU_TOKEN@*/).labelsHidden()
+            )
+            .labelStyle(.titleOnly)
+            .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+            .allowsHitTesting(/*@START_MENU_TOKEN@*/false/*@END_MENU_TOKEN@*/)
+            .labelsHidden()
           }
         }.padding(.top, 2.0)
 
@@ -67,7 +65,7 @@
             format: .byteCount(style: .file)
           ).font(.headline).fontWeight(.semibold)
         } header: {
-          Text("Size").font(.subheadline).padding(.top, 2.0)
+          Text(.snapshotDetailsPropertySize).font(.subheadline).padding(.top, 2.0)
         }
 
         Section {
@@ -75,37 +73,47 @@
             .font(.headline)
             .fontWeight(.semibold)
         } header: {
-          Text("Created").font(.subheadline).padding(.top, 2.0)
+          Text(.snapshotDetailsPropertyCreated).font(.subheadline).padding(.top, 2.0)
         }
 
         Section {
           TextEditor(text: self.$snapshot.notes).onSubmit {
             self.saveAction(self.snapshot)
-          }.disabled(!marketplace.purchased).foregroundStyle(
+          }
+          .disabled(!marketplace.purchased)
+          .foregroundStyle(
             self.marketplace.purchased ?
               Color.primary :
               Color.primary.opacity(0.5)
           )
         } header: {
           HStack {
-            Text("Notes").font(.subheadline).padding(.top, 2.0)
+            Text(.snapshotDetailsPropertyNotes).font(.subheadline).padding(.top, 2.0)
 
             if !marketplace.purchased {
               Spacer()
               Button(action: {
                 openWindow(value: purchaseWindow)
               }, label: {
-                Text("GO PRO").foregroundStyle(Color.blue)
+                Text(.upgradePurchase).foregroundStyle(Color.blue)
               }).buttonStyle(.plain)
             }
           }
         }
-      })
+      }
       .onReceive(self.timer) { _ in
         if self.snapshot.hasChanges {
           self.saveAction(snapshot)
         }
       }
+    }
+
+    internal init(
+      snapshot: Bindable<SnapshotObject>,
+      saveAction: @escaping (SnapshotObject) -> Void
+    ) {
+      self._snapshot = snapshot
+      self.saveAction = saveAction
     }
   }
 

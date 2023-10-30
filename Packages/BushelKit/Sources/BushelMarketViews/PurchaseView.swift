@@ -22,8 +22,8 @@
         PurchaseHeaderView()
       }
       .frame(idealWidth: 615, maxWidth: 700, minHeight: 960, alignment: .center)
-      .subscriptionStorePolicyDestination(url: Configuration.URLs.privacyPolicy, for: .privacyPolicy)
-      .subscriptionStorePolicyDestination(url: Configuration.URLs.termsOfUse, for: .termsOfService)
+      .subscriptionStorePolicyDestination(url: .bushel.privacyPolicy, for: .privacyPolicy)
+      .subscriptionStorePolicyDestination(url: .bushel.termsOfUse, for: .termsOfService)
       .storeButton(.visible, for: .restorePurchases, .policies)
       .subscriptionStoreButtonLabel(.multiline)
 

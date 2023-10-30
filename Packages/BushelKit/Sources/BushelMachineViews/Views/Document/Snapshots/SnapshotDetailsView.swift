@@ -10,12 +10,6 @@
     var snapshot: Bindable<SnapshotObject>?
     let saveAction: (SnapshotObject) -> Void
 
-    internal init(snapshot: Bindable<SnapshotObject>?,
-                  saveAction: @escaping (SnapshotObject) -> Void) {
-      self.snapshot = snapshot
-      self.saveAction = saveAction
-    }
-
     var body: some View {
       Group {
         if let snapshot {
@@ -27,6 +21,14 @@
           EmptyView()
         }
       }
+    }
+
+    internal init(
+      snapshot: Bindable<SnapshotObject>?,
+      saveAction: @escaping (SnapshotObject) -> Void
+    ) {
+      self.snapshot = snapshot
+      self.saveAction = saveAction
     }
   }
 

@@ -76,8 +76,8 @@
       self.operatingSystemVersionString ?? ""
     }
 
-    // swiftlint:disable:next function_default_parameter_at_end
     @MainActor
+    // swiftlint:disable:next function_default_parameter_at_end
     convenience init(
       _ snapshot: Snapshot,
       machine: MachineEntry,
