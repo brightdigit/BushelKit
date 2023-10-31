@@ -97,9 +97,10 @@
       }
     }
 
-    #warning("logging-note: it woudl be nice logging here")
+    @MainActor
     public func update(using context: ModelContext, at updateAt: Date = Date()) throws {
       self.updatedAt = updateAt
+      Self.logger.debug("Noting updated bookmark \(self.path)")
       try context.save()
     }
 

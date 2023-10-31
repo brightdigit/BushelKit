@@ -10,7 +10,7 @@ public protocol LocalizedID {
 #if canImport(SwiftUI)
   import SwiftUI
 
-  extension LocalizedID {
+  public extension LocalizedID {
     var key: LocalizedStringKey {
       LocalizedStringID.assert()
       return LocalizedStringKey(keyValue)

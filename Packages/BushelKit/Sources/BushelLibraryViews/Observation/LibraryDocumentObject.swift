@@ -157,6 +157,7 @@
       }
     }
 
+    @MainActor
     func loadURL(
       _ url: URL?,
       withContext modelContext: ModelContext,
@@ -232,6 +233,7 @@
       self.selectedItem = nil
     }
 
+    @MainActor
     func onSelectionChange() {
       guard let object else {
         Self.logger.error("There is object to select from.")
@@ -249,6 +251,7 @@
       }
     }
 
+    @MainActor
     // swiftlint:disable:next cyclomatic_complexity function_body_length
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {

@@ -96,18 +96,33 @@
 
       graphicsDevices = specifications.graphicsConfigurations.map { config in
         let displayConfig = VZMacGraphicsDeviceConfiguration()
-        displayConfig.displays = config.displays.map { _ in
-          .init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)
+        displayConfig.displays = config.displays.map { display in
+          .init(
+            widthInPixels: display.widthInPixels,
+            heightInPixels: display.heightInPixels,
+            pixelsPerInch: display.pixelsPerInch
+          )
         }
         return displayConfig
       }
       networkDevices = networkDevices
       bootLoader = VZMacOSBootLoader()
       pointingDevices = [VZUSBScreenCoordinatePointingDeviceConfiguration()]
-
       pointingDevices.append(VZMacTrackpadConfiguration())
 
       keyboards = [VZUSBKeyboardConfiguration()]
+
+      //      consoleDevices.append(
+      //        {
+      //          let consoleDevice = VZVirtioConsoleDeviceConfiguration()
+      //          let spiceAgentPort = VZVirtioConsolePortConfiguration()
+      //          spiceAgentPort.name = VZSpiceAgentPortAttachment.spiceAgentPortName
+      //          spiceAgentPort.attachment = VZSpiceAgentPortAttachment()
+      //          consoleDevice.ports[0] = spiceAgentPort
+      //
+      //          return consoleDevice
+      //        }()
+      //      )
     }
   }
 #endif

@@ -69,12 +69,14 @@
           value: self.$object.configuration.memory,
           in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
         ).layoutPriority(100)
-        TextField(
-          value: self.$object.configuration.memory,
-          formatter: ByteCountFormatter.memory
-        ) {
-          Text(LocalizedStringID.machineDetailsMemoryName)
-        }.frame(minWidth: 70, idealWidth: 75, maxWidth: 100).multilineTextAlignment(.trailing)
+
+        Text(
+          Int64(self.object.configuration.memory),
+          format: .byteCount(style: .file)
+        )
+        .frame(minWidth: 70, idealWidth: 75, maxWidth: 100)
+        .multilineTextAlignment(.trailing)
+        .opacity(0.8)
         Stepper(
           value: self.$object.configuration.memory,
           in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
@@ -119,15 +121,13 @@
             in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
           )
           .layoutPriority(100)
-          TextField(
-            value: self.$object.configuration.primaryStorageSizeFloat,
-            formatter: ByteCountFormatter.file
-          ) {
-            Text(LocalizedStringID.machineDetailsMemoryName)
-          }
-          .labelsHidden()
+          Text(
+            Int64(self.object.configuration.primaryStorage.size),
+            format: .byteCount(style: .file)
+          )
           .frame(minWidth: 70, idealWidth: 75, maxWidth: 100)
           .multilineTextAlignment(.trailing)
+          .opacity(0.8)
           Stepper(
             value: self.$object.configuration.primaryStorageSizeFloat,
             in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),

@@ -12,6 +12,9 @@
   import SwiftUI
 
   public struct MachineScene: Scene, LoggerCategorized {
+    static let minimumWidth = 512.0
+    static let idealSessionWidth = 1920.0
+
     public var body: some Scene {
       WindowGroup("New Machine...", for: MachineBuildRequest.self) { request in
         #if os(macOS)
@@ -23,8 +26,6 @@
       WindowGroup(for: MachineFile.self) { file in
         #if os(macOS)
           DocumentView(machineFile: file).nsWindowAdaptor {
-            #warning("logging-note: not sure what is this, should we log something here?")
-            #warning("cont: SessionView down there have one too")
             $0?.isRestorable = false
           }
           .presentedWindowToolbarStyle(.expanded)

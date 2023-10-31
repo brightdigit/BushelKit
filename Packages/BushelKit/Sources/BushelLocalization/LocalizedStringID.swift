@@ -67,6 +67,9 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case sessionSaveAndTurnOff
   case sessionTurnOff
   case sessionShutdownAlert
+  case sessionCaptureSystemKeysToggle
+  // swiftlint:disable:next identifier_name
+  case sessionAutomaticallyReconfigureDisplayToggle
   case settingsGeneralTab
   case settingsAdvancedTab
   case settingsTestTab

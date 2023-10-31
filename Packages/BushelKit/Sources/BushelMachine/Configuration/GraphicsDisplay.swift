@@ -26,6 +26,10 @@ public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConv
 }
 
 public extension GraphicsDisplay {
+  var aspectRatio: CGFloat {
+    CGFloat(self.widthInPixels) / CGFloat(self.heightInPixels)
+  }
+
   static func `default`() -> GraphicsDisplay {
     .init(widthInPixels: 1920, heightInPixels: 1080, pixelsPerInch: 80)
   }

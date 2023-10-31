@@ -4,13 +4,14 @@
 //
 
 #if canImport(SwiftUI) && canImport(Virtualization) && arch(arm64)
+  import BushelCore
   import BushelSessionUI
   import Foundation
   import SwiftUI
 
   extension VZMachine: Sessionable {
-    func view() -> some View {
-      VirtualizationMachineView(virtualMachine: self.machine)
+    func view(_ settings: Binding<ScreenSettings>) -> some View {
+      ScreenView(virtualMachine: self.machine, settings: settings)
     }
   }
 #endif
