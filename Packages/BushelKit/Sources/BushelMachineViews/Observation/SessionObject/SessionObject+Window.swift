@@ -5,8 +5,27 @@
 
 #if canImport(Observation) && os(macOS) && canImport(SwiftUI) && canImport(SwiftData)
   import AppKit
+  import BushelCore
   import Foundation
   import SwiftUI
+
+  public extension CGSize {
+    @available(*, deprecated, message: "Should use BushelCore")
+    @inlinable
+    func resizing(
+      toAspectRatio aspectRatio: CGFloat,
+      minimumWidth: CGFloat,
+      withAdditionalHeight additionalHeight: CGFloat
+    ) -> CGSize {
+      let remainingHeight = max(self.height - additionalHeight, 0)
+      let calculatedWidth = remainingHeight * aspectRatio
+      if calculatedWidth < minimumWidth {
+        return .init(width: minimumWidth, height: minimumWidth / aspectRatio + additionalHeight)
+      } else {
+        return .init(width: calculatedWidth, height: remainingHeight + additionalHeight)
+      }
+    }
+  }
 
   extension SessionObject {
     var capturesSystemKeys: Bool {

@@ -4,7 +4,6 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
   import Foundation
   import SwiftUI
 
