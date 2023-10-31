@@ -97,7 +97,7 @@ public extension FileManager {
   }
 
   func accumulateSizeFromDirectory(at url: URL) async throws -> Int {
-    try await self.reduce(.totalFileAllocatedSizeKey, directoryAt: url, 0) {
+    try await self.reduce(.fileAllocatedSizeKey, directoryAt: url, 0) {
       $0 + $1
     }
   }

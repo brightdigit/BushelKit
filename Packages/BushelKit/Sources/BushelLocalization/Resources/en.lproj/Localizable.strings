@@ -226,6 +226,12 @@
 /* session_turn_off */
 "session_turn_off" = "Turn Off";
 
+/* Session Automatically Reconfigure Display Toggle */
+"session_automatically_reconfigure_display_toggle" = "Automatically Reconfigure Display";
+
+/* Session Capture System Keys Toggle */
+"session_capture_system_keys_toggle" = "Automatically Reconfigure Display";
+
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
 
@@ -314,7 +320,7 @@
 "snapshot_details_property_dicardable" = "Discardable";
 
 /* Snapshot Details Property Size */
-"snapshot_details_property_Size" = "Size";
+"snapshot_details_property_size" = "Size";
 
 /* Snapshot Details Property Created */
 "snapshot_details_property_created" = "Created";

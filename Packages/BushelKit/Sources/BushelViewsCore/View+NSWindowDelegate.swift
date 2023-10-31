@@ -1,5 +1,5 @@
 //
-// NSWindowDelegateAdaptor.swift
+// View+NSWindowDelegate.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -32,19 +32,7 @@
     }
   }
 
-  class NSWindowDelegateAdaptor: NSObject, NSWindowDelegate {
-    let onWindowShouldClose: ((NSWindow) -> Bool)?
-
-    internal init(onWindowShouldClose: ((NSWindow) -> Bool)?) {
-      self.onWindowShouldClose = onWindowShouldClose
-    }
-
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-      onWindowShouldClose?(sender) ?? true
-    }
-  }
-
-  extension View {
+  public extension View {
     func nsWindowDelegateAdaptor(
       _ binding: Binding<NSWindowDelegate?>,
       _ delegate: @autoclosure () -> NSWindowDelegate
@@ -53,18 +41,6 @@
         NSWindowDelegateAdaptorModifier(
           binding: binding,
           delegate: delegate()
-        )
-      )
-    }
-
-    public func onCloseButton(
-      _ delegate: Binding<NSWindowDelegate?>,
-      _ closure: @escaping (NSWindow) -> Bool
-    ) -> some View {
-      self.nsWindowDelegateAdaptor(
-        delegate,
-        NSWindowDelegateAdaptor(
-          onWindowShouldClose: closure
         )
       )
     }

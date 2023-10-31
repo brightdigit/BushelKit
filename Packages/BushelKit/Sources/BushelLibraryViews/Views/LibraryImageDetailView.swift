@@ -50,6 +50,9 @@
       .onChange(of: self.image.metadata) { _, newValue in
         self.metadataLabel = system.label(fromMetadata: newValue)
       }
+      .onDisappear {
+        self.image.save()
+      }
     }
 
     internal init(image: Bindable<LibraryImageObject>, system: LibrarySystem) {

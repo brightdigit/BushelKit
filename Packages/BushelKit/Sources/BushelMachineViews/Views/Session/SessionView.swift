@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import AppKit
   import BushelCore
   import BushelLocalization
   import BushelLogging
@@ -17,6 +18,7 @@
   struct SessionView: View, LoggerCategorized {
     let timer = Timer.publish(every: 5.0, on: .main, in: .common).autoconnect()
     @Binding var request: SessionRequest?
+
     @State var object = SessionObject()
     @State var hasIntialStarted = false
     @State var closeOnShutdown = false
@@ -33,90 +35,44 @@
     @Environment(\.openWindow) private var openWindow
     @Environment(\.purchaseWindow) private var purchaseWindow
 
-    var startPauseResume: some View {
-      Group {
-        if self.object.canStart {
-          Button {
-            self.object.begin { try await $0.start() }
-          } label: {
-            Image(systemName: "play.fill")
-          }
-        } else if self.object.canPause {
-          Button {
-            self.object.begin { try await $0.pause() }
-          } label: {
-            Image(systemName: "pause.fill")
-          }
-        } else if self.object.canResume {
-          Button {
-            self.object.begin { try await $0.resume() }
-          } label: {
-            Image(systemName: "play")
-          }
-        } else {
-          ProgressView().scaleEffect(0.5)
-        }
-      }
-    }
-
     var body: some View {
       ZStack {
         object.view()
       }
-
       .toolbar(content: {
         ToolbarItemGroup {
-          Button {
-            self.object.startSnapshot(.init(), options: [])
-          } label: {
-            Image(systemName: "camera")
-          }
-          self.startPauseResume.tint(.primary)
-          Button {
-            self.object.beginShutdown()
-          } label: {
-            Image(systemName: "power")
-          }.disabled(!self.object.canRequestStop).tint(.primary)
+          SessionToolbarView(
+            screenSettings: self.$object.screenSettings,
+            agent: self.object,
+            onGeometryProxy: self.object.toolbarProxy
+          )
         }
       })
+      .frame(
+        minWidth: object.minWidth,
+        idealWidth: object.idealWidth,
+        minHeight: object.minHeight,
+        idealHeight: object.idealHeight
+      )
+      .nsWindowAdaptor { window in
+        self.object.setWindow(window)
+      }
+      .nsWindowDelegateAdaptor(
+        self.$object.windowDelegate,
+        SessionWindowDelegate(object: object)
+      )
       .confirmationDialog(
         "Shutdown Machine",
         isPresented: self.$object.presentConfirmCloseAlert
       ) {
-        Button {
-          closeOnShutdown = true
-          self.object.beginShutdown()
-        } label: {
-          Text(.sessionPressPowerButton)
-        }
-
-        Button {
-          if self.marketplace.purchased {
-            closeOnShutdown = true
-            self.object.stop(saveSnapshot: .init())
-          } else {
-            openWindow(value: self.purchaseWindow)
-          }
-        } label: {
-          if self.marketplace.purchased {
-            Text(LocalizedText.key(LocalizedStringID.sessionSaveAndTurnOff))
-          } else {
-            Text(LocalizedText.key(LocalizedStringID.sessionUpgradeSaveAndTurnOff))
-          }
-        }
-
-        Button {
-          closeOnShutdown = true
-          self.object.stop(saveSnapshot: nil)
-        } label: {
-          Text(.sessionTurnOff)
-        }
-
-        Button("Cancel", role: .cancel) {}
+        SessionClosingActionsView(
+          closeOnShutdown: self.$closeOnShutdown,
+          pressPowerButton: self.object.pressPowerButton,
+          stopAndSaveSnapshot: self.object.stop(saveSnapshot:)
+        )
       } message: {
         Text(.sessionShutdownAlert)
       }
-      .onCloseButton(self.$object.windowClose, self.object.shouldCloseWindow(_:))
       .onReceive(self.timer, perform: { _ in
         if self.marketplace.purchased {
           self.object.startSnapshot(.init(), options: .discardable)
@@ -162,6 +118,7 @@
       }
 
       .onChange(of: self.object.state) { oldValue, newValue in
+        self.object.updateWindowSize()
         if oldValue != .stopped, newValue == .stopped, self.closeOnShutdown {
           dismiss()
         }

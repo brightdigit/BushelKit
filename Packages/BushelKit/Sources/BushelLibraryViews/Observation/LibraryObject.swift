@@ -34,6 +34,7 @@
       self.entry = entry
     }
 
+    @MainActor
     // swiftlint:disable:next cyclomatic_complexity
     func save() throws {
       guard let modelContext else {
@@ -120,6 +121,7 @@
       }
     }
 
+    @MainActor
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func importRemoteImageAt(
       _ remoteURL: URL,
@@ -259,6 +261,7 @@
       try modelContext.save()
     }
 
+    @MainActor
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func importRestoreImageAt(
       _ importingURL: URL,
@@ -362,6 +365,7 @@
   }
 
   extension LibraryObject {
+    @MainActor
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     convenience init(
       _ url: URL,
