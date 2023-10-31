@@ -6,6 +6,7 @@
 import Foundation
 
 public extension CGSize {
+  @inlinable
   func resizing(
     toAspectRatio aspectRatio: CGFloat,
     minimumWidth: CGFloat,

@@ -6,7 +6,7 @@ missing:
   severity: error
 
 partial:
-  severity: error
+  severity: warning
 
 unused:
   severity: warning
