@@ -23,19 +23,5 @@
         }
       }
     }
-
-    #if os(macOS)
-      @available(*, deprecated, message: "Use single open panel...")
-      public struct OpenCommands: View, LoggerCategorized {
-        public init() {}
-
-        @Environment(\.openWindow) private var openWindow
-        public var body: some View {
-          Button("Machine...") {
-            OpenFilePanel(MachineFileTypeSpecification.self)(with: openWindow)
-          }
-        }
-      }
-    #endif
   }
 #endif

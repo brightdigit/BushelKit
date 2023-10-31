@@ -37,13 +37,13 @@
       self.name = _entry.name
     }
 
-    deinit {
+    @MainActor
+    func save() {
+      Self.logger.debug("Saving \(self.entry.name)")
       do {
-        #warning("logging-note: why not to log this too?")
         try self.library.save()
       } catch {
-        assertionFailure(error: error)
-        Self.logger.error("Unable to save new name: \(error)")
+        Self.logger.error("Unable to save \(self.entry.name): \(error)")
       }
     }
   }

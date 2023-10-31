@@ -93,6 +93,7 @@
       )
     }
 
+    @MainActor
     init(
       configuration: MachineObjectConfiguration
     ) async throws {

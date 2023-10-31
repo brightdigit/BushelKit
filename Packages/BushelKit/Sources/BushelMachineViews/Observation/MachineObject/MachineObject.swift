@@ -39,9 +39,9 @@
       }
     }
 
-    var sessionViewable: (any Sessionable)? {
-      assert(machine is (any Sessionable))
-      return machine as? (any Sessionable)
+    var sessionViewable: (any Sessionable<ScreenSettings>)? {
+      assert(machine is (any Sessionable<ScreenSettings>))
+      return machine as? (any Sessionable<ScreenSettings>)
     }
 
     var state: MachineState = .stopped

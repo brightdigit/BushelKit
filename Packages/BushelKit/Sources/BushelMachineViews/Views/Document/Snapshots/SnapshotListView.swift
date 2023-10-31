@@ -41,7 +41,7 @@
           .frame(
             minWidth: 256,
             idealWidth: 256,
-            maxWidth: min(512, geometry.size.width / 2.0),
+            maxWidth: min(MachineScene.minimumWidth, geometry.size.width / 2.0),
             maxHeight: .infinity
           )
         }.frame(width: geometry.size.width, height: geometry.size.height)
