@@ -1,5 +1,5 @@
 //
-// LibraryDocumentObject.swift
+// DocumentObject.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -21,7 +21,7 @@
   import SwiftUI
 
   @Observable
-  class LibraryDocumentObject: LoggerCategorized {
+  class DocumentObject: LoggerCategorized {
     var restoreImageImportProgress: ProgressOperationProperties?
     var object: LibraryObject?
     var error: LibraryError?

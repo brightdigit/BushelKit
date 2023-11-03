@@ -16,6 +16,17 @@ extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebug
     case invalidFormatString(String)
   }
 
+  private static let codeNames: [Int: String] = [
+    11: "Big Sur",
+    12: "Monterey",
+    13: "Ventura",
+    14: "Sonoma"
+  ]
+
+  public var macOSReleaseName: String? {
+    Self.macOSReleaseName(majorVersion: majorVersion)
+  }
+
   public var description: String {
     [majorVersion, minorVersion, patchVersion].map(String.init).joined(separator: ".")
   }
@@ -74,6 +85,10 @@ extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebug
     } catch {
       throw throwingError ?? error
     }
+  }
+
+  public static func macOSReleaseName(majorVersion: Int) -> String? {
+    Self.codeNames[majorVersion]
   }
 
   static func singleStringDecodingContainer(from decoder: Decoder) -> SingleValueDecodingContainer? {

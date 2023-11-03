@@ -1,5 +1,5 @@
 //
-// LibraryImageDetailView.swift
+// ImageView.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -9,7 +9,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct LibraryImageDetailView: View {
+  struct ImageView: View {
     @Environment(\.openWindow) var openWindow
     @Bindable var image: LibraryImageObject
     let system: any LibrarySystem
@@ -25,15 +25,25 @@
             .mask { Circle() }
             .overlay { Circle().stroke() }
             .padding(.horizontal)
+            .accessibilityHidden(true)
           VStack(alignment: .leading) {
-            TextField("Name", text: self.$image.name).font(.largeTitle)
-            Text(metadataLabel.operatingSystemLongName).lineLimit(1).font(.title)
+            TextField("Name", text: self.$image.name)
+              .font(.largeTitle)
+              .accessibilityIdentifier("name-field")
+            Text(metadataLabel.operatingSystemLongName)
+              .lineLimit(1)
+              .font(.title)
+              .accessibilityIdentifier("operating-system-name")
             Text(
               Int64(image.metadata.contentLength), format: .byteCount(style: .file)
-            ).font(.title2)
+            )
+            .font(.title2)
+            .accessibilityIdentifier("content-length")
             Text(image.metadata.lastModified, style: .date).font(.title2)
+              .accessibilityIdentifier("last-modified")
           }
         }
+        .accessibilityElement(children: .contain)
         Button("Build") {
           openWindow(
             value: MachineBuildRequest(
@@ -44,6 +54,7 @@
             )
           )
         }
+        .accessibilityHint("Configure a new virtual machine")
         Spacer()
       }
       .padding(.vertical)
