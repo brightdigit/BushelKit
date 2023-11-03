@@ -10,7 +10,7 @@
   struct ToolbarView: View {
     let title: String
     let allAllowedContentTypes: [UTType]
-    @Bindable var object: LibraryDocumentObject
+    @Bindable var object: DocumentObject
 
     var body: some View {
       HStack {
@@ -18,7 +18,7 @@
           Button("Import File...") {
             self.object.presentFileImporter = true
           }
-          .accessibilityIdentifier("library:" + title + "toolbar:plus:import")
+          .accessibilityIdentifier("library:" + title + ":toolbar:plus:import")
           .accessibilityLabel("Import File")
           Button("Download From Hub...") {
             self.object.presentHubModal = true

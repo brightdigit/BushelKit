@@ -1,18 +1,15 @@
 //
-//  BushelUITestsLaunchTests.swift
-//  BushelUITests
-//
-//  Created by Leo Dion on 9/1/22.
+// LaunchTests.swift
+// Copyright (c) 2023 BrightDigit.
 //
 
-import XCTest
+#if os(macOS)
+  import XCTest
 
-final class BushelUITestsLaunchTests: XCTestCase {
-
+  open class LaunchTests: XCTestCase {
     func testLaunch() throws {
-        let app = XCUIApplication()
-        app.launch()
-      
+      let app = XCUIApplication()
+      app.launch()
 
 //        // Insert steps here to perform after app launch but before taking a screenshot,
 //        // such as logging into a test account or navigating somewhere in the app
@@ -22,4 +19,5 @@ final class BushelUITestsLaunchTests: XCTestCase {
 //        attachment.lifetime = .keepAlways
 //        add(attachment)
     }
-}
+  }
+#endif

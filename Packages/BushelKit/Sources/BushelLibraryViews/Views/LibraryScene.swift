@@ -18,7 +18,7 @@
 
     public var body: some Scene {
       WindowGroup(for: LibraryFile.self, content: { file in
-        LibraryDocumentView(file: file)
+        DocumentView(file: file)
       })
     }
 

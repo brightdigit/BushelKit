@@ -623,6 +623,27 @@ struct BushelSettingsApp: Product, Target {
   }
 }
 //
+// BushelUITests.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelUITests: Product, Target {
+  var dependencies: any Dependencies {
+    BushelUITestingUtilities()
+  }
+}
+//
+// BushelAccessibility.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelAccessibility: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+  }
+}
+//
 // BushelArgs.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -1082,6 +1103,17 @@ import Foundation
 
 struct BushelTestUtlities: Target {}
 //
+// BushelUITestingUtilities.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+struct BushelUITestingUtilities: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelAccessibility()
+  }
+}
+//
 // BushelUT.swift
 // Copyright (c) 2023 BrightDigit.
 //
@@ -1204,6 +1236,7 @@ import PackageDescription
 
 let package = Package(
   entries: {
+    BushelUITests()
     BushelCommand()
     BushelLibraryApp()
     BushelMachineApp()
