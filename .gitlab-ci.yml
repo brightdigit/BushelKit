@@ -2,7 +2,14 @@ stages:
   - build
   - lint
   - deploy
-  
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+    
 cache:
   - key: 
       files:
@@ -23,21 +30,22 @@ cache:
   script:
     - ./Scripts/package.sh
     - git diff --exit-code
-    - xcodes select 15
+    - xcodes select 15.1
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
 
 build spm macos:
   stage: build
-  only:
-    - branches
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "push"
   tags:
       - macos
   script: 
-    - xcodes select 15 
+    - xcodes select 15.1
     - cd Packages/BushelKit
     - swift build
-    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0,name=iPhone 14"
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.2 -destination "OS=17.0.1,name=iPhone 14"
 
 build spm linux 5.9.0-nightly:
   stage: build
@@ -93,7 +101,7 @@ deploy:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - xcodes select 15
+    - xcodes select 15.0.1
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
