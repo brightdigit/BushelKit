@@ -1,5 +1,5 @@
 //
-// LibraryDocumentView.swift
+// DocumentView.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -13,14 +13,14 @@
   import Observation
   import SwiftUI
 
-  struct LibraryDocumentView: View, LoggerCategorized {
+  struct DocumentView: View, LoggerCategorized {
     @Environment(\.librarySystemManager) private var librarySystemManager
     @Environment(\.modelContext) private var context
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hubView) var hubView
 
-    @State var object: LibraryDocumentObject
+    @State var object: DocumentObject
     @Binding var file: LibraryFile?
 
     var title: String {
@@ -35,6 +35,7 @@
           object: self.object
         )
         LibraryList(
+          accessibilityTitle: title,
           items: object.object?.library.items,
           selectedItem: self.$object.selectedItem,
           librarySystemManager: librarySystemManager
@@ -73,7 +74,7 @@
       } detail: {
         if let image = self.object.object?.bindableImage(withID: self.object.selectedItem) {
           let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystemID)
-          LibraryImageDetailView(
+          ImageView(
             image: image,
             system: system
           )
@@ -134,7 +135,7 @@
 
     internal init(
       file: Binding<LibraryFile?>,
-      object: LibraryDocumentObject = .init()
+      object: DocumentObject = .init()
     ) {
       _file = file
       _object = .init(initialValue: object)

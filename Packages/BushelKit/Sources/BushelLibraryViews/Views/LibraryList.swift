@@ -8,6 +8,7 @@
   import SwiftUI
 
   struct LibraryList: View {
+    let accessibilityTitle: String
     let items: [LibraryImageFile]?
     @Binding var selectedItem: LibraryImageFile.ID?
     let librarySystemManager: any LibrarySystemManaging
@@ -37,6 +38,11 @@
                 Text(label.operatingSystemLongName)
               }
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier(
+              "library:" + accessibilityTitle + ":images:" + libraryItem.id.uuidString
+            )
+            .accessibilityLabel(libraryItem.name)
           }
         }
       }

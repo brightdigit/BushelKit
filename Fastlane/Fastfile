@@ -16,6 +16,43 @@
 default_platform(:mac)
 
 platform :mac do  
+  lane :connect_feedback do
+    fastlane_require 'spaceship'
+    fastlane_require 'csv'
+    
+    identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    itc_team_id = CredentialsManager::AppfileConfig.try_fetch_value(:itc_team_id)
+    
+    Spaceship::Tunes.login
+    # Spaceship::Tunes.select_team
+  
+    Spaceship::Tunes.client.team_id = itc_team_id
+  
+    # Gets app
+    app = Spaceship::ConnectAPI::App.find(identifier)
+  
+    # Gets feedback for an app (default includes screenshots and tester info)
+    feedbacks = app.get_beta_feedback
+  
+    headers = ["Date", "Email", "Comment", "Build", "Device", "iOS Version", "Screenshot"]
+  
+    CSV.open("reviews.csv", "w") do |csv|
+      csv << headers
+      feedbacks.each do |feedback|
+        # device_model os_version
+        response = ["#{feedback.timestamp}", "#{feedback.email_address}", "#{feedback.comment}", "#{feedback.build.version}", "#{feedback.device_model}", "#{feedback.os_version}"]
+        
+        # Iterate over feedback screenshots
+        feedback.screenshots.each do |screenshot|
+          image_asset = screenshot.image_assets.first        
+          response += ["#{image_asset["url"]}"]
+        end
+        
+        csv << response
+      end
+    end
+  end
   lane :meta do 
   
     upload_to_app_store(
