@@ -30,7 +30,7 @@ cache:
   script:
     - ./Scripts/package.sh
     - git diff --exit-code
-    - xcodes select 15.1
+    - xcodes select 15.0.1
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
 
@@ -42,10 +42,10 @@ build spm macos:
   tags:
       - macos
   script: 
-    - xcodes select 15.1
+    - xcodes select 15.0.1
     - cd Packages/BushelKit
     - swift build
-    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.2 -destination "OS=17.0.1,name=iPhone 14"
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0.1,name=iPhone 14"
 
 build spm linux 5.9.0-nightly:
   stage: build

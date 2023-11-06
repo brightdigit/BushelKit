@@ -1188,6 +1188,8 @@ struct BushelWelcomeViews: Target {
   var dependencies: any Dependencies {
     BushelData()
     BushelLocalization()
+    BushelOnboardingEnvironment()
+    BushelMarketEnvironment()
   }
 }
 //
