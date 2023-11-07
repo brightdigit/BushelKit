@@ -136,3 +136,4 @@ Support/macOS/macOS.entitlements
 vendor/ruby
 public
 .mint
+*.lcov
