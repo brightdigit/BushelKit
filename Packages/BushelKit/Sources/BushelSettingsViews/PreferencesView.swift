@@ -56,7 +56,7 @@
         .tag(Tabs.about)
       }
       .padding(20)
-      .frame(minWidth: 900, minHeight: 450)
+      .frame(minWidth: 900, minHeight: 500)
     }
 
     public init(purchaseScreenValue: PurchaseScreenValue) {

@@ -43,7 +43,7 @@
       self.init(pages: pagesBuilder(), onDismiss: onDismiss)
     }
 
-    init(pages: [IdentifiableView], onDismiss: (() -> Void)?) {
+    public init(pages: [IdentifiableView], onDismiss: (() -> Void)?) {
       self.pages = pages
       self.onDimiss = onDismiss
 
