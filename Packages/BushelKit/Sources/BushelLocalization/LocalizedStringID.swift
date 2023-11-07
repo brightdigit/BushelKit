@@ -4,17 +4,20 @@
 //
 
 public enum LocalizedStringID: String, CaseIterable, LocalizedID {
+  // swiftlint:disable identifier_name
   case welcomeToBushel
   case upgradePurchase
   case proFeatures
   case aboutSubscriptionEndsAt
   case aboutFeedback
   case aboutFeedbackDetails
+  case aboutAuthorCredits
+  case aboutSocialHeader
   case copyrightBrightdigit
   case version
   case name
-  // swiftlint:disable:next identifier_name
   case ok
+  case contactUs
   case startMachine
   case openMachine
   case snapshotMachine
@@ -68,7 +71,6 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case sessionTurnOff
   case sessionShutdownAlert
   case sessionCaptureSystemKeysToggle
-  // swiftlint:disable:next identifier_name
   case sessionAutomaticallyReconfigureDisplayToggle
   case settingsGeneralTab
   case settingsAdvancedTab
@@ -88,30 +90,59 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case machineConfirmDeleteCancel
   case machineConfirmRestoreCancel
   case machineConfirmRestoreNew
-  case onboardingDoneMessage
-  case onboardingMachineTitle
-  case onboardingHubTitle
-  case onboardingWelcomeMessage
-  case onboardingMachineMessage
-  case onboardingHubMessage
-  case onboardingSnapshotsMessage
-  case onboardingSnapshotsTitle
-  case onboardingLibraryTitle
-  case onboardingLibraryMessage
-  case onboardingDoneTitle
   case onboardingWelcomeTitle
+  case onboardingWelcomeSubtitle
+  case onboardingWelcomeMessage
+  case onboardingLibraryTitle
+  case onboardingLibrarySubtitle
+  case onboardingLibraryMessage
+  case onboardingHubTitle
+  case onboardingHubSubtitle
+  case onboardingHubMessage
+  case onboardingMachineTitle
+  case onboardingMachineSubtitle
+  case onboardingMachineMessage
+  case onboardingSnapshotsTitle
+  case onboardingSnapshotsSubtitle
+  case onboardingSnapshotsMessage
+  case onboardingDoneTitle
+  case onboardingDoneSubtitle
+  case onboardingDoneMessage
   case onboardingFeatureListHeader
+  case onboardingFeatureItemLocalizationAndAccessibilityTitle
+  case onboardingFeatureItemLocalizationAndAccessibilityDescription
+  case onboardingFeatureItemSnapshotsTitle
+  case onboardingFeatureItemSnapshotsDescription
+  case onboardingFeatureItemScriptTitle
+  case onboardingFeatureItemScriptDescription
+  case onboardingFeatureItemCustomMachineTitle
+  case onboardingFeatureItemCustomMachineDescription
+  case onboardingFeatureItemRestoreImageManagementTitle
+  case onboardingFeatureItemRestoreImageManagementDescription
+  case onboardingFeatureItemVersionsTitle
+  case onboardingFeatureItemVersionsDescription
+  case onboardingFeatureItemLibraryTitle
+  case onboardingFeatureItemLibraryDescription
   case onboardingDoneButton
   case onboardingNextButton
   case tipLibraryTitle
   case tipLibraryMessage
   case libraryDeleteConfirmation
-  case snapshotDetailsPropertySize // "Size"
-  case snapshotDetailsPropertyDicardable // "Discardable"
-  case snapshotDetailsPropertyName // "Name"
-  case snapshotDetailsPropertyNotes // "Notes"
-  case snapshotDetailsPropertyCreated // "Created"
-
+  case snapshotDetailsPropertySize
+  case snapshotDetailsPropertyDicardable
+  case snapshotDetailsPropertyName
+  case snapshotDetailsPropertyNotes
+  case snapshotDetailsPropertyCreated
+  case purchaseDescription
+  case purchaseFeatureSnapshotNotesDescription
+  case purchaseFeatureShutdownSnapshotDescription
+  case purchaseFeatureAutomaticSnapshotsTitle // "Automatic Periodic Snapshots"
+  case purchaseFeatureMachineSizeTitle // "Machine Space Usage Insight"
+  case purchaseFeatureMachineSizeDescription // "Track of Your Virtual Machine Space Usage."
+  case purchaseFeatureSnapshotNotesTitle // "Annotate Your Snapshots"
+  case purchaseFeatureAutomaticSnapshotsDescription
+  case purchaseFeatureShutdownSnapshotTitle // "Auto-Snapshot on Shutdown"
+  // swiftlint:enable identifier_name
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()
   }

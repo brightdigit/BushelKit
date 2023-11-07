@@ -44,6 +44,8 @@ targetTemplates:
           privacyPolicy: https://getbushel.app/privacy-policy
           termsOfUse: https://getbushel.app/terms-of-use
           support: https://getbushel.app/support
+          company: https://brightdigit.com
+          contactMailTo: mailto:leo@brightdigit.com?subject=About%20Bushel... 
         ATSApplicationFontsPath: .
         CFBundleDocumentTypes:
           - {CFBundleTypeName: 'macOS Restore Image', CFBundleTypeRole: Viewer, LSHandlerRank: Alternate, LSItemContentTypes: [com.apple.iphone.ipsw, com.apple.itunes.ipsw]}
