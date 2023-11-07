@@ -25,8 +25,7 @@ public extension PrereleaseLabel {
     guard
       let label = dictionary[Keys.label.rawValue] as? String,
       let base = dictionary[Keys.base.rawValue] as? Int else {
-      #warning("shendy-note: let's have a message here for what was expected")
-      assertionFailure()
+      assertionFailure("Bundle InfoDictionary Missing Label and Base for Prerelease Info")
       return nil
     }
     self.init(label: label, baseNumber: base)

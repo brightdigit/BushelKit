@@ -6,7 +6,7 @@
 import Foundation
 
 extension LocalizedStringID {
-  #if DEBUG
+  #if DEBUG && !os(Linux)
     struct Assert {
       private static var loadedValues = false
 
@@ -83,7 +83,7 @@ extension LocalizedStringID {
   #endif
 
   static func assert() {
-    #if DEBUG
+    #if DEBUG && !os(Linux)
       Assert.begin()
     #endif
   }
