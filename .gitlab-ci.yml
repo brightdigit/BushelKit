@@ -30,7 +30,7 @@ cache:
   script:
     - ./Scripts/package.sh
     - git diff --exit-code
-    - xcodes select 15.0.1
+    - xcodes select 15.0.1 
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
 
@@ -41,11 +41,39 @@ build spm macos:
     - if: $CI_PIPELINE_SOURCE == "push"
   tags:
       - macos
-  script: 
+  artifacts:
+    paths:
+      - cobertura.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura.xml
+  script:
     - xcodes select 15.0.1
-    - cd Packages/BushelKit
-    - swift build
-    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0.1,name=iPhone 14"
+    - MINT_PATH="$PWD/.mint"
+    - MINT_ARGS="-n -m ../../Mintfile --silent"
+    - MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
+    - /opt/homebrew/bin/mint bootstrap
+    - pushd Packages/BushelKit
+    - xcodebuild -resolvePackageDependencies
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14" &>/dev/null || true
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14"
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0.1,name=iPhone 14" -enableCodeCoverage YES -derivedDataPath Build
+    - popd
+    - XCRESULT=$(find . -path "./Packages/BushelKit/Build/Logs/Test/Test-BushelKit-Package-*.xcresult")
+    - echo ${XCRESULT}    
+    - /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+   
+ 
+upload spm macos coverage:
+  stage: build
+  needs: ["build spm macos"]
+  image: ellerbrock/alpine-bash-curl-ssl
+  artifacts:
+    paths:
+      - cobertura.xml
+  script:
+    - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F xcode15 -F macos
 
 build spm linux 5.9.0-nightly:
   stage: build
@@ -57,7 +85,12 @@ build spm linux 5.9.0-nightly:
   script:
     - cd Packages/BushelKit
     - swift build
-    - swift test
+    - swift test --enable-code-coverage
+    - llvm-cov export -format="lcov" .build/x86_64-unknown-linux-gnu/debug/BushelKitPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > cobertura.xml
+    - apt-get update -y
+    - apt-get install -y curl
+    - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
+
 build spm linux 5.9.0:
   stage: build
   only:
@@ -68,8 +101,12 @@ build spm linux 5.9.0:
   script:
     - cd Packages/BushelKit
     - swift build
-    - swift test
-  
+    - swift test --enable-code-coverage
+    - llvm-cov export -format="lcov" .build/x86_64-unknown-linux-gnu/debug/BushelKitPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > cobertura.xml
+    - apt-get update -y
+    - apt-get install -y curl
+    - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
+
 lint lenient:
   only:
     - merge_requests
