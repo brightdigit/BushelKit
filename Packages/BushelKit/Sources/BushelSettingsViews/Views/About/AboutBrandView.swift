@@ -55,7 +55,7 @@
     }
 
     internal init(
-      creditsHeaderID: LocalizedID = LocalizedStringID.aboutSocialHeader,
+      creditsHeaderID: LocalizedID = LocalizedStringID.aboutAuthorCredits,
       wordmarkImageResourceName: String = "BrightDigit/Wordmark/template",
       websiteURL: URL,
       @SocialLinkListBuilder _ links: () -> [SocialLink]

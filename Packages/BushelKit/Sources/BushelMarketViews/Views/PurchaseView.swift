@@ -6,27 +6,54 @@
 #if canImport(StoreKit) && canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
+  import BushelLogging
   import BushelMarket
   import BushelViewsCore
   import Foundation
   import StoreKit
   import SwiftUI
 
-  public struct PurchaseView: SingleWindowView {
+  public struct PurchaseView: SingleWindowView, LoggerCategorized {
     public typealias Value = PurchaseWindowValue
+
     @State var windowInitialized = false
+    @State var marketingContentHeight: CGFloat?
+    @State var screenHeight: CGFloat?
     let groupID: String
+
+    var minHeight: CGFloat? {
+      marketingContentHeight.map { $0 + 400 }
+    }
+
+    var marketingContentSizeClassProperties: PurchaseHeaderViewProperties? {
+      Self.logger.debug("Calcuating marketingContentSizeClassProperties based on \(screenHeight ?? -1)")
+      switch screenHeight {
+      case .none:
+        return nil
+
+      case .some(950...):
+        return .extraLarge
+
+      case .some:
+        return .small
+      }
+    }
 
     public var body: some View {
       SubscriptionStoreView(groupID: groupID) {
-        PurchaseHeaderView {
-          PurchaseFeatureItem.automaticSnapshots
-          PurchaseFeatureItem.machineSize
-          PurchaseFeatureItem.snapshotNotes
-          PurchaseFeatureItem.shutdownSnapshot
+        Group {
+          if let marketingContentSizeClassProperties {
+            PurchaseHeaderView(properties: marketingContentSizeClassProperties) {
+              PurchaseFeatureItem.automaticSnapshots
+              PurchaseFeatureItem.machineSize
+              PurchaseFeatureItem.snapshotNotes
+              PurchaseFeatureItem.shutdownSnapshot
+            }.onGeometry(self.setMarketingContentHeight(basedOnProxy:))
+          }
         }
       }
-      .frame(idealWidth: 615, maxWidth: 700, minHeight: 960, alignment: .center)
+
+      .frame(idealWidth: 615, maxWidth: 700, minHeight: minHeight, alignment: .center)
       .subscriptionStorePolicyDestination(url: .bushel.privacyPolicy, for: .privacyPolicy)
       .subscriptionStorePolicyDestination(url: .bushel.termsOfUse, for: .termsOfService)
       .storeButton(.visible, for: .restorePurchases, .policies)
@@ -47,6 +74,12 @@
       self.init(groupID: MarketplaceSettings.default.primaryGroupID)
     }
 
+    private func setMarketingContentHeight(basedOnProxy geometry: GeometryProxy) {
+      Self.logger.debug("setMarketingContentHeight based on \(geometry.size.height)")
+
+      self.marketingContentHeight = marketingContentHeight ?? geometry.size.height
+    }
+
     #if os(macOS)
       private func setupNSWindow(_ window: NSWindow?) {
         guard let window, !windowInitialized else {
@@ -54,6 +87,7 @@
         }
         window.standardWindowButton(.closeButton)?.superview?.isHidden = true
         window.titlebarAppearsTransparent = true
+        self.screenHeight = NSScreen.main?.frame.height
         windowInitialized = true
       }
     #endif

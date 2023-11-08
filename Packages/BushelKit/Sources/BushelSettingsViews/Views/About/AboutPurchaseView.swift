@@ -20,7 +20,6 @@
             openWindow(value: purchaseScreenValue)
           }.buttonStyle(.borderedProminent).fontWeight(.bold)
           Text(.proFeatures)
-            .fontWeight(.thin)
             .lineLimit(2, reservesSpace: true)
         }
       }
