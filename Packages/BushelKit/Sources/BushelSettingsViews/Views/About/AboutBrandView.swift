@@ -35,6 +35,7 @@
           }
         }
         .foregroundStyle(Color.primary)
+        .buttonStyle(.borderless)
 
         Spacer()
         SocialLinkList(items: links)
