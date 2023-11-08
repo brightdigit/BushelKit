@@ -9,44 +9,53 @@
   import SwiftUI
 
   struct PurchaseHeaderView: View {
+    typealias Properties = PurchaseHeaderViewProperties
+
+    let properties: Properties
     let features: [PurchaseFeatureItem]
 
     var body: some View {
       PreferredLayoutView { value in
-        VStack(spacing: 20) {
-          Image.resource("Logo").resizable().aspectRatio(contentMode: .fit).frame(height: 120)
+        VStack(spacing: properties.verticalSpacing) {
+          Image.resource("Logo")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: properties.logoHeight)
 
           Text(.welcomeToBushel)
-            .font(.system(size: 36.0))
+            .font(.system(size: properties.headerFontSize))
             .fontWeight(.bold)
 
           Text(.purchaseDescription)
-            .font(.system(size: 14.0))
+            .font(.system(size: properties.descriptionFontSize))
             .multilineTextAlignment(.leading)
             .lineLimit(3, reservesSpace: true)
             .apply(\.size.width, with: value)
-            .padding(.horizontal, 40)
+            .padding(.horizontal, properties.verticalPadding)
 
           HStack {
             Spacer()
-            VStack(alignment: .leading, spacing: 16.0) {
-              ForEach(self.features) { properties in
-                PurchaseFeatureView(properties: properties)
+            VStack(alignment: .leading, spacing: properties.featureSpacing) {
+              ForEach(self.features) { item in
+                PurchaseFeatureView(properties: self.properties.feature, item: item)
               }
             }.padding(8.0).frame(width: value.get(), alignment: .leading)
             Spacer()
           }
         }
-      }.padding(40)
-        .padding(.top, 20)
+      }
+      .padding(.horizontal, 80)
+      .padding(.vertical, properties.verticalPadding)
+      .padding(.top, properties.additionalTopPadding)
     }
 
-    internal init(features: [PurchaseFeatureItem]) {
+    internal init(properties: Properties, features: [PurchaseFeatureItem]) {
+      self.properties = properties
       self.features = features
     }
 
-    internal init(@ArrayBuilder<PurchaseFeatureItem> _ features: () -> [PurchaseFeatureItem]) {
-      self.init(features: features())
+    internal init(properties: Properties, @ArrayBuilder<PurchaseFeatureItem> _ features: () -> [PurchaseFeatureItem]) {
+      self.init(properties: properties, features: features())
     }
   }
 

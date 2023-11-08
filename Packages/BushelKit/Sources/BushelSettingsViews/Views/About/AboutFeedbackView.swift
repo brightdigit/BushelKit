@@ -18,7 +18,7 @@
     var body: some View {
       VStack(alignment: .leading, spacing: 6.0) {
         Text(titleID).fontWeight(.bold)
-        Text(detailsID).lineLimit(3, reservesSpace: true).fontWidth(.expanded).fontWeight(.thin)
+        Text(detailsID).lineLimit(3, reservesSpace: true)
         HStack {
           Spacer()
           Button(openURL, buttonURL) {
