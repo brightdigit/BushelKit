@@ -241,6 +241,9 @@
 /* Session Capture System Keys Toggle */
 "session_capture_system_keys_toggle" = "Automatically Reconfigure Display";
 
+/* Keep Window Open on Shutdown Tooltip */
+"keep_window_open_on_shutdown" = "Keep Window Open on Shutdown";
+
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
 

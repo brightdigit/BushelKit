@@ -21,7 +21,7 @@
 
     @State var object = SessionObject()
     @State var hasIntialStarted = false
-    @State var closeOnShutdown = false
+    @State var keepWindowOpenOnShutdown = false
     @State var shouldDisplaySubscriptionStoreView = false
 
     var waitingForShutdown: Bool = false
@@ -43,6 +43,7 @@
         ToolbarItemGroup {
           SessionToolbarView(
             screenSettings: self.$object.screenSettings,
+            keepWindowOpenOnShutdown: $keepWindowOpenOnShutdown,
             agent: self.object,
             onGeometryProxy: self.object.toolbarProxy
           )
@@ -66,7 +67,7 @@
         isPresented: self.$object.presentConfirmCloseAlert
       ) {
         SessionClosingActionsView(
-          closeOnShutdown: self.$closeOnShutdown,
+          keepWindowOpenOnShutdown: self.$keepWindowOpenOnShutdown,
           pressPowerButton: self.object.pressPowerButton,
           stopAndSaveSnapshot: self.object.stop(saveSnapshot:)
         )
@@ -119,7 +120,7 @@
 
       .onChange(of: self.object.state) { oldValue, newValue in
         self.object.updateWindowSize()
-        if oldValue != .stopped, newValue == .stopped, self.closeOnShutdown {
+        if oldValue != .stopped, newValue == .stopped, !self.keepWindowOpenOnShutdown {
           dismiss()
         }
       }

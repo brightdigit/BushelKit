@@ -11,6 +11,7 @@
 
   struct SessionToolbarView: View {
     @Binding var screenSettings: ScreenSettings
+    @Binding var keepWindowOpenOnShutdown: Bool
     let agent: SessionToolbarAgent
     let onGeometryProxy: (GeometryProxy) -> Void
 
@@ -47,6 +48,12 @@
         isOn: self.$screenSettings.automaticallyReconfiguresDisplay
       )
       .hidden()
+      Toggle(
+        LocalizedStringID.keepWindowOpenOnShutdown.key,
+        systemImage: "lock.fill",
+        isOn: self.$keepWindowOpenOnShutdown
+      )
+      .help(Text(.keepWindowOpenOnShutdown))
       Toggle(
         LocalizedStringID.sessionCaptureSystemKeysToggle.key,
         systemImage: "command.square.fill",
