@@ -72,6 +72,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case sessionShutdownAlert
   case sessionCaptureSystemKeysToggle
   case sessionAutomaticallyReconfigureDisplayToggle
+  case keepWindowOpenOnShutdown
   case settingsGeneralTab
   case settingsAdvancedTab
   case settingsTestTab
