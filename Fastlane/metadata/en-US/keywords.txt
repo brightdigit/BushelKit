@@ -1,1 +1,1 @@
-
+virtual,macos,monterey,developer,testing,machine,sonoma,versioning,snapshots,app,debug,simulator

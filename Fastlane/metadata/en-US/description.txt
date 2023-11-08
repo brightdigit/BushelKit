@@ -1,1 +1,28 @@
+Welcome to Bushel: Elevate Your Development Experience!
+
+Unleash the full power of macOS virtual machines with Bushel, the ultimate app for developers who demand precision and flexibility in their app testing. Whether you're building, testing, or debugging, Bushel equips you with the tools to create a dynamic and controlled virtual environment, ensuring your projects are built with rigor and without compromise.
+
+Key Features:
+
+* Virtual Machine Customization: Tailor your virtual machine to your exact needs. Choose your desired macOS version, configure CPU, memory, and disk space, and optimize your development environment for peak performance.
+
+* Library & Hubs Integration: Store and access macOS restore images (.ipsw files) conveniently in your Library. Expand your horizons by connecting to online Hubs for a vast collection of macOS versions. Streamlining the setup of your virtual machine has never been this easy.
+
+* Snapshot Management: The Snapshot feature is your safety net for testing and experimentation. Capture your virtual machine's precise state at any moment, whether you're trying out a script, adjusting settings, or safeguarding your (virtual) machine from potential mishaps. Enjoy the freedom to test, break, and roll back with confidence.
+
+* Testing Across macOS Versions: Ensure your app's compatibility and performance across various macOS releases. Test, simulate, and fine-tune your projects with ease, knowing you have the complete, native capabilities of the operating system at your disposal.
+
+* Script Testing: Run startup scripts on a fresh virtual machine without worrying about damaging your physical machine. Bushel offers a risk-free environment for script testing, making it a breeze to debug and perfect your scripts.
+
+* Easy Localization & Accessibility Testing: Explore different localizations and accessibility settings effortlessly. Perform UX testing for every locale and language that Apple supports, enhancing your app's global reach.
+
+* macOS Restore Image Management: Simplify macOS version installations with efficient management of restore images. Bushel ensures smooth OS installations and reduces setup time, allowing you to focus on development.
+Bushel Pro Subscription:
+
+Upgrade to Bushel Pro for enhanced capabilities, including automatic periodic snapshots, snapshot-on-shutdown, and the ability to add notes to each snapshot. Gain better control over virtual machine disk size and improved management of macOS restore images for OS installation.
+
+Get Started:
+
+Discover the unparalleled features of Bushel and step into a world of limitless app development possibilities. Elevate your testing, experimentation, and development with a tool designed to meet your uncompromising standards.
+
 https://getbushel.app/terms-of-use

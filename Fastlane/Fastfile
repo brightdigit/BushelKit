@@ -57,7 +57,8 @@ platform :mac do
   
     upload_to_app_store(
       skip_binary_upload: true,
-      precheck_include_in_app_purchases: false
+      precheck_include_in_app_purchases: false,
+      overwrite_screenshots: true
     )  
   end
   
@@ -101,7 +102,8 @@ platform :mac do
     upload_to_app_store(
       force: true, 
       skip_binary_upload: true,
-      precheck_include_in_app_purchases: false
+      precheck_include_in_app_purchases: false,
+      overwrite_screenshots: true
     )    
   end
 end
