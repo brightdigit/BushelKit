@@ -16,7 +16,9 @@
     public var body: some View {
       PreferredLayoutView { value in
         HStack {
-          Image.resource(label.imageName).resizable().aspectRatio(contentMode: .fit)
+          Image.resource(label.imageName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
             .padding(.vertical, 4.0)
             .frame(height: value.get())
             .mask { Circle() }

@@ -8,28 +8,32 @@
   import SwiftUI
 
   struct PurchaseFeatureView: View {
-    let properties: PurchaseFeatureItem
+    typealias Properties = PurchaseFeatureViewProperties
+
+    let properties: Properties
+    let item: PurchaseFeatureItem
 
     var body: some View {
       HStack {
-        Image(systemName: properties.systemName)
+        Image(systemName: item.systemName)
           .resizable()
           .aspectRatio(contentMode: .fit)
-          .frame(width: 50, alignment: .center)
+          .frame(width: properties.imageWidth, alignment: .center)
           .foregroundStyle(.tint)
         VStack(alignment: .leading) {
-          Text(properties.titleID)
-            .font(.system(size: 16.0))
+          Text(item.titleID)
+            .font(.system(size: properties.fontSize))
             .fontWeight(.bold)
-          Text(properties.descriptionID)
+          Text(item.descriptionID)
 
             .opacity(0.8)
         }
       }
     }
 
-    internal init(properties: PurchaseFeatureItem) {
+    internal init(properties: PurchaseFeatureView.Properties, item: PurchaseFeatureItem) {
       self.properties = properties
+      self.item = item
     }
   }
 

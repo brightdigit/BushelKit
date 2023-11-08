@@ -14,9 +14,7 @@
     let name: String
     let url: URL
     var body: some View {
-      Button {
-        openURL(url)
-      } label: {
+      Link(destination: url, label: {
         PreferredLayoutView { value in
           Group {
             Image.resource(imageName)
@@ -25,15 +23,14 @@
               .frame(height: value.get())
             Text(title)
               .font(.system(size: 12.0))
-              .fontWeight(.thin)
               .lineLimit(1)
               .apply(\.size.height, with: value)
           }
         }
-      }
-      #if os(macOS)
-      .buttonStyle(.link)
-      #endif
+      })
+      .accessibilityLabel(name)
+      .buttonStyle(.borderless)
+      .foregroundStyle(Color.primary)
     }
 
     internal init(imageName: String, title: String, name: String, url: URL) {
