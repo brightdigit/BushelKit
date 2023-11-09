@@ -54,7 +54,10 @@
       self.features = features
     }
 
-    internal init(properties: Properties, @ArrayBuilder<PurchaseFeatureItem> _ features: () -> [PurchaseFeatureItem]) {
+    internal init(
+      properties: Properties,
+      @ArrayBuilder<PurchaseFeatureItem> _ features: () -> [PurchaseFeatureItem]
+    ) {
       self.init(properties: properties, features: features())
     }
   }

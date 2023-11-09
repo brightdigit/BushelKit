@@ -20,6 +20,17 @@
       self.object = object
     }
 
+    func windowDidBecomeMain(_: Notification) {
+      guard object.canStart, !object.hasIntialStarted else {
+        return
+      }
+
+      object.hasIntialStarted = true
+      object.begin { machine in
+        try await machine.start()
+      }
+    }
+
     func windowWillResize(_: NSWindow, to frameSize: NSSize) -> NSSize {
       Self.logger.debug("windowWillResize to \(frameSize.debugDescription)")
       guard let aspectRatio = object.aspectRatio else {
