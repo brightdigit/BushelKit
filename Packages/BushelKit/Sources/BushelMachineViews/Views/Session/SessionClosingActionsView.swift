@@ -19,7 +19,6 @@
 
     var body: some View {
       Button {
-        keepWindowOpenOnShutdown = true
         self.pressPowerButton()
       } label: {
         Text(.sessionPressPowerButton)
@@ -27,7 +26,6 @@
 
       Button {
         if self.marketplace.purchased {
-          keepWindowOpenOnShutdown = true
           self.stopAndSaveSnapshot(.init())
         } else {
           openWindow(value: self.purchaseWindow)
@@ -41,7 +39,6 @@
       }
 
       Button {
-        keepWindowOpenOnShutdown = true
         self.stopAndSaveSnapshot(nil)
       } label: {
         Text(.sessionTurnOff)
