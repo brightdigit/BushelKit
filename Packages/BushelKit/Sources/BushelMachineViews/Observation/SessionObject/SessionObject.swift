@@ -24,6 +24,12 @@
     var toolbarHeight: CGFloat = 24.0 + 28.0
     var screenSettings = ScreenSettings()
 
+    var hasIntialStarted = false
+    var keepWindowOpenOnShutdown = false
+    var shouldDisplaySubscriptionStoreView = false
+
+    var waitingForShutdown: Bool = false
+
     var machineObject: MachineObject?
     var error: MachineError?
     var initializedWindowSize: Bool = false

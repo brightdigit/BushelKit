@@ -21,7 +21,9 @@ targetTemplates:
   Application:
     type: application
     platform: macOS
-    scheme: {}
+    scheme:
+      environmentVariables:
+        DISABLE_ASSERTION_FAILURE_FOR_ERROR: ${DISABLE_ASSERTION_FAILURE_FOR_ERROR}
     dependencies:
       - package: BushelKit
         product: Bushel${packageName}App
@@ -44,6 +46,8 @@ targetTemplates:
           privacyPolicy: https://getbushel.app/privacy-policy
           termsOfUse: https://getbushel.app/terms-of-use
           support: https://getbushel.app/support
+          company: https://brightdigit.com
+          contactMailTo: mailto:leo@brightdigit.com?subject=About%20Bushel... 
         ATSApplicationFontsPath: .
         CFBundleDocumentTypes:
           - {CFBundleTypeName: 'macOS Restore Image', CFBundleTypeRole: Viewer, LSHandlerRank: Alternate, LSItemContentTypes: [com.apple.iphone.ipsw, com.apple.itunes.ipsw]}
@@ -123,13 +127,12 @@ targets:
   Bushel-UITests:
     type: bundle.ui-testing
     platform: macOS
-    sources:
-      - path: "Tests/macOS/UI"
-        name: UI
-        group: Tests/macOS
     scheme:
       testTargets:
         - Bushel-UITests
+    dependencies:
+      - package: BushelKit
+        product: BushelUITests
     settings:
       TEST_TARGET_NAME: Bushel
       GENERATE_INFOPLIST_FILE: true

@@ -13,13 +13,12 @@
     @Environment(\.marketplace) var marketplace
     @Environment(\.openWindow) var openWindow
 
-    @Binding var closeOnShutdown: Bool
+    @Binding var keepWindowOpenOnShutdown: Bool
     let pressPowerButton: () -> Void
     let stopAndSaveSnapshot: (SnapshotRequest?) -> Void
 
     var body: some View {
       Button {
-        closeOnShutdown = true
         self.pressPowerButton()
       } label: {
         Text(.sessionPressPowerButton)
@@ -27,7 +26,6 @@
 
       Button {
         if self.marketplace.purchased {
-          closeOnShutdown = true
           self.stopAndSaveSnapshot(.init())
         } else {
           openWindow(value: self.purchaseWindow)
@@ -41,7 +39,6 @@
       }
 
       Button {
-        closeOnShutdown = true
         self.stopAndSaveSnapshot(nil)
       } label: {
         Text(.sessionTurnOff)
@@ -51,11 +48,11 @@
     }
 
     internal init(
-      closeOnShutdown: Binding<Bool>,
+      keepWindowOpenOnShutdown: Binding<Bool>,
       pressPowerButton: @escaping () -> Void,
       stopAndSaveSnapshot: @escaping (SnapshotRequest?) -> Void
     ) {
-      self._closeOnShutdown = closeOnShutdown
+      self._keepWindowOpenOnShutdown = keepWindowOpenOnShutdown
       self.pressPowerButton = pressPowerButton
       self.stopAndSaveSnapshot = stopAndSaveSnapshot
     }

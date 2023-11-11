@@ -38,16 +38,22 @@
 "privacy_policy" = "Privacy Policy";
 
 /* List of pro features. */
-"pro_features" = "And much more: Configure windows visibility, minimized capturing window, access to all privacy actions and directories, custom touches color, custom color for captures, optimise for App Previews, optimise recordings for quality or speed, delete Derived Data globally and per app, clear Xcode Previews cache.";
+"pro_features" = "for access to advanced features such as enhanced snapshot tools, improved virtual machine size management and more... ";
 
 /* Pro Subscription Ends At */
 "about_subscription_ends_at" = "PRO Subscription ends at:";
 
 /* Feedback and Issues Title */
-"about_feedback" = "Feedback & Issues";
+"about_feedback" = "Get in Touch with Us";
 
 /* Feedback and Issues Details */
-"about_feedback_details" = "Etiam non dictum nisi, in rhoncus nulla. Aenean eget nulla nec sem ultrices ornare vitae finibus ex. Maecenas hendrerit, felis.";
+"about_feedback_details" = "We're here to help! Whether you have questions, encounter issues, or want to request a feature, don't hesitate to contact us. Your feedback and input are invaluable to us.";
+
+/* About Button Header for BrightDigit Credit */
+"about_author_credits" = "Carefully Crafted by";
+
+/* About Button Header for BrightDigit Social Follow */
+"about_social_header" = "Follow Us At";
 
 /* BrightDigit Copyright */
 "copyright_brightdigit" = "© BrightDigit, LLC 2023";
@@ -63,6 +69,9 @@
 
 /* Download button */
 "download" = "Download";
+
+/* Contact Us Button */
+"contact_us" = "Contact Us";
 
 /* Import image button */
 "import_image" = "Import Image";
@@ -114,6 +123,9 @@
 
 /* Configuration Machine Will Install */
 "machine_will_install" = "This will install:";
+
+/* Ask to delete machine failed installation */
+"machine_install_error_delete" = "Would you like to delete the failed machine?";
 
 /* Machine Details Operating System Label */
 "name" = "Name";
@@ -232,6 +244,9 @@
 /* Session Capture System Keys Toggle */
 "session_capture_system_keys_toggle" = "Automatically Reconfigure Display";
 
+/* Keep Window Open on Shutdown Tooltip */
+"keep_window_open_on_shutdown" = "Keep Window Open on Shutdown";
+
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
 
@@ -259,50 +274,110 @@
 /* Snapshot Machine Confirm Restore Snapshot Cancel */
 "machine_confirm_restore_cancel" = "Cancel, don't restore this snapshot";
 
-/* Onboarding done Message */
-"onboarding_done_button" = "Let's Go";
-
-/* Onboarding done Title */
-"onboarding_done_title" = "Title";
-
-/* Onboarding done Message */
-"onboarding_done_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
-
-/* hub */
-"onboarding_hub_title" = "Title";
-
-/* Onboarding done Title */
-"onboarding_hub_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
-
-/* Onboarding library Title */
-"onboarding_library_title" = "Start with a Library";
-
-/* Onboarding done Message */
-"onboarding_library_message" = "A **Bushel Library** is used to store various _restore images_ so you can easily install diffferent versions of **macOS** on your **virtual machine**.";
-
-/* Onboarding machine Title */
-"onboarding_machine_title" = "Build Your _Virtual_ Machine";
-
-/* Onboarding done Message */
-"onboarding_machine_message" = "Once you've imported an image into your first **library**, you can create a **machine** and install that version of **macOS**.";
-
-/* Onboarding snapshots Title */
-"onboarding_snapshots_title" = "Snapshot and Rewind";
-
-/* Onboarding done Message */
-"onboarding_snapshots_message" = "Take snapshots to try new things or just in case you break something, you can always rewind, restore and go back.";
-
 /* Onboarding welcome Title */
 "onboarding_welcome_title" = "Welcome to Bushel";
 
+/* Onboarding welcome Subtitle */
+"onboarding_welcome_subtitle" = "Elevate Your Development Experience!";
+
 /* Onboarding done Message */
-"onboarding_welcome_message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula.";
+"onboarding_welcome_message" = "Bushel empowers developers with powerful tools for comprehensive app testing and development on macOS. Learn how to harness the full power of macOS virtual machines with Bushel's intuitive and efficient tools.";
+
+/* Onboarding library Title */
+"onboarding_library_title" = "Introducing the Bushel Library";
+
+/* Onboarding library Subtitle */
+"onboarding_library_subtitle" = "Your macOS Version Repository";
+
+/* Onboarding library Message */
+"onboarding_library_message" = "Explore the power of the Bushel Library, a centralized repository for your macOS restore images, simplifying the process of installing various macOS versions onto your virtual machines.";
+
+/* Onboarding hub Title */
+"onboarding_hub_title" = "Discover Bushel Hubs";
+
+/* Onboarding hub Subtitle */
+"onboarding_hub_subtitle" = "Your Portal to macOS Restore Image Repositories";
+
+/* Onboarding done Message */
+"onboarding_hub_message" = "Discover how easy it is to download and import restore images directly from the web into your Bushel Library. Bushel Hubs make staying up-to-date with the latest macOS versions a seamless part of your development journey";
+
+/* Onboarding machine Title */
+"onboarding_machine_title" = "Craft Your Ideal _Virtual_ Machine";
+
+/* Onboarding machine Subtitle */
+"onboarding_machine_subtitle" = "Tailor every detail of your virtual Mac";
+
+/* Onboarding done Message */
+"onboarding_machine_message" = "Get ready to embark on a journey of customization as you create your virtual machine in Bushel. Here, you hold the reins, from choosing your macOS version to specifying the number of CPUs, memory, disk space, and more.";
+
+/* Onboarding snapshots Title */
+"onboarding_snapshots_title" = "Harness the Power of Snapshots";
+
+/* Onboarding snapshots Subtitle */
+"onboarding_snapshots_subtitle" = "Test, Break, and Roll Back with Confidence";
+
+/* Onboarding snapshots Message */
+"onboarding_snapshots_message" = "Explore how snapshots revolutionize your development process, enabling you to fearlessly delve into testing while knowing you can effortlessly roll back to a stable state at any time. With Bushel's Snapshot feature, testing, breaking, and rolling back your virtual machine has never been easier.";
+
+/* Onboarding done Title */
+"onboarding_done_title" = "Empower Your Development Journey with Bushel!";
+
+/* Onboarding done Title */
+"onboarding_done_subtitle" = "Welcome to a New Era of macOS Testing and Development.";
+
+/* Onboarding done Message */
+"onboarding_done_message" = "Congratulations, you're now equipped with the tools to supercharge your development journey with Bushel. It's time to unleash your creativity, test without limits, and make your mark in the world of app development. It all begins with creating your Library of restore images. Get started today and experience the true power of Bushel – your ultimate companion in building exceptional apps for macOS.";
+
+/* Onboarding done Message */
+"onboarding_done_button" = "Get Started";
+
+/* Onboarding Next */
+"onboarding_next_button" = "Continue";
 
 /* Onboarding Feature List Header */
 "onboarding_feature_list_header" = "What can you do with Bushel?";
 
-/* Onboarding Next */
-"onboarding_next_button" = "Continue";
+/* Onboarding Feature Item Virtual Machine Customization Title */
+"onboarding_feature_item_custom_machine_title" = "Virtual Machine Customization";
+
+/* Onboarding Feature Item Virtual Machine Customization Description */
+"onboarding_feature_item_custom_machine_description" = "Users can select the macOS version, CPU, memory, and disk space, tailoring their virtual environment to their exact needs.";
+
+/* Onboarding Feature Item Library and Hubs Integration Title */
+"onboarding_feature_item_library_title" = "Library and Hubs Integration";
+
+/* Onboarding Feature Item Library and Hubs Integration Description */
+"onboarding_feature_item_library_description" = "Access and manage a vast collection of macOS restore images from your Library and expand your options by connecting to online Hubs.";
+
+/* Onboarding Feature Item Snapshot Management Title */
+"onboarding_feature_item_snapshots_title" = "Snapshot Management";
+
+/* Onboarding Feature Item Snapshot Management Description */
+"onboarding_feature_item_snapshots_description" = "Capture and rollback to snapshots, providing a safety net for testing, experimentation, and avoiding irreversible changes.";
+
+/* Onboarding Feature Item Testing Across macOS Versions Title */
+"onboarding_feature_item_versions_title" = "Testing Across macOS Versions";
+
+/* Onboarding Feature Item Testing Across macOS Versions Description */
+"onboarding_feature_item_versions_description" = "Test your apps on a wide range of macOS versions, ensuring compatibility and optimal performance.";
+
+/* Onboarding Feature Item Script Testing Title */
+"onboarding_feature_item_script_title" = "Script Testing";
+
+/* Onboarding Feature Item Script Testing Description */
+"onboarding_feature_item_script_description" = "Safely run startup scripts on a fresh virtual machine without worrying about damaging your physical machine.";
+
+/* Onboarding Feature Item Easy Localization and Accessibility Testing Title */
+"onboarding_feature_item_localization_and_accessibility_title" = "Easy Localization and Accessibility Testing";
+
+/* Onboarding Feature Item Easy Localization and Accessibility Testing Description */
+"onboarding_feature_item_localization_and_accessibility_description" = "Streamline the process of testing your apps for different localizations, accessibility settings, and user experiences.";
+
+/* Onboarding Feature Item macOS Restore Image Management Title */
+"onboarding_feature_item_restore_image_management_title" = "macOS Restore Image Management";
+
+/* Onboarding Feature Item macOS Restore Image Management Description */
+"onboarding_feature_item_restore_image_management_description" = "Simplify the installation of macOS versions by effectively handling restore images for OS installations.";
 
 /* Library Tip Title */
 "tip_library_title" = "Store your OS restore images";
@@ -312,6 +387,9 @@
 
 /* Library Delete Image Confirmation */
 "library_delete_confirmation" = "Are you sure you want to delete %@?";
+
+/* Image not supported */
+"library_unsupported_image" = "This image is not supported via Virtualization";
 
 /* Snapshot Details Property Name */
 "snapshot_details_property_name" = "Name";
@@ -327,3 +405,34 @@
 
 /* Snapshot Details Property Notes */
 "snapshot_details_property_notes" = "Notes";
+
+/* Purchase Header Description */
+"purchase_description" = "Upgrade to Bushel Pro and supercharge your development workflow.  Gain access to advanced features that ensure your development workflow is seamless and secure.";
+
+/* Purchase Feature Automatic Snapshots Title */
+"purchase_feature_automatic_snapshots_title" = "Automatic Periodic Snapshots";
+
+/* Purchase Feature Automatic Snapshots Description */
+"purchase_feature_automatic_snapshots_description" = "Enjoy automatic periodic snapshots to safeguard your progress.";
+
+
+/* Purchase Feature Snapshot Notes Title */
+"purchase_feature_snapshot_notes_title" = "Annotate Your Snapshots";
+
+/* Purchase Feature Snapshot Notes Description */
+"purchase_feature_snapshot_notes_description" = "Organize and annotate snapshots with additional notes.";
+
+/* Purchase Feature Machine Size Title */
+"purchase_feature_machine_size_title" = "Machine Space Usage Insight";
+
+/* Purchase Feature Machine Size Description */
+"purchase_feature_machine_size_description" = "Track of Your Virtual Machine Space Usage.";
+
+
+/* Purchase Feature Machine Size Title */
+"purchase_feature_shutdown_snapshot_title" = "Auto-Snapshot on Shutdown";
+
+/* Purchase Feature Machine Size Description */
+"purchase_feature_shutdown_snapshot_description" = "Snapshot on shutdown for instant backups.";
+
+

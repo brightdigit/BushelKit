@@ -7,14 +7,9 @@ import BushelCore
 import Foundation
 
 public enum MacOSVirtualization {
-  private static let codeNames: [Int: String] = [
-    11: "Big Sur",
-    12: "Monterey",
-    13: "Ventura",
-    14: "Sonoma"
-  ]
-
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
+
+  public static let shortName = "macOS"
 
   public static func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
     let shortName = operatingSystemShortName(for: metadata)
@@ -29,7 +24,7 @@ public enum MacOSVirtualization {
   }
 
   public static func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
-    Self.codeNames[operatingSystemVersion.majorVersion] ?? operatingSystemVersion.majorVersion.description
+    operatingSystemVersion.macOSReleaseName ?? operatingSystemVersion.majorVersion.description
   }
 
   public static func operatingSystemShortName(for metadata: OperatingSystemInstalled) -> String {
@@ -39,5 +34,17 @@ public enum MacOSVirtualization {
 
   public static func defaultName(fromMetadata metadata: OperatingSystemInstalled) -> String {
     operatingSystemShortName(for: metadata)
+  }
+
+  public static func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
+    .init(
+      operatingSystemLongName: self.operatingSystemLongName(for: metadata),
+      defaultName: self.defaultName(fromMetadata: metadata),
+      imageName: self.imageName(for: metadata),
+      systemName: self.shortName,
+      versionName: MacOSVirtualization.codeNameFor(
+        operatingSystemVersion: metadata.operatingSystemVersion
+      )
+    )
   }
 }

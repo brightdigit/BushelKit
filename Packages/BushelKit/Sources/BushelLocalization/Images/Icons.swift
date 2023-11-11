@@ -94,4 +94,15 @@ public enum Icons {
     case banana02 = "040-banana-2"
     case banana03 = "041-banana-3"
   }
+
+  public enum Feature: String, Icon {
+    public static let namespace: String = "Icons/Features"
+    case localizationAndAccessibility = "LocalizationAndAccessibility"
+    case snapshots = "Snapshots"
+    case script = "Script"
+    case customMachine = "CustomMachine"
+    case restoreImageManagement = "RestoreImageManagement"
+    case versions = "Versions"
+    case library = "Library"
+  }
 }

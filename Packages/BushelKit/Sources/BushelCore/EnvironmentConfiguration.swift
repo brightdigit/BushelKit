@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct EnvironmentConfiguration {
+public struct EnvironmentConfiguration: CustomReflectable {
   public enum Key: String {
     case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
     case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
@@ -26,6 +26,15 @@ public struct EnvironmentConfiguration {
 
   @EnvironmentProperty(Key.resetApplication)
   public var resetApplication: Bool
+
+  public var customMirror: Mirror {
+    Mirror(self, children: [
+      "disableAssertionFailureForError": disableAssertionFailureForError,
+      "disallowDatabaseRebuild": disallowDatabaseRebuild,
+      "skipOnboarding": skipOnboarding,
+      "resetApplication": resetApplication
+    ])
+  }
 
   internal init() {}
 }

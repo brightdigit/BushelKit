@@ -22,10 +22,14 @@
             )
             .font(.system(size: 12.0))
             .fontWeight(.medium)
+            .lineLimit(1)
+            .multilineTextAlignment(.leading)
             Text(document.text).font(.system(size: 10.0)).fontWeight(.ultraLight).lineLimit(1)
           }.foregroundColor(.primary)
           Spacer()
-        }.accessibilityLabel(document.name)
+        }
+        .padding(.trailing)
+        .accessibilityLabel(document.name)
       }.buttonStyle(BorderlessButtonStyle())
     }
   }

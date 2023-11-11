@@ -64,7 +64,7 @@
         throw LibraryError.accessDeniedError(nil, at: libraryURL)
       }
 
-      let jsonFileURL = libraryURL.appending(path: Paths.restoreLibraryJSONFileName)
+      let jsonFileURL = libraryURL.appending(path: URL.bushel.paths.restoreLibraryJSONFileName)
       do {
         let jsonData = try JSON.encoder.encode(library)
         try jsonData.write(to: jsonFileURL)
@@ -112,7 +112,7 @@
     }
 
     private func saveChangesTo(_ libraryURL: URL) throws {
-      let jsonFileURL = libraryURL.appending(path: Paths.restoreLibraryJSONFileName)
+      let jsonFileURL = libraryURL.appending(path: URL.bushel.paths.restoreLibraryJSONFileName)
       do {
         let jsonData = try JSON.encoder.encode(library)
         try jsonData.write(to: jsonFileURL)
@@ -175,7 +175,7 @@
       let name = system.label(fromMetadata: metadata).defaultName
       let imageFile = LibraryImageFile(metadata: metadata, name: name)
 
-      let imagesFolderURL = libraryURL.appending(path: Paths.restoreImagesDirectoryName)
+      let imagesFolderURL = libraryURL.appending(path: URL.bushel.paths.restoreImagesDirectoryName)
       do {
         try FileManager.default.createEmptyDirectory(
           at: imagesFolderURL,
@@ -220,10 +220,6 @@
         throw LibraryError.missingInitializedProperty(.modelContext)
       }
 
-      guard let librarySystemManager else {
-        throw LibraryError.missingInitializedProperty(.librarySystemManager)
-      }
-
       guard let bookmarkData = entry.bookmarkData else {
         throw LibraryError.missingInitializedProperty(.bookmarkData)
       }
@@ -244,7 +240,7 @@
         libraryURL.stopAccessingSecurityScopedResource()
       }
 
-      let imagesURL = libraryURL.appendingPathComponent(Paths.restoreImagesDirectoryName)
+      let imagesURL = libraryURL.appendingPathComponent(URL.bushel.paths.restoreImagesDirectoryName)
 
       guard let index = self.library.items.firstIndex(where: { $0.id == id }) else {
         assertionFailure()
@@ -323,7 +319,7 @@
         throw LibraryError.imageCorruptedError(error, at: importingURL)
       }
 
-      let imagesFolderURL = libraryURL.appending(path: Paths.restoreImagesDirectoryName)
+      let imagesFolderURL = libraryURL.appending(path: URL.bushel.paths.restoreImagesDirectoryName)
       do {
         try FileManager.default.createEmptyDirectory(
           at: imagesFolderURL,

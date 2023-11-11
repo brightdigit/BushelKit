@@ -29,8 +29,8 @@
           deleting(snapshot)
         } label: {
           Image(systemName: "trash.fill")
-        }
-      }
+        }.opacity(snapshot.isDiscardable ? 0.7 : 1.0)
+      }.foregroundStyle(.primary)
     }
 
     internal init(

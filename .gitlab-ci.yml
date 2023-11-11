@@ -2,7 +2,14 @@ stages:
   - build
   - lint
   - deploy
-  
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+    
 cache:
   - key: 
       files:
@@ -23,34 +30,52 @@ cache:
   script:
     - ./Scripts/package.sh
     - git diff --exit-code
-    - xcodes select 15
+    - xcodes select 15.0.1 
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
 
 build spm macos:
   stage: build
-  only:
-    - branches
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "push"
   tags:
       - macos
-  script: 
-    - xcodes select 15 
-    - cd Packages/BushelKit
-    - swift build
-    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0,name=iPhone 14"
-
-build spm linux 5.9.0-nightly:
-  stage: build
-  only:
-    - merge_requests
-    - main
-    - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
-  image: swiftlang/swift:nightly-5.9-jammy
+  artifacts:
+    paths:
+      - cobertura.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura.xml
   script:
-    - cd Packages/BushelKit
-    - swift build
-    - swift test
-build spm linux 5.9.0:
+    - xcodes select 15.0.1
+    - MINT_PATH="$PWD/.mint"
+    - MINT_ARGS="-n -m ../../Mintfile --silent"
+    - MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
+    - /opt/homebrew/bin/mint bootstrap
+    - pushd Packages/BushelKit
+    - xcodebuild -resolvePackageDependencies
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14" &>/dev/null || true
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14"
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0.1,name=iPhone 14" -enableCodeCoverage YES -derivedDataPath Build
+    - popd
+    - XCRESULT=$(find . -path "./Packages/BushelKit/Build/Logs/Test/Test-BushelKit-Package-*.xcresult")
+    - echo ${XCRESULT}    
+    - /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+   
+ 
+upload spm macos coverage:
+  stage: build
+  needs: ["build spm macos"]
+  image: ellerbrock/alpine-bash-curl-ssl
+  artifacts:
+    paths:
+      - cobertura.xml
+  script:
+    - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F xcode15 -F macos
+
+build spm linux:
   stage: build
   only:
     - merge_requests
@@ -60,8 +85,12 @@ build spm linux 5.9.0:
   script:
     - cd Packages/BushelKit
     - swift build
-    - swift test
-  
+    - swift test --enable-code-coverage
+    - llvm-cov export -format="lcov" .build/x86_64-unknown-linux-gnu/debug/BushelKitPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > cobertura.xml
+    - apt-get update -y
+    - apt-get install -y curl
+    - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
+
 lint lenient:
   only:
     - merge_requests
@@ -93,7 +122,7 @@ deploy:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - xcodes select 15
+    - xcodes select 15.0.1
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME

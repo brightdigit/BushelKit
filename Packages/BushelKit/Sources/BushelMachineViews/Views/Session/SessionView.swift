@@ -16,15 +16,12 @@
   import SwiftUI
 
   struct SessionView: View, LoggerCategorized {
+    #warning("Make timer configurable")
     let timer = Timer.publish(every: 5.0, on: .main, in: .common).autoconnect()
     @Binding var request: SessionRequest?
 
     @State var object = SessionObject()
-    @State var hasIntialStarted = false
-    @State var closeOnShutdown = false
-    @State var shouldDisplaySubscriptionStoreView = false
 
-    var waitingForShutdown: Bool = false
     @Environment(\.metadataLabelProvider) var labelProvider
     @Environment(\.machineSystemManager) var systemManager
     @Environment(\.modelContext) private var context
@@ -43,6 +40,7 @@
         ToolbarItemGroup {
           SessionToolbarView(
             screenSettings: self.$object.screenSettings,
+            keepWindowOpenOnShutdown: self.$object.keepWindowOpenOnShutdown,
             agent: self.object,
             onGeometryProxy: self.object.toolbarProxy
           )
@@ -66,7 +64,7 @@
         isPresented: self.$object.presentConfirmCloseAlert
       ) {
         SessionClosingActionsView(
-          closeOnShutdown: self.$closeOnShutdown,
+          keepWindowOpenOnShutdown: self.$object.keepWindowOpenOnShutdown,
           pressPowerButton: self.object.pressPowerButton,
           stopAndSaveSnapshot: self.object.stop(saveSnapshot:)
         )
@@ -75,7 +73,9 @@
       }
       .onReceive(self.timer, perform: { _ in
         if self.marketplace.purchased {
-          self.object.startSnapshot(.init(), options: .discardable)
+          if self.object.state == .running {
+            self.object.startSnapshot(.init(), options: .discardable)
+          }
         }
       })
       .onChange(of: request?.url) { _, newValue in
@@ -107,11 +107,11 @@
         }
       }
       .onChange(of: self.object.canStart) { _, newValue in
-        guard newValue, !self.hasIntialStarted else {
+        guard newValue, !self.object.hasIntialStarted else {
           return
         }
 
-        hasIntialStarted = true
+        self.object.hasIntialStarted = true
         self.object.begin {
           try await $0.start()
         }
@@ -119,7 +119,9 @@
 
       .onChange(of: self.object.state) { oldValue, newValue in
         self.object.updateWindowSize()
-        if oldValue != .stopped, newValue == .stopped, self.closeOnShutdown {
+        if oldValue != .stopped, newValue == .stopped, !self.object.keepWindowOpenOnShutdown {
+          self.object.hasIntialStarted = false
+          self.object.startSnapshot(.init(), options: .discardable)
           dismiss()
         }
       }

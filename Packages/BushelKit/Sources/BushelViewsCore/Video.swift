@@ -20,6 +20,7 @@
       let view = AVPlayerView()
       view.controlsStyle = .none
       view.player = player
+      player?.play()
       return view
     }
 

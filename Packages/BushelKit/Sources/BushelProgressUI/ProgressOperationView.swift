@@ -15,9 +15,13 @@
     public var body: some View {
       VStack {
         HStack {
-          icon()
+          icon().accessibilityIdentifier("progress-icon")
           VStack(alignment: .leading) {
-            Text(title).lineLimit(1).font(.title)
+            Text(title)
+              .lineLimit(1)
+              .font(.title)
+              .accessibilityIdentifier("progress-title")
+              .accessibilityLabel(title)
             HStack {
               if let totalValue = progress.totalValue {
                 ProgressView(value: progress.currentValue, total: totalValue)
@@ -25,6 +29,7 @@
                 ProgressView(value: progress.currentValue)
               }
             }
+            .accessibilityIdentifier("progress-view")
             text(progress)
           }
         }

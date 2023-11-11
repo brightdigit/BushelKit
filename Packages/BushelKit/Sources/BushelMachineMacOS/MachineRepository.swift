@@ -19,7 +19,7 @@
 
     static let shared = MachineRepository()
 
-    var storage = [URL: VZMachine]()
+    var storage = [URL: VirtualizationMachine]()
 
     private init() {
       assert(!Self.alreadyCreated)
@@ -29,14 +29,14 @@
     internal func machineAt(
       _ url: URL,
       withConfiguration configuration: MachineConfiguration
-    ) async throws -> VZMachine {
+    ) async throws -> VirtualizationMachine {
       Self.logger.debug("finding machine at \(url)")
       if let machine = storage[url] {
         Self.logger.debug("found at \(url)")
         return machine
       }
       Self.logger.debug("no machine found at \(url)")
-      let dataDirectory = url.appendingPathComponent(Paths.machineDataDirectoryName)
+      let dataDirectory = url.appendingPathComponent(URL.bushel.paths.machineDataDirectoryName)
       let vzMachineConfiguration = try VZVirtualMachineConfiguration(
         contentsOfDirectory: dataDirectory,
         basedOn: configuration
@@ -45,7 +45,7 @@
       let vzMachine = VZVirtualMachine(configuration: vzMachineConfiguration)
       Self.logger.debug("creating machine at \(url)")
       let machine = await MainActor.run {
-        VZMachine(url: url, configuration: configuration, machine: vzMachine)
+        VirtualizationMachine(url: url, configuration: configuration, machine: vzMachine)
       }
       storage[url] = machine
       return machine

@@ -22,7 +22,7 @@
       AnyView(content)
     }
 
-    internal init(_ content: any View, id: UUID = .init()) {
+    public init(_ content: any View, id: UUID = .init()) {
       self.content = content
       self.id = id
     }

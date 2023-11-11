@@ -7,6 +7,7 @@ import PackageDescription
 
 let package = Package(
   entries: {
+    BushelUITests()
     BushelCommand()
     BushelLibraryApp()
     BushelMachineApp()

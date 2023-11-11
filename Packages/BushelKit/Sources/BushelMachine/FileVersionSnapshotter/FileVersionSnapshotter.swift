@@ -33,8 +33,8 @@
       try fileVersion.replaceItem(at: url)
       let exportedConfiguration = MachineConfiguration(snapshot: snapshot, original: machine.configuration)
       let data = try JSON.encoder.encode(exportedConfiguration)
-      let configurationFileURL = url.appendingPathComponent(Paths.machineJSONFileName)
-      let newSnapshotsDirURL = url.appending(component: Paths.snapshotsDirectoryName)
+      let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
+      let newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
       try self.fileManager.removeItem(at: newSnapshotsDirURL)
       try self.fileManager.createEmptyDirectory(
         at: newSnapshotsDirURL,
