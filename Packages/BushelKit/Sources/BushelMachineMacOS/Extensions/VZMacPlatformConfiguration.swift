@@ -5,6 +5,7 @@
 
 #if canImport(Virtualization) && canImport(Combine) && arch(arm64)
   import BushelMachine
+  import BushelMacOSCore
   import Virtualization
 
   extension VZMacPlatformConfiguration {
@@ -30,19 +31,13 @@
       guard let hardwareModel = try VZMacHardwareModel(
         dataRepresentation: Data(contentsOf: hardwareModelURL)
       ) else {
-        throw VirtualizationError.undefinedType(
-          "Invalid hardware model url",
-          hardwareModelURL
-        )
+        throw BuilderError.corrupted(.hardwareModel, dataAtURL: hardwareModelURL)
       }
       self.hardwareModel = hardwareModel
       guard let machineIdentifier = try VZMacMachineIdentifier(
         dataRepresentation: .init(contentsOf: machineIdentifierURL)
       ) else {
-        throw VirtualizationError.undefinedType(
-          "Invalid machineIdentifierURL",
-          machineIdentifierURL
-        )
+        throw BuilderError.corrupted(.machineIdentifier, dataAtURL: machineIdentifierURL)
       }
       self.machineIdentifier = machineIdentifier
     }
@@ -56,17 +51,8 @@
       self.init()
 
       guard let configuration = restoreImage.mostFeaturefulSupportedConfiguration else {
-        if restoreImage.isSupported {
-          throw VirtualizationError.undefinedType(
-            "This image contains no valid machine configuration.",
-            restoreImage
-          )
-        } else {
-          throw VirtualizationError.undefinedType(
-            "This image is not supported.",
-            restoreImage
-          )
-        }
+        let label = MacOSVirtualization.label(fromMetadata: restoreImage.operatingSystem)
+        throw BuilderError.noSupportedConfigurationImage(label, isSupported: restoreImage.isSupported)
       }
 
       if let machineDirectory {

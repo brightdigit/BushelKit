@@ -1,5 +1,5 @@
 //
-// VZSnapshotter.swift
+// VirtualizationSnapshotter.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -9,17 +9,17 @@ import Foundation
 
 #if canImport(Virtualization) && arch(arm64)
 
-  struct VZSnapshotter: Snapshotter {
-    typealias MachineType = VZMachine
+  struct VirtualizationSnapshotter: Snapshotter {
+    typealias MachineType = VirtualizationMachine
 
     static let vmSystemID: SnapshotterID = "macOSApple"
 
     // swiftlint:disable:next unavailable_function
-    func exportSnapshot(_: BushelMachine.Snapshot, from _: VZMachine, to _: URL) async throws {
+    func exportSnapshot(_: BushelMachine.Snapshot, from _: VirtualizationMachine, to _: URL) async throws {
       fatalError("Not Implmented")
     }
 
-    func deleteSnapshot(_ snapshot: Snapshot, from machine: VZMachine) throws {
+    func deleteSnapshot(_ snapshot: Snapshot, from machine: VirtualizationMachine) throws {
       let paths = machine.beginSnapshot()
       let snapshotFileURL = paths.snapshotCollectionURL
         .appendingPathComponent(snapshot.id.uuidString)
@@ -28,7 +28,7 @@ import Foundation
       machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
-    func restoreSnapshot(_ snapshot: Snapshot, to machine: VZMachine) async throws {
+    func restoreSnapshot(_ snapshot: Snapshot, to machine: VirtualizationMachine) async throws {
       let paths = machine.beginSnapshot()
       let snapshotFileURL = paths.snapshotCollectionURL
         .appendingPathComponent(snapshot.id.uuidString)

@@ -49,6 +49,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case welcomeNoRecentDocuments
   case welcomeUpdatingRecentDocuments
   case machineWillInstall
+  case machineInstallErrorDelete
   case machineDetailsSystemTab
   case machineDetailsOS
   case machineDetailsChip
@@ -129,6 +130,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case tipLibraryTitle
   case tipLibraryMessage
   case libraryDeleteConfirmation
+  case libraryUnsupportedImage
   case snapshotDetailsPropertySize
   case snapshotDetailsPropertyDicardable
   case snapshotDetailsPropertyName

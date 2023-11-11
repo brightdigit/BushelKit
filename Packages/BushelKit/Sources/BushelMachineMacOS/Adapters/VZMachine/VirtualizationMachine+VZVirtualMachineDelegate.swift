@@ -1,5 +1,5 @@
 //
-// VZMachine+VZVirtualMachineDelegate.swift
+// VirtualizationMachine+VZVirtualMachineDelegate.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -7,7 +7,7 @@
   import BushelCore
   import Virtualization
 
-  extension VZMachine: VZVirtualMachineDelegate {
+  extension VirtualizationMachine: VZVirtualMachineDelegate {
     func guestDidStop(_: VZVirtualMachine) {
       notifyObservers(.guestDidStop)
     }

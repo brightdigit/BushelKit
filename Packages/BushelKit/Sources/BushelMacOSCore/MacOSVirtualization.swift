@@ -9,6 +9,8 @@ import Foundation
 public enum MacOSVirtualization {
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
 
+  public static let shortName = "macOS"
+
   public static func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
     let shortName = operatingSystemShortName(for: metadata)
     guard let buildVersion = metadata.buildVersion else {
@@ -32,5 +34,17 @@ public enum MacOSVirtualization {
 
   public static func defaultName(fromMetadata metadata: OperatingSystemInstalled) -> String {
     operatingSystemShortName(for: metadata)
+  }
+
+  public static func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
+    .init(
+      operatingSystemLongName: self.operatingSystemLongName(for: metadata),
+      defaultName: self.defaultName(fromMetadata: metadata),
+      imageName: self.imageName(for: metadata),
+      systemName: self.shortName,
+      versionName: MacOSVirtualization.codeNameFor(
+        operatingSystemVersion: metadata.operatingSystemVersion
+      )
+    )
   }
 }

@@ -124,6 +124,9 @@
 /* Configuration Machine Will Install */
 "machine_will_install" = "This will install:";
 
+/* Ask to delete machine failed installation */
+"machine_install_error_delete" = "Would you like to delete the failed machine?";
+
 /* Machine Details Operating System Label */
 "name" = "Name";
 
@@ -376,7 +379,6 @@
 /* Onboarding Feature Item macOS Restore Image Management Description */
 "onboarding_feature_item_restore_image_management_description" = "Simplify the installation of macOS versions by effectively handling restore images for OS installations.";
 
-
 /* Library Tip Title */
 "tip_library_title" = "Store your OS restore images";
 
@@ -385,6 +387,9 @@
 
 /* Library Delete Image Confirmation */
 "library_delete_confirmation" = "Are you sure you want to delete %@?";
+
+/* Image not supported */
+"library_unsupported_image" = "This image is not supported via Virtualization";
 
 /* Snapshot Details Property Name */
 "snapshot_details_property_name" = "Name";

@@ -13,7 +13,7 @@ public struct SnapshotPaths {
   public init(machinePathURL: URL) {
     self.init(
       snapshottingSourceURL: machinePathURL,
-      snapshotCollectionURL: machinePathURL.appendingPathComponent(Paths.snapshotsDirectoryName)
+      snapshotCollectionURL: machinePathURL.appendingPathComponent(URL.bushel.paths.snapshotsDirectoryName)
     )
   }
 

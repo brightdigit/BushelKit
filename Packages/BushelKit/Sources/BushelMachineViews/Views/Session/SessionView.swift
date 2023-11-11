@@ -16,6 +16,7 @@
   import SwiftUI
 
   struct SessionView: View, LoggerCategorized {
+    #warning("Make timer configurable")
     let timer = Timer.publish(every: 5.0, on: .main, in: .common).autoconnect()
     @Binding var request: SessionRequest?
 
@@ -72,7 +73,9 @@
       }
       .onReceive(self.timer, perform: { _ in
         if self.marketplace.purchased {
-          self.object.startSnapshot(.init(), options: .discardable)
+          if self.object.state == .running {
+            self.object.startSnapshot(.init(), options: .discardable)
+          }
         }
       })
       .onChange(of: request?.url) { _, newValue in
@@ -118,6 +121,7 @@
         self.object.updateWindowSize()
         if oldValue != .stopped, newValue == .stopped, !self.object.keepWindowOpenOnShutdown {
           self.object.hasIntialStarted = false
+          self.object.startSnapshot(.init(), options: .discardable)
           dismiss()
         }
       }

@@ -61,22 +61,24 @@
     }
 
     public func onSubscriptionUpdate(_ result: Result<[Subscription], MarketError>) {
-      switch result {
-      case let .success(subscriptions):
+      Task { @MainActor in
+        switch result {
+        case let .success(subscriptions):
 
-        self.subscriptions = subscriptions
-        self.error = nil
-        Self.logger.debug("Successful update")
+          self.subscriptions = subscriptions
+          self.error = nil
+          Self.logger.debug("Successful update")
 
-      case let .failure(.networkError(error)):
-        Self.logger.debug("Subscription update network failure: \(error.localizedDescription)")
+        case let .failure(.networkError(error)):
+          Self.logger.debug("Subscription update network failure: \(error.localizedDescription)")
 
-      case let .failure(error):
+        case let .failure(error):
 
-        self.subscriptions = nil
-        self.error = error
-        Self.logger.debug("Subscription update failed: \(error.localizedDescription)")
-        assertionFailure(error: error)
+          self.subscriptions = nil
+          self.error = error
+          Self.logger.debug("Subscription update failed: \(error.localizedDescription)")
+          assertionFailure(error: error)
+        }
       }
     }
 

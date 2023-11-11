@@ -8,15 +8,16 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
+  import BushelLogging
   import BushelMachine
   import BushelViewsCore
   import Observation
   import SwiftData
   import SwiftUI
 
-  public struct ConfigurationView: View {
+  public struct ConfigurationView: View, LoggerCategorized {
     @Binding var buildRequest: MachineBuildRequest?
-    @State var buildResult: Result<URL, BuildError>?
+    @State var buildResult: Result<URL, BuilderError>?
     @State var object: ConfigurationObject
 
     @Environment(\.modelContext) private var context
@@ -207,10 +208,28 @@
         .background {
           self.listenForExport
         }
+        .alert(
+          isPresented: self.$object.isAlertPresented,
+          error: self.object.error,
+          actions: { _ in
+            ConfigurationAlertActions(
+              destinationURL: self.object.getDestinationURL(assertionFailureIfNil: true),
+              onCompleted: self.dismissWindow
+            )
+          },
+          message: { error in
+            Text(error.alertMessageText)
+            if self.object.getDestinationURL(assertionFailureIfNil: true) != nil {
+              Text(.machineInstallErrorDelete)
+            }
+          }
+        )
+
         .onChange(of: self.buildRequest, self.object.onBuildRequestChange(from:to:))
         .onChange(of: self.object.configuration.restoreImageID, self.object.onRestoreImageChange(from:to:))
         .onChange(of: self.buildResult) { _, newValue in
-          guard let machineURL = try? newValue?.get() else {
+          guard let machineURL = self.object.machineURL(fromBuildResult: newValue) else {
+            self.buildResult = nil
             return
           }
           self.openWindow(value: MachineFile(url: machineURL))
@@ -257,6 +276,12 @@
     internal init(request: Binding<MachineBuildRequest?>, object: ConfigurationObject) {
       self._buildRequest = request
       self._object = .init(initialValue: object)
+    }
+
+    public func dismissWindow() {
+      Task { @MainActor in
+        self.dismiss()
+      }
     }
   }
 

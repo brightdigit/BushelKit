@@ -1,5 +1,5 @@
 //
-// VirtualizationMacOSRestoreImage.swift
+// VirtualizationRestoreImage.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -7,7 +7,7 @@
   import Foundation
   import Virtualization
 
-  public struct VirtualizationMacOSRestoreImage {
+  public struct VirtualizationRestoreImage {
     public let image: VZMacOSRestoreImage
     public let url: URL
 
@@ -17,7 +17,7 @@
     }
   }
 
-  extension VirtualizationMacOSRestoreImage {
+  extension VirtualizationRestoreImage {
     init(url: URL) async throws {
       let image = try await withCheckedThrowingContinuation { continuation in
         VZMacOSRestoreImage.load(

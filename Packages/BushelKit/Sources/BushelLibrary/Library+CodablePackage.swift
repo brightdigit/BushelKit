@@ -16,7 +16,7 @@ extension Library: InitializablePackage {
   }
 
   public static var configurationFileWrapperKey: String {
-    Paths.restoreLibraryJSONFileName
+    URL.bushel.paths.restoreLibraryJSONFileName
   }
 
   public static var readableContentTypes: [FileType] {

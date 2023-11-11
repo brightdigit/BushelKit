@@ -1,11 +1,11 @@
 //
-// VZMachine+SnapshotAction.swift
+// VirtualizationMachine+SnapshotAction.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
 #if canImport(Virtualization) && arch(arm64)
 
-  extension VZMachine {
+  extension VirtualizationMachine {
     func prepareForSnapshot() async throws -> PreviousAction? {
       if machine.canPause {
         try await machine.pause()

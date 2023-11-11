@@ -10,7 +10,7 @@
 
   struct InstallerView: View, LoggerCategorized {
     @Environment(\.dismiss) var dismiss
-    @Binding var buildResult: Result<URL, BuildError>?
+    @Binding var buildResult: Result<URL, BuilderError>?
     var installationObject: InstallerObject
 
     var body: some View {
@@ -32,7 +32,7 @@
           try await self.installationObject.build()
         }
         .map { self.installationObject.url.deletingLastPathComponent() }
-        .mapError(BuildError.init(innerError:))
+        .mapError(BuilderError.fromInstallation)
 
         switch buildResult {
         case let .success(url):
@@ -47,13 +47,13 @@
       }
     }
 
-    internal init(buildResult: Binding<Result<URL, BuildError>?>, installationObject: InstallerObject) {
+    internal init(buildResult: Binding<Result<URL, BuilderError>?>, installationObject: InstallerObject) {
       self._buildResult = buildResult
       self.installationObject = installationObject
     }
 
     init(
-      buildResult: Binding<Result<URL, BuildError>?>,
+      buildResult: Binding<Result<URL, BuilderError>?>,
       builder: MachineBuilder,
       percentCompleted: Double = 0.0
     ) {

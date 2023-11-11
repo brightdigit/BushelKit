@@ -16,7 +16,9 @@
       .macOS
     }
 
-    public let shortName = "macOS"
+    public var shortName: String {
+      MacOSVirtualization.shortName
+    }
 
     public var allowedContentTypes: Set<BushelCore.FileType> {
       MacOSVirtualization.allowedContentTypes
@@ -42,15 +44,7 @@
     }
 
     public func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
-      .init(
-        operatingSystemLongName: self.operatingSystemLongName(for: metadata),
-        defaultName: self.defaultName(fromMetadata: metadata),
-        imageName: self.imageName(for: metadata),
-        systemName: self.shortName,
-        versionName: MacOSVirtualization.codeNameFor(
-          operatingSystemVersion: metadata.operatingSystemVersion
-        )
-      )
+      MacOSVirtualization.label(fromMetadata: metadata)
     }
   }
 

@@ -15,7 +15,7 @@
 
     var observation: NSKeyValueObservation?
 
-    internal private(set) lazy var contentView = VZVirtualMachinePausableView()
+    internal private(set) lazy var contentView = VirtualizationPausableView()
 
     var virtualMachine: VZVirtualMachine? {
       get {

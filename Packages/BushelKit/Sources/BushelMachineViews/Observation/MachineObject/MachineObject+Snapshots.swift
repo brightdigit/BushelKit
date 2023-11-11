@@ -148,11 +148,11 @@
       )
     }
 
-    func saveSnapshot(_ request: SnapshotRequest, options _: SnapshotOptions, at url: URL) async throws {
+    func saveSnapshot(_ request: SnapshotRequest, options: SnapshotOptions, at url: URL) async throws {
       let snapshot: Snapshot
       snapshot = try await machine.createNewSnapshot(
         request: request,
-        options: .init(),
+        options: options,
         using: self.snapshotFactory
       )
       _ = try await SnapshotEntry(snapshot, machine: self.entry, using: modelContext)

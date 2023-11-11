@@ -6,6 +6,7 @@
 struct BushelMarketViews: Target {
   var dependencies: any Dependencies {
     BushelCore()
+    BushelLocalization()
     BushelLogging()
     BushelMarket()
     BushelMarketStore()
