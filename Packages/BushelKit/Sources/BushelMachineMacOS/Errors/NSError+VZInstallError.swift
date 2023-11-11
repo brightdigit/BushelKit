@@ -8,19 +8,19 @@
   import Virtualization
 
   extension NSError: VZInstallError {
-    var isVZError: Bool {
+    public var isVZError: Bool {
       self.domain == VZErrorDomain
     }
 
-    var rawCode: Int {
+    public var rawCode: Int {
       self.code
     }
 
-    var underlyingError: VZUnderlyingError? {
+    public var underlyingError: VZUnderlyingError? {
       (self.userInfo[NSUnderlyingErrorKey] as? NSError).flatMap(VZUnderlyingNSError.init)
     }
 
-    func codeMatches(_ code: VZError.Code) -> Bool {
+    public func codeMatches(_ code: VZError.Code) -> Bool {
       self.code == code.rawValue
     }
   }

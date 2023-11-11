@@ -75,23 +75,7 @@ upload spm macos coverage:
   script:
     - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F xcode15 -F macos
 
-build spm linux 5.10-nightly:
-  stage: build
-  only:
-    - merge_requests
-    - main
-    - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
-  image: swiftlang/swift:nightly-5.10-jammy
-  script:
-    - cd Packages/BushelKit
-    - swift build
-    - swift test --enable-code-coverage
-    - llvm-cov export -format="lcov" .build/x86_64-unknown-linux-gnu/debug/BushelKitPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > cobertura.xml
-    - apt-get update -y
-    - apt-get install -y curl
-    - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
-
-build spm linux 5.9.0:
+build spm linux:
   stage: build
   only:
     - merge_requests
