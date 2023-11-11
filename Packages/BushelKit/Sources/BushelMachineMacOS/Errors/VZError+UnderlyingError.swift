@@ -6,13 +6,13 @@
 #if canImport(Virtualization)
   import Virtualization
 
-  extension VZError {
+  public extension VZError {
     enum UnderlyingError {
-      enum Domain: String {
+      public enum Domain: String {
         case mobileDeviceRestore = "com.apple.MobileDevice.MobileRestore"
       }
 
-      enum Code: Int {
+      public enum Code: Int {
         case unauthorizedInstall = 3194
       }
     }
