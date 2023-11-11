@@ -1,5 +1,5 @@
 //
-// VZMachine+SnapshotMachine.swift
+// VirtualizationMachine+SnapshotMachine.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -7,7 +7,7 @@ import BushelMachine
 
 #if canImport(Virtualization) && arch(arm64)
 
-  extension VZMachine {
+  extension VirtualizationMachine {
     func beginSnapshot() -> SnapshotPaths {
       assert(url.startAccessingSecurityScopedResource())
       return .init(machinePathURL: url)

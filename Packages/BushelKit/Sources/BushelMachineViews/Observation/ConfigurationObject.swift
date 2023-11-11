@@ -9,6 +9,7 @@
   import BushelMachine
   import Foundation
   import Observation
+  import SwiftData
 
   @Observable
   final class ConfigurationObject: LoggerCategorized {
@@ -25,9 +26,21 @@
 
     var configuration: MachineSetupConfiguration
     internal private(set) var restoreImageMetadata: InstallerImage.Metadata?
-    var builder: MachineBuilderActivity?
+    var builder: MachineBuilderActivity? {
+      willSet {
+        self.lastDestinationURL = self.builder?.id ?? self.lastDestinationURL
+      }
+    }
+
+    var lastDestinationURL: URL?
     internal private(set) var machineConfiguration: MachineConfiguration?
-    var error: Error?
+    var error: ConfigurationError? {
+      didSet {
+        self.isAlertPresented = self.error != nil
+      }
+    }
+
+    var isAlertPresented: Bool = false
 
     @ObservationIgnored
     internal private(set) var systemManager: MachineSystemManaging?
@@ -50,9 +63,14 @@
           self.images = try database
             .image(labelProvider)
             .map(ConfigurationImage.init(installerImage:))
-        } catch {
+        } catch let error as ConfigurationError {
+          Self.logger.error("Error fetching image: \(error)")
           assertionFailure(error: error)
           self.error = error
+        } catch {
+          Self.logger.critical("Unknown error fetching image: \(error)")
+          assertionFailure(error: error)
+          self.error = .unknownError(error)
         }
       }
     }
@@ -77,7 +95,7 @@
     internal init(
       configuration: MachineSetupConfiguration,
       builder: MachineBuilderActivity? = nil,
-      error: Error? = nil
+      error: ConfigurationError? = nil
     ) {
       self._configuration = configuration
       self._builder = builder
@@ -96,7 +114,6 @@
       self.labelProvider = labelProvider
 
       guard let restoreImageID = request?.restoreImage?.imageID else {
-        #warning("logging-note: should we log here")
         return
       }
       self.updateMetadataAt(basedOn: restoreImageID)
@@ -105,7 +122,6 @@
     func updateMetadataAt(basedOn restoreImageID: UUID?) {
       guard let restoreImageID else {
         self.restoreImageMetadata = nil
-        #warning("logging-note: should we log here")
         return
       }
       guard let labelProvider else {
@@ -124,8 +140,16 @@
           library: self.configuration.libraryID,
           labelProvider
         )
+      } catch let error as SwiftDataError {
+        assertionFailure(error: error)
+        Self.logger.error("Database error fetching image \(restoreImageID): \(error)")
+        self.error = .databaseError(error)
+        return
       } catch {
-        self.error = error
+        assertionFailure(error: error)
+
+        Self.logger.critical("Unknown error fetching image \(restoreImageID): \(error)")
+        self.error = .unknownError(error)
         return
       }
 
@@ -136,8 +160,15 @@
       let machineConfiguration: MachineConfiguration
       do {
         machineConfiguration = try self.machineConfiguration(using: database)
-      } catch {
+      } catch let error as ConfigurationError {
+        Self.logger.error("Error preparing build: \(error)")
+        assertionFailure(error: error)
         self.error = error
+        return
+      } catch {
+        Self.logger.critical("Error preparing build: \(error)")
+        assertionFailure(error: error)
+        self.error = .unknownError(error)
         return
       }
       self.machineConfiguration = machineConfiguration

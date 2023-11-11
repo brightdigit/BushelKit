@@ -1,5 +1,5 @@
 //
-// VirtualizationInstaller.swift
+// VirtualizationMachineBuilder.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -8,8 +8,7 @@
   import BushelMachine
   import Foundation
   import Virtualization
-
-  class VirtualizationInstaller: MachineBuilder, LoggerCategorized {
+  class VirtualizationMachineBuilder: MachineBuilder, LoggerCategorized {
     static var loggingCategory: Loggers.Category {
       .machine
     }
@@ -27,7 +26,6 @@
 
     @MainActor
     func build() async throws {
-      #warning("log the completionHandler before calling continuation")
       try await withCheckedThrowingContinuation { continuation in
         Task { @MainActor in
           installer.install(completionHandler: continuation.resume(with:))

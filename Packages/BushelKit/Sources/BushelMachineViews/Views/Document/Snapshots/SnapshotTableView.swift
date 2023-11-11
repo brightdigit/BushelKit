@@ -12,6 +12,7 @@
     @State private var sortOrder = [
       KeyPathComparator(\Snapshot.createdAt, order: .reverse)
     ]
+    @Environment(\.marketplace) var marketplace
     @Binding var selectedSnapshot: Snapshot.ID?
     let snapshots: [Snapshot]
     let agent: SnapshotActionsAgent
@@ -25,9 +26,10 @@
         TableColumn("") { snapshot in
           SnapshotActionsView(snapshot: snapshot, agent: self.agent)
         }.width(72)
+
         TableColumn("Name", value: \.name) { snapshot in
           Text(snapshot.name)
-        }.defaultVisibility(.hidden)
+        }.defaultVisibility(marketplace.purchased ? .visible : .hidden)
         TableColumn("Date", value: \.createdAt) { snapshot in
           Text(snapshot.createdAt, formatter: Formatters.snapshotDateFormatter)
         }
@@ -38,7 +40,8 @@
             format: .byteCount(style: .file)
           )
         }
-        TableColumn("Notes", value: \.notes).width(ideal: 160, max: 280).defaultVisibility(.hidden)
+        TableColumn("Notes", value: \.notes).width(ideal: 160, max: 280)
+          .defaultVisibility(.hidden)
       }
     }
   }

@@ -61,7 +61,7 @@
         throw error
       }
       let imageURL = libraryURL
-        .appending(path: Paths.restoreImagesDirectoryName)
+        .appending(path: URL.bushel.paths.restoreImagesDirectoryName)
         .appending(path: imageID.uuidString)
         .appendingPathExtension(entry.fileExtension)
       return imageURL

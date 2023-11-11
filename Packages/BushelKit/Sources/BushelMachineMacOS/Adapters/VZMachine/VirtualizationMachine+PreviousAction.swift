@@ -1,11 +1,11 @@
 //
-// VZMachine+PreviousAction.swift
+// VirtualizationMachine+PreviousAction.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
 #if canImport(Virtualization) && arch(arm64)
 
-  extension VZMachine {
+  extension VirtualizationMachine {
     enum PreviousAction {
       case pause
       case start

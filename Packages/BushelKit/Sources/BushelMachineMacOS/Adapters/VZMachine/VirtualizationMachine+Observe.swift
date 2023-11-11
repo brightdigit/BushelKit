@@ -1,5 +1,5 @@
 //
-// VZMachine+Observe.swift
+// VirtualizationMachine+Observe.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -12,7 +12,7 @@
   import SwiftUI
   import Virtualization
 
-  extension VZMachine {
+  extension VirtualizationMachine {
     func notifyObservers(_ event: MachineChange.Event) {
       let update = MachineChange(source: self, event: event)
       #warning("logging-note: why not print every notifiy of machine changes")

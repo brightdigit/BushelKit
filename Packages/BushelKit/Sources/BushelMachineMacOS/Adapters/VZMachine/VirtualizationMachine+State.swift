@@ -1,12 +1,12 @@
 //
-// VZMachine+State.swift
+// VirtualizationMachine+State.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
 #if canImport(Virtualization) && arch(arm64)
   import BushelMachine
 
-  extension VZMachine {
+  extension VirtualizationMachine {
     var state: MachineState {
       // swiftlint:disable:next force_unwrapping
       .init(rawValue: machine.state.rawValue)!

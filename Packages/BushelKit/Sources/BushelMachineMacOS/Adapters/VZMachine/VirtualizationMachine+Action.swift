@@ -1,12 +1,12 @@
 //
-// VZMachine+Action.swift
+// VirtualizationMachine+Action.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
 #if canImport(Virtualization) && arch(arm64)
   import Foundation
 
-  extension VZMachine {
+  extension VirtualizationMachine {
     @MainActor
     func start() async throws {
       try await machine.start()

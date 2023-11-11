@@ -1,5 +1,5 @@
 //
-// VZMachine.swift
+// VirtualizationMachine.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -9,7 +9,7 @@
   import Foundation
   import Virtualization
 
-  final class VZMachine: NSObject, Machine {
+  final class VirtualizationMachine: NSObject, Machine {
     let url: URL
     var configuration: MachineConfiguration
     let machine: VZVirtualMachine
