@@ -14,7 +14,7 @@
   import Virtualization
 
   public struct MacOSVirtualizationMachineSystem: MachineSystem {
-    public typealias RestoreImageType = VirtualizationMacOSRestoreImage
+    public typealias RestoreImageType = VirtualizationRestoreImage
 
     public var repository: MachineRepository {
       .shared
@@ -35,14 +35,14 @@
 
     public func restoreImage(
       from restoreImage: any InstallerImage
-    ) async throws -> VirtualizationMacOSRestoreImage {
+    ) async throws -> VirtualizationRestoreImage {
       let url = try restoreImage.getURL()
       return try await .init(url: url)
     }
 
     #warning("shendy-note: where this is used, I couldn't find its use somewhere")
     public func validateConfiguration(
-      _ configuration: BushelMachine.MachineBuildConfiguration<VirtualizationMacOSRestoreImage>,
+      _ configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
       to url: URL
     ) throws {
       try self.validatedMachineConfiguration(for: configuration, at: url)
@@ -50,7 +50,7 @@
 
     @discardableResult
     func validatedMachineConfiguration(
-      for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationMacOSRestoreImage>,
+      for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
       at url: URL
     ) throws -> VZVirtualMachineConfiguration {
       let machineConfiguration: VZVirtualMachineConfiguration
@@ -70,7 +70,7 @@
     #warning("logging-note: why not mention that a configuration has been validated")
     @MainActor
     public func createBuilder(
-      for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationMacOSRestoreImage>,
+      for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
       at url: URL
     ) throws -> BushelMachine.MachineBuilder {
       let machineConfiguration = try self.validatedMachineConfiguration(for: configuration, at: url)
@@ -82,7 +82,7 @@
         restoringFromImageAt: configuration.restoreImage.url
       )
 
-      return VirtualizationInstaller(url: url, installer: installer)
+      return VirtualizationMachineBuilder(url: url, installer: installer)
     }
   }
 #endif

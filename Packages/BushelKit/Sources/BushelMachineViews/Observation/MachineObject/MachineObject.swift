@@ -136,7 +136,7 @@
     func writeConfigurationAt(_ url: URL) throws {
       let configuraton = machine.configuration
       let data = try JSON.encoder.encode(configuraton)
-      let configurationFileURL = url.appendingPathComponent(Paths.machineJSONFileName)
+      let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
       try data.write(to: configurationFileURL)
     }
 

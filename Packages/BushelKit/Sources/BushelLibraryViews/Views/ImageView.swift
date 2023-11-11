@@ -55,6 +55,10 @@
           )
         }
         .accessibilityHint("Configure a new virtual machine")
+        .disabled(!self.image.metadata.isImageSupported)
+        if !self.image.metadata.isImageSupported {
+          Text(.libraryUnsupportedImage)
+        }
         Spacer()
       }
       .padding(.vertical)

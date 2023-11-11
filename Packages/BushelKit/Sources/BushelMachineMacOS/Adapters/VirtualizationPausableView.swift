@@ -1,5 +1,5 @@
 //
-// VZVirtualMachinePausableView.swift
+// VirtualizationPausableView.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -8,7 +8,7 @@
   import BushelLogging
   import Virtualization
 
-  class VZVirtualMachinePausableView: VZVirtualMachineView, LoggerCategorized {
+  class VirtualizationPausableView: VZVirtualMachineView, LoggerCategorized {
     static var loggingCategory: BushelLogging.Loggers.Category {
       .view
     }

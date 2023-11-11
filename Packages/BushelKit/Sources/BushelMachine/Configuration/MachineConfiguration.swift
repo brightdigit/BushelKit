@@ -99,7 +99,7 @@ extension MachineConfiguration: CodablePackage {
   }
 
   public static var configurationFileWrapperKey: String {
-    Paths.machineJSONFileName
+    URL.bushel.paths.machineJSONFileName
   }
 
   public static var readableContentTypes: [BushelCore.FileType] {

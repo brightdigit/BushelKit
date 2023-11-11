@@ -8,6 +8,27 @@
   import Virtualization
 
   public extension VZMacOSRestoreImage {
+    internal struct OperatingSystem: OperatingSystemInstalled {
+      internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
+        self.operatingSystemVersion = operatingSystemVersion
+        self.buildVersion = buildVersion
+      }
+
+      internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
+        guard let operatingSystemVersion else {
+          return nil
+        }
+        self.init(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
+      }
+
+      let operatingSystemVersion: OperatingSystemVersion
+      let buildVersion: String?
+    }
+
+    var operatingSystem: OperatingSystemInstalled {
+      OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
+    }
+
     static func fetchLatestSupported() async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
         self.fetchLatestSupported { result in

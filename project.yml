@@ -21,7 +21,9 @@ targetTemplates:
   Application:
     type: application
     platform: macOS
-    scheme: {}
+    scheme:
+      environmentVariables:
+        DISABLE_ASSERTION_FAILURE_FOR_ERROR: ${DISABLE_ASSERTION_FAILURE_FOR_ERROR}
     dependencies:
       - package: BushelKit
         product: Bushel${packageName}App

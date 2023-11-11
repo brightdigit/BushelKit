@@ -1,5 +1,5 @@
 //
-// VZMachine+Sessionable.swift
+// VirtualizationMachine+Sessionable.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -9,9 +9,9 @@
   import Foundation
   import SwiftUI
 
-  extension VZMachine: Sessionable {
+  extension VirtualizationMachine: Sessionable {
     func view(_ settings: Binding<ScreenSettings>) -> some View {
-      ScreenView(virtualMachine: self.machine, settings: settings)
+      VirtualizationScreenView(virtualMachine: self.machine, settings: settings)
     }
   }
 #endif

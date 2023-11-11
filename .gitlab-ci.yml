@@ -75,13 +75,13 @@ upload spm macos coverage:
   script:
     - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F xcode15 -F macos
 
-build spm linux 5.9.0-nightly:
+build spm linux 5.10-nightly:
   stage: build
   only:
     - merge_requests
     - main
     - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
-  image: swiftlang/swift:nightly-5.9-jammy
+  image: swiftlang/swift:nightly-5.10-jammy
   script:
     - cd Packages/BushelKit
     - swift build

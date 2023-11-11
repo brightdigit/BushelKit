@@ -13,6 +13,20 @@
   extension ConfigurationObject {
     func verify() {}
 
+    func machineURL(fromBuildResult buildResult: Result<URL, BuilderError>?) -> URL? {
+      switch buildResult {
+      case let .failure(error):
+        self.error = .machineBuilderError(error)
+        fallthrough
+
+      case .none:
+        return nil
+
+      case let .success(url):
+        return url
+      }
+    }
+
     func onRestoreImageChange(from _: UUID?, to newRestoreImageID: UUID?) {
       assert(newRestoreImageID == self.configuration.restoreImageID)
       Self.logger.debug("restore image change to \(newRestoreImageID?.uuidString ?? "null")")
@@ -63,8 +77,12 @@
           }
         }
         .get()
-      } catch {
+      } catch let error as ConfigurationError {
         self.error = error
+        Self.logger.error("Unable to create build, error: \(error)")
+      } catch {
+        self.error = .unknownError(error)
+        Self.logger.critical("Unable to create build unknown error: \(error)")
       }
     }
 
@@ -76,14 +94,25 @@
           let builder = try await parameters.manager.createBuilder(
             for: configuration,
             image: parameters.image,
-            at: url.appendingPathComponent(Paths.machineDataDirectoryName)
+            at: url.appendingPathComponent(URL.bushel.paths.machineDataDirectoryName)
           )
           self.builder = .init(builder: builder)
-        } catch {
+        } catch let error as BuilderError {
           Self.logger.error("Unable to create builder: \(error)")
-          self.error = error
+          self.error = .machineBuilderError(error)
+        } catch {
+          Self.logger.critical("Unable to create builder: \(error)")
+          self.error = .unknownError(error)
         }
       }
+    }
+
+    public func getDestinationURL(assertionFailureIfNil: Bool) -> URL? {
+      let destinationDataURL = self.builder?.builder.url ?? self.lastDestinationURL
+      if assertionFailureIfNil {
+        assert(destinationDataURL != nil)
+      }
+      return destinationDataURL?.deletingLastPathComponent()
     }
   }
 

@@ -1,5 +1,5 @@
 //
-// ScreenView.swift
+// VirtualizationScreenView.swift
 // Copyright (c) 2023 BrightDigit.
 //
 
@@ -10,7 +10,7 @@
   import SwiftUI
   import Virtualization
 
-  struct ScreenView: NSViewControllerRepresentable, LoggerCategorized {
+  struct VirtualizationScreenView: NSViewControllerRepresentable, LoggerCategorized {
     typealias NSViewControllerType = VirtualizationScreenViewController
 
     static var loggingCategory: BushelLogging.Loggers.Category {
