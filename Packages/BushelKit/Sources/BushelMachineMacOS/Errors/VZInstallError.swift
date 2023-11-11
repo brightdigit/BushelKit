@@ -7,7 +7,7 @@
   import BushelMachine
   import Virtualization
 
-  protocol VZInstallError: InstallFailureError {
+  public protocol VZInstallError: InstallFailureError {
     var isVZError: Bool { get }
     var rawCode: Int { get }
     var underlyingError: VZUnderlyingError? { get }
