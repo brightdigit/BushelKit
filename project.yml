@@ -9,7 +9,7 @@ settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "1.0.0"
-  CURRENT_PROJECT_VERSION: 52
+  CURRENT_PROJECT_VERSION: 53
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
@@ -47,7 +47,7 @@ targetTemplates:
           termsOfUse: https://getbushel.app/terms-of-use
           support: https://getbushel.app/support
           company: https://brightdigit.com
-          contactMailTo: mailto:leo@brightdigit.com?subject=About%20Bushel... 
+          contactMailTo: mailto:leo@brightdigit.com?subject=About%20Bushel...
         ATSApplicationFontsPath: .
         CFBundleDocumentTypes:
           - {CFBundleTypeName: 'macOS Restore Image', CFBundleTypeRole: Viewer, LSHandlerRank: Alternate, LSItemContentTypes: [com.apple.iphone.ipsw, com.apple.itunes.ipsw]}
