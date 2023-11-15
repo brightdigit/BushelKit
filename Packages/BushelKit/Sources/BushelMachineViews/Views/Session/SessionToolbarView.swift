@@ -7,11 +7,14 @@
   import BushelCore
   import BushelLocalization
   import BushelMachine
+  import BushelViewsCore
   import SwiftUI
 
   struct SessionToolbarView: View {
     @Binding var screenSettings: ScreenSettings
     @Binding var keepWindowOpenOnShutdown: Bool
+    @AppStorage(for: Preference.MachineShutdownAction.self)
+    var machineShutdownActionOption: MachineShutdownActionOption?
     let agent: SessionToolbarAgent
     let onGeometryProxy: (GeometryProxy) -> Void
 
@@ -54,6 +57,7 @@
         isOn: self.$keepWindowOpenOnShutdown
       )
       .help(Text(.keepWindowOpenOnShutdown))
+      .isHidden(self.machineShutdownActionOption == .closeWindow)
       Toggle(
         LocalizedStringID.sessionCaptureSystemKeysToggle.key,
         systemImage: "command.square.fill",

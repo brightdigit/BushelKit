@@ -10,7 +10,7 @@
     "_applicationInternalID" : "1642807785",
     "_developerTeamID" : "MLT7M394S7",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 720125898.16911399,
+    "_lastSynchronizedDate" : 721678240.86922395,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -99,15 +99,7 @@
         },
         {
           "adHocOffers" : [
-            {
-              "displayPrice" : "41.99",
-              "internalID" : "4007767C",
-              "numberOfPeriods" : 1,
-              "offerID" : "test.promo.offer.22",
-              "paymentMode" : "payUpFront",
-              "referenceName" : "Test Promo Offer",
-              "subscriptionPeriod" : "P1Y"
-            }
+
           ],
           "codeOffers" : [
 
@@ -116,7 +108,12 @@
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "1643977347",
-          "introductoryOffer" : null,
+          "introductoryOffer" : {
+            "internalID" : "F21945C2",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
           "localizations" : [
             {
               "description" : "The Full Bushel of Pro Features for a year",

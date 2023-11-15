@@ -30,8 +30,6 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case selectImage
   case saveToLibrary
   case creatingSession
-  case generalSettings
-  case advancedSettings
   case restorePurchases
   case termsOfUse
   case privacyPolicy
@@ -42,6 +40,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case menuWindowWelcomeToBushel
   case menuHelpBushel
   case menuClear
+  case menuOnboarding
   case welcomePro
   case welcomeNewMachineTitle
   case welcomeExistingMachineTitle
@@ -139,12 +138,44 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case purchaseDescription
   case purchaseFeatureSnapshotNotesDescription
   case purchaseFeatureShutdownSnapshotDescription
-  case purchaseFeatureAutomaticSnapshotsTitle // "Automatic Periodic Snapshots"
-  case purchaseFeatureMachineSizeTitle // "Machine Space Usage Insight"
-  case purchaseFeatureMachineSizeDescription // "Track of Your Virtual Machine Space Usage."
-  case purchaseFeatureSnapshotNotesTitle // "Annotate Your Snapshots"
+  case purchaseFeatureAutomaticSnapshotsTitle
+  case purchaseFeatureMachineSizeTitle
+  case purchaseFeatureMachineSizeDescription
+  case purchaseFeatureSnapshotNotesTitle
   case purchaseFeatureAutomaticSnapshotsDescription
-  case purchaseFeatureShutdownSnapshotTitle // "Auto-Snapshot on Shutdown"
+  case purchaseFeatureShutdownSnapshotTitle
+  case settingsClearDatabaseLabel
+  case settingsSessionCloseForceTurnOff
+  case settingsAutomaticSnapshotsDescription
+  case settingsResetAllConfirmationTitle
+  case settingsAutomaticSnapshotsOften
+  case settingsClearAllRecentDocuments
+  case settingsClearDatabaseConfirmationTitle
+  case settingsClearDatabaseConfirmationButton
+  case settingsSessionCloseButton
+  case settingsMachineShutdownAlwaysClose
+  case settingsResetUserSettingsDescription
+  case settingsResetAllLabel
+  case settingsAutomaticSnapshotsMin
+  case recentDocuments
+  case settingsClearRecentDocuments
+  case settingsSessionCloseSaveSnapshotTurnOff
+  case settingsResetUserSettingsConfirmationButton
+  case enabled
+  case upgradeTo
+  case settingsResetUserSettingsConfirmationTitle
+  case settingsClearDatabaseDescription
+  case settingsAutomaticSnapshotsPrefix
+  case settingsAutomaticSnapshotsSection
+  case settingsSessionCloseAskUser
+  case settingsResetAllDescription
+  case settingsAutomaticSnapshotsMax
+  case settingsSessionCloseLabel
+  case settingsAutomaticSnapshotsLabel
+  case settingsActiveSession
+  case settingsResetAllConfirmationButton
+  case settingsResetUserSettingsLabel
+  case settingsMachineShutdown
   // swiftlint:enable identifier_name
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

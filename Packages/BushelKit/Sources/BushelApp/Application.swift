@@ -77,6 +77,9 @@
           CommandGroup(before: .singleWindowList) {
             Welcome.WindowCommands()
           }
+          CommandGroup(replacing: .help) {
+            Welcome.HelpCommands()
+          }
         #endif
       })
       .configure(

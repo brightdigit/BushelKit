@@ -43,6 +43,7 @@
         guard let window, !windowInitialized else {
           return
         }
+        window.isRestorable = false
         window.standardWindowButton(.closeButton)?.superview?.isHidden = true
         window.titlebarAppearsTransparent = true
         window.level = .floating
