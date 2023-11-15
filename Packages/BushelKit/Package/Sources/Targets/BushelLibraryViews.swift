@@ -6,7 +6,7 @@
 struct BushelLibraryViews: Target {
   var dependencies: any Dependencies {
     BushelLibrary()
-    BushelLibraryData()
+    BushelData()
     BushelLibraryEnvironment()
     BushelLogging()
     BushelUT()
