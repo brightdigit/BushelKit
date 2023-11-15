@@ -102,7 +102,7 @@
         }
       }.formStyle(.grouped)
         .confirmationDialog(
-          LocalizedStringID.settingsResetUserSettingsConfirmationTitle.key,
+          Text(.settingsResetUserSettingsConfirmationTitle),
           isPresented: self.$confimResetUserSettings,
           actions: {
             Button(role: .destructive, .settingsResetUserSettingsConfirmationButton) {
@@ -121,7 +121,7 @@
           }
         )
         .confirmationDialog(
-          LocalizedStringID.settingsClearDatabaseConfirmationTitle.key,
+          Text(.settingsClearDatabaseConfirmationTitle),
           isPresented: self.$confimClearDatbase,
           actions: {
             Button(role: .destructive, .settingsClearDatabaseConfirmationButton) {
@@ -140,7 +140,7 @@
           }
         )
         .confirmationDialog(
-          LocalizedStringID.settingsResetAllConfirmationTitle.key,
+          Text(.settingsResetAllConfirmationTitle),
           isPresented: self.$confirmClearAllSettings,
           actions: {
             Button(role: .destructive, .settingsResetAllConfirmationButton) {

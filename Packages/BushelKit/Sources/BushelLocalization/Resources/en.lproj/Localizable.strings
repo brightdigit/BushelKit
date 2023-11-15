@@ -238,7 +238,7 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 "settings_automatic_snapshots_description" = "Bushel has the ability to periodically take snapshots of your Virtual Machine, so you can rollback at anytime. The more frequent you take snapshots, the more disk space you take up but the more granular you can rollback your machine. Each snapshot is marked as discardable which makes it easy to filter and remove later.";
 
 /* Label for the option to take periodic snapshots. */
-"settings_automatic_snapshots_label" = "Take Perodic Snapshots:";
+"settings_automatic_snapshots_label" = "Take Periodic Snapshots:";
 
 /* Sub-label for specifying the frequency of snapshots. */
 "settings_automatic_snapshots_often" = "How Often:";
@@ -247,7 +247,7 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 "settings_automatic_snapshots_min" = "Barely";
 
 /* Maximum frequency for taking snapshots. */
-"settings_automatic_snapshots_max" = "Barely";
+"settings_automatic_snapshots_max" = "Frequently";
 
 /* Prefix for specifying frequency of snapshots. */
 "settings_automatic_snapshots_prefix" = "Every";
@@ -529,5 +529,3 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Purchase Feature Machine Size Description */
 "purchase_feature_shutdown_snapshot_description" = "Snapshot on shutdown for instant backups.";
-
-
