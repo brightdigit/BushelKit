@@ -11,6 +11,7 @@
   struct PurchaseHeaderView: View {
     typealias Properties = PurchaseHeaderViewProperties
 
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     let properties: Properties
     let features: [PurchaseFeatureItem]
 
@@ -47,6 +48,10 @@
       .padding(.horizontal, 80)
       .padding(.vertical, properties.verticalPadding)
       .padding(.top, properties.additionalTopPadding)
+
+      .containerBackground(for: .subscriptionStoreFullHeight, content: {
+        Image.resource("UI/apple-basket-bokeh").opacity(self.colorSchemeContrast == .increased ? 0.25 : 0.9)
+      })
     }
 
     internal init(properties: Properties, features: [PurchaseFeatureItem]) {

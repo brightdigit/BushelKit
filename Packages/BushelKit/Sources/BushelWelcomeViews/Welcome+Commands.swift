@@ -6,11 +6,33 @@
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import BushelData
+  import BushelLocalization
   import BushelViewsCore
   import SwiftData
   import SwiftUI
 
   public enum Welcome {
+    public struct HelpCommands: View {
+      public init() {}
+
+      @Environment(\.openURL) private var openURL
+      @Environment(\.openWindow) private var openWindow
+      @Environment(\.onboardingWindow) private var onboardingWindow
+
+      public var body: some View {
+        Button(.menuOnboarding) {
+          openWindow(value: onboardingWindow)
+        }
+        Button(openURL, URL.bushel.contactMailTo) {
+          Text(.contactUs)
+        }
+        Divider()
+        Button(openURL, URL.bushel.support) {
+          Text(.menuHelpBushel)
+        }
+      }
+    }
+
     public struct WindowCommands: View {
       public init() {}
 

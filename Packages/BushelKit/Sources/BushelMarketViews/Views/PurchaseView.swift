@@ -63,6 +63,7 @@
         .nsWindowAdaptor(self.setupNSWindow(_:))
       #endif
         .padding(.top, -20)
+        .backgroundStyle(.clear)
     }
 
     public init(groupID: String, windowInitialized: Bool = false) {

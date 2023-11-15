@@ -13,7 +13,7 @@
   public struct PreferencesView<PurchaseScreenValue: Codable & Hashable>:
     View {
     private enum Tabs: Hashable {
-      case general, advanced, tests, about
+      case general, advanced, about
     }
 
     @Environment(\.openWindow) var openWindow
@@ -34,12 +34,6 @@
             Label(.settingsAdvancedTab, systemImage: "wrench.and.screwdriver.fill")
           }
           .tag(Tabs.advanced)
-
-        DebuggingView(purchaseScreenValue: purchaseScreenValue)
-          .tabItem {
-            Label(.settingsTestTab, systemImage: "ladybug.fill")
-          }
-          .tag(Tabs.tests)
 
         AboutView(
           version: Bundle.applicationVersion,
