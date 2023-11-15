@@ -104,11 +104,24 @@
       self.initializedWindowSize = true
     }
 
+    func setCloseButtonAction(_ option: SessionCloseButtonActionOption?) {
+      self.sessionCloseButtonActionOption = option
+    }
+
     func shouldCloseWindow(_: NSWindow) -> Bool {
       if self.machineObject?.state == .stopped || self.machineObject == nil {
         return true
       } else {
-        self.presentConfirmCloseAlert = true
+        switch self.sessionCloseButtonActionOption {
+        case .saveSnapshotAndForceTurnOff:
+          self.stop(saveSnapshot: .init())
+
+        case .forceTurnOff:
+          self.stop(saveSnapshot: nil)
+
+        default:
+          self.presentConfirmCloseAlert = true
+        }
         return false
       }
     }

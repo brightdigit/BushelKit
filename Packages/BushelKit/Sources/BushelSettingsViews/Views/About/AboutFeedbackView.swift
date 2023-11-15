@@ -3,12 +3,19 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(macOS)
   import BushelLocalization
+  import BushelOnboardingEnvironment
+  import BushelViewsCore
   import SwiftUI
 
+  @available(iOS 16.0, visionOS 1.0, macOS 13.0, *)
   struct AboutFeedbackView: View {
+    @State var isAdvancedButtonsVisible: Bool = true
     @Environment(\.openURL) var openURL
+    @Environment(\.openWindow) var openWindow
+    @Environment(\.requestReview) var requestReview
+    @Environment(\.onboardingWindow) var onboardingWindow
     let alignment: HorizontalAlignment
     let spacing: CGFloat
     let titleID: LocalizedStringID
@@ -21,7 +28,18 @@
         Text(detailsID).lineLimit(3, reservesSpace: true)
         HStack {
           Spacer()
+          Button("More Actions") {
+            self.isAdvancedButtonsVisible.toggle()
+          }.keyboardShortcut(KeyEquivalent("b"), modifiers: [.command, .option, .control])
+            .opacity(0.0)
+          Button("Launch Onboarding") {
+            self.openWindow(value: onboardingWindow)
+          }.isHidden(self.isAdvancedButtonsVisible)
+          Button("Love the App?") {
+            self.requestReview()
+          }.isHidden(self.isAdvancedButtonsVisible)
           Button(openURL, buttonURL) {
+            Image(systemName: "envelope.fill")
             Text(buttonTextID)
           }
         }

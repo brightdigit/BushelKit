@@ -51,13 +51,15 @@
     }
   }
 
-  public extension Scene {
-    func onboardingWindow<SingleWindowViewType: SingleWindowView>(
-      _ view: SingleWindowViewType.Type
-    ) -> some Scene where SingleWindowViewType.Value == OnboardingWindowValue {
-      self.environment(\.onboardingWindow, view.Value.default)
+  #if os(macOS)
+    public extension Scene {
+      func onboardingWindow<SingleWindowViewType: SingleWindowView>(
+        _ view: SingleWindowViewType.Type
+      ) -> some Scene where SingleWindowViewType.Value == OnboardingWindowValue {
+        self.environment(\.onboardingWindow, view.Value.default)
+      }
     }
-  }
+  #endif
 
   extension Scene {
     func configure<
@@ -100,7 +102,7 @@
           .registerSystems(configuration.systems)
       #else
         return self.modelContainer(configuration.modelContainer)
-          .onboardingWindow(OnboardingView.self)
+          // .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))

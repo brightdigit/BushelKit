@@ -8,8 +8,8 @@ import BushelMacOSCore
 import BushelSystem
 import Foundation
 
-struct MockSystem: System {
-  var hubs: [Hub] {
+public struct MockSystem: System {
+  public var hubs: [Hub] {
     [
       Hub(title: "Totally Fake", id: "fake", count: 1) {
         [
@@ -25,11 +25,13 @@ struct MockSystem: System {
               vmSystemID: .macOS
             ),
             url: .init(
-              "http://localhost:8080/UniversalMac_14.0_23A5337a_Restore.ipsw"
+              "http://localhost:8080/6679D692-1B85-4788-B582-80E3337E53C5.ipsw"
             )
           )
         ]
       }
     ]
   }
+
+  public init() {}
 }

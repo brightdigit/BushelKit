@@ -25,6 +25,15 @@
 /* Title for upgrading to "Bushel Pro" */
 "upgrade_purchase" = "Go Pro";
 
+/* Label for an upgrade action. */
+"upgrade_to" = "Upgrade to";
+
+/* Indicates something is enabled. */
+"enabled" = "Enabled";
+
+/* Section header or label for recent documents. */
+"recent_documents" = "Recent Documents";
+
 /* Restore Purchases button Title */
 "restore_purchases" = "Restore Purchases";
 
@@ -82,12 +91,6 @@
 /* Session view Creating Session message */
 "creating_session" = "Creating Session...";
 
-/* Settings - General Settings */
-"general_settings" = "General Settings";
-
-/* Settings - Advanced Settings */
-"advanced_settings" = "Advanced Settings";
-
 /* Restore Image - Download Image Button */
 "download_image" = "Download Image";
 
@@ -108,6 +111,9 @@
 
 /* Clear Menu Button */
 "menu_clear" = "Clear Menu";
+
+/* Launch Onboarding from the Menu */
+"menu_onboarding" = "Launch Onboarding";
 
 /* Welcome Action Button title for creating new machine */
 "welcome_pro" = "Pro";
@@ -198,6 +204,95 @@
 
 /* Settings General Tab */
 "settings_general_tab" = "General";
+
+/* Describes an option related to the behavior of the close button in a session. */
+"settings_session_close_label" = "The Close Button Should:";
+
+/* Label for the close button settings. */
+"settings_session_close_button" = "Close Button";
+
+/* Settings Ask the User on Window Close */
+"settings_session_close_ask_user" = "Ask the User";
+
+/* Settings Force Turn Off on Window Close */
+"settings_session_close_force_turn_off" = "Force Turn Off";
+
+/* Settings Save State and Force Turn Off on Window Close */
+"settings_session_close_save_snapshot_turn_off" = "Save Snapshot and Force Turn Off";
+
+/* Refers to the label for an active session setting. */
+"settings_active_session" = "Active Session";
+
+/* Label indicating an action related to machine shutdown. */
+"settings_machine_shutdown" = "On Machine Shutdown:";
+
+/* Option for always closing a window on shutdown. */
+"settings_machine_shutdown_always_close" = "Always Close Window";
+
+/* Section header for automatic snapshots settings. */
+"settings_automatic_snapshots_section" = "Snapshots";
+
+/*
+Explanation of automatic snapshots functionality. Bushel has the ability to periodically take snapshots of your Virtual Machine, so you can rollback at anytime. The more frequent you take snapshots, the more disk space you take up but the more granular you can rollback your machine. Each snapshot is marked as discardable which makes it easy to filter and remove later.
+*/
+"settings_automatic_snapshots_description" = "Bushel has the ability to periodically take snapshots of your Virtual Machine, so you can rollback at anytime. The more frequent you take snapshots, the more disk space you take up but the more granular you can rollback your machine. Each snapshot is marked as discardable which makes it easy to filter and remove later.";
+
+/* Label for the option to take periodic snapshots. */
+"settings_automatic_snapshots_label" = "Take Periodic Snapshots:";
+
+/* Sub-label for specifying the frequency of snapshots. */
+"settings_automatic_snapshots_often" = "How Often:";
+
+/* Minimum frequency for taking snapshots. */
+"settings_automatic_snapshots_min" = "Barely";
+
+/* Maximum frequency for taking snapshots. */
+"settings_automatic_snapshots_max" = "Frequently";
+
+/* Prefix for specifying frequency of snapshots. */
+"settings_automatic_snapshots_prefix" = "Every";
+
+/* Clears all recent documents. */
+"settings_clear_all_recent_documents" = "Clear All Recent Documents";
+
+/* Clears recent documents. */
+"settings_clear_recent_documents" = "Clear Recent Documents";
+
+/* Description for resetting all user settings. */
+"settings_reset_user_settings_description" = "Reset All User Settings";
+
+/* Label for resetting all user settings. */
+"settings_reset_user_settings_label" = "Reset All User Settings";
+
+/* Confirmation title for resetting all user settings. */
+"settings_reset_user_settings_confirmation_title" = "Are you sure you want to reset all user settings?";
+
+/* Confirmation button for resetting all user settings. */
+"settings_reset_user_settings_confirmation_button" = "Yes, Reset All User Setting";
+
+/* Description for clearing the database. */
+"settings_clear_database_description" = "Clear Database";
+
+/* Label for clearing the database. */
+"settings_clear_database_label" = "Clear Database";
+
+/* Confirmation title for clearing the entire database. */
+"settings_clear_database_confirmation_title" = "Are you sure you want to clear the entire database of used libraries and machines?";
+
+/* Confirmation button for clearing the entire database. */
+"settings_clear_database_confirmation_button" = "Yes, Clear the Entire Database";
+
+/* Description for resetting all settings and data. */
+"settings_reset_all_description" = "Reset All Settings and Data";
+
+/* Label for resetting all settings and data. */
+"settings_reset_all_label" = "Reset All Settings and Data";
+
+/* Confirmation title for clearing the entire database and resetting all application settings. */
+"settings_reset_all_confirmation_title" = "Are you sure you want to clear the entire database and reset all application settings?";
+
+/* Confirmation button for clearing the entire database and resetting all application settings. */
+"settings_reset_all_confirmation_button" = "Yes, Clear the Entire Database";
 
 /* Settings Test Tab */
 "settings_test_tab" = "Lab";
@@ -434,5 +529,3 @@
 
 /* Purchase Feature Machine Size Description */
 "purchase_feature_shutdown_snapshot_description" = "Snapshot on shutdown for instant backups.";
-
-
