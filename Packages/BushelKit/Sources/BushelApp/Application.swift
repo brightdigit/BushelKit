@@ -23,7 +23,7 @@
   import SwiftData
   import SwiftUI
 
-  #if WAX_FRUIT
+  #if DEBUG
     import BushelWax
   #endif
 
@@ -89,7 +89,7 @@
         #if arch(arm64) && os(macOS)
           MacOSVirtualizationSystem()
         #endif
-        #if WAX_FRUIT
+        #if DEBUG
           MockSystem()
         #endif
       }
