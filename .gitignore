@@ -137,3 +137,5 @@ vendor/ruby
 public
 .mint
 *.lcov
+Docker/*/www
+!Docker/*/www/.gitkeep
