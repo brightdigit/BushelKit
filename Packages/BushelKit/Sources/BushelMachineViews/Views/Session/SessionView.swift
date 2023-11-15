@@ -12,15 +12,28 @@
   import BushelMachineEnvironment
   import BushelMarketEnvironment
   import BushelViewsCore
+  import Combine
   import StoreKit
   import SwiftUI
 
   struct SessionView: View, LoggerCategorized {
-    #warning("Make timer configurable")
-    let timer = Timer.publish(every: 5.0, on: .main, in: .common).autoconnect()
-    @Binding var request: SessionRequest?
+    // swiftlint:disable:next implicitly_unwrapped_optional
+    var timer: AnyPublisher<Date, Never>!
 
+    @Binding var request: SessionRequest?
     @State var object = SessionObject()
+
+    @AppStorage(for: AutomaticSnapshots.Enabled.self)
+    var automaticSnapshotEnabled: Bool
+    @AppStorage(for: AutomaticSnapshots.Value.self)
+    var automaticSnapshotValue: Int?
+    @AppStorage(for: AutomaticSnapshots.Polynomial.self)
+    var polynomial: LagrangePolynomial
+
+    @AppStorage(for: Preference.MachineShutdownAction.self)
+    var machineShutdownActionOption: MachineShutdownActionOption?
+    @AppStorage(for: Preference.SessionCloseButtonAction.self)
+    var sessionCloseButtonActionOption: SessionCloseButtonActionOption?
 
     @Environment(\.metadataLabelProvider) var labelProvider
     @Environment(\.machineSystemManager) var systemManager
@@ -117,9 +130,23 @@
         }
       }
 
+      .onChange(of: self.marketplace.purchased) { _, newValue in
+        guard newValue, self.sessionCloseButtonActionOption == .saveSnapshotAndForceTurnOff else {
+          return
+        }
+        self.sessionCloseButtonActionOption = nil
+      }
+      .onChange(of: self.sessionCloseButtonActionOption) { _, newValue in
+        self.object.setCloseButtonAction(newValue)
+      }
+
       .onChange(of: self.object.state) { oldValue, newValue in
         self.object.updateWindowSize()
-        if oldValue != .stopped, newValue == .stopped, !self.object.keepWindowOpenOnShutdown {
+        if
+          oldValue != .stopped,
+          newValue == .stopped,
+          !self.object.keepWindowOpenOnShutdown ||
+          self.machineShutdownActionOption == .closeWindow {
           self.object.hasIntialStarted = false
           self.object.startSnapshot(.init(), options: .discardable)
           dismiss()
@@ -128,6 +155,22 @@
       .navigationTitle(
         Self.navigationTitle(from: self.object.machineObject, default: "Loading Session...")
       )
+    }
+
+    init(request: Binding<SessionRequest?>) {
+      self._request = request
+
+      let interval = automaticSnapshotValue
+        .map(Double.init)?
+        .transform(using: self.polynomial)
+        .roundToNearest(value: .Snapshot.intervalIncrements, unlessThan: true) ??
+        .Snapshot.defaultInterval
+      self.timer = .automaticSnapshotPublisher(
+        every: interval,
+        isEnabled: true
+      )
+
+      self.object.setCloseButtonAction(self.sessionCloseButtonActionOption)
     }
 
     static func navigationTitle(
