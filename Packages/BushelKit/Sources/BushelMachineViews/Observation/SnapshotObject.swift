@@ -52,10 +52,6 @@
       self.initialSnapshot.createdAt
     }
 
-    var fileLength: Int {
-      self.initialSnapshot.fileLength
-    }
-
     var hasChanges: Bool {
       self.initialSnapshot.name != self.name || self.initialSnapshot.notes != self.notes
     }

@@ -8,49 +8,77 @@
   ],
   "settings" : {
     "_applicationInternalID" : "1642807785",
+    "_compatibilityTimeRate" : {
+      "3" : 6,
+      "5" : 1004
+    },
     "_developerTeamID" : "MLT7M394S7",
-    "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 721678240.86922395,
+    "_failTransactionsEnabled" : true,
+    "_lastSynchronizedDate" : 721844554.49310994,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 0,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Load Products"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 1,
+          "type" : "purchase"
+        },
+        "enabled" : true,
         "name" : "Purchase"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 0,
+          "type" : "verification"
+        },
+        "enabled" : true,
         "name" : "Verification"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "App Store Sync"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Subscription Status"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "App Transaction"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Manage Subscriptions Sheet"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 0,
+          "type" : "refund request"
+        },
         "enabled" : false,
         "name" : "Refund Request Sheet"
       },
@@ -62,7 +90,8 @@
         "enabled" : false,
         "name" : "Offer Code Redeem Sheet"
       }
-    ]
+    ],
+    "_timeRate" : 1005
   },
   "subscriptionGroups" : [
     {
@@ -109,7 +138,7 @@
           "groupNumber" : 1,
           "internalID" : "1643977347",
           "introductoryOffer" : {
-            "internalID" : "F21945C2",
+            "internalID" : "D843935B",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
