@@ -139,8 +139,6 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case purchaseFeatureSnapshotNotesDescription
   case purchaseFeatureShutdownSnapshotDescription
   case purchaseFeatureAutomaticSnapshotsTitle
-  case purchaseFeatureMachineSizeTitle
-  case purchaseFeatureMachineSizeDescription
   case purchaseFeatureSnapshotNotesTitle
   case purchaseFeatureAutomaticSnapshotsDescription
   case purchaseFeatureShutdownSnapshotTitle

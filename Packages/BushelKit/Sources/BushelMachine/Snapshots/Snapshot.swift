@@ -11,7 +11,6 @@ public struct Snapshot: Codable, Identifiable {
   public let id: UUID
   public let snapshotterID: SnapshotterID
   public let createdAt: Date
-  public let fileLength: Int
   public var notes: String
   public var operatingSystemVersion: OperatingSystemVersion?
   public var buildVersion: String?
@@ -21,7 +20,6 @@ public struct Snapshot: Codable, Identifiable {
     id: UUID,
     snapshotterID: SnapshotterID,
     createdAt: Date,
-    fileLength: Int,
     isDiscardable: Bool,
     notes: String = "",
     operatingSystemVersion: OperatingSystemVersion? = nil,
@@ -31,7 +29,6 @@ public struct Snapshot: Codable, Identifiable {
     self.id = id
     self.snapshotterID = snapshotterID
     self.createdAt = createdAt
-    self.fileLength = fileLength
     self.isDiscardable = isDiscardable
     self.notes = notes
     self.operatingSystemVersion = operatingSystemVersion
@@ -67,7 +64,6 @@ public extension Snapshot {
       id: id,
       snapshotterID: snapshotterID,
       createdAt: createdAt,
-      fileLength: fileLength,
       isDiscardable: isDiscardable,
       notes: newNotes,
       operatingSystemVersion: operatingSystemVersion,

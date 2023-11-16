@@ -35,7 +35,7 @@
           .background(.bar, in: RoundedRectangle(cornerRadius: 4.0))
         }
         VStack(alignment: .trailing, spacing: 8.0) {
-          Toggle(LocalizedStringID.enabled.key, isOn: $automaticSnapshotEnabled)
+          Toggle(LocalizedStringID.enabled, isOn: $automaticSnapshotEnabled)
             .opacity(marketplace.purchased ? 1.0 : 0.5)
             .disabled(!marketplace.purchased)
           Group {

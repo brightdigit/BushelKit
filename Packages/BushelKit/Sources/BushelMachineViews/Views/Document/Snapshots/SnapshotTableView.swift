@@ -33,13 +33,6 @@
         TableColumn("Date", value: \.createdAt) { snapshot in
           Text(snapshot.createdAt, formatter: Formatters.snapshotDateFormatter)
         }
-
-        TableColumn("Size", value: \.fileLength) { snapshot in
-          Text(
-            ByteCountFormatStyle.FormatInput(snapshot.fileLength),
-            format: .byteCount(style: .file)
-          )
-        }
         TableColumn("Notes", value: \.notes).width(ideal: 160, max: 280)
           .defaultVisibility(.hidden)
       }

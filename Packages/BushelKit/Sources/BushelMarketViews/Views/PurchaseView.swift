@@ -45,7 +45,6 @@
           if let marketingContentSizeClassProperties {
             PurchaseHeaderView(properties: marketingContentSizeClassProperties) {
               PurchaseFeatureItem.automaticSnapshots
-              PurchaseFeatureItem.machineSize
               PurchaseFeatureItem.snapshotNotes
               PurchaseFeatureItem.shutdownSnapshot
             }.onGeometry(self.setMarketingContentHeight(basedOnProxy:))

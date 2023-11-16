@@ -14,7 +14,6 @@
     public var name: String
     public var snapshotID: UUID
     public var createdAt: Date
-    public var fileLength: Int
     public var isDiscardable: Bool
     public var notes: String
     public var machine: MachineEntry?
@@ -52,7 +51,6 @@
       snapshotID: UUID,
       snapshotterID: SnapshotterID,
       createdAt: Date,
-      fileLength: Int,
       isDiscardable: Bool,
       notes: String,
       operatingSystemVersion: OperatingSystemVersion? = nil,
@@ -62,7 +60,6 @@
       self.snapshotID = snapshotID
       self.snapshotterIDRawValue = snapshotterID.rawValue
       self.createdAt = createdAt
-      self.fileLength = fileLength
       self.isDiscardable = isDiscardable
       self.notes = notes
       self.machine = machine
@@ -89,7 +86,6 @@
         snapshotID: snapshot.id,
         snapshotterID: snapshot.snapshotterID,
         createdAt: snapshot.createdAt,
-        fileLength: snapshot.fileLength,
         isDiscardable: snapshot.isDiscardable,
         notes: snapshot.notes,
         operatingSystemVersion: osInstalled?.operatingSystemVersion ?? snapshot.operatingSystemVersion,
@@ -111,7 +107,6 @@
     ) throws {
       self.snapshotID = snapshot.id
       self.createdAt = snapshot.createdAt
-      self.fileLength = snapshot.fileLength
       if let osInstalled {
         self.buildVersion = osInstalled.buildVersion
         self.operatingSystemVersion = osInstalled.operatingSystemVersion

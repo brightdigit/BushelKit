@@ -16,6 +16,7 @@
     @Environment(\.openWindow) var openWindow
     @Environment(\.requestReview) var requestReview
     @Environment(\.onboardingWindow) var onboardingWindow
+    @Environment(\.purchaseWindow) var purchaseWindow
     let alignment: HorizontalAlignment
     let spacing: CGFloat
     let titleID: LocalizedStringID
@@ -32,6 +33,9 @@
             self.isAdvancedButtonsVisible.toggle()
           }.keyboardShortcut(KeyEquivalent("b"), modifiers: [.command, .option, .control])
             .opacity(0.0)
+          Button("See Subscription Page") {
+            self.openWindow(value: self.purchaseWindow)
+          }.isHidden(self.isAdvancedButtonsVisible)
           Button("Launch Onboarding") {
             self.openWindow(value: onboardingWindow)
           }.isHidden(self.isAdvancedButtonsVisible)

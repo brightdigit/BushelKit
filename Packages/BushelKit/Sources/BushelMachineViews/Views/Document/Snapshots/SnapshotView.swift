@@ -40,7 +40,7 @@
           HStack {
             Text(.snapshotDetailsPropertyDicardable).font(.subheadline)
             Toggle(
-              "Discardable",
+              .snapshotDetailsPropertyDicardable,
               systemImage: "trash.fill",
               isOn: .constant(self.snapshot.isDiscardable)
             )
@@ -57,15 +57,6 @@
           } header: {
             Text(label.systemName).font(.subheadline).padding(.top, 2.0)
           }
-        }
-
-        Section {
-          Text(
-            ByteCountFormatStyle.FormatInput(snapshot.fileLength),
-            format: .byteCount(style: .file)
-          ).font(.headline).fontWeight(.semibold)
-        } header: {
-          Text(.snapshotDetailsPropertySize).font(.subheadline).padding(.top, 2.0)
         }
 
         Section {
@@ -116,11 +107,5 @@
       self.saveAction = saveAction
     }
   }
-
-  // #Preview {
-//  SnapshotDetailsView(snapshot: .init(
-//    .random()
-//  )).frame(width: 256)
-  // }
 
 #endif

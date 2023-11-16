@@ -118,8 +118,6 @@
         options: options
       )
 
-      let contentLength = try await self.fileManager.accumulateSizeFromDirectory(at: version.url)
-
       try version.writePersistentIdentifier(to: snapshotFileURL)
 
       let snapshot = Snapshot(
@@ -127,7 +125,6 @@
         id: id,
         snapshotterID: FileVersionSnapshotterFactory.systemID,
         createdAt: .init(),
-        fileLength: contentLength,
         isDiscardable: version.isDiscardable,
         notes: request.notes
       )

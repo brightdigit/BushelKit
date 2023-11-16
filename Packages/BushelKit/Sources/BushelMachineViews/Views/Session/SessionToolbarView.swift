@@ -7,14 +7,23 @@
   import BushelCore
   import BushelLocalization
   import BushelMachine
+  import BushelMarketEnvironment
   import BushelViewsCore
   import SwiftUI
 
   struct SessionToolbarView: View {
     @Binding var screenSettings: ScreenSettings
+    @Binding var sessionAutomaticSnapshotsEnabled: Bool
     @Binding var keepWindowOpenOnShutdown: Bool
+
     @AppStorage(for: Preference.MachineShutdownAction.self)
     var machineShutdownActionOption: MachineShutdownActionOption?
+
+    @AppStorage(for: AutomaticSnapshots.Enabled.self)
+    var automaticSnapshotsEnabled: Bool
+
+    @Environment(\.marketplace) var marketplace
+
     let agent: SessionToolbarAgent
     let onGeometryProxy: (GeometryProxy) -> Void
 
@@ -46,20 +55,27 @@
 
     var body: some View {
       Toggle(
-        LocalizedStringID.sessionAutomaticallyReconfigureDisplayToggle.key,
+        LocalizedStringID.sessionAutomaticallyReconfigureDisplayToggle,
         systemImage: "square.resize.up",
         isOn: self.$screenSettings.automaticallyReconfiguresDisplay
       )
       .hidden()
+      if marketplace.purchased, automaticSnapshotsEnabled {
+        Toggle(
+          LocalizedStringID.settingsAutomaticSnapshotsLabel,
+          systemImage: "camera.badge.clock.fill",
+          isOn: self.$sessionAutomaticSnapshotsEnabled
+        )
+      }
       Toggle(
-        LocalizedStringID.keepWindowOpenOnShutdown.key,
+        LocalizedStringID.keepWindowOpenOnShutdown,
         systemImage: "lock.fill",
         isOn: self.$keepWindowOpenOnShutdown
       )
       .help(Text(.keepWindowOpenOnShutdown))
       .isHidden(self.machineShutdownActionOption == .closeWindow)
       Toggle(
-        LocalizedStringID.sessionCaptureSystemKeysToggle.key,
+        LocalizedStringID.sessionCaptureSystemKeysToggle,
         systemImage: "command.square.fill",
         isOn: self.$screenSettings.capturesSystemKeys
       )
