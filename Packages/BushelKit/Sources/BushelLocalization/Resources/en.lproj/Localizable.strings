@@ -518,13 +518,6 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 "purchase_feature_snapshot_notes_description" = "Organize and annotate snapshots with additional notes.";
 
 /* Purchase Feature Machine Size Title */
-"purchase_feature_machine_size_title" = "Machine Space Usage Insight";
-
-/* Purchase Feature Machine Size Description */
-"purchase_feature_machine_size_description" = "Track of Your Virtual Machine Space Usage.";
-
-
-/* Purchase Feature Machine Size Title */
 "purchase_feature_shutdown_snapshot_title" = "Auto-Snapshot on Shutdown";
 
 /* Purchase Feature Machine Size Description */

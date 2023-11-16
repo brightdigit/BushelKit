@@ -37,7 +37,6 @@ import Foundation
       machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 
-    #warning("logging-note: I think we should log every step here?")
     @MainActor
     func createNewSnapshot(
       of machine: MachineType,
@@ -68,7 +67,6 @@ import Foundation
         id: id,
         snapshotterID: Self.vmSystemID,
         createdAt: .init(),
-        fileLength: contentLength ?? -1,
         isDiscardable: false,
         notes: request.notes
       )

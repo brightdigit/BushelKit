@@ -20,12 +20,6 @@ extension PurchaseFeatureItem {
       titleID: .purchaseFeatureSnapshotNotesTitle,
       descriptionID: .purchaseFeatureSnapshotNotesDescription
     )
-  static let machineSize: PurchaseFeatureItem =
-    .init(
-      systemName: "chart.pie.fill",
-      titleID: .purchaseFeatureMachineSizeTitle,
-      descriptionID: .purchaseFeatureMachineSizeDescription
-    )
   static let shutdownSnapshot: PurchaseFeatureItem =
     .init(
       systemName: "power.circle.fill",

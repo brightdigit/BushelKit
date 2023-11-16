@@ -54,7 +54,6 @@
           }
           Table(self.snapshots) {
             TableColumn("ID", value: \.snapshotID.description)
-            TableColumn("Size", value: \.fileLength.description)
             TableColumn("Operating System", value: \.operatingSystemVersionDescription)
             TableColumn("Created At", value: \.createdAt.description)
           }.padding().tabItem {

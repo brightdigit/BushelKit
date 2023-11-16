@@ -85,6 +85,16 @@
           assertionFailure(error: error)
         }
         return nil
+      } catch let error as NSError where error.code == 4 && error.domain == NSCocoaErrorDomain {
+        logger.notice("Removing file doesn't exist bookmark: \(bookmark.path)")
+        context.delete(bookmark)
+        do {
+          try context.save()
+        } catch {
+          logger.error("Unable to delete \(bookmark.path) error: \(error) ")
+          assertionFailure(error: error)
+        }
+        return nil
       } catch {
         logger.error("Bookmark \(bookmark.path) error: \(error) ")
         assertionFailure(error: error)

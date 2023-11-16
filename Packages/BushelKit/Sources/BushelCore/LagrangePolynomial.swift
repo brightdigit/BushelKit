@@ -48,19 +48,18 @@ public struct LagrangePolynomial: Codable, RawRepresentable {
     self = decoded
   }
 
-  // swiftlint:disable:next large_tuple
-  static func termForValue(_ newValue: Double, points: (CGPoint, CGPoint, CGPoint)) -> Double {
-    // swiftlint:disable:next line_length
-    points.0.y * ((newValue - points.0.x) * (newValue - points.2.x)) / ((points.0.x - points.1.x) * (points.0.x - points.2.x))
-  }
-
   public func transform(_ value: Double) -> Double {
     let newValue = isInverse ? (maxX - value) : value
 
-    return [
-      Self.termForValue(newValue, points: (point0, point1, point2)),
-      Self.termForValue(newValue, points: (point1, point2, point0)),
-      Self.termForValue(newValue, points: (point2, point0, point1))
-    ].reduce(0, +)
+    // swiftlint:disable identifier_name
+    let x0 = point0.x, x1 = point1.x, x2 = point2.x
+    let y0 = point0.y, y1 = point1.y, y2 = point2.y
+    // swiftlint:enable identifier_name
+
+    let term0 = y0 * ((newValue - x1) * (newValue - x2)) / ((x0 - x1) * (x0 - x2))
+    let term1 = y1 * ((newValue - x0) * (newValue - x2)) / ((x1 - x0) * (x1 - x2))
+    let term2 = y2 * ((newValue - x0) * (newValue - x1)) / ((x2 - x0) * (x2 - x1))
+
+    return term0 + term1 + term2
   }
 }

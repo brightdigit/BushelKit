@@ -53,6 +53,7 @@
         ToolbarItemGroup {
           SessionToolbarView(
             screenSettings: self.$object.screenSettings,
+            sessionAutomaticSnapshotsEnabled: self.$object.sessionAutomaticSnapshotsEnabled,
             keepWindowOpenOnShutdown: self.$object.keepWindowOpenOnShutdown,
             agent: self.object,
             onGeometryProxy: self.object.toolbarProxy
@@ -85,7 +86,7 @@
         Text(.sessionShutdownAlert)
       }
       .onReceive(self.timer, perform: { _ in
-        if self.marketplace.purchased {
+        if self.marketplace.purchased, self.object.sessionAutomaticSnapshotsEnabled {
           if self.object.state == .running {
             self.object.startSnapshot(.init(), options: .discardable)
           }

@@ -4,10 +4,21 @@
 //
 
 #if canImport(Combine)
+  import BushelLogging
   import Combine
   import Foundation
 
+  #if canImport(os)
+    import os
+  #else
+    import Logging
+  #endif
+
   extension AnyPublisher where Output == Date, Failure == Never {
+    static var snapshotLogger: Logger {
+      Loggers.forCategory(.machine)
+    }
+
     static func automaticSnapshotPublisher(
       every interval: TimeInterval,
       tolerance: TimeInterval? = nil,
@@ -18,6 +29,9 @@
     ) -> AnyPublisher<Date, Never> {
       if isEnabled {
         let tolerance = tolerance ?? Swift.min(interval / 2.0, 15.0)
+        Self.snapshotLogger.debug(
+          "Starting Automatic Snapshots every \(interval) secs with tolerance of \(tolerance) secs"
+        )
         return Timer.publish(
           every: interval,
           tolerance: tolerance,
