@@ -19,7 +19,7 @@ Key Features:
 * macOS Restore Image Management: Simplify macOS version installations with efficient management of restore images. Bushel ensures smooth OS installations and reduces setup time, allowing you to focus on development.
 Bushel Pro Subscription:
 
-Upgrade to Bushel Pro for enhanced capabilities, including automatic periodic snapshots, snapshot-on-shutdown, and the ability to add notes to each snapshot. Gain better control over virtual machine disk size and improved management of macOS restore images for OS installation.
+Upgrade to Bushel Pro for enhanced capabilities, including automatic periodic snapshots, snapshot-on-shutdown, and the ability to add notes to each snapshot. Gain better control over your virtual machines and improved management of macOS restore images for OS installation.
 
 Get Started:
 

@@ -10,10 +10,15 @@
   import SwiftUI
 
   struct GeneralSettingsView: View {
+    @AppStorage(for: RecentDocumentsClearDate.self)
+    private var recentDocumentsClearDate: Date?
+
     @AppStorage(for: Preference.MachineShutdownAction.self)
     var machineShutdownActionOption: MachineShutdownActionOption?
+
     @AppStorage(for: Preference.SessionCloseButtonAction.self)
     var sessionCloseButtonActionOption: SessionCloseButtonActionOption?
+
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.marketplace) var marketplace
     var body: some View {
@@ -73,7 +78,9 @@
           HStack {
             Spacer()
             LabeledContent {
-              Button(.settingsClearRecentDocuments) {}
+              Button(.settingsClearRecentDocuments) {
+                self.recentDocumentsClearDate = .init()
+              }
             } label: {
               Text(LocalizedStringID.settingsClearAllRecentDocuments)
             }

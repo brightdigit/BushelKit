@@ -33,12 +33,12 @@ cache:
     - xcodes select 15.0.1 
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
-
 build spm macos:
   stage: build
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $APPSTORE_DEPLOY == null
   tags:
       - macos
   artifacts:
@@ -68,6 +68,9 @@ build spm macos:
 upload spm macos coverage:
   stage: build
   needs: ["build spm macos"]
+  except:
+    variables:
+      - $APPSTORE_DEPLOY
   image: ellerbrock/alpine-bash-curl-ssl
   artifacts:
     paths:
@@ -81,6 +84,9 @@ build spm linux:
     - merge_requests
     - main
     - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
+  except:
+    variables:
+      - $APPSTORE_DEPLOY
   image: swift:5.9.0-jammy
   script:
     - cd Packages/BushelKit
@@ -92,6 +98,9 @@ build spm linux:
     - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
 
 lint lenient:
+  except:
+    variables:
+      - $APPSTORE_DEPLOY
   only:
     - merge_requests
   <<: *lint_template
@@ -118,6 +127,9 @@ deploy:
     - main
     - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
     - /ARCHIVE/
+  except:
+    variables:
+      - $APPSTORE_DEPLOY
   script:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
@@ -126,3 +138,28 @@ deploy:
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
+
+production:
+  stage: deploy
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  tags:
+    - macos 
+  when: manual
+  only:
+    refs:
+      - main    
+    variables:
+      - $APPSTORE_DEPLOY
+  script:
+    #- if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
+    - rbenv rehash
+    - rbenv exec bundle install
+    - xcodes select 15.0.1
+    #- LINT_MODE=NONE xcodegen
+    - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
+    - rbenv exec bundle exec fastlane production
