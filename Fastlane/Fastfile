@@ -106,4 +106,47 @@ platform :mac do
       overwrite_screenshots: true
     )    
   end
+  
+  
+  desc "Push a new beta build to TestFlight"
+  lane :production do
+    build_number = `yq eval '.settings .CURRENT_PROJECT_VERSION' ../project.yml`.strip.to_i
+    prebuild_info = `yq eval -o json -I0 '.targetTemplates.Application.info.properties.BrightDigitPrereleaseInfo' ../project.yml`.strip.dump    
+    remote_branch = ENV["CI_COMMIT_REF_NAME"]
+    
+    #puts prebuild_info
+    system "yq eval \".settings.CURRENT_PROJECT_VERSION = \"#{build_number+1}\"\" -i ../project.yml"
+    system "yq 'del(.targetTemplates.Application.info.properties.BrightDigitPrereleaseInfo)' -i ../project.yml"
+    system "LINT_MODE=NONE xcodegen -s ../project.yml"
+    
+    version = get_version_number(target: "Bushel")
+    tag = "#{version}-appstore.#{build_number}"
+    
+    archive
+    upload_to_testflight(skip_waiting_for_build_processing: true)  
+    
+    upload_to_app_store(
+      force: true, 
+      skip_binary_upload: true,
+      precheck_include_in_app_purchases: false,
+      overwrite_screenshots: true,
+      submit_for_review: true,
+      automatic_release: false,    
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false
+      }
+    )  
+    
+    git_commit(path: ["project.yml"], message: "Posting Build #{build_number+1} to App Store [ci skip]", skip_git_hooks: true)
+    add_git_tag(tag: tag)     
+    push_to_git_remote(local_branch: "HEAD", remote_branch: remote_branch)        
+
+    system "yq eval \".targetTemplates.Application.info.properties.BrightDigitPrereleaseInfo = \"#{prebuild_info}\"\" -i ../project.yml"
+    system "yq eval \".settings.CURRENT_PROJECT_VERSION = \"#{build_number+1}\"\" -i ../project.yml"
+  
+    git_commit(path: ["project.yml"], message: "Increment Build Number to #{build_number+1} [ci skip]", skip_git_hooks: true)
+    push_to_git_remote(local_branch: "HEAD", remote_branch: remote_branch)      
+
+  end
 end
