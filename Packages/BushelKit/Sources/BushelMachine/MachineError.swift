@@ -11,9 +11,7 @@ import Foundation
   import FoundationNetworking
 #endif
 
-public struct MachineError: LocalizedError, LoggerCategorized {
-  public typealias LoggersType = BushelLogging.Loggers
-
+public struct MachineError: LocalizedError, Loggable {
   public enum ObjectProperty {
     case url
     case machine
@@ -107,7 +105,7 @@ public struct MachineError: LocalizedError, LoggerCategorized {
     }
   }
 
-  public static var loggingCategory: BushelLogging.Loggers.Category {
+  public static var loggingCategory: BushelLogging.Category {
     .library
   }
 

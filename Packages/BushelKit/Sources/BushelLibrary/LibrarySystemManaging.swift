@@ -7,14 +7,14 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public protocol LibrarySystemManaging: LoggerCategorized {
+public protocol LibrarySystemManaging: Loggable {
   var allAllowedFileTypes: [FileType] { get }
   func resolve(_ id: VMSystemID) -> any LibrarySystem
   func resolveSystemFor(url: URL) -> VMSystemID?
 }
 
-public extension LibrarySystemManaging where Self: LoggerCategorized {
-  static var loggingCategory: BushelLogging.Loggers.Category {
+public extension LibrarySystemManaging where Self: Loggable {
+  static var loggingCategory: BushelLogging.Category {
     .library
   }
 }

@@ -11,7 +11,7 @@ import Foundation
   import SwiftUI
 #endif
 
-public protocol Machine: LoggerCategorized {
+public protocol Machine: Loggable {
   var configuration: MachineConfiguration { get }
 
   /// Execution state of the virtual machine.
@@ -71,7 +71,7 @@ public protocol Machine: LoggerCategorized {
 }
 
 public extension Machine {
-  static var loggingCategory: Loggers.LoggerCategory {
+  static var loggingCategory: BushelLogging.Category {
     .machine
   }
 

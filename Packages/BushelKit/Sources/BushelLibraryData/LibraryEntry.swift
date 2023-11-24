@@ -13,7 +13,7 @@
 
   #warning("I think we need to log the operations running for this entry")
   @Model
-  public final class LibraryEntry: LoggerCategorized {
+  public final class LibraryEntry: Loggable {
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 

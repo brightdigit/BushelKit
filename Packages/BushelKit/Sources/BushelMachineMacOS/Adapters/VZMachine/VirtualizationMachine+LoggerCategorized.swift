@@ -6,8 +6,8 @@
 #if canImport(Virtualization) && arch(arm64)
   import BushelLogging
 
-  extension VirtualizationMachine: LoggerCategorized {
-    static var loggingCategory: Loggers.Category {
+  extension VirtualizationMachine: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .machine
     }
   }

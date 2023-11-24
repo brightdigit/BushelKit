@@ -11,7 +11,7 @@
   import SwiftData
   import SwiftUI
 
-  struct WelcomeRecentDocumentsView: View, LoggerCategorized {
+  struct WelcomeRecentDocumentsView: View, Loggable {
     let recentDocumentsClearDate: Date?
     @Environment(\.modelContext) private var context
     @Environment(\.openWindow) private var openWindow

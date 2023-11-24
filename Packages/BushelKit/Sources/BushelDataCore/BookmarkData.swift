@@ -10,7 +10,7 @@
   import SwiftData
 
   @Model
-  public final class BookmarkData: LoggerCategorized {
+  public final class BookmarkData: Loggable {
     public private(set) var path: String
 
     @Attribute(.unique)

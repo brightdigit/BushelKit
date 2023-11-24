@@ -7,7 +7,7 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public class LibrarySystemManager: LibrarySystemManaging, LoggerCategorized {
+public class LibrarySystemManager: LibrarySystemManaging, Loggable {
   public let fileTypeBasedOnURL: (URL) -> FileType?
 
   let fileTypeMap: [FileType: VMSystemID]

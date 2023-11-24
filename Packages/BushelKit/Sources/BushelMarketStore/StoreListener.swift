@@ -9,8 +9,8 @@
   import Foundation
   import StoreKit
 
-  public class StoreListener: LoggerCategorized, MarketListener {
-    public static var loggingCategory: Loggers.Category {
+  public class StoreListener: Loggable, MarketListener {
+    public static var loggingCategory: BushelLogging.Category {
       .market
     }
 

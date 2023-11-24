@@ -13,7 +13,7 @@ import Foundation
   import FoundationNetworking
 #endif
 
-public struct LibraryError: LocalizedError, LoggerCategorized {
+public struct LibraryError: LocalizedError, Loggable {
   struct ImageImportDetails {
     enum Phase {
       case copy
@@ -149,7 +149,7 @@ public struct LibraryError: LocalizedError, LoggerCategorized {
     }
   }
 
-  public static var loggingCategory: BushelLogging.Loggers.Category {
+  public static var loggingCategory: BushelLogging.Category {
     .library
   }
 

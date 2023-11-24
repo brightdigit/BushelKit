@@ -11,12 +11,12 @@
   import Observation
 
   @Observable
-  public class Marketplace: LoggerCategorized, MarketObserver {
+  public class Marketplace: Loggable, MarketObserver {
     private static var shared = [Int: Marketplace]()
 
     internal static let `default` = Marketplace(groupIDs: [], listener: EmptyMarketListener.shared)
 
-    public static var loggingCategory: Loggers.Category {
+    public static var loggingCategory: BushelLogging.Category {
       .market
     }
 

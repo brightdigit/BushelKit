@@ -11,7 +11,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  struct WelcomeActionListView: View, LoggerCategorized {
+  struct WelcomeActionListView: View, Loggable {
     @Environment(\.openWindow) var openWindow
     @Environment(\.openFileURL) var openFileURL
     #if os(macOS)

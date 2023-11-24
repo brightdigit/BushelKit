@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct SnapshotRestoreActions: View, LoggerCategorized {
+  struct SnapshotRestoreActions: View, Loggable {
     let url: URL?
     let snapshot: Snapshot
     let restore: (Snapshot, URL, SnapshotRequest?) -> Void
