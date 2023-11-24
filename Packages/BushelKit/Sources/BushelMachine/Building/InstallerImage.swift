@@ -25,8 +25,8 @@ public extension InstallerImage {
   }
 }
 
-public extension InstallerImage where Self: LoggerCategorized {
-  static var loggingCategory: BushelLogging.Loggers.Category {
+public extension InstallerImage where Self: Loggable {
+  static var loggingCategory: BushelLogging.Category {
     .library
   }
 }

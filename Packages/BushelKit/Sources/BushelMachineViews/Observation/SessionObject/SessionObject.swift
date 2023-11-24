@@ -18,7 +18,7 @@
   #endif
 
   @Observable
-  class SessionObject: LoggerCategorized, MachineObjectParent, SessionFramable {
+  class SessionObject: Loggable, MachineObjectParent, SessionFramable {
     var url: URL?
     var presentConfirmCloseAlert: Bool = false
     var toolbarHeight: CGFloat = 24.0 + 28.0

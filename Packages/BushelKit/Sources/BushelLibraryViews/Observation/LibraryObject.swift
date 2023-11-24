@@ -13,7 +13,7 @@
   import SwiftUI
 
   @Observable
-  class LibraryObject: LoggerCategorized {
+  class LibraryObject: Loggable {
     @ObservationIgnored
     var modelContext: ModelContext?
 

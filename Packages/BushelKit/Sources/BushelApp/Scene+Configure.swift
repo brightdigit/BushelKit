@@ -76,15 +76,16 @@
     func configure(
       _ configuration: some ApplicationConfiguration
     ) -> some Scene {
+      let logger = BushelLogging.logger(forCategory: .application)
       if EnvironmentConfiguration.shared.resetApplication {
-        Loggers.loggers[.application]?.debug("Clearing application data")
+        logger.debug("Clearing application data")
         do {
           try Bundle.main.clearUserDefaults()
           try FileManager.default.clearSavedApplicationState()
           try ModelContext(configuration.modelContainer).clearDatabase()
-          Loggers.loggers[.application]?.debug("Clearing completed")
+          logger.debug("Clearing completed")
         } catch {
-          Loggers.loggers[.application]?.error("Unable to reset application: \(error)")
+          logger.error("Unable to reset application: \(error)")
           assertionFailure(error: error)
         }
       }

@@ -11,7 +11,7 @@
   import SwiftUI
 
   @Observable
-  class DocumentObject: LoggerCategorized, MachineObjectParent {
+  class DocumentObject: Loggable, MachineObjectParent {
     var url: URL?
     var error: MachineError?
     var machineObject: MachineObject?

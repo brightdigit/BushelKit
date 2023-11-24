@@ -12,7 +12,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  public struct LibraryScene: Scene, LoggerCategorized {
+  public struct LibraryScene: Scene, Loggable {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
 

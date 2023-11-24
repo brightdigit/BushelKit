@@ -11,7 +11,7 @@
   import BushelMachineEnvironment
   import SwiftUI
 
-  struct DocumentView: View, LoggerCategorized {
+  struct DocumentView: View, Loggable {
     @State var object = DocumentObject()
 
     @Environment(\.machineSystemManager) var systemManager

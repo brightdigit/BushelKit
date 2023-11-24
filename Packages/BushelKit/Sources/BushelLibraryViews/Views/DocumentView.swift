@@ -13,7 +13,7 @@
   import Observation
   import SwiftUI
 
-  struct DocumentView: View, LoggerCategorized {
+  struct DocumentView: View, Loggable {
     @Environment(\.librarySystemManager) private var librarySystemManager
     @Environment(\.modelContext) private var context
     @Environment(\.openWindow) private var openWindow

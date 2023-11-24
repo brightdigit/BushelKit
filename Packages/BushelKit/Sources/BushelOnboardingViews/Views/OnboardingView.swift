@@ -11,7 +11,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  public struct OnboardingView: SingleWindowView, LoggerCategorized {
+  public struct OnboardingView: SingleWindowView, Loggable {
     public typealias Value = OnboardingWindowValue
     @AppStorage(for: OnboardingAlphaAt.self) private var onboardedAt: Date?
     @State var windowInitialized = false

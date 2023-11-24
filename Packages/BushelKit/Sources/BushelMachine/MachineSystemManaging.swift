@@ -15,8 +15,8 @@ public protocol MachineSystemManaging {
   func resolve(_ id: VMSystemID) -> any MachineSystem
 }
 
-public extension MachineSystemManaging where Self: LoggerCategorized {
-  static var loggingCategory: BushelLogging.Loggers.Category {
+public extension MachineSystemManaging where Self: Loggable {
+  static var loggingCategory: BushelLogging.Category {
     .library
   }
 }

@@ -9,8 +9,8 @@
   import BushelLogging
   import SwiftData
 
-  extension ModelContainer: LoggerCategorized {
-    public static var loggingCategory: Loggers.Category {
+  extension ModelContainer: Loggable {
+    public static var loggingCategory: BushelLogging.Category {
       .data
     }
 

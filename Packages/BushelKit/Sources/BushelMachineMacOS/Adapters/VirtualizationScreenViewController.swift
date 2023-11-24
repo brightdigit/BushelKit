@@ -8,8 +8,8 @@
   import AppKit
   import BushelLogging
   import Virtualization
-  class VirtualizationScreenViewController: NSViewController, LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  class VirtualizationScreenViewController: NSViewController, Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
 

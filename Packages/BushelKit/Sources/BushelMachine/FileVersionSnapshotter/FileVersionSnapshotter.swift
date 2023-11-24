@@ -8,8 +8,8 @@
   import BushelLogging
   import Foundation
 
-  struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, LoggerCategorized {
-    static var loggingCategory: Loggers.Category {
+  struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .machine
     }
 

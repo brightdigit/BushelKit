@@ -14,7 +14,7 @@
   import SwiftUI
 
   @Observable
-  class LibraryImageObject: LoggerCategorized {
+  class LibraryImageObject: Loggable {
     var library: LibraryObject
     var entry: LibraryImageEntry
     let index: Int

@@ -8,8 +8,8 @@
   import BushelLogging
   import Foundation
 
-  class SessionWindowDelegate: NSObject, NSWindowDelegate, LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  class SessionWindowDelegate: NSObject, NSWindowDelegate, Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
 
