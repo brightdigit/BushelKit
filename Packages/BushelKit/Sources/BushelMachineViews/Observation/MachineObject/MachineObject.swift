@@ -17,7 +17,7 @@
   import SwiftUI
 
   @Observable
-  class MachineObject: LoggerCategorized {
+  class MachineObject: Loggable {
     typealias Machine = (any BushelMachine.Machine)
 
     var machine: Machine {

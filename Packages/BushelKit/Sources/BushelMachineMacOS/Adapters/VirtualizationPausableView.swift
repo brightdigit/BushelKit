@@ -8,8 +8,8 @@
   import BushelLogging
   import Virtualization
 
-  class VirtualizationPausableView: VZVirtualMachineView, LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  class VirtualizationPausableView: VZVirtualMachineView, Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
 

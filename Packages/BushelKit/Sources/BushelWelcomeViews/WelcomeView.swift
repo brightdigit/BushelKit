@@ -10,7 +10,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct WelcomeView: SingleWindowView, LoggerCategorized {
+  struct WelcomeView: SingleWindowView, Loggable {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.openWindow) var openWindow
     @Environment(\.onboardingWindow) var onboardingWindow

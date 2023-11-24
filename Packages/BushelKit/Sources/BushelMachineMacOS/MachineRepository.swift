@@ -10,8 +10,8 @@
   import Foundation
   import Virtualization
 
-  public actor MachineRepository: LoggerCategorized {
-    public static var loggingCategory: BushelLogging.Loggers.Category {
+  public actor MachineRepository: Loggable {
+    public static var loggingCategory: BushelLogging.Category {
       .machine
     }
 

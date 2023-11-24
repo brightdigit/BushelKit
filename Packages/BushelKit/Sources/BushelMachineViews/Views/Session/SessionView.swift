@@ -16,7 +16,7 @@
   import StoreKit
   import SwiftUI
 
-  struct SessionView: View, LoggerCategorized {
+  struct SessionView: View, Loggable {
     // swiftlint:disable:next implicitly_unwrapped_optional
     var timer: AnyPublisher<Date, Never>!
 

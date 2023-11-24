@@ -12,7 +12,7 @@
   import SwiftData
 
   @Model
-  public final class MachineEntry: LoggerCategorized {
+  public final class MachineEntry: Loggable {
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 

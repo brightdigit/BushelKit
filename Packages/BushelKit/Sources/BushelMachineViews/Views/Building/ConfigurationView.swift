@@ -15,7 +15,7 @@
   import SwiftData
   import SwiftUI
 
-  public struct ConfigurationView: View, LoggerCategorized {
+  public struct ConfigurationView: View, Loggable {
     @Binding var buildRequest: MachineBuildRequest?
     @State var buildResult: Result<URL, BuilderError>?
     @State var object: ConfigurationObject

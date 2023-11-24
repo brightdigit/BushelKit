@@ -16,7 +16,7 @@
 
   extension AnyPublisher where Output == Date, Failure == Never {
     static var snapshotLogger: Logger {
-      Loggers.forCategory(.machine)
+      BushelLogging.logger(forCategory: .machine)
     }
 
     static func automaticSnapshotPublisher(

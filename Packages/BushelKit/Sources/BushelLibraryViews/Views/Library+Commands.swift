@@ -13,7 +13,7 @@
   import UniformTypeIdentifiers
 
   public extension Library {
-    struct NewCommands: View, LoggerCategorized {
+    struct NewCommands: View, Loggable {
       public init() {}
 
       @Environment(\.newLibrary) private var newLibrary
@@ -27,7 +27,7 @@
     }
 
     @available(*, deprecated, message: "Use single open panel...")
-    struct OpenCommands: View, LoggerCategorized {
+    struct OpenCommands: View, Loggable {
       public init() {}
 
       @Environment(\.openWindow) private var openWindow

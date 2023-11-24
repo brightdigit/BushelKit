@@ -6,7 +6,7 @@
 import BushelCore
 import BushelLogging
 
-public protocol SnapshotterFactory: LoggerCategorized {
+public protocol SnapshotterFactory: Loggable {
   static var systemID: SnapshotterID { get }
   func createNewSnapshot(
     of machine: some Machine,
@@ -17,7 +17,7 @@ public protocol SnapshotterFactory: LoggerCategorized {
 }
 
 extension SnapshotterFactory {
-  public static var loggingCategory: Loggers.LoggerCategory {
+  public static var loggingCategory: BushelLogging.Category {
     .machine
   }
 

@@ -17,8 +17,8 @@
   struct SceneConfiguration<
     MachineFileType: FileTypeSpecification,
     LibraryFileType: InitializableFileTypeSpecification
-  >: ApplicationConfiguration, LoggerCategorized {
-    static var loggingCategory: Loggers.Category {
+  >: ApplicationConfiguration, Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .application
     }
 

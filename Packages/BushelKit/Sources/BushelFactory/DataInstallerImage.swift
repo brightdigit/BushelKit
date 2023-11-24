@@ -13,7 +13,7 @@
   import Foundation
   import SwiftData
 
-  class DataInstallerImage: InstallerImage, LoggerCategorized {
+  class DataInstallerImage: InstallerImage, Loggable {
     let entry: LibraryImageEntry
     let context: ModelContext
     let metadata: Metadata

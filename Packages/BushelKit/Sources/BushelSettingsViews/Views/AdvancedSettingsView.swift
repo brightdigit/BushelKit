@@ -13,7 +13,7 @@
 
   #warning("Show number of machines and images")
   #warning("Show current size")
-  struct AdvancedSettingsView: View, LoggerCategorized {
+  struct AdvancedSettingsView: View, Loggable {
     enum AdvancedSettingsError: LocalizedError {
       case databaseError(SwiftDataError)
       case missingBundleIdentifer
