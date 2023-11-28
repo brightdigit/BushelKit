@@ -318,6 +318,9 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Database Bookmarks */
 "database_bookmarks" = "Bookmarks";
 
+/* session_shutdown_alert title */
+"session_shutdown_title" = "Shutdown Machine";
+
 /* session_shutdown_alert */
 "session_shutdown_alert" = "How would you like to shutdown your machine?";
 

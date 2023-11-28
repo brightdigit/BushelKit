@@ -28,6 +28,10 @@
   }
 
   extension SessionObject {
+    var isMachineActive: Bool {
+      !(self.machineObject?.state == .stopped || self.machineObject == nil || self.error != nil)
+    }
+
     var capturesSystemKeys: Bool {
       get {
         self.screenSettings.capturesSystemKeys
@@ -109,21 +113,20 @@
     }
 
     func shouldCloseWindow(_: NSWindow) -> Bool {
-      if self.machineObject?.state == .stopped || self.machineObject == nil {
+      guard isMachineActive else {
         return true
-      } else {
-        switch self.sessionCloseButtonActionOption {
-        case .saveSnapshotAndForceTurnOff:
-          self.stop(saveSnapshot: .init())
-
-        case .forceTurnOff:
-          self.stop(saveSnapshot: nil)
-
-        default:
-          self.presentConfirmCloseAlert = true
-        }
-        return false
       }
+      switch self.sessionCloseButtonActionOption {
+      case .saveSnapshotAndForceTurnOff:
+        self.stop(saveSnapshot: .init())
+
+      case .forceTurnOff:
+        self.stop(saveSnapshot: nil)
+
+      default:
+        self.presentConfirmCloseAlert = true
+      }
+      return false
     }
 
     func toolbarProxy(_ proxy: GeometryProxy) {
