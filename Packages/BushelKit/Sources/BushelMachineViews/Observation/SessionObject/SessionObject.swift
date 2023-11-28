@@ -20,6 +20,7 @@
   @Observable
   class SessionObject: Loggable, MachineObjectParent, SessionFramable {
     var url: URL?
+    var alertIsPresented: Bool = false
     var presentConfirmCloseAlert: Bool = false
     var toolbarHeight: CGFloat = 24.0 + 28.0
     var screenSettings = ScreenSettings()
@@ -33,7 +34,13 @@
     var waitingForShutdown: Bool = false
 
     var machineObject: MachineObject?
-    var error: MachineError?
+
+    var error: MachineError? {
+      didSet {
+        alertIsPresented = (error != nil) || alertIsPresented
+      }
+    }
+
     var initializedWindowSize: Bool = false
 
     @ObservationIgnored

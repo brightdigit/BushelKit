@@ -20,6 +20,7 @@
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
     @Environment(\.snapshotProvider) private var snapshotProvider
+    @Environment(\.dismiss) private var dismiss
 
     @Binding var machineFile: MachineFile?
 
@@ -60,6 +61,19 @@
       .sheet(item: self.$object.currentOperation, content: { (operation: MachineOperation) in
         OperationView(operation: operation)
       })
+      .alert(
+        isPresented: self.$object.alertIsPresented,
+        error: self.object.error
+      ) { error in
+        if error.isCritical {
+          Button("OK") {
+            Task { @MainActor in
+              self.dismiss()
+            }
+          }
+        }
+      } message: { _ in
+      }
     }
 
     func beginLoadingURL(_ url: URL?) {

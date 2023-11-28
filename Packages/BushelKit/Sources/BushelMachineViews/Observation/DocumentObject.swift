@@ -13,7 +13,13 @@
   @Observable
   class DocumentObject: Loggable, MachineObjectParent {
     var url: URL?
-    var error: MachineError?
+    var alertIsPresented: Bool = false
+    var error: MachineError? {
+      didSet {
+        alertIsPresented = (error != nil) || alertIsPresented
+      }
+    }
+
     var machineObject: MachineObject?
 
     var canSaveSnapshot: Bool {
@@ -95,7 +101,6 @@
         self.url = url
       } catch {
         Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
-
         self.error = assertionFailure(error: error) { error in
           Self.logger.critical("Unknown error: \(error)")
         }
