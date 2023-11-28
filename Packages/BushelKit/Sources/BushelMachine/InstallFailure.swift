@@ -37,10 +37,7 @@ public struct InstallFailure: Equatable {
 
   static func fromError(_ error: Error) -> InstallFailure {
     guard let error = error as? InstallFailureError else {
-      print(type(of: error))
-      dump(error)
       assertionFailure(error: error)
-
       return .unknown
     }
 

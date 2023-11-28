@@ -42,10 +42,8 @@ import BushelMachine
         @MainActor in
         do {
           try await closure(machine)
-        } catch let error as MachineError {
-          self.error = error
         } catch {
-          assertionFailure(error: error)
+          self.error = MachineError.fromSessionAction(error: error)
         }
       }
     }
