@@ -65,7 +65,7 @@
         switch result {
         case let .success(subscriptions):
 
-          self.subscriptions = subscriptions
+          self.subscriptions.merge(with: subscriptions)
           self.error = nil
           Self.logger.debug("Successful update")
 
@@ -74,7 +74,6 @@
 
         case let .failure(error):
 
-          self.subscriptions = nil
           self.error = error
           Self.logger.debug("Subscription update failed: \(error.localizedDescription)")
           assertionFailure(error: error)

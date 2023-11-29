@@ -17,12 +17,14 @@
     // swiftlint:disable:next implicitly_unwrapped_optional
     var updateListener: Task<Void, Never>!
     weak var observer: MarketObserver?
+    var hasCurrentEntitlements: Bool = false
 
     public init() {}
 
     public func initialize(for observer: MarketObserver) {
       self.observer = observer
       self.updateListener = Self.listenerFor(self)
+
       self.invalidate()
     }
 
@@ -81,6 +83,10 @@
 
     public func invalidate() {
       Task {
+        if !hasCurrentEntitlements {
+          await self.updateCurrentEntitlements()
+          self.hasCurrentEntitlements = true
+        }
         await self.updateSubscriptionStatus()
       }
     }
@@ -103,8 +109,24 @@
 
         return MarketError.networkError(error)
       }
-
       observer.onSubscriptionUpdate(result)
+    }
+
+    func updateCurrentEntitlements() async {
+      let subscriptions = await Transaction.currentEntitlements.compactMap { result -> Subscription? in
+        guard let transaction = try? result.payloadValue else {
+          return nil
+        }
+        let subscription = await Subscription(transaction: transaction)
+        await transaction.finish()
+        return subscription
+      }
+      .reduce(
+        into: [Subscription]()
+      ) { partialResult, subscription in
+        partialResult.append(subscription)
+      }
+      observer?.onSubscriptionUpdate(.success(subscriptions))
     }
 
     deinit {

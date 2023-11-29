@@ -10,8 +10,10 @@ import Foundation
 public struct Subscription {
   public let groupID: String
   public let currentProductID: String
+  public let transcationDate: Date
   public let environment: Environment
-  public let willAutoRenew: Bool
+  // swiftlint:disable:next discouraged_optional_boolean
+  public let willAutoRenew: Bool?
   public let recentSubscriptionStartDate: Date
   public let renewalDate: Date?
   public let period: Subscription.Period?
@@ -21,8 +23,10 @@ public struct Subscription {
   public init(
     groupID: String,
     currentProductID: String,
+    transactionDate: Date,
     environment: Subscription.Environment,
-    willAutoRenew: Bool,
+    // swiftlint:disable:next discouraged_optional_boolean
+    willAutoRenew: Bool?,
     recentSubscriptionStartDate: Date,
     renewalDate: Date? = nil,
     period: Subscription.Period? = nil,
@@ -32,6 +36,7 @@ public struct Subscription {
   ) {
     self.groupID = groupID
     self.currentProductID = currentProductID
+    self.transcationDate = transactionDate
     self.environment = environment
     self.willAutoRenew = willAutoRenew
     self.recentSubscriptionStartDate = recentSubscriptionStartDate
@@ -40,5 +45,27 @@ public struct Subscription {
     self.offer = offer
     self.gracePeriodExpirationDate = gracePeriodExpirationDate
     self.autoRenewPreference = autoRenewPreference
+  }
+}
+
+public extension Optional where Wrapped == [Subscription] {
+  mutating func merge(with updatedSubscriptions: [Subscription]) {
+    guard let oldSubscriptions = self else {
+      self = updatedSubscriptions
+      return
+    }
+
+    let productSubscriptions = Dictionary(
+      grouping: oldSubscriptions + updatedSubscriptions
+    ) {
+      $0.currentProductID
+    }
+    let values = productSubscriptions.compactMapValues { subscriptions in
+      subscriptions.max(by: {
+        $0.transcationDate < $1.transcationDate
+      })
+    }.values
+
+    self = .some(.init(values))
   }
 }
