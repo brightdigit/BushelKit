@@ -67,10 +67,11 @@ build spm macos:
  
 upload spm macos coverage:
   stage: build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $APPSTORE_DEPLOY == null
   needs: ["build spm macos"]
-  except:
-    variables:
-      - $APPSTORE_DEPLOY
   image: ellerbrock/alpine-bash-curl-ssl
   artifacts:
     paths:
@@ -113,7 +114,7 @@ lint strict:
    LINT_MODE: "STRICT"
   <<: *lint_template  
 
-deploy:
+testflight:
   stage: deploy
   cache:
     key:
@@ -149,7 +150,6 @@ production:
       - vendor/ruby
   tags:
     - macos 
-  when: manual
   only:
     refs:
       - main    
