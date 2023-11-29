@@ -10,7 +10,14 @@
   import SwiftUI
 
   struct GeneralSettingsView: View {
-    @AppStorage(for: RecentDocumentsClearDate.self)
+    @State
+    private var recentDocumentsTypeFilterSelection =
+      DocumentTypeFilterOption.machinesAndLibraries.rawValue
+
+    @AppStorage(for: RecentDocuments.TypeFilter.self)
+    private var recentDocumentsTypeFilter
+
+    @AppStorage(for: RecentDocuments.ClearDate.self)
     private var recentDocumentsClearDate: Date?
 
     @AppStorage(for: Preference.MachineShutdownAction.self)
@@ -21,7 +28,9 @@
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.marketplace) var marketplace
+
     var body: some View {
+      // swiftlint:disable:next closure_body_length
       Form {
         Section {
           LabeledContent {
@@ -50,7 +59,10 @@
                 id: \.tag
               ) { value in
                 if !value.requiresSubscription || marketplace.purchased {
-                  Text(value.localizedID).tag(value.tag)
+                  Text(
+                    value.localizedID(default: LocalizedStringID.settingsSessionCloseLabel)
+                  )
+                  .tag(value.tag)
                 }
               }
             } label: {
@@ -78,6 +90,27 @@
           HStack {
             Spacer()
             LabeledContent {
+              Picker(
+                selection: self.$recentDocumentsTypeFilterSelection,
+                content: {
+                  ForEach(DocumentTypeFilterOption.allCases) { value in
+                    Text(
+                      value.localizedID(default: LocalizedStringID.settingsFilterRecentDocumentsNone)
+                    )
+                    .tag(value.tag)
+                  }
+                },
+                label: {
+                  Text(.settingsFilterRecentDocumentsNone)
+                }
+              ).labelsHidden()
+            } label: {
+              Text(.settingsFilterRecentDocuments)
+            }
+          }
+          HStack {
+            Spacer()
+            LabeledContent {
               Button(.settingsClearRecentDocuments) {
                 self.recentDocumentsClearDate = .init()
               }
@@ -88,15 +121,24 @@
         } header: {
           Text(LocalizedStringID.recentDocuments)
         }
-      }.formStyle(.grouped)
-    }
-  }
-
-  public extension Optional where Wrapped == SessionCloseButtonActionOption {
-    var localizedID: LocalizedID {
-      let value = LocalizedStringID(rawValue: self.localizedStringIDRawValue)
-      assert(value != nil)
-      return value ?? LocalizedStringID.settingsSessionCloseLabel
+      }
+      .formStyle(.grouped)
+      .onChange(of: self.recentDocumentsTypeFilterSelection) { _, newValue in
+        guard let newTypeFilter = DocumentTypeFilterOption(rawValue: newValue)?.typeFilter else {
+          return
+        }
+        guard newTypeFilter != self.recentDocumentsTypeFilter else {
+          return
+        }
+        self.recentDocumentsTypeFilter = newTypeFilter
+      }
+      .onChange(of: self.recentDocumentsTypeFilter) { _, newValue in
+        let newSelection = DocumentTypeFilterOption(filter: newValue)
+        guard newSelection.rawValue != self.recentDocumentsTypeFilterSelection else {
+          return
+        }
+        self.recentDocumentsTypeFilterSelection = newSelection.rawValue
+      }
     }
   }
 

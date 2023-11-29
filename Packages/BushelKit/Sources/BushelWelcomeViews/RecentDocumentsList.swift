@@ -4,12 +4,14 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelCore
   import BushelData
   import SwiftData
   import SwiftUI
 
   struct RecentDocumentsList<ItemView: View>: View {
-    let recentDocumentsClearDate: Date?
+    let recentDocumentsClearDate: Date
+    let recentDocumentsTypeFilter: DocumentTypeFilter
 
     @Binding var isEmpty: Bool
     @Query var bookmarks: [BookmarkData]
@@ -42,29 +44,42 @@
 
     internal init(
       recentDocumentsClearDate: Date?,
+      recentDocumentsTypeFilter: DocumentTypeFilter,
       isEmpty: Binding<Bool>,
       bookmarksQuery: Query<Array<BookmarkData>.Element, [BookmarkData]>? = nil,
       object: RecentDocumentsObject = RecentDocumentsObject(),
       forEach: @escaping (RecentDocument) -> ItemView
     ) {
+      let recentDocumentsClearDate = recentDocumentsClearDate ?? .distantPast
       self._bookmarks = bookmarksQuery ??
-        Self.queryBasedOn(recentDocumentsClearDate: recentDocumentsClearDate)
+        Self.queryBasedOn(
+          recentDocumentsTypeFilter: recentDocumentsTypeFilter,
+          recentDocumentsClearDate: recentDocumentsClearDate
+        )
       self.recentDocumentsClearDate = recentDocumentsClearDate
+      self.recentDocumentsTypeFilter = recentDocumentsTypeFilter
       self._isEmpty = isEmpty
       self._object = .init(wrappedValue: object)
       self.forEach = forEach
     }
 
     static func queryBasedOn(
-      recentDocumentsClearDate: Date?
+      recentDocumentsTypeFilter: DocumentTypeFilter,
+      recentDocumentsClearDate: Date
     ) -> Query<Array<BookmarkData>.Element, [BookmarkData]> {
       let sort = \BookmarkData.updatedAt
       let order = SortOrder.reverse
-
-      let filter: Predicate<BookmarkData>? = recentDocumentsClearDate
-        .map { date in
-          #Predicate { $0.updatedAt > date }
+      let filter: Predicate<BookmarkData>
+      let searchStrings = recentDocumentsTypeFilter.searchStrings
+      if let libraryFilter = searchStrings.first {
+        filter = #Predicate {
+          $0.updatedAt > recentDocumentsClearDate && !$0.path.localizedStandardContains(libraryFilter)
         }
+      } else {
+        filter = #Predicate {
+          $0.updatedAt > recentDocumentsClearDate
+        }
+      }
 
       return Query(filter: filter, sort: sort, order: order)
     }

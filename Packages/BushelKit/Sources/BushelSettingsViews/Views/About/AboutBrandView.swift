@@ -24,13 +24,13 @@
                 .fontWeight(.thin)
                 .textCase(.lowercase)
                 .italic()
-                .padding(.trailing, 40.0)
+                .padding(.trailing, 120.0)
                 .apply(\.size.width, with: value)
               Image
                 .resource(self.wordmarkImageResourceName)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: value.get())
+                .aspectRatio(contentMode: .fit)
+                .frame(width: value.get(), alignment: .bottomLeading)
             }
           }
         }
