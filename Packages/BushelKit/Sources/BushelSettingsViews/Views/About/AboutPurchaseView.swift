@@ -10,11 +10,19 @@
     @Environment(\.openWindow) var openWindow
     let subscriptionEndDate: Date?
     let purchaseScreenValue: PurchaseScreenValue
+    var subscriptionEndDateStyle: Text.DateStyle {
+      #if DEBUG
+        return .relative
+      #else
+        return .date
+      #endif
+    }
+
     var body: some View {
       VStack(alignment: .leading) {
         if let subscriptionEndDate, subscriptionEndDate > .init() {
           Text(.aboutSubscriptionEndsAt).font(.system(.caption))
-          Text(subscriptionEndDate, style: .date)
+          Text(subscriptionEndDate, style: subscriptionEndDateStyle)
         } else {
           Button(.upgradePurchase) {
             openWindow(value: purchaseScreenValue)

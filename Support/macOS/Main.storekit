@@ -13,17 +13,17 @@
       "5" : 1004
     },
     "_developerTeamID" : "MLT7M394S7",
-    "_failTransactionsEnabled" : true,
+    "_failTransactionsEnabled" : false,
     "_lastSynchronizedDate" : 721844554.49310994,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : {
-          "index" : 0,
+          "index" : 2,
           "type" : "generic"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "Load Products"
       },
       {
@@ -31,7 +31,7 @@
           "index" : 1,
           "type" : "purchase"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "Purchase"
       },
       {
@@ -39,7 +39,7 @@
           "index" : 0,
           "type" : "verification"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "Verification"
       },
       {
@@ -47,7 +47,7 @@
           "index" : 2,
           "type" : "generic"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "App Store Sync"
       },
       {
@@ -55,7 +55,7 @@
           "index" : 2,
           "type" : "generic"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "Subscription Status"
       },
       {
@@ -63,7 +63,7 @@
           "index" : 2,
           "type" : "generic"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "App Transaction"
       },
       {
@@ -71,7 +71,7 @@
           "index" : 2,
           "type" : "generic"
         },
-        "enabled" : true,
+        "enabled" : false,
         "name" : "Manage Subscriptions Sheet"
       },
       {
