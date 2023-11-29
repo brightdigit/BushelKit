@@ -252,6 +252,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Prefix for specifying frequency of snapshots. */
 "settings_automatic_snapshots_prefix" = "Every";
 
+/* Show Only in Recent Documents */
+"settings_filter_recent_documents" = "Include Types:";
+
+/* Show Only Machines in Recent Documents */
+"settings_filter_recent_documents_machines_only" = "Machines Only";
+
+/* Show All Items in Recent Documents */
+"settings_filter_recent_documents_none" = "Both Machines and Libraries";
+
 /* Clears all recent documents. */
 "settings_clear_all_recent_documents" = "Clear All Recent Documents";
 

@@ -40,7 +40,7 @@
       Group {
         #if os(macOS)
           WelcomeScene()
-          Settings(purchaseScreenValue: MarketScene.purchaseScreenValue)
+          Settings(purchaseScreenValue: MarketScene.purchaseScreenValue).windowResizability(.contentSize)
         #endif
 
         LibraryScene()

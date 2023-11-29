@@ -13,7 +13,7 @@
 
   public struct OnboardingView: SingleWindowView, Loggable {
     public typealias Value = OnboardingWindowValue
-    @AppStorage(for: OnboardingAlphaAt.self) private var onboardedAt: Date?
+    @AppStorage(for: Onboarding.Beta.self) private var onboardedAt: Date?
     @State var windowInitialized = false
 
     #warning("shendy-note: this might need to have adaptive frame to screen size")
