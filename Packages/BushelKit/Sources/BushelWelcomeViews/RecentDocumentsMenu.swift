@@ -4,10 +4,12 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelCore
   import SwiftUI
 
   public struct RecentDocumentsMenu: View {
     let recentDocumentsClearDate: Date?
+    let recentDocumentsTypeFilter: DocumentTypeFilter
     let clearMenu: () -> Void
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openFileURL) private var openFileURL
@@ -17,6 +19,7 @@
         if !isEmpty {
           RecentDocumentsList(
             recentDocumentsClearDate: recentDocumentsClearDate,
+            recentDocumentsTypeFilter: recentDocumentsTypeFilter,
             isEmpty: self.$isEmpty
           ) { document in
             Button {

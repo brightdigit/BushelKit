@@ -12,6 +12,7 @@
   import SwiftUI
 
   struct WelcomeRecentDocumentsView: View, Loggable {
+    let recentDocumentsTypeFilter: DocumentTypeFilter
     let recentDocumentsClearDate: Date?
     @Environment(\.modelContext) private var context
     @Environment(\.openWindow) private var openWindow
@@ -29,6 +30,7 @@
           List {
             RecentDocumentsList(
               recentDocumentsClearDate: recentDocumentsClearDate,
+              recentDocumentsTypeFilter: recentDocumentsTypeFilter,
               isEmpty: self.$isEmpty
             ) { document in
               RecentDocumentItemButton(document: document)
