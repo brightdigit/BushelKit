@@ -8,20 +8,20 @@
   import SwiftData
   import SwiftUI
 
-  public extension View where Self: LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  public extension View where Self: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
   }
 
-  public extension Scene where Self: LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  public extension Scene where Self: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
   }
 
-  public extension Observable where Self: LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  public extension Observable where Self: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
   }

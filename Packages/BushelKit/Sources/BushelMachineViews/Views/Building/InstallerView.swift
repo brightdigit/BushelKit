@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct InstallerView: View, LoggerCategorized {
+  struct InstallerView: View, Loggable {
     @Environment(\.dismiss) var dismiss
     @Binding var buildResult: Result<URL, BuilderError>?
     var installationObject: InstallerObject

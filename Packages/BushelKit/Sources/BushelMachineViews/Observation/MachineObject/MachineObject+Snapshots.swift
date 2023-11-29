@@ -7,6 +7,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelLogging
   import BushelMachine
   import BushelMachineData
   import BushelViewsCore
@@ -15,6 +16,41 @@
   import SwiftUI
 
   extension MachineObject {
+    struct DeleteSnapshotRequest {
+      static var loggingCategory: BushelLogging.Category {
+        .machine
+      }
+
+      private init(snapshot: Snapshot, url: URL) {
+        self.snapshot = snapshot
+        self.url = url
+      }
+
+      let snapshot: Snapshot
+      let url: URL
+
+      func isConfirmed(with confirmingRemovingSnapshot: Snapshot?) -> Bool {
+        snapshot.id == confirmingRemovingSnapshot?.id
+      }
+
+      internal init(snapshot: Snapshot?, url: URL?, using logger: Logger) throws {
+        guard let snapshot else {
+          let error = MachineError.missingProperty(.snapshot)
+          assertionFailure(error: error)
+          logger.error("Missing snapshot: \(error)")
+          throw error
+        }
+        guard let url else {
+          let error = MachineError.missingProperty(.url)
+          assertionFailure(error: error)
+          logger.error("Missing url: \(error)")
+          throw error
+        }
+        self.snapshot = snapshot
+        self.url = url
+      }
+    }
+
     struct SnapshotSelection {
       internal init(id: Snapshot.ID, configurationURL: URL, index: Int) {
         self.id = id
@@ -182,37 +218,25 @@
 
     func deleteSnapshot(_ snapshot: Snapshot?, at url: URL?) {
       do {
-        guard let snapshot = snapshot ?? confirmingRemovingSnapshot else {
-          let error = MachineError.missingProperty(.snapshot)
-          assertionFailure(error: error)
-          Self.logger.error("Missing snapshot: \(error)")
-          throw error
-        }
-        guard let url else {
-          let error = MachineError.missingProperty(.url)
-          assertionFailure(error: error)
-          Self.logger.error("Missing url: \(error)")
-          throw error
-        }
-        if snapshot.id != confirmingRemovingSnapshot?.id {
-          let confirmingRemovingSnapshotIDString = self.confirmingRemovingSnapshot?.id.uuidString ?? "null"
-          assertionFailure("\(snapshot.id) != \(confirmingRemovingSnapshotIDString)")
-          Self.logger.error(
-            "Not matching snapshot ids: \(snapshot.id) != \(confirmingRemovingSnapshotIDString)"
-          )
-        }
-        if self.selectedSnapshot == snapshot.id {
+        let deletingSnapshotRequest = try DeleteSnapshotRequest(
+          snapshot: snapshot ?? confirmingRemovingSnapshot,
+          url: url,
+          using: Self.logger
+        )
+        assert(deletingSnapshotRequest.isConfirmed(with: confirmingRestoreSnapshot))
+        if self.selectedSnapshot == deletingSnapshotRequest.snapshot.id {
           self.selectedSnapshot = nil
         }
-        try machine.deleteSnapshot(snapshot, using: self.snapshotFactory)
-        let snapshotID = snapshot.id
+        try machine.deleteSnapshot(deletingSnapshotRequest.snapshot, using: self.snapshotFactory)
+        let snapshotID = deletingSnapshotRequest.snapshot.id
         try modelContext.delete(model: SnapshotEntry.self, where: #Predicate {
           $0.snapshotID == snapshotID
         })
-        try writeConfigurationAt(url)
+        try writeConfigurationAt(deletingSnapshotRequest.url)
         Self.logger.debug("Completed deleting snapshot \(snapshotID)")
       } catch {
-        self.error = assertionFailure(error: error) { error in
+        let newError: Error = MachineError.fromSnapshotError(error)
+        self.error = assertionFailure(error: newError) { error in
           Self.logger.critical("Unknown error: \(error)")
         }
       }
@@ -268,8 +292,8 @@
             // swiftlint:disable:next line_length
             "Could not restore snapshot \(snapshot.id) to \(url, privacy: .public): \(error, privacy: .public)"
           )
-
-          self.error = assertionFailure(error: error) { error in
+          let newError: Error = MachineError.fromSnapshotError(error)
+          self.error = assertionFailure(error: newError) { error in
             Self.logger.critical("Unknown error: \(error)")
           }
         }
@@ -318,11 +342,7 @@
           withContext: modelContext
         )
       } catch {
-        let machineError: MachineError = if let bookmarkError = error as? BookmarkError {
-          .bookmarkError(bookmarkError)
-        } else {
-          .fromDatabaseError(error)
-        }
+        let machineError = MachineError.fromExportSnapshotError(error)
         assertionFailure(error: machineError)
         self.error = machineError
       }

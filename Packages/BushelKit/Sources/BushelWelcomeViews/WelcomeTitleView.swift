@@ -14,7 +14,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  struct WelcomeTitleView: View, LoggerCategorized {
+  struct WelcomeTitleView: View, Loggable {
     var body: some View {
       HStack {
         Spacer()

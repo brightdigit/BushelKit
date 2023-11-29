@@ -11,7 +11,7 @@
   import SwiftData
   import SwiftUI
 
-  public struct MachineScene: Scene, LoggerCategorized {
+  public struct MachineScene: Scene, Loggable {
     static let minimumWidth = 512.0
     static let idealSessionWidth = 1920.0
 

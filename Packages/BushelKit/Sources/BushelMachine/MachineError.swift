@@ -11,103 +11,14 @@ import Foundation
   import FoundationNetworking
 #endif
 
-public struct MachineError: LocalizedError, LoggerCategorized {
-  public typealias LoggersType = BushelLogging.Loggers
-
+public struct MachineError: LocalizedError, Loggable {
   public enum ObjectProperty {
     case url
     case machine
     case snapshot
   }
 
-  enum Details {
-    private struct UnknownError: Error {
-      private init() {}
-      // swiftlint:disable:next strict_fileprivate
-      fileprivate static let shared = UnknownError()
-    }
-
-    case bookmarkError
-    case systemResolution
-    case missingRestoreImageWithID(InstallerImageIdentifier)
-    case accessDeniedLibraryAt(URL)
-    case corruptedAt(URL)
-    case database
-    case missingProperty(ObjectProperty)
-
-    // swiftlint:disable:next cyclomatic_complexity
-    func errorDescription(fromError error: Error?) -> String {
-      switch self {
-      case .bookmarkError:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "There's an issue getting the bookmark: \(error)"
-
-      case .systemResolution:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "Unable to resolve new image: \(error)"
-
-      case let .accessDeniedLibraryAt(path):
-        let components: [String?] = [
-          "There's an issue getting access to library at \(path)", error?.localizedDescription
-        ]
-        return components.compactMap { $0 }.joined(separator: ": ")
-
-      case let .corruptedAt(libraryURL):
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "There's an issue reading the library at \(libraryURL): \(error)"
-      case .database:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "There was an issue syncing with the database: \(error)"
-
-      case let .missingRestoreImageWithID(id):
-        return "There's an issue finding referenced restore image: \(id)"
-
-      case let .missingProperty(property):
-        return "Missing object property: \(property)"
-      }
-    }
-
-    func recoverySuggestion(fromError _: Error?) -> String? {
-      switch self {
-      case .accessDeniedLibraryAt:
-        "Close and open the library again."
-      default:
-        nil
-      }
-    }
-
-    // swiftlint:disable:next cyclomatic_complexity
-    func isRecoverable(fromError _: Error?) -> Bool {
-      switch self {
-      case .bookmarkError:
-        false
-
-      case .accessDeniedLibraryAt:
-        false
-
-      case .corruptedAt:
-        false
-
-      case .database:
-        false
-
-      case .systemResolution:
-        false
-
-      case .missingRestoreImageWithID:
-        true
-
-      case .missingProperty:
-        false
-      }
-    }
-  }
-
-  public static var loggingCategory: BushelLogging.Loggers.Category {
+  public static var loggingCategory: BushelLogging.Category {
     .library
   }
 
@@ -124,6 +35,19 @@ public struct MachineError: LocalizedError, LoggerCategorized {
 
   public var isRecoverable: Bool {
     details.isRecoverable(fromError: innerError)
+  }
+
+  public var isCritical: Bool {
+    switch self.details {
+    case .corruptedAt:
+      true
+
+    case .session:
+      true
+
+    default:
+      false
+    }
   }
 
   private init<TypedError: Error>(
@@ -151,6 +75,36 @@ public struct MachineError: LocalizedError, LoggerCategorized {
 }
 
 public extension MachineError {
+  static func fromSessionAction(error: Error) -> MachineError {
+    if let error = error as? MachineError {
+      error
+    } else {
+      .init(details: .session, innerError: error)
+    }
+  }
+
+  static func fromExportSnapshotError(_ error: Error) -> MachineError {
+    if let error = error as? MachineError {
+      error
+    } else if error is SnapshotError {
+      MachineError(details: .snapshot, innerError: error)
+    } else if let error = error as? BookmarkError {
+      .bookmarkError(error)
+    } else {
+      .fromDatabaseError(error)
+    }
+  }
+
+  static func fromSnapshotError(_ error: Error) -> Error {
+    if error is MachineError {
+      error
+    } else if error is SnapshotError {
+      MachineError(details: .snapshot, innerError: error)
+    } else {
+      error
+    }
+  }
+
   static func missingProperty(_ property: ObjectProperty) -> MachineError {
     .init(details: .missingProperty(property))
   }

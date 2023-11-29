@@ -51,7 +51,19 @@ public extension MachineSystem {
     image: any InstallerImage,
     at url: URL
   ) async throws -> MachineBuilder {
-    let restoreImage = try await self.restoreImage(from: image)
+    let restoreImage: RestoreImageType
+    do {
+      restoreImage = try await self.restoreImage(from: image)
+    } catch let error as NSError {
+      if let error = BuilderError.restoreImage(image, withError: error) {
+        throw error
+      }
+      assertionFailure(error: error)
+      throw error
+    } catch {
+      assertionFailure(error: error)
+      throw error
+    }
     let machineConfiguration = MachineConfiguration(
       setup: configuration,
       restoreImageFile: image

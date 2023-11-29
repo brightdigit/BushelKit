@@ -8,8 +8,8 @@
   import Foundation
   import SwiftData
 
-  public extension PersistentModel where Self: LoggerCategorized {
-    static var loggingCategory: BushelLogging.Loggers.Category {
+  public extension PersistentModel where Self: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .data
     }
   }

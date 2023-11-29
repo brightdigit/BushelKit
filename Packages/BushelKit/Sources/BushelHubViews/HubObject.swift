@@ -11,8 +11,8 @@
   import Foundation
 
   @Observable
-  class HubObject: LoggerCategorized {
-    static var loggingCategory: Loggers.Category {
+  class HubObject: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .observation
     }
 

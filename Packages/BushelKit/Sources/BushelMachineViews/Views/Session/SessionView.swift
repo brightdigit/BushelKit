@@ -16,7 +16,7 @@
   import StoreKit
   import SwiftUI
 
-  struct SessionView: View, LoggerCategorized {
+  struct SessionView: View, Loggable {
     // swiftlint:disable:next implicitly_unwrapped_optional
     var timer: AnyPublisher<Date, Never>!
 
@@ -74,7 +74,7 @@
         SessionWindowDelegate(object: object)
       )
       .confirmationDialog(
-        "Shutdown Machine",
+        Text(.sessionShutdownTitle),
         isPresented: self.$object.presentConfirmCloseAlert
       ) {
         SessionClosingActionsView(
@@ -92,34 +92,8 @@
           }
         }
       })
-      .onChange(of: request?.url) { _, newValue in
-        if let url = newValue {
-          Task {
-            await self.object.loadURL(
-              url,
-              withContext: context,
-              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
-              snapshotFactory: self.snapshotProvider,
-              using: systemManager,
-              labelProvider: self.labelProvider.callAsFunction(_:_:)
-            )
-          }
-        }
-      }
-      .onAppear {
-        if let url = self.request?.url {
-          Task {
-            await self.object.loadURL(
-              url,
-              withContext: context,
-              restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
-              snapshotFactory: self.snapshotProvider,
-              using: systemManager,
-              labelProvider: self.labelProvider.callAsFunction(_:_:)
-            )
-          }
-        }
-      }
+      .onChange(of: request?.url, self.beginLoading(_: newURL:))
+      .onAppear(perform: self.beginLoadingURL)
       .onChange(of: self.object.canStart) { _, newValue in
         guard newValue, !self.object.hasIntialStarted else {
           return
@@ -156,6 +130,19 @@
       .navigationTitle(
         Self.navigationTitle(from: self.object.machineObject, default: "Loading Session...")
       )
+      .alert(
+        isPresented: self.$object.alertIsPresented,
+        error: self.object.error
+      ) { error in
+        if error.isCritical {
+          Button(.ok) {
+            Task { @MainActor in
+              self.dismiss()
+            }
+          }
+        }
+      } message: { _ in
+      }
     }
 
     init(request: Binding<SessionRequest?>) {
@@ -183,6 +170,29 @@
 
     static func navigationTitle(from machineObject: MachineObject) -> String {
       "\(machineObject.entry.name) (\(machineObject.state))"
+    }
+
+    func beginLoadingURL() {
+      self.beginLoadingURL(self.request?.url)
+    }
+
+    func beginLoading(_: URL?, newURL: URL?) {
+      self.beginLoadingURL(newURL)
+    }
+
+    func beginLoadingURL(_ url: URL?) {
+      if let url {
+        Task {
+          await self.object.loadURL(
+            url,
+            withContext: context,
+            restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
+            snapshotFactory: self.snapshotProvider,
+            using: systemManager,
+            labelProvider: self.labelProvider.callAsFunction(_:_:)
+          )
+        }
+      }
     }
   }
 #endif

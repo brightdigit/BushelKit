@@ -8,8 +8,8 @@
   import BushelMachine
   import Foundation
   import Virtualization
-  class VirtualizationMachineBuilder: MachineBuilder, LoggerCategorized {
-    static var loggingCategory: Loggers.Category {
+  class VirtualizationMachineBuilder: MachineBuilder, Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .machine
     }
 

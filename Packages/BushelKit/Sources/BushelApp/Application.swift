@@ -27,12 +27,12 @@
     import BushelWax
   #endif
 
-  public protocol Application: App, LoggerCategorized {
+  public protocol Application: App, Loggable {
     var scenePhase: ScenePhase { get }
   }
 
   public extension Application {
-    static var loggingCategory: Loggers.LoggerCategory {
+    static var loggingCategory: BushelLogging.Category {
       .application
     }
 
@@ -40,7 +40,7 @@
       Group {
         #if os(macOS)
           WelcomeScene()
-          Settings(purchaseScreenValue: MarketScene.purchaseScreenValue)
+          Settings(purchaseScreenValue: MarketScene.purchaseScreenValue).windowResizability(.contentSize)
         #endif
 
         LibraryScene()

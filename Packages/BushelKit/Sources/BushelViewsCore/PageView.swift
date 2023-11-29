@@ -7,7 +7,7 @@
   import BushelLogging
   import SwiftUI
 
-  public struct PageView: View, LoggerCategorized {
+  public struct PageView: View, Loggable {
     @Environment(\.dismiss) var dismiss
     @State private var currentPageID: IdentifiableView.ID?
 

@@ -13,7 +13,7 @@
   import StoreKit
   import SwiftUI
 
-  public struct PurchaseView: SingleWindowView, LoggerCategorized {
+  public struct PurchaseView: SingleWindowView, Loggable {
     public typealias Value = PurchaseWindowValue
 
     @State var windowInitialized = false

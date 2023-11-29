@@ -17,7 +17,7 @@
   import SwiftUI
 
   @Observable
-  class DocumentObject: LoggerCategorized {
+  class DocumentObject: Loggable {
     var restoreImageImportProgress: ProgressOperationProperties?
     var object: LibraryObject?
     var error: LibraryError?

@@ -100,9 +100,11 @@
         } catch let error as BuilderError {
           Self.logger.error("Unable to create builder: \(error)")
           self.error = .machineBuilderError(error)
+          self.lastDestinationURL = url
         } catch {
           Self.logger.critical("Unable to create builder: \(error)")
           self.error = .unknownError(error)
+          self.lastDestinationURL = url
         }
       }
     }

@@ -13,8 +13,8 @@
   import SwiftUI
 
   @Observable
-  class RecentDocumentsObject: LoggerCategorized {
-    static var loggingCategory: Loggers.Category {
+  class RecentDocumentsObject: Loggable {
+    static var loggingCategory: BushelLogging.Category {
       .view
     }
 
