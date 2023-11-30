@@ -12,7 +12,9 @@
   struct DebugDatabaseView: View {
     @Query var bookmarks: [BookmarkData]
     @Query var libraries: [LibraryEntry]
-    @Query var images: [LibraryImageEntry]
+    @Query(filter: #Predicate<LibraryImageEntry> {
+      $0.library != nil
+    }) var images: [LibraryImageEntry]
     @Query var machines: [MachineEntry]
     @Query var snapshots: [SnapshotEntry]
     @Environment(\.dismiss) private var dismiss

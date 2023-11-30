@@ -3,6 +3,7 @@
 // Copyright (c) 2023 BrightDigit.
 //
 
+// swiftlint:disable file_length
 #if canImport(SwiftUI)
   import BushelData
   import BushelLocalization
@@ -31,6 +32,7 @@
       }
     }
 
+    @State var isAdvancedButtonsVisible: Bool = false
     @State var error: AdvancedSettingsError?
     @State var confimResetUserSettings = false
     @State var confimClearDatbase = false
@@ -39,6 +41,7 @@
     @Environment(\.modelContext) private var context
 
     var body: some View {
+      // swiftlint:disable:next closure_body_length
       Form {
         Section {
           GuidedLabeledContent(
@@ -99,73 +102,102 @@
               Text(.settingsResetAllLabel)
             }
           }.foregroundStyle(Color.red)
+        } footer: {
+          Button("More Actions") {
+            self.isAdvancedButtonsVisible.toggle()
+          }.keyboardShortcut(KeyEquivalent("d"), modifiers: [.command, .option, .control])
+            .opacity(0.0)
         }
-      }.formStyle(.grouped)
-        .confirmationDialog(
-          Text(.settingsResetUserSettingsConfirmationTitle),
-          isPresented: self.$confimResetUserSettings,
-          actions: {
-            Button(role: .destructive, .settingsResetUserSettingsConfirmationButton) {
-              do {
-                try Bundle.main.clearUserDefaults()
-              } catch is Bundle.MissingIdentifierError {
-                Self.logger.error("Couldn't find domain name or bundleIdentifier to clear.")
-                assertionFailure("Couldn't find domain name or bundleIdentifier to clear.")
-                self.error = .missingBundleIdentifer
-              } catch {
-                Self.logger.critical("Unknown error: \(error)")
-                assertionFailure("Unknown error: \(error)")
-                self.error = .unknownError(error)
+
+        if self.isAdvancedButtonsVisible {
+          Section {
+            GuidedLabeledContent(
+              LocalizedStringID.settingsClearDatabaseDescription
+            ) {
+              Button(
+                role: .destructive
+              ) {
+                self.presentDebugDatabaseView = true
+              } label: {
+                HStack {
+                  Text(.settingsDatabaseShowButton)
+                }
+              }
+            } label: {
+              HStack {
+                Image(systemName: "tablecells")
+                Text(.settingsDatabaseShowTitle)
               }
             }
           }
-        )
-        .confirmationDialog(
-          Text(.settingsClearDatabaseConfirmationTitle),
-          isPresented: self.$confimClearDatbase,
-          actions: {
-            Button(role: .destructive, .settingsClearDatabaseConfirmationButton) {
-              do {
-                try self.context.clearDatabase()
-              } catch let error as SwiftDataError {
-                Self.logger.error("Error trying to clear the database.")
-                assertionFailure("Error trying to clear the database.")
-                self.error = .databaseError(error)
-              } catch {
-                Self.logger.critical("Unknown error: \(error)")
-                assertionFailure("Unknown error: \(error)")
-                self.error = .unknownError(error)
-              }
-            }
+        }
+      }
+
+      .formStyle(.grouped)
+
+      .confirmationDialog(
+        Text(.settingsResetUserSettingsConfirmationTitle),
+        isPresented: self.$confimResetUserSettings,
+        actions: {
+          Button(
+            role: .destructive,
+            .settingsResetUserSettingsConfirmationButton,
+            action: self.clearResetUserSettingAction
+          )
+        }
+      )
+      .confirmationDialog(
+        Text(.settingsClearDatabaseConfirmationTitle),
+        isPresented: self.$confimClearDatbase,
+        actions: {
+          Button(
+            role: .destructive,
+            .settingsClearDatabaseConfirmationButton,
+            action: self.clearDatabaseAction
+          )
+        }
+      )
+      .confirmationDialog(
+        Text(.settingsResetAllConfirmationTitle),
+        isPresented: self.$confirmClearAllSettings,
+        actions: {
+          Button(role: .destructive, .settingsResetAllConfirmationButton) {
+            self.clearResetUserSettingAction()
+            self.clearDatabaseAction()
           }
-        )
-        .confirmationDialog(
-          Text(.settingsResetAllConfirmationTitle),
-          isPresented: self.$confirmClearAllSettings,
-          actions: {
-            Button(role: .destructive, .settingsResetAllConfirmationButton) {
-              do {
-                try Bundle.main.clearUserDefaults()
-                try self.context.clearDatabase()
-              } catch is Bundle.MissingIdentifierError {
-                Self.logger.error("Couldn't find domain name or bundleIdentifier to clear.")
-                assertionFailure("Couldn't find domain name or bundleIdentifier to clear.")
-                self.error = .missingBundleIdentifer
-              } catch let error as SwiftDataError {
-                Self.logger.error("Error trying to clear the database.")
-                assertionFailure("Error trying to clear the database.")
-                self.error = .databaseError(error)
-              } catch {
-                Self.logger.critical("Unknown error: \(error)")
-                assertionFailure("Unknown error: \(error)")
-                self.error = .unknownError(error)
-              }
-            }
-          }
-        )
-        .sheet(isPresented: self.$presentDebugDatabaseView, content: {
-          DebugDatabaseView()
-        })
+        }
+      )
+      .sheet(isPresented: self.$presentDebugDatabaseView, content: {
+        DebugDatabaseView()
+      })
+    }
+
+    func clearResetUserSettingAction() {
+      do {
+        try Bundle.main.clearUserDefaults()
+      } catch is Bundle.MissingIdentifierError {
+        Self.logger.error("Couldn't find domain name or bundleIdentifier to clear.")
+        assertionFailure("Couldn't find domain name or bundleIdentifier to clear.")
+        self.error = .missingBundleIdentifer
+      } catch {
+        Self.logger.critical("Unknown error: \(error)")
+        assertionFailure("Unknown error: \(error)")
+        self.error = .unknownError(error)
+      }
+    }
+
+    func clearDatabaseAction() {
+      do {
+        try self.context.clearDatabase()
+      } catch let error as SwiftDataError {
+        Self.logger.error("Error trying to clear the database.")
+        assertionFailure("Error trying to clear the database.")
+        self.error = .databaseError(error)
+      } catch {
+        Self.logger.critical("Unknown error: \(error)")
+        assertionFailure("Unknown error: \(error)")
+        self.error = .unknownError(error)
+      }
     }
   }
 
