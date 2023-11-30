@@ -9,7 +9,7 @@ settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "1.0.0"
-  CURRENT_PROJECT_VERSION: 62
+  CURRENT_PROJECT_VERSION: 63
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
@@ -37,9 +37,6 @@ targetTemplates:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSHumanReadableCopyright: Copyright (c) 2023 BrightDigit
         LSApplicationCategoryType: public.app-category.developer-tools
-        BrightDigitPrereleaseInfo:
-          Label: beta
-          Base: 48
         BrightDigitStoreGroupIDList:
           - 21016280
         BrightDigitURLDirectory:
