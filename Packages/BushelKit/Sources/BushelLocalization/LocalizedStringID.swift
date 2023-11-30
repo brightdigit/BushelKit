@@ -188,6 +188,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case settingsResetAllConfirmationButton
   case settingsResetUserSettingsLabel
   case settingsMachineShutdown
+  case requestReview
   // swiftlint:enable identifier_name
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()
