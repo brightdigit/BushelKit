@@ -136,6 +136,21 @@
 /* Machine Details Operating System Label */
 "name" = "Name";
 
+/* Machine Configuration Choose Button */
+"machine_images_choose" = "Choose";
+
+/* Machine Configuration Empty Images Alert Title */
+"machine_images_empty_title" = "No Available Images";
+
+/* Machine Configuration Empty Images Alert Existing Button */
+"machine_images_empty_add_library" = "Add Existing Library";
+
+/* Machine Configuration Empty Images Alert New Button */
+"machine_images_empty_new_library" = "Create New Library";
+
+/* Machine Configuration Empty Images Alert Message */
+"machine_images_empty_message" = "There are existing images available. Would you like to add an existing library or create a new image library?";
+
 /* Machine Details System Tab */
 "machine_details_system_tab" = "System";
 

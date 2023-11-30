@@ -48,6 +48,11 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case welcomeNoRecentDocuments
   case welcomeUpdatingRecentDocuments
   case machineWillInstall
+  case machineImagesChoose
+  case machineImagesEmptyTitle
+  case machineImagesEmptyMessage
+  case machineImagesEmptyNewLibrary
+  case machineImagesEmptyAddLibrary
   case machineInstallErrorDelete
   case machineDetailsSystemTab
   case machineDetailsOS

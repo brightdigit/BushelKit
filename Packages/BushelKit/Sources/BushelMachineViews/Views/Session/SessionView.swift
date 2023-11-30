@@ -29,7 +29,6 @@
     var automaticSnapshotValue: Int?
     @AppStorage(for: AutomaticSnapshots.Polynomial.self)
     var polynomial: LagrangePolynomial
-
     @AppStorage(for: Preference.MachineShutdownAction.self)
     var machineShutdownActionOption: MachineShutdownActionOption?
     @AppStorage(for: Preference.SessionCloseButtonAction.self)
@@ -111,17 +110,7 @@
       })
       .onChange(of: request?.url, self.beginLoading(_: newURL:))
       .onAppear(perform: self.beginLoadingURL)
-      .onChange(of: self.object.canStart) { _, newValue in
-        guard newValue, !self.object.hasIntialStarted else {
-          return
-        }
-
-        self.object.hasIntialStarted = true
-        self.object.begin {
-          try await $0.start()
-        }
-      }
-
+      .onChange(of: self.object.canStart, self.object.onCanStartChange)
       .onChange(of: self.marketplace.purchased) { _, newValue in
         guard newValue, self.sessionCloseButtonActionOption == .saveSnapshotAndForceTurnOff else {
           return
@@ -132,18 +121,13 @@
         self.object.setCloseButtonAction(newValue)
       }
 
-      .onChange(of: self.object.state) { oldValue, newValue in
-        self.object.updateWindowSize()
-        if
-          !object.isRestarting,
-          oldValue != .stopped,
-          newValue == .stopped,
-          !self.object.keepWindowOpenOnShutdown ||
-          self.machineShutdownActionOption == .closeWindow {
-          self.object.hasIntialStarted = false
-          self.object.startSnapshot(.init(), options: .discardable)
-          dismiss()
-        }
+      .onChange(of: self.object.state) {
+        self.object.onStateChanged(
+          from: $0,
+          to: $1,
+          shutdownOption: self.machineShutdownActionOption,
+          dismiss: self.dismiss.callAsFunction
+        )
       }
       .navigationTitle(
         Self.navigationTitle(from: self.object.machineObject, default: "Loading Session...")
