@@ -7,6 +7,7 @@
   import BushelMachine
   import BushelMarketEnvironment
   import BushelUT
+  import StoreKit
   import SwiftUI
 
   @available(iOS, unavailable)
@@ -16,6 +17,7 @@
     @Environment(\.marketplace) private var marketplace
     @Environment(\.openWindow) private var openWindow
     @Environment(\.purchaseWindow) private var purchaseWindow
+    @Environment(\.requestReview) var requestReview
     @Bindable var object: MachineObject
 
     #warning("Use query to stay in sync")
@@ -46,7 +48,16 @@
           )
         }.frame(width: geometry.size.width, height: geometry.size.height)
       }
-
+      .onChange(of: object.currentOperation) { oldValue, newValue in
+        guard oldValue != nil, newValue == nil, object.error == nil else {
+          return
+        }
+        Task {
+          // Delay for two seconds to avoid interrupting the person using the app.
+          try await Task.sleep(for: .seconds(2))
+          await requestReview()
+        }
+      }
       .fileExporter(
         isPresented: $object.presentExportingSnapshot,
         document: object.exportingSnapshot?.1,

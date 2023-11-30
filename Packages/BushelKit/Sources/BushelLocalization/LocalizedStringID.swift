@@ -48,6 +48,11 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case welcomeNoRecentDocuments
   case welcomeUpdatingRecentDocuments
   case machineWillInstall
+  case machineImagesChoose
+  case machineImagesEmptyTitle
+  case machineImagesEmptyMessage
+  case machineImagesEmptyNewLibrary
+  case machineImagesEmptyAddLibrary
   case machineInstallErrorDelete
   case machineDetailsSystemTab
   case machineDetailsOS
@@ -65,6 +70,9 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case hubLastModified
   case hubURL
   case hubNoneSelected
+  case sessionForceRestartTitle
+  case sessionForceRestartButton
+  case sessionForceRestartMessage
   case sessionPressPowerButton
   case sessionUpgradeSaveAndTurnOff
   case sessionSaveAndTurnOff
@@ -154,6 +162,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case settingsClearAllRecentDocuments
   case settingsClearDatabaseConfirmationTitle
   case settingsClearDatabaseConfirmationButton
+  case settingsDatabaseShowTitle
+  case settingsDatabaseShowButton
   case settingsSessionCloseButton
   case settingsMachineShutdownAlwaysClose
   case settingsResetUserSettingsDescription
@@ -178,6 +188,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case settingsResetAllConfirmationButton
   case settingsResetUserSettingsLabel
   case settingsMachineShutdown
+  case requestReview
   // swiftlint:enable identifier_name
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

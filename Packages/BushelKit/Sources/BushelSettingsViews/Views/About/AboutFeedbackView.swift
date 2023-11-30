@@ -36,10 +36,10 @@
           Button("See Subscription Page") {
             self.openWindow(value: self.purchaseWindow)
           }.isHidden(self.isAdvancedButtonsVisible)
-          Button("Launch Onboarding") {
+          Button(.menuOnboarding) {
             self.openWindow(value: onboardingWindow)
           }.isHidden(self.isAdvancedButtonsVisible)
-          Button("Love the App?") {
+          Button(.requestReview) {
             self.requestReview()
           }.isHidden(self.isAdvancedButtonsVisible)
           Button(openURL, buttonURL) {

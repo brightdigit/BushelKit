@@ -69,6 +69,7 @@
   }
 
   extension LibraryImageEntry {
+    @MainActor
     convenience init(library: LibraryEntry, file: LibraryImageFile, using context: ModelContext) throws {
       self.init(
         name: file.name,
@@ -87,6 +88,7 @@
       try context.save()
     }
 
+    @MainActor
     func syncronizeFile(
       _ file: LibraryImageFile,
       withLibrary library: LibraryEntry,

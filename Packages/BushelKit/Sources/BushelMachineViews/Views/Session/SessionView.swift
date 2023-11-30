@@ -45,6 +45,14 @@
     @Environment(\.openWindow) private var openWindow
     @Environment(\.purchaseWindow) private var purchaseWindow
 
+    @Environment(\.requestReview) var requestReview
+
+    var shouldTakeAutomaticSnapshots: Bool {
+      self.marketplace.purchased &&
+        self.object.sessionAutomaticSnapshotsEnabled &&
+        self.object.state == .running
+    }
+
     var body: some View {
       ZStack {
         object.view()
@@ -55,6 +63,8 @@
             screenSettings: self.$object.screenSettings,
             sessionAutomaticSnapshotsEnabled: self.$object.sessionAutomaticSnapshotsEnabled,
             keepWindowOpenOnShutdown: self.$object.keepWindowOpenOnShutdown,
+            isForceRestartRequested: self.$object.isForceRestartRequested,
+
             agent: self.object,
             onGeometryProxy: self.object.toolbarProxy
           )
@@ -74,6 +84,14 @@
         SessionWindowDelegate(object: object)
       )
       .confirmationDialog(
+        Text(.sessionForceRestartTitle),
+        isPresented: self.$object.isForceRestartRequested
+      ) {
+        Button(role: .destructive, .sessionForceRestartButton, action: self.object.beginForceRestart)
+      } message: {
+        Text(.sessionForceRestartMessage)
+      }
+      .confirmationDialog(
         Text(.sessionShutdownTitle),
         isPresented: self.$object.presentConfirmCloseAlert
       ) {
@@ -86,25 +104,13 @@
         Text(.sessionShutdownAlert)
       }
       .onReceive(self.timer, perform: { _ in
-        if self.marketplace.purchased, self.object.sessionAutomaticSnapshotsEnabled {
-          if self.object.state == .running {
-            self.object.startSnapshot(.init(), options: .discardable)
-          }
+        if shouldTakeAutomaticSnapshots {
+          self.object.startSnapshot(.init(), options: .discardable)
         }
       })
       .onChange(of: request?.url, self.beginLoading(_: newURL:))
       .onAppear(perform: self.beginLoadingURL)
-      .onChange(of: self.object.canStart) { _, newValue in
-        guard newValue, !self.object.hasIntialStarted else {
-          return
-        }
-
-        self.object.hasIntialStarted = true
-        self.object.begin {
-          try await $0.start()
-        }
-      }
-
+      .onChange(of: self.object.canStart, self.object.onCanStartChange)
       .onChange(of: self.marketplace.purchased) { _, newValue in
         guard newValue, self.sessionCloseButtonActionOption == .saveSnapshotAndForceTurnOff else {
           return
@@ -114,21 +120,16 @@
       .onChange(of: self.sessionCloseButtonActionOption) { _, newValue in
         self.object.setCloseButtonAction(newValue)
       }
-
-      .onChange(of: self.object.state) { oldValue, newValue in
-        self.object.updateWindowSize()
-        if
-          oldValue != .stopped,
-          newValue == .stopped,
-          !self.object.keepWindowOpenOnShutdown ||
-          self.machineShutdownActionOption == .closeWindow {
-          self.object.hasIntialStarted = false
-          self.object.startSnapshot(.init(), options: .discardable)
-          dismiss()
-        }
+      .onChange(of: self.object.state) {
+        self.object.onStateChanged(
+          from: $0,
+          to: $1,
+          shutdownOption: self.machineShutdownActionOption,
+          self.onShutdown
+        )
       }
       .navigationTitle(
-        Self.navigationTitle(from: self.object.machineObject, default: "Loading Session...")
+        self.object.machineObject.navigationTitle(default: "Loading Session...")
       )
       .alert(
         isPresented: self.$object.alertIsPresented,
@@ -161,15 +162,12 @@
       self.object.setCloseButtonAction(self.sessionCloseButtonActionOption)
     }
 
-    static func navigationTitle(
-      from machineObject: MachineObject?,
-      default defaultValue: String
-    ) -> String {
-      machineObject.map(Self.navigationTitle(from:)) ?? defaultValue
-    }
-
-    static func navigationTitle(from machineObject: MachineObject) -> String {
-      "\(machineObject.entry.name) (\(machineObject.state))"
+    func onShutdown() {
+      Task {
+        try await Task.sleep(for: .seconds(2))
+        await requestReview()
+      }
+      self.dismiss()
     }
 
     func beginLoadingURL() {

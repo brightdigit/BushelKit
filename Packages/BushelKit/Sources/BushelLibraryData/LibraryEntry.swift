@@ -53,6 +53,7 @@
       self.images?.count ?? 0
     }
 
+    @MainActor
     convenience init(
       bookmarkData: BookmarkData,
       library: Library,
@@ -67,6 +68,7 @@
       try context.save()
     }
 
+    @MainActor
     func synchronizeWith(_ library: Library, using context: ModelContext) throws {
       let entryMap: [UUID: LibraryImageEntry] = .init(uniqueKeysWithValues: images?.map {
         ($0.imageID, $0)
@@ -84,12 +86,12 @@
       let libraryItemsToInsert = libraryIDsToInsert.compactMap { imageMap[$0] }
 
       try entryIDsToUpdate.forEach { entryID in
-        guard let entry = entryMap[entryID], let image = imageMap[entryID] else {
+        guard let entry = entryMap[entryID], let images = imageMap[entryID] else {
           assertionFailure("synconized ids not found for \(entryID)")
           Self.logger.error("synconized ids not found for \(entryID)")
           return
         }
-        try entry.syncronizeFile(image, withLibrary: self, using: context)
+        try entry.syncronizeFile(images, withLibrary: self, using: context)
       }
 
       try libraryItemsToInsert.forEach {
@@ -101,6 +103,7 @@
     }
 
     @discardableResult
+    @MainActor
     func appendImage(file: LibraryImageFile, using context: ModelContext) throws -> LibraryImageEntry {
       let entry = try LibraryImageEntry(library: self, file: file, using: context)
       try context.save()

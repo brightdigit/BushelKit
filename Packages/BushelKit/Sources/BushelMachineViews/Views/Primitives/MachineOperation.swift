@@ -7,7 +7,7 @@ import BushelLocalization
 import BushelMachine
 import Foundation
 
-struct MachineOperation: Identifiable {
+struct MachineOperation: Identifiable, Equatable {
   enum OperationType {
     case restoring
     case exporting

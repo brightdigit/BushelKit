@@ -69,7 +69,7 @@
       try saveChangesTo(libraryURL)
 
       do {
-        try entry.appendImage(file: imageFile, using: modelContext)
+        try await entry.appendImage(file: imageFile, using: modelContext)
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }
@@ -78,7 +78,7 @@
     @MainActor
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func importImage(
-      _ image: ImportRequest,
+      _ images: ImportRequest,
       setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void
     ) async throws {
       guard let modelContext else {
@@ -93,8 +93,8 @@
         throw LibraryError.missingInitializedProperty(.bookmarkData)
       }
 
-      guard image.startAccessingSecurityScopedResource() != false else {
-        throw LibraryError.accessDeniedError(nil, at: image.url)
+      guard images.startAccessingSecurityScopedResource() != false else {
+        throw LibraryError.accessDeniedError(nil, at: images.url)
       }
 
       defer {
@@ -103,7 +103,7 @@
         } catch {
           assertionFailure(error: error)
         }
-        image.stopAccessingSecurityScopedResource()
+        images.stopAccessingSecurityScopedResource()
       }
 
       let libraryURL: URL
@@ -124,16 +124,16 @@
       let system: any LibrarySystem
 
       do {
-        system = try librarySystemManager.resolve(image.url)
+        system = try librarySystemManager.resolve(images.url)
       } catch {
         throw try LibraryError.systemResolutionError(error)
       }
 
-      let imageFile = try await LibraryImageFile(request: image, using: system)
+      let imageFile = try await LibraryImageFile(request: images, using: system)
 
       try await copyFile(
         imageFile,
-        at: image.url,
+        at: images.url,
         to: libraryURL,
         using: system,
         modelContext: modelContext,

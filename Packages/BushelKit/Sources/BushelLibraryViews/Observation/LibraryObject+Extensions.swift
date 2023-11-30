@@ -59,7 +59,8 @@
       }
     }
 
-    func bindableImage(withID id: UUID?) -> Bindable<LibraryImageObject>? {
+    func libraryImageObject(withID id: UUID?) -> LibraryImageObject? {
+      Self.logger.debug("Creating Bindable Image for \(id?.uuidString ?? "nil")")
       guard let id else {
         Self.logger.debug("No id for image")
         return nil
@@ -88,7 +89,11 @@
         return nil
       }
 
-      return .init(LibraryImageObject(index: index, library: self, entry: entry))
+      return LibraryImageObject(index: index, library: self, entry: entry)
+    }
+
+    func bindableImage(withID id: UUID?) -> Bindable<LibraryImageObject>? {
+      self.libraryImageObject(withID: id).map(Bindable.init(wrappedValue:))
     }
   }
 #endif

@@ -136,6 +136,21 @@
 /* Machine Details Operating System Label */
 "name" = "Name";
 
+/* Machine Configuration Choose Button */
+"machine_images_choose" = "Choose";
+
+/* Machine Configuration Empty Images Alert Title */
+"machine_images_empty_title" = "No Available Images";
+
+/* Machine Configuration Empty Images Alert Existing Button */
+"machine_images_empty_add_library" = "Add Existing Library";
+
+/* Machine Configuration Empty Images Alert New Button */
+"machine_images_empty_new_library" = "Create New Library";
+
+/* Machine Configuration Empty Images Alert Message */
+"machine_images_empty_message" = "There are existing images available. Would you like to add an existing library or create a new image library?";
+
 /* Machine Details System Tab */
 "machine_details_system_tab" = "System";
 
@@ -291,6 +306,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Confirmation button for clearing the entire database. */
 "settings_clear_database_confirmation_button" = "Yes, Clear the Entire Database";
 
+/* Database Display title. */
+"settings_database_show_title" = "Show Database Table";
+
+/* Database Display description. */
+"settings_database_show_button" = "Open Database Sheet";
+
 /* Description for resetting all settings and data. */
 "settings_reset_all_description" = "Reset All Settings and Data";
 
@@ -332,6 +353,17 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* session_shutdown_alert */
 "session_shutdown_alert" = "How would you like to shutdown your machine?";
+
+
+/* session_shutdown_alert title */
+"session_force_restart_title" = "Force Restart Machine";
+
+
+/* session_force_restart_message */
+"session_force_restart_message" = "Are you sure you wish to force restart the machine?";
+
+/* session_force_restart_button */
+"session_force_restart_button" = "Yes, Force Restart.?";
 
 /* session_press_power_button */
 "session_press_power_button" = "Press Power Button";
@@ -534,3 +566,6 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Purchase Feature Machine Size Description */
 "purchase_feature_shutdown_snapshot_description" = "Snapshot on shutdown for instant backups.";
+
+/* Love the App? */
+"request_review" = "Love the App?";
