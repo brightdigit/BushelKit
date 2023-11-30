@@ -65,6 +65,9 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case hubLastModified
   case hubURL
   case hubNoneSelected
+  case sessionForceRestartTitle
+  case sessionForceRestartButton
+  case sessionForceRestartMessage
   case sessionPressPowerButton
   case sessionUpgradeSaveAndTurnOff
   case sessionSaveAndTurnOff
