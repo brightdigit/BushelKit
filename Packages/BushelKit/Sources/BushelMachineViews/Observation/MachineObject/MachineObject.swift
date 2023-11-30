@@ -146,6 +146,10 @@
   }
 
   extension MachineObject {
+    var navigationTitle: String {
+      "\(self.entry.name) (\(self.state))"
+    }
+
     convenience init(
       parent: MachineObjectParent,
       configuration: MachineObjectConfiguration
@@ -163,6 +167,14 @@
         systemManager: configuration.systemManager,
         snapshotFactory: configuration.snapshotFactory
       )
+    }
+  }
+
+  extension Optional where Wrapped == MachineObject {
+    func navigationTitle(
+      default defaultValue: String
+    ) -> String {
+      self?.navigationTitle ?? defaultValue
     }
   }
 

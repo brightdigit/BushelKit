@@ -8,6 +8,7 @@
   import BushelData
   import BushelLocalization
   import BushelViewsCore
+  import StoreKit
   import SwiftData
   import SwiftUI
 
@@ -18,13 +19,17 @@
       @Environment(\.openURL) private var openURL
       @Environment(\.openWindow) private var openWindow
       @Environment(\.onboardingWindow) private var onboardingWindow
+      @Environment(\.requestReview) private var requestReview
 
       public var body: some View {
-        Button(.menuOnboarding) {
-          openWindow(value: onboardingWindow)
-        }
         Button(openURL, URL.bushel.contactMailTo) {
           Text(.contactUs)
+        }
+        Button(.requestReview) {
+          requestReview()
+        }
+        Button(.menuOnboarding) {
+          openWindow(value: onboardingWindow)
         }
         Divider()
         Button(openURL, URL.bushel.support) {
