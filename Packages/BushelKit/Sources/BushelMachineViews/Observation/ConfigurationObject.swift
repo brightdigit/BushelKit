@@ -61,7 +61,7 @@
         }
         do {
           self.images = try database
-            .image(labelProvider)
+            .images(labelProvider)
             .map(ConfigurationImage.init(installerImage:))
         } catch let error as ConfigurationError {
           Self.logger.error("Error fetching image: \(error)")

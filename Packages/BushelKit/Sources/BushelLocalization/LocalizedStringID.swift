@@ -154,6 +154,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case settingsClearAllRecentDocuments
   case settingsClearDatabaseConfirmationTitle
   case settingsClearDatabaseConfirmationButton
+  case settingsDatabaseShowTitle
+  case settingsDatabaseShowButton
   case settingsSessionCloseButton
   case settingsMachineShutdownAlwaysClose
   case settingsResetUserSettingsDescription

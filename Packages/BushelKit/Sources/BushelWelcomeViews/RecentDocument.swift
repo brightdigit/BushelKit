@@ -43,6 +43,8 @@
       using context: ModelContext,
       fileManager: FileManager = .default
     ) {
+      let bookmarkID = bookmarkData.bookmarkID
+      let updatedAt = bookmarkData.updatedAt
       guard let url = Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: context) else {
         return nil
       }
@@ -58,12 +60,12 @@
       }
 
       self.init(
-        id: bookmarkData.bookmarkID,
+        id: bookmarkID,
         url: url,
         name: url.deletingPathExtension().lastPathComponent,
         path: url.path,
         text: url.abbreviatingWithTilde,
-        updatedAt: bookmarkData.updatedAt
+        updatedAt: updatedAt
       )
     }
 
