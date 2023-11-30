@@ -9,8 +9,14 @@
   struct ImageListSelectionView: View {
     let images: [ConfigurationImage]?
 
+    @State var promptForLibrary = false
     @State var currentSelectedImageID: UUID?
     @Binding var resultingSelectedImageID: UUID?
+    @Environment(\.openWindow) var openWindow
+    #if os(macOS)
+      @Environment(\.newLibrary) var newLibrary
+      @Environment(\.openLibrary) var openLibrary
+    #endif
     @Environment(\.dismiss) var dismiss
 
     var listStyle: some ListStyle {
@@ -33,15 +39,48 @@
           ProgressView()
         }
       }.toolbar(content: {
-        Button("Cancel") {
+        Button(role: .cancel, .cancel) {
           dismiss()
-        }
-        #warning("logging-note: to log a chosen image")
-        Button("Choose") {
+        }.keyboardShortcut(.cancelAction)
+        Button(.machineImagesChoose) {
           self.resultingSelectedImageID = currentSelectedImageID
           dismiss()
         }
+        .disabled(self.currentSelectedImageID != nil)
+        .keyboardShortcut(.defaultAction)
       })
+      .onAppear {
+        self.promptForLibrary = (images?.isEmpty == true)
+      }
+      .alert(
+        Text(.machineImagesEmptyTitle),
+        isPresented: self.$promptForLibrary,
+        actions: {
+          #if os(macOS)
+            Button {
+              self.newLibrary(with: openWindow)
+              self.dismiss()
+            } label: {
+              Text(.machineImagesEmptyNewLibrary)
+            }
+            Button {
+              self.openLibrary(with: openWindow)
+              self.dismiss()
+            } label: {
+              Text(.machineImagesEmptyAddLibrary)
+            }
+          #endif
+          Button(
+            role: .cancel
+          ) {
+            self.dismiss()
+          } label: {
+            Text(.cancel)
+          }
+        }, message: {
+          Text(.machineImagesEmptyMessage)
+        }
+      )
     }
 
     internal init(

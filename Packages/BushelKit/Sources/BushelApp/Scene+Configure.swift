@@ -96,6 +96,7 @@
           .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
           .newLibrary(type(of: configuration).LibraryFileType)
+          .openLibrary(type(of: configuration).LibraryFileType)
           .openMachine(type(of: configuration).MachineFileType)
           .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
           .snapshotProvider([FileVersionSnapshotterFactory()])

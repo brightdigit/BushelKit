@@ -53,5 +53,35 @@ import BushelMachine
         try await $0.requestStop()
       }
     }
+
+    func onCanStartChange(_: Bool, _ newValue: Bool) {
+      guard newValue, !self.hasIntialStarted else {
+        return
+      }
+
+      self.hasIntialStarted = true
+      self.begin {
+        try await $0.start()
+      }
+    }
+
+    func onStateChanged(
+      from oldValue: MachineState,
+      to newValue: MachineState,
+      shutdownOption: MachineShutdownActionOption?,
+      dismiss: @escaping () -> Void
+    ) {
+      self.updateWindowSize()
+      if
+        !self.isRestarting,
+        oldValue != .stopped,
+        newValue == .stopped,
+        !self.keepWindowOpenOnShutdown ||
+        shutdownOption == .closeWindow {
+        self.hasIntialStarted = false
+        self.startSnapshot(.init(), options: .discardable)
+        dismiss()
+      }
+    }
   }
 #endif
