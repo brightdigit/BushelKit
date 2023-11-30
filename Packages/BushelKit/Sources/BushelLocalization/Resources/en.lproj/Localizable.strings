@@ -291,6 +291,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Confirmation button for clearing the entire database. */
 "settings_clear_database_confirmation_button" = "Yes, Clear the Entire Database";
 
+/* Database Display title. */
+"settings_database_show_title" = "Show Database Table";
+
+/* Database Display description. */
+"settings_database_show_button" = "Open Database Sheet";
+
 /* Description for resetting all settings and data. */
 "settings_reset_all_description" = "Reset All Settings and Data";
 

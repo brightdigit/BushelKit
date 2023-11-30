@@ -86,12 +86,12 @@
       let libraryItemsToInsert = libraryIDsToInsert.compactMap { imageMap[$0] }
 
       try entryIDsToUpdate.forEach { entryID in
-        guard let entry = entryMap[entryID], let image = imageMap[entryID] else {
+        guard let entry = entryMap[entryID], let images = imageMap[entryID] else {
           assertionFailure("synconized ids not found for \(entryID)")
           Self.logger.error("synconized ids not found for \(entryID)")
           return
         }
-        try entry.syncronizeFile(image, withLibrary: self, using: context)
+        try entry.syncronizeFile(images, withLibrary: self, using: context)
       }
 
       try libraryItemsToInsert.forEach {

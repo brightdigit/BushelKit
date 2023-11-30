@@ -12,8 +12,27 @@
   import SwiftData
 
   extension ModelContext: InstallerImageRepository {
-    public func image(
+    public func removeImage(_ images: InstallerImage) throws -> RemoveImageFailure? {
+      guard case let .bookmarkID(bookmarkDataID) = images.libraryID else {
+        return .notSupported
+      }
+
+      let imageID = images.imageID
+      var libraryPredicate = FetchDescriptor<LibraryImageEntry>(
+        predicate: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
+      )
+      libraryPredicate.fetchLimit = 1
+      guard let imageEntry = try self.fetch(libraryPredicate).first else {
+        return .notFound
+      }
+
+      try self.delete(imageEntry)
+      return nil
+    }
+
+    public func images(
       _ labelProvider: @escaping MetadataLabelProvider) throws -> [any InstallerImage] {
+      try self.delete(model: LibraryImageEntry.self, where: #Predicate { $0.library == nil })
       let imagePredicate = FetchDescriptor<LibraryImageEntry>()
       let images = try self.fetch(imagePredicate)
       return images.map { entry in
@@ -22,6 +41,7 @@
     }
 
     #warning("logging-note: what about all else of guard statements here, and the switch cases too")
+    // swiftlint:disable:next cyclomatic_complexity
     public func image(
       withID id: UUID,
       library: LibraryIdentifier?,
@@ -38,20 +58,23 @@
         guard let library = items.first else {
           return nil
         }
-        guard let image = library.images?.first(where: { $0.imageID == id }) else {
+        guard let images = library.images?.first(where: { $0.imageID == id }) else {
           return nil
         }
-        return DataInstallerImage(entry: image, context: self, labelProvider)
+        return DataInstallerImage(entry: images, context: self, labelProvider)
 
       case .none:
         var imagePredicate = FetchDescriptor<LibraryImageEntry>(
           predicate: #Predicate { $0.imageID == id }
         )
         imagePredicate.fetchLimit = 1
-        guard let image = try self.fetch(imagePredicate).first else {
+        guard let images = try self.fetch(imagePredicate).first else {
           return nil
         }
-        return DataInstallerImage(entry: image, context: self, labelProvider)
+        guard images.library != nil else {
+          return nil
+        }
+        return DataInstallerImage(entry: images, context: self, labelProvider)
 
       case let .url(url):
         return try URLInstallerImage(imageID: id, url: url, labelProvider)
