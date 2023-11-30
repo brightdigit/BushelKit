@@ -54,6 +54,15 @@ import BushelMachine
       }
     }
 
+    func beginForceRestart() {
+      self.begin { machine in
+        self.isRestarting = true
+        try await machine.stop()
+        try await machine.start()
+        self.isRestarting = false
+      }
+    }
+
     func onCanStartChange(_: Bool, _ newValue: Bool) {
       guard newValue, !self.hasIntialStarted else {
         return
@@ -69,7 +78,7 @@ import BushelMachine
       from oldValue: MachineState,
       to newValue: MachineState,
       shutdownOption: MachineShutdownActionOption?,
-      dismiss: @escaping () -> Void
+      _ completed: @escaping () -> Void
     ) {
       self.updateWindowSize()
       if
@@ -80,7 +89,7 @@ import BushelMachine
         shutdownOption == .closeWindow {
         self.hasIntialStarted = false
         self.startSnapshot(.init(), options: .discardable)
-        dismiss()
+        completed()
       }
     }
   }

@@ -29,6 +29,7 @@
     var automaticSnapshotValue: Int?
     @AppStorage(for: AutomaticSnapshots.Polynomial.self)
     var polynomial: LagrangePolynomial
+
     @AppStorage(for: Preference.MachineShutdownAction.self)
     var machineShutdownActionOption: MachineShutdownActionOption?
     @AppStorage(for: Preference.SessionCloseButtonAction.self)
@@ -43,6 +44,14 @@
     @Environment(\.marketplace) private var marketplace
     @Environment(\.openWindow) private var openWindow
     @Environment(\.purchaseWindow) private var purchaseWindow
+
+    @Environment(\.requestReview) var requestReview
+
+    var shouldTakeAutomaticSnapshots: Bool {
+      self.marketplace.purchased &&
+        self.object.sessionAutomaticSnapshotsEnabled &&
+        self.object.state == .running
+    }
 
     var body: some View {
       ZStack {
@@ -78,14 +87,7 @@
         Text(.sessionForceRestartTitle),
         isPresented: self.$object.isForceRestartRequested
       ) {
-        Button(role: .destructive, .sessionForceRestartButton) {
-          self.object.begin { machine in
-            self.object.isRestarting = true
-            try await machine.stop()
-            try await machine.start()
-            self.object.isRestarting = false
-          }
-        }
+        Button(role: .destructive, .sessionForceRestartButton, action: self.object.beginForceRestart)
       } message: {
         Text(.sessionForceRestartMessage)
       }
@@ -102,10 +104,8 @@
         Text(.sessionShutdownAlert)
       }
       .onReceive(self.timer, perform: { _ in
-        if self.marketplace.purchased, self.object.sessionAutomaticSnapshotsEnabled {
-          if self.object.state == .running {
-            self.object.startSnapshot(.init(), options: .discardable)
-          }
+        if shouldTakeAutomaticSnapshots {
+          self.object.startSnapshot(.init(), options: .discardable)
         }
       })
       .onChange(of: request?.url, self.beginLoading(_: newURL:))
@@ -120,17 +120,16 @@
       .onChange(of: self.sessionCloseButtonActionOption) { _, newValue in
         self.object.setCloseButtonAction(newValue)
       }
-
       .onChange(of: self.object.state) {
         self.object.onStateChanged(
           from: $0,
           to: $1,
           shutdownOption: self.machineShutdownActionOption,
-          dismiss: self.dismiss.callAsFunction
+          self.onShutdown
         )
       }
       .navigationTitle(
-        Self.navigationTitle(from: self.object.machineObject, default: "Loading Session...")
+        self.object.machineObject.navigationTitle(default: "Loading Session...")
       )
       .alert(
         isPresented: self.$object.alertIsPresented,
@@ -163,15 +162,12 @@
       self.object.setCloseButtonAction(self.sessionCloseButtonActionOption)
     }
 
-    static func navigationTitle(
-      from machineObject: MachineObject?,
-      default defaultValue: String
-    ) -> String {
-      machineObject.map(Self.navigationTitle(from:)) ?? defaultValue
-    }
-
-    static func navigationTitle(from machineObject: MachineObject) -> String {
-      "\(machineObject.entry.name) (\(machineObject.state))"
+    func onShutdown() {
+      Task {
+        try await Task.sleep(for: .seconds(2))
+        await requestReview()
+      }
+      self.dismiss()
     }
 
     func beginLoadingURL() {

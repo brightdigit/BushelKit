@@ -566,3 +566,6 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Purchase Feature Machine Size Description */
 "purchase_feature_shutdown_snapshot_description" = "Snapshot on shutdown for instant backups.";
+
+/* Love the App? */
+"request_review" = "Love the App?";
