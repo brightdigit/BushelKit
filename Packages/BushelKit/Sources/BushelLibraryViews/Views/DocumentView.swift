@@ -72,10 +72,11 @@
             }
           )
       } detail: {
-        if let image = self.object.object?.bindableImage(withID: self.object.selectedItem) {
-          let system = self.librarySystemManager.resolve(image.wrappedValue.metadata.vmSystemID)
+        if var image = self.object.bindableImage {
+          @Bindable var bindableImage = image
+          let system = self.librarySystemManager.resolve(image.metadata.vmSystemID)
           ImageView(
-            image: image,
+            image: _bindableImage,
             system: system
           )
           .accessibilityIdentifier("library:" + title + ":selected")
@@ -94,7 +95,9 @@
           Button(
             role: .destructive
           ) {
-            self.object.deleteSelectedItem(withID: image.id)
+            Task { @MainActor in
+              self.object.deleteSelectedItem(withID: image.id)
+            }
           } label: {
             Text(.machineConfirmDeleteYes)
           }

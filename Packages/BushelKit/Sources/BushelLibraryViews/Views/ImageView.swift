@@ -59,6 +59,7 @@
         if !self.image.metadata.isImageSupported {
           Text(.libraryUnsupportedImage)
         }
+
         Spacer()
       }
       .padding(.vertical)
@@ -66,6 +67,9 @@
         self.metadataLabel = system.label(fromMetadata: newValue)
       }
       .onDisappear {
+        guard !self.image.isDeleted else {
+          return
+        }
         self.image.save()
       }
     }

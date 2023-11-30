@@ -53,6 +53,7 @@
       self.images?.count ?? 0
     }
 
+    @MainActor
     convenience init(
       bookmarkData: BookmarkData,
       library: Library,
@@ -67,6 +68,7 @@
       try context.save()
     }
 
+    @MainActor
     func synchronizeWith(_ library: Library, using context: ModelContext) throws {
       let entryMap: [UUID: LibraryImageEntry] = .init(uniqueKeysWithValues: images?.map {
         ($0.imageID, $0)
@@ -101,6 +103,7 @@
     }
 
     @discardableResult
+    @MainActor
     func appendImage(file: LibraryImageFile, using context: ModelContext) throws -> LibraryImageEntry {
       let entry = try LibraryImageEntry(library: self, file: file, using: context)
       try context.save()

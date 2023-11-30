@@ -125,6 +125,11 @@
         return
       }
 
+      Self.logger.debug("Deleting Image \(selectedItem)")
+      self.queuedRemovalSelectedImageID = nil
+      self.selectedItem = nil
+      Self.logger.debug("Removing Selected Item")
+
       assert(selectedItem == id)
       do {
         Self.logger.debug("Deleting \(selectedItem)")
@@ -135,8 +140,6 @@
           Self.logger.critical("Unknown error: \(error)")
         }
       }
-      self.queuedRemovalSelectedImageID = nil
-      self.selectedItem = nil
     }
 
     @MainActor
