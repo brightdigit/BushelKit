@@ -233,7 +233,7 @@
             return
           }
           self.openWindow(value: MachineFile(url: machineURL))
-          self.dismiss()
+          self.dismissWindow()
         }
         .onAppear {
           self.object.setupFrom(
