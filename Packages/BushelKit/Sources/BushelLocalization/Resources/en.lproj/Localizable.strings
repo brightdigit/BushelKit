@@ -339,6 +339,17 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* session_shutdown_alert */
 "session_shutdown_alert" = "How would you like to shutdown your machine?";
 
+
+/* session_shutdown_alert title */
+"session_force_restart_title" = "Force Restart Machine";
+
+
+/* session_force_restart_message */
+"session_force_restart_message" = "Are you sure you wish to force restart the machine?";
+
+/* session_force_restart_button */
+"session_force_restart_button" = "Yes, Force Restart.?";
+
 /* session_press_power_button */
 "session_press_power_button" = "Press Power Button";
 

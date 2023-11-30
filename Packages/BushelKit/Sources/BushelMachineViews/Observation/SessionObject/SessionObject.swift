@@ -28,7 +28,9 @@
     var hasIntialStarted = false
     var keepWindowOpenOnShutdown = false
     var shouldDisplaySubscriptionStoreView = false
+    var isForceRestartRequested = false
     var sessionAutomaticSnapshotsEnabled = true
+    var isRestarting = false
     var sessionCloseButtonActionOption: SessionCloseButtonActionOption?
 
     var waitingForShutdown: Bool = false

@@ -15,6 +15,7 @@
     @Binding var screenSettings: ScreenSettings
     @Binding var sessionAutomaticSnapshotsEnabled: Bool
     @Binding var keepWindowOpenOnShutdown: Bool
+    @Binding var isForceRestartRequested: Bool
 
     @AppStorage(for: Preference.MachineShutdownAction.self)
     var machineShutdownActionOption: MachineShutdownActionOption?
@@ -85,6 +86,11 @@
         Image(systemName: "camera")
       }
       self.startPauseResume.tint(.primary)
+      Button {
+        self.isForceRestartRequested = true
+      } label: {
+        Image(systemName: "restart.circle.fill")
+      }
       Button {
         self.agent.pressPowerButton()
       } label: {

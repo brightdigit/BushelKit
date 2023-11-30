@@ -55,6 +55,8 @@
             screenSettings: self.$object.screenSettings,
             sessionAutomaticSnapshotsEnabled: self.$object.sessionAutomaticSnapshotsEnabled,
             keepWindowOpenOnShutdown: self.$object.keepWindowOpenOnShutdown,
+            isForceRestartRequested: self.$object.isForceRestartRequested,
+
             agent: self.object,
             onGeometryProxy: self.object.toolbarProxy
           )
@@ -73,6 +75,21 @@
         self.$object.windowDelegate,
         SessionWindowDelegate(object: object)
       )
+      .confirmationDialog(
+        Text(.sessionForceRestartTitle),
+        isPresented: self.$object.isForceRestartRequested
+      ) {
+        Button(role: .destructive, .sessionForceRestartButton) {
+          self.object.begin { machine in
+            self.object.isRestarting = true
+            try await machine.stop()
+            try await machine.start()
+            self.object.isRestarting = false
+          }
+        }
+      } message: {
+        Text(.sessionForceRestartMessage)
+      }
       .confirmationDialog(
         Text(.sessionShutdownTitle),
         isPresented: self.$object.presentConfirmCloseAlert
@@ -118,6 +135,7 @@
       .onChange(of: self.object.state) { oldValue, newValue in
         self.object.updateWindowSize()
         if
+          !object.isRestarting,
           oldValue != .stopped,
           newValue == .stopped,
           !self.object.keepWindowOpenOnShutdown ||
