@@ -52,4 +52,8 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable {
     hasher.combine(name)
     hasher.combine(metadata)
   }
+
+  public func updatingMetadata(_ metadata: ImageMetadata) -> LibraryImageFile {
+    .init(id: self.id, metadata: metadata, name: name)
+  }
 }

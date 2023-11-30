@@ -27,5 +27,14 @@
       self.library = library
       self.entry = entry
     }
+
+    func updateMetadata(_ metadata: ImageMetadata, at index: Int) {
+      guard self.library.items.indices.contains(index) else {
+        Self.logger.warning("Can't update deleted image \(metadata.vmSystemID.rawValue) \(metadata.operatingSystemVersion) at \(index)")
+        return
+      }
+      let file = self.library.items[index]
+      self.library.items[index] = file.updatingMetadata(metadata)
+    }
   }
 #endif

@@ -69,7 +69,7 @@
       try saveChangesTo(libraryURL)
 
       do {
-        try entry.appendImage(file: imageFile, using: modelContext)
+        try await entry.appendImage(file: imageFile, using: modelContext)
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }

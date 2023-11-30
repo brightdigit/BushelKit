@@ -19,15 +19,28 @@
   @Observable
   class DocumentObject: Loggable {
     var restoreImageImportProgress: ProgressOperationProperties?
-    var object: LibraryObject?
+    var object: LibraryObject? {
+      didSet {
+        self.bindableImage = self.object?.libraryImageObject(withID: self.selectedItem)
+      }
+    }
+
     var error: LibraryError?
-    var selectedItem: LibraryImageFile.ID?
+    var selectedItem: LibraryImageFile.ID? {
+      didSet {
+        self.bindableImage = self.object?.libraryImageObject(withID: self.selectedItem)
+        Self.logger.debug("Updating BindableImage to \(self.selectedItem?.uuidString ?? "nil")")
+      }
+    }
+
     var selectedHubImage: InstallImage?
     var presentFileImporter = false
     var presentFileExporter = false
     var presentHubModal = false
     var presentDeleteImageConfirmation = false
     var queuedRemovalSelectedImageID: LibraryImageFile.ID?
+
+    var bindableImage: LibraryImageObject?
 
     var queuedRemovalSelectedImage: LibraryImageFile? {
       guard let queuedRemovalSelectedImageID else {
