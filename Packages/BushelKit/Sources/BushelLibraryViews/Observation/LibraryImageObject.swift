@@ -19,8 +19,10 @@
     var entry: LibraryImageEntry
     let index: Int
 
-    var metadata: ImageMetadata {
-      library.library.items[index].metadata
+    var metadata: ImageMetadata
+
+    var isDeleted: Bool {
+      !library.library.items.indices.contains(index)
     }
 
     var name: String {
@@ -35,10 +37,12 @@
       self.library = library
       self.entry = entry
       self.name = _entry.name
+      self.metadata = library.library.items[index].metadata
     }
 
     @MainActor
     func save() {
+      library.updateMetadata(metadata, at: index)
       Self.logger.debug("Saving \(self.entry.name)")
       do {
         try self.library.save()

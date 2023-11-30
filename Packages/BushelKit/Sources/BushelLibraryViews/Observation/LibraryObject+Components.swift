@@ -30,7 +30,7 @@
       let modelContext: ModelContext
       let system: any LibrarySystemManaging
 
-      private static func entry(
+      @MainActor private static func entry(
         from item: LibraryEntry?,
         library: Library,
         bookmarkData: BookmarkData,
@@ -59,6 +59,7 @@
         return entry
       }
 
+      @MainActor
       internal init(
         item: LibraryEntry?,
         bookmarkData: BookmarkData,
