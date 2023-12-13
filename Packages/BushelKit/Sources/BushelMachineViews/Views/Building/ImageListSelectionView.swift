@@ -46,7 +46,7 @@
           self.resultingSelectedImageID = currentSelectedImageID
           dismiss()
         }
-        .disabled(self.currentSelectedImageID != nil)
+        .disabled(self.currentSelectedImageID == nil)
         .keyboardShortcut(.defaultAction)
       })
       .onAppear {
