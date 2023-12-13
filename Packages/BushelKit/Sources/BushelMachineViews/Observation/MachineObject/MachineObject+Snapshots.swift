@@ -223,7 +223,7 @@
           url: url,
           using: Self.logger
         )
-        assert(deletingSnapshotRequest.isConfirmed(with: confirmingRestoreSnapshot))
+        assert(deletingSnapshotRequest.isConfirmed(with: confirmingRemovingSnapshot))
         if self.selectedSnapshot == deletingSnapshotRequest.snapshot.id {
           self.selectedSnapshot = nil
         }

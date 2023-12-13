@@ -50,10 +50,8 @@ build spm macos:
         path: cobertura.xml
   script:
     - xcodes select 15.0.1
-    - MINT_PATH="$PWD/.mint"
-    - MINT_ARGS="-n -m ../../Mintfile --silent"
-    - MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
-    - /opt/homebrew/bin/mint bootstrap
+    - MINT_ARGS="-n -m Mintfile --silent"
+    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/BushelKit
     - xcodebuild -resolvePackageDependencies
     - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14" &>/dev/null || true
@@ -62,7 +60,7 @@ build spm macos:
     - popd
     - XCRESULT=$(find . -path "./Packages/BushelKit/Build/Logs/Test/Test-BushelKit-Package-*.xcresult")
     - echo ${XCRESULT}    
-    - /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
    
  
 upload spm macos coverage:

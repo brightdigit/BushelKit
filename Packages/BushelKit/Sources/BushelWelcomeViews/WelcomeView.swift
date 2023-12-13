@@ -16,7 +16,7 @@
     @Environment(\.onboardingWindow) var onboardingWindow
     @AppStorage(for: RecentDocuments.TypeFilter.self) private var recentDocumentsTypeFilter
     @AppStorage(for: RecentDocuments.ClearDate.self) private var recentDocumentsClearDate
-    @AppStorage(for: Onboarding.Beta.self) private var onboardedAt
+    @AppStorage(for: Onboarding.NorthernSpy.self) private var onboardedAt
     var body: some View {
       HStack {
         WelcomeTitleView()
