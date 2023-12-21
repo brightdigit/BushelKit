@@ -37,6 +37,11 @@ public protocol MachineSystem {
   /// - Parameter restoreImage: The installer image to use.
   /// - Returns: An image to use for create a machine.
   func restoreImage(from restoreImage: any InstallerImage) async throws -> RestoreImageType
+
+  /// Returns the range of configuration values available.
+  /// - Parameter restoreImage: The installer image to use.
+  /// - Returns: ``ConfigurationRange`` giving the cpu count range and memory range.
+  func configurationRange(for restoreImage: any InstallerImage) -> ConfigurationRange
 }
 
 public extension MachineSystem {
