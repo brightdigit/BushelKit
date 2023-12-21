@@ -14,6 +14,7 @@
     @Bindable var image: LibraryImageObject
     let system: any LibrarySystem
     @State var metadataLabel: MetadataLabel
+    var onSave: () -> Void
 
     var body: some View {
       VStack {
@@ -27,9 +28,10 @@
             .padding(.horizontal)
             .accessibilityHidden(true)
           VStack(alignment: .leading) {
-            TextField("Name", text: self.$image.name)
+            TextField("Name", text: self.$image.name, onCommit: self.beginSave)
               .font(.largeTitle)
               .accessibilityIdentifier("name-field")
+
             Text(metadataLabel.operatingSystemLongName)
               .lineLimit(1)
               .font(.title)
@@ -66,20 +68,35 @@
       .onChange(of: self.image.metadata) { _, newValue in
         self.metadataLabel = system.label(fromMetadata: newValue)
       }
-      .onDisappear {
-        guard !self.image.isDeleted else {
-          return
-        }
-        self.image.save()
-      }
+      .onDisappear(perform: self.save)
     }
 
-    internal init(image: Bindable<LibraryImageObject>, system: LibrarySystem) {
+    internal init(
+      image: Bindable<LibraryImageObject>,
+      system: LibrarySystem,
+      onSave: @escaping () -> Void
+    ) {
       self._image = image
       self.system = system
+      self.onSave = onSave
 
       let initialValue = system.label(fromMetadata: image.wrappedValue.metadata)
       self._metadataLabel = State(initialValue: initialValue)
+    }
+
+    @MainActor
+    func save() {
+      guard !self.image.isDeleted else {
+        return
+      }
+      self.image.save()
+      self.onSave()
+    }
+
+    func beginSave() {
+      Task { @MainActor in
+        self.save()
+      }
     }
   }
 #endif

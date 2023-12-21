@@ -30,7 +30,7 @@ cache:
   script:
     - ./Scripts/package.sh
     - git diff --exit-code
-    - xcodes select 15.0.1 
+    - xcodes select 15.1
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
 build spm macos:
@@ -49,14 +49,14 @@ build spm macos:
         coverage_format: cobertura
         path: cobertura.xml
   script:
-    - xcodes select 15.0.1
+    - xcodes select 15.1
     - MINT_ARGS="-n -m Mintfile --silent"
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/BushelKit
     - xcodebuild -resolvePackageDependencies
-    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14" &>/dev/null || true
-    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.0.1,name=iPhone 14"
-    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.0 -destination "OS=17.0.1,name=iPhone 14" -enableCodeCoverage YES -derivedDataPath Build
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.2,name=iPhone 15" &>/dev/null || true
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.2,name=iPhone 15"
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.2 -destination "OS=17.2,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
     - popd
     - XCRESULT=$(find . -path "./Packages/BushelKit/Build/Logs/Test/Test-BushelKit-Package-*.xcresult")
     - echo ${XCRESULT}    
@@ -133,7 +133,7 @@ testflight:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - xcodes select 15.0.1
+    - xcodes select 15.1
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
@@ -154,10 +154,8 @@ production:
     variables:
       - $APPSTORE_DEPLOY
   script:
-    #- if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - xcodes select 15.0.1
-    #- LINT_MODE=NONE xcodegen
+    - xcodes select 15.1
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane production

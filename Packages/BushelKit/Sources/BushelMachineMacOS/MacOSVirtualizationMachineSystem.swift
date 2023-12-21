@@ -40,6 +40,10 @@
       return try await .init(url: url)
     }
 
+    public func configurationRange(for _: InstallerImage) -> ConfigurationRange {
+      MacOSVirtualization.configurationRange
+    }
+
     #warning("shendy-note: where this is used, I couldn't find its use somewhere")
     public func validateConfiguration(
       _ configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,

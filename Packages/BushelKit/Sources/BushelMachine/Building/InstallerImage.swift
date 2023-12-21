@@ -23,6 +23,11 @@ public extension InstallerImage {
   var buildVersion: String? {
     metadata.buildVersion
   }
+
+  func getConfigurationRange(from manager: MachineSystemManaging) -> ConfigurationRange {
+    let manager = manager.resolve(self.metadata.vmSystemID)
+    return manager.configurationRange(for: self)
+  }
 }
 
 public extension InstallerImage where Self: Loggable {

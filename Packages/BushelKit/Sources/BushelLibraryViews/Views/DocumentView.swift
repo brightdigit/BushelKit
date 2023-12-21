@@ -77,7 +77,8 @@
           let system = self.librarySystemManager.resolve(image.metadata.vmSystemID)
           ImageView(
             image: _bindableImage,
-            system: system
+            system: system,
+            onSave: self.onSave
           )
           .accessibilityIdentifier("library:" + title + ":selected")
         } else {
@@ -142,6 +143,12 @@
     ) {
       _file = file
       _object = .init(initialValue: object)
+    }
+
+    func onSave() {
+      let oldSelectedItem = self.object.selectedItem
+      self.object.selectedItem = nil
+      self.object.selectedItem = oldSelectedItem
     }
   }
 #endif

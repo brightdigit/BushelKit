@@ -38,41 +38,14 @@
       try configurationAt(directoryURL, withSpecifications: specification, createDisks: false)
     }
 
-    static func computeCPUCount() -> Int {
-      let totalAvailableCPUs = ProcessInfo.processInfo.processorCount
-
-      var virtualCPUCount = totalAvailableCPUs <= 1 ? 1 : totalAvailableCPUs - 1
-      virtualCPUCount = max(
-        virtualCPUCount, VZVirtualMachineConfiguration.minimumAllowedCPUCount
-      )
-      virtualCPUCount = min(
-        virtualCPUCount, VZVirtualMachineConfiguration.maximumAllowedCPUCount
-      )
-
-      return virtualCPUCount
-    }
-
-    static func computeMemorySize() -> UInt64 {
-      // We arbitrarily choose 4GB.
-      var memorySize = (4 * 1024 * 1024 * 1024) as UInt64
-      memorySize = max(
-        memorySize, VZVirtualMachineConfiguration.minimumAllowedMemorySize
-      )
-      memorySize = min(
-        memorySize, VZVirtualMachineConfiguration.maximumAllowedMemorySize
-      )
-
-      return memorySize
-    }
-
     #warning("logging-note: thinking about how to log these information")
     func configurationAt(
       _ machineDirectory: URL,
       withSpecifications specifications: MachineConfiguration,
       createDisks: Bool
     ) throws {
-      cpuCount = Self.computeCPUCount()
-      memorySize = Self.computeMemorySize() // machine.memorySize
+      cpuCount = specifications.cpuCount
+      memorySize = UInt64(specifications.memory)
 
       let disksDirectory = machineDirectory
         .appendingPathComponent("disks", isDirectory: true)

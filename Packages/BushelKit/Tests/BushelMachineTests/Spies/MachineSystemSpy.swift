@@ -54,6 +54,10 @@ internal final class MachineSystemSpy: MachineSystem {
     return .init()
   }
 
+  func configurationRange(for _: InstallerImage) -> ConfigurationRange {
+    .default
+  }
+
   private func handleResult() throws {
     switch result {
     case .success:
