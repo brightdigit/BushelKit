@@ -15,9 +15,9 @@ public struct MachineSetupConfiguration {
   /// Storage specifications
   public var storage: [MachineStorageSpecification]
   /// CPU Count
-  public var cpuCount: Float = 1
+  public var cpuCount: Float
   /// Amount of Memory
-  public var memory: Float = (128 * 1024 * 1024 * 1024)
+  public var memory: Float
   /// Netwoking Configuration
   public var networkConfigurations: [NetworkConfiguration]
   /// Graphics Configuration
@@ -30,7 +30,7 @@ public struct MachineSetupConfiguration {
     restoreImageID: UUID? = nil,
     storage: [MachineStorageSpecification] = [.default],
     cpuCount: Float = 1,
-    memory: Float = (128 * 1024 * 1024 * 1024),
+    memory: Float = (8 * 1024 * 1024 * 1024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()]
   ) {

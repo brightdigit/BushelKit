@@ -51,14 +51,19 @@
 
     public var cpuSectionContent: some View {
       HStack {
-        Slider(value: self.$object.configuration.cpuCount, in: 1 ... 4, step: 1).layoutPriority(100)
+        Slider(
+          value: self.$object.configuration.cpuCount,
+          in: self.object.range.cpuCount,
+          step: 1
+        )
+        .layoutPriority(100)
         TextField(
           value: self.$object.configuration.cpuCount,
           format: .number
         ) {
           Text(LocalizedStringID.machineDetailsMemoryName)
         }.frame(minWidth: 70, idealWidth: 75, maxWidth: 100).multilineTextAlignment(.trailing)
-        Stepper(value: self.$object.configuration.cpuCount, in: 1 ... 4) {
+        Stepper(value: self.$object.configuration.cpuCount, in: self.object.range.cpuCount) {
           Text(.machineDetailsMemoryName)
         }
       }
@@ -68,7 +73,7 @@
       HStack {
         Slider(
           value: self.$object.configuration.memory,
-          in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
+          in: self.object.range.memory
         ).layoutPriority(100)
 
         Text(
@@ -80,7 +85,7 @@
         .opacity(0.8)
         Stepper(
           value: self.$object.configuration.memory,
-          in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
+          in: self.object.range.memory,
           step: 1 * 1024 * 1024 * 1024
         ) {
           Text(LocalizedStringID.machineDetailsMemoryName)

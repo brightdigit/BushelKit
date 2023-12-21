@@ -30,4 +30,8 @@ public struct MachineSystemStub: MachineSystem, Equatable {
   public func restoreImage(from _: InstallerImage) async throws -> RestoreImageType {
     .init()
   }
+
+  public func configurationRange(for _: InstallerImage) -> ConfigurationRange {
+    .default
+  }
 }

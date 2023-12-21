@@ -24,6 +24,7 @@
       }
     }
 
+    var range: ConfigurationRange = .default
     var configuration: MachineSetupConfiguration
     internal private(set) var restoreImageMetadata: InstallerImage.Metadata?
     var builder: MachineBuilderActivity? {
@@ -124,36 +125,39 @@
         self.restoreImageMetadata = nil
         return
       }
-      guard let labelProvider else {
-        assertionFailure("Missing label Provider")
+
+      guard let systemManager else {
+        assertionFailure("Missing system.")
         return
       }
 
-      guard let database else {
-        assertionFailure("Missing database.")
-        return
-      }
       let image: (any InstallerImage)?
       do {
-        image = try database.image(
-          withID: restoreImageID,
-          library: self.configuration.libraryID,
-          labelProvider
+        image = try self.database.imageBasedOn(
+          restoreImageID,
+          libraryID: self.configuration.libraryID,
+          logger: Self.logger,
+          self.labelProvider
         )
-      } catch let error as SwiftDataError {
-        assertionFailure(error: error)
-        Self.logger.error("Database error fetching image \(restoreImageID): \(error)")
-        self.error = .databaseError(error)
+      } catch let error as ConfigurationError {
+        self.error = error
         return
       } catch {
-        assertionFailure(error: error)
-
-        Self.logger.critical("Unknown error fetching image \(restoreImageID): \(error)")
-        self.error = .unknownError(error)
+        // should never happen
+        Self.logger.critical("Unknown error fetching image  \(error)")
+        assertionFailure("Unknown error fetching image  \(error)")
         return
       }
 
-      self.restoreImageMetadata = image?.metadata
+      guard let image else {
+        assertionFailure("No image found for \(restoreImageID)")
+        Self.logger.error("No image found for \(restoreImageID)")
+        return
+      }
+
+      self.range = image.getConfigurationRange(from: systemManager)
+      Self.logger.debug("New Configuration Range: \(self.range)")
+      self.restoreImageMetadata = image.metadata
     }
 
     func prepareBuild(using database: InstallerImageRepository) {

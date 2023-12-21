@@ -7,6 +7,7 @@
   import BushelCore
   import BushelData
   import BushelLibrary
+  import BushelLogging
   import BushelMachine
   import Foundation
   import SwiftData
@@ -81,4 +82,5 @@
       }
     }
   }
+
 #endif
