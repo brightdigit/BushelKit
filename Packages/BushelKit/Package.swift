@@ -555,7 +555,7 @@ struct WWDC2023: PlatformSet {
 }
 //
 // BushelApp.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelApp: Product, Target {

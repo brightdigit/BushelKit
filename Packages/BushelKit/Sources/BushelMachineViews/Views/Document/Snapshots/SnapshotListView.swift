@@ -1,18 +1,21 @@
 //
 // SnapshotListView.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 #if canImport(SwiftUI)
   import BushelMachine
+  import BushelMachineData
   import BushelMarketEnvironment
   import BushelUT
   import StoreKit
+  import SwiftData
   import SwiftUI
 
   @available(iOS, unavailable)
   struct SnapshotListView: View {
     let url: URL?
+    @Query private var snapshots: [SnapshotEntry]
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
     @Environment(\.marketplace) private var marketplace
     @Environment(\.openWindow) private var openWindow
@@ -20,7 +23,6 @@
     @Environment(\.requestReview) var requestReview
     @Bindable var object: MachineObject
 
-    #warning("Use query to stay in sync")
     #warning("Add filter for discardable")
     var body: some View {
       GeometryReader { geometry in
@@ -55,8 +57,12 @@
         Task {
           // Delay for two seconds to avoid interrupting the person using the app.
           try await Task.sleep(for: .seconds(2))
-          await requestReview()
+          requestReview()
         }
+      }
+
+      .onChange(of: self.snapshots) {
+        self.object.refreshSnapshots()
       }
       .fileExporter(
         isPresented: $object.presentExportingSnapshot,
@@ -88,6 +94,19 @@
           agent: self.object
         )
       }
+    }
+
+    internal init(
+      url: URL?,
+      object: MachineObject,
+      snapshotsQuery: Query<Array<SnapshotEntry>.Element, [SnapshotEntry]>? = nil
+    ) {
+      self.url = url
+      let bookmarkDataID = object.entry.bookmarkDataID
+      self._snapshots = snapshotsQuery ?? Query(filter: #Predicate { snapshot in
+        snapshot.machine?.bookmarkDataID == bookmarkDataID
+      })
+      self.object = object
     }
   }
 #endif

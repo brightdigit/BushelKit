@@ -1,1 +1,2 @@
-
+* Fixing Machine Configuration UI
+* Image Name Change Works
