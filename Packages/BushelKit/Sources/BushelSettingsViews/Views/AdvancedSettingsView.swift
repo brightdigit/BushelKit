@@ -1,6 +1,6 @@
 //
 // AdvancedSettingsView.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 // swiftlint:disable file_length
@@ -186,6 +186,7 @@
       }
     }
 
+    @MainActor
     func clearDatabaseAction() {
       do {
         try self.context.clearDatabase()

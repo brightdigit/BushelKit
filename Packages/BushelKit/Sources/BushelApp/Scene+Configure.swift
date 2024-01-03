@@ -1,6 +1,6 @@
 //
 // Scene+Configure.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 #if canImport(SwiftUI)
@@ -82,7 +82,7 @@
         do {
           try Bundle.main.clearUserDefaults()
           try FileManager.default.clearSavedApplicationState()
-          try ModelContext(configuration.modelContainer).clearDatabase()
+          try ModelContext(configuration.modelContainer).clearDatabaseBegin()
           logger.debug("Clearing completed")
         } catch {
           logger.error("Unable to reset application: \(error)")
