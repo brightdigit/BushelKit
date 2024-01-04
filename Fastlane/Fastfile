@@ -130,7 +130,7 @@ platform :mac do
       skip_binary_upload: true,
       precheck_include_in_app_purchases: false,
       overwrite_screenshots: true,
-      submit_for_review: true,
+      submit_for_review: false,
       automatic_release: false,    
       submission_information: {
         add_id_info_uses_idfa: false,
