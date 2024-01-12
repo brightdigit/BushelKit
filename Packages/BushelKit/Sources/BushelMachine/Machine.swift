@@ -58,7 +58,7 @@ public protocol Machine: Loggable {
   /// - Returns: true if the request was made successfully.
   func requestStop() async throws
 
-  func beginSnapshot() -> SnapshotPaths
+  func beginSnapshot() throws -> SnapshotPaths
 
   func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference)
 
