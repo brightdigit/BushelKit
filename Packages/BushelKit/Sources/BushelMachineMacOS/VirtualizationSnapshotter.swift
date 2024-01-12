@@ -1,6 +1,6 @@
 //
 // VirtualizationSnapshotter.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import BushelCore
@@ -20,7 +20,7 @@ import Foundation
     }
 
     func deleteSnapshot(_ snapshot: Snapshot, from machine: VirtualizationMachine) throws {
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
       let snapshotFileURL = paths.snapshotCollectionURL
         .appendingPathComponent(snapshot.id.uuidString)
         .appendingPathExtension("bshsnapshot")
@@ -29,7 +29,7 @@ import Foundation
     }
 
     func restoreSnapshot(_ snapshot: Snapshot, to machine: VirtualizationMachine) async throws {
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
       let snapshotFileURL = paths.snapshotCollectionURL
         .appendingPathComponent(snapshot.id.uuidString)
         .appendingPathExtension("bshsnapshot")
@@ -43,7 +43,7 @@ import Foundation
       request: SnapshotRequest,
       options _: SnapshotOptions
     ) async throws -> Snapshot {
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
       let previousAction = try await machine.prepareForSnapshot()
       let id = UUID()
 

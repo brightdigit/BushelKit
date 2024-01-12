@@ -1,3 +1,6 @@
+variables:
+  XCODE_VERSION: "15.2"
+
 stages:
   - build
   - lint
@@ -30,7 +33,7 @@ cache:
   script:
     - ./Scripts/package.sh
     - git diff --exit-code
-    - xcodes select 15.1
+    - xcodes select $XCODE_VERSION
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
 build spm macos:
@@ -49,7 +52,7 @@ build spm macos:
         coverage_format: cobertura
         path: cobertura.xml
   script:
-    - xcodes select 15.1
+    - xcodes select $XCODE_VERSION
     - MINT_ARGS="-n -m Mintfile --silent"
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/BushelKit
@@ -133,7 +136,7 @@ testflight:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - xcodes select 15.1
+    - xcodes select $XCODE_VERSION
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
@@ -156,6 +159,6 @@ production:
   script:
     - rbenv rehash
     - rbenv exec bundle install
-    - xcodes select 15.1
+    - xcodes select $XCODE_VERSION
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane production
