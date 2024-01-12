@@ -8,8 +8,10 @@ import BushelMachine
 #if canImport(Virtualization) && arch(arm64)
 
   extension VirtualizationMachine {
-    func beginSnapshot() -> SnapshotPaths {
-      assert(url.startAccessingSecurityScopedResource())
+    func beginSnapshot() throws -> SnapshotPaths {
+      guard url.startAccessingSecurityScopedResource() else {
+        throw MachineError.accessDeniedError(nil, at: url)
+      }
       return .init(machinePathURL: url)
     }
 

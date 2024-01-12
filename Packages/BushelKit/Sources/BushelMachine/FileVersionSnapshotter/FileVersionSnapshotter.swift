@@ -28,7 +28,7 @@
     }
 
     func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
       try fileVersion.replaceItem(at: url)
       let exportedConfiguration = MachineConfiguration(snapshot: snapshot, original: machine.configuration)
@@ -48,7 +48,7 @@
     }
 
     func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) throws {
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
       let oldSnapshots = try self.fileManager.dataDictionary(directoryAt: paths.snapshotCollectionURL)
 
       let snapshotFileNameKey = [snapshot.id.uuidString, "bshsnapshot"].joined(separator: ".")
@@ -86,7 +86,7 @@
     }
 
     func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) throws {
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
       try fileVersion.remove()
       machine.finishedWithSnapshot(snapshot, by: .remove)
@@ -100,7 +100,7 @@
     ) async throws -> Snapshot {
       let id = UUID()
 
-      let paths = machine.beginSnapshot()
+      let paths = try machine.beginSnapshot()
 
       try self.fileManager.createEmptyDirectory(
         at: paths.snapshotCollectionURL,
