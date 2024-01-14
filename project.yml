@@ -9,7 +9,7 @@ settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "1.0.3"
-  CURRENT_PROJECT_VERSION: 76
+  CURRENT_PROJECT_VERSION: 77
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
@@ -58,9 +58,6 @@ targetTemplates:
         UTImportedTypeDeclarations:
           - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.iphone.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
           - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.itunes.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
-        BrightDigitPrereleaseInfo:
-          Label: beta
-          Base: 74
     sources:
       - path: "Support/macOS"
         name: macOS
