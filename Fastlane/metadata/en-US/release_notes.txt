@@ -1,4 +1,1 @@
-* Fixing Machine Configuration UI
-* Image Name Change Works
-* Fixing Snapshot Updates 
-* Fix for Snapshot Exporting
+* Fixes to Snapshot Export
