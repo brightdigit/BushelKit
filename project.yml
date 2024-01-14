@@ -58,6 +58,9 @@ targetTemplates:
         UTImportedTypeDeclarations:
           - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.iphone.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
           - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.itunes.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
+        BrightDigitPrereleaseInfo:
+          Label: beta
+          Base: 74
     sources:
       - path: "Support/macOS"
         name: macOS
