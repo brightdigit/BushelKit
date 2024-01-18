@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ "$ACTION" == "install" ]; then 
+	if [ -n "$SRCROOT" ]; then
+		exit
+	fi
+fi
+
 export MINT_PATH="$PWD/.mint"
 MINT_ARGS="-n -m ../../Mintfile --silent"
 MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
