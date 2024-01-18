@@ -11,6 +11,10 @@ public enum MacOSVirtualization {
 
   public static let shortName = "macOS"
 
+  public static var ipswFileExtension: String {
+    FileType.ipswFileExtension
+  }
+
   public static func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
     let shortName = operatingSystemShortName(for: metadata)
     guard let buildVersion = metadata.buildVersion else {

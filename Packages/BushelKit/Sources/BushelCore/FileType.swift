@@ -44,12 +44,11 @@ public struct FileType: Hashable, ExpressibleByStringLiteral {
 }
 
 public extension FileType {
+  static let ipswFileExtension = "ipsw"
   static let iTunesIPSW: FileType = "com.apple.itunes.ipsw"
   static let iPhoneIPSW: FileType = "com.apple.iphone.ipsw"
 
   static let virtualMachine: FileType = .exportedAs("com.brightdigit.bushel-vm", "bshvm")
-
-  // static let bshvm: UTType = .init(filenameExtension: "bshvm")!
 
   static var restoreImageLibrary: FileType = .exportedAs("com.brightdigit.bushel-rilib", "bshrilib")
 

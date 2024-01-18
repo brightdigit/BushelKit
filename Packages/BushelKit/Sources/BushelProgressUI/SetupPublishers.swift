@@ -1,6 +1,6 @@
 //
 // SetupPublishers.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 #if canImport(Combine)

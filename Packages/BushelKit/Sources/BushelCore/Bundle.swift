@@ -12,6 +12,8 @@ public extension Bundle {
     fileprivate static let shared: Error = MissingIdentifierError()
   }
 
+  static let suiteName = "group.com.brightdigit.Bushel"
+
   func clearUserDefaults() throws {
     guard let domainName = self.bundleIdentifier else {
       throw MissingIdentifierError.shared
