@@ -64,8 +64,8 @@ build spm macos:
     - XCRESULT=$(find . -path "./Packages/BushelKit/Build/Logs/Test/Test-BushelKit-Package-*.xcresult")
     - echo ${XCRESULT}    
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
-   
- 
+
+
 upload spm macos coverage:
   stage: build
   rules:
@@ -132,6 +132,9 @@ testflight:
   except:
     variables:
       - $APPSTORE_DEPLOY
+  artifacts:
+    paths:
+      - archive/Bushel*.xcarchive
   script:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
@@ -156,6 +159,9 @@ production:
       - main    
     variables:
       - $APPSTORE_DEPLOY
+  artifacts:
+    paths:
+      - archive/Bushel*.xcarchive
   script:
     - rbenv rehash
     - rbenv exec bundle install
