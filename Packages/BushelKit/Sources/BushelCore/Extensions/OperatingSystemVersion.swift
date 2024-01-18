@@ -5,7 +5,11 @@
 
 import Foundation
 
-extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebugStringConvertible, Codable {
+extension OperatingSystemVersion: CustomStringConvertible,
+  Hashable,
+  CustomDebugStringConvertible,
+  Codable,
+  Comparable {
   enum CodingKeys: String, CodingKey {
     case majorVersion
     case minorVersion
@@ -33,7 +37,7 @@ extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebug
 
   public var debugDescription: String {
     // swiftlint:disable:next line_length
-    "OperatingSystemVersion(majorVersion: \(majorVersion), minorVersion: \(minorVersion), patchVersion: \(patchVersion)"
+    "OperatingSystemVersion(majorVersion: \(majorVersion), minorVersion: \(minorVersion), patchVersion: \(patchVersion))"
   }
 
   public init(string: String) throws {
@@ -85,6 +89,16 @@ extension OperatingSystemVersion: CustomStringConvertible, Hashable, CustomDebug
     } catch {
       throw throwingError ?? error
     }
+  }
+
+  public static func < (lhs: OperatingSystemVersion, rhs: OperatingSystemVersion) -> Bool {
+    guard lhs.majorVersion == rhs.majorVersion else {
+      return lhs.majorVersion < rhs.majorVersion
+    }
+    guard lhs.minorVersion == rhs.minorVersion else {
+      return lhs.minorVersion < rhs.minorVersion
+    }
+    return lhs.patchVersion < rhs.patchVersion
   }
 
   public static func macOSReleaseName(majorVersion: Int) -> String? {

@@ -1,6 +1,6 @@
 //
 // Target.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol Target: _Depending, Dependency, _Named {

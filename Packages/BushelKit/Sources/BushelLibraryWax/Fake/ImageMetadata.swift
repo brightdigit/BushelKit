@@ -4,6 +4,7 @@
 //
 
 import BushelCore
+import BushelMacOSCore
 import Foundation
 
 extension ImageMetadata {
@@ -14,7 +15,7 @@ extension ImageMetadata {
     operatingSystemVersion: .init(majorVersion: 13, minorVersion: 6, patchVersion: 0),
     contentLength: 12_893_555_341,
     lastModified: .now,
-    fileExtension: "ipsw",
+    fileExtension: MacOSVirtualization.ipswFileExtension,
     vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
@@ -25,7 +26,7 @@ extension ImageMetadata {
     operatingSystemVersion: .init(majorVersion: 14, minorVersion: 0, patchVersion: 0),
     contentLength: 13_893_555_341,
     lastModified: .now,
-    fileExtension: "ipsw",
+    fileExtension: MacOSVirtualization.ipswFileExtension,
     vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
@@ -36,7 +37,7 @@ extension ImageMetadata {
     operatingSystemVersion: .init(majorVersion: 12, minorVersion: 6, patchVersion: 0),
     contentLength: 14_893_555_341,
     lastModified: .now,
-    fileExtension: "ipsw",
+    fileExtension: MacOSVirtualization.ipswFileExtension,
     vmSystemID: .init(stringLiteral: "macOSApple")
   )
 

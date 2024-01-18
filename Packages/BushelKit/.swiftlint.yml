@@ -122,6 +122,7 @@ excluded:
   - .build
   - Package.swift
   - Package/Support/PackageDescription.swift
+  - Packages
 indentation_width:
   indentation_width: 2
 file_name:
