@@ -1,7 +1,7 @@
 // swift-tools-version: 5.9
 //
 // Array+Depedencies.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension Array: Dependencies where Element == Dependency {
@@ -11,7 +11,7 @@ extension Array: Dependencies where Element == Dependency {
 }
 //
 // Array+SupportedPlatforms.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension Array: SupportedPlatforms where Element == SupportedPlatform {
@@ -21,7 +21,7 @@ extension Array: SupportedPlatforms where Element == SupportedPlatform {
 }
 //
 // Array+TestTargets.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension Array: TestTargets where Element == TestTarget {
@@ -31,7 +31,7 @@ extension Array: TestTargets where Element == TestTarget {
 }
 //
 // Dependencies.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol Dependencies: Sequence where Element == Dependency {
@@ -41,7 +41,7 @@ protocol Dependencies: Sequence where Element == Dependency {
 }
 //
 // Dependency.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol Dependency {
@@ -49,7 +49,7 @@ protocol Dependency {
 }
 //
 // DependencyBuilder.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 @resultBuilder
@@ -64,7 +64,7 @@ enum DependencyBuilder {
 }
 //
 // LanguageTag.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension LanguageTag {
@@ -72,7 +72,7 @@ extension LanguageTag {
 }
 //
 // Package+Extensions.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension Package {
@@ -136,7 +136,7 @@ extension Package {
 }
 //
 // PackageDependency.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import PackageDescription
@@ -192,7 +192,7 @@ typealias _PackageDescription_TargetDependency = PackageDescription.Target.Depen
 typealias _PackageDescription_PackageDependency = PackageDescription.Package.Dependency
 //
 // PlatformSet.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol PlatformSet {
@@ -201,7 +201,7 @@ protocol PlatformSet {
 }
 //
 // Product+Target.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension Product where Self: Target {
@@ -221,7 +221,7 @@ extension Product where Self: Target {
 }
 //
 // Product.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol Product: _Named {
@@ -236,7 +236,7 @@ extension Product {
 }
 //
 // ProductType.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 enum ProductType {
@@ -245,7 +245,7 @@ enum ProductType {
 }
 //
 // ProductsBuilder.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 @resultBuilder
@@ -260,7 +260,7 @@ enum ProductsBuilder {
 }
 //
 // ResourcesBuilder.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 @resultBuilder
@@ -275,7 +275,7 @@ enum ResourcesBuilder {
 }
 //
 // String.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension String {
@@ -285,7 +285,7 @@ extension String {
 }
 //
 // SupportedPlatformBuilder.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import PackageDescription
@@ -320,7 +320,7 @@ enum SupportedPlatformBuilder {
 }
 //
 // SupportedPlatforms.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol SupportedPlatforms: Sequence where Element == SupportedPlatform {
@@ -330,7 +330,7 @@ protocol SupportedPlatforms: Sequence where Element == SupportedPlatform {
 }
 //
 // SwiftSettingsBuilder.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 @resultBuilder
@@ -345,7 +345,7 @@ enum SwiftSettingsBuilder {
 }
 //
 // Target.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol Target: _Depending, Dependency, _Named {
@@ -377,7 +377,7 @@ extension Target {
 }
 //
 // TargetType.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 enum TargetType {
@@ -387,7 +387,7 @@ enum TargetType {
 }
 //
 // TestTarget.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol TestTarget: Target {}
@@ -399,7 +399,7 @@ extension TestTarget {
 }
 //
 // TestTargetBuilder.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 @resultBuilder
@@ -414,7 +414,7 @@ enum TestTargetBuilder {
 }
 //
 // TestTargets.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol TestTargets: Sequence where Element == TestTarget {
@@ -424,7 +424,7 @@ protocol TestTargets: Sequence where Element == TestTarget {
 }
 //
 // _Depending.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol _Depending {
@@ -451,7 +451,7 @@ extension _Depending {
 }
 //
 // _Named.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 protocol _Named {
@@ -465,7 +465,7 @@ extension _Named {
 }
 //
 // _PackageDescription_Product.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension _PackageDescription_Product {
@@ -483,7 +483,7 @@ extension _PackageDescription_Product {
 }
 //
 // _PackageDescription_Target.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 extension _PackageDescription_Target {
@@ -518,7 +518,7 @@ extension _PackageDescription_Target {
 }
 //
 // ArgumentParser.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct ArgumentParser: PackageDependency {
@@ -528,7 +528,7 @@ struct ArgumentParser: PackageDependency {
 }
 //
 // FelinePine.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import PackageDescription
@@ -539,8 +539,20 @@ struct FelinePine: PackageDependency {
   }
 }
 //
+// IPSWDownloads.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+import Foundation
+
+struct IPSWDownloads: PackageDependency {
+  var dependency: Package.Dependency {
+    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.1")
+  }
+}
+//
 // WWDC2023.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import PackageDescription
@@ -562,6 +574,7 @@ struct BushelApp: Product, Target {
   var dependencies: any Dependencies {
     BushelViews()
     BushelVirtualization()
+    BushelHubIPSW()
     BushelMachine()
     BushelLibrary()
     BushelSystem()
@@ -574,7 +587,7 @@ struct BushelApp: Product, Target {
 }
 //
 // BushelCommand.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelCommand: Target, Product {
@@ -592,7 +605,7 @@ struct BushelCommand: Target, Product {
 }
 //
 // BushelLibraryApp.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibraryApp: Product, Target {
@@ -603,7 +616,7 @@ struct BushelLibraryApp: Product, Target {
 }
 //
 // BushelMachineApp.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMachineApp: Target, Product {
@@ -614,7 +627,7 @@ struct BushelMachineApp: Target, Product {
 }
 //
 // BushelSettingsApp.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelSettingsApp: Product, Target {
@@ -624,7 +637,7 @@ struct BushelSettingsApp: Product, Target {
 }
 //
 // BushelUITests.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelUITests: Product, Target {
@@ -634,7 +647,7 @@ struct BushelUITests: Product, Target {
 }
 //
 // BushelAccessibility.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelAccessibility: Target {
@@ -645,7 +658,7 @@ struct BushelAccessibility: Target {
 }
 //
 // BushelArgs.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelArgs: Target {
@@ -656,13 +669,13 @@ struct BushelArgs: Target {
 }
 //
 // BushelCore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelCore: Target {}
 //
 // BushelCoreWax.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -674,7 +687,7 @@ struct BushelCoreWax: Target {
 }
 //
 // BushelData.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelData: Target {
@@ -685,7 +698,7 @@ struct BushelData: Target {
 }
 //
 // BushelDataCore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelDataCore: Target {
@@ -696,7 +709,7 @@ struct BushelDataCore: Target {
 }
 //
 // BushelEnvironmentCore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelEnvironmentCore: Target {
@@ -707,7 +720,7 @@ struct BushelEnvironmentCore: Target {
 }
 //
 // BushelFactory.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -723,7 +736,7 @@ struct BushelFactory: Target {
 }
 //
 // BushelHub.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -737,7 +750,7 @@ struct BushelHub: Target {
 }
 //
 // BushelHubEnvironment.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -751,8 +764,21 @@ struct BushelHubEnvironment: Target {
   }
 }
 //
+// BushelHubIPSW.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelHubIPSW: Target {
+  var dependencies: any Dependencies {
+    BushelHub()
+    IPSWDownloads()
+    BushelLogging()
+    BushelMacOSCore()
+  }
+}
+//
 // BushelHubMacOS.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelHubMacOS: Target {
@@ -763,7 +789,7 @@ struct BushelHubMacOS: Target {
 }
 //
 // BushelHubViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -780,18 +806,19 @@ struct BushelHubViews: Target {
 }
 //
 // BushelLibrary.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibrary: Target {
   var dependencies: any Dependencies {
     BushelLogging()
     BushelCore()
+    BushelMacOSCore()
   }
 }
 //
 // BushelLibraryData.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibraryData: Target {
@@ -803,7 +830,7 @@ struct BushelLibraryData: Target {
 }
 //
 // BushelLibraryEnvironment.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -818,7 +845,7 @@ struct BushelLibraryEnvironment: Target {
 }
 //
 // BushelLibraryMacOS.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibraryMacOS: Target {
@@ -829,7 +856,7 @@ struct BushelLibraryMacOS: Target {
 }
 //
 // BushelLibraryViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibraryViews: Target {
@@ -845,23 +872,24 @@ struct BushelLibraryViews: Target {
 }
 //
 // BushelLibraryWax.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibraryWax: Target {
   var dependencies: any Dependencies {
     BushelLibrary()
+    BushelMacOSCore()
   }
 }
 //
 // BushelLocalization.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLocalization: Target {}
 //
 // BushelLogging.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLogging: Target {
@@ -871,7 +899,7 @@ struct BushelLogging: Target {
 }
 //
 // BushelMacOSCore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMacOSCore: Target {
@@ -881,7 +909,7 @@ struct BushelMacOSCore: Target {
 }
 //
 // BushelMachine.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMachine: Target {
@@ -892,7 +920,7 @@ struct BushelMachine: Target {
 }
 //
 // BushelMachineData.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMachineData: Target {
@@ -904,7 +932,7 @@ struct BushelMachineData: Target {
 }
 //
 // BushelMachineEnvironment.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -919,7 +947,7 @@ struct BushelMachineEnvironment: Target {
 }
 //
 // BushelMachineMacOS.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMachineMacOS: Target {
@@ -931,7 +959,7 @@ struct BushelMachineMacOS: Target {
 }
 //
 // BushelMachineViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMachineViews: Target {
@@ -948,7 +976,7 @@ struct BushelMachineViews: Target {
 }
 //
 // BushelMachineWax.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -961,7 +989,7 @@ struct BushelMachineWax: Target {
 }
 //
 // BushelMarket.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -973,7 +1001,7 @@ struct BushelMarket: Target {
 }
 //
 // BushelMarketEnvironment.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMarketEnvironment: Target {
@@ -986,7 +1014,7 @@ struct BushelMarketEnvironment: Target {
 }
 //
 // BushelMarketStore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMarketStore: Target {
@@ -998,7 +1026,7 @@ struct BushelMarketStore: Target {
 }
 //
 // BushelMarketViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMarketViews: Target {
@@ -1014,7 +1042,7 @@ struct BushelMarketViews: Target {
 }
 //
 // BushelOnboardingCore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelOnboardingCore: Target {
@@ -1025,7 +1053,7 @@ struct BushelOnboardingCore: Target {
 }
 //
 // BushelOnboardingEnvironment.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelOnboardingEnvironment: Target {
@@ -1038,7 +1066,7 @@ struct BushelOnboardingEnvironment: Target {
 }
 //
 // BushelOnboardingViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelOnboardingViews: Target {
@@ -1052,7 +1080,7 @@ struct BushelOnboardingViews: Target {
 }
 //
 // BushelProgressUI.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -1060,14 +1088,14 @@ import Foundation
 struct BushelProgressUI: Target {}
 //
 // BushelSessionUI.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
 struct BushelSessionUI: Target {}
 //
 // BushelSettingsViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelSettingsViews: Target {
@@ -1080,7 +1108,7 @@ struct BushelSettingsViews: Target {
 }
 //
 // BushelSystem.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -1097,7 +1125,7 @@ struct BushelSystem: Target {
 }
 //
 // BushelTestUtlities.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -1105,7 +1133,7 @@ import Foundation
 struct BushelTestUtlities: Target {}
 //
 // BushelUITestingUtilities.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelUITestingUtilities: Target {
@@ -1116,7 +1144,7 @@ struct BushelUITestingUtilities: Target {
 }
 //
 // BushelUT.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelUT: Target {
@@ -1126,7 +1154,7 @@ struct BushelUT: Target {
 }
 //
 // BushelViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelViews: Target {
@@ -1142,7 +1170,7 @@ struct BushelViews: Target {
 }
 //
 // BushelViewsCore.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelViewsCore: Target {
@@ -1154,7 +1182,7 @@ struct BushelViewsCore: Target {
 }
 //
 // BushelVirtualization.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelVirtualization: Target {
@@ -1167,7 +1195,7 @@ struct BushelVirtualization: Target {
 }
 //
 // BushelWax.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -1181,7 +1209,7 @@ struct BushelWax: Target {
 }
 //
 // BushelWelcomeViews.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
@@ -1196,7 +1224,7 @@ struct BushelWelcomeViews: Target {
 }
 //
 // BushelCoreTests.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelCoreTests: TestTarget {
@@ -1208,7 +1236,7 @@ struct BushelCoreTests: TestTarget {
 }
 //
 // BushelLibraryTests.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelLibraryTests: TestTarget {
@@ -1221,7 +1249,7 @@ struct BushelLibraryTests: TestTarget {
 }
 //
 // BushelMachineTests.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 struct BushelMachineTests: TestTarget {
@@ -1233,7 +1261,7 @@ struct BushelMachineTests: TestTarget {
 }
 //
 // Index.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 import PackageDescription

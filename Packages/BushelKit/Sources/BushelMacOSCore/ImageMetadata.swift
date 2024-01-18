@@ -41,7 +41,7 @@
         operatingSystemVersion: vzRestoreImage.operatingSystemVersion,
         contentLength: contentLength,
         lastModified: lastModified,
-        fileExtension: "ipsw",
+        fileExtension: MacOSVirtualization.ipswFileExtension,
         vmSystemID: VMSystemID.macOS
       )
     }

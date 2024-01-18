@@ -7,6 +7,7 @@ struct BushelApp: Product, Target {
   var dependencies: any Dependencies {
     BushelViews()
     BushelVirtualization()
+    BushelHubIPSW()
     BushelMachine()
     BushelLibrary()
     BushelSystem()

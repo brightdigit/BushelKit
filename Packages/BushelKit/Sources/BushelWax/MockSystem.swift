@@ -21,7 +21,7 @@ public struct MockSystem: System {
               operatingSystemVersion: .init(majorVersion: 1, minorVersion: 1, patchVersion: 0),
               contentLength: 123,
               lastModified: .now,
-              fileExtension: "ipsw",
+              fileExtension: MacOSVirtualization.ipswFileExtension,
               vmSystemID: .macOS
             ),
             url: .init(
