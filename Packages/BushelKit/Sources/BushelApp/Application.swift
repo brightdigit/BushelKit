@@ -8,6 +8,7 @@
   import BushelData
   import BushelFactory
   import BushelHub
+  import BushelHubIPSW
   import BushelLibrary
   import BushelLibraryData
   import BushelLogging
@@ -88,6 +89,7 @@
       ) {
         #if arch(arm64) && os(macOS)
           MacOSVirtualizationSystem()
+          IPSWDownloads.hubs
         #endif
         #if DEBUG
           MockSystem()

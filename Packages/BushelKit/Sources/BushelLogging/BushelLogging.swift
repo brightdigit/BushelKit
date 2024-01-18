@@ -14,5 +14,6 @@ public enum BushelLogging: LoggingSystem {
     case application
     case observation
     case market
+    case hub
   }
 }

@@ -32,7 +32,7 @@
         includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey]
       )
       .filter { url in
-        url.pathExtension == "ipsw"
+        url.pathExtension == MacOSVirtualization.ipswFileExtension
       }
       .shuffled()
       .prefix(specifications.maximumDesiredLibraryImageCount)

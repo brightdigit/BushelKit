@@ -1,11 +1,11 @@
 //
 // VZVirtioBlockDeviceConfiguration.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 //
 // VZVirtioBlockDeviceConfiguration.swift
-// Copyright (c) 2023 BrightDigit.
+// Copyright (c) 2024 BrightDigit.
 //
 
 #if arch(arm64) && canImport(Virtualization)
