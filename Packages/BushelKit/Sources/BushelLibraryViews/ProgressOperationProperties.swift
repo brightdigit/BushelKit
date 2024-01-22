@@ -10,7 +10,7 @@
   import Foundation
 
   public extension ProgressOperationProperties {
-    init(system: LibrarySystem, metadata: ImageMetadata, operation: any ProgressOperation<Int>) {
+    init(system: any LibrarySystem, metadata: ImageMetadata, operation: any ProgressOperation<Int>) {
       let label = system.label(fromMetadata: metadata)
       self.init(
         imageName: label.imageName,

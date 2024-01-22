@@ -16,7 +16,7 @@
     convenience init(
       url: URL,
       machine: any Machine,
-      osInstalled: OperatingSystemInstalled?,
+      osInstalled: (any OperatingSystemInstalled)?,
       restoreImageID: UUID,
       name: String,
       createdAt: Date,
@@ -40,7 +40,7 @@
     convenience init(
       bookmarkData: BookmarkData,
       machine: any Machine,
-      osInstalled: OperatingSystemInstalled?,
+      osInstalled: (any OperatingSystemInstalled)?,
       restoreImageID: UUID,
       name: String,
       createdAt: Date,
@@ -68,7 +68,7 @@
     @MainActor
     func synchronizeWith(
       _ machine: any Machine,
-      osInstalled: OperatingSystemInstalled?,
+      osInstalled: (any OperatingSystemInstalled)?,
       using context: ModelContext
     ) throws {
       let entryMap: [UUID: SnapshotEntry] = .init(uniqueKeysWithValues: snapshots?.map {

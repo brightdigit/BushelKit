@@ -33,7 +33,7 @@
     }
 
     var images: [HubImage]?
-    var error: Error?
+    var error: (any Error)?
 
     var selectedHubID: Hub.ID? {
       didSet {

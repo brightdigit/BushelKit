@@ -20,14 +20,14 @@
     let closure: BushelCore.MetadataLabelProvider
     public func callAsFunction(
       _ vmSystemID: VMSystemID,
-      _ operatingSystemInfo: OperatingSystemInstalled
+      _ operatingSystemInfo: any OperatingSystemInstalled
     ) -> MetadataLabel {
       closure(vmSystemID, operatingSystemInfo)
     }
   }
 
   private extension MetadataLabel {
-    init(_: VMSystemID, _: OperatingSystemInstalled) {
+    init(_: VMSystemID, _: any OperatingSystemInstalled) {
       self.init()
     }
 

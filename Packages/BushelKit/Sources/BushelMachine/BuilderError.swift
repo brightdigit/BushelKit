@@ -10,7 +10,7 @@ public enum BuilderError: LocalizedError, Equatable {
   case corrupted(Property, dataAtURL: URL)
   case noSupportedConfigurationImage(MetadataLabel, isSupported: Bool)
   case installationFailure(InstallFailure)
-  case restoreImage(any InstallerImage, RestoreImageFailure, withError: Error)
+  case restoreImage(any InstallerImage, RestoreImageFailure, withError: any Error)
 
   public typealias Property = BuilderProperty
 
@@ -51,7 +51,7 @@ public enum BuilderError: LocalizedError, Equatable {
     }
   }
 
-  public static func fromInstallation(error: Error) -> BuilderError {
+  public static func fromInstallation(error: any Error) -> BuilderError {
     .installationFailure(.fromError(error))
   }
 

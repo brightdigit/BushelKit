@@ -18,7 +18,7 @@
     enum AdvancedSettingsError: LocalizedError {
       case databaseError(SwiftDataError)
       case missingBundleIdentifer
-      case unknownError(Error)
+      case unknownError(any Error)
 
       var errorDescription: String? {
         switch self {

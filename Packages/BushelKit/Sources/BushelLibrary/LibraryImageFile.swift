@@ -20,7 +20,7 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable {
     [id.uuidString, metadata.fileExtension].joined(separator: ".")
   }
 
-  public init(from decoder: Decoder) throws {
+  public init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: Self.CodingKeys.self)
     let id = try container.decode(UUID.self, forKey: .id)
     let name = try container.decode(String.self, forKey: .name)

@@ -5,4 +5,4 @@
 
 import Foundation
 
-public typealias MetadataLabelProvider = (VMSystemID, OperatingSystemInstalled) -> MetadataLabel
+public typealias MetadataLabelProvider = (VMSystemID, any OperatingSystemInstalled) -> MetadataLabel

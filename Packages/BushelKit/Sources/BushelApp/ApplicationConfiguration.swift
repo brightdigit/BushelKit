@@ -16,15 +16,15 @@
     associatedtype MachineFileType: FileTypeSpecification
     associatedtype HubViewType: View
 
-    var systems: [System] { get }
+    var systems: [any System] { get }
 
     var allowedOpenFileTypes: [FileType] { get }
 
     var schemas: [any PersistentModel.Type] { get }
 
-    func hubView(_ image: Binding<InstallImage?>) -> HubViewType
+    func hubView(_ image: Binding<(any InstallImage)?>) -> HubViewType
 
-    func installerImageRepository(_ context: ModelContext) -> InstallerImageRepository
+    func installerImageRepository(_ context: ModelContext) -> any InstallerImageRepository
 
     func openFileURL(_ url: URL, openWindow: OpenWindowAction)
   }

@@ -12,7 +12,7 @@
   public struct HubView: View {
     @Environment(\.hubs) var hubs
     @Environment(\.dismiss) var dismiss
-    @Binding var selectedHubImage: InstallImage?
+    @Binding var selectedHubImage: (any InstallImage)?
     @State var object: HubObject
     public var body: some View {
       NavigationSplitView {
@@ -47,12 +47,12 @@
       })
     }
 
-    init(selectedHubImage: Binding<InstallImage?>, object: HubObject) {
+    init(selectedHubImage: Binding<(any InstallImage)?>, object: HubObject) {
       self._selectedHubImage = selectedHubImage
       self._object = .init(wrappedValue: object)
     }
 
-    public init(selectedHubImage: Binding<InstallImage?>) {
+    public init(selectedHubImage: Binding<(any InstallImage)?>) {
       self.init(selectedHubImage: selectedHubImage, object: .init())
     }
   }

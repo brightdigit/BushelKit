@@ -11,7 +11,7 @@
       self.init(id: id, systemImage: systemImage)
     }
 
-    init(id: LocalizedID, systemImage: String) {
+    init(id: any LocalizedID, systemImage: String) {
       self.init(
         title: { Text(id) },
         icon: { Image(systemName: systemImage) }

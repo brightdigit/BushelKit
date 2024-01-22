@@ -24,7 +24,7 @@ public extension InstallerImage {
     metadata.buildVersion
   }
 
-  func getConfigurationRange(from manager: MachineSystemManaging) -> ConfigurationRange {
+  func getConfigurationRange(from manager: any MachineSystemManaging) -> ConfigurationRange {
     let manager = manager.resolve(self.metadata.vmSystemID)
     return manager.configurationRange(for: self)
   }

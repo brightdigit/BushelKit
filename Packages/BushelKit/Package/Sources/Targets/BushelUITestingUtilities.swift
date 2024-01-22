@@ -6,6 +6,7 @@
 struct BushelUITestingUtilities: Target {
   var dependencies: any Dependencies {
     BushelCore()
+    BushelMacOSCore()
     BushelAccessibility()
   }
 }

@@ -8,7 +8,7 @@ import BushelLocalization
 import Foundation
 
 public extension Localizable {
-  func localizedID(default defaultValue: LocalizedID) -> LocalizedID {
+  func localizedID(default defaultValue: any LocalizedID) -> any LocalizedID {
     let value = LocalizedStringID(rawValue: self.localizedStringIDRawValue)
     assert(value != nil)
     return value ?? defaultValue
@@ -16,7 +16,7 @@ public extension Localizable {
 }
 
 public extension Optional where Wrapped: Localizable {
-  func localizedID(default defaultValue: LocalizedID) -> LocalizedID {
+  func localizedID(default defaultValue: any LocalizedID) -> any LocalizedID {
     let value = LocalizedStringID(rawValue: self.localizedStringIDRawValue)
     assert(value != nil)
     return value ?? defaultValue

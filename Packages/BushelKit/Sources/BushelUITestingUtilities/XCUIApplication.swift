@@ -4,6 +4,8 @@
 //
 
 #if os(macOS)
+  import BushelCore
+  import BushelMacOSCore
   import XCTest
 
   public extension XCUIApplication {

@@ -13,8 +13,8 @@
     func loadURL(
       _ url: URL,
       withContext modelContext: ModelContext,
-      restoreImageDBfrom: @escaping (ModelContext) -> InstallerImageRepository,
-      snapshotFactory: SnapshotProvider,
+      restoreImageDBfrom: @escaping (ModelContext) -> any InstallerImageRepository,
+      snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
 
       labelProvider: @escaping MetadataLabelProvider

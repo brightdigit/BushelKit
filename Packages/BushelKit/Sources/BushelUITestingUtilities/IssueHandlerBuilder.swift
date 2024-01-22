@@ -22,14 +22,14 @@
     }
 
     public static func buildPartialBlock(
-      first: AuditIssueFilter
+      first: any AuditIssueFilter
     ) -> [AuditIssueFilterClosure] {
       buildPartialBlock(first: first.callAsFunction(_:))
     }
 
     public static func buildPartialBlock(
       accumulated: [AuditIssueFilterClosure],
-      next: AuditIssueFilter
+      next: any AuditIssueFilter
     ) -> [AuditIssueFilterClosure] {
       buildPartialBlock(accumulated: accumulated, next: next.callAsFunction(_:))
     }

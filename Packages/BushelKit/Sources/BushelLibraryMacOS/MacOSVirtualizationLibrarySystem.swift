@@ -26,15 +26,15 @@
 
     public init() {}
 
-    public func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
+    public func operatingSystemLongName(for metadata: any OperatingSystemInstalled) -> String {
       MacOSVirtualization.operatingSystemLongName(for: metadata)
     }
 
-    public func imageName(for metadata: OperatingSystemInstalled) -> String {
+    public func imageName(for metadata: any OperatingSystemInstalled) -> String {
       MacOSVirtualization.imageName(for: metadata)
     }
 
-    public func defaultName(fromMetadata metadata: OperatingSystemInstalled) -> String {
+    public func defaultName(fromMetadata metadata: any OperatingSystemInstalled) -> String {
       MacOSVirtualization.defaultName(fromMetadata: metadata)
     }
 
@@ -43,7 +43,7 @@
       return try await ImageMetadata(vzRestoreImage: image, url: url)
     }
 
-    public func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
+    public func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
       MacOSVirtualization.label(fromMetadata: metadata)
     }
   }
