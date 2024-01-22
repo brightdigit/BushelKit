@@ -16,7 +16,7 @@
       self.code
     }
 
-    public var underlyingError: VZUnderlyingError? {
+    public var underlyingError: (any VZUnderlyingError)? {
       (self.userInfo[NSUnderlyingErrorKey] as? NSError).flatMap(VZUnderlyingNSError.init)
     }
 

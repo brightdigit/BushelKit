@@ -17,14 +17,14 @@
 
     let bookmarkData: BookmarkData
     let machine: Machine
-    let restoreImage: OperatingSystemInstalled?
+    let restoreImage: (any OperatingSystemInstalled)?
     let existingEntry: MachineEntry?
     let configuration: MachineObjectConfiguration
     let label: MetadataLabel
 
     internal init(
       machine: Machine,
-      restoreImage: OperatingSystemInstalled?,
+      restoreImage: (any OperatingSystemInstalled)?,
       configuration: MachineObjectConfiguration,
       existingEntry: MachineEntry?,
       bookmarkData: BookmarkData,

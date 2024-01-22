@@ -33,7 +33,7 @@
       }
     }
 
-    func restoreImageFileFrom(result: Result<URL, Error>) -> LibraryFile? {
+    func restoreImageFileFrom(result: Result<URL, any Error>) -> LibraryFile? {
       let newResult: Result<URL, LibraryError>
       do {
         newResult = try assertionFailure(result: result)
@@ -55,7 +55,7 @@
       }
     }
 
-    func onFileImporterCompleted(_ result: Result<URL, Error>) {
+    func onFileImporterCompleted(_ result: Result<URL, any Error>) {
       let newResult: Result<URL, LibraryError>
       do {
         newResult = try assertionFailure(result: result)

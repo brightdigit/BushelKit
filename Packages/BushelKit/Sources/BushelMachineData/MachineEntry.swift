@@ -82,7 +82,7 @@
     internal init(
       bookmarkData: BookmarkData,
       machine: any Machine,
-      osInstalled: OperatingSystemInstalled?,
+      osInstalled: (any OperatingSystemInstalled)?,
       restoreImageID: UUID,
       name: String,
       createdAt: Date,

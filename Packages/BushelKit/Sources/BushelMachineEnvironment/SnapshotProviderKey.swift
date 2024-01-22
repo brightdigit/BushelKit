@@ -11,12 +11,12 @@
   import SwiftUI
 
   private struct SnapshotProviderKey: EnvironmentKey {
-    static let defaultValue: SnapshotProvider =
+    static let defaultValue: any SnapshotProvider =
       SnapshotterRepository()
   }
 
   public extension EnvironmentValues {
-    var snapshotProvider: SnapshotProvider {
+    var snapshotProvider: any SnapshotProvider {
       get { self[SnapshotProviderKey.self] }
       set { self[SnapshotProviderKey.self] = newValue }
     }
@@ -24,7 +24,7 @@
 
   public extension Scene {
     func snapshotProvider(
-      _ snapshotProvider: SnapshotProvider
+      _ snapshotProvider: any SnapshotProvider
     ) -> some Scene {
       self.environment(\.snapshotProvider, snapshotProvider)
     }

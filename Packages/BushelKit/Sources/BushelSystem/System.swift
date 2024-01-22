@@ -9,13 +9,13 @@ import BushelMachine
 import Foundation
 
 public protocol System {
-  var library: LibrarySystem? { get }
+  var library: (any LibrarySystem)? { get }
   var machine: (any MachineSystem)? { get }
   var hubs: [Hub] { get }
 }
 
 public extension System {
-  var library: LibrarySystem? {
+  var library: (any LibrarySystem)? {
     nil
   }
 

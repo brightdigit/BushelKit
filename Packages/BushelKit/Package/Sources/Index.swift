@@ -22,7 +22,7 @@ let package = Package(
   swiftSettings: {
     SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
     SwiftSetting.enableUpcomingFeature("ConciseMagicFile")
-    // .enableUpcomingFeature("ExistentialAny"),
+    SwiftSetting.enableUpcomingFeature("ExistentialAny")
     SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
     SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
     SwiftSetting.enableUpcomingFeature("StrictConcurrency")

@@ -26,7 +26,7 @@
       _ imageFile: LibraryImageFile,
       at url: URL,
       to libraryURL: URL,
-      using system: LibrarySystem,
+      using system: any LibrarySystem,
       modelContext: ModelContext,
       _ setProgress: @MainActor @escaping (ProgressOperationProperties?) -> Void
     ) async throws {

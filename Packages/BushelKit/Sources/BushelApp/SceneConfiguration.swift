@@ -22,7 +22,7 @@
       .application
     }
 
-    let systems: [BushelSystem.System]
+    let systems: [any System]
 
     var schemas: [any PersistentModel.Type] {
       .all
@@ -32,11 +32,11 @@
       [.virtualMachine, .restoreImageLibrary]
     }
 
-    internal init(@SystemBuilder _ systems: @escaping () -> [System]) {
+    internal init(@SystemBuilder _ systems: @escaping () -> [any System]) {
       self.systems = systems()
     }
 
-    func installerImageRepository(_ context: ModelContext) -> BushelMachine.InstallerImageRepository {
+    func installerImageRepository(_ context: ModelContext) -> any InstallerImageRepository {
       context
     }
 
@@ -51,7 +51,7 @@
       }
     }
 
-    func hubView(_ image: Binding<InstallImage?>) -> some View {
+    func hubView(_ image: Binding<(any InstallImage)?>) -> some View {
       HubView(selectedHubImage: image)
     }
   }

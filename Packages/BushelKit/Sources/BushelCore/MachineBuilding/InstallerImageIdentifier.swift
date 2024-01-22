@@ -39,7 +39,7 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
     self.init(imageID: imageID, libraryID: libraryID)
   }
 
-  public init(from decoder: Decoder) throws {
+  public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()
     let string = try container.decode(String.self)
     let value = Self(string: string)
@@ -49,7 +49,7 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
     self = value
   }
 
-  public func encode(to encoder: Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.singleValueContainer()
     try container.encode(self.description)
   }

@@ -27,7 +27,7 @@
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
     @Environment(\.machineSystemManager) private var systemManager
 
-    var installerImageRepository: InstallerImageRepository {
+    var installerImageRepository: any InstallerImageRepository {
       self.machineRestoreImageDBFrom(context)
     }
 

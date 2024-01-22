@@ -15,7 +15,7 @@
       self.image = image
     }
 
-    internal init(object: ConfigurationObject, using database: InstallerImageRepository) throws {
+    internal init(object: ConfigurationObject, using database: any InstallerImageRepository) throws {
       guard let systemManager = object.systemManager else {
         let error = ConfigurationError.missingSystemManager
         assertionFailure(error: error)

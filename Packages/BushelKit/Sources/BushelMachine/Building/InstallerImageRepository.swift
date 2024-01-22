@@ -20,5 +20,5 @@ public protocol InstallerImageRepository {
   ) throws -> (any InstallerImage)?
 
   @discardableResult
-  func removeImage(_ image: InstallerImage) throws -> RemoveImageFailure?
+  func removeImage(_ image: any InstallerImage) throws -> RemoveImageFailure?
 }

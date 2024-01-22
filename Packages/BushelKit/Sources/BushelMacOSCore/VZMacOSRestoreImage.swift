@@ -25,7 +25,7 @@
       let buildVersion: String?
     }
 
-    var operatingSystem: OperatingSystemInstalled {
+    var operatingSystem: any OperatingSystemInstalled {
       OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
     }
 

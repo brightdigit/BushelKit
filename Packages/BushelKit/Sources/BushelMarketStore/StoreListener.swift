@@ -16,12 +16,12 @@
 
     // swiftlint:disable:next implicitly_unwrapped_optional
     var updateListener: Task<Void, Never>!
-    weak var observer: MarketObserver?
+    weak var observer: (any MarketObserver)?
     var hasCurrentEntitlements: Bool = false
 
     public init() {}
 
-    public func initialize(for observer: MarketObserver) {
+    public func initialize(for observer: any MarketObserver) {
       self.observer = observer
       self.updateListener = Self.listenerFor(self)
 

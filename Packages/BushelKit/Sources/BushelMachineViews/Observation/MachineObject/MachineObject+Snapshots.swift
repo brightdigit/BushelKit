@@ -235,7 +235,7 @@
         try writeConfigurationAt(deletingSnapshotRequest.url)
         Self.logger.debug("Completed deleting snapshot \(snapshotID)")
       } catch {
-        let newError: Error = MachineError.fromSnapshotError(error)
+        let newError: any Error = MachineError.fromSnapshotError(error)
         self.error = assertionFailure(error: newError) { error in
           Self.logger.critical("Unknown error: \(error)")
         }
@@ -292,7 +292,7 @@
             // swiftlint:disable:next line_length
             "Could not restore snapshot \(snapshot.id) to \(url, privacy: .public): \(error, privacy: .public)"
           )
-          let newError: Error = MachineError.fromSnapshotError(error)
+          let newError: any Error = MachineError.fromSnapshotError(error)
           self.error = assertionFailure(error: newError) { error in
             Self.logger.critical("Unknown error: \(error)")
           }
@@ -300,7 +300,7 @@
       }
     }
 
-    func beginExport(to result: Result<URL, Error>) {
+    func beginExport(to result: Result<URL, any Error>) {
       let url: URL
       guard let exportingSnapshot = self.exportingSnapshot else {
         Self.logger.error("Missing snapshot for export")

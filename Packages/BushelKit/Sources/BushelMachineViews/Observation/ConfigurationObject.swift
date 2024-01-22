@@ -44,7 +44,7 @@
     var isAlertPresented: Bool = false
 
     @ObservationIgnored
-    internal private(set) var systemManager: MachineSystemManaging?
+    internal private(set) var systemManager: (any MachineSystemManaging)?
 
     @ObservationIgnored
     internal private(set) var labelProvider: MetadataLabelProvider?
@@ -91,7 +91,7 @@
     }
 
     @ObservationIgnored
-    internal private(set) var database: InstallerImageRepository?
+    internal private(set) var database: (any InstallerImageRepository)?
 
     internal init(
       configuration: MachineSetupConfiguration,
@@ -105,8 +105,8 @@
 
     func setupFrom(
       request: MachineBuildRequest?,
-      systemManager: MachineSystemManaging,
-      using database: InstallerImageRepository,
+      systemManager: any MachineSystemManaging,
+      using database: any InstallerImageRepository,
       labelProvider: @escaping (MetadataLabelProvider)
     ) {
       self.configuration.updating(forRequest: request)
@@ -160,7 +160,7 @@
       self.restoreImageMetadata = image.metadata
     }
 
-    func prepareBuild(using database: InstallerImageRepository) {
+    func prepareBuild(using database: any InstallerImageRepository) {
       let machineConfiguration: MachineConfiguration
       do {
         machineConfiguration = try self.machineConfiguration(using: database)

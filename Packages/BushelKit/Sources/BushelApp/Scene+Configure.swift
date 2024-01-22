@@ -24,7 +24,7 @@
     >(
       libraryFileType: LibraryFileType.Type,
       machineFileType: MachineFileType.Type,
-      @SystemBuilder _ systems: @escaping () -> [System]
+      @SystemBuilder _ systems: @escaping () -> [any System]
     ) -> some View {
       self.configure(SceneConfiguration<MachineFileType, LibraryFileType>(systems))
     }
@@ -68,7 +68,7 @@
     >(
       libraryFileType: LibraryFileType.Type,
       machineFileType: MachineFileType.Type,
-      @SystemBuilder _ systems: @escaping () -> [System]
+      @SystemBuilder _ systems: @escaping () -> [any System]
     ) -> some Scene {
       self.configure(SceneConfiguration<MachineFileType, LibraryFileType>(systems))
     }

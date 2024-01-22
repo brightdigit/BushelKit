@@ -6,7 +6,7 @@
 import Foundation
 
 @inlinable
-public func assertionFailure(error: Error, file: StaticString = #file, line: UInt = #line) {
+public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line) {
   guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else {
     return
   }
@@ -15,8 +15,8 @@ public func assertionFailure(error: Error, file: StaticString = #file, line: UIn
 
 @inlinable
 public func assertionFailure<NewFailure: LocalizedError>(
-  error: Error,
-  _ unknownError: @escaping (Error) -> Void,
+  error: any Error,
+  _ unknownError: @escaping (any Error) -> Void,
   file: StaticString = #file,
   line: UInt = #line
 ) -> NewFailure? {

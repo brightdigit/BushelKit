@@ -22,7 +22,7 @@
 
     public let groupIDs: [String]
     public private(set) var subscriptions: [Subscription]?
-    public private(set) var error: Error?
+    public private(set) var error: (any Error)?
 
     @ObservationIgnored
     var storeListener: (any MarketListener)?
@@ -30,7 +30,7 @@
     private init(
       groupIDs: [String],
       subscriptions: [Subscription]? = nil,
-      error: Error? = nil,
+      error: (any Error)? = nil,
       listener: @autoclosure () -> any MarketListener
     ) {
       self.groupIDs = groupIDs
