@@ -42,7 +42,7 @@
     }
   }
 
-  extension Optional where Wrapped == InstallerImageRepository {
+  extension Optional where Wrapped == any InstallerImageRepository {
     func imageBasedOn(
       _ restoreImageID: UUID,
       libraryID: LibraryIdentifier?,

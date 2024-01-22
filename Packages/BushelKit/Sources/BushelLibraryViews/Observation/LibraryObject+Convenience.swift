@@ -71,7 +71,7 @@
     func beginImport(
       _ request: ImportRequest,
       setProgressWith setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void,
-      onError: @escaping (Error) -> Void
+      onError: @escaping (any Error) -> Void
     ) {
       Task {
         do {

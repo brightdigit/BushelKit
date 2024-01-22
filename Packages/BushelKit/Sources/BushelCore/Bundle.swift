@@ -9,7 +9,7 @@ public extension Bundle {
   struct MissingIdentifierError: Error {
     private init() {}
     // swiftlint:disable:next strict_fileprivate
-    fileprivate static let shared: Error = MissingIdentifierError()
+    fileprivate static let shared: any Error = MissingIdentifierError()
   }
 
   static let suiteName = "group.com.brightdigit.Bushel"

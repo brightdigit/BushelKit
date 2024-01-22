@@ -8,12 +8,12 @@
   import SwiftUI
 
   struct SocialLinkListHeader: View {
-    let titleID: LocalizedID
+    let titleID: any LocalizedID
     var body: some View {
       Text(titleID).textCase(.lowercase).italic().fontWeight(.thin)
     }
 
-    internal init(titleID: LocalizedID = LocalizedStringID.aboutSocialHeader) {
+    internal init(titleID: any LocalizedID = LocalizedStringID.aboutSocialHeader) {
       self.titleID = titleID
     }
   }
@@ -22,7 +22,7 @@
     init(
       alignment: HorizontalAlignment = .trailing,
       @SocialLinkListBuilder _ items: () -> [SocialLink],
-      headerTextID: LocalizedID = LocalizedStringID.aboutSocialHeader
+      headerTextID: any LocalizedID = LocalizedStringID.aboutSocialHeader
     ) {
       self.init(items: items(), alignment: alignment) {
         SocialLinkListHeader(titleID: headerTextID)
@@ -31,7 +31,7 @@
 
     init(
       alignment: HorizontalAlignment = .trailing,
-      headerTextID: LocalizedID = LocalizedStringID.aboutSocialHeader,
+      headerTextID: any LocalizedID = LocalizedStringID.aboutSocialHeader,
       items: [SocialLink]
     ) {
       self.init(items: items, alignment: alignment) {

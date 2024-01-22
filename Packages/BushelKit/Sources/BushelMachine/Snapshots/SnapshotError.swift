@@ -6,7 +6,7 @@
 import Foundation
 
 internal enum SnapshotError: Error, LocalizedError {
-  case innerError(Error)
+  case innerError(any Error)
   case missingSnapshotVersionID(UUID)
   case missingSnapshotVersionAt(URL, forPersistentIdentifier: Any)
   case missingSnapshotFile(UUID)
@@ -16,7 +16,7 @@ internal enum SnapshotError: Error, LocalizedError {
     Self.description(from: self)
   }
 
-  static func inner(error: Error) -> SnapshotError {
+  static func inner(error: any Error) -> SnapshotError {
     if let snapshotError = error as? SnapshotError {
       snapshotError
     } else {
@@ -24,7 +24,7 @@ internal enum SnapshotError: Error, LocalizedError {
     }
   }
 
-  static func description(from error: Error) -> String {
+  static func description(from error: any Error) -> String {
     guard let error = error as? SnapshotError else {
       assertionFailure()
       return error.localizedDescription

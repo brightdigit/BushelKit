@@ -33,7 +33,7 @@
       }
     }
 
-    var selectedHubImage: InstallImage?
+    var selectedHubImage: (any InstallImage)?
     var presentFileImporter = false
     var presentFileExporter = false
     var presentHubModal = false

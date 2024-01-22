@@ -13,7 +13,7 @@
   import SwiftData
 
   extension ModelContext: InstallerImageRepository {
-    public func removeImage(_ images: InstallerImage) throws -> RemoveImageFailure? {
+    public func removeImage(_ images: any InstallerImage) throws -> RemoveImageFailure? {
       guard case let .bookmarkID(bookmarkDataID) = images.libraryID else {
         return .notSupported
       }

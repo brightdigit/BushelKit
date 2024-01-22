@@ -78,7 +78,7 @@
     convenience init(
       _ snapshot: Snapshot,
       machine: MachineEntry,
-      osInstalled: OperatingSystemInstalled? = nil,
+      osInstalled: (any OperatingSystemInstalled)? = nil,
       using context: ModelContext
     ) throws {
       self.init(
@@ -102,7 +102,7 @@
     func syncronizeSnapshot(
       _ snapshot: Snapshot,
       machine: MachineEntry,
-      osInstalled: OperatingSystemInstalled? = nil,
+      osInstalled: (any OperatingSystemInstalled)? = nil,
       using context: ModelContext
     ) throws {
       self.snapshotID = snapshot.id

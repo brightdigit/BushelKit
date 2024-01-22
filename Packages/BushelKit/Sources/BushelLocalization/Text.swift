@@ -11,7 +11,7 @@
       self.init(source.key, bundle: .module)
     }
 
-    init(_ source: LocalizedID) {
+    init(_ source: any LocalizedID) {
       self.init(source.key, bundle: .module)
     }
 
@@ -20,7 +20,7 @@
       self.init(text)
     }
 
-    init(localizedUsingID id: LocalizedID, arguments: CVarArg...) {
+    init(localizedUsingID id: any LocalizedID, arguments: any CVarArg...) {
       self.init(
         String(localizedUsingID: id, arguments: arguments)
       )

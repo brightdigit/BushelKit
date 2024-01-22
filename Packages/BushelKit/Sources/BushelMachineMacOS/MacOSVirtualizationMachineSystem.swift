@@ -40,7 +40,7 @@
       return try await .init(url: url)
     }
 
-    public func configurationRange(for _: InstallerImage) -> ConfigurationRange {
+    public func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
       MacOSVirtualization.configurationRange
     }
 
@@ -76,7 +76,7 @@
     public func createBuilder(
       for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
       at url: URL
-    ) throws -> BushelMachine.MachineBuilder {
+    ) throws -> any MachineBuilder {
       let machineConfiguration = try self.validatedMachineConfiguration(for: configuration, at: url)
 
       let virtualMachine = VZVirtualMachine(configuration: machineConfiguration)

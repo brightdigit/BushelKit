@@ -15,7 +15,7 @@ public enum MacOSVirtualization {
     FileType.ipswFileExtension
   }
 
-  public static func operatingSystemLongName(for metadata: OperatingSystemInstalled) -> String {
+  public static func operatingSystemLongName(for metadata: any OperatingSystemInstalled) -> String {
     let shortName = operatingSystemShortName(for: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName
@@ -23,7 +23,7 @@ public enum MacOSVirtualization {
     return shortName.appending(" (\(buildVersion))")
   }
 
-  public static func imageName(for metadata: OperatingSystemInstalled) -> String {
+  public static func imageName(for metadata: any OperatingSystemInstalled) -> String {
     "OSVersions/".appending(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion))
   }
 
@@ -31,16 +31,16 @@ public enum MacOSVirtualization {
     operatingSystemVersion.macOSReleaseName ?? operatingSystemVersion.majorVersion.description
   }
 
-  public static func operatingSystemShortName(for metadata: OperatingSystemInstalled) -> String {
+  public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String {
     // swiftlint:disable:next line_length
     "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
-  public static func defaultName(fromMetadata metadata: OperatingSystemInstalled) -> String {
+  public static func defaultName(fromMetadata metadata: any OperatingSystemInstalled) -> String {
     operatingSystemShortName(for: metadata)
   }
 
-  public static func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
+  public static func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
     .init(
       operatingSystemLongName: self.operatingSystemLongName(for: metadata),
       defaultName: self.defaultName(fromMetadata: metadata),

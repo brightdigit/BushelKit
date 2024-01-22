@@ -16,7 +16,7 @@
     /// - Parameters:
     ///   - virtualMachine The virtual machine invoking the delegate method.
     ///   - error The error
-    func virtualMachine(_: VZVirtualMachine, didStopWithError error: Error) {
+    func virtualMachine(_: VZVirtualMachine, didStopWithError error: any Error) {
       notifyObservers(.stopWithError(error))
     }
 
@@ -35,7 +35,7 @@
     func virtualMachine(
       _: VZVirtualMachine,
       networkDevice _: VZNetworkDevice,
-      attachmentWasDisconnectedWithError error: Error
+      attachmentWasDisconnectedWithError error: any Error
     ) {
       notifyObservers(.networkDetatchedWithError(error))
     }

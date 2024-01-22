@@ -20,7 +20,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
     .ubuntu_22_10_0_21F125
   }
 
-  public func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
+  public func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
     .init(
       operatingSystemLongName: self.operatingSystemLongName(forOSMetadata: metadata),
       defaultName: self.defaultName(fromOSMetadata: metadata),
@@ -32,7 +32,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
 
   // MARK: - Helpers
 
-  private func operatingSystemLongName(forOSMetadata metadata: OperatingSystemInstalled) -> String {
+  private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
     let shortName = defaultName(fromOSMetadata: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName
@@ -40,7 +40,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
     return shortName.appending(" (\(buildVersion))")
   }
 
-  private func defaultName(fromOSMetadata metadata: OperatingSystemInstalled) -> String {
+  private func defaultName(fromOSMetadata metadata: any OperatingSystemInstalled) -> String {
     // swiftlint:disable:next line_length
     "\(self.shortName) \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
@@ -49,7 +49,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
     "Kinetic Kudu"
   }
 
-  private func imageName(forOSMetadata metadata: OperatingSystemInstalled) -> String {
+  private func imageName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
     "OSVersions/".appending(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion))
   }
 }

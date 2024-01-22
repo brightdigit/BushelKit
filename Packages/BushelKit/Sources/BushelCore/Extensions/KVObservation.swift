@@ -40,7 +40,7 @@
       _ observer: NSObject,
       options: NSKeyValueObservingOptions,
       _ isIncluded: @escaping (String) -> Bool = { _ in true }
-    ) -> KVObservation {
+    ) -> any KVObservation {
       let propertyKeys = self.getAllPropertyKeys().filter(isIncluded)
       return self.addObserver(observer, forKeyPaths: propertyKeys, options: options)
     }
@@ -49,7 +49,7 @@
       _ observer: NSObject,
       forKeyPaths keyPaths: [String],
       options: NSKeyValueObservingOptions
-    ) -> KVObservation {
+    ) -> any KVObservation {
       for keyPath in keyPaths {
         self.addObserver(observer, forKeyPath: keyPath, options: options, context: nil)
       }

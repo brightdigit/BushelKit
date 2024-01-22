@@ -50,7 +50,7 @@
       self.cancel = cancel
     }
 
-    internal init(url: URL?, snapshot: Snapshot, agent: SnapshotDeleteActionsAgent) {
+    internal init(url: URL?, snapshot: Snapshot, agent: any SnapshotDeleteActionsAgent) {
       self.init(
         url: url,
         snapshot: snapshot,

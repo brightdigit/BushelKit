@@ -87,7 +87,7 @@ public extension Machine {
   func createNewSnapshot(
     request: SnapshotRequest,
     options: SnapshotOptions,
-    using provider: SnapshotProvider
+    using provider: any SnapshotProvider
   ) async throws -> Snapshot {
     guard let snapshotter = provider.snapshotter(
       withID: self.configuration.snapshotSystemID,
@@ -102,7 +102,7 @@ public extension Machine {
 
   func deleteSnapshot(
     _ snapshot: Snapshot,
-    using provider: SnapshotProvider
+    using provider: any SnapshotProvider
   ) throws {
     guard let snapshotter = provider.snapshotter(
       withID: self.configuration.snapshotSystemID,
@@ -117,7 +117,7 @@ public extension Machine {
 
   func restoreSnapshot(
     _ snapshot: Snapshot,
-    using provider: SnapshotProvider
+    using provider: any SnapshotProvider
   ) async throws {
     guard let snapshotter = provider.snapshotter(
       withID: self.configuration.snapshotSystemID,
@@ -133,7 +133,7 @@ public extension Machine {
   func exportSnapshot(
     _ snapshot: Snapshot,
     to url: URL,
-    using provider: SnapshotProvider
+    using provider: any SnapshotProvider
   ) async throws {
     guard let snapshotter = provider.snapshotter(
       withID: self.configuration.snapshotSystemID,

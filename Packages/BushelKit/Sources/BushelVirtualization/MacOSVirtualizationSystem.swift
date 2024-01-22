@@ -14,7 +14,7 @@
   import BushelSystem
 
   public struct MacOSVirtualizationSystem: System, MacOSVirtualizationHubProvider {
-    public var library: LibrarySystem? {
+    public var library: (any LibrarySystem)? {
       MacOSVirtualizationLibrarySystem()
     }
 

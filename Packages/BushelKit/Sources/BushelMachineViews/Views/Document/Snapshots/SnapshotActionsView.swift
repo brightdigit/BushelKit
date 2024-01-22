@@ -48,7 +48,7 @@
     #warning("logging-note: should we log the call of queue methods of agent here?")
     internal init(
       snapshot: Snapshot,
-      agent: SnapshotActionsAgent
+      agent: any SnapshotActionsAgent
     ) {
       self.init(
         snapshot: snapshot,

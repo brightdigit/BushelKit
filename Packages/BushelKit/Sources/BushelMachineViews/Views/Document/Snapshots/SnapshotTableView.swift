@@ -15,7 +15,7 @@
     @Environment(\.marketplace) var marketplace
     @Binding var selectedSnapshot: Snapshot.ID?
     let snapshots: [Snapshot]
-    let agent: SnapshotActionsAgent
+    let agent: any SnapshotActionsAgent
 
     var body: some View {
       Table(

@@ -11,7 +11,7 @@
 
   public extension GuidedLabeledContent where Description == GuidedLabeledContentDescriptionView {
     init(
-      _ source: LocalizedID,
+      _ source: any LocalizedID,
       _ content: @escaping () -> Content,
       label: @escaping () -> Label,
       descriptionAlignment: GuidedLabeledContentDescriptionView.Alignment? = .leading

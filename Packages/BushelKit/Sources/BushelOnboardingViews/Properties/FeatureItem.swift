@@ -6,7 +6,7 @@
 import BushelLocalization
 
 struct FeatureItem: Identifiable {
-  let icon: Icon
+  let icon: any Icon
   let titleID: LocalizedStringID
   let descriptionID: LocalizedStringID
   let id: String
@@ -21,7 +21,7 @@ struct FeatureItem: Identifiable {
   }
 
   internal init(
-    icon: Icon,
+    icon: any Icon,
     titleID: LocalizedStringID,
     descriptionID: LocalizedStringID,
     id: String? = nil

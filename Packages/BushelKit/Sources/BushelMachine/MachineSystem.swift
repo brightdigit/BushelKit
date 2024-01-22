@@ -21,7 +21,7 @@ public protocol MachineSystem {
   func createBuilder(
     for configuration: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
-  ) throws -> MachineBuilder
+  ) throws -> any MachineBuilder
 
   /// Creates a machine based on the url and configuration.
   /// - Parameters:
@@ -55,7 +55,7 @@ public extension MachineSystem {
     for configuration: MachineSetupConfiguration,
     image: any InstallerImage,
     at url: URL
-  ) async throws -> MachineBuilder {
+  ) async throws -> any MachineBuilder {
     let restoreImage: RestoreImageType
     do {
       restoreImage = try await self.restoreImage(from: image)
