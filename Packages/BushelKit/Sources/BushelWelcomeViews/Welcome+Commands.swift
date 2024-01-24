@@ -43,7 +43,7 @@
 
       @Environment(\.openWindow) private var openWindow
       public var body: some View {
-        Button("Welcome to Bushel") {
+        Button(.welcomeToBushel) {
           openWindow(value: WelcomeView.Value.default)
         }
       }
@@ -59,7 +59,7 @@
       @Environment(\.allowedOpenFileTypes) private var allowedOpenFileTypes
 
       public var body: some View {
-        Button("Open...") {
+        Button(.menuOpen) {
           openFileURL(ofFileTypes: allowedOpenFileTypes, using: openWindow)
         }
         RecentDocumentsMenu(

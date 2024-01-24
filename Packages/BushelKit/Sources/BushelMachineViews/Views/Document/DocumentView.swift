@@ -34,7 +34,7 @@
           }
         #if os(macOS)
           SnapshotsView(url: object.url, machineObject: object.machineObject).tabItem {
-            Label("Snapshots", systemImage: "camera")
+            Label(.databaseSnapshots, systemImage: "camera")
           }
         #endif
       }
