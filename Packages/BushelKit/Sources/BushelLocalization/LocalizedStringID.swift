@@ -5,6 +5,7 @@
 
 public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   // swiftlint:disable identifier_name
+  case bushel
   case welcomeToBushel
   case upgradePurchase
   case proFeatures
@@ -36,6 +37,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case stayBasic
   case menuNew
   case menuOpen
+  case menuMachine
+  case menuLibrary
   case menuOpenRecent
   case menuWindowWelcomeToBushel
   case menuHelpBushel

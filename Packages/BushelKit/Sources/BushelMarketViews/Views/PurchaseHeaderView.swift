@@ -23,7 +23,7 @@
             .aspectRatio(contentMode: .fit)
             .frame(height: properties.logoHeight)
 
-          Text(.welcomeToBushel)
+          Text(.bushel)
             .font(.system(size: properties.headerFontSize))
             .fontWeight(.bold)
 

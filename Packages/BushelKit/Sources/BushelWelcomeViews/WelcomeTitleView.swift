@@ -26,7 +26,7 @@
             WelcomeLogoTitleLabelView()
           }
           .accessibilityLabel(
-            String(localizedUsingID: LocalizedStringID.welcomeToBushel)
+            String(localizedUsingID: LocalizedStringID.bushel)
           )
           Spacer(minLength: 10.0)
           WelcomeActionListView()
