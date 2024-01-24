@@ -13,7 +13,7 @@
     @Environment(\.marketplace) var marketplace
     var body: some View {
       HStack {
-        Text(.welcomeToBushel)
+        Text(.bushel)
           .font(.system(size: 36.0))
           .fontWeight(.bold)
 
@@ -25,13 +25,14 @@
             .italic()
         }
       }
-      Text(
-        .key(LocalizedStringID.version),
-        .text(
+
+      HStack(spacing: 4) {
+        Text(.version)
+        Text(
           // swiftlint:disable:next line_length
           "\(Bundle.applicationVersionFormatted.marketingVersion) (\(Bundle.applicationVersionFormatted.buildNumberHex))"
         )
-      )
+      }
       .font(.system(size: 12.0))
       .fontWeight(.medium)
       .foregroundColor(.secondary)

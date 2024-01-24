@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
+  import BushelLocalization
   import BushelLogging
   import BushelOnboardingEnvironment
   import BushelViewsCore
@@ -48,7 +49,7 @@
           openWindow(value: onboardingWindow)
         }
       }
-      .navigationTitle("Welcome to Bushel")
+      .navigationTitle(Text(.welcomeToBushel))
       .accessibilityIdentifier("welcomeView")
     }
 

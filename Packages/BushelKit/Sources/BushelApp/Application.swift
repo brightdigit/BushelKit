@@ -52,11 +52,13 @@
       }
       .commands(content: {
         CommandGroup(replacing: .newItem) {
-          Menu("New") {
+          Menu {
             #if os(macOS)
               Library.NewCommands()
             #endif
             Machine.NewCommands()
+          } label: {
+            Text(.menuNew)
           }
           #if os(macOS)
             Divider()
