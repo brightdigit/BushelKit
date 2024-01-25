@@ -23,7 +23,7 @@
 "snapshot_machine" = "خذ لقطة";
 
 /* Button label for when to build machine */
-"build_machine" = "إبدأ بالإنشاء";
+"build_machine" = "إبدأ";
 
 /* Title for upgrading to "Bushel Pro" */
 "upgrade_purchase" = "انتقل للنسخة الإحترافية";

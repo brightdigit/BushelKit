@@ -27,7 +27,8 @@
             .font(.system(size: properties.headerFontSize))
             .fontWeight(.bold)
 
-          Text(.purchaseDescription)
+          #warning("@Leo, This is expected to be localized without .key() because it is a static string, yet it only worked this way.")
+          Text(.key(LocalizedStringID.purchaseDescription))
             .font(.system(size: properties.descriptionFontSize))
             .multilineTextAlignment(.leading)
             .lineLimit(3, reservesSpace: true)
