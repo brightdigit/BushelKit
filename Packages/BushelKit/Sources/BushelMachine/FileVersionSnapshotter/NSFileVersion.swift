@@ -30,9 +30,10 @@
       itemAt url: URL,
       forPersistentIdentifierData identifierData: Data
     ) throws -> NSFileVersion {
-      guard let persistentIdentifier = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(
-        identifierData
-      ) else {
+      guard let persistentIdentifier = try NSKeyedUnarchiver.unarchivedObject(
+        ofClasses: [NSObject.self],
+        from: identifierData
+      ) as? NSObject else {
         throw SnapshotError.unarchiveError(identifierData)
       }
       guard let version = self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier) else {
