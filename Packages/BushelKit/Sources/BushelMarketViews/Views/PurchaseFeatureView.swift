@@ -21,10 +21,10 @@
           .frame(width: properties.imageWidth, alignment: .center)
           .foregroundStyle(.tint)
         VStack(alignment: .leading) {
-          Text(item.titleID)
+          Text(.key(item.titleID))
             .font(.system(size: properties.fontSize))
             .fontWeight(.bold)
-          Text(item.descriptionID)
+          Text(.key(item.descriptionID))
 
             .opacity(0.8)
         }

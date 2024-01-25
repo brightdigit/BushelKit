@@ -15,7 +15,7 @@
     @Environment(\.openFileURL) private var openFileURL
     @State var isEmpty = false
     public var body: some View {
-      Menu("Open Recent") {
+      Menu {
         if !isEmpty {
           RecentDocumentsList(
             recentDocumentsClearDate: recentDocumentsClearDate,
@@ -35,6 +35,8 @@
         Button("Clear Menu") {
           clearMenu()
         }.disabled(self.isEmpty)
+      } label: {
+        Text(.menuOpenRecent)
       }
     }
   }
