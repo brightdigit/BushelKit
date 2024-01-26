@@ -16,7 +16,7 @@
     case imageNotSupported
     case databaseError(SwiftDataError)
     case machineBuilderError(BuilderError)
-    case unknownError(Error)
+    case unknownError(any Error)
 
     public var isFeedbackEnabled: Bool {
       switch self {

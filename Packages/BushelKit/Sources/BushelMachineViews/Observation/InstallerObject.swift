@@ -9,7 +9,7 @@
 
   @Observable
   class InstallerObject {
-    private let builder: MachineBuilder
+    private let builder: any MachineBuilder
 
     var url: URL {
       builder.url
@@ -18,7 +18,7 @@
     private(set) var percentCompleted: Double = 0.0
     var id: UUID?
 
-    internal init(builder: MachineBuilder, percentCompleted: Double = 0.0) {
+    internal init(builder: any MachineBuilder, percentCompleted: Double = 0.0) {
       self.builder = builder
       // self.result = result
       self.percentCompleted = percentCompleted

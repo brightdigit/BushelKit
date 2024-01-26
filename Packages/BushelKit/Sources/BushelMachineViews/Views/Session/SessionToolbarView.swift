@@ -25,7 +25,7 @@
 
     @Environment(\.marketplace) var marketplace
 
-    let agent: SessionToolbarAgent
+    let agent: any SessionToolbarAgent
     let onGeometryProxy: (GeometryProxy) -> Void
 
     var startPauseResume: some View {

@@ -10,7 +10,7 @@
   public protocol VZInstallError: InstallFailureError {
     var isVZError: Bool { get }
     var rawCode: Int { get }
-    var underlyingError: VZUnderlyingError? { get }
+    var underlyingError: (any VZUnderlyingError)? { get }
     func codeMatches(_ code: VZError.Code) -> Bool
   }
 

@@ -50,7 +50,7 @@ public struct LibraryError: LocalizedError, Loggable {
     case copyImage(source: URL, destination: URL)
 
     // swiftlint:disable:next cyclomatic_complexity function_body_length
-    func errorDescription(fromError error: Error?) -> String {
+    func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:
         assert(error != nil)
@@ -98,7 +98,7 @@ public struct LibraryError: LocalizedError, Loggable {
       }
     }
 
-    func recoverySuggestion(fromError _: Error?) -> String? {
+    func recoverySuggestion(fromError _: (any Error)?) -> String? {
       switch self {
       case .accessDeniedLibraryAt(at: _):
         return "Close and open the library again."
@@ -114,7 +114,7 @@ public struct LibraryError: LocalizedError, Loggable {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func isRecoverable(fromError _: Error?) -> Bool {
+    func isRecoverable(fromError _: (any Error)?) -> Bool {
       switch self {
       case .bookmarkError:
         return false
@@ -153,7 +153,7 @@ public struct LibraryError: LocalizedError, Loggable {
     .library
   }
 
-  let innerError: Error?
+  let innerError: (any Error)?
   let details: Details
 
   public var errorDescription: String? {
@@ -169,7 +169,7 @@ public struct LibraryError: LocalizedError, Loggable {
   }
 
   private init<TypedError: Error>(
-    innerError: Error,
+    innerError: any Error,
     as _: TypedError.Type,
     details: LibraryError.Details
   ) throws {
@@ -181,7 +181,7 @@ public struct LibraryError: LocalizedError, Loggable {
 
   private init(
     details: LibraryError.Details,
-    innerError: Error? = nil
+    innerError: (any Error)? = nil
   ) {
     if let innerError = innerError as? LibraryError {
       assertionFailure(
@@ -198,23 +198,23 @@ public struct LibraryError: LocalizedError, Loggable {
 }
 
 public extension LibraryError {
-  static func bookmarkError(_ error: Error) throws -> LibraryError {
+  static func bookmarkError(_ error: any Error) throws -> LibraryError {
     try .init(innerError: error, as: BookmarkError.self, details: .bookmarkError)
   }
 
-  static func accessDeniedError(_ error: Error?, at url: URL) -> LibraryError {
+  static func accessDeniedError(_ error: (any Error)?, at url: URL) -> LibraryError {
     LibraryError(details: .accessDeniedLibraryAt(url), innerError: error)
   }
 
-  static func imageCorruptedError(_ error: Error, at url: URL) -> LibraryError {
+  static func imageCorruptedError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .imageCorruptedAt(url), innerError: error)
   }
 
-  static func libraryCorruptedError(_ error: Error, at url: URL) -> LibraryError {
+  static func libraryCorruptedError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .libraryCorruptedAt(url), innerError: error)
   }
 
-  static func imagesFolderError(_ error: Error, at url: URL) -> LibraryError {
+  static func imagesFolderError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .imageFolderInitializationAt(url), innerError: error)
   }
 
@@ -222,19 +222,23 @@ public extension LibraryError {
     LibraryError(details: .missingInitialization(for: property))
   }
 
-  static func metadataUpdateError(_ error: Error, at url: URL) -> LibraryError {
+  static func metadataUpdateError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .updateMetadataAt(url), innerError: error)
   }
 
-  static func fromDatabaseError(_ error: Error) -> LibraryError {
+  static func fromDatabaseError(_ error: any Error) -> LibraryError {
     LibraryError(details: .database, innerError: error)
   }
 
-  static func copyFrom(_ importingURL: URL, to libraryURL: URL, withError error: Error) -> LibraryError {
+  static func copyFrom(
+    _ importingURL: URL,
+    to libraryURL: URL,
+    withError error: any Error
+  ) -> LibraryError {
     LibraryError(details: .copyImage(source: importingURL, destination: libraryURL), innerError: error)
   }
 
-  static func systemResolutionError(_ error: Error) throws -> LibraryError {
+  static func systemResolutionError(_ error: any Error) throws -> LibraryError {
     try .init(innerError: error, as: VMSystemError.self, details: .systemResolution)
   }
 }

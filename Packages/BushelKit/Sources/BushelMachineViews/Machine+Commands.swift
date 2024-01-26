@@ -18,7 +18,7 @@
 
       @Environment(\.openWindow) private var openWindow
       public var body: some View {
-        Button("Machine...") {
+        Button(.menuMachine) {
           openWindow(value: MachineBuildRequest())
         }
       }

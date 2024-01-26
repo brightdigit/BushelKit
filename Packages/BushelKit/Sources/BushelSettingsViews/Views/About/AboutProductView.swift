@@ -23,7 +23,7 @@
             .frame(height: value.get())
           VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading) {
-              Text(.welcomeToBushel).font(.system(size: 36)).fontWeight(.black)
+              Text(.bushel).font(.system(size: 36)).fontWeight(.black)
               Text(
                 .text(
                   "\(version.description) (\(version.buildNumberHex(withLength: 3)))"

@@ -1139,6 +1139,7 @@ struct BushelTestUtlities: Target {}
 struct BushelUITestingUtilities: Target {
   var dependencies: any Dependencies {
     BushelCore()
+    BushelMacOSCore()
     BushelAccessibility()
   }
 }
@@ -1283,7 +1284,7 @@ let package = Package(
   swiftSettings: {
     SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
     SwiftSetting.enableUpcomingFeature("ConciseMagicFile")
-    // .enableUpcomingFeature("ExistentialAny"),
+    SwiftSetting.enableUpcomingFeature("ExistentialAny")
     SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
     SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
     SwiftSetting.enableUpcomingFeature("StrictConcurrency")

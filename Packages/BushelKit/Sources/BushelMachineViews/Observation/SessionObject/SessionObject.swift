@@ -46,7 +46,7 @@
     var initializedWindowSize: Bool = false
 
     @ObservationIgnored
-    weak var windowDelegate: NSWindowDelegate?
+    weak var windowDelegate: (any NSWindowDelegate)?
 
     @ObservationIgnored
     weak var window: NSWindow?

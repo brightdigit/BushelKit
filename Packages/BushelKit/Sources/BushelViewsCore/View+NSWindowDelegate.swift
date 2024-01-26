@@ -9,13 +9,13 @@
 
   private struct NSWindowDelegateAdaptorModifier: ViewModifier {
     #warning("Modifying state during view update, this will cause undefined behavior.")
-    @Binding var binding: NSWindowDelegate?
+    @Binding var binding: (any NSWindowDelegate)?
     // swiftlint:disable:next weak_delegate
-    let delegate: NSWindowDelegate
+    let delegate: any NSWindowDelegate
 
     init(
-      binding: Binding<NSWindowDelegate?>,
-      delegate: @autoclosure () -> NSWindowDelegate
+      binding: Binding<(any NSWindowDelegate)?>,
+      delegate: @autoclosure () -> any NSWindowDelegate
     ) {
       self._binding = binding
       self.delegate = binding.wrappedValue ?? delegate()
@@ -34,8 +34,8 @@
 
   public extension View {
     func nsWindowDelegateAdaptor(
-      _ binding: Binding<NSWindowDelegate?>,
-      _ delegate: @autoclosure () -> NSWindowDelegate
+      _ binding: Binding<(any NSWindowDelegate)?>,
+      _ delegate: @autoclosure () -> any NSWindowDelegate
     ) -> some View {
       self.modifier(
         NSWindowDelegateAdaptorModifier(

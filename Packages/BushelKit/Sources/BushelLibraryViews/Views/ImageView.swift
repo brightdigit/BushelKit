@@ -73,7 +73,7 @@
 
     internal init(
       image: Bindable<LibraryImageObject>,
-      system: LibrarySystem,
+      system: any LibrarySystem,
       onSave: @escaping () -> Void
     ) {
       self._image = image

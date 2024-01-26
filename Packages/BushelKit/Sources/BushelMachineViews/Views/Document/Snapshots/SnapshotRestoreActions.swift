@@ -48,7 +48,7 @@
     internal init(
       url: URL?,
       snapshot: Snapshot,
-      agent: SnapshotRestoreActionsAgent
+      agent: any SnapshotRestoreActionsAgent
     ) {
       self.init(
         url: url,

@@ -6,12 +6,12 @@
 import Foundation
 
 public struct MachineBuilderActivity: Identifiable {
-  public let builder: MachineBuilder
+  public let builder: any MachineBuilder
   public var id: URL {
     builder.url
   }
 
-  public init(builder: MachineBuilder) {
+  public init(builder: any MachineBuilder) {
     self.builder = builder
   }
 }

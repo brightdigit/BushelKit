@@ -22,7 +22,7 @@ public struct MachineError: LocalizedError, Loggable {
     .library
   }
 
-  let innerError: Error?
+  let innerError: (any Error)?
   let details: Details
 
   public var errorDescription: String? {
@@ -51,7 +51,7 @@ public struct MachineError: LocalizedError, Loggable {
   }
 
   private init<TypedError: Error>(
-    innerError: Error,
+    innerError: any Error,
     as _: TypedError.Type,
     details: MachineError.Details
   ) throws {
@@ -61,7 +61,7 @@ public struct MachineError: LocalizedError, Loggable {
     self.init(details: details, innerError: innerError)
   }
 
-  private init(details: MachineError.Details, innerError: Error? = nil) {
+  private init(details: MachineError.Details, innerError: (any Error)? = nil) {
     if let innerError = innerError as? MachineError {
       assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
       Self.logger.critical(
@@ -75,7 +75,7 @@ public struct MachineError: LocalizedError, Loggable {
 }
 
 public extension MachineError {
-  static func fromSessionAction(error: Error) -> MachineError {
+  static func fromSessionAction(error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
     } else {
@@ -83,7 +83,7 @@ public extension MachineError {
     }
   }
 
-  static func fromExportSnapshotError(_ error: Error) -> MachineError {
+  static func fromExportSnapshotError(_ error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
     } else if error is SnapshotError {
@@ -95,7 +95,7 @@ public extension MachineError {
     }
   }
 
-  static func fromSnapshotError(_ error: Error) -> Error {
+  static func fromSnapshotError(_ error: any Error) -> any Error {
     if error is MachineError {
       error
     } else if error is SnapshotError {
@@ -113,19 +113,19 @@ public extension MachineError {
     .init(details: .bookmarkError, innerError: error)
   }
 
-  static func bookmarkError(_ error: Error) throws -> MachineError {
+  static func bookmarkError(_ error: any Error) throws -> MachineError {
     try .init(innerError: error, as: BookmarkError.self, details: .bookmarkError)
   }
 
-  static func accessDeniedError(_ error: Error?, at url: URL) -> MachineError {
+  static func accessDeniedError(_ error: (any Error)?, at url: URL) -> MachineError {
     MachineError(details: .accessDeniedLibraryAt(url), innerError: error)
   }
 
-  static func corruptedError(_ error: Error, at url: URL) -> MachineError {
+  static func corruptedError(_ error: any Error, at url: URL) -> MachineError {
     MachineError(details: .corruptedAt(url), innerError: error)
   }
 
-  static func fromDatabaseError(_ error: Error) -> MachineError {
+  static func fromDatabaseError(_ error: any Error) -> MachineError {
     MachineError(details: .database, innerError: error)
   }
 }

@@ -15,7 +15,7 @@
     let machine: VZVirtualMachine
 
     // swiftlint:disable:next implicitly_unwrapped_optional
-    var observation: KVObservation!
+    var observation: (any KVObservation)!
     var observers = [UUID: @MainActor (MachineChange) -> Void]()
 
     @MainActor

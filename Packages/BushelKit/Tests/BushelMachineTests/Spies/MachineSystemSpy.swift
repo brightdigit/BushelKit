@@ -27,7 +27,7 @@ internal final class MachineSystemSpy: MachineSystem {
   internal func createBuilder(
     for _: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
-  ) throws -> MachineBuilder {
+  ) throws -> any MachineBuilder {
     isCreateBuiderForConfigurationCalled = true
 
     try handleResult()
@@ -46,7 +46,7 @@ internal final class MachineSystemSpy: MachineSystem {
     return MachineStub(configuration: configuration, state: .starting)
   }
 
-  internal func restoreImage(from _: InstallerImage) async throws -> RestoreImageType {
+  internal func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
     isRestoreImageFromCalled = true
 
     try handleResult()
@@ -54,7 +54,7 @@ internal final class MachineSystemSpy: MachineSystem {
     return .init()
   }
 
-  func configurationRange(for _: InstallerImage) -> ConfigurationRange {
+  func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
   }
 

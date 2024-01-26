@@ -54,7 +54,7 @@ public extension Snapshot {
     let buildVersion: String?
   }
 
-  var operatingSystemInstalled: OperatingSystemInstalled? {
+  var operatingSystemInstalled: (any OperatingSystemInstalled)? {
     OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
   }
 

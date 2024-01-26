@@ -10,7 +10,7 @@
 
   struct AboutBrandView: View {
     @Environment(\.openURL) var openURL
-    let creditsHeaderID: LocalizedID
+    let creditsHeaderID: any LocalizedID
     let wordmarkImageResourceName: String
     let websiteURL: URL
     let links: [SocialLink]
@@ -43,7 +43,7 @@
     }
 
     internal init(
-      creditsHeaderID: LocalizedID,
+      creditsHeaderID: any LocalizedID,
       wordmarkImageResourceName: String,
       websiteURL: URL,
       links: [SocialLink]
@@ -55,7 +55,7 @@
     }
 
     internal init(
-      creditsHeaderID: LocalizedID = LocalizedStringID.aboutAuthorCredits,
+      creditsHeaderID: any LocalizedID = LocalizedStringID.aboutAuthorCredits,
       wordmarkImageResourceName: String = "BrightDigit/Wordmark/template",
       websiteURL: URL,
       @SocialLinkListBuilder _ links: () -> [SocialLink]

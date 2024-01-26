@@ -54,7 +54,7 @@
 
     init(
       buildResult: Binding<Result<URL, BuilderError>?>,
-      builder: MachineBuilder,
+      builder: any MachineBuilder,
       percentCompleted: Double = 0.0
     ) {
       self.init(

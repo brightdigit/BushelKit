@@ -45,8 +45,8 @@ public struct MachineChange {
   public enum Event {
     case property(PropertyChange)
     case guestDidStop
-    case stopWithError(Error)
-    case networkDetatchedWithError(Error)
+    case stopWithError(any Error)
+    case networkDetatchedWithError(any Error)
   }
 
   public let event: Event

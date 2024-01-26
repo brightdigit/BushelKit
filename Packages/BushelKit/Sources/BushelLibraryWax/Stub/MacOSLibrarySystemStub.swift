@@ -27,7 +27,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     .macOS_12_6_0_21G115
   }
 
-  public func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel {
+  public func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
     .init(
       operatingSystemLongName: self.operatingSystemLongName(forOSMetadata: metadata),
       defaultName: self.defaultName(fromOSMetadata: metadata),
@@ -39,7 +39,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
 
   // MARK: - Helpers
 
-  private func operatingSystemLongName(forOSMetadata metadata: OperatingSystemInstalled) -> String {
+  private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
     let shortName = defaultName(fromOSMetadata: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName
@@ -47,7 +47,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     return shortName.appending(" (\(buildVersion))")
   }
 
-  private func defaultName(fromOSMetadata metadata: OperatingSystemInstalled) -> String {
+  private func defaultName(fromOSMetadata metadata: any OperatingSystemInstalled) -> String {
     // swiftlint:disable:next line_length
     "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
@@ -56,7 +56,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     Self.codeNames[operatingSystemVersion.majorVersion] ?? operatingSystemVersion.majorVersion.description
   }
 
-  private func imageName(forOSMetadata metadata: OperatingSystemInstalled) -> String {
+  private func imageName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
     "OSVersions/".appending(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion))
   }
 }

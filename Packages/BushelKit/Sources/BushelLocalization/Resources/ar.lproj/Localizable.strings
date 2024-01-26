@@ -8,22 +8,25 @@
 
 
 /* Welcome window message */
-"welcome_to_bushel" = "Bushel";
+"bushel" = "Bushel";
+
+/* Welcome To Bushel message */
+"welcome_to_bushel" = "أهلا بك ف Bushel";
 
 /* Button for starting VM */
-"start_machine" = "تشغيل جهاز افتراضى";
+"start_machine" = "تشغيل الجهاز";
 
 /* Open Window for VM */
-"open_machine" = "إفتح جهاز افتراضى";
+"open_machine" = "إفتح جهاز";
 
 /* Button for taking snapshots of VM */
 "snapshot_machine" = "خذ لقطة";
 
 /* Button label for when to build machine */
-"build_machine" = "إبدأ بالإنشاء";
+"build_machine" = "إبدأ";
 
 /* Title for upgrading to "Bushel Pro" */
-"upgrade_purchase" = "Go Pro";
+"upgrade_purchase" = "انتقل للنسخة الإحترافية";
 
 /* Label for an upgrade action. */
 "upgrade_to" = "الترقية إلى";
@@ -97,6 +100,12 @@
 /* New File Menu */
 "menu_new" = "جديد";
 
+/* Machine Menu Button title */
+"menu_machine" = "جهاز...";
+
+/* Library Menu Button title */
+"menu_library" = "مكتبة...";
+
 /* Open Menu Button */
 "menu_open" = "فتح...";
 
@@ -116,16 +125,16 @@
 "menu_onboarding" = "تشغيل شاشة التمهيد";
 
 /* Welcome Action Button title for creating new machine */
-"welcome_pro" = "Pro";
+"welcome_pro" = "النسخة الإحترافية";
 
 /* Welcome Action Button title for creating new machine */
-"welcome_new_machine_title" = "انشئ جهاز إفتراضى جديد";
+"welcome_new_machine_title" = "إنشاء جهاز إفتراضى جديد";
 
 /* Welcome Action Button title for opening a machine */
 "welcome_existing_machine_title" = "تشغيل جهاز إفتراضى سابق";
 
 /* Welcome Action Button title for starting a library */
-"welcome_start_library_title" = "ابدأ مكتبة لاقراص الاقلاع";
+"welcome_start_library_title" = "ابدأ مكتبة لأقراص الإقلاع";
 
 /* Configuration Machine Will Install */
 "machine_will_install" = "سيتم تنصيب:";
@@ -135,6 +144,21 @@
 
 /* Machine Details Operating System Label */
 "name" = "الإسم";
+
+/* Machine Configuration Choose Button */
+"machine_images_choose" = "اختر";
+
+/* Machine Configuration Empty Images Alert Title */
+"machine_images_empty_title" = "لا يوجد أقراص إقلاع";
+
+/* Machine Configuration Empty Images Alert Existing Button */
+"machine_images_empty_add_library" = "إضافة مكتبة موجودة";
+
+/* Machine Configuration Empty Images Alert New Button */
+"machine_images_empty_new_library" = "إنشاء مكتبة جديدة";
+
+/* Machine Configuration Empty Images Alert Message */
+"machine_images_empty_message" = "يوجد أقراص إقلاع، هل تحب إضافتهم لمكتبة موجودة او انشاء مكتبة جديدة؟";
 
 /* Machine Details System Tab */
 "machine_details_system_tab" = "النظام";
@@ -252,6 +276,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Prefix for specifying frequency of snapshots. */
 "settings_automatic_snapshots_prefix" = "كل";
 
+/* Show Only in Recent Documents */
+"settings_filter_recent_documents" = "تشمل الأنواع:";
+
+/* Show Only Machines in Recent Documents */
+"settings_filter_recent_documents_machines_only" = "الأجهزة فقط";
+
+/* Show All Items in Recent Documents */
+"settings_filter_recent_documents_none" = "كلا من الأجهزة والمكتبات";
+
 /* Clears all recent documents. */
 "settings_clear_all_recent_documents" = "مسح جميع الملفات الحديثة";
 
@@ -281,6 +314,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Confirmation button for clearing the entire database. */
 "settings_clear_database_confirmation_button" = "نعم، قم بمسح قاعدة البيانات بأكملها";
+
+/* Database Display title. */
+"settings_database_show_title" = "عرض قاعدة البيانات";
+
+/* Database Display description. */
+"settings_database_show_button" = "فتح شاشة قاعدة البيانات";
 
 /* Description for resetting all settings and data. */
 "settings_reset_all_description" = "إعادة ضبط جميع الإعدادات والبيانات";
@@ -318,8 +357,22 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Database Bookmarks */
 "database_bookmarks" = "علامة مرجعية";
 
+/* session_shutdown_alert title */
+"session_shutdown_title" = "إيقاف تشغيل الجهاز";
+
 /* session_shutdown_alert */
 "session_shutdown_alert" = "هل تريد ايقاف تشغيل هذا الجهاز؟";
+
+
+/* session_shutdown_alert title */
+"session_force_restart_title" = "إعادة تشغيل الجهاز إجباريا";
+
+
+/* session_force_restart_message */
+"session_force_restart_message" = "هل انت متأكد أنك ترغب فى إعادة تشغيل الجهاز إجباريا؟";
+
+/* session_force_restart_button */
+"session_force_restart_button" = "نعم، قم بإعادة التشغيل إجباريا.?";
 
 /* session_press_power_button */
 "session_press_power_button" = "اضغط على زر الطاقة";
@@ -518,13 +571,10 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 "purchase_feature_snapshot_notes_description" = "تنظيم وتدوين معلومات عن اللقطات مع إضافة ملاحظات عليها";
 
 /* Purchase Feature Machine Size Title */
-"purchase_feature_machine_size_title" = "نظرة على المساحة المستخدمة للجهاز الإفتراضى";
-
-/* Purchase Feature Machine Size Description */
-"purchase_feature_machine_size_description" = "تتبع المساحة المستخدمة لدى الجهاز الإفتراضى لديك";
-
-/* Purchase Feature Machine Size Title */
 "purchase_feature_shutdown_snapshot_title" = "أخد لقطة تلقائيا عند إيقاف التشغيل";
 
 /* Purchase Feature Machine Size Description */
 "purchase_feature_shutdown_snapshot_description" = "أخد لقطة عند إيقاف التشغيل، كنسخة احتياطية فورية";
+
+/* Love the App? */
+"request_review" = "أعجبك التطبيق؟";

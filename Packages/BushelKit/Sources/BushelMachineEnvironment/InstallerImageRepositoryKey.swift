@@ -11,14 +11,14 @@
   import SwiftUI
 
   private struct InstallerImageRepositoryKey: EnvironmentKey {
-    static let defaultValue: Transformation<ModelContext, InstallerImageRepository> = .init {
+    static let defaultValue: Transformation<ModelContext, any InstallerImageRepository> = .init {
       // swiftlint:disable:next force_cast
       $0 as! any InstallerImageRepository
     }
   }
 
   public extension EnvironmentValues {
-    var installerImageRepository: Transformation<ModelContext, InstallerImageRepository> {
+    var installerImageRepository: Transformation<ModelContext, any InstallerImageRepository> {
       get { self[InstallerImageRepositoryKey.self] }
       set { self[InstallerImageRepositoryKey.self] = newValue }
     }
@@ -26,7 +26,7 @@
 
   public extension Scene {
     func installerImageRepository(
-      _ database: @escaping (ModelContext) -> InstallerImageRepository
+      _ database: @escaping (ModelContext) -> any InstallerImageRepository
     ) -> some Scene {
       self.environment(\.installerImageRepository, .init(database))
     }
@@ -35,7 +35,7 @@
   @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func installerImageRepository(
-      _ database: @escaping (ModelContext) -> InstallerImageRepository
+      _ database: @escaping (ModelContext) -> any InstallerImageRepository
     ) -> some View {
       self.environment(\.installerImageRepository, .init(database))
     }

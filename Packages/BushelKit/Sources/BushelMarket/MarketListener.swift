@@ -6,6 +6,6 @@
 import Foundation
 
 public protocol MarketListener {
-  func initialize(for observer: MarketObserver)
+  func initialize(for observer: any MarketObserver)
   func invalidate()
 }

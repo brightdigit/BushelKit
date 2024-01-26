@@ -9,7 +9,7 @@ import Foundation
 extension LibraryImageFile {
   init(
     request: ImportRequest,
-    using system: LibrarySystem
+    using system: any LibrarySystem
   ) async throws {
     switch request {
     case let .local(url: importingURL):

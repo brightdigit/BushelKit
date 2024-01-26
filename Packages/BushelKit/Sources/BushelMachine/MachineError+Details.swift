@@ -30,7 +30,7 @@ public extension MachineError {
     case session
 
     // swiftlint:disable:next cyclomatic_complexity function_body_length
-    func errorDescription(fromError error: Error?) -> String {
+    func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:
         assert(error != nil)
@@ -74,7 +74,7 @@ public extension MachineError {
       }
     }
 
-    func recoverySuggestion(fromError _: Error?) -> String? {
+    func recoverySuggestion(fromError _: (any Error)?) -> String? {
       switch self {
       case .accessDeniedLibraryAt:
         "Close and open the library again."
@@ -84,7 +84,7 @@ public extension MachineError {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func isRecoverable(fromError _: Error?) -> Bool {
+    func isRecoverable(fromError _: (any Error)?) -> Bool {
       switch self {
       case .bookmarkError:
         false

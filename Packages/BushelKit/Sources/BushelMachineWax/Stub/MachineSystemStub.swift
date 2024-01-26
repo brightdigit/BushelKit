@@ -16,7 +16,7 @@ public struct MachineSystemStub: MachineSystem, Equatable {
   public func createBuilder(
     for _: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
-  ) throws -> MachineBuilder {
+  ) throws -> any MachineBuilder {
     MachineBuilderStub(url: url)
   }
 
@@ -27,11 +27,11 @@ public struct MachineSystemStub: MachineSystem, Equatable {
     MachineStub(configuration: configuration, state: .starting)
   }
 
-  public func restoreImage(from _: InstallerImage) async throws -> RestoreImageType {
+  public func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
     .init()
   }
 
-  public func configurationRange(for _: InstallerImage) -> ConfigurationRange {
+  public func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
   }
 }

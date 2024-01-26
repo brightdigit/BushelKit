@@ -8,7 +8,7 @@
   import SwiftUI
 
   public extension Image {
-    init(icon: Icon) {
+    init(icon: any Icon) {
       self.init(icon.name, bundle: .module)
     }
   }

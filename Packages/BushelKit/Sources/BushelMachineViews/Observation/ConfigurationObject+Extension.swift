@@ -43,7 +43,7 @@
       self.updateMetadataAt(basedOn: restoreImageID)
     }
 
-    func machineConfiguration(using database: InstallerImageRepository) throws -> MachineConfiguration {
+    func machineConfiguration(using database: any InstallerImageRepository) throws -> MachineConfiguration {
       Self.logger.debug("creating configuration")
       guard let restoreImageID = configuration.restoreImageID else {
         let error = ConfigurationError.missingRestoreImageID
@@ -69,7 +69,10 @@
       return .init(setup: configuration, restoreImageFile: image)
     }
 
-    func beginBuildRequest(for result: Result<URL, Error>, using database: InstallerImageRepository) {
+    func beginBuildRequest(
+      for result: Result<URL, any Error>,
+      using database: any InstallerImageRepository
+    ) {
       do {
         try result.flatMap { url in
           Result {
@@ -86,7 +89,7 @@
       }
     }
 
-    func beginCreateBuilder(_ url: URL, using database: InstallerImageRepository) throws {
+    func beginCreateBuilder(_ url: URL, using database: any InstallerImageRepository) throws {
       let parameters = try BuilderParameters(object: self, using: database)
       Task {
         do {

@@ -20,7 +20,7 @@
       @Environment(\.openWindow) private var openWindow
 
       public var body: some View {
-        Button("Library...") {
+        Button(.menuLibrary) {
           NewFilePanel<LibraryFileSpecifications>()(with: openWindow)
         }
       }
@@ -32,7 +32,7 @@
 
       @Environment(\.openWindow) private var openWindow
       public var body: some View {
-        Button("Library...") {
+        Button(.menuLibrary) {
           OpenFilePanel<LibraryFileSpecifications>()(with: openWindow)
         }
       }

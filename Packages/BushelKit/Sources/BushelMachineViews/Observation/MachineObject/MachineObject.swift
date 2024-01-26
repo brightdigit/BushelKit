@@ -78,7 +78,7 @@
 
     let snapshotFactory: any SnapshotProvider
 
-    weak var parent: MachineObjectParent?
+    weak var parent: (any MachineObjectParent)?
 
     var error: MachineError? {
       get {
@@ -92,12 +92,12 @@
     }
 
     internal init(
-      parent: MachineObjectParent,
+      parent: any MachineObjectParent,
       machine: MachineObject.Machine,
       entry: MachineEntry,
       label: MetadataLabel,
       modelContext: ModelContext,
-      systemManager: MachineSystemManaging,
+      systemManager: any MachineSystemManaging,
       snapshotFactory: any SnapshotProvider
     ) {
       self.parent = parent
@@ -151,7 +151,7 @@
     }
 
     convenience init(
-      parent: MachineObjectParent,
+      parent: any MachineObjectParent,
       configuration: MachineObjectConfiguration
     ) async throws {
       let components = try await MachineObjectComponents(

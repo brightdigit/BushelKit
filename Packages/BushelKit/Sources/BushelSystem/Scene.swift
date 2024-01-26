@@ -37,10 +37,10 @@
     }
 
     func registerSystems(
-      _ systems: [System]
+      _ systems: [any System]
     ) -> some Scene {
       let (librarySystems, machineSystems, hubs) = systems.reduce(
-        into: ([LibrarySystem](), [any MachineSystem](), [Hub]())
+        into: ([any LibrarySystem](), [any MachineSystem](), [Hub]())
       ) { partialResult, system in
         if let library = system.library {
           partialResult.0.append(library)
@@ -62,7 +62,7 @@
     }
 
     func registerSystems(
-      @SystemBuilder _ systems: @escaping () -> [System]
+      @SystemBuilder _ systems: @escaping () -> [any System]
     ) -> some Scene {
       self.registerSystems(systems())
     }

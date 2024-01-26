@@ -13,7 +13,7 @@ public protocol LibrarySystem {
   // func operatingSystemLongName(for metadata: ImageMetadata) -> String
   // func imageName(for metadata: ImageMetadata) -> String
   func metadata(fromURL url: URL) async throws -> ImageMetadata
-  func label(fromMetadata metadata: OperatingSystemInstalled) -> MetadataLabel
+  func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
 }
 
 public extension LibrarySystem {

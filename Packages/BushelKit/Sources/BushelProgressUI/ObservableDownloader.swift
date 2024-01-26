@@ -32,7 +32,7 @@
     let requestSubject = PassthroughSubject<DownloadRequest, Never>()
     let locationURLSubject = PassthroughSubject<URL, Never>()
     let downloadUpdate = PassthroughSubject<DownloadUpdate, Never>()
-    var completion: ((Result<Void, Error>) -> Void)?
+    var completion: ((Result<Void, any Error>) -> Void)?
 
     let formatter = ByteCountFormatter()
 
@@ -71,7 +71,7 @@
       self.cancellables = setupPublishers(self)
     }
 
-    func onCompletion(_ result: Result<Void, Error>) {
+    func onCompletion(_ result: Result<Void, any Error>) {
       assert(completion != nil)
       completion?(result)
     }
@@ -83,7 +83,7 @@
     public func begin(
       from downloadSourceURL: URL,
       to destinationFileURL: URL,
-      _ completion: @escaping (Result<Void, Error>
+      _ completion: @escaping (Result<Void, any Error>
       ) -> Void
     ) {
       assert(self.completion == nil)
@@ -113,7 +113,11 @@
       )
     }
 
-    public func urlSession(_: URLSession, task _: URLSessionTask, didCompleteWithError error: Error?) {
+    public func urlSession(
+      _: URLSession,
+      task _: URLSessionTask,
+      didCompleteWithError error: (any Error)?
+    ) {
       guard let error else {
         // Handle success case.
         return
