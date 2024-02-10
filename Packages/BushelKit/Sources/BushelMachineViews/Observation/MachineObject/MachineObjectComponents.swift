@@ -51,7 +51,7 @@
     ) async throws {
       let newURL: URL
       do {
-        newURL = try bookmarkData.fetchURL(using: configuration.modelContext, withURL: configuration.url)
+        newURL = try await bookmarkData.fetchURL(using: configuration.database, withURL: configuration.url)
       } catch {
         throw try MachineError.bookmarkError(error)
       }
@@ -72,7 +72,7 @@
       let restoreImage: (any InstallerImage)?
 
       do {
-        restoreImage = try configuration.restoreImageDB.image(
+        restoreImage = try await configuration.restoreImageDB.image(
           withID: machine.configuration.restoreImageFile.imageID,
           library: machine.configuration.restoreImageFile.libraryID,
           configuration.labelProvider
@@ -93,20 +93,11 @@
       )
     }
 
-    @MainActor
     init(
       configuration: MachineObjectConfiguration
     ) async throws {
       let bookmarkData: BookmarkData
-      bookmarkData = try BookmarkData.resolveURL(configuration.url, with: configuration.modelContext)
-
-      defer {
-        do {
-          try bookmarkData.update(using: configuration.modelContext)
-        } catch {
-          assertionFailure(error: error)
-        }
-      }
+      bookmarkData = try await BookmarkData.resolveURL(configuration.url, with: configuration.database)
 
       let bookmarkDataID = bookmarkData.bookmarkID
       var machinePredicate = FetchDescriptor<MachineEntry>(
@@ -117,7 +108,7 @@
 
       let items: [MachineEntry]
       do {
-        items = try configuration.modelContext.fetch(machinePredicate)
+        items = try await configuration.database.fetch(machinePredicate)
       } catch {
         throw MachineError.fromDatabaseError(error)
       }
@@ -126,6 +117,12 @@
         bookmarkData: bookmarkData,
         existingEntry: items.first
       )
+
+      do {
+        try await bookmarkData.update(using: configuration.database)
+      } catch {
+        assertionFailure(error: error)
+      }
     }
   }
 

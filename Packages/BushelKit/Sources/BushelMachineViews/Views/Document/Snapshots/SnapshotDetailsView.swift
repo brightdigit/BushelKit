@@ -7,12 +7,12 @@
   import SwiftUI
 
   struct SnapshotDetailsView: View {
-    var snapshot: Bindable<SnapshotObject>?
+    var bindableSnapshotObject: BindableSnapshotObject
     let saveAction: (SnapshotObject) -> Void
 
     var body: some View {
       Group {
-        if let snapshot {
+        if let snapshot = bindableSnapshotObject.bindableSnapshot {
           SnapshotView(
             snapshot: snapshot,
             saveAction: saveAction
@@ -24,15 +24,12 @@
     }
 
     internal init(
-      snapshot: Bindable<SnapshotObject>?,
-      saveAction: @escaping (SnapshotObject) -> Void
+      snapshot: @escaping () async -> Bindable<SnapshotObject>?,
+      save: @escaping (SnapshotObject) -> Void
     ) {
-      self.snapshot = snapshot
-      self.saveAction = saveAction
+      self.bindableSnapshotObject = .init(snapshot: snapshot)
+      self.saveAction = save
     }
   }
 
-//  #Preview {
-//    SnapshotDetailsView()
-//  }
 #endif

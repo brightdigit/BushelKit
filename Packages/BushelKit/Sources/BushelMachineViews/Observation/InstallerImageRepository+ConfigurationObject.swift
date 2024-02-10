@@ -16,14 +16,14 @@
       libraryID: LibraryIdentifier?,
       logger: Logger,
       _ labelProvider: MetadataLabelProvider?
-    ) throws -> (any InstallerImage)? {
+    ) async throws -> (any InstallerImage)? {
       guard let labelProvider else {
         assertionFailure("Missing label Provider")
         return nil
       }
       let image: (any InstallerImage)?
       do {
-        image = try self.image(
+        image = try await self.image(
           withID: restoreImageID,
           library: libraryID,
           labelProvider
@@ -48,13 +48,13 @@
       libraryID: LibraryIdentifier?,
       logger: Logger,
       _ labelProvider: MetadataLabelProvider?
-    ) throws -> (any InstallerImage)? {
+    ) async throws -> (any InstallerImage)? {
       guard let database = self else {
         assertionFailure("Missing database.")
         return nil
       }
 
-      return try database.imageBasedOn(
+      return try await database.imageBasedOn(
         restoreImageID,
         libraryID: libraryID,
         logger: logger,

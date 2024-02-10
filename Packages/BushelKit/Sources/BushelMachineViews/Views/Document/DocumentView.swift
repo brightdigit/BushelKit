@@ -16,7 +16,7 @@
 
     @Environment(\.machineSystemManager) var systemManager
     @Environment(\.openWindow) var openWindow
-    @Environment(\.modelContext) private var context
+    @Environment(\.database) private var database
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
     @Environment(\.snapshotProvider) private var snapshotProvider
@@ -80,7 +80,7 @@
       self.object
         .beginLoadingURL(
           url,
-          withContext: context,
+          withDatabase: database,
           restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
           snapshotFactory: snapshotProvider,
           using: systemManager,

@@ -4,10 +4,16 @@
 //
 
 #if arch(arm64) && canImport(Virtualization)
+  import BushelLogging
   import BushelMachine
   import Virtualization
 
-  extension VZVirtualMachineConfiguration {
+  extension VZVirtualMachineConfiguration: Loggable {
+    public static var loggingCategory: BushelLogging.Category {
+      .machine
+    }
+
+    static let oneMegabyte: UInt64 = (1024 * 1024)
     static let minimumHardDiskSize = UInt64(64 * 1024 * 1024 * 1024)
 
     convenience init(
@@ -45,7 +51,14 @@
       createDisks: Bool
     ) throws {
       cpuCount = specifications.cpuCount
-      memorySize = UInt64(specifications.memory)
+      let memoryMB = (UInt64(specifications.memory) / Self.oneMegabyte)
+      memorySize = memoryMB * Self.oneMegabyte
+
+      if specifications.memory != memorySize {
+        Self.logger.warning(
+          "Memory \(specifications.memory) does not match. Must be multiple of \(Self.oneMegabyte)"
+        )
+      }
 
       let disksDirectory = machineDirectory
         .appendingPathComponent("disks", isDirectory: true)
@@ -84,18 +97,6 @@
       pointingDevices.append(VZMacTrackpadConfiguration())
 
       keyboards = [VZUSBKeyboardConfiguration()]
-
-      //      consoleDevices.append(
-      //        {
-      //          let consoleDevice = VZVirtioConsoleDeviceConfiguration()
-      //          let spiceAgentPort = VZVirtioConsolePortConfiguration()
-      //          spiceAgentPort.name = VZSpiceAgentPortAttachment.spiceAgentPortName
-      //          spiceAgentPort.attachment = VZSpiceAgentPortAttachment()
-      //          consoleDevice.ports[0] = spiceAgentPort
-      //
-      //          return consoleDevice
-      //        }()
-      //      )
     }
   }
 #endif

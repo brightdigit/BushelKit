@@ -13,7 +13,9 @@
 
   #warning("I think we need to log the operations running for this entry")
   @Model
-  public final class LibraryEntry: Loggable {
+  public final class LibraryEntry: Loggable, BookmarkedEntry {
+    public typealias BookmarkedErrorType = LibraryError
+
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 
@@ -53,23 +55,23 @@
       self.images?.count ?? 0
     }
 
-    @MainActor
     convenience init(
       bookmarkData: BookmarkData,
       library: Library,
-      withContext context: ModelContext
-    ) throws {
+      withDatabase database: any Database
+    ) async throws {
       self.init(bookmarkData: bookmarkData)
-      context.insert(self)
-      try context.save()
-      try library.items.forEach {
-        _ = try LibraryImageEntry(library: self, file: $0, using: context)
+      await database.insert(self)
+      try await database.save()
+
+      for file in library.items {
+        _ = try await LibraryImageEntry(library: self, file: file, using: database)
       }
-      try context.save()
+
+      try await database.save()
     }
 
-    @MainActor
-    func synchronizeWith(_ library: Library, using context: ModelContext) throws {
+    func synchronizeWith(_ library: Library, using database: any Database) async throws {
       let entryMap: [UUID: LibraryImageEntry] = .init(uniqueKeysWithValues: images?.map {
         ($0.imageID, $0)
       } ?? [])
@@ -85,28 +87,33 @@
       let entriesToDelete = entryIDsToDelete.compactMap { entryMap[$0] }
       let libraryItemsToInsert = libraryIDsToInsert.compactMap { imageMap[$0] }
 
-      try entryIDsToUpdate.forEach { entryID in
+      for entryID in entryIDsToUpdate {
         guard let entry = entryMap[entryID], let images = imageMap[entryID] else {
           assertionFailure("synconized ids not found for \(entryID)")
           Self.logger.error("synconized ids not found for \(entryID)")
           return
         }
-        try entry.syncronizeFile(images, withLibrary: self, using: context)
+        try await entry.syncronizeFile(images, withLibrary: self, using: database)
       }
 
-      try libraryItemsToInsert.forEach {
-        _ = try LibraryImageEntry(library: self, file: $0, using: context)
+      for file in libraryItemsToInsert {
+        _ = try await LibraryImageEntry(library: self, file: file, using: database)
       }
 
-      entriesToDelete.forEach(context.delete)
-      try context.save()
+      for entry in entriesToDelete {
+        await database.delete(entry)
+      }
+
+      try await database.save()
     }
 
     @discardableResult
-    @MainActor
-    func appendImage(file: LibraryImageFile, using context: ModelContext) throws -> LibraryImageEntry {
-      let entry = try LibraryImageEntry(library: self, file: file, using: context)
-      try context.save()
+    func appendImage(
+      file: LibraryImageFile,
+      using database: any Database
+    ) async throws -> LibraryImageEntry {
+      let entry = try await LibraryImageEntry(library: self, file: file, using: database)
+      try await database.save()
       return entry
     }
   }

@@ -15,7 +15,7 @@
 
   class DataInstallerImage: InstallerImage, Loggable {
     let entry: LibraryImageEntry
-    let context: ModelContext
+    let database: any Database
     let metadata: Metadata
 
     var libraryID: LibraryIdentifier? {
@@ -33,15 +33,15 @@
 
     internal init(
       entry: LibraryImageEntry,
-      context: ModelContext,
+      database: any Database,
       _ labelProvider: @escaping MetadataLabelProvider
     ) {
       self.entry = entry
-      self.context = context
+      self.database = database
       self.metadata = .init(entry: entry, labelProvider)
     }
 
-    func getURL() throws -> URL {
+    func getURL() async throws -> URL {
       assert(self.entry.library != nil)
       guard let bookmarkData = self.entry.library?.bookmarkData else {
         let error = InstallerImageError(imageID: imageID, type: .missingBookmark, libraryID: libraryID)
@@ -49,7 +49,7 @@
         assertionFailure(error: error)
         throw error
       }
-      let libraryURL = try bookmarkData.fetchURL(using: context, withURL: nil)
+      let libraryURL = try await bookmarkData.fetchURL(using: database, withURL: nil)
       guard libraryURL.startAccessingSecurityScopedResource() else {
         let error = InstallerImageError(
           imageID: imageID,
@@ -65,6 +65,47 @@
         .appending(path: imageID.uuidString)
         .appendingPathExtension(entry.fileExtension)
       return imageURL
+    }
+  }
+
+  extension DataInstallerImage {
+    convenience init?(
+      id: UUID,
+      database: any Database,
+      _ labelProvider: @escaping BushelCore.MetadataLabelProvider
+    ) async throws {
+      var imagePredicate = FetchDescriptor<LibraryImageEntry>(
+        predicate: #Predicate { $0.imageID == id }
+      )
+      imagePredicate.fetchLimit = 1
+      guard let images = try await database.fetch(imagePredicate).first else {
+        return nil
+      }
+      guard images.library != nil else {
+        return nil
+      }
+      self.init(entry: images, database: database, labelProvider)
+    }
+
+    convenience init?(
+      id: UUID,
+      bookmarkDataID: UUID,
+      database: any Database,
+      _ labelProvider: @escaping BushelCore.MetadataLabelProvider
+    ) async throws {
+      var libraryPredicate = FetchDescriptor<LibraryEntry>(
+        predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID }
+      )
+
+      libraryPredicate.fetchLimit = 1
+      let items = try await database.fetch(libraryPredicate)
+      guard let library = items.first else {
+        return nil
+      }
+      guard let images = library.images?.first(where: { $0.imageID == id }) else {
+        return nil
+      }
+      self.init(entry: images, database: database, labelProvider)
     }
   }
 #endif

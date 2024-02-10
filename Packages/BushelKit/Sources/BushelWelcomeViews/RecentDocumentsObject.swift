@@ -19,11 +19,13 @@
     }
 
     @ObservationIgnored
-    private var context: ModelContext?
+    private var database: (any Database)?
     private var lastUpdate: Date?
     private var bookmarks: [BookmarkData]? {
       didSet {
-        self.invalidate()
+        Task {
+          await self.invalidate()
+        }
       }
     }
 
@@ -35,21 +37,38 @@
 
     private(set) var isEmpty = true
 
-    internal func updateBookmarks(_ bookmarks: [BookmarkData], using context: ModelContext) {
-      self.context = context
+    internal func updateBookmarks(_ bookmarks: [BookmarkData], using database: any Database) {
+      self.database = database
       self.bookmarks = bookmarks
     }
 
-    private func invalidate() {
-      guard let context else {
+    private func invalidate() async {
+      guard let database else {
         assertionFailure()
         return
       }
-      self.recentDocuments = self.bookmarks?.compactMap { bookmarkData in
-        RecentDocument(bookmarkData: bookmarkData, logger: Self.logger, using: context)
-      }
+      let recentDocuments: [RecentDocument]?
 
-      self.lastUpdate = Date()
+      if let bookmarks {
+        var newRecentDocuments = [RecentDocument]()
+
+        for bookmarkData in bookmarks {
+          if let recentDocument = await RecentDocument(
+            bookmarkData: bookmarkData,
+            logger: Self.logger,
+            using: database
+          ) {
+            newRecentDocuments.append(recentDocument)
+          }
+        }
+        recentDocuments = newRecentDocuments
+      } else {
+        recentDocuments = nil
+      }
+      Task { @MainActor in
+        self.recentDocuments = recentDocuments
+        self.lastUpdate = Date()
+      }
     }
   }
 #endif

@@ -27,7 +27,10 @@
             .font(.system(size: properties.headerFontSize))
             .fontWeight(.bold)
 
-          #warning("@Leo, This is expected to be localized without .key() because it is a static string, yet it only worked this way.")
+          #warning("""
+          @Leo, This is expected to be localized without .key()
+          because it is a static string, yet it only worked this way.
+          """)
           Text(.key(LocalizedStringID.purchaseDescription))
             .font(.system(size: properties.descriptionFontSize))
             .multilineTextAlignment(.leading)

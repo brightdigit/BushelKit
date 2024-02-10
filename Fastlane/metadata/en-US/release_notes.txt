@@ -1,2 +1,3 @@
 * Fixes to Snapshot Export
 * New IPSWDownloads Hub
+* UI Improvements via SwiftData Fixes

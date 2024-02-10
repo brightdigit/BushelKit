@@ -29,7 +29,7 @@ public extension MachineError {
     case snapshot
     case session
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    // swiftlint:disable:next cyclomatic_complexity
     func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:

@@ -40,12 +40,12 @@
     init?(
       bookmarkData: BookmarkData,
       logger: Logger,
-      using context: ModelContext,
+      using database: any Database,
       fileManager: FileManager = .default
-    ) {
+    ) async {
       let bookmarkID = bookmarkData.bookmarkID
       let updatedAt = bookmarkData.updatedAt
-      guard let url = Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: context) else {
+      guard let url = await Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: database) else {
         return nil
       }
 
@@ -72,16 +72,16 @@
     static func fetchURL(
       forBookmark bookmark: BookmarkData,
       logger: Logger,
-      using context: ModelContext
-    ) -> URL? {
+      using database: any Database
+    ) async -> URL? {
       let url: URL
       do {
-        url = try bookmark.fetchURL(using: context, withURL: nil)
+        url = try await bookmark.fetchURL(using: database, withURL: nil)
       } catch let error as NSError where error.code == 259 {
         logger.notice("Removing invalid bookmark: \(bookmark.path)")
-        context.delete(bookmark)
+        await database.delete(bookmark)
         do {
-          try context.save()
+          try await database.save()
         } catch {
           logger.error("Unable to delete \(bookmark.path) error: \(error) ")
           assertionFailure(error: error)
@@ -89,9 +89,9 @@
         return nil
       } catch let error as NSError where error.code == 4 && error.domain == NSCocoaErrorDomain {
         logger.notice("Removing file doesn't exist bookmark: \(bookmark.path)")
-        context.delete(bookmark)
+        await database.delete(bookmark)
         do {
-          try context.save()
+          try await database.save()
         } catch {
           logger.error("Unable to delete \(bookmark.path) error: \(error) ")
           assertionFailure(error: error)
