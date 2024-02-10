@@ -68,7 +68,7 @@
       .onChange(of: self.image.metadata) { _, newValue in
         self.metadataLabel = system.label(fromMetadata: newValue)
       }
-      .onDisappear(perform: self.save)
+      .onDisappear(perform: self.beginSave)
     }
 
     internal init(
@@ -84,18 +84,20 @@
       self._metadataLabel = State(initialValue: initialValue)
     }
 
-    @MainActor
-    func save() {
+    func save() async {
       guard !self.image.isDeleted else {
         return
       }
-      self.image.save()
+      await self.image.save()
       self.onSave()
     }
 
     func beginSave() {
-      Task { @MainActor in
-        self.save()
+      guard !self.image.isDeleted else {
+        return
+      }
+      Task {
+        await self.save()
       }
     }
   }

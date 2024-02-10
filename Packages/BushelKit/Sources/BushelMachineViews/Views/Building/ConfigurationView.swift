@@ -7,6 +7,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelDataCore
   import BushelLocalization
   import BushelLogging
   import BushelMachine
@@ -20,7 +21,7 @@
     @State var buildResult: Result<URL, BuilderError>?
     @State var object: ConfigurationObject
 
-    @Environment(\.modelContext) private var context
+    @Environment(\.database) private var database
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openWindow) private var openWindow
@@ -28,7 +29,7 @@
     @Environment(\.machineSystemManager) private var systemManager
 
     var installerImageRepository: any InstallerImageRepository {
-      self.machineRestoreImageDBFrom(context)
+      self.machineRestoreImageDBFrom(database)
     }
 
     public var restoreImageSectionContent: some View {
@@ -107,7 +108,7 @@
           .keyboardShortcut(.cancelAction)
           .frame(minWidth: 0, maxWidth: .infinity)
           Button {
-            object.prepareBuild(using: self.installerImageRepository)
+            object.beginPrepareBuild(using: self.installerImageRepository)
           } label: {
             Text(.buildMachine).frame(minWidth: 0, maxWidth: .infinity)
           }
@@ -241,7 +242,7 @@
           self.dismissWindow()
         }
         .onAppear {
-          self.object.setupFrom(
+          self.object.beginSetupFrom(
             request: self.buildRequest,
             systemManager: self.systemManager,
             using: self.installerImageRepository,

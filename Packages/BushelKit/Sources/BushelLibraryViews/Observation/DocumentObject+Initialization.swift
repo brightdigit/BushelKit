@@ -5,30 +5,32 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelDataCore
   import BushelLibrary
   import Foundation
   import SwiftData
   extension DocumentObject {
-    @MainActor
     func loadURL(
       _ url: URL?,
-      withContext modelContext: ModelContext,
+      withDatabase database: any Database,
       using librarySystemManager: any LibrarySystemManaging
     ) {
-      self.modelContext = modelContext
+      self.database = database
       self.librarySystemManager = librarySystemManager
 
       if let url {
-        do {
-          object = try .init(url, withContext: modelContext, using: librarySystemManager)
-        } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(url) {
-          Self.logger.error("Could not open \(url, privacy: .public): no longer exists")
-          presentFileExporter = true
-        } catch {
-          Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
+        Task {
+          do {
+            object = try await .init(url, withDatabase: database, using: librarySystemManager)
+          } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(url) {
+            Self.logger.error("Could not open \(url, privacy: .public): no longer exists")
+            presentFileExporter = true
+          } catch {
+            Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
 
-          self.error = assertionFailure(error: error) { error in
-            Self.logger.critical("Unknown error: \(error)")
+            self.error = assertionFailure(error: error) { error in
+              Self.logger.critical("Unknown error: \(error)")
+            }
           }
         }
       } else {
@@ -36,12 +38,34 @@
       }
     }
 
-    @MainActor
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    private func setURL(
+      to newURL: URL,
+      database: any Database,
+      manager: any LibrarySystemManaging
+    ) async {
+      let presentFileExporter: Bool
+      do {
+        object = try await .init(newURL, withDatabase: database, using: manager)
+        presentFileExporter = false
+      } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(newURL) {
+        Self.logger.error("Could not open \(newURL, privacy: .public): no longer exists")
+        presentFileExporter = true
+      } catch {
+        Self.logger.error("Could not open \(newURL, privacy: .public): \(error)")
+        self.error = assertionFailure(error: error) { error in
+          Self.logger.critical("Unknown error: \(error)")
+        }
+        self.presentErrorAlert = true
+        return
+      }
+
+      Self.logger.debug("Load completed for url at \(newURL.path(), privacy: .public)")
+      self.presentFileExporter = presentFileExporter
+    }
+
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {
         Self.logger.debug("New value is the same.")
-
         return
       }
 
@@ -56,12 +80,8 @@
         return
       }
 
-      defer {
-        self.presentFileExporter = false
-      }
-
       Self.logger.debug("Loading new url at \(newValue, privacy: .public)")
-      guard let modelContext else {
+      guard let database else {
         assertionFailure("Missing model context")
         Self.logger.error("Missing model context")
         return
@@ -71,21 +91,13 @@
         Self.logger.error("Missing model context")
         return
       }
-      do {
-        object = try .init(newValue, withContext: modelContext, using: librarySystemManager)
-      } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(newValue) {
-        Self.logger.error("Could not open \(newValue, privacy: .public): no longer exists")
-        presentFileExporter = true
-      } catch {
-        Self.logger.error("Could not open \(newValue, privacy: .public): \(error)")
-        self.error = assertionFailure(error: error) { error in
-          Self.logger.critical("Unknown error: \(error)")
-        }
-        self.presentErrorAlert = true
-        return
+      Task {
+        await setURL(
+          to: newValue,
+          database: database,
+          manager: librarySystemManager
+        )
       }
-
-      Self.logger.debug("Load completed for url at \(newValue.path(), privacy: .public)")
     }
   }
 #endif

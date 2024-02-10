@@ -49,8 +49,8 @@
 
     private static func creteNewBookmarkFromURL(
       _ url: URL,
-      _ context: ModelContext
-    ) throws -> BookmarkData {
+      _ database: any Database
+    ) async throws -> BookmarkData {
       let bookmarkData: Data
       do {
         bookmarkData = try url.bookmarkDataWithSecurityScope()
@@ -62,16 +62,16 @@
       Self.logger.debug(
         "Creating Bookmark for \(url, privacy: .public) with ID: \(bookmark.bookmarkID, privacy: .public)"
       )
-      context.insert(bookmark)
+      await database.insert(bookmark)
       do {
-        try context.save()
+        try await database.save()
       } catch {
         throw BookmarkError.databaseError(error)
       }
       return bookmark
     }
 
-    public static func resolveURL(_ url: URL, with context: ModelContext) throws -> BookmarkData {
+    public static func resolveURL(_ url: URL, with database: any Database) async throws -> BookmarkData {
       let path = url.standardizedFileURL.path
       var predicate = FetchDescriptor<BookmarkData>(
         predicate: #Predicate { $0.path == path }
@@ -79,33 +79,35 @@
       predicate.fetchLimit = 1
       let items: [BookmarkData]
       do {
-        items = try context.fetch(predicate)
+        items = try await database.fetch(predicate)
       } catch {
         throw BookmarkError.databaseError(error)
       }
       if let item = items.first {
         Self.logger.debug("Refresh Bookmark for \(url, privacy: .public) with ID: \(item.bookmarkID)")
         do {
-          try item.refreshBookmark(using: context, withURL: url)
+          try await item.refreshBookmark(using: database, withURL: url)
         } catch {
           throw BookmarkError.accessDeniedError(error, at: url)
         }
 
         return item
       } else {
-        return try creteNewBookmarkFromURL(url, context)
+        return try await creteNewBookmarkFromURL(url, database)
       }
     }
 
-    @MainActor
-    public func update(using context: ModelContext, at updateAt: Date = Date()) throws {
+    public func update(using database: any Database, at updateAt: Date = Date()) async throws {
       self.updatedAt = updateAt
       Self.logger.debug("Noting updated bookmark \(self.path)")
-      try context.save()
+      try await database.save()
     }
 
-    #warning("logging-note: any useful logs here")
-    private func updateURL(_ url: URL, withNewBookmarkData: Bool, using context: ModelContext) throws {
+    private func updateURL(
+      _ url: URL,
+      withNewBookmarkData: Bool,
+      using database: any Database
+    ) async throws {
       if withNewBookmarkData {
         let accessingSecurityScopedResource = url.startAccessingSecurityScopedResource()
 
@@ -116,19 +118,19 @@
         let path = url.standardizedFileURL.path
         data = bookmarkData
         self.path = path
-        try context.save()
+        try await database.save()
       }
     }
 
-    private func refreshBookmark(using context: ModelContext, withURL newURL: URL?) throws {
-      _ = try fetchURL(using: context, withURL: newURL)
+    private func refreshBookmark(using database: any Database, withURL newURL: URL?) async throws {
+      _ = try await fetchURL(using: database, withURL: newURL)
     }
 
-    public func fetchURL(using context: ModelContext, withURL _: URL?) throws -> URL {
+    public func fetchURL(using database: any Database, withURL _: URL?) async throws -> URL {
       var isStale = false
       let url = try URL(resolvingSecurityScopeBookmarkData: data, bookmarkDataIsStale: &isStale)
       Self.logger.debug("Bookmark for \(url, privacy: .public) stale: \(isStale)")
-      try updateURL(url, withNewBookmarkData: isStale, using: context)
+      try await updateURL(url, withNewBookmarkData: isStale, using: database)
       return url
     }
   }

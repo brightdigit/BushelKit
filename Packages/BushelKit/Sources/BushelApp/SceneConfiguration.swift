@@ -6,6 +6,8 @@
 #if canImport(SwiftUI)
 
   import BushelCore
+  import BushelData
+  import BushelFactory
   import BushelHubViews
   import BushelLibrary
   import BushelLogging
@@ -36,8 +38,8 @@
       self.systems = systems()
     }
 
-    func installerImageRepository(_ context: ModelContext) -> any InstallerImageRepository {
-      context
+    func installerImageRepository(_ database: any Database) -> any InstallerImageRepository {
+      DatabaseInstallerRepository(database: database)
     }
 
     func openFileURL(_ url: URL, openWindow: OpenWindowAction) {

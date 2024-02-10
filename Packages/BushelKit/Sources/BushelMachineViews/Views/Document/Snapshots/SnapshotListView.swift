@@ -33,14 +33,14 @@
             agent: self.object
           )
           .frame(maxWidth: .infinity, maxHeight: .infinity)
-          SnapshotDetailsView(
-            snapshot:
-            self.object.bindableSnapshot(
+          SnapshotDetailsView {
+            await self.object.bindableSnapshot(
               usingLabelFrom: self.metadataLabelProvider.callAsFunction(_:_:),
               fromConfigurationURL: self.url
-            ),
-            saveAction: self.object.beginSavingSnapshot
-          )
+            )
+          } save: { snapshotObject in
+            self.object.beginSavingSnapshot(snapshotObject)
+          }
           .padding()
           .frame(
             minWidth: 256,

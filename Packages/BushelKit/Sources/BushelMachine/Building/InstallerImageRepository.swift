@@ -11,14 +11,14 @@ public protocol InstallerImageRepository {
 
   func images(
     _ labelProvider: @escaping MetadataLabelProvider
-  ) throws -> [any InstallerImage]
+  ) async throws -> [any InstallerImage]
 
   func image(
     withID id: UUID,
     library: LibraryIdentifier?,
     _ labelProvider: @escaping MetadataLabelProvider
-  ) throws -> (any InstallerImage)?
+  ) async throws -> (any InstallerImage)?
 
   @discardableResult
-  func removeImage(_ image: any InstallerImage) throws -> RemoveImageFailure?
+  func removeImage(_ image: any InstallerImage) async throws -> RemoveImageFailure?
 }

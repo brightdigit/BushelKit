@@ -36,7 +36,7 @@
     public func restoreImage(
       from restoreImage: any InstallerImage
     ) async throws -> VirtualizationRestoreImage {
-      let url = try restoreImage.getURL()
+      let url = try await restoreImage.getURL()
       return try await .init(url: url)
     }
 
@@ -58,8 +58,6 @@
       at url: URL
     ) throws -> VZVirtualMachineConfiguration {
       let machineConfiguration: VZVirtualMachineConfiguration
-
-      // setState(atPhase: .building)
 
       machineConfiguration = try VZVirtualMachineConfiguration(
         toDirectory: url,

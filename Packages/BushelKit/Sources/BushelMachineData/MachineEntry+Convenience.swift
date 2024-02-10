@@ -12,7 +12,6 @@
   import SwiftData
 
   public extension MachineEntry {
-    @MainActor
     convenience init(
       url: URL,
       machine: any Machine,
@@ -21,10 +20,10 @@
       name: String,
       createdAt: Date,
       lastOpenedAt: Date?,
-      withContext context: ModelContext
-    ) throws {
-      let bookmark = try BookmarkData.resolveURL(url, with: context)
-      try self.init(
+      withDatabase database: any Database
+    ) async throws {
+      let bookmark = try await BookmarkData.resolveURL(url, with: database)
+      try await self.init(
         bookmarkData: bookmark,
         machine: machine,
         osInstalled: osInstalled,
@@ -32,11 +31,10 @@
         name: name,
         createdAt: createdAt,
         lastOpenedAt: lastOpenedAt,
-        withContext: context
+        withDatabase: database
       )
     }
 
-    @MainActor
     convenience init(
       bookmarkData: BookmarkData,
       machine: any Machine,
@@ -45,8 +43,8 @@
       name: String,
       createdAt: Date,
       lastOpenedAt: Date?,
-      withContext context: ModelContext
-    ) throws {
+      withDatabase database: any Database
+    ) async throws {
       self.init(
         bookmarkData: bookmarkData,
         machine: machine,
@@ -56,21 +54,24 @@
         createdAt: createdAt,
         lastOpenedAt: lastOpenedAt
       )
-      context.insert(self)
-      try context.save()
-      try machine.configuration.snapshots.forEach {
-        _ = try SnapshotEntry($0, machine: self, osInstalled: osInstalled, using: context)
+      await database.insert(self)
+      try await database.save()
+      for snapshot in machine.configuration.snapshots {
+        _ = try await SnapshotEntry(
+          snapshot,
+          machine: self,
+          database: database,
+          withOS: osInstalled
+        )
       }
-      try context.save()
+      try await database.save()
     }
 
-    #warning("Remove @MainActor")
-    @MainActor
     func synchronizeWith(
       _ machine: any Machine,
       osInstalled: (any OperatingSystemInstalled)?,
-      using context: ModelContext
-    ) throws {
+      using database: any Database
+    ) async throws {
       let entryMap: [UUID: SnapshotEntry] = .init(uniqueKeysWithValues: snapshots?.map {
         ($0.snapshotID, $0)
       } ?? [])
@@ -86,26 +87,34 @@
       let entriesToDelete = entryIDsToDelete.compactMap { entryMap[$0] }
       let libraryItemsToInsert = libraryIDsToInsert.compactMap { imageMap[$0] }
 
-      try entryIDsToUpdate.forEach { entryID in
+      for entryID in entryIDsToUpdate {
         guard let entry = entryMap[entryID], let image = imageMap[entryID] else {
           assertionFailure("synconized ids not found for \(entryID)")
           Self.logger.error("synconized ids not found for \(entryID)")
           return
         }
-        try entry.syncronizeSnapshot(image, machine: self, osInstalled: osInstalled, using: context)
-      }
-
-      try libraryItemsToInsert.forEach {
-        _ = try SnapshotEntry(
-          $0,
+        try await entry.syncronizeSnapshot(
+          image,
           machine: self,
-          osInstalled: osInstalled,
-          using: context
+          database: database,
+          withOS: osInstalled
         )
       }
 
-      entriesToDelete.forEach(context.delete)
-      try context.save()
+      for snapshot in libraryItemsToInsert {
+        _ = try await SnapshotEntry(
+          snapshot,
+          machine: self,
+          database: database,
+          withOS: osInstalled
+        )
+      }
+
+      for snapshot in entriesToDelete {
+        await database.delete(snapshot)
+      }
+
+      try await database.save()
     }
   }
 

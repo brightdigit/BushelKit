@@ -6,17 +6,18 @@
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import BushelData
+  import BushelLogging
   import SwiftData
   import SwiftUI
 
-  struct RecentDocumentsList<ItemView: View>: View {
+  struct RecentDocumentsList<ItemView: View>: View, Loggable {
     let recentDocumentsClearDate: Date
     let recentDocumentsTypeFilter: DocumentTypeFilter
 
     @Binding var isEmpty: Bool
     @Query var bookmarks: [BookmarkData]
-    @Environment(\.modelContext) private var context
-    @State var object = RecentDocumentsObject()
+    @Environment(\.database) private var database
+    @State var object: RecentDocumentsObject
 
     let forEach: (RecentDocument) -> ItemView
 
@@ -31,11 +32,10 @@
         }
       }
       .onChange(of: self.bookmarks) { _, _ in
-        object.updateBookmarks(self.bookmarks, using: self.context)
+        object.updateBookmarks(self.bookmarks, using: self.database)
       }
       .onAppear {
-        object.updateBookmarks(self.bookmarks, using: self.context)
-        self.isEmpty = object.isEmpty
+        object.updateBookmarks(self.bookmarks, using: self.database)
       }
       .onChange(of: self.object.isEmpty) { _, newValue in
         self.isEmpty = newValue
@@ -71,6 +71,7 @@
       let order = SortOrder.reverse
       let filter: Predicate<BookmarkData>
       let searchStrings = recentDocumentsTypeFilter.searchStrings
+      Self.logger.debug("Querying for \(searchStrings)")
       if let libraryFilter = searchStrings.first {
         filter = #Predicate {
           $0.updatedAt > recentDocumentsClearDate && !$0.path.localizedStandardContains(libraryFilter)

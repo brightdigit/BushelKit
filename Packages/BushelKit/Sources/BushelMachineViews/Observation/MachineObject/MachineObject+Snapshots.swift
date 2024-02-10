@@ -131,7 +131,7 @@
       try await object.entry.syncronizeSnapshot(
         object.updatedSnapshot,
         machine: self.entry,
-        using: modelContext
+        database: database
       )
 
       try writeConfigurationAt(object.machineConfigurationURL)
@@ -141,22 +141,18 @@
       Self.logger.debug("Saving snapshot completed")
     }
 
-    func bindableSnapshot(
-      usingLabelFrom labelProvider: MetadataLabelProvider,
-      fromConfigurationURL configurationURL: URL?
-    ) -> Bindable<SnapshotObject>? {
-      guard let selection = SnapshotSelection(
-        selectedSnapshot: selectedSnapshot,
-        configurationURL: configurationURL,
-        snapshots: machine.configuration.snapshots
-      ) else {
-        return nil
+    private func snapshotEntryBasedOn(
+      selection: MachineObject.SnapshotSelection,
+      id: Snapshot.ID
+    ) async -> SnapshotEntry? {
+      if let entryChild = self.entry.snapshots?.first(
+        where: { $0.snapshotID == selection.id }
+      ) {
+        return entryChild
       }
-      let id = selection.id
-      let entryChild = self.entry.snapshots?.first(where: { $0.snapshotID == selection.id })
-      let entry: SnapshotEntry?
+
       do {
-        entry = try entryChild ?? modelContext.fetch(
+        return try await database.fetch(
           FetchDescriptor<SnapshotEntry>(
             predicate: #Predicate { $0.snapshotID == id }
           )
@@ -166,6 +162,21 @@
         assertionFailure(error: error)
         return nil
       }
+    }
+
+    func bindableSnapshot(
+      usingLabelFrom labelProvider: MetadataLabelProvider,
+      fromConfigurationURL configurationURL: URL?
+    ) async -> Bindable<SnapshotObject>? {
+      guard let selection = SnapshotSelection(
+        selectedSnapshot: selectedSnapshot,
+        configurationURL: configurationURL,
+        snapshots: machine.configuration.snapshots
+      ) else {
+        return nil
+      }
+      let id = selection.id
+      let entry = await snapshotEntryBasedOn(selection: selection, id: id)
       guard let entry else {
         Self.logger.error("No entry with \(selection.id) from database")
         assertionFailure("No entry with \(selection.id) from database")
@@ -184,14 +195,22 @@
       )
     }
 
-    func saveSnapshot(_ request: SnapshotRequest, options: SnapshotOptions, at url: URL) async throws {
+    func saveSnapshot(
+      _ request: SnapshotRequest,
+      options: SnapshotOptions,
+      at url: URL
+    ) async throws {
       let snapshot: Snapshot
       snapshot = try await machine.createNewSnapshot(
         request: request,
         options: options,
         using: self.snapshotFactory
       )
-      _ = try await SnapshotEntry(snapshot, machine: self.entry, using: modelContext)
+      _ = try await SnapshotEntry(
+        snapshot,
+        machine: self.entry,
+        database: database
+      )
 
       try writeConfigurationAt(url)
       self.refreshSnapshots()
@@ -217,6 +236,12 @@
     }
 
     func deleteSnapshot(_ snapshot: Snapshot?, at url: URL?) {
+      Task {
+        await self.deletingSnapshot(snapshot, at: url)
+      }
+    }
+
+    func deletingSnapshot(_ snapshot: Snapshot?, at url: URL?) async {
       do {
         let deletingSnapshotRequest = try DeleteSnapshotRequest(
           snapshot: snapshot ?? confirmingRemovingSnapshot,
@@ -229,7 +254,7 @@
         }
         try machine.deleteSnapshot(deletingSnapshotRequest.snapshot, using: self.snapshotFactory)
         let snapshotID = deletingSnapshotRequest.snapshot.id
-        try modelContext.delete(model: SnapshotEntry.self, where: #Predicate {
+        try await database.delete(model: SnapshotEntry.self, where: #Predicate {
           $0.snapshotID == snapshotID
         })
         try writeConfigurationAt(deletingSnapshotRequest.url)
@@ -286,7 +311,7 @@
             try await self.saveSnapshot(request, options: [], at: url)
           }
           try await self.machine.restoreSnapshot(snapshot, using: self.snapshotFactory)
-          try await self.entry.synchronizeWith(machine, osInstalled: nil, using: self.modelContext)
+          try await self.entry.synchronizeWith(machine, osInstalled: nil, using: self.database)
         } catch {
           Self.logger.error(
             // swiftlint:disable:next line_length
@@ -339,7 +364,7 @@
           name: url.deletingPathExtension().lastPathComponent,
           createdAt: .init(),
           lastOpenedAt: .init(),
-          withContext: modelContext
+          withDatabase: database
         )
       } catch {
         let machineError = MachineError.fromExportSnapshotError(error)

@@ -14,7 +14,7 @@
   struct MachineObjectConfiguration {
     let url: URL
     let restoreImageDB: any InstallerImageRepository
-    let modelContext: ModelContext
+    let database: any Database
     let systemManager: any MachineSystemManaging
     let labelProvider: MetadataLabelProvider
     let snapshotFactory: any SnapshotProvider
@@ -22,15 +22,14 @@
     internal init(
       url: URL,
       restoreImageDB: any InstallerImageRepository,
-      modelContext: ModelContext,
+      database: any Database,
       systemManager: any MachineSystemManaging,
-
       snapshotFactory: any SnapshotProvider,
       labelProvider: @escaping MetadataLabelProvider
     ) {
       self.url = url
       self.restoreImageDB = restoreImageDB
-      self.modelContext = modelContext
+      self.database = database
       self.systemManager = systemManager
       self.labelProvider = labelProvider
       self.snapshotFactory = snapshotFactory
@@ -40,16 +39,16 @@
   extension MachineObjectConfiguration {
     init(
       url: URL,
-      modelContext: ModelContext,
+      database: any Database,
       systemManager: any MachineSystemManaging,
       snapshotterFactory: any SnapshotProvider,
-      installerImageRepositoryFrom: @escaping (ModelContext) -> any InstallerImageRepository,
+      installerImageRepositoryFrom: @escaping (any Database) -> any InstallerImageRepository,
       labelProvider: @escaping MetadataLabelProvider
     ) {
       self.init(
         url: url,
-        restoreImageDB: installerImageRepositoryFrom(modelContext),
-        modelContext: modelContext,
+        restoreImageDB: installerImageRepositoryFrom(database),
+        database: database,
         systemManager: systemManager,
         snapshotFactory: snapshotterFactory,
         labelProvider: labelProvider

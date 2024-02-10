@@ -21,15 +21,19 @@
     var restoreImageImportProgress: ProgressOperationProperties?
     var object: LibraryObject? {
       didSet {
-        self.bindableImage = self.object?.libraryImageObject(withID: self.selectedItem)
+        Task { @MainActor in
+          self.bindableImage = await self.object?.libraryImageObject(withID: self.selectedItem)
+        }
       }
     }
 
     var error: LibraryError?
     var selectedItem: LibraryImageFile.ID? {
       didSet {
-        self.bindableImage = self.object?.libraryImageObject(withID: self.selectedItem)
-        Self.logger.debug("Updating BindableImage to \(self.selectedItem?.uuidString ?? "nil")")
+        Task { @MainActor in
+          self.bindableImage = await self.object?.libraryImageObject(withID: self.selectedItem)
+          Self.logger.debug("Updating BindableImage to \(self.selectedItem?.uuidString ?? "nil")")
+        }
       }
     }
 
@@ -63,7 +67,7 @@
     }
 
     @ObservationIgnored
-    var modelContext: ModelContext?
+    var database: (any Database)?
 
     @ObservationIgnored
     var librarySystemManager: (any LibrarySystemManaging)?
@@ -73,13 +77,13 @@
       error: LibraryError? = nil,
       selectedItem: LibraryImageFile.ID? = nil,
       presentFileImporter: Bool = false,
-      modelContext: ModelContext? = nil,
+      database: (any Database)? = nil,
       librarySystemManager: (any LibrarySystemManaging)? = nil
     ) {
       self._error = error
       self._selectedItem = selectedItem
       self._presentFileImporter = presentFileImporter
-      self.modelContext = modelContext
+      self.database = database
       self.librarySystemManager = librarySystemManager
       self.restoreImageImportProgress = restoreImageImportProgress
     }

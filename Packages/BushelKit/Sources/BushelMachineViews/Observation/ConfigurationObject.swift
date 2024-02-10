@@ -20,7 +20,7 @@
           return
         }
         self.configuration.libraryID = nil
-        self.updateMetadataAt(basedOn: sheetSelectedRestoreImageID)
+        self.beginUpdateMetadataAt(basedOn: sheetSelectedRestoreImageID)
       }
     }
 
@@ -50,6 +50,7 @@
     internal private(set) var labelProvider: MetadataLabelProvider?
 
     var presentFileExporter: Bool = false
+
     var presentImageSelection: Bool = false {
       didSet {
         guard let labelProvider else {
@@ -60,18 +61,20 @@
           assertionFailure("Missing database Provider")
           return
         }
-        do {
-          self.images = try database
-            .images(labelProvider)
-            .map(ConfigurationImage.init(installerImage:))
-        } catch let error as ConfigurationError {
-          Self.logger.error("Error fetching image: \(error)")
-          assertionFailure(error: error)
-          self.error = error
-        } catch {
-          Self.logger.critical("Unknown error fetching image: \(error)")
-          assertionFailure(error: error)
-          self.error = .unknownError(error)
+        Task {
+          do {
+            self.images = try await database
+              .images(labelProvider)
+              .map(ConfigurationImage.init(installerImage:))
+          } catch let error as ConfigurationError {
+            Self.logger.error("Error fetching image: \(error)")
+            assertionFailure(error: error)
+            self.error = error
+          } catch {
+            Self.logger.critical("Unknown error fetching image: \(error)")
+            assertionFailure(error: error)
+            self.error = .unknownError(error)
+          }
         }
       }
     }
@@ -103,12 +106,28 @@
       self._error = error
     }
 
-    func setupFrom(
+    func beginSetupFrom(
       request: MachineBuildRequest?,
       systemManager: any MachineSystemManaging,
       using database: any InstallerImageRepository,
       labelProvider: @escaping (MetadataLabelProvider)
     ) {
+      Task {
+        await self.setupFrom(
+          request: request,
+          systemManager: systemManager,
+          using: database,
+          labelProvider: labelProvider
+        )
+      }
+    }
+
+    func setupFrom(
+      request: MachineBuildRequest?,
+      systemManager: any MachineSystemManaging,
+      using database: any InstallerImageRepository,
+      labelProvider: @escaping (MetadataLabelProvider)
+    ) async {
       self.configuration.updating(forRequest: request)
       self.database = database
       self.systemManager = systemManager
@@ -117,10 +136,16 @@
       guard let restoreImageID = request?.restoreImage?.imageID else {
         return
       }
-      self.updateMetadataAt(basedOn: restoreImageID)
+      await self.updateMetadataAt(basedOn: restoreImageID)
     }
 
-    func updateMetadataAt(basedOn restoreImageID: UUID?) {
+    func beginUpdateMetadataAt(basedOn restoreImageID: UUID?) {
+      Task {
+        await self.updateMetadataAt(basedOn: restoreImageID)
+      }
+    }
+
+    func updateMetadataAt(basedOn restoreImageID: UUID?) async {
       guard let restoreImageID else {
         self.restoreImageMetadata = nil
         return
@@ -133,7 +158,7 @@
 
       let image: (any InstallerImage)?
       do {
-        image = try self.database.imageBasedOn(
+        image = try await self.database.imageBasedOn(
           restoreImageID,
           libraryID: self.configuration.libraryID,
           logger: Self.logger,
@@ -160,10 +185,16 @@
       self.restoreImageMetadata = image.metadata
     }
 
-    func prepareBuild(using database: any InstallerImageRepository) {
+    func beginPrepareBuild(using database: any InstallerImageRepository) {
+      Task {
+        await self.prepareBuild(using: database)
+      }
+    }
+
+    func prepareBuild(using database: any InstallerImageRepository) async {
       let machineConfiguration: MachineConfiguration
       do {
-        machineConfiguration = try self.machineConfiguration(using: database)
+        machineConfiguration = try await self.machineConfiguration(using: database)
       } catch let error as ConfigurationError {
         Self.logger.error("Error preparing build: \(error)")
         assertionFailure(error: error)

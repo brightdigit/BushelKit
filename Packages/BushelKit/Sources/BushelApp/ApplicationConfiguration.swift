@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
 
   import BushelCore
+  import BushelDataCore
   import BushelMachine
   import BushelSystem
   import SwiftData
@@ -24,7 +25,7 @@
 
     func hubView(_ image: Binding<(any InstallImage)?>) -> HubViewType
 
-    func installerImageRepository(_ context: ModelContext) -> any InstallerImageRepository
+    func installerImageRepository(_ database: any Database) -> any InstallerImageRepository
 
     func openFileURL(_ url: URL, openWindow: OpenWindowAction)
   }

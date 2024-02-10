@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelData
   import BushelLibrary
   import BushelLibraryData
   import BushelLogging
@@ -15,7 +16,7 @@
   @Observable
   class LibraryObject: Loggable {
     @ObservationIgnored
-    var modelContext: ModelContext?
+    var database: (any Database)?
 
     @ObservationIgnored
     var librarySystemManager: (any LibrarySystemManaging)?

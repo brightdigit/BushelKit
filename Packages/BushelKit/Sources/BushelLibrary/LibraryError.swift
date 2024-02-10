@@ -27,7 +27,7 @@ public struct LibraryError: LocalizedError, Loggable {
 
   public enum InitializationProperty {
     case bookmarkData
-    case modelContext
+    case database
     case librarySystemManager
   }
 
@@ -49,7 +49,7 @@ public struct LibraryError: LocalizedError, Loggable {
     case database
     case copyImage(source: URL, destination: URL)
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    // swiftlint:disable:next cyclomatic_complexity
     func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:

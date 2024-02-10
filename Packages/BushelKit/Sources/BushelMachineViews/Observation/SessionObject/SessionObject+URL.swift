@@ -6,14 +6,15 @@
 #if canImport(Observation) && os(macOS) && canImport(SwiftUI) && canImport(SwiftData)
 
   import BushelCore
+  import BushelDataCore
   import BushelMachine
   import Foundation
   import SwiftData
   extension SessionObject {
     func loadURL(
       _ url: URL,
-      withContext modelContext: ModelContext,
-      restoreImageDBfrom: @escaping (ModelContext) -> any InstallerImageRepository,
+      withDatabase database: any Database,
+      restoreImageDBfrom: @escaping (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
 
@@ -24,7 +25,7 @@
           parent: self,
           configuration: .init(
             url: url,
-            modelContext: modelContext,
+            database: database,
             systemManager: systemManager,
             snapshotterFactory: snapshotFactory,
             installerImageRepositoryFrom: restoreImageDBfrom,

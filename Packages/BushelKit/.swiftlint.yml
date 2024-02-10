@@ -102,10 +102,10 @@ cyclomatic_complexity:
   - 6
   - 12
 file_length:
-  warning: 200
+  warning: 215
   error: 300
 function_body_length:
-  - 30
+  - 40
   - 60
 function_parameter_count: 8
 line_length:
@@ -131,3 +131,4 @@ fatal_error_message:
     severity: error
 disabled_rules:
     - nesting
+    - implicit_getter

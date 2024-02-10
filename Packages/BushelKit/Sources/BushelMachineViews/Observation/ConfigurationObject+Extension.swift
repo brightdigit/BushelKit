@@ -30,7 +30,7 @@
     func onRestoreImageChange(from _: UUID?, to newRestoreImageID: UUID?) {
       assert(newRestoreImageID == self.configuration.restoreImageID)
       Self.logger.debug("restore image change to \(newRestoreImageID?.uuidString ?? "null")")
-      self.updateMetadataAt(basedOn: newRestoreImageID)
+      self.beginUpdateMetadataAt(basedOn: newRestoreImageID)
     }
 
     func onBuildRequestChange(from _: MachineBuildRequest?, to request: MachineBuildRequest?) {
@@ -40,10 +40,12 @@
       guard let restoreImageID = request?.restoreImage?.imageID else {
         return
       }
-      self.updateMetadataAt(basedOn: restoreImageID)
+      self.beginUpdateMetadataAt(basedOn: restoreImageID)
     }
 
-    func machineConfiguration(using database: any InstallerImageRepository) throws -> MachineConfiguration {
+    func machineConfiguration(
+      using database: any InstallerImageRepository
+    ) async throws -> MachineConfiguration {
       Self.logger.debug("creating configuration")
       guard let restoreImageID = configuration.restoreImageID else {
         let error = ConfigurationError.missingRestoreImageID
@@ -53,7 +55,7 @@
       }
       guard
         let labelProvider,
-        let image = try database.image(
+        let image = try await database.image(
           withID: restoreImageID,
           library: configuration.libraryID,
           labelProvider
@@ -89,9 +91,9 @@
       }
     }
 
-    func beginCreateBuilder(_ url: URL, using database: any InstallerImageRepository) throws {
-      let parameters = try BuilderParameters(object: self, using: database)
+    func beginCreateBuilder(_ url: URL, using database: any InstallerImageRepository) {
       Task {
+        let parameters = try await BuilderParameters(object: self, using: database)
         do {
           Self.logger.error("Creating builder for \(url)")
           let builder = try await parameters.manager.createBuilder(

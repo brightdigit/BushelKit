@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
 
   import BushelCore
+  import BushelData
   import BushelLogging
   import BushelMachine
   import BushelOnboardingCore
@@ -33,18 +34,18 @@
       _ configuration: some ApplicationConfiguration
     ) -> some View {
       #if os(macOS)
-        self.modelContainer(configuration.modelContainer)
+        self
+          .modelContainer(configuration.modelContainer)
           .hubView(configuration.hubView(_:))
-          .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
           .newLibrary(type(of: configuration).LibraryFileType)
           .openMachine(type(of: configuration).MachineFileType)
           .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
           .registerSystems(configuration.systems)
       #else
-        self.modelContainer(configuration.modelContainer)
+        self
+          .modelContainer(configuration.modelContainer)
           .hubView(configuration.hubView(_:))
-          .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
           .registerSystems(configuration.systems)
       #endif
@@ -82,7 +83,7 @@
         do {
           try Bundle.main.clearUserDefaults()
           try FileManager.default.clearSavedApplicationState()
-          try ModelContext(configuration.modelContainer).clearDatabaseBegin()
+          #warning("Add thing for clearing database")
           logger.debug("Clearing completed")
         } catch {
           logger.error("Unable to reset application: \(error)")
@@ -90,7 +91,9 @@
         }
       }
       #if os(macOS)
-        return self.modelContainer(configuration.modelContainer)
+        return self
+          .modelContainer(configuration.modelContainer)
+          .database(configuration.modelContainer)
           .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)
@@ -100,11 +103,9 @@
           .openMachine(type(of: configuration).MachineFileType)
           .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
           .snapshotProvider([FileVersionSnapshotterFactory()])
-
           .registerSystems(configuration.systems)
       #else
         return self.modelContainer(configuration.modelContainer)
-          // .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)
           .openFileURL(configuration.openFileURL(_:openWindow:))
