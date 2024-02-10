@@ -12,6 +12,10 @@ import Foundation
 
     // swiftlint:disable strict_fileprivate
     private struct NSWindowAdaptorHostingView: NSViewRepresentable {
+      #warning("""
+      Issue 100
+      We need a way to specific when the callback is called and whether it should be.
+      """)
       private var callback: (NSWindow?) -> Void
 
       fileprivate init(callback: @escaping (NSWindow?) -> Void) {

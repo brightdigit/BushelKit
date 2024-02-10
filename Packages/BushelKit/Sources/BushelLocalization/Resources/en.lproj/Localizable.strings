@@ -536,6 +536,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Library Delete Image Confirmation */
 "library_delete_confirmation" = "Are you sure you want to delete %@?";
 
+/* Library Image Confirm Delete Image Yes */
+"library_confirm_delete_yes" = "Yes, delete image";
+
+/* Library Image Confirm Delete Image Cancel */
+"library_confirm_delete_cancel" = "Cancel";
+
 /* Image not supported */
 "library_unsupported_image" = "This image is not supported via Virtualization";
 

@@ -72,7 +72,7 @@
     @ObservationIgnored
     var observationID: UUID?
 
-    let modelContext: ModelContext
+    let database: any Database
 
     let systemManager: any MachineSystemManaging
 
@@ -96,7 +96,7 @@
       machine: MachineObject.Machine,
       entry: MachineEntry,
       label: MetadataLabel,
-      modelContext: ModelContext,
+      database: any Database,
       systemManager: any MachineSystemManaging,
       snapshotFactory: any SnapshotProvider
     ) {
@@ -104,7 +104,7 @@
       self.machine = machine
       self.entry = entry
       self.label = label
-      self.modelContext = modelContext
+      self.database = database
       self.systemManager = systemManager
       self.snapshotFactory = snapshotFactory
 
@@ -163,7 +163,7 @@
         machine: components.machine,
         entry: entry,
         label: components.label,
-        modelContext: configuration.modelContext,
+        database: configuration.database,
         systemManager: configuration.systemManager,
         snapshotFactory: configuration.snapshotFactory
       )

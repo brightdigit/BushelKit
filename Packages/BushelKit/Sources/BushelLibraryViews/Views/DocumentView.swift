@@ -15,7 +15,7 @@
 
   struct DocumentView: View, Loggable {
     @Environment(\.librarySystemManager) private var librarySystemManager
-    @Environment(\.modelContext) private var context
+    @Environment(\.database) private var database
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hubView) var hubView
@@ -44,7 +44,11 @@
           .onChange(of: self.file?.url, self.object.onURLChange(from:to:))
           .onChange(of: self.object.selectedItem, self.object.onSelectionChange)
           .onAppear(perform: {
-            self.object.loadURL(self.file?.url, withContext: self.context, using: self.librarySystemManager)
+            self.object.loadURL(
+              self.file?.url,
+              withDatabase: self.database,
+              using: self.librarySystemManager
+            )
           })
           .sheet(
             isPresented: self.$object.presentHubModal,
@@ -96,11 +100,11 @@
           Button(
             role: .destructive
           ) {
-            Task { @MainActor in
-              self.object.deleteSelectedItem(withID: image.id)
+            Task {
+              await self.object.deleteSelectedItem(withID: image.id)
             }
           } label: {
-            Text(.machineConfirmDeleteYes)
+            Text(.libraryConfirmDeleteYes)
           }
           Button(
             role: .cancel,
@@ -108,7 +112,7 @@
               self.object.cancelRemovalSelectedItem(withID: image.id)
             },
             label: {
-              Text(.machineConfirmDeleteCancel)
+              Text(.libraryConfirmDeleteCancel)
             }
           )
         }, message: { image in

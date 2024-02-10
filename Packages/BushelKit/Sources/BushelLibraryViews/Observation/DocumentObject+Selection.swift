@@ -112,7 +112,7 @@
       self.queuedRemovalSelectedImageID = nil
     }
 
-    func deleteSelectedItem(withID id: UUID) {
+    func deleteSelectedItem(withID id: UUID) async {
       guard let selectedItem else {
         Self.logger.error("There is no selected item to delete.")
         assertionFailure("There is no selected item to delete.")
@@ -133,7 +133,7 @@
       assert(selectedItem == id)
       do {
         Self.logger.debug("Deleting \(selectedItem)")
-        try object.deleteImage(withID: selectedItem)
+        try await object.deleteImage(withID: selectedItem)
       } catch {
         Self.logger.error("Unable to delete image: \(error)")
         self.error = assertionFailure(error: error) { error in
@@ -142,7 +142,6 @@
       }
     }
 
-    @MainActor
     func onSelectionChange() {
       guard let object else {
         Self.logger.error("There is object to select from.")
@@ -150,12 +149,14 @@
         return
       }
 
-      do {
-        try object.save()
-      } catch {
-        Self.logger.error("Unable to save library: \(error)")
-        self.error = assertionFailure(error: error) { error in
-          Self.logger.critical("Unknown error: \(error)")
+      Task {
+        do {
+          try await object.save()
+        } catch {
+          Self.logger.error("Unable to save library: \(error)")
+          self.error = assertionFailure(error: error) { error in
+            Self.logger.critical("Unknown error: \(error)")
+          }
         }
       }
     }

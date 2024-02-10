@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelDataCore
   import BushelLogging
   import BushelMachine
   import SwiftData
@@ -27,7 +28,7 @@
     }
 
     @ObservationIgnored
-    var modelContext: ModelContext?
+    var database: (any Database)?
 
     @ObservationIgnored
     var systemManager: (any MachineSystemManaging)?
@@ -52,8 +53,8 @@
 
     func beginLoadingURL(
       _ url: URL?,
-      withContext modelContext: ModelContext,
-      restoreImageDBfrom: @escaping (ModelContext) -> any InstallerImageRepository,
+      withDatabase database: any Database,
+      restoreImageDBfrom: @escaping (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider
@@ -66,7 +67,7 @@
         await self
           .loadURL(
             url,
-            withContext: modelContext,
+            withDatabase: database,
             restoreImageDBfrom: restoreImageDBfrom,
             snapshotFactory: snapshotFactory,
             using: systemManager,
@@ -77,21 +78,21 @@
 
     private func loadURL(
       _ url: URL,
-      withContext modelContext: ModelContext,
-      restoreImageDBfrom: @escaping (ModelContext) -> any InstallerImageRepository,
+      withDatabase database: any Database,
+      restoreImageDBfrom: @escaping (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider
     ) async {
       Self.logger.info("Loading Machine at \(url)")
-      self.modelContext = modelContext
+      self.database = database
       self.systemManager = systemManager
       do {
         self.machineObject = try await MachineObject(
           parent: self,
           configuration: .init(
             url: url,
-            modelContext: modelContext,
+            database: database,
             systemManager: systemManager,
             snapshotterFactory: snapshotFactory,
             installerImageRepositoryFrom: restoreImageDBfrom,

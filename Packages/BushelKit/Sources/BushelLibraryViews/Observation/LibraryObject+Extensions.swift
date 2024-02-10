@@ -11,38 +11,15 @@
   import Foundation
   import SwiftData
   import SwiftUI
+
   extension LibraryObject {
-    @MainActor
-    // swiftlint:disable:next cyclomatic_complexity
-    func save() throws {
-      guard let modelContext else {
-        throw LibraryError.missingInitializedProperty(.modelContext)
+    func save() async throws {
+      guard let database else {
+        throw LibraryError.missingInitializedProperty(.database)
       }
 
-      guard let bookmarkData = entry.bookmarkData else {
-        throw LibraryError.missingInitializedProperty(.bookmarkData)
-      }
-
-      defer {
-        do {
-          try bookmarkData.update(using: modelContext)
-        } catch {
-          assertionFailure(error: error)
-        }
-      }
-
-      let libraryURL: URL
-      do {
-        libraryURL = try bookmarkData.fetchURL(using: modelContext, withURL: nil)
-      } catch {
-        throw try LibraryError.bookmarkError(error)
-      }
-
-      let canAccessFile = libraryURL.startAccessingSecurityScopedResource()
-
-      guard canAccessFile else {
-        throw LibraryError.accessDeniedError(nil, at: libraryURL)
-      }
+      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let libraryURL = accessibleBookmark.url
 
       let jsonFileURL = libraryURL.appending(path: URL.bushel.paths.restoreLibraryJSONFileName)
       do {
@@ -52,14 +29,10 @@
         throw LibraryError.metadataUpdateError(error, at: jsonFileURL)
       }
 
-      do {
-        try modelContext.save()
-      } catch {
-        throw LibraryError.fromDatabaseError(error)
-      }
+      try await accessibleBookmark.stopAccessing(updateTo: database)
     }
 
-    func libraryImageObject(withID id: UUID?) -> LibraryImageObject? {
+    func libraryImageObject(withID id: UUID?) async -> LibraryImageObject? {
       Self.logger.debug("Creating Bindable Image for \(id?.uuidString ?? "nil")")
       guard let id else {
         Self.logger.debug("No id for image")
@@ -72,16 +45,18 @@
       }
       let entryChild = self.entry.images?.first(where: { $0.imageID == id })
       let entry: LibraryImageEntry?
-      do {
-        entry = try entryChild ?? modelContext?.fetch(
-          FetchDescriptor<LibraryImageEntry>(
-            predicate: #Predicate { $0.imageID == id }
-          )
-        ).first
-      } catch {
-        Self.logger.error("Error fetching entry \(id) from database: \(error)")
-        assertionFailure(error: error)
-        return nil
+      if let entryChild {
+        entry = entryChild
+      } else {
+        do {
+          entry = try await database?.fetch(
+            #Predicate { $0.imageID == id }
+          ).first
+        } catch {
+          Self.logger.error("Error fetching entry \(id) from database: \(error)")
+          assertionFailure(error: error)
+          return nil
+        }
       }
       guard let entry else {
         Self.logger.error("No entry with \(id) from database")
@@ -92,8 +67,8 @@
       return LibraryImageObject(index: index, library: self, entry: entry)
     }
 
-    func bindableImage(withID id: UUID?) -> Bindable<LibraryImageObject>? {
-      self.libraryImageObject(withID: id).map(Bindable.init(wrappedValue:))
+    func bindableImage(withID id: UUID?) async -> Bindable<LibraryImageObject>? {
+      await self.libraryImageObject(withID: id).map(Bindable.init(wrappedValue:))
     }
   }
 #endif

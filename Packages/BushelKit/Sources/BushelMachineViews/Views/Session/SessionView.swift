@@ -37,7 +37,7 @@
 
     @Environment(\.metadataLabelProvider) var labelProvider
     @Environment(\.machineSystemManager) var systemManager
-    @Environment(\.modelContext) private var context
+    @Environment(\.database) private var database
     @Environment(\.dismiss) private var dismiss
     @Environment(\.snapshotProvider) private var snapshotProvider
     @Environment(\.installerImageRepository) private var machineRestoreImageDBFrom
@@ -183,7 +183,7 @@
         Task {
           await self.object.loadURL(
             url,
-            withContext: context,
+            withDatabase: database,
             restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
             snapshotFactory: self.snapshotProvider,
             using: systemManager,

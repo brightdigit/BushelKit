@@ -40,12 +40,11 @@
       self.metadata = library.library.items[index].metadata
     }
 
-    @MainActor
-    func save() {
+    func save() async {
       library.updateMetadata(metadata, at: index)
       Self.logger.debug("Saving \(self.entry.name)")
       do {
-        try self.library.save()
+        try await self.library.save()
       } catch {
         Self.logger.error("Unable to save \(self.entry.name): \(error)")
       }

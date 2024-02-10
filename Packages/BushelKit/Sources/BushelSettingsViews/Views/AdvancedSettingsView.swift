@@ -3,7 +3,6 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-// swiftlint:disable file_length
 #if canImport(SwiftUI)
   import BushelData
   import BushelLocalization
@@ -38,7 +37,7 @@
     @State var confimClearDatbase = false
     @State var confirmClearAllSettings = false
     @State var presentDebugDatabaseView = false
-    @Environment(\.modelContext) private var context
+    @Environment(\.database) private var database
 
     var body: some View {
       // swiftlint:disable:next closure_body_length
@@ -186,18 +185,19 @@
       }
     }
 
-    @MainActor
     func clearDatabaseAction() {
-      do {
-        try self.context.clearDatabase()
-      } catch let error as SwiftDataError {
-        Self.logger.error("Error trying to clear the database.")
-        assertionFailure("Error trying to clear the database.")
-        self.error = .databaseError(error)
-      } catch {
-        Self.logger.critical("Unknown error: \(error)")
-        assertionFailure("Unknown error: \(error)")
-        self.error = .unknownError(error)
+      Task {
+        do {
+          try await self.database.deleteAll(of: [any PersistentModel.Type].all)
+        } catch let error as SwiftDataError {
+          Self.logger.error("Error trying to clear the database.")
+          assertionFailure("Error trying to clear the database.")
+          self.error = .databaseError(error)
+        } catch {
+          Self.logger.critical("Unknown error: \(error)")
+          assertionFailure("Unknown error: \(error)")
+          self.error = .unknownError(error)
+        }
       }
     }
   }

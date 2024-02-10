@@ -5,8 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelData
   import BushelLibrary
-  import BushelLibraryData
   import BushelProgressUI
   import Foundation
   import SwiftData
@@ -27,7 +27,7 @@
       at url: URL,
       to libraryURL: URL,
       using system: any LibrarySystem,
-      modelContext: ModelContext,
+      database: any Database,
       _ setProgress: @MainActor @escaping (ProgressOperationProperties?) -> Void
     ) async throws {
       let imagesFolderURL = libraryURL.appending(path: URL.bushel.paths.restoreImagesDirectoryName)
@@ -69,58 +69,30 @@
       try saveChangesTo(libraryURL)
 
       do {
-        try await entry.appendImage(file: imageFile, using: modelContext)
+        try await entry.appendImage(file: imageFile, using: database)
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }
     }
 
-    @MainActor
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func importImage(
       _ images: ImportRequest,
       setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void
     ) async throws {
-      guard let modelContext else {
-        throw LibraryError.missingInitializedProperty(.modelContext)
+      guard let database else {
+        throw LibraryError.missingInitializedProperty(.database)
       }
 
       guard let librarySystemManager else {
         throw LibraryError.missingInitializedProperty(.librarySystemManager)
       }
 
-      guard let bookmarkData = entry.bookmarkData else {
-        throw LibraryError.missingInitializedProperty(.bookmarkData)
-      }
-
       guard images.startAccessingSecurityScopedResource() != false else {
         throw LibraryError.accessDeniedError(nil, at: images.url)
       }
 
-      defer {
-        do {
-          try bookmarkData.update(using: modelContext)
-        } catch {
-          assertionFailure(error: error)
-        }
-        images.stopAccessingSecurityScopedResource()
-      }
-
-      let libraryURL: URL
-      do {
-        libraryURL = try bookmarkData.fetchURL(using: modelContext, withURL: nil)
-      } catch {
-        throw try LibraryError.bookmarkError(error)
-      }
-
-      let canAccessFile = libraryURL.startAccessingSecurityScopedResource()
-      guard canAccessFile else {
-        throw LibraryError.accessDeniedError(nil, at: libraryURL)
-      }
-
-      defer {
-        libraryURL.stopAccessingSecurityScopedResource()
-      }
+      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let libraryURL = accessibleBookmark.url
       let system: any LibrarySystem
 
       do {
@@ -136,36 +108,20 @@
         at: images.url,
         to: libraryURL,
         using: system,
-        modelContext: modelContext,
+        database: database,
         setProgress
       )
+
+      try await accessibleBookmark.stopAccessing(updateTo: database)
     }
 
-    func deleteImage(withID id: UUID) throws {
-      guard let modelContext else {
-        throw LibraryError.missingInitializedProperty(.modelContext)
+    func deleteImage(withID id: UUID) async throws {
+      guard let database else {
+        throw LibraryError.missingInitializedProperty(.database)
       }
 
-      guard let bookmarkData = entry.bookmarkData else {
-        throw LibraryError.missingInitializedProperty(.bookmarkData)
-      }
-
-      let libraryURL: URL
-      do {
-        libraryURL = try bookmarkData.fetchURL(using: modelContext, withURL: nil)
-      } catch {
-        throw try LibraryError.bookmarkError(error)
-      }
-
-      let canAccessFile = libraryURL.startAccessingSecurityScopedResource()
-      guard canAccessFile else {
-        throw LibraryError.accessDeniedError(nil, at: libraryURL)
-      }
-
-      defer {
-        libraryURL.stopAccessingSecurityScopedResource()
-      }
-
+      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let libraryURL = accessibleBookmark.url
       let imagesURL = libraryURL.appendingPathComponent(URL.bushel.paths.restoreImagesDirectoryName)
 
       guard let index = self.library.items.firstIndex(where: { $0.id == id }) else {
@@ -176,11 +132,11 @@
       let imageFile = library.items.remove(at: index)
       let imageFileURL = imagesURL.appendingPathComponent(imageFile.fileName)
       try FileManager.default.removeItem(at: imageFileURL)
-      try modelContext.delete(model: LibraryImageEntry.self, where: #Predicate {
+      try await database.delete(model: LibraryImageEntry.self, where: #Predicate {
         $0.imageID == id
       })
       try saveChangesTo(libraryURL)
-      try modelContext.save()
+      try await accessibleBookmark.stopAccessing(updateTo: database)
     }
   }
 #endif

@@ -5,6 +5,7 @@
 
 #if canImport(SwiftData)
   import BushelCore
+  import BushelDataCore
   import BushelMachine
   import Foundation
   import SwiftData
@@ -73,14 +74,12 @@
       self.operatingSystemVersionString ?? ""
     }
 
-    @MainActor
-    // swiftlint:disable:next function_default_parameter_at_end
     convenience init(
       _ snapshot: Snapshot,
       machine: MachineEntry,
-      osInstalled: (any OperatingSystemInstalled)? = nil,
-      using context: ModelContext
-    ) throws {
+      database: any Database,
+      withOS osInstalled: (any OperatingSystemInstalled)? = nil
+    ) async throws {
       self.init(
         name: snapshot.name,
         snapshotID: snapshot.id,
@@ -91,20 +90,17 @@
         operatingSystemVersion: osInstalled?.operatingSystemVersion ?? snapshot.operatingSystemVersion,
         buildVersion: osInstalled?.buildVersion ?? snapshot.buildVersion
       )
-      context.insert(self)
+      await database.insert(self)
       self.machine = machine
-      try context.save()
+      try await database.save()
     }
 
-    #warning("Remove @MainActor")
-    @MainActor
-    // swiftlint:disable:next function_default_parameter_at_end
     func syncronizeSnapshot(
       _ snapshot: Snapshot,
       machine: MachineEntry,
-      osInstalled: (any OperatingSystemInstalled)? = nil,
-      using context: ModelContext
-    ) throws {
+      database: any Database,
+      withOS osInstalled: (any OperatingSystemInstalled)? = nil
+    ) async throws {
       self.snapshotID = snapshot.id
       self.createdAt = snapshot.createdAt
       if let osInstalled {
@@ -112,7 +108,7 @@
         self.operatingSystemVersion = osInstalled.operatingSystemVersion
       }
       self.machine = machine
-      try context.save()
+      try await database.save()
     }
   }
 

@@ -18,7 +18,7 @@
       @Environment(\.newLibrary) var newLibrary
       @Environment(\.openMachine) var openMachine
     #endif
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.database) var database
     @State var openDocumentIsVisible = false
 
     var body: some View {
@@ -43,17 +43,19 @@
           isPresented: self.$openDocumentIsVisible,
           allowedContentTypes: UTType.allowedContentTypes(for: .virtualMachine)
         ) { result in
-          let url: URL
-          do {
-            let currentURL = try result.get()
-            let bookmark = try BookmarkData.resolveURL(currentURL, with: modelContext)
-            url = try bookmark.fetchURL(using: modelContext, withURL: currentURL)
-          } catch {
-            Self.logger.error("Unable to open machine: \(error)")
-            assertionFailure(error: error)
-            return
+          Task {
+            let url: URL
+            do {
+              let currentURL = try result.get()
+              let bookmark = try await BookmarkData.resolveURL(currentURL, with: database)
+              url = try await bookmark.fetchURL(using: database, withURL: currentURL)
+            } catch {
+              Self.logger.error("Unable to open machine: \(error)")
+              assertionFailure(error: error)
+              return
+            }
+            openFileURL(url, with: openWindow)
           }
-          openFileURL(url, with: openWindow)
         }
 
         WelcomeActionButton(

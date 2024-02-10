@@ -6,6 +6,11 @@
 import Foundation
 
 @inlinable
+public func assert(isMainThread: Bool) {
+  assert(isMainThread == Thread.isMainThread)
+}
+
+@inlinable
 public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line) {
   guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else {
     return

@@ -9,15 +9,13 @@
   import Foundation
 
   extension MachineEntry {
-    #warning("Remove @MainActor")
-    @MainActor
-    static func basedOnComponents(_ components: MachineObjectComponents) throws -> MachineEntry {
+    static func basedOnComponents(_ components: MachineObjectComponents) async throws -> MachineEntry {
       if let item = components.existingEntry {
         do {
-          try item.synchronizeWith(
+          try await item.synchronizeWith(
             components.machine,
             osInstalled: components.restoreImage,
-            using: components.configuration.modelContext
+            using: components.configuration.database
           )
         } catch {
           throw MachineError.fromDatabaseError(error)
@@ -25,7 +23,7 @@
         return item
       } else {
         do {
-          return try MachineEntry(
+          return try await MachineEntry(
             bookmarkData: components.bookmarkData,
             machine: components.machine,
             osInstalled: components.restoreImage,
@@ -33,7 +31,7 @@
             name: components.configuration.url.deletingPathExtension().lastPathComponent,
             createdAt: Date(),
             lastOpenedAt: Date(),
-            withContext: components.configuration.modelContext
+            withDatabase: components.configuration.database
           )
         } catch {
           throw MachineError.fromDatabaseError(error)

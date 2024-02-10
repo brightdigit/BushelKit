@@ -5,6 +5,7 @@
 
 #if canImport(SwiftData)
   import BushelCore
+  import BushelDataCore
   import BushelLibrary
   import BushelLogging
   import Foundation
@@ -69,8 +70,11 @@
   }
 
   extension LibraryImageEntry {
-    @MainActor
-    convenience init(library: LibraryEntry, file: LibraryImageFile, using context: ModelContext) throws {
+    convenience init(
+      library: LibraryEntry,
+      file: LibraryImageFile,
+      using database: any Database
+    ) async throws {
       self.init(
         name: file.name,
         id: file.id,
@@ -82,18 +86,17 @@
         vmSystemID: file.metadata.vmSystemID,
         fileExtension: file.metadata.fileExtension
       )
-      context.insert(self)
-      try context.save()
+      await database.insert(self)
+      try await database.save()
       self.library = library
-      try context.save()
+      try await database.save()
     }
 
-    @MainActor
     func syncronizeFile(
       _ file: LibraryImageFile,
       withLibrary library: LibraryEntry,
-      using context: ModelContext
-    ) throws {
+      using database: any Database
+    ) async throws {
       name = file.name
       imageID = file.id
       isImageSupported = file.metadata.isImageSupported
@@ -104,7 +107,7 @@
       vmSystemID = file.metadata.vmSystemID
       fileExtension = file.metadata.fileExtension
       self.library = library
-      try context.save()
+      try await database.save()
     }
   }
 

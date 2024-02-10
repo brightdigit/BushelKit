@@ -141,6 +141,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case tipLibraryTitle
   case tipLibraryMessage
   case libraryDeleteConfirmation
+  case libraryConfirmDeleteYes
+  case libraryConfirmDeleteCancel
   case libraryUnsupportedImage
   case snapshotDetailsPropertySize
   case snapshotDetailsPropertyDicardable

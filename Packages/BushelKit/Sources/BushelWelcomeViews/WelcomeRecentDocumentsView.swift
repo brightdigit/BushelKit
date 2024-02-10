@@ -14,9 +14,6 @@
   struct WelcomeRecentDocumentsView: View, Loggable {
     let recentDocumentsTypeFilter: DocumentTypeFilter
     let recentDocumentsClearDate: Date?
-    @Environment(\.modelContext) private var context
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.openFileURL) private var openFileURL
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     @State var isEmpty = false

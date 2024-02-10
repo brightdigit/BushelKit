@@ -12,7 +12,7 @@ public protocol InstallerImage: OperatingSystemInstalled {
   var libraryID: LibraryIdentifier? { get }
   var imageID: UUID { get }
   var metadata: Metadata { get }
-  func getURL() throws -> URL
+  func getURL() async throws -> URL
 }
 
 public extension InstallerImage {

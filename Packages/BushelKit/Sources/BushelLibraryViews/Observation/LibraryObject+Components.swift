@@ -16,42 +16,42 @@
       internal init(
         library: Library,
         entry: LibraryEntry,
-        modelContext: ModelContext,
+        database: any Database,
         system: any LibrarySystemManaging
       ) {
         self.library = library
         self.entry = entry
-        self.modelContext = modelContext
+        self.database = database
         self.system = system
       }
 
       let library: Library
       let entry: LibraryEntry
-      let modelContext: ModelContext
+      let database: any Database
       let system: any LibrarySystemManaging
 
-      @MainActor private static func entry(
+      private static func entry(
         from item: LibraryEntry?,
         library: Library,
         bookmarkData: BookmarkData,
-        using modelContext: ModelContext
-      ) throws -> LibraryEntry {
+        using database: any Database
+      ) async throws -> LibraryEntry {
         let entry: LibraryEntry
         if let item {
           do {
-            try item.synchronizeWith(library, using: modelContext)
+            try await item.synchronizeWith(library, using: database)
             entry = item
           } catch {
             throw LibraryError.fromDatabaseError(error)
           }
         } else {
           do {
-            entry = try LibraryEntry(
+            entry = try await LibraryEntry(
               bookmarkData: bookmarkData,
               library: library,
-              withContext: modelContext
+              withDatabase: database
             )
-            try modelContext.save()
+            try await database.save()
           } catch {
             throw LibraryError.fromDatabaseError(error)
           }
@@ -59,17 +59,16 @@
         return entry
       }
 
-      @MainActor
       internal init(
         item: LibraryEntry?,
         bookmarkData: BookmarkData,
         url: URL,
-        withContext modelContext: ModelContext,
+        withDatabase database: any Database,
         using librarySystemManager: any LibrarySystemManaging
-      ) throws {
+      ) async throws {
         let newURL: URL
         do {
-          newURL = try bookmarkData.fetchURL(using: modelContext, withURL: url)
+          newURL = try await bookmarkData.fetchURL(using: database, withURL: url)
         } catch {
           throw try LibraryError.bookmarkError(error)
         }
@@ -85,13 +84,13 @@
         } catch {
           throw LibraryError.libraryCorruptedError(error, at: newURL)
         }
-        let entry = try Self.entry(
+        let entry = try await Self.entry(
           from: item,
           library: library,
           bookmarkData: bookmarkData,
-          using: modelContext
+          using: database
         )
-        self.init(library: library, entry: entry, modelContext: modelContext, system: librarySystemManager)
+        self.init(library: library, entry: entry, database: database, system: librarySystemManager)
       }
     }
   }

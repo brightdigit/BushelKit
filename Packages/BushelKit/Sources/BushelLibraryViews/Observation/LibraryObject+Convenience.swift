@@ -14,26 +14,17 @@
   extension LibraryObject {
     convenience init(components: Components) {
       self.init(library: components.library, entry: components.entry)
-      self.modelContext = components.modelContext
+      self.database = components.database
       self.librarySystemManager = components.system
     }
 
-    @MainActor
     convenience init(
       _ url: URL,
-      withContext modelContext: ModelContext,
+      withDatabase database: any Database,
       using librarySystemManager: any LibrarySystemManaging
-    ) throws {
+    ) async throws {
       let bookmarkData: BookmarkData
-      bookmarkData = try BookmarkData.resolveURL(url, with: modelContext)
-
-      defer {
-        do {
-          try bookmarkData.update(using: modelContext)
-        } catch {
-          assertionFailure(error: error)
-        }
-      }
+      bookmarkData = try await BookmarkData.resolveURL(url, with: database)
 
       let bookmarkDataID = bookmarkData.bookmarkID
       var libraryPredicate = FetchDescriptor<LibraryEntry>(
@@ -44,19 +35,25 @@
 
       let items: [LibraryEntry]
       do {
-        items = try modelContext.fetch(libraryPredicate)
+        items = try await database.fetch(libraryPredicate)
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }
 
-      let components = try Components(
+      let components = try await Components(
         item: items.first,
         bookmarkData: bookmarkData,
         url: url,
-        withContext: modelContext,
+        withDatabase: database,
         using: librarySystemManager
       )
       self.init(components: components)
+
+      do {
+        try await bookmarkData.update(using: database)
+      } catch {
+        assertionFailure(error: error)
+      }
     }
 
     func matchesURL(_ url: URL) -> Bool {
