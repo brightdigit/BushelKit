@@ -11,6 +11,7 @@
   import Foundation
   import SwiftData
   import SwiftUI
+
   extension LibraryObject {
     private func saveChangesTo(_ libraryURL: URL) throws {
       let jsonFileURL = libraryURL.appending(path: URL.bushel.paths.restoreLibraryJSONFileName)
@@ -137,6 +138,28 @@
       })
       try saveChangesTo(libraryURL)
       try await accessibleBookmark.stopAccessing(updateTo: database)
+    }
+
+    func syncronize() async throws {
+      guard let database else {
+        throw LibraryError.missingInitializedProperty(.database)
+      }
+
+      guard let librarySystemManager else {
+        throw LibraryError.missingInitializedProperty(.librarySystemManager)
+      }
+
+      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let libraryURL = accessibleBookmark.url
+      let imagesURL = libraryURL.appendingPathComponent(URL.bushel.paths.restoreImagesDirectoryName)
+
+      let files = try await librarySystemManager.libraryImageFiles(
+        ofDirectoryAt: imagesURL
+      )
+
+      self.library = .init(items: files)
+      try await self.entry.synchronizeWith(library, using: database)
+      try saveChangesTo(libraryURL)
     }
   }
 #endif

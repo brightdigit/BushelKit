@@ -20,6 +20,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case ok
   case contactUs
   case startMachine
+  case pauseMachine
+  case resumeMachine
   case openMachine
   case snapshotMachine
   case buildMachine
@@ -85,6 +87,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case sessionCaptureSystemKeysToggle
   case sessionAutomaticallyReconfigureDisplayToggle
   case keepWindowOpenOnShutdown
+  case automaticallyTakeSnapshotsTooltip // "Automatically Take Snapshots"
   case settingsGeneralTab
   case settingsAdvancedTab
   case settingsTestTab

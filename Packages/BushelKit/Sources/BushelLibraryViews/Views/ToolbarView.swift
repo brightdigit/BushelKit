@@ -54,6 +54,15 @@
         .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
         .disabled(self.object.selectedItem == nil)
 
+        Button {
+          self.object.beginSyncronize()
+        } label: {
+          VStack {
+            Spacer()
+            Image(systemName: "arrow.clockwise")
+            Spacer()
+          }
+        }.frame(height: 12).contentShape(Rectangle()).hidden()
         Spacer()
       }
       .buttonStyle(.plain)

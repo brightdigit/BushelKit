@@ -62,6 +62,8 @@ public protocol Machine: Loggable {
 
   func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference)
 
+  func finishedWithSyncronization(_ difference: SnapshotSyncronizationDifference?) throws
+
   func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int)
 
   func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID
@@ -81,6 +83,22 @@ public extension Machine {
       return self.removeObservation(withID: id)
     }
     return false
+  }
+
+  func syncronizeSnapshots(
+    using provider:
+    any SnapshotProvider,
+    options: SnapshotSyncronizeOptions
+  ) async throws {
+    guard let snapshotter = provider.snapshotter(
+      withID: self.configuration.snapshotSystemID,
+      for: type(of: self)
+    ) else {
+      Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
+      preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
+    }
+    let snapshots = try await snapshotter.syncronizeSnapshots(for: self, options: options)
+    try self.finishedWithSyncronization(snapshots)
   }
 
   @discardableResult

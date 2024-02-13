@@ -74,7 +74,8 @@
       HStack {
         Slider(
           value: self.$object.configuration.memory,
-          in: self.object.range.memory
+          in: self.object.range.memory,
+          step: 1 * 1024 * 1024 * 1024
         ).layoutPriority(100)
 
         Text(
