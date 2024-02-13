@@ -47,6 +47,7 @@
           saveSnapshot: self.object.beginSavingSnapshot
         )
       }
+      .focusedSceneValue(\.machineDocument, object)
       // here
       .onChange(of: self.machineFile?.url) {
         self.beginLoadingURL($1)

@@ -88,7 +88,7 @@
       self.database = database
       self.systemManager = systemManager
       do {
-        self.machineObject = try await MachineObject(
+        let machineObject = try await MachineObject(
           parent: self,
           configuration: .init(
             url: url,
@@ -99,11 +99,37 @@
             labelProvider: labelProvider
           )
         )
+        self.machineObject = machineObject
         self.url = url
+        try await machineObject.syncronizeSnapshots(at: url, options: .init())
       } catch {
         Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
         self.error = assertionFailure(error: error) { error in
           Self.logger.critical("Unknown error: \(error)")
+        }
+      }
+    }
+
+    func beginSyncronizing() {
+      guard let url = self.url else {
+        let error = MachineError.missingProperty(.url)
+        Self.logger.error("Missing url: \(error)")
+        assertionFailure(error: error)
+        self.error = error
+        return
+      }
+      guard let machine = self.machineObject else {
+        let error = MachineError.missingProperty(.machine)
+        Self.logger.error("Missing machine: \(error)")
+        assertionFailure(error: error)
+        self.error = error
+        return
+      }
+      Task {
+        do {
+          try await machine.syncronizeSnapshots(at: url, options: .init())
+        } catch {
+          Self.logger.error("Unable to complete syncronize: \(error.localizedDescription)")
         }
       }
     }

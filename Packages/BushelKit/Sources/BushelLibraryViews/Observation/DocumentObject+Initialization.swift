@@ -20,18 +20,7 @@
 
       if let url {
         Task {
-          do {
-            object = try await .init(url, withDatabase: database, using: librarySystemManager)
-          } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(url) {
-            Self.logger.error("Could not open \(url, privacy: .public): no longer exists")
-            presentFileExporter = true
-          } catch {
-            Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
-
-            self.error = assertionFailure(error: error) { error in
-              Self.logger.critical("Unknown error: \(error)")
-            }
-          }
+          await self.setURL(to: url, database: database, manager: librarySystemManager)
         }
       } else {
         presentFileExporter = true
@@ -61,6 +50,9 @@
 
       Self.logger.debug("Load completed for url at \(newURL.path(), privacy: .public)")
       self.presentFileExporter = presentFileExporter
+      Task(priority: .background) {
+        await self.syncronize()
+      }
     }
 
     func onURLChange(from oldValue: URL?, to newValue: URL?) {
@@ -97,6 +89,25 @@
           database: database,
           manager: librarySystemManager
         )
+      }
+    }
+
+    public func beginSyncronize() {
+      Task {
+        await self.syncronize()
+      }
+    }
+
+    private func syncronize() async {
+      guard let object = self.object else {
+        Self.logger.error("No object yet.")
+        return
+      }
+
+      do {
+        try await object.syncronize()
+      } catch {
+        Self.logger.error("Unable to synconize: \(error.localizedDescription)")
       }
     }
   }

@@ -16,6 +16,12 @@
 /* Button for starting VM */
 "start_machine" = "Start Machine";
 
+/* Button for pause VM */
+"pause_machine" = "Pause Machine";
+
+/* Button for resume VM */
+"resume_machine" = "Resume Machine";
+
 /* Open Window for VM */
 "open_machine" = "Open Machine";
 
@@ -363,16 +369,14 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* session_shutdown_alert */
 "session_shutdown_alert" = "How would you like to shutdown your machine?";
 
-
 /* session_shutdown_alert title */
 "session_force_restart_title" = "Force Restart Machine";
-
 
 /* session_force_restart_message */
 "session_force_restart_message" = "Are you sure you wish to force restart the machine?";
 
 /* session_force_restart_button */
-"session_force_restart_button" = "Yes, Force Restart.?";
+"session_force_restart_button" = "Yes, Force Restart.";
 
 /* session_press_power_button */
 "session_press_power_button" = "Press Power Button";
@@ -390,10 +394,13 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 "session_automatically_reconfigure_display_toggle" = "Automatically Reconfigure Display";
 
 /* Session Capture System Keys Toggle */
-"session_capture_system_keys_toggle" = "Automatically Reconfigure Display";
+"session_capture_system_keys_toggle" = "Capture System Keys";
 
 /* Keep Window Open on Shutdown Tooltip */
 "keep_window_open_on_shutdown" = "Keep Window Open on Shutdown";
+
+/* Automatically Take Snapshots */
+"automatically_take_snapshots_tooltip" = "Automatically Take Snapshots";
 
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
@@ -568,7 +575,6 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Purchase Feature Automatic Snapshots Description */
 "purchase_feature_automatic_snapshots_description" = "Enjoy automatic periodic snapshots to safeguard your progress.";
-
 
 /* Purchase Feature Snapshot Notes Title */
 "purchase_feature_snapshot_notes_title" = "Annotate Your Snapshots";

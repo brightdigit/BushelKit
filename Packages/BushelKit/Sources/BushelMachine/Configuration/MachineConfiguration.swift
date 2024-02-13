@@ -43,6 +43,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled {
     graphicsConfigurations: [GraphicsConfiguration] = [.default()],
     snapshots: [Snapshot] = []
   ) {
+    assert(memory.isMultiple(of: 1024 * 1024))
     self.restoreImageFile = restoreImageFile
     self.vmSystemID = vmSystemID
     self.snapshotSystemID = snapshotSystemID
