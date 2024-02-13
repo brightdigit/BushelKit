@@ -36,18 +36,21 @@
           } label: {
             Image(systemName: "play.fill")
           }
+          .help(Text(LocalizedStringID.startMachine))
         } else if self.agent.canPause {
           Button {
             agent.pause()
           } label: {
             Image(systemName: "pause.fill")
           }
+          .help(Text(LocalizedStringID.pauseMachine))
         } else if self.agent.canResume {
           Button {
             agent.resume()
           } label: {
             Image(systemName: "play")
           }
+          .help(Text(LocalizedStringID.resumeMachine))
         } else {
           ProgressView().scaleEffect(0.5)
         }
@@ -67,6 +70,7 @@
           systemImage: "camera.badge.clock.fill",
           isOn: self.$sessionAutomaticSnapshotsEnabled
         )
+        .help(Text(.settingsAutomaticSnapshotsLabel))
       }
       Toggle(
         LocalizedStringID.keepWindowOpenOnShutdown,
@@ -80,22 +84,26 @@
         systemImage: "command.square.fill",
         isOn: self.$screenSettings.capturesSystemKeys
       )
+      .help(Text(.sessionCaptureSystemKeysToggle))
       Button {
         self.agent.snapshot(.init(), options: [])
       } label: {
         Image(systemName: "camera")
       }
+      .help(Text(.snapshotMachine))
       self.startPauseResume.tint(.primary)
       Button {
         self.isForceRestartRequested = true
       } label: {
         Image(systemName: "restart.circle.fill")
       }
+      .help(Text(.sessionForceRestartTitle))
       Button {
         self.agent.pressPowerButton()
       } label: {
         Image(systemName: "power")
       }
+      .help(Text(.sessionPressPowerButton))
       .disabled(!self.agent.canPressPowerButton)
       .tint(.primary)
       .background(content: {
@@ -107,8 +115,4 @@
       })
     }
   }
-
-//  #Preview {
-//    SessionToolbarView()
-//  }
 #endif

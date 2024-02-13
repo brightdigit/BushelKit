@@ -7,6 +7,25 @@
   import Foundation
 
   extension NSFileVersion {
+    struct VersionDataSet {
+      let fileVersion: NSFileVersion
+      let url: URL
+
+      func remove(with fileManager: FileManager) throws {
+        try fileVersion.remove()
+        try fileManager.removeItem(at: url)
+      }
+    }
+
+    var persistentIdentifierData: Data {
+      get throws {
+        try NSKeyedArchiver.archivedData(
+          withRootObject: self.persistentIdentifier,
+          requiringSecureCoding: false
+        )
+      }
+    }
+
     @available(iOS, unavailable)
     static func addOfItem(
       at url: URL,
@@ -49,24 +68,21 @@
     static func version(
       withID snapshotID: UUID,
       basedOn paths: SnapshotPaths
-    ) throws -> NSFileVersion {
+    ) throws -> VersionDataSet {
       let identifierDataFileURL = paths.snapshotCollectionURL
         .appendingPathComponent(snapshotID.uuidString)
         .appendingPathExtension("bshsnapshot")
       let identifierData = try Data(contentsOf: identifierDataFileURL)
 
-      return try Self.version(
+      let version = try Self.version(
         itemAt: paths.snapshottingSourceURL,
         forPersistentIdentifierData: identifierData
       )
+
+      return .init(fileVersion: version, url: identifierDataFileURL)
     }
 
     func writePersistentIdentifier(to snapshotFileURL: URL) throws {
-      let persistentIdentifierData = try NSKeyedArchiver.archivedData(
-        withRootObject: self.persistentIdentifier,
-        requiringSecureCoding: false
-      )
-
       try persistentIdentifierData.write(to: snapshotFileURL)
     }
   }

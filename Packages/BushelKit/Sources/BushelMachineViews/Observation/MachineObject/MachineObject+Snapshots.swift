@@ -7,6 +7,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelDataCore
   import BushelLogging
   import BushelMachine
   import BushelMachineData
@@ -273,6 +274,17 @@
     func cancelDeleteSnapshot(_ snapshot: Snapshot?) {
       assert(snapshot?.id == confirmingRemovingSnapshot?.id)
       self.confirmingRemovingSnapshot = nil
+    }
+
+    func syncronizeSnapshots(at url: URL, options: SnapshotSyncronizeOptions) async throws {
+      try await self.machine.syncronizeSnapshots(using: self.snapshotFactory, options: options)
+      try self.writeConfigurationAt(url)
+      try await self.entry.synchronizeWith(self.machine, osInstalled: nil, using: database)
+
+      self.refreshSnapshots()
+      self.machine = machine
+
+      Self.logger.notice("Syncronization Complete.")
     }
 
     func beginSavingSnapshot(_ request: SnapshotRequest, options: SnapshotOptions, at url: URL) {

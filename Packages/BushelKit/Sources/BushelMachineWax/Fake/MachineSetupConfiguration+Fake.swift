@@ -12,7 +12,7 @@ public extension MachineSetupConfiguration {
     restoreImageID: .imageIDSample,
     storage: [.default],
     cpuCount: 1,
-    memory: 1,
+    memory: 1024 * 1024,
     networkConfigurations: [.default()],
     graphicsConfigurations: [.default()]
   )

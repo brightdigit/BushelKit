@@ -42,7 +42,7 @@
         "No restore image id was passed."
       case .missingSystemManager:
         "Missing system manager."
-      case let .restoreImageNotFound:
+      case .restoreImageNotFound:
         "Unable to find restore image."
       case .imageNotSupported:
         "Image is not supported for virtualization."

@@ -34,4 +34,27 @@ public extension LibrarySystemManaging {
     let system = self.resolve(id)
     return system.label(fromMetadata: metadata)
   }
+
+  func libraryImageFiles(ofDirectoryAt imagesURL: URL) async throws -> [LibraryImageFile] {
+    let imageFileURLs = try FileManager.default.contentsOfDirectory(
+      at: imagesURL,
+      includingPropertiesForKeys: []
+    )
+
+    let files = await withTaskGroup(of: LibraryImageFile?.self) { group in
+      var files = [LibraryImageFile]()
+      for imageFileURL in imageFileURLs {
+        group.addLibraryImageFileTask(forURL: imageFileURL, librarySystemManager: self, logger: Self.logger)
+      }
+      for await file in group {
+        if let file {
+          Self.logger.debug("Completed Metadata for \(file.id)")
+          files.append(file)
+        }
+      }
+      return files
+    }.sorted(using: LibraryImageFileComparator.default)
+
+    return files
+  }
 }
