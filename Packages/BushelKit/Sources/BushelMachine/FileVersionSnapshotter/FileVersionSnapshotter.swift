@@ -102,9 +102,16 @@
       guard let versions else {
         return nil
       }
-      let snapshotFileDataDictionary = try self.fileManager.dataDictionary(
-        directoryAt: paths.snapshotCollectionURL
-      )
+      let snapshotFileDataDictionary: [String: Data]
+      let snapshotCollectionDirectoryExists =
+        self.fileManager.directoryExists(at: paths.snapshotCollectionURL) == .directoryExists
+      if snapshotCollectionDirectoryExists {
+        snapshotFileDataDictionary = try self.fileManager.dataDictionary(
+          directoryAt: paths.snapshotCollectionURL
+        )
+      } else {
+        snapshotFileDataDictionary = [:]
+      }
       let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value }).mapValues {
         $0.map(\.key)
       }
@@ -143,10 +150,11 @@
 
       Self.logger.notice("Updated stored snapshots: -\(filesToDelete.count) +\(snapshotsAdded.count)")
 
-      let snapshotFileURLs = try FileManager.default.contentsOfDirectory(
-        at: paths.snapshotCollectionURL,
-        includingPropertiesForKeys: []
-      )
+      let snapshotFileURLs = try snapshotCollectionDirectoryExists ?
+        FileManager.default.contentsOfDirectory(
+          at: paths.snapshotCollectionURL,
+          includingPropertiesForKeys: []
+        ) : []
       let snapshotIDs = snapshotFileURLs
         .map { $0.deletingPathExtension().lastPathComponent }
         .compactMap(UUID.init(uuidString:))
