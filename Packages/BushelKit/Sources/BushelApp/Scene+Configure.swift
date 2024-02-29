@@ -35,6 +35,7 @@
     ) -> some View {
       #if os(macOS)
         self
+          .database(configuration.modelContainer)
           .modelContainer(configuration.modelContainer)
           .hubView(configuration.hubView(_:))
           .openFileURL(configuration.openFileURL(_:openWindow:))
