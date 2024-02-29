@@ -3,6 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
+// swiftlint:disable file_length
 #if os(macOS)
   import BushelCore
   import BushelLogging
@@ -92,6 +93,7 @@
       machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
+    // swiftlint:disable:next function_body_length
     func syncronizeSnapshots(
       for machine: MachineType,
       options _: SnapshotSyncronizeOptions
