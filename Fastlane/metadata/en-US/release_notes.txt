@@ -1,4 +1,1 @@
-* Fixes to Snapshot Export
-* New IPSWDownloads Hub
-* UI Improvements via SwiftData Fixes
-* Added Better Syncronization and Snapshot support
+* Fixes to Recent Menu
