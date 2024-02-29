@@ -96,4 +96,12 @@
     }
   }
 
+  @available(*, deprecated, message: "This is a fix for a bug. Use Scene only eventually.")
+  public extension View {
+    func database(
+      _ modelContainer: ModelContainer
+    ) -> some View {
+      self.environment(\.database, BackgroundDatabase(modelContainer: modelContainer))
+    }
+  }
 #endif
