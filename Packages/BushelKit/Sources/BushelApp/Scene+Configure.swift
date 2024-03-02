@@ -35,7 +35,7 @@
     ) -> some View {
       #if os(macOS)
         self
-          .database(configuration.modelContainer)
+          .database(configuration.database)
           .modelContainer(configuration.modelContainer)
           .hubView(configuration.hubView(_:))
           .openFileURL(configuration.openFileURL(_:openWindow:))
@@ -94,7 +94,7 @@
       #if os(macOS)
         return self
           .modelContainer(configuration.modelContainer)
-          .database(configuration.modelContainer)
+          .database(configuration.database)
           .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
           .installerImageRepository(configuration.installerImageRepository)

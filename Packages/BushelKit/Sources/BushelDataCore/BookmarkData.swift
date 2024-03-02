@@ -10,7 +10,7 @@
   import SwiftData
 
   @Model
-  public final class BookmarkData: Loggable {
+  public final class BookmarkData: Loggable, FetchIdentifiable {
     public private(set) var path: String
 
     @Attribute(.unique)
@@ -24,6 +24,16 @@
 
     @Attribute
     public var createdAt: Date
+
+    @Transient
+    public var modelFetchDescriptor: FetchDescriptor<BookmarkData> {
+      let id = self.bookmarkID
+      var descriptor = FetchDescriptor<BookmarkData>(predicate: #Predicate { input in
+        input.bookmarkID == id
+      })
+      descriptor.fetchLimit = 1
+      return descriptor
+    }
 
     private convenience init(url: URL, bookmarkData: Data) {
       let path = url.standardizedFileURL.path

@@ -43,6 +43,10 @@
       assertionFailure("No Database Set.")
       throw NotImplmentedError.instance
     }
+
+    func contextMatchesModel(_: some PersistentModel) -> Bool {
+      false
+    }
   }
 
   private struct DatabaseKey: EnvironmentKey {

@@ -21,7 +21,9 @@
 
     var allowedOpenFileTypes: [FileType] { get }
 
-    var schemas: [any PersistentModel.Type] { get }
+    var modelContainer: ModelContainer { get }
+
+    var database: any Database { get }
 
     func hubView(_ image: Binding<(any InstallImage)?>) -> HubViewType
 
@@ -30,9 +32,4 @@
     func openFileURL(_ url: URL, openWindow: OpenWindowAction)
   }
 
-  extension ApplicationConfiguration {
-    var modelContainer: ModelContainer {
-      .forTypes(schemas)
-    }
-  }
 #endif
