@@ -11,7 +11,7 @@
   import SwiftData
   import SwiftUI
 
-  public class BackgroundDatabase: Database {
+  public final class BackgroundDatabase: Database {
     private actor DatabaseContainer {
       private let factory: @Sendable () -> any Database
       private var wrapped: (any Database)?
@@ -86,22 +86,9 @@
       assert(isMainThread: false)
       return try await self.database.save()
     }
-  }
 
-  public extension Scene {
-    func database(
-      _ modelContainer: ModelContainer
-    ) -> some Scene {
-      self.environment(\.database, BackgroundDatabase(modelContainer: modelContainer))
-    }
-  }
-
-  @available(*, deprecated, message: "This is a fix for a bug. Use Scene only eventually.")
-  public extension View {
-    func database(
-      _ modelContainer: ModelContainer
-    ) -> some View {
-      self.environment(\.database, BackgroundDatabase(modelContainer: modelContainer))
+    public func contextMatchesModel(_ model: some PersistentModel) async -> Bool {
+      await self.database.contextMatchesModel(model)
     }
   }
 #endif

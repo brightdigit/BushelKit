@@ -4,9 +4,10 @@
 //
 
 #if canImport(SwiftData)
+  import BushelLogging
   import Foundation
   import SwiftData
-  public protocol Database {
+  public protocol Database: Sendable, Loggable {
     func delete<T>(_ model: T) async where T: PersistentModel
     func insert<T>(_ model: T) async where T: PersistentModel
     func save() async throws
@@ -16,9 +17,14 @@
       where predicate: Predicate<T>?
     ) async throws
     func transaction(_ block: @escaping (ModelContext) throws -> Void) async throws
+    func contextMatchesModel<T>(_ model: T) async -> Bool where T: PersistentModel
   }
 
   public extension Database {
+    static var loggingCategory: LoggingSystemType.Category {
+      .data
+    }
+
     func deleteAll(of types: [any PersistentModel.Type]) async throws {
       try await self.transaction { context in
         try types.forEach {
@@ -54,6 +60,22 @@
       where predicate: Predicate<T>? = nil
     ) async throws {
       try await self.delete(where: predicate)
+    }
+  }
+
+  public extension Database {
+    func switchContextFor<T: FetchIdentifiable>(model: T) async throws -> T {
+      if await self.contextMatchesModel(model) {
+        return model
+      }
+
+      return try await self.fetchContextFor(model: model)
+    }
+
+    func fetchContextFor<T: FetchIdentifiable>(model: T) async throws -> T {
+      Self.logger.notice("Switching Context for Model: \(T.self)")
+      let array = try await self.fetch(model.modelFetchDescriptor)
+      return try T.model(from: array)
     }
   }
 #endif

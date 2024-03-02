@@ -70,11 +70,20 @@
     }
 
     static func fetchURL(
-      forBookmark bookmark: BookmarkData,
+      forBookmark originBookmark: BookmarkData,
       logger: Logger,
       using database: any Database
     ) async -> URL? {
       let url: URL
+
+      let bookmark: BookmarkData
+      do {
+        bookmark = try await database.switchContextFor(model: originBookmark)
+      } catch {
+        logger.error("Unable to switch context with database.")
+        assertionFailure(error: error)
+        return nil
+      }
       do {
         url = try await bookmark.fetchURL(using: database, withURL: nil)
       } catch let error as NSError where error.code == 259 {
@@ -119,4 +128,5 @@
       #endif
     }
   }
+
 #endif

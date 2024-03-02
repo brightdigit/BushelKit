@@ -17,6 +17,7 @@
 
     public func transaction(_ block: @escaping (ModelContext) throws -> Void) async throws {
       assert(isMainThread: false)
+
       try self.modelContext.transaction {
         assert(isMainThread: false)
         try block(modelContext)
@@ -25,12 +26,20 @@
 
     public func delete(_ model: some PersistentModel) async {
       assert(isMainThread: false)
+      assert(model.modelContext == self.modelContext || model.modelContext == nil)
+      guard model.modelContext == self.modelContext else {
+        return
+      }
       Self.logger.debug("Delete begun: \(type(of: model).self)")
       self.modelContext.delete(model)
     }
 
     public func insert(_ model: some PersistentModel) async {
       assert(isMainThread: false)
+      assert(model.modelContext == self.modelContext || model.modelContext == nil)
+      guard model.modelContext == self.modelContext else {
+        return
+      }
       Self.logger.debug("Insert begun: \(type(of: model).self)")
       self.modelContext.insert(model)
     }
@@ -39,6 +48,7 @@
       where predicate: Predicate<T>?
     ) async throws {
       assert(isMainThread: false)
+
       Self.logger.debug("Delete begun: \(T.self)")
       try self.modelContext.delete(model: T.self, where: predicate)
     }
@@ -53,6 +63,10 @@
       assert(isMainThread: false)
       Self.logger.debug("Fetch begun: \(T.self)")
       return try self.modelContext.fetch(descriptor)
+    }
+
+    public func contextMatchesModel(_ model: some PersistentModel) async -> Bool {
+      model.modelContext == self.modelContext
     }
   }
 #endif

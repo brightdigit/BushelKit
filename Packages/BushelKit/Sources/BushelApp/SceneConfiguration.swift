@@ -26,12 +26,19 @@
 
     let systems: [any System]
 
-    var schemas: [any PersistentModel.Type] {
+    let schemas: [any PersistentModel.Type] =
       .all
-    }
 
     var allowedOpenFileTypes: [FileType] {
       [.virtualMachine, .restoreImageLibrary]
+    }
+
+    var modelContainer: ModelContainer {
+      SharedDatabase.shared.modelContainer
+    }
+
+    var database: any Database {
+      SharedDatabase.shared.database
     }
 
     internal init(@SystemBuilder _ systems: @escaping () -> [any System]) {
