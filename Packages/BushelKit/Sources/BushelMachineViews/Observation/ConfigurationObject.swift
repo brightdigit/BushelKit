@@ -12,7 +12,7 @@
   import SwiftData
 
   @Observable
-  final class ConfigurationObject: Loggable {
+  final class ConfigurationObject: Loggable, Sendable {
     var sheetSelectedRestoreImageID: UUID? {
       didSet {
         self.configuration.restoreImageID = sheetSelectedRestoreImageID

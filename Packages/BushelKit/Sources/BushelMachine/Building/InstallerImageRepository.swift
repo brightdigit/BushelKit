@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public protocol InstallerImageRepository {
+public protocol InstallerImageRepository: Sendable {
   typealias Error = InstallerImageError
 
   func images(

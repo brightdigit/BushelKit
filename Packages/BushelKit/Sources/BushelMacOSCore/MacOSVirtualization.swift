@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public enum MacOSVirtualization {
+public enum MacOSVirtualization: Sendable {
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
 
   public static let shortName = "macOS"

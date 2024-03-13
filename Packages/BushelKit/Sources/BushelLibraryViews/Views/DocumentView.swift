@@ -76,7 +76,7 @@
             }
           )
       } detail: {
-        if var image = self.object.bindableImage {
+        if let image = self.object.bindableImage {
           @Bindable var bindableImage = image
           let system = self.librarySystemManager.resolve(image.metadata.vmSystemID)
           ImageView(

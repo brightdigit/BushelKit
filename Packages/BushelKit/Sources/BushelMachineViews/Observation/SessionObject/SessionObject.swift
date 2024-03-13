@@ -7,7 +7,7 @@
   import BushelCore
   import BushelLogging
   import BushelMachine
-  import BushelSessionUI
+  import BushelScreenCore
   import Foundation
   import Observation
   import SwiftData
@@ -18,7 +18,7 @@
   #endif
 
   @Observable
-  class SessionObject: Loggable, MachineObjectParent, SessionFramable {
+  final class SessionObject: Loggable, MachineObjectParent, SessionFramable, Sendable {
     var url: URL?
     var alertIsPresented: Bool = false
     var presentConfirmCloseAlert: Bool = false

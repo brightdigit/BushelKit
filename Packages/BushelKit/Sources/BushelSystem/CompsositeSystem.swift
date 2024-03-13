@@ -8,9 +8,9 @@ import BushelLibrary
 import BushelMachine
 
 struct CompsositeSystem: System {
-  let libraryClosure: (() -> any LibrarySystem)?
-  let machineClosure: (() -> any MachineSystem)?
-  let hubsClosure: (() -> [Hub])?
+  let libraryClosure: (@Sendable () -> any LibrarySystem)?
+  let machineClosure: (@Sendable () -> any MachineSystem)?
+  let hubsClosure: (@Sendable () -> [Hub])?
   var library: (any LibrarySystem)? {
     self.libraryClosure?()
   }
@@ -24,9 +24,9 @@ struct CompsositeSystem: System {
   }
 
   internal init(
-    libraryClosure: (() -> any LibrarySystem)? = nil,
-    machineClosure: (() -> any MachineSystem)? = nil,
-    hubsClosure: (() -> [Hub])? = nil
+    libraryClosure: (@Sendable () -> any LibrarySystem)? = nil,
+    machineClosure: (@Sendable () -> any MachineSystem)? = nil,
+    hubsClosure: (@Sendable () -> [Hub])? = nil
   ) {
     self.libraryClosure = libraryClosure
     self.machineClosure = machineClosure

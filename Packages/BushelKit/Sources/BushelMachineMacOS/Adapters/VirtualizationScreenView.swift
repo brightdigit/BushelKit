@@ -6,7 +6,7 @@
 #if canImport(SwiftUI) && canImport(Virtualization)
   import BushelCore
   import BushelLogging
-  import BushelSessionUI
+  import BushelScreenCore
   import SwiftUI
   import Virtualization
 

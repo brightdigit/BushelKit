@@ -24,13 +24,13 @@ public enum SystemBuilder {
     accumulated + [next]
   }
 
-  public static func buildPartialBlock(first: @escaping () -> [Hub]) -> [any System] {
+  public static func buildPartialBlock(first: @escaping @Sendable () -> [Hub]) -> [any System] {
     [CompsositeSystem(hubsClosure: first)]
   }
 
   public static func buildPartialBlock(
     accumulated: [any System],
-    next: @escaping () -> [Hub]
+    next: @escaping @Sendable () -> [Hub]
   ) -> [any System] {
     accumulated + [CompsositeSystem(hubsClosure: next)]
   }

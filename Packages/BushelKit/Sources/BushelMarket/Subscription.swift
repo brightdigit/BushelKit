@@ -7,7 +7,7 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public struct Subscription {
+public struct Subscription: Sendable {
   public let groupID: String
   public let currentProductID: String
   public let transcationDate: Date

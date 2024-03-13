@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public struct LibraryImageFile: Codable, Identifiable, Hashable {
+public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
   enum CodingKeys: String, CodingKey {
     case id
     case name

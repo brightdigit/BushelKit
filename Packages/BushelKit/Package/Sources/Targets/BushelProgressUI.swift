@@ -5,4 +5,8 @@
 
 import Foundation
 
-struct BushelProgressUI: Target {}
+struct BushelProgressUI: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+  }
+}

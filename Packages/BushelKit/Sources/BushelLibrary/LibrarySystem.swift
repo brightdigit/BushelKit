@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public protocol LibrarySystem {
+public protocol LibrarySystem: Sendable {
   var id: VMSystemID { get }
   var shortName: String { get }
   var allowedContentTypes: Set<FileType> { get }

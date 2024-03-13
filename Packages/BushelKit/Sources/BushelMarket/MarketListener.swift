@@ -5,7 +5,7 @@
 
 import Foundation
 
-public protocol MarketListener {
+public protocol MarketListener: Sendable {
   func initialize(for observer: any MarketObserver)
   func invalidate()
 }

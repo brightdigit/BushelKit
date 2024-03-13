@@ -14,17 +14,24 @@
   import SwiftUI
 
   @Observable
-  class LibraryObject: Loggable {
-    @ObservationIgnored
-    var database: (any Database)?
-
-    @ObservationIgnored
-    var librarySystemManager: (any LibrarySystemManaging)?
-
+  final class LibraryObject: Loggable, Sendable {
     var library: Library
     var entry: LibraryEntry
 
-    internal init(library: Library, entry: LibraryEntry) {
+    @ObservationIgnored
+    internal private(set) var database: (any Database)?
+
+    @ObservationIgnored
+    internal private(set) var librarySystemManager: (any LibrarySystemManaging)?
+
+    internal init(
+      library: Library,
+      entry: LibraryEntry,
+      database: (any Database)? = nil,
+      librarySystemManager: (any LibrarySystemManaging)? = nil
+    ) {
+      self.database = database
+      self.librarySystemManager = librarySystemManager
       self.library = library
       self.entry = entry
     }
