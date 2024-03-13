@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public enum BuilderError: LocalizedError, Equatable {
+public enum BuilderError: LocalizedError, Equatable, Sendable {
   case corrupted(Property, dataAtURL: URL)
   case noSupportedConfigurationImage(MetadataLabel, isSupported: Bool)
   case installationFailure(InstallFailure)
@@ -14,7 +14,7 @@ public enum BuilderError: LocalizedError, Equatable {
 
   public typealias Property = BuilderProperty
 
-  public enum RestoreImageFailure {
+  public enum RestoreImageFailure: Sendable {
     case corrupt
     case notFound
   }

@@ -1,5 +1,5 @@
 variables:
-  XCODE_VERSION: "15.2"
+  XCODE_VERSION: "15.3"
   FF_USE_FASTZIP: "true"
   TRANSFER_METER_FREQUENCY: "2s"
   ARTIFACT_COMPRESSION_LEVEL: "fastest"
@@ -63,9 +63,9 @@ build spm macos:
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/BushelKit
     - xcodebuild -resolvePackageDependencies
-    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.2,name=iPhone 15" &>/dev/null || true
-    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.2,name=iPhone 15"
-    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.2 -destination "OS=17.2,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.4,name=iPhone 15" &>/dev/null || true
+    - xcodebuild build -quiet -scheme BushelKit-Package -derivedDataPath Build -destination "OS=17.4,name=iPhone 15"
+    - xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator17.4 -destination "OS=17.4,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
     - popd
     - XCRESULT=$(find . -path "./Packages/BushelKit/Build/Logs/Test/Test-BushelKit-Package-*.xcresult")
     - echo ${XCRESULT}    
@@ -95,7 +95,7 @@ build spm linux:
   except:
     variables:
       - $APPSTORE_DEPLOY
-  image: swift:5.9.0-jammy
+  image: swift:5.10-jammy
   script:
     - cd Packages/BushelKit
     - swift build
@@ -120,6 +120,24 @@ lint strict:
   variables:
    LINT_MODE: "STRICT"
   <<: *lint_template  
+
+match:
+  stage: lint
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  tags:
+    - macos  
+  only:
+    variables:
+      - $MATCH
+  script:
+    - rbenv rehash
+    - rbenv exec bundle install
+    - rbenv exec bundle exec fastlane match appstore --additional_cert_types=mac_installer_distribution --readonly
 
 testflight:
   stage: deploy

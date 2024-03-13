@@ -7,7 +7,7 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public protocol InstallerImage: OperatingSystemInstalled {
+public protocol InstallerImage: OperatingSystemInstalled, Sendable {
   typealias Metadata = InstallerImageMetadata
   var libraryID: LibraryIdentifier? { get }
   var imageID: UUID { get }

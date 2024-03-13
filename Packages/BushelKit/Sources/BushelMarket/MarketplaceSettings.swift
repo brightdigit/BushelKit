@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct MarketplaceSettings {
+public struct MarketplaceSettings: Sendable {
   // swiftlint:disable:next force_unwrapping
   public static let `default`: MarketplaceSettings = .init()!
   public let groupIDs: [String]

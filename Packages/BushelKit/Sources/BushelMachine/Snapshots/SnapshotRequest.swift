@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct SnapshotRequest {
+public struct SnapshotRequest: Sendable {
   public let name: String
   public let notes: String
   public init(name: String = "", notes: String = "") {

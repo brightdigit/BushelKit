@@ -13,9 +13,12 @@
 
   extension LibraryObject {
     convenience init(components: Components) {
-      self.init(library: components.library, entry: components.entry)
-      self.database = components.database
-      self.librarySystemManager = components.system
+      self.init(
+        library: components.library,
+        entry: components.entry,
+        database: components.database,
+        librarySystemManager: components.system
+      )
     }
 
     convenience init(
@@ -67,8 +70,9 @@
 
     func beginImport(
       _ request: ImportRequest,
-      setProgressWith setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void,
-      onError: @escaping (any Error) -> Void
+      setProgressWith setProgress:
+      @MainActor @Sendable @escaping (ProgressOperationView.Properties?) -> Void,
+      onError: @escaping @Sendable (any Error) -> Void
     ) {
       Task {
         do {

@@ -8,13 +8,13 @@ import BushelLogging
 import Foundation
 
 public extension Subscription {
-  struct Period {
-    public enum Unit {
+  struct Period: Sendable {
+    public enum Unit: Sendable {
       case year
       case month
       case week
       case day
-      case unknown(value: Any)
+      case unknown(value: any Sendable)
     }
 
     public init(unit: Unit, value: Int) {

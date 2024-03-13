@@ -535,7 +535,7 @@ import PackageDescription
 
 struct FelinePine: PackageDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/FelinePine.git", from: "1.0.0-beta.1")
+    .package(url: "https://github.com/brightdigit/FelinePine.git", from: "1.0.0-beta.2")
   }
 }
 //
@@ -547,7 +547,19 @@ import Foundation
 
 struct IPSWDownloads: PackageDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.1")
+    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.4")
+  }
+}
+//
+// OperatingSystemVersion.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+import Foundation
+
+struct OperatingSystemVersion: PackageDependency {
+  var dependency: Package.Dependency {
+    .package(url: "https://github.com/brightdigit/OperatingSystemVersion.git", from: "1.0.0-beta.1")
   }
 }
 //
@@ -583,6 +595,7 @@ struct BushelApp: Product, Target {
     BushelFactory()
     BushelMarket()
     BushelWax()
+    BushelXPCSession()
   }
 }
 //
@@ -601,6 +614,19 @@ struct BushelCommand: Target, Product {
 
   var productType: ProductType {
     .executable
+  }
+}
+//
+// BushelGuestProfile.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+import Foundation
+
+struct BushelGuestProfile: Product, Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
   }
 }
 //
@@ -623,6 +649,27 @@ struct BushelMachineApp: Target, Product {
   var dependencies: any Dependencies {
     BushelMachineViews()
     BushelMachineMacOS()
+  }
+}
+//
+// BushelService.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelService: Product, Target {
+  var dependencies: any Dependencies {
+    BushelViews()
+    BushelVirtualization()
+    BushelHubIPSW()
+    BushelMachine()
+    BushelLibrary()
+    BushelSystem()
+    BushelData()
+    BushelHub()
+    BushelFactory()
+    BushelMarket()
+    BushelWax()
+    BushelMessage()
   }
 }
 //
@@ -672,7 +719,11 @@ struct BushelArgs: Target {
 // Copyright (c) 2024 BrightDigit.
 //
 
-struct BushelCore: Target {}
+struct BushelCore: Target {
+  var dependencies: any Dependencies {
+    OperatingSystemVersion()
+  }
+}
 //
 // BushelCoreWax.swift
 // Copyright (c) 2024 BrightDigit.
@@ -954,7 +1005,20 @@ struct BushelMachineMacOS: Target {
   var dependencies: any Dependencies {
     BushelMachine()
     BushelMacOSCore()
-    BushelSessionUI()
+    BushelScreenCore()
+  }
+}
+//
+// BushelMachineMessage.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelMachineMessage: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMessageCore()
+    BushelMachineData()
   }
 }
 //
@@ -969,7 +1033,7 @@ struct BushelMachineViews: Target {
     BushelUT()
     BushelLocalization()
     BushelViewsCore()
-    BushelSessionUI()
+    BushelScreenCore()
     BushelMachineEnvironment()
     BushelMarketEnvironment()
   }
@@ -1041,6 +1105,30 @@ struct BushelMarketViews: Target {
   }
 }
 //
+// BushelMessage.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelMessage: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMachineMessage()
+  }
+}
+//
+// BushelMessageCore.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelMessageCore: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelDataCore()
+  }
+}
+//
 // BushelOnboardingCore.swift
 // Copyright (c) 2024 BrightDigit.
 //
@@ -1085,14 +1173,57 @@ struct BushelOnboardingViews: Target {
 
 import Foundation
 
-struct BushelProgressUI: Target {}
+struct BushelProgressUI: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+  }
+}
 //
-// BushelSessionUI.swift
+// BushelScreenCore.swift
 // Copyright (c) 2024 BrightDigit.
 //
 
 import Foundation
-struct BushelSessionUI: Target {}
+struct BushelScreenCore: Target {}
+//
+// BushelSession.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelSession: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelSessionCore()
+    BushelSessionEnvironment()
+    BushelMachineMessage()
+  }
+}
+//
+// BushelSessionCore.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelSessionCore: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMessage()
+  }
+}
+//
+// BushelSessionEnvironment.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelSessionEnvironment: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelMessageCore()
+    BushelSessionCore()
+  }
+}
 //
 // BushelSettingsViews.swift
 // Copyright (c) 2024 BrightDigit.
@@ -1221,6 +1352,20 @@ struct BushelWelcomeViews: Target {
     BushelLocalization()
     BushelOnboardingEnvironment()
     BushelMarketEnvironment()
+    BushelMessage()
+    BushelSessionEnvironment()
+  }
+}
+//
+// BushelXPCSession.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelXPCSession: Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelLogging()
+    BushelSession()
   }
 }
 //
@@ -1261,6 +1406,26 @@ struct BushelMachineTests: TestTarget {
   }
 }
 //
+// BushelServiceTests.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelServiceTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelService()
+  }
+}
+//
+// BushelSessionTests.swift
+// Copyright (c) 2024 BrightDigit.
+//
+
+struct BushelSessionTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelSession()
+  }
+}
+//
 // Index.swift
 // Copyright (c) 2024 BrightDigit.
 //
@@ -1275,11 +1440,15 @@ let package = Package(
     BushelMachineApp()
     BushelSettingsApp()
     BushelApp()
+    BushelService()
+    BushelGuestProfile()
   },
   testTargets: {
     BushelCoreTests()
     BushelLibraryTests()
     BushelMachineTests()
+    BushelServiceTests()
+    BushelSessionTests()
   },
   swiftSettings: {
     SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
@@ -1288,6 +1457,9 @@ let package = Package(
     SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
     SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
     SwiftSetting.enableUpcomingFeature("StrictConcurrency")
+    SwiftSetting.enableUpcomingFeature("DisableOutwardActorInference")
+    SwiftSetting.enableExperimentalFeature("StrictConcurrency")
+    SwiftSetting.unsafeFlags(["-warn-concurrency", "-enable-actor-data-race-checks"])
   }
 )
 .supportedPlatforms {

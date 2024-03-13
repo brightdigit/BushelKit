@@ -29,7 +29,7 @@
       to libraryURL: URL,
       using system: any LibrarySystem,
       database: any Database,
-      _ setProgress: @MainActor @escaping (ProgressOperationProperties?) -> Void
+      _ setProgress: @MainActor @Sendable @escaping (ProgressOperationProperties?) -> Void
     ) async throws {
       let imagesFolderURL = libraryURL.appending(path: URL.bushel.paths.restoreImagesDirectoryName)
       do {
@@ -44,7 +44,7 @@
 
       let destinationURL = imagesFolderURL.appending(path: imageFile.id.uuidString)
         .appendingPathExtension(url.pathExtension)
-      let progress = try FileManager.default.fileOperationProgress(
+      let progress = try FileManager.fileOperationProgress(
         from: url,
         to: destinationURL,
         totalValue: imageFile.metadata.contentLength
@@ -78,7 +78,7 @@
 
     func importImage(
       _ images: ImportRequest,
-      setProgress: @MainActor @escaping (ProgressOperationView.Properties?) -> Void
+      setProgress: @MainActor @Sendable @escaping (ProgressOperationView.Properties?) -> Void
     ) async throws {
       guard let database else {
         throw LibraryError.missingInitializedProperty(.database)

@@ -14,7 +14,7 @@
   import SwiftUI
 
   @Observable
-  class LibraryImageObject: Loggable {
+  final class LibraryImageObject: Loggable, Sendable {
     var library: LibraryObject
     var entry: LibraryImageEntry
     let index: Int

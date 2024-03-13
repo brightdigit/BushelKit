@@ -5,7 +5,7 @@
 
 import BushelCore
 
-public protocol SnapshotProvider {
+public protocol SnapshotProvider: Sendable {
   func snapshotter<MachineType: Machine>(
     withID id: SnapshotterID,
     for machineType: MachineType.Type

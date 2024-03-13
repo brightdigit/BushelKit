@@ -13,11 +13,15 @@ let package = Package(
     BushelMachineApp()
     BushelSettingsApp()
     BushelApp()
+    BushelService()
+    BushelGuestProfile()
   },
   testTargets: {
     BushelCoreTests()
     BushelLibraryTests()
     BushelMachineTests()
+    BushelServiceTests()
+    BushelSessionTests()
   },
   swiftSettings: {
     SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
@@ -26,6 +30,9 @@ let package = Package(
     SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
     SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
     SwiftSetting.enableUpcomingFeature("StrictConcurrency")
+    SwiftSetting.enableUpcomingFeature("DisableOutwardActorInference")
+    SwiftSetting.enableExperimentalFeature("StrictConcurrency")
+    SwiftSetting.unsafeFlags(["-warn-concurrency", "-enable-actor-data-race-checks"])
   }
 )
 .supportedPlatforms {

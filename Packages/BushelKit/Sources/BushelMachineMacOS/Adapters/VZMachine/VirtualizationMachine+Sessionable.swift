@@ -5,7 +5,7 @@
 
 #if canImport(SwiftUI) && canImport(Virtualization) && arch(arm64)
   import BushelCore
-  import BushelSessionUI
+  import BushelScreenCore
   import Foundation
   import SwiftUI
 

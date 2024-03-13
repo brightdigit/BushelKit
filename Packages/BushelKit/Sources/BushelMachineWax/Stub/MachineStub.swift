@@ -7,6 +7,10 @@ import BushelMachine
 import Foundation
 
 public struct MachineStub: Machine {
+  public var machineIdentifer: UInt64? {
+    nil
+  }
+
   public let configuration: MachineConfiguration
   public let state: MachineState
 
