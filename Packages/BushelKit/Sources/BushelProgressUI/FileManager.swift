@@ -9,14 +9,14 @@
 
   public extension FileManager {
     #warning("logging-note: let's log that a url is getting copied/downloaded")
-    func fileOperationProgress(
+    static func fileOperationProgress(
       from sourceURL: URL,
       to destinationURL: URL,
       totalValue: Int?
     ) throws -> any ProgressOperation<Int> {
       if sourceURL.isFileURL {
         try CopyOperation(
-          fileManager: self,
+          fileManager: { .default },
           sourceURL: sourceURL,
           destinationURL: destinationURL
         )

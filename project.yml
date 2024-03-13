@@ -8,12 +8,15 @@ options:
 settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
-  MARKETING_VERSION: "1.1.1"
-  CURRENT_PROJECT_VERSION: 88
+  MARKETING_VERSION: "1.2.0"
+  CURRENT_PROJECT_VERSION: 90
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
   LINT_MODE: ${LINT_MODE}
+  SWIFT_STRICT_CONCURRENCY: complete
+  OTHER_SWIFT_FLAGS: -Xfrontend -enable-actor-data-race-checks -Xfrontend -warn-concurrency
+  ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: false
 packages:
   BushelKit:
     path: ./Packages/BushelKit
@@ -60,7 +63,8 @@ targetTemplates:
           - {UTTypeConformsTo: [''], UTTypeIdentifier: com.apple.itunes.ipsw, UTTypeTagSpecification: {public.filename-extension: [ipsw]}}
         BrightDigitPrereleaseInfo:
           Label: beta
-          Base: 82
+          Base: 89
+        BrightDigitXPCService: ${bundleIdPrefix}.BushelXPC
     sources:
       - path: "Support/macOS"
         name: macOS
@@ -95,12 +99,51 @@ targetTemplates:
       - path: "Apps/${target_name}"
         group: Apps
 targets:
+  BushelXPC:
+    platform: macOS
+    type: xpc-service
+    settings:
+      base:
+        PRODUCT_NAME: BushelXPC
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: iPhone Developer
+          PROVISIONING_PROFILE_SPECIFIER: match Development com.brightdigit.BushelXPC macos
+        Release:
+          CODE_SIGN_IDENTITY: iPhone Distribution
+          PROVISIONING_PROFILE_SPECIFIER: match AppStore com.brightdigit.BushelXPC macos
+    sources:
+      - path: "Sources/XPC"
+        name: XPC
+        group: Sources
+    info:
+      path: Support/XPC/Info.plist
+      properties:
+        BrightDigitXPCService: ${bundleIdPrefix}.BushelXPC
+        XPCService:
+          ServiceType: Application
+    dependencies:
+      - package: BushelKit
+        product: BushelService
+      - sdk: Virtualization.framework
+    entitlements:
+      path: Support/XPC/macOS.entitlements
+      properties:
+        com.apple.security.files.bookmarks.app-scope: true
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.server: true
+        com.apple.security.virtualization: true
+        com.apple.vm.networking: true
+        com.apple.security.application-groups:
+          - group.com.brightdigit.Bushel
   Bushel:
     templates:
       - Application
     templateAttributes:
       packageName:
       productName:
+    dependencies:
+      - target: BushelXPC
     sources:
       - path: "Sources/macOS"
         name: macOS

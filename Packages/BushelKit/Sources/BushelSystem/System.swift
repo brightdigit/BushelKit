@@ -8,7 +8,7 @@ import BushelLibrary
 import BushelMachine
 import Foundation
 
-public protocol System {
+public protocol System: Sendable {
   var library: (any LibrarySystem)? { get }
   var machine: (any MachineSystem)? { get }
   var hubs: [Hub] { get }

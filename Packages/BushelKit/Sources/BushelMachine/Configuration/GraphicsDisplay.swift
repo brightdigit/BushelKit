@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConvertible {
+public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConvertible, Sendable {
   public let id: UUID
 
   public let widthInPixels: Int

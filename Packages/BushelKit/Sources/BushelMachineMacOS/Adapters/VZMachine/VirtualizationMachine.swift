@@ -9,20 +9,34 @@
   import Foundation
   import Virtualization
 
+  #warning("make actor?")
   final class VirtualizationMachine: NSObject, Machine {
     let url: URL
     var configuration: MachineConfiguration
     let machine: VZVirtualMachine
+    let identifier: MachineIdentifier
+    let hardwareModel: HardwareModel
 
     // swiftlint:disable:next implicitly_unwrapped_optional
     var observation: (any KVObservation)!
-    var observers = [UUID: @MainActor (MachineChange) -> Void]()
+    var observers = [UUID: @Sendable @MainActor (MachineChange) -> Void]()
+
+    var machineIdentifer: UInt64? {
+      identifier.ecID
+    }
 
     @MainActor
-    internal init(url: URL, configuration: MachineConfiguration, machine: VZVirtualMachine) {
+    internal init(
+      url: URL,
+      configuration: MachineConfiguration,
+      machine: VZVirtualMachine,
+      data: VirtualizationData
+    ) {
       self.url = url
       self.configuration = configuration
       self.machine = machine
+      self.hardwareModel = data.hardwareModel
+      self.identifier = data.machineIdentifier
 
       super.init()
 

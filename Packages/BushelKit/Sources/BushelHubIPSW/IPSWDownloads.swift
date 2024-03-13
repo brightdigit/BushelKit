@@ -10,7 +10,7 @@ import OpenAPIURLSession
 
 @_exported import struct IPSWDownloads.IPSWDownloads
 
-extension IPSWDownloads: Loggable {
+extension IPSWDownloads: Loggable, Sendable {
   static let title = "IPSW Downloads"
   static let hubID = "ipsw-downloads"
   static let virtualMacID = "VirtualMac2,1"
@@ -37,12 +37,14 @@ extension IPSWDownloads: Loggable {
     }
   }
 
+  @Sendable
   public static func hubs() -> [Hub] {
     [
       .init(title: title, id: hubID, count: lastCount, self.hubImages)
     ]
   }
 
+  @Sendable
   public static func hubImages() async throws -> [HubImage] {
     let client = IPSWDownloads(transport: URLSessionTransport())
     let firmwares = try await client.device(withIdentifier: virtualMacID, type: .ipsw).firmwares

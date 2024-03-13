@@ -1,0 +1,22 @@
+{
+  "images" : [
+    {
+      "filename" : "macos-big-sur-wallpaper-1-scaled.jpg",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "macos-big-sur-wallpaper-2-scaled.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct MachineStorageSpecification: Codable, Identifiable, Equatable {
+public struct MachineStorageSpecification: Codable, Identifiable, Equatable, Sendable {
   public let id: UUID
   public var size: UInt64
   public var label: String

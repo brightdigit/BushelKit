@@ -76,10 +76,8 @@
       using database: any InstallerImageRepository
     ) {
       do {
-        try result.flatMap { url in
-          Result {
-            try self.beginCreateBuilder(url, using: database)
-          }
+        try result.map { url in
+          self.beginCreateBuilder(url, using: database)
         }
         .get()
       } catch let error as ConfigurationError {

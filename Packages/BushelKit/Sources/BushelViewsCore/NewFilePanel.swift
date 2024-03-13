@@ -10,11 +10,12 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  public struct NewFilePanel<FileType: InitializableFileTypeSpecification> {
+  public struct NewFilePanel<FileType: InitializableFileTypeSpecification>: Sendable {
     public init() {}
 
     public init(_: FileType.Type) {}
 
+    @MainActor
     public func callAsFunction(with openWindow: OpenWindowAction) {
       let openPanel = NSSavePanel()
       openPanel.allowedContentTypes = [UTType(fileType: FileType.fileType)]
@@ -36,6 +37,7 @@
   }
 
   public extension OpenWindowAction {
+    @MainActor
     func callAsFunction(newFileOf valueType: (some InitializableFileTypeSpecification).Type) {
       NewFilePanel(valueType)(with: self)
     }

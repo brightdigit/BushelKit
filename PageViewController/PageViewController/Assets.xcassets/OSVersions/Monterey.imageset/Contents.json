@@ -1,0 +1,22 @@
+{
+  "images" : [
+    {
+      "filename" : "Monterey-Graphic-1-dragged.jpg",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Monterey-Graphic-3-dragged.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

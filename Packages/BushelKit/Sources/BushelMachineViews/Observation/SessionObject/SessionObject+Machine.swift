@@ -78,18 +78,20 @@ import BushelMachine
       from oldValue: MachineState,
       to newValue: MachineState,
       shutdownOption: MachineShutdownActionOption?,
-      _ completed: @escaping () -> Void
+      _ completed: @escaping @Sendable @MainActor () -> Void
     ) {
-      self.updateWindowSize()
-      if
-        !self.isRestarting,
-        oldValue != .stopped,
-        newValue == .stopped,
-        !self.keepWindowOpenOnShutdown ||
-        shutdownOption == .closeWindow {
-        self.hasIntialStarted = false
-        self.startSnapshot(.init(), options: .discardable)
-        completed()
+      Task { @MainActor in
+        self.updateWindowSize()
+        if
+          !self.isRestarting,
+          oldValue != .stopped,
+          newValue == .stopped,
+          !self.keepWindowOpenOnShutdown ||
+          shutdownOption == .closeWindow {
+          self.hasIntialStarted = false
+          self.startSnapshot(.init(), options: .discardable)
+          completed()
+        }
       }
     }
   }

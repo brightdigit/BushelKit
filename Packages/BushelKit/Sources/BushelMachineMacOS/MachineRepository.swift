@@ -8,23 +8,17 @@
   import BushelLogging
   import BushelMachine
   import Foundation
-  import Virtualization
+  @preconcurrency import Virtualization
 
   public actor MachineRepository: Loggable {
     public static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
-    static var alreadyCreated = false
-
-    static let shared = MachineRepository()
-
+    internal static let shared = MachineRepository()
     var storage = [URL: VirtualizationMachine]()
 
-    private init() {
-      assert(!Self.alreadyCreated)
-      Self.alreadyCreated = true
-    }
+    private init() {}
 
     internal func machineAt(
       _ url: URL,
@@ -43,9 +37,16 @@
       )
       try vzMachineConfiguration.validate()
       let vzMachine = VZVirtualMachine(configuration: vzMachineConfiguration)
+
+      let machineData = try VirtualizationData(
+        atDataDirectory: dataDirectory,
+        withPaths: URL.bushel.paths.vzMac,
+        using: .init()
+      )
+
       Self.logger.debug("creating machine at \(url)")
       let machine = await MainActor.run {
-        VirtualizationMachine(url: url, configuration: configuration, machine: vzMachine)
+        VirtualizationMachine(url: url, configuration: configuration, machine: vzMachine, data: machineData)
       }
       storage[url] = machine
       return machine

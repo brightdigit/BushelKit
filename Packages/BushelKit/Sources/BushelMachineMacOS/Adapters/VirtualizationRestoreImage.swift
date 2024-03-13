@@ -5,9 +5,9 @@
 
 #if canImport(Virtualization) && arch(arm64)
   import Foundation
-  import Virtualization
+  @preconcurrency import Virtualization
 
-  public struct VirtualizationRestoreImage {
+  public struct VirtualizationRestoreImage: Sendable {
     public let image: VZMacOSRestoreImage
     public let url: URL
 
