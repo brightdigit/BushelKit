@@ -37,7 +37,7 @@
     public func insert(_ model: some PersistentModel) async {
       assert(isMainThread: false)
       assert(model.modelContext == self.modelContext || model.modelContext == nil)
-      guard model.modelContext == self.modelContext else {
+      guard model.modelContext == self.modelContext || model.modelContext == nil else {
         return
       }
       Self.logger.debug("Insert begun: \(type(of: model).self)")

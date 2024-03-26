@@ -3,10 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelCore
-import Foundation
-
-public struct PurchaseWindowValue: DefaultableViewValue {
+public struct PurchaseWindowValue: Codable, Hashable {
   public static var `default` = PurchaseWindowValue()
 
   private init() {}

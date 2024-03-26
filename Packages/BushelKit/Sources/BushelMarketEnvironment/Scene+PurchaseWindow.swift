@@ -14,6 +14,8 @@
     typealias Value = PurchaseWindowValue
   }
 
+  extension PurchaseWindowValue: DefaultableViewValue {}
+
   public extension EnvironmentValues {
     var purchaseWindow: PurchaseWindowValue {
       get { self[PurchaseWindowValueKey.self] }
