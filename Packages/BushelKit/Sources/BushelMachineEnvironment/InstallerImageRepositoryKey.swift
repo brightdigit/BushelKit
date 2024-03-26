@@ -60,7 +60,7 @@
 
   public extension Scene {
     func installerImageRepository(
-      _ database: @Sendable @escaping (any Database) -> any InstallerImageRepository
+      _ database: @escaping (any Database) -> any InstallerImageRepository
     ) -> some Scene {
       self.environment(\.installerImageRepository, .init(database))
     }

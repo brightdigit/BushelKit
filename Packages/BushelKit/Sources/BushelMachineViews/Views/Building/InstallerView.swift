@@ -27,7 +27,7 @@
       .padding(.horizontal, 100)
       .background(Color.black)
       .onAppear {}
-      .task { @Sendable in
+      .task {
         let buildResult = await Result {
           try await self.installationObject.build()
         }

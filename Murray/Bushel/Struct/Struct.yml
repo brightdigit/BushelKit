@@ -1,4 +1,4 @@
-name: Struct
+name: Protocol
 parameters:
   - name: "name"
     isRequired: true

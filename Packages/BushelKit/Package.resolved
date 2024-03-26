@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/FelinePine.git",
       "state" : {
-        "revision" : "54c727e0b069ffda7f80db7af99bfab2518e0780",
-        "version" : "1.0.0-beta.2"
+        "revision" : "71e4a968ddcf3b7cc8d5ca9706cd10162fa9fb89",
+        "version" : "1.0.0-beta.1"
       }
     },
     {
@@ -14,17 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/IPSWDownloads.git",
       "state" : {
-        "revision" : "2fa4b95e1d91aff657963d145d30fcbff1a933c9",
-        "version" : "1.0.0-beta.4"
-      }
-    },
-    {
-      "identity" : "operatingsystemversion",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/brightdigit/OperatingSystemVersion.git",
-      "state" : {
-        "revision" : "bd3c70eb38da109ec6be9958e80ee495125d3232",
-        "version" : "1.0.0-beta.1"
+        "revision" : "72e280502262564df282c75fb56ec5cdaec1c79c",
+        "version" : "1.0.0-beta.2"
       }
     },
     {

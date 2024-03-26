@@ -26,11 +26,6 @@
       self.content = content
       self.id = id
     }
-
-    public init(_ content: @escaping () -> some View, id: UUID = .init()) {
-      self.content = content()
-      self.id = id
-    }
   }
 
   extension View {

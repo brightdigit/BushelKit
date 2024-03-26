@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public struct Snapshot: Codable, Identifiable, Sendable {
+public struct Snapshot: Codable, Identifiable {
   public var name: String
   public let id: UUID
   public let snapshotterID: SnapshotterID

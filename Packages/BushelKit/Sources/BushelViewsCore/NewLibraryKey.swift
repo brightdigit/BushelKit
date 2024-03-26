@@ -10,7 +10,7 @@
   import SwiftUI
 
   public typealias NewLibraryAction = OpenWindowWithAction
-  private struct NewLibraryKey: EnvironmentKey, Sendable {
+  private struct NewLibraryKey: EnvironmentKey {
     static let defaultValue: NewLibraryAction = .default
   }
 
@@ -26,7 +26,7 @@
   @available(*, deprecated, message: "Use on Scene only.")
   public extension View {
     func newLibrary(
-      _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
+      _ closure: @escaping (OpenWindowAction) -> Void
     ) -> some View {
       environment(\.newLibrary, .init(closure: closure))
     }
@@ -34,15 +34,13 @@
     func newLibrary<FileType: InitializableFileTypeSpecification>(
       _: FileType.Type
     ) -> some View {
-      newLibrary {
-        NewFilePanel<FileType>()(with: $0)
-      }
+      newLibrary(NewFilePanel<FileType>().callAsFunction(with:))
     }
   }
 
   public extension Scene {
     func newLibrary(
-      _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
+      _ closure: @escaping (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.newLibrary, .init(closure: closure))
     }
@@ -50,9 +48,7 @@
     func newLibrary<FileType: InitializableFileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {
-      newLibrary {
-        NewFilePanel<FileType>()(with: $0)
-      }
+      newLibrary(NewFilePanel<FileType>().callAsFunction(with:))
     }
   }
 #endif

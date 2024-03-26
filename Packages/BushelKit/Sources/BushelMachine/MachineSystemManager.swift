@@ -8,7 +8,7 @@ import BushelLogging
 import Foundation
 
 /// Implementation of a ``MachineSystemManaging``
-public final class MachineSystemManager: MachineSystemManaging, Loggable {
+public class MachineSystemManager: MachineSystemManaging, Loggable {
   let implementations: [VMSystemID: any MachineSystem]
 
   /// Creates a ``MachineSystemManager`` based on the list of implementations.

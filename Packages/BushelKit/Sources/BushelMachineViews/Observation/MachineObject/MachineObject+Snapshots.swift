@@ -17,7 +17,7 @@
   import SwiftUI
 
   extension MachineObject {
-    struct DeleteSnapshotRequest: Sendable {
+    struct DeleteSnapshotRequest {
       static var loggingCategory: BushelLogging.Category {
         .machine
       }

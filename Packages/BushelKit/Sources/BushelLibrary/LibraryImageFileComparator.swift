@@ -5,9 +5,9 @@
 
 import Foundation
 
-public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
+public struct LibraryImageFileComparator: SortComparator, Hashable {
   public typealias Compared = LibraryImageFile
-  public enum Field: Equatable, Sendable {
+  public enum Field: Equatable {
     case operatingSystemBuild
   }
 

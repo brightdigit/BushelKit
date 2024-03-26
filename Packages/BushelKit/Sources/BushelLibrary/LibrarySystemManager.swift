@@ -7,8 +7,8 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendable {
-  public let fileTypeBasedOnURL: @Sendable (URL) -> FileType?
+public class LibrarySystemManager: LibrarySystemManaging, Loggable {
+  public let fileTypeBasedOnURL: (URL) -> FileType?
 
   let fileTypeMap: [FileType: VMSystemID]
   let implementations: [VMSystemID: any LibrarySystem]
@@ -17,10 +17,8 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
     implementations.values.flatMap(\.allowedContentTypes)
   }
 
-  public init(
-    _ implementations: [any LibrarySystem],
-    fileTypeBasedOnURL: @escaping @Sendable (URL) -> FileType?
-  ) {
+  #warning("logging-note: anything important here to note?")
+  public init(_ implementations: [any LibrarySystem], fileTypeBasedOnURL: @escaping (URL) -> FileType?) {
     self.implementations = .init(
       uniqueKeysWithValues:
       implementations.map {
@@ -36,9 +34,6 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
         partialResult[value] = pair.key
       }
     }
-
-    Self.logger.debug("LibrarySystems Initialized: \(implementations.map(\.shortName))")
-    Self.logger.debug("LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))")
 
     self.fileTypeBasedOnURL = fileTypeBasedOnURL
   }

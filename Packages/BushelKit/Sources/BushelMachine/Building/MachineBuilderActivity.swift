@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct MachineBuilderActivity: Identifiable, Sendable {
+public struct MachineBuilderActivity: Identifiable {
   public let builder: any MachineBuilder
   public var id: URL {
     builder.url

@@ -7,14 +7,11 @@
   import BushelCore
   import BushelLocalization
   import BushelLogging
-  import BushelMessage
   import BushelOnboardingEnvironment
-  import BushelSessionEnvironment
   import BushelViewsCore
   import SwiftUI
 
   struct WelcomeView: SingleWindowView, Loggable {
-    @Environment(\.session) var session
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.openWindow) var openWindow
     @Environment(\.onboardingWindow) var onboardingWindow
@@ -40,16 +37,6 @@
       .accessibilityElement(children: .contain)
       .accessibilityLabel("Welcome View")
       .frame(width: 750, height: 440)
-      .onAppear(perform: {
-        Task {
-          do {
-            let result = try await self.session.sendMessage(MachineNameListRequest())
-            print("count", result)
-          } catch {
-            dump(error)
-          }
-        }
-      })
       .task {
         do {
           try await Task.sleep(for: .seconds(0.5), tolerance: .seconds(0.25))

@@ -10,9 +10,9 @@ struct PageItem: Identifiable {
   let titleID: LocalizedStringID
   let subtitleID: LocalizedStringID
   let messageID: LocalizedStringID
-  let nextButtonID: LocalizedStringID
+  let nextButtonID: LocalizedStringID // = .onboardingNextButton
   let videoResourceName: String
-  let videoResourceExtension: String
+  let videoResourceExtension: String // = AVPlayer.defaultResourceFileExtension
 
   internal init(
     titleID: LocalizedStringID,

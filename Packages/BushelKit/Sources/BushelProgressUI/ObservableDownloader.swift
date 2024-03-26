@@ -8,13 +8,13 @@
   import Foundation
 
   @Observable
-  public final class ObservableDownloader: NSObject, URLSessionDownloadDelegate, Sendable {
+  public class ObservableDownloader: NSObject, URLSessionDownloadDelegate {
     struct DownloadRequest {
       let downloadSourceURL: URL
       let destinationFileURL: URL
     }
 
-    struct DownloadUpdate: Sendable {
+    struct DownloadUpdate {
       let totalBytesWritten: Int64
       let totalBytesExpectedToWrite: Int64?
     }
@@ -23,18 +23,18 @@
     public internal(set) var totalBytesExpectedToWrite: Int64?
 
     // swiftlint:disable:next implicitly_unwrapped_optional
-    internal private(set) var session: URLSession!
+    var session: URLSession!
 
-    internal let resumeDataSubject = PassthroughSubject<Data, Never>()
-    internal var task: URLSessionDownloadTask?
+    let resumeDataSubject = PassthroughSubject<Data, Never>()
+    var task: URLSessionDownloadTask?
 
-    private var cancellables = [AnyCancellable]()
-    internal let requestSubject = PassthroughSubject<DownloadRequest, Never>()
-    internal let locationURLSubject = PassthroughSubject<URL, Never>()
-    internal let downloadUpdate = PassthroughSubject<DownloadUpdate, Never>()
-    private var completion: ((Result<Void, any Error>) -> Void)?
+    var cancellables = [AnyCancellable]()
+    let requestSubject = PassthroughSubject<DownloadRequest, Never>()
+    let locationURLSubject = PassthroughSubject<URL, Never>()
+    let downloadUpdate = PassthroughSubject<DownloadUpdate, Never>()
+    var completion: ((Result<Void, any Error>) -> Void)?
 
-    private let formatter = ByteCountFormatter()
+    let formatter = ByteCountFormatter()
 
     public var prettyBytesWritten: String {
       formatter.string(from: .init(value: .init(totalBytesWritten), unit: .bytes))

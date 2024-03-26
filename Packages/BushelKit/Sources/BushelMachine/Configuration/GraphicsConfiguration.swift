@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
+public struct GraphicsConfiguration: Codable, Identifiable {
   public let id: UUID
   public let displays: [GraphicsDisplay]
   // swiftlint:disable:next function_default_parameter_at_end

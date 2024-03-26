@@ -7,8 +7,8 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public struct InstallerImageError: Error, Sendable {
-  public enum ErrorType: Sendable {
+public struct InstallerImageError: Error {
+  public enum ErrorType {
     case missingBookmark
     case accessDeniedURL(URL)
     case imageNotFound

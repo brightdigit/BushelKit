@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
+public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   // swiftlint:disable identifier_name
   case bushel
   case welcomeToBushel

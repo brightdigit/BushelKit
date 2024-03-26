@@ -9,15 +9,13 @@
   import Foundation
   import SwiftUI
 
-  public struct OpenWindowWithValueAction<ValueType: Sendable>: Sendable {
+  public struct OpenWindowWithValueAction<ValueType> {
     public static var `default`: Self {
-      .init { value, action in
-        Self.defaultClosure(value, with: action)
-      }
+      OpenWindowWithValueAction(closure: Self.defaultClosure(_:with:))
     }
 
-    let closure: @Sendable @MainActor (ValueType, OpenWindowAction) -> Void
-    public init(closure: @escaping @MainActor @Sendable (ValueType, OpenWindowAction) -> Void) {
+    let closure: (ValueType, OpenWindowAction) -> Void
+    public init(closure: @escaping (ValueType, OpenWindowAction) -> Void) {
       self.closure = closure
     }
 
@@ -25,7 +23,6 @@
       assertionFailure()
     }
 
-    @MainActor
     public func callAsFunction(_ value: ValueType, with openWidow: OpenWindowAction) {
       closure(value, openWidow)
     }

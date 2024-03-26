@@ -8,11 +8,7 @@
   import Observation
 
   @Observable
-  public final class DownloadOperation<ValueType: BinaryInteger & Sendable>:
-
-    Identifiable,
-    ProgressOperation,
-    Sendable {
+  public class DownloadOperation<ValueType: BinaryInteger>: NSObject, Identifiable, ProgressOperation {
     let download: ObservableDownloader
     let sourceURL: URL
     let destinationURL: URL

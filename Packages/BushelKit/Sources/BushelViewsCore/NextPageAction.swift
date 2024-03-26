@@ -7,17 +7,17 @@
   import Foundation
   import SwiftUI
 
-  private struct NextPageKey: EnvironmentKey, Sendable {
+  private struct NextPageKey: EnvironmentKey {
     static let defaultValue: NextPageAction = .default
   }
 
-  public struct NextPageAction: Sendable {
+  public struct NextPageAction {
     static let `default`: NextPageAction = .init {
       assertionFailure()
     }
 
-    let nextPageFunction: @Sendable () -> Void
-    internal init(_ nextPageFunction: @Sendable @escaping () -> Void) {
+    let nextPageFunction: () -> Void
+    internal init(_ nextPageFunction: @escaping () -> Void) {
       self.nextPageFunction = nextPageFunction
     }
 

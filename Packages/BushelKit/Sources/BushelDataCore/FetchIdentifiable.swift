@@ -16,7 +16,7 @@
     }
   }
 
-  public protocol FetchIdentifiable: PersistentModel, Sendable {
+  public protocol FetchIdentifiable: PersistentModel {
     var modelFetchDescriptor: FetchDescriptor<Self> {
       get
     }

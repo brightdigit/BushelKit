@@ -8,7 +8,6 @@
   import BushelLogging
   import Foundation
 
-  @MainActor
   class SessionWindowDelegate: NSObject, NSWindowDelegate, Loggable {
     static var loggingCategory: BushelLogging.Category {
       .view

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct NetworkConfiguration: Codable, Identifiable, Sendable {
+public struct NetworkConfiguration: Codable, Identifiable {
   public let id: UUID
   public let attachment: NetworkingConfigurationAttachment
 

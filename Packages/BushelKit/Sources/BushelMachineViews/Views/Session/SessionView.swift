@@ -12,11 +12,10 @@
   import BushelMachineEnvironment
   import BushelMarketEnvironment
   import BushelViewsCore
-  @preconcurrency import Combine
+  import Combine
   import StoreKit
   import SwiftUI
 
-  @MainActor
   struct SessionView: View, Loggable {
     // swiftlint:disable:next implicitly_unwrapped_optional
     var timer: AnyPublisher<Date, Never>!
@@ -122,8 +121,12 @@
         self.object.setCloseButtonAction(newValue)
       }
       .onChange(of: self.object.state) {
-        // swiftlint:disable:next line_length
-        self.object.onStateChanged(from: $0, to: $1, shutdownOption: self.machineShutdownActionOption) { self.onShutdown() }
+        self.object.onStateChanged(
+          from: $0,
+          to: $1,
+          shutdownOption: self.machineShutdownActionOption,
+          self.onShutdown
+        )
       }
       .navigationTitle(
         self.object.machineObject.navigationTitle(default: "Loading Session...")
@@ -159,11 +162,10 @@
       self.object.setCloseButtonAction(self.sessionCloseButtonActionOption)
     }
 
-    @MainActor
     func onShutdown() {
-      Task { @MainActor in
+      Task {
         try await Task.sleep(for: .seconds(2))
-        requestReview()
+        await requestReview()
       }
       self.dismiss()
     }

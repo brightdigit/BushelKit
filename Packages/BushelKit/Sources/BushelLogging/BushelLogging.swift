@@ -5,8 +5,8 @@
 
 import FelinePine
 
-public enum BushelLogging: LoggingSystem, Sendable {
-  public enum Category: String, CaseIterable, Sendable {
+public enum BushelLogging: LoggingSystem {
+  public enum Category: String, CaseIterable {
     case library
     case data
     case view

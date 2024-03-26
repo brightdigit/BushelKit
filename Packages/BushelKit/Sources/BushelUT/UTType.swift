@@ -41,7 +41,6 @@ import BushelCore
   }
 
   public extension FileType {
-    @Sendable
     init?(url: URL) {
       guard let utType = UTType(filenameExtension: url.pathExtension) else {
         return nil

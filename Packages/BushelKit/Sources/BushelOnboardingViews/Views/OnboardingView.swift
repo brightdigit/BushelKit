@@ -39,7 +39,6 @@
     }
 
     #if os(macOS)
-      @MainActor
       private func setupNSWindow(_ window: NSWindow?) {
         guard let window, !windowInitialized else {
           return
