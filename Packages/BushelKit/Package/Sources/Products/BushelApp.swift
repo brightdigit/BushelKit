@@ -16,6 +16,5 @@ struct BushelApp: Product, Target {
     BushelFactory()
     BushelMarket()
     BushelWax()
-    BushelXPCSession()
   }
 }

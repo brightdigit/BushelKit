@@ -3,6 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
+// swiftlint:disable file_length
 #if os(macOS)
   import BushelCore
   import BushelLogging
@@ -90,6 +91,78 @@
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
       try fileVersion.remove(with: self.fileManager)
       machine.finishedWithSnapshot(snapshot, by: .remove)
+    }
+
+    // swiftlint:disable:next function_body_length
+    func syncronizeSnapshots(
+      for machine: MachineType,
+      options _: SnapshotSyncronizeOptions
+    ) async throws -> SnapshotSyncronizationDifference? {
+      let paths = try machine.beginSnapshot()
+      let versions = NSFileVersion.otherVersionsOfItem(at: paths.snapshottingSourceURL)
+      assert(versions != nil)
+      guard let versions else {
+        return nil
+      }
+      let snapshotFileDataDictionary: [String: Data]
+      let snapshotCollectionDirectoryExists =
+        self.fileManager.directoryExists(at: paths.snapshotCollectionURL) == .directoryExists
+      if snapshotCollectionDirectoryExists {
+        snapshotFileDataDictionary = try self.fileManager.dataDictionary(
+          directoryAt: paths.snapshotCollectionURL
+        )
+      } else {
+        snapshotFileDataDictionary = [:]
+      }
+      let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value }).mapValues {
+        $0.map(\.key)
+      }
+
+      var filesToKeep = [String]()
+      var versionsToAdd = [NSFileVersion]()
+
+      for version in versions {
+        let persistentIdentifierData: Data
+        do {
+          persistentIdentifierData = try version.persistentIdentifierData
+        } catch {
+          Self.logger.error("Unable to fetch persistentIdentifierData: \(error.localizedDescription)")
+          continue
+        }
+
+        let files = dataLookup[persistentIdentifierData]
+        if let fileToKeep = files?.first {
+          filesToKeep.append(fileToKeep)
+        } else {
+          versionsToAdd.append(version)
+        }
+      }
+
+      let filesToDelete = Set(snapshotFileDataDictionary.keys).subtracting(filesToKeep).map(
+        paths.snapshotCollectionURL.appendingPathComponent(_:)
+      )
+
+      try filesToDelete.forEach { url in
+        try fileManager.removeItem(at: url)
+      }
+
+      let snapshotsAdded = try versionsToAdd.map { versionToAdd in
+        try self.saveSnapshot(forVersion: versionToAdd, to: paths.snapshotCollectionURL)
+      }
+
+      Self.logger.notice("Updated stored snapshots: -\(filesToDelete.count) +\(snapshotsAdded.count)")
+
+      let snapshotFileURLs = try snapshotCollectionDirectoryExists ?
+        FileManager.default.contentsOfDirectory(
+          at: paths.snapshotCollectionURL,
+          includingPropertiesForKeys: []
+        ) : []
+      let snapshotIDs = snapshotFileURLs
+        .map { $0.deletingPathExtension().lastPathComponent }
+        .compactMap(UUID.init(uuidString:))
+      assert(snapshotFileURLs.count == snapshotIDs.count)
+
+      return .init(addedSnapshots: snapshotsAdded, snapshotIDs: snapshotIDs)
     }
 
     func saveSnapshot(

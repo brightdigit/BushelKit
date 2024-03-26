@@ -8,13 +8,12 @@
   import BushelLocalization
   import BushelLogging
   import BushelViewsCore
-  @preconcurrency import SwiftData
+  import SwiftData
   import SwiftUI
 
   #warning("Show number of machines and images")
   #warning("Show current size")
-  @MainActor
-  struct AdvancedSettingsView: View, Loggable, Sendable {
+  struct AdvancedSettingsView: View, Loggable {
     enum AdvancedSettingsError: LocalizedError {
       case databaseError(SwiftDataError)
       case missingBundleIdentifer

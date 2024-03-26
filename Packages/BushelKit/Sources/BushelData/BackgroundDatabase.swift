@@ -14,7 +14,7 @@
   public final class BackgroundDatabase: Database {
     private actor DatabaseContainer {
       private let factory: @Sendable () -> any Database
-      private var wrappedTask: Task<any Database, Never>?
+      private var wrapped: (any Database)?
 
       // swiftlint:disable:next strict_fileprivate
       fileprivate init(factory: @escaping @Sendable () -> any Database) {
@@ -24,14 +24,16 @@
       // swiftlint:disable:next strict_fileprivate
       fileprivate var database: any Database {
         get async {
-          if let wrappedTask {
-            return await wrappedTask.value
+          guard let wrapped else {
+            let wrapped = await Task.detached {
+              assert(isMainThread: false)
+
+              return self.factory()
+            }.value
+            self.wrapped = wrapped
+            return wrapped
           }
-          let task = Task {
-            factory()
-          }
-          self.wrappedTask = task
-          return await task.value
+          return wrapped
         }
       }
     }
@@ -44,7 +46,7 @@
       }
     }
 
-    package convenience init(modelContainer: ModelContainer) {
+    internal convenience init(modelContainer: ModelContainer) {
       self.init {
         assert(isMainThread: false)
         return ModelActorDatabase(modelContainer: modelContainer)
@@ -55,29 +57,27 @@
       self.container = .init(factory: factory)
     }
 
-    public func transaction(_ block: @Sendable @escaping (ModelContext) throws -> Void) async throws {
+    public func transaction(_ block: @escaping (ModelContext) throws -> Void) async throws {
       assert(isMainThread: false)
       try await self.database.transaction(block)
     }
 
-    public func delete(where predicate: Predicate<some PersistentModel & Sendable>?) async throws {
+    public func delete(where predicate: Predicate<some PersistentModel>?) async throws {
       assert(isMainThread: false)
       return try await self.database.delete(where: predicate)
     }
 
-    public func fetch<T>(
-      _ descriptor: FetchDescriptor<T>
-    ) async throws -> [T] where T: PersistentModel & Sendable {
+    public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
       assert(isMainThread: false)
       return try await self.database.fetch(descriptor)
     }
 
-    public func delete(_ model: some PersistentModel & Sendable) async {
+    public func delete(_ model: some PersistentModel) async {
       assert(isMainThread: false)
       return await self.database.delete(model)
     }
 
-    public func insert(_ model: some PersistentModel & Sendable) async {
+    public func insert(_ model: some PersistentModel) async {
       assert(isMainThread: false)
       return await self.database.insert(model)
     }
@@ -87,7 +87,7 @@
       return try await self.database.save()
     }
 
-    public func contextMatchesModel(_ model: some PersistentModel & Sendable) async -> Bool {
+    public func contextMatchesModel(_ model: some PersistentModel) async -> Bool {
       await self.database.contextMatchesModel(model)
     }
   }

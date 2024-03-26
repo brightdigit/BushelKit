@@ -8,15 +8,14 @@
   import BushelMachine
   import Foundation
   import Virtualization
-
-  final class VirtualizationMachineBuilder: MachineBuilder, Loggable, Sendable {
+  class VirtualizationMachineBuilder: MachineBuilder, Loggable {
     static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
     let url: URL
 
-    private var observations = [UUID: NSKeyValueObservation]()
+    var observations = [UUID: NSKeyValueObservation]()
 
     let installer: VZMacOSInstaller
 
@@ -34,7 +33,7 @@
       }
     }
 
-    func observePercentCompleted(_ onUpdate: @Sendable @escaping (Double) -> Void) -> UUID {
+    func observePercentCompleted(_ onUpdate: @escaping (Double) -> Void) -> UUID {
       let observation = self.installer.progress.observe(
         \.fractionCompleted,
         options: [.new, .initial]
@@ -47,9 +46,9 @@
       return id
     }
 
+    #warning("let's log here and observation is being removed")
     func removeObserver(_ id: UUID) -> Bool {
-      Self.logger.debug("Removing Observer")
-      return self.observations.removeValue(forKey: id) != nil
+      self.observations.removeValue(forKey: id) != nil
     }
 
     deinit {

@@ -11,8 +11,7 @@ import Foundation
   import SwiftUI
 #endif
 
-public protocol Machine: Loggable, Sendable {
-  var machineIdentifer: UInt64? { get }
+public protocol Machine: Loggable {
   var configuration: MachineConfiguration { get }
 
   /// Execution state of the virtual machine.
@@ -67,7 +66,7 @@ public protocol Machine: Loggable, Sendable {
 
   func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int)
 
-  func beginObservation(_ update: @escaping @Sendable @MainActor (MachineChange) -> Void) -> UUID
+  func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID
 
   @discardableResult
   func removeObservation(withID id: UUID) -> Bool

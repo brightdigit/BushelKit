@@ -6,8 +6,8 @@
 import BushelCore
 import Foundation
 
-public struct PurchaseWindowValue: DefaultableViewValue, Sendable {
-  public static let `default` = PurchaseWindowValue()
+public struct PurchaseWindowValue: DefaultableViewValue {
+  public static var `default` = PurchaseWindowValue()
 
   private init() {}
 }

@@ -15,7 +15,7 @@
   extension VirtualizationMachine {
     func notifyObservers(_ event: MachineChange.Event) {
       let update = MachineChange(source: self, event: event)
-      Self.logger.debug("Updating \(self.observers.count) observer of change: \(event)")
+      #warning("logging-note: why not print every notifiy of machine changes")
       for value in observers.values {
         Task { @MainActor in
           value(update)
@@ -23,13 +23,13 @@
       }
     }
 
+    #warning("logging-note: let's have a debug message for remove too")
     @discardableResult
     func removeObservation(withID id: UUID) -> Bool {
-      Self.logger.debug("Removing Observer")
-      return self.observers.removeValue(forKey: id) != nil
+      self.observers.removeValue(forKey: id) != nil
     }
 
-    func beginObservation(_ update: @Sendable @escaping @MainActor (MachineChange) -> Void) -> UUID {
+    func beginObservation(_ update: @escaping @MainActor (MachineChange) -> Void) -> UUID {
       let id = UUID()
       Self.logger.debug("Begin observations: \(id)")
       self.observers[id] = update

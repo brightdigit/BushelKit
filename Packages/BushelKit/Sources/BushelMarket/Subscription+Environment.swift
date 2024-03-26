@@ -8,7 +8,7 @@ import BushelLogging
 import Foundation
 
 public extension Subscription {
-  enum Environment: Sendable {
+  enum Environment {
     case production
 
     case sandbox

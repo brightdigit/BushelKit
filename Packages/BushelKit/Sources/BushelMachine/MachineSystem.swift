@@ -7,8 +7,8 @@ import BushelCore
 import Foundation
 
 /// Manages a set of machines for a system
-public protocol MachineSystem: Sendable {
-  associatedtype RestoreImageType: Sendable
+public protocol MachineSystem {
+  associatedtype RestoreImageType
   /// Supported system id
   var id: VMSystemID { get }
 

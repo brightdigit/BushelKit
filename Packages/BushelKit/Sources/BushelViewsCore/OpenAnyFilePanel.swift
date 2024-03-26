@@ -18,7 +18,6 @@
       self.fileTypes = fileTypes
     }
 
-    @MainActor
     public func callAsFunction(with openFileURL: OpenFileURLAction, using openWindow: OpenWindowAction) {
       let openPanel = NSOpenPanel()
       openPanel.allowedContentTypes = fileTypes.map(UTType.init(fileType:))
@@ -33,7 +32,6 @@
   }
 
   public extension OpenFileURLAction {
-    @MainActor
     func callAsFunction(ofFileTypes fileTypes: [FileType], using openWindow: OpenWindowAction) {
       OpenAnyFilePanel(fileTypes: fileTypes).callAsFunction(with: self, using: openWindow)
     }

@@ -5,7 +5,7 @@
 
 import BushelLocalization
 
-struct PurchaseFeatureItem: Identifiable, Sendable {
+struct PurchaseFeatureItem: Identifiable {
   let systemName: String
   let titleID: LocalizedStringID
   let descriptionID: LocalizedStringID

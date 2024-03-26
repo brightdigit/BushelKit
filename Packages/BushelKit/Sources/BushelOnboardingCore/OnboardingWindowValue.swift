@@ -7,7 +7,7 @@ import BushelCore
 import Foundation
 
 public struct OnboardingWindowValue: DefaultableViewValue {
-  public static let `default` = OnboardingWindowValue()
+  public static var `default` = OnboardingWindowValue()
 
   private init() {}
 }

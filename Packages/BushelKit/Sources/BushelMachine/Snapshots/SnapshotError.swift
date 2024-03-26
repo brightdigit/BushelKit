@@ -5,10 +5,10 @@
 
 import Foundation
 
-internal enum SnapshotError: Error, LocalizedError, Sendable {
+internal enum SnapshotError: Error, LocalizedError {
   case innerError(any Error)
   case missingSnapshotVersionID(UUID)
-  case missingSnapshotVersionAt(URL, forPersistentIdentifier: any Sendable)
+  case missingSnapshotVersionAt(URL, forPersistentIdentifier: Any)
   case missingSnapshotFile(UUID)
   case unarchiveError(Data)
 

@@ -7,7 +7,7 @@ import BushelCore
 import Foundation
 
 /// Metadata attached to a machine
-public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
+public struct MachineConfiguration: Codable, OperatingSystemInstalled {
   public let restoreImageFile: InstallerImageIdentifier
 
   /// System ID

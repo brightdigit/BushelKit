@@ -3,6 +3,6 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public enum NetworkingConfigurationAttachment: Codable, Sendable {
+public enum NetworkingConfigurationAttachment: Codable {
   case nat
 }

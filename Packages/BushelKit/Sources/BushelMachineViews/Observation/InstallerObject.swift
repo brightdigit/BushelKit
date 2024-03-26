@@ -8,7 +8,7 @@
   import Foundation
 
   @Observable
-  final class InstallerObject: Sendable {
+  class InstallerObject {
     private let builder: any MachineBuilder
 
     var url: URL {

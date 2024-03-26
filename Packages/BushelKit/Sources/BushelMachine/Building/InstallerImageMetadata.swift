@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public struct InstallerImageMetadata: Equatable, Sendable {
+public struct InstallerImageMetadata: Equatable {
   public let longName: String
   public let defaultName: String
   public let labelName: String

@@ -17,7 +17,7 @@
   import SwiftUI
 
   @Observable
-  final class DocumentObject: Loggable, Sendable {
+  class DocumentObject: Loggable {
     var restoreImageImportProgress: ProgressOperationProperties?
     var object: LibraryObject? {
       didSet {
