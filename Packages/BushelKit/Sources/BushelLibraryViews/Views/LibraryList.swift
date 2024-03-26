@@ -8,6 +8,8 @@
   import SwiftUI
 
   struct LibraryList: View {
+    typealias Item = LibraryListImageItem
+
     let accessibilityTitle: String
     let items: [LibraryImageFile]?
     @Binding var selectedItem: LibraryImageFile.ID?
@@ -17,32 +19,11 @@
       List(selection: self.$selectedItem) {
         if let items {
           ForEach(items) { libraryItem in
-            HStack {
-              let label = librarySystemManager.labelForSystem(
-                libraryItem.metadata.vmSystemID,
-                metadata: libraryItem.metadata
-              )
-
-              Image.resource(label.imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 80)
-                .mask {
-                  Circle()
-                }
-                .overlay {
-                  Circle().stroke()
-                }
-              VStack(alignment: .leading) {
-                Text(libraryItem.name).font(.title)
-                Text(label.operatingSystemLongName)
-              }
-            }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier(
-              "library:" + accessibilityTitle + ":images:" + libraryItem.id.uuidString
+            Item(
+              libraryItem: libraryItem,
+              librarySystemManager: self.librarySystemManager,
+              accessibilityTitle: self.accessibilityTitle
             )
-            .accessibilityLabel(libraryItem.name)
           }
         }
       }

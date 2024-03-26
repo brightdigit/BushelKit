@@ -109,7 +109,7 @@
 
     public func update(using database: any Database, at updateAt: Date = Date()) async throws {
       self.updatedAt = updateAt
-      Self.logger.debug("Noting updated bookmark \(self.path)")
+      Self.logger.debug("Nothing updated bookmark \(self.path)")
       try await database.save()
     }
 
