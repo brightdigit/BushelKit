@@ -27,7 +27,7 @@
         do {
           value = try FileType.createAt(fileURL)
         } catch {
-          // Self.logger.error("Unable to create file at: \(fileURL)")
+          openPanel.presentError(error)
           return
         }
         openWindow(value: value)

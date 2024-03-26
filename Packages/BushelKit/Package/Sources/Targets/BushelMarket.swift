@@ -7,6 +7,6 @@ import Foundation
 
 struct BushelMarket: Target {
   var dependencies: any Dependencies {
-    BushelViewsCore()
+    BushelCore()
   }
 }
