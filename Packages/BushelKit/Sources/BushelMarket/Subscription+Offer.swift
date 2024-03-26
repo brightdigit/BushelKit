@@ -8,8 +8,8 @@ import BushelLogging
 import Foundation
 
 public extension Subscription {
-  struct Offer: Sendable {
-    public enum Kind: Sendable {
+  struct Offer {
+    public enum Kind {
       case introductory
 
       case promotional

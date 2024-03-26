@@ -56,8 +56,7 @@
         throw SnapshotError.innerError(error)
       }
       unarchiver.requiresSecureCoding = false
-      guard let persistentIdentifier: any Sendable =
-        unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) else {
+      guard let persistentIdentifier = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) else {
         throw SnapshotError.unarchiveError(identifierData)
       }
       guard let version = self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier) else {

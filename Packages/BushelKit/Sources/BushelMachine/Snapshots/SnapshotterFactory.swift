@@ -6,7 +6,7 @@
 import BushelCore
 import BushelLogging
 
-public protocol SnapshotterFactory: Loggable, Sendable {
+public protocol SnapshotterFactory: Loggable {
   static var systemID: SnapshotterID { get }
   func createNewSnapshot(
     of machine: some Machine,

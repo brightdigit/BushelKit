@@ -47,7 +47,6 @@
           }
           Table(self.machines) {
             TableColumn("Name", value: \.name)
-            TableColumn("ECID", value: \.machineIdentifierHex)
             TableColumn("Operating System", value: \.operatingSystemVersionDescription)
             TableColumn("Created At", value: \.createdAt.description)
             TableColumn("Last Opened", value: \.lastOpenedDescription)

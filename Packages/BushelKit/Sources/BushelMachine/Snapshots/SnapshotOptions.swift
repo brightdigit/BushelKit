@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public struct SnapshotOptions: OptionSet, Sendable {
+public struct SnapshotOptions: OptionSet {
   public typealias RawValue = Int
 
   public static let discardable: SnapshotOptions = .init(rawValue: 1)

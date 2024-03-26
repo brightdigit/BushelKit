@@ -13,7 +13,7 @@
 
   #warning("I think we need to log the operations running for this entry")
   @Model
-  public final class LibraryEntry: Loggable, BookmarkedEntry, Sendable {
+  public final class LibraryEntry: Loggable, BookmarkedEntry {
     public typealias BookmarkedErrorType = LibraryError
 
     @Attribute(.unique)

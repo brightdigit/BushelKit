@@ -25,13 +25,13 @@ public struct LibraryError: LocalizedError, Loggable {
     let libraryURL: URL
   }
 
-  public enum InitializationProperty: Sendable {
+  public enum InitializationProperty {
     case bookmarkData
     case database
     case librarySystemManager
   }
 
-  enum Details: Sendable {
+  enum Details {
     private struct UnknownError: Error {
       private init() {}
       // swiftlint:disable:next strict_fileprivate

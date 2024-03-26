@@ -6,20 +6,16 @@
 #if canImport(Observation) && (os(macOS) || os(iOS))
   import Foundation
 
-  public struct ProgressOperationProperties: Identifiable, Sendable {
+  public struct ProgressOperationProperties: Identifiable {
     let imageName: String
-    let text: any (StringProtocol & Sendable)
+    let text: any StringProtocol
     let progress: FileOperationProgress<Int>
 
     public var id: URL {
       progress.id
     }
 
-    public init(
-      imageName: String,
-      text: any(StringProtocol & Sendable),
-      progress: FileOperationProgress<Int>
-    ) {
+    public init(imageName: String, text: any StringProtocol, progress: FileOperationProgress<Int>) {
       self.imageName = imageName
       self.text = text
       self.progress = progress

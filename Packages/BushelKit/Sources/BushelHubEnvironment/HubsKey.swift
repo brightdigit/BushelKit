@@ -12,7 +12,7 @@
   private struct HubsKey: EnvironmentKey {
     typealias Value = [Hub]
 
-    static let defaultValue: [Hub] = []
+    static var defaultValue: [Hub] = []
   }
 
   public extension EnvironmentValues {

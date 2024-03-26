@@ -10,8 +10,8 @@ import Foundation
   import SwiftUI
 #endif
 
-public struct MachineChange: Sendable {
-  public enum Property: String, Sendable {
+public struct MachineChange {
+  public enum Property: String {
     case state
     case canStart
     case canStop
@@ -26,40 +26,27 @@ public struct MachineChange: Sendable {
     case socketDevices
   }
 
-  public struct PropertyChange: CustomStringConvertible, Sendable {
+  public struct PropertyChange: CustomStringConvertible {
     public let property: Property
-    public let new: (any Sendable)?
-    public let old: (any Sendable)?
+    public let new: Any?
+    public let old: Any?
 
     public var description: String {
       "\(property): \(String(describing: old)) -> \(String(describing: new))"
     }
 
-    public init(property: Property, new: (any Sendable)? = nil, old: (any Sendable)? = nil) {
+    public init(property: Property, new: Any? = nil, old: Any? = nil) {
       self.property = property
       self.new = new
       self.old = old
     }
   }
 
-  public enum Event: Sendable, CustomStringConvertible {
+  public enum Event {
     case property(PropertyChange)
     case guestDidStop
     case stopWithError(any Error)
     case networkDetatchedWithError(any Error)
-
-    public var description: String {
-      switch self {
-      case let .property(change):
-        return "property: \(change.property.rawValue)"
-      case .guestDidStop:
-        return "guestDidStop"
-      case .stopWithError:
-        return "stopWithError"
-      case .networkDetatchedWithError:
-        return "networkDetatchedWithError"
-      }
-    }
   }
 
   public let event: Event
@@ -72,7 +59,7 @@ public struct MachineChange: Sendable {
 }
 
 public extension MachineChange.PropertyChange {
-  init?(keyPath: String?, new: (any Sendable)? = nil, old: (any Sendable)? = nil) {
+  init?(keyPath: String?, new: Any? = nil, old: Any? = nil) {
     guard let property = keyPath.flatMap(MachineChange.Property.init(rawValue:)) else {
       return nil
     }

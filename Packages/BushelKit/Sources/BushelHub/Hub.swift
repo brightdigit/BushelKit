@@ -6,18 +6,13 @@
 import BushelCore
 import Foundation
 
-public struct Hub: Hashable, Identifiable, Sendable {
+public struct Hub: Hashable, Identifiable {
   public let title: String
   public let id: String
   public let count: Int?
-  public let getImages: @Sendable () async throws -> [HubImage]
+  public let getImages: () async throws -> [HubImage]
 
-  public init(
-    title: String,
-    id: String,
-    count: Int?,
-    _ images: @escaping @Sendable () async throws -> [HubImage]
-  ) {
+  public init(title: String, id: String, count: Int?, _ images: @escaping () async throws -> [HubImage]) {
     self.title = title
     self.id = id
     self.count = count

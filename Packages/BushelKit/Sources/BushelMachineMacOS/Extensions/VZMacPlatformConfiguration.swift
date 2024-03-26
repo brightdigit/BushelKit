@@ -4,7 +4,6 @@
 //
 
 #if canImport(Virtualization) && canImport(Combine) && arch(arm64)
-
   import BushelMachine
   import BushelMacOSCore
   import Virtualization
@@ -13,11 +12,11 @@
     convenience init(fromDirectory machineDirectory: URL) throws {
       self.init()
       let auxiliaryStorageURL = machineDirectory
-        .appendingPathComponent(URL.bushel.paths.vzMac.auxiliaryStorageFileName)
+        .appendingPathComponent("auxiliary.storage")
       let hardwareModelURL = machineDirectory
-        .appendingPathComponent(URL.bushel.paths.vzMac.hardwareModelFileName)
+        .appendingPathComponent("hardware.model.bin")
       let machineIdentifierURL = machineDirectory
-        .appendingPathComponent(URL.bushel.paths.vzMac.machineIdentifierFileName)
+        .appendingPathComponent("machine.identifier.bin")
       #if swift(>=5.7.1)
         if #available(macOS 13.0, *) {
           self.auxiliaryStorage = VZMacAuxiliaryStorage(url: auxiliaryStorageURL)
@@ -62,11 +61,11 @@
           withIntermediateDirectories: true
         )
         let auxiliaryStorageURL = machineDirectory
-          .appendingPathComponent(URL.bushel.paths.vzMac.auxiliaryStorageFileName)
+          .appendingPathComponent("auxiliary.storage")
         let hardwareModelURL = machineDirectory
-          .appendingPathComponent(URL.bushel.paths.vzMac.hardwareModelFileName)
+          .appendingPathComponent("hardware.model.bin")
         let machineIdentifierURL = machineDirectory
-          .appendingPathComponent(URL.bushel.paths.vzMac.machineIdentifierFileName)
+          .appendingPathComponent("machine.identifier.bin")
 
         let auxiliaryStorage = try VZMacAuxiliaryStorage(
           creatingStorageAt: auxiliaryStorageURL,

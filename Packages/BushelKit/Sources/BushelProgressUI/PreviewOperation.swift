@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct PreviewOperation<ValueType: BinaryInteger & Sendable>: ProgressOperation {
+public struct PreviewOperation<ValueType: BinaryInteger>: ProgressOperation {
   public let currentValue: ValueType
 
   public let totalValue: ValueType?

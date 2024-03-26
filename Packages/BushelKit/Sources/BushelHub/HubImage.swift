@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public struct HubImage: Identifiable, InstallImage, Sendable {
+public struct HubImage: Identifiable, InstallImage {
   public let title: String
   public let metadata: ImageMetadata
   public let url: URL

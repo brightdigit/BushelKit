@@ -7,6 +7,6 @@ import Foundation
 
 struct IPSWDownloads: PackageDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.4")
+    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.1")
   }
 }

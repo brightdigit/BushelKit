@@ -13,7 +13,7 @@
 
   #warning("I think we need to log the operations running for this entry")
   @Model
-  public final class LibraryImageEntry: Sendable {
+  public final class LibraryImageEntry {
     public var library: LibraryEntry?
     public var name: String
     @Attribute(.unique)

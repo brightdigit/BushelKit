@@ -12,14 +12,12 @@
   private struct MetadataLabelProviderKey: EnvironmentKey {
     typealias Value = MetadataLabelProviderAction
 
-    static let defaultValue: MetadataLabelProviderAction = .default
+    static var defaultValue: MetadataLabelProviderAction = .default
   }
 
-  public struct MetadataLabelProviderAction: Sendable {
+  public struct MetadataLabelProviderAction {
     static let `default` = MetadataLabelProviderAction(closure: MetadataLabel.init)
     let closure: BushelCore.MetadataLabelProvider
-
-    @Sendable
     public func callAsFunction(
       _ vmSystemID: VMSystemID,
       _ operatingSystemInfo: any OperatingSystemInstalled
@@ -29,12 +27,10 @@
   }
 
   private extension MetadataLabel {
-    @Sendable
     init(_: VMSystemID, _: any OperatingSystemInstalled) {
       self.init()
     }
 
-    @Sendable
     init() {
       self.init(
         operatingSystemLongName: "",

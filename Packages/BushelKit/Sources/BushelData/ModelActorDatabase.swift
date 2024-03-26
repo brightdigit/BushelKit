@@ -7,7 +7,7 @@
   import BushelCore
   import BushelLogging
   import Foundation
-  @preconcurrency import SwiftData
+  import SwiftData
 
   @ModelActor
   public actor ModelActorDatabase: Database, Loggable {
@@ -24,7 +24,7 @@
       }
     }
 
-    public func delete(_ model: some PersistentModel & Sendable) async {
+    public func delete(_ model: some PersistentModel) async {
       assert(isMainThread: false)
       assert(model.modelContext == self.modelContext || model.modelContext == nil)
       guard model.modelContext == self.modelContext else {
@@ -34,7 +34,7 @@
       self.modelContext.delete(model)
     }
 
-    public func insert(_ model: some PersistentModel & Sendable) async {
+    public func insert(_ model: some PersistentModel) async {
       assert(isMainThread: false)
       assert(model.modelContext == self.modelContext || model.modelContext == nil)
       guard model.modelContext == self.modelContext else {
@@ -44,7 +44,7 @@
       self.modelContext.insert(model)
     }
 
-    public func delete<T: PersistentModel & Sendable>(
+    public func delete<T: PersistentModel>(
       where predicate: Predicate<T>?
     ) async throws {
       assert(isMainThread: false)
@@ -59,9 +59,7 @@
       try self.modelContext.save()
     }
 
-    public func fetch<T>(
-      _ descriptor: FetchDescriptor<T>
-    ) async throws -> [T] where T: PersistentModel & Sendable {
+    public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
       assert(isMainThread: false)
       Self.logger.debug("Fetch begun: \(T.self)")
       return try self.modelContext.fetch(descriptor)

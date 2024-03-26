@@ -12,7 +12,7 @@ import Foundation
 #endif
 
 public struct MachineError: LocalizedError, Loggable {
-  public enum ObjectProperty: Sendable {
+  public enum ObjectProperty {
     case url
     case machine
     case snapshot

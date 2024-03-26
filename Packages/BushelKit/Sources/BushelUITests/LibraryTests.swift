@@ -8,7 +8,7 @@
   import XCTest
 
   open class LibraryTests: XCTestCase {
-    @MainActor public func testLibrary() throws {
+    public func testLibrary() throws {
       let app: XCUIApplication = .launchBushel(withFlags: .resetApplication)
       try app.runLibraryCreation(
         specifications: .init(
