@@ -57,8 +57,8 @@ public enum BuilderError: LocalizedError, Equatable {
 
   public static func restoreImage(_ image: any InstallerImage, withError error: NSError) -> BuilderError? {
     #if !os(Linux)
-      let reason: NSError = error.underlyingErrors[0] as NSError
-      if reason.localizedFailureReason?.contains("non-existent path") == true {
+      let reason: NSError? = error.underlyingErrors.first as? NSError
+      if reason?.localizedFailureReason?.contains("non-existent path") == true {
         return .restoreImage(image, .notFound, withError: error)
       }
     #endif
