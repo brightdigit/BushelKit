@@ -16,7 +16,7 @@
     func delete<T: PersistentModel>(
       where predicate: Predicate<T>?
     ) async throws
-    func transaction(_ block: @escaping (ModelContext) throws -> Void) async throws
+    func transaction(_ block: @Sendable @escaping (ModelContext) throws -> Void) async throws
     func contextMatchesModel<T>(_ model: T) async -> Bool where T: PersistentModel
   }
 

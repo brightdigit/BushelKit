@@ -57,7 +57,7 @@
       self.container = .init(factory: factory)
     }
 
-    public func transaction(_ block: @escaping (ModelContext) throws -> Void) async throws {
+    public func transaction(_ block: @escaping @Sendable (ModelContext) throws -> Void) async throws {
       assert(isMainThread: false)
       try await self.database.transaction(block)
     }
