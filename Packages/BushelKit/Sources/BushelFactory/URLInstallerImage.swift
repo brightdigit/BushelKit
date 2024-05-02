@@ -9,7 +9,7 @@ import BushelLogging
 import BushelMachine
 import Foundation
 
-struct URLInstallerImage: InstallerImage, Loggable {
+struct URLInstallerImage: InstallerImage, Loggable, Sendable {
   var libraryID: LibraryIdentifier? {
     .url(url)
   }

@@ -13,11 +13,16 @@ let package = Package(
     BushelMachineApp()
     BushelSettingsApp()
     BushelApp()
+    BushelService()
+    BushelGuestProfile()
   },
   testTargets: {
     BushelCoreTests()
     BushelLibraryTests()
     BushelMachineTests()
+    BushelServiceTests()
+    BushelSessionTests()
+    BushelFactoryTests()
   },
   swiftSettings: {
     SwiftSetting.enableUpcomingFeature("BareSlashRegexLiterals")
@@ -26,6 +31,17 @@ let package = Package(
     SwiftSetting.enableUpcomingFeature("ForwardTrailingClosures")
     SwiftSetting.enableUpcomingFeature("ImplicitOpenExistentials")
     SwiftSetting.enableUpcomingFeature("StrictConcurrency")
+    SwiftSetting.enableUpcomingFeature("DisableOutwardActorInference")
+    SwiftSetting.enableUpcomingFeature("DynamicActorIsolation")
+    SwiftSetting.enableUpcomingFeature("FullTypedThrows")
+    SwiftSetting.enableUpcomingFeature("InternalImportsByDef")
+    SwiftSetting.enableUpcomingFeature("InferSendableFromCap")
+    SwiftSetting.enableUpcomingFeature("IsolatedDefaultValue")
+    SwiftSetting.enableUpcomingFeature("DisableOutwardActorI")
+    SwiftSetting.enableUpcomingFeature("ImportObjcForwardDec")
+    SwiftSetting.enableUpcomingFeature("DeprecateApplication")
+    SwiftSetting.enableExperimentalFeature("StrictConcurrency")
+    SwiftSetting.unsafeFlags(["-warn-concurrency", "-enable-actor-data-race-checks"])
   }
 )
 .supportedPlatforms {

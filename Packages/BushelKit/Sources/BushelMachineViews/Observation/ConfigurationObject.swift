@@ -5,6 +5,7 @@
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
   import BushelCore
+  import BushelFactory
   import BushelLogging
   import BushelMachine
   import Foundation
@@ -12,7 +13,7 @@
   import SwiftData
 
   @Observable
-  final class ConfigurationObject: Loggable {
+  final class ConfigurationObject: Loggable, Sendable {
     var sheetSelectedRestoreImageID: UUID? {
       didSet {
         self.configuration.restoreImageID = sheetSelectedRestoreImageID

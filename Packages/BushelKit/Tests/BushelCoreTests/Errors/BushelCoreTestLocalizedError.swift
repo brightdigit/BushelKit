@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelTestUtlities
+import BushelTestUtilities
 
 struct BushelCoreTestLocalizedError: MockLocalizedError {
   static let sample = Self(value: "sample")

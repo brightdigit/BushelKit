@@ -101,7 +101,8 @@
         vmSystemID: "cheese",
         snapshotSystemID: .init(stringLiteral: ""),
         operatingSystemVersion: .init(majorVersion: 15, minorVersion: 0, patchVersion: 1),
-        buildVersion: "test"
+        buildVersion: "test",
+        storage: [.init(label: "preview", size: 800_000_000_000)]
       )
     )
   }

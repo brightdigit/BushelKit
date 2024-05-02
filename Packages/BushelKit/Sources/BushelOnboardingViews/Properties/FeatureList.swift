@@ -3,7 +3,8 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelViewsCore
+import BushelCore
+
 struct FeatureList {
   let features: [FeatureItem]
 

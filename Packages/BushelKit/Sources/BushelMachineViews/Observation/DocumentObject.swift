@@ -12,7 +12,7 @@
   import SwiftUI
 
   @Observable
-  class DocumentObject: Loggable, MachineObjectParent {
+  final class DocumentObject: Loggable, MachineObjectParent, Sendable {
     var url: URL?
     var alertIsPresented: Bool = false
     var error: MachineError? {
@@ -54,7 +54,7 @@
     func beginLoadingURL(
       _ url: URL?,
       withDatabase database: any Database,
-      restoreImageDBfrom: @escaping (any Database) -> any InstallerImageRepository,
+      restoreImageDBfrom: @escaping @Sendable (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider

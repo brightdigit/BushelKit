@@ -4,17 +4,18 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelAccessibility
   import BushelCore
   import BushelLibrary
   import BushelLocalization
   import SwiftUI
 
-  struct ImageView: View {
+  struct ImageView: View, Sendable {
     @Environment(\.openWindow) var openWindow
     @Bindable var image: LibraryImageObject
     let system: any LibrarySystem
     @State var metadataLabel: MetadataLabel
-    var onSave: () -> Void
+    var onSave: @Sendable () -> Void
 
     var body: some View {
       VStack {
@@ -30,19 +31,19 @@
           VStack(alignment: .leading) {
             TextField("Name", text: self.$image.name, onCommit: self.beginSave)
               .font(.largeTitle)
-              .accessibilityIdentifier("name-field")
+              .accessibilityIdentifier(Library.nameField.identifier)
 
             Text(metadataLabel.operatingSystemLongName)
               .lineLimit(1)
               .font(.title)
-              .accessibilityIdentifier("operating-system-name")
+              .accessibilityIdentifier(Library.operatingSystemName.identifier)
             Text(
               Int64(image.metadata.contentLength), format: .byteCount(style: .file)
             )
             .font(.title2)
-            .accessibilityIdentifier("content-length")
+            .accessibilityIdentifier(Library.contentLength.identifier)
             Text(image.metadata.lastModified, style: .date).font(.title2)
-              .accessibilityIdentifier("last-modified")
+              .accessibilityIdentifier(Library.lastModified.identifier)
           }
         }
         .accessibilityElement(children: .contain)
@@ -74,7 +75,7 @@
     internal init(
       image: Bindable<LibraryImageObject>,
       system: any LibrarySystem,
-      onSave: @escaping () -> Void
+      onSave: @escaping @Sendable () -> Void
     ) {
       self._image = image
       self.system = system
@@ -96,7 +97,7 @@
       guard !self.image.isDeleted else {
         return
       }
-      Task {
+      Task { @MainActor in
         await self.save()
       }
     }

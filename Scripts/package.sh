@@ -10,7 +10,7 @@ else
 fi
 
 cd $PACKAGE_DIR
-echo "// swift-tools-version: 5.9" > Package.swift
+echo "// swift-tools-version: 5.10" > Package.swift
 cat Package/Support/*.swift >> Package.swift
 cat Package/Sources/**/*.swift >> Package.swift
 cat Package/Sources/*.swift >> Package.swift

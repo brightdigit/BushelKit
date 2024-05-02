@@ -12,13 +12,23 @@ MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
 
 /opt/homebrew/bin/mint bootstrap
 
-if [ -z "$SRCROOT" ]; then
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-	PACKAGE_DIR="${SCRIPT_DIR}/../Packages/BushelKit"
-else
-	PACKAGE_DIR="${SRCROOT}/Packages/BushelKit" 	
-fi
-
+function lint_swift_package() {
+	pushd $1
+	
+	if [ -z "$CI" ]; then
+		$MINT_RUN swiftformat .
+		$MINT_RUN swiftlint autocorrect
+	else 
+		set -e
+	fi
+	
+	#$MINT_RUN periphery scan 
+	$MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
+	$MINT_RUN swiftformat --lint $SWIFTFORMAT_OPTIONS .
+	$MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
+	
+	popd
+}
 
 if [ "$LINT_MODE" == "NONE" ]; then
 	exit
@@ -32,21 +42,25 @@ else
 	STRINGSLINT_OPTIONS="--config .stringslint.yml"
 fi
 
-pushd $PACKAGE_DIR
-
-pushd $PACKAGE_DIR
-swift package resolve
-
-if [ -z "$CI" ]; then
-	$MINT_RUN swiftformat .
-	$MINT_RUN swiftlint autocorrect
-else 
-	set -e
+if [ -z "$SRCROOT" ]; then
+	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+	PACKAGE_PARENT_DIR="${SCRIPT_DIR}/../Packages"
+else
+	PACKAGE_PARENT_DIR="${SRCROOT}/Packages" 	
 fi
 
-#$MINT_RUN periphery scan 
-$MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
-$MINT_RUN swiftformat --lint $SWIFTFORMAT_OPTIONS .
-$MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
+pushd $PACKAGE_PARENT_DIR
 
-popd
+for packageDirectory in $PACKAGE_PARENT_DIR/*; do 
+	lint_swift_package "$packageDirectory" &
+done
+
+wait
+# if [ -z "$SRCROOT" ]; then
+# 	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# 	PACKAGE_DIR="${SCRIPT_DIR}/../Packages/BushelKit"
+# else
+# 	PACKAGE_DIR="${SRCROOT}/Packages/BushelKit" 	
+# fi
+
+

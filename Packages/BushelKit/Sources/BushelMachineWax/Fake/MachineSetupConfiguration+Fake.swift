@@ -10,7 +10,7 @@ public extension MachineSetupConfiguration {
   static let sampleMachineSetupConfiguration: Self = .init(
     libraryID: .sampleLibraryID,
     restoreImageID: .imageIDSample,
-    storage: [.default],
+    storage: [.init(label: "", size: MachineStorageSpecification.defaultSize)],
     cpuCount: 1,
     memory: 1024 * 1024,
     networkConfigurations: [.default()],

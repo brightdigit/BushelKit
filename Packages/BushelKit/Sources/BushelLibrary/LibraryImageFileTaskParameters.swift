@@ -6,7 +6,7 @@
 import BushelLogging
 import Foundation
 
-struct LibraryImageFileTaskParameters {
+struct LibraryImageFileTaskParameters: Sendable {
   let system: any LibrarySystem
   let id: UUID
   let url: URL
@@ -51,7 +51,6 @@ public extension TaskGroup<LibraryImageFile?> {
       }
       return
     }
-
     logger.debug("Updating Metadata for \(parameters.id)")
     self.addTask {
       do {

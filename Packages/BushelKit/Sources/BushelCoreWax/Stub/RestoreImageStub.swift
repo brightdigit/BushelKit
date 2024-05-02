@@ -5,6 +5,6 @@
 
 import Foundation
 
-public struct RestoreImageStub {
+public struct RestoreImageStub: Sendable {
   public init() {}
 }

@@ -8,7 +8,7 @@
   import Observation
 
   @Observable
-  public class FileOperationProgress<ValueType: BinaryInteger>: Identifiable {
+  public final class FileOperationProgress<ValueType: BinaryInteger>: Identifiable, Sendable {
     public let operation: any ProgressOperation<ValueType>
 
     public var id: URL {

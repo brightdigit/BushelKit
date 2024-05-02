@@ -24,6 +24,10 @@
       MacOSVirtualization.allowedContentTypes
     }
 
+    public var releaseCollectionMetadata: any ReleaseCollectionMetadata {
+      MacOSReleaseCollectionMetadata.macosReleases
+    }
+
     public init() {}
 
     public func operatingSystemLongName(for metadata: any OperatingSystemInstalled) -> String {

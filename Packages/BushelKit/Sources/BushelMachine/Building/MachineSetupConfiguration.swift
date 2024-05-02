@@ -23,12 +23,18 @@ public struct MachineSetupConfiguration {
   /// Graphics Configuration
   public var graphicsConfigurations: [GraphicsConfiguration]
 
-  public var snapshotSystemID: SnapshotterID = "fileVersion"
+  public var snapshotSystemID: SnapshotterID = .fileVersion
+
+  public init(
+    system: any MachineSystem
+  ) {
+    self.init(storage: [.default(forSystem: system)])
+  }
 
   public init(
     libraryID: LibraryIdentifier? = nil,
     restoreImageID: UUID? = nil,
-    storage: [MachineStorageSpecification] = [.default],
+    storage: [MachineStorageSpecification],
     cpuCount: Float = 1,
     memory: Float = (8 * 1024 * 1024 * 1024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
@@ -42,12 +48,31 @@ public struct MachineSetupConfiguration {
     self.networkConfigurations = networkConfigurations
     self.graphicsConfigurations = graphicsConfigurations
   }
+
+  @available(*, deprecated)
+  public init(
+    libraryID: LibraryIdentifier? = nil,
+    restoreImageID: UUID? = nil,
+    storage: [MachineStorageSpecification]? = nil,
+    cpuCount: Float = 1,
+    memory: Float = (8 * 1024 * 1024 * 1024),
+    networkConfigurations: [NetworkConfiguration] = [.default()],
+    graphicsConfigurations: [GraphicsConfiguration] = [.default()]
+  ) {
+    self.libraryID = libraryID
+    self.restoreImageID = restoreImageID
+    self.storage = storage ?? [.defaultPrimary]
+    self.cpuCount = cpuCount
+    self.memory = memory
+    self.networkConfigurations = networkConfigurations
+    self.graphicsConfigurations = graphicsConfigurations
+  }
 }
 
 public extension MachineSetupConfiguration {
   var primaryStorage: MachineStorageSpecification {
     get {
-      storage.first ?? .default
+      storage.first ?? .defaultPrimary
     }
     set {
       storage[0] = newValue
@@ -63,10 +88,19 @@ public extension MachineSetupConfiguration {
     }
   }
 
+  @available(*, deprecated)
   init(request: MachineBuildRequest?) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,
       restoreImageID: request?.restoreImage?.imageID
+    )
+  }
+
+  init(request: MachineBuildRequest?, system: any MachineSystem) {
+    self.init(
+      libraryID: request?.restoreImage?.libraryID,
+      restoreImageID: request?.restoreImage?.imageID,
+      storage: [.default(forSystem: system)]
     )
   }
 

@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public struct InstallFailure: Equatable {
+public struct InstallFailure: Equatable, Sendable {
   static let unknown: InstallFailure = .init(
     errorDomain: "Unknown",
     errorCode: 0,

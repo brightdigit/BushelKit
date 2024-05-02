@@ -10,7 +10,7 @@
   import SwiftUI
 
   @Observable
-  class SnapshotObject {
+  final class SnapshotObject: Sendable {
     let initialSnapshot: Snapshot
     let entry: SnapshotEntry
     let index: Int

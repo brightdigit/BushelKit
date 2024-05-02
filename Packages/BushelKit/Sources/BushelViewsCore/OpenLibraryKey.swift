@@ -26,7 +26,7 @@
 
   public extension Scene {
     func openLibrary(
-      _ closure: @escaping (OpenWindowAction) -> Void
+      _ closure: @escaping @MainActor (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.openLibrary, .init(closure: closure))
     }

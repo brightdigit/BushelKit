@@ -10,7 +10,8 @@ struct BushelMachineViews: Target {
     BushelUT()
     BushelLocalization()
     BushelViewsCore()
-    BushelSessionUI()
+    BushelScreenCore()
+    BushelFactoryViews()
     BushelMachineEnvironment()
     BushelMarketEnvironment()
   }

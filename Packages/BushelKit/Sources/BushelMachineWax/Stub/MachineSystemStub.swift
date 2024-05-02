@@ -11,6 +11,10 @@ import Foundation
 public struct MachineSystemStub: MachineSystem, Equatable {
   public typealias RestoreImageType = RestoreImageStub
 
+  public let defaultStorageLabel: String = "stub"
+
+  public let defaultSnapshotSystem: BushelCore.SnapshotterID = "testing"
+
   public var id: VMSystemID
 
   public func createBuilder(

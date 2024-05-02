@@ -13,6 +13,7 @@
   import BushelOnboardingViews
   import BushelSystem
   import BushelViewsCore
+  import BushelXPCSession
   import SwiftData
   import SwiftUI
   import TipKit
@@ -38,7 +39,7 @@
           .database(configuration.database)
           .modelContainer(configuration.modelContainer)
           .hubView(configuration.hubView(_:))
-          .openFileURL(configuration.openFileURL(_:openWindow:))
+          .openFileURL { configuration.openFileURL($0, openWindow: $1) }
           .newLibrary(type(of: configuration).LibraryFileType)
           .openMachine(type(of: configuration).MachineFileType)
           .allowedOpenFileTypes(configuration.allowedOpenFileTypes)
@@ -70,7 +71,7 @@
     >(
       libraryFileType: LibraryFileType.Type,
       machineFileType: MachineFileType.Type,
-      @SystemBuilder _ systems: @escaping () -> [any System]
+      @SystemBuilder _ systems: @escaping @Sendable () -> [any System]
     ) -> some Scene {
       self.configure(SceneConfiguration<MachineFileType, LibraryFileType>(systems))
     }
@@ -95,10 +96,11 @@
         return self
           .modelContainer(configuration.modelContainer)
           .database(configuration.database)
+          .session(configuration.xpcService)
           .onboardingWindow(OnboardingView.self)
           .hubView(configuration.hubView(_:))
-          .installerImageRepository(configuration.installerImageRepository)
-          .openFileURL(configuration.openFileURL(_:openWindow:))
+          .installerImageRepository { configuration.installerImageRepository($0) }
+          .openFileURL { configuration.openFileURL($0, openWindow: $1) }
           .newLibrary(type(of: configuration).LibraryFileType)
           .openLibrary(type(of: configuration).LibraryFileType)
           .openMachine(type(of: configuration).MachineFileType)

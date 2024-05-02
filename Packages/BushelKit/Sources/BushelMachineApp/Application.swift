@@ -9,6 +9,7 @@
   import BushelMachineData
   import BushelMachineMacOS
   import BushelMachineViews
+  import BushelMacOSCore
   import BushelViewsCore
   import SwiftUI
 
@@ -18,7 +19,7 @@
 
   public extension Application {
     var body: some Scene {
-      MachineScene()
+      MachineScene(system: .macOS)
     }
   }
 #endif

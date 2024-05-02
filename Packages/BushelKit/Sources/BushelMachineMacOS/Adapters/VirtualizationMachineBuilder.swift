@@ -8,14 +8,15 @@
   import BushelMachine
   import Foundation
   import Virtualization
-  class VirtualizationMachineBuilder: MachineBuilder, Loggable {
+
+  final class VirtualizationMachineBuilder: MachineBuilder, Loggable, Sendable {
     static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
     let url: URL
 
-    var observations = [UUID: NSKeyValueObservation]()
+    private var observations = [UUID: NSKeyValueObservation]()
 
     let installer: VZMacOSInstaller
 
@@ -26,14 +27,25 @@
 
     @MainActor
     func build() async throws {
+      let seconds: Int = .random(in: 10 ... 20)
       try await withCheckedThrowingContinuation { continuation in
         Task { @MainActor in
-          installer.install(completionHandler: continuation.resume(with:))
+          installer.install { result in
+            Task {
+              Self.logger.debug("waiting for file lock on auxillary for \(seconds) secs.")
+              do {
+                try await Task.sleep(for: .seconds(seconds))
+              } catch {
+                Self.logger.error("Unable to sleep for \(seconds) secs: \(error)")
+              }
+              continuation.resume(with: result)
+            }
+          }
         }
       }
     }
 
-    func observePercentCompleted(_ onUpdate: @escaping (Double) -> Void) -> UUID {
+    func observePercentCompleted(_ onUpdate: @Sendable @escaping (Double) -> Void) -> UUID {
       let observation = self.installer.progress.observe(
         \.fractionCompleted,
         options: [.new, .initial]
@@ -46,9 +58,9 @@
       return id
     }
 
-    #warning("let's log here and observation is being removed")
     func removeObserver(_ id: UUID) -> Bool {
-      self.observations.removeValue(forKey: id) != nil
+      Self.logger.debug("Removing Observer")
+      return self.observations.removeValue(forKey: id) != nil
     }
 
     deinit {

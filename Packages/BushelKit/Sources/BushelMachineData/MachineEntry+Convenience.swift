@@ -72,6 +72,7 @@
       osInstalled: (any OperatingSystemInstalled)?,
       using database: any Database
     ) async throws {
+      self.machineIdentifer = machine.machineIdentifer
       let entryMap: [UUID: SnapshotEntry] = .init(uniqueKeysWithValues: snapshots?.map {
         ($0.snapshotID, $0)
       } ?? [])

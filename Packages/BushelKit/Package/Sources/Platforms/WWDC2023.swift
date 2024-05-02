@@ -11,5 +11,7 @@ struct WWDC2023: PlatformSet {
     SupportedPlatform.iOS(.v17)
     SupportedPlatform.watchOS(.v10)
     SupportedPlatform.tvOS(.v17)
+    SupportedPlatform.visionOS(.v1)
+    SupportedPlatform.macCatalyst(.v17)
   }
 }

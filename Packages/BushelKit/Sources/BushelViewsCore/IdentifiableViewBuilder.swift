@@ -7,6 +7,7 @@
   import Foundation
   import SwiftUI
 
+  @available(*, deprecated, message: "Use RadiantKit.")
   @resultBuilder
   public enum IdentifiableViewBuilder {
     public static func buildPartialBlock(first: any View) -> [IdentifiableView] {

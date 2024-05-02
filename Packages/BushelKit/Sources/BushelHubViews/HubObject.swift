@@ -11,7 +11,7 @@
   import Foundation
 
   @Observable
-  class HubObject: Loggable {
+  final class HubObject: Loggable, Sendable {
     static var loggingCategory: BushelLogging.Category {
       .observation
     }

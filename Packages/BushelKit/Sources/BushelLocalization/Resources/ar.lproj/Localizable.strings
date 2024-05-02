@@ -125,7 +125,7 @@
 "menu_onboarding" = "تشغيل شاشة التمهيد";
 
 /* Welcome Action Button title for creating new machine */
-"welcome_pro" = "النسخة الإحترافية";
+"welcome_pro" = "نسخة احترافية";
 
 /* Welcome Action Button title for creating new machine */
 "welcome_new_machine_title" = "إنشاء جهاز إفتراضى جديد";

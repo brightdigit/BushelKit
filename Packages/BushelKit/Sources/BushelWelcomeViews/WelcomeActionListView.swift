@@ -68,7 +68,9 @@
         }
 
         // TipView(tip)
-      }.accessibilityElement(children: .contain)
+      }
+      .accessibilityElement(children: .contain)
+      .accessibilityLabel("Welcome Action Buttons")
     }
   }
 

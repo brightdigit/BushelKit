@@ -7,7 +7,7 @@ import BushelCore
 import Foundation
 
 /// Metadata attached to a machine
-public struct MachineConfiguration: Codable, OperatingSystemInstalled {
+public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
   public let restoreImageFile: InstallerImageIdentifier
 
   /// System ID
@@ -36,7 +36,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled {
     snapshotSystemID: SnapshotterID,
     operatingSystemVersion: OperatingSystemVersion,
     buildVersion: String? = nil,
-    storage: [MachineStorageSpecification] = [.default],
+    storage: [MachineStorageSpecification],
     cpuCount: Int = 1,
     memory: Int = (128 * 1024 * 1024 * 1024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
@@ -61,7 +61,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled {
 public extension MachineConfiguration {
   init(setup: MachineSetupConfiguration, restoreImageFile: any InstallerImage) {
     self.init(
-      restoreImageFile: restoreImageFile.indentifier,
+      restoreImageFile: restoreImageFile.identifier,
       vmSystemID: restoreImageFile.metadata.vmSystemID,
       snapshotSystemID: setup.snapshotSystemID,
       operatingSystemVersion: restoreImageFile.operatingSystemVersion,

@@ -36,6 +36,15 @@ extension PackageDependency {
       let packageName = name ?? location.packageName
       return .product(name: productName, package: packageName)
 
+    case let .fileSystem(name: name, path: path):
+      if let packageName = name ?? path.components(separatedBy: "/").last {
+        return .product(name: productName, package: packageName)
+      } else {
+        return .byName(name: productName)
+      }
+
+    case .registry:
+      return .byName(name: productName)
     @unknown default:
       return .byName(name: productName)
     }

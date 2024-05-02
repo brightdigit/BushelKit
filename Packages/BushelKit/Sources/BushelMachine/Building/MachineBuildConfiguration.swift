@@ -7,7 +7,7 @@ import BushelCore
 import Foundation
 
 ///  Used by the `MachineSystem` to build a new virtual machine.
-public struct MachineBuildConfiguration<RestoreImageType> {
+public struct MachineBuildConfiguration<RestoreImageType: Sendable>: Sendable {
   /// Hardware configuration of the machine.
   public let configuration: MachineConfiguration
 

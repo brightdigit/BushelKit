@@ -5,9 +5,9 @@
 
 import Foundation
 
-public protocol MachineBuilder {
+public protocol MachineBuilder: Sendable {
   var url: URL { get }
-  func observePercentCompleted(_ onUpdate: @escaping (Double) -> Void) -> UUID
+  func observePercentCompleted(_ onUpdate: @escaping @Sendable (Double) -> Void) -> UUID
   @discardableResult
   func removeObserver(_ id: UUID) -> Bool
   func build() async throws

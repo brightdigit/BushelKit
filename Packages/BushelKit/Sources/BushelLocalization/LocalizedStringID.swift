@@ -3,10 +3,10 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public enum LocalizedStringID: String, CaseIterable, LocalizedID {
+// swiftlint:disable type_body_length file_length
+public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   // swiftlint:disable identifier_name
   case bushel
-  case welcomeToBushel
   case upgradePurchase
   case proFeatures
   case aboutSubscriptionEndsAt
@@ -47,12 +47,23 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case menuClear
   case menuOnboarding
   case welcomePro
+  case welcomeToBushel
   case welcomeNewMachineTitle
   case welcomeExistingMachineTitle
   case welcomeStartLibraryTitle
   case welcomeNoRecentDocuments
   case welcomeUpdatingRecentDocuments
   case machineWillInstall
+  case machineDialogChooseSpecifications
+  case machineDialogChooseOS
+  case machineDialogReleaseCustom
+  case machineDialogBuildPicker
+  case machineDialogCpusName
+  case machineDialogMemoryName
+  case machineDialogStorageName
+  case machineDialogSpecTemplateNameBasic
+  case machineDialogSpecTemplateNameDeveloper
+  case machineDialogSpecTemplateNameMaximum
   case machineImagesChoose
   case machineImagesEmptyTitle
   case machineImagesEmptyMessage
@@ -197,6 +208,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID {
   case settingsResetUserSettingsLabel
   case settingsMachineShutdown
   case requestReview
+
   // swiftlint:enable identifier_name
   public var keyValue: String {
     rawValue.camelCaseTosnake_case()

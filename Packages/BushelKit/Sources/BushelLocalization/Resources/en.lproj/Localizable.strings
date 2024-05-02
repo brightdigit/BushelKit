@@ -151,6 +151,36 @@
 /* Machine Details Operating System Label */
 "name" = "Name";
 
+/* Machine Building Dialog Choose OS */
+"machine_dialog_choose_o_s" = "Choose the operating system for your new machine:";
+
+/* Machine Building Dialog Choose Specifications */
+"machine_dialog_choose_specifications" = "Choose the specifications for your new machine:";
+
+/* Machine Building Dialog Custom Release */
+"machine_dialog_release_custom" = "Custom";
+
+/* Machine Building Dialog Build Picker Title */
+"machine_dialog_build_picker" = "Build";
+
+/* Machine Building Dialog CPU Field Label */
+"machine_dialog_cpus_name" = "CPUs";
+
+/* Machine Building Dialog Memory Field Label */
+"machine_dialog_memory_name" = "Memory";
+
+/* Machine Building Dialog Storage Field Label */
+"machine_dialog_storage_name" = "Storage";
+
+/* Machine Building Dialog Specification Basic Template Name */
+"machine_dialog_spec_template_name_basic" = "Basic";
+
+/* Machine Building Dialog Specification Developer Template Name */
+"machine_dialog_spec_template_name_developer" = "Developer";
+
+/* Machine Building Dialog Specification Maximum Template Name */
+"machine_dialog_spec_template_name_maximum" = "Maximum";
+
 /* Machine Configuration Choose Button */
 "machine_images_choose" = "Choose";
 
