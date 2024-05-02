@@ -10,13 +10,13 @@ internal final class MachinePrimaryStorageConfigurationTests: XCTestCase {
   internal func testEmptyStorageConfiguration() {
     let sut = MachineSetupConfiguration(storage: [])
 
-    assertPrimaryStorage(sut: sut, against: .default)
+    assertPrimaryStorage(sut: sut, against: .defaultPrimary)
   }
 
   internal func testDefaultPrimaryStorage() {
     let sut = MachineSetupConfiguration()
 
-    assertPrimaryStorage(sut: sut, against: .default)
+    assertPrimaryStorage(sut: sut, against: .defaultPrimary)
   }
 
   internal func testCustomPrimaryStorage() {

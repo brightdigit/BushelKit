@@ -130,8 +130,8 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,macos,swift
 
-Support/macOS/Info.plist
-Support/macOS/macOS.entitlements
+Support/*/Info.plist
+Support/*/macOS.entitlements
 
 vendor/ruby
 public

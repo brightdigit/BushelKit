@@ -7,10 +7,16 @@ import BushelCore
 import Foundation
 
 /// Manages a set of machines for a system
-public protocol MachineSystem {
-  associatedtype RestoreImageType
+public protocol MachineSystem: Sendable {
+  associatedtype RestoreImageType: Sendable
   /// Supported system id
   var id: VMSystemID { get }
+
+  /// Default label for a new virtual hard drive.
+  var defaultStorageLabel: String { get }
+
+  /// Default snapshot system.
+  var defaultSnapshotSystem: SnapshotterID { get }
 
   @MainActor
   /// Creates a builder for creating the machine
@@ -54,7 +60,7 @@ public extension MachineSystem {
   func createBuilder(
     for configuration: MachineSetupConfiguration,
     image: any InstallerImage,
-    at url: URL
+    withDataDirectoryAt url: URL
   ) async throws -> any MachineBuilder {
     let restoreImage: RestoreImageType
     do {
@@ -75,6 +81,37 @@ public extension MachineSystem {
     )
     let setupConfiguration = MachineBuildConfiguration(
       configuration: machineConfiguration,
+      restoreImage: restoreImage
+    )
+    return try await self.createBuilder(for: setupConfiguration, at: url)
+  }
+
+  /// Create a builder based on the specification.
+  /// - Parameters:
+  ///   - configuration: The configured specifications.
+  ///   - image: Install Image.
+  ///   - url: Desintation URL.
+  /// - Returns: Machine builder to start creating the machine.
+  func createBuilder(
+    for configuration: MachineConfiguration,
+    image: any InstallerImage,
+    withDataDirectoryAt url: URL
+  ) async throws -> any MachineBuilder {
+    let restoreImage: RestoreImageType
+    do {
+      restoreImage = try await self.restoreImage(from: image)
+    } catch let error as NSError {
+      if let error = BuilderError.restoreImage(image, withError: error) {
+        throw error
+      }
+      assertionFailure(error: error)
+      throw error
+    } catch {
+      assertionFailure(error: error)
+      throw error
+    }
+    let setupConfiguration = MachineBuildConfiguration(
+      configuration: configuration,
       restoreImage: restoreImage
     )
     return try await self.createBuilder(for: setupConfiguration, at: url)

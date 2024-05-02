@@ -8,12 +8,17 @@
   import BushelLibraryMacOS
   import BushelMachineMacOS
 
+  import BushelCore
   import BushelHub
   import BushelLibrary
   import BushelMachine
   import BushelSystem
 
   public struct MacOSVirtualizationSystem: System, MacOSVirtualizationHubProvider {
+    public static var systemID: VMSystemID {
+      .macOS
+    }
+
     public var library: (any LibrarySystem)? {
       MacOSVirtualizationLibrarySystem()
     }

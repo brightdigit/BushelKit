@@ -1,0 +1,11 @@
+name: Struct
+parameters:
+  - name: "name"
+    isRequired: true
+  - name: "module"
+    isRequired: true
+paths:
+  - from: TestCase.swift.stencil
+    to: '{{paths.tests}}/Bushel{{module|firstUppercase}}Tests/{{name|firstUppercase}}Tests.swift'
+description: An item named Struct created from scaffold
+replacements: []

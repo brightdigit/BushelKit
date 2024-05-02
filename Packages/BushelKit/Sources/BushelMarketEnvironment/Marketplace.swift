@@ -11,7 +11,7 @@
   import Observation
 
   @Observable
-  public class Marketplace: Loggable, MarketObserver {
+  public final class Marketplace: Loggable, MarketObserver, Sendable {
     private static var shared = [Int: Marketplace]()
 
     internal static let `default` = Marketplace(groupIDs: [], listener: EmptyMarketListener.shared)

@@ -24,7 +24,7 @@
       }
     }
 
-    public func delete(_ model: some PersistentModel) async {
+    public func delete(_ model: some PersistentModel & Sendable) async {
       assert(isMainThread: false)
       assert(model.modelContext == self.modelContext || model.modelContext == nil)
       guard model.modelContext == self.modelContext else {
@@ -34,7 +34,7 @@
       self.modelContext.delete(model)
     }
 
-    public func insert(_ model: some PersistentModel) async {
+    public func insert(_ model: some PersistentModel & Sendable) async {
       assert(isMainThread: false)
       assert(model.modelContext == self.modelContext || model.modelContext == nil)
       guard model.modelContext == self.modelContext || model.modelContext == nil else {
@@ -44,7 +44,7 @@
       self.modelContext.insert(model)
     }
 
-    public func delete<T: PersistentModel>(
+    public func delete<T: PersistentModel & Sendable>(
       where predicate: Predicate<T>?
     ) async throws {
       assert(isMainThread: false)
@@ -59,7 +59,9 @@
       try self.modelContext.save()
     }
 
-    public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
+    public func fetch<T>(
+      _ descriptor: FetchDescriptor<T>
+    ) async throws -> [T] where T: PersistentModel & Sendable {
       assert(isMainThread: false)
       Self.logger.debug("Fetch begun: \(T.self)")
       return try self.modelContext.fetch(descriptor)

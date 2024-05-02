@@ -9,6 +9,7 @@ struct BushelOnboardingViews: Target {
     BushelLogging()
     BushelLocalization()
     BushelViewsCore()
+    RadiantKit()
     BushelOnboardingCore()
   }
 }

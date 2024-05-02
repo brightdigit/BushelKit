@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelAccessibility
   import BushelCore
   import BushelData
   import BushelLogging
@@ -32,7 +33,9 @@
             ) { document in
               RecentDocumentItemButton(document: document)
             }
-          }.listStyle(SidebarListStyle()).padding(-20)
+          }
+          .listStyle(SidebarListStyle())
+          .padding(-20)
         }
       }
     }

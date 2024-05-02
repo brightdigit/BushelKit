@@ -5,6 +5,7 @@
 
 #if canImport(SwiftData)
   import BushelCore
+  import BushelFactory
   import BushelLogging
   import BushelMachine
   import Foundation

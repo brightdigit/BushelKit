@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelAccessibility
   import BushelCore
   import BushelLocalization
   import BushelMarketEnvironment
@@ -11,13 +12,18 @@
 
   struct WelcomeLogoTitleLabelView: View {
     @Environment(\.marketplace) var marketplace
+
+    private var isActiveSubscription: Bool {
+      (marketplace.subscriptionEndDate ?? .distantPast) > .now
+    }
+
     var body: some View {
       HStack {
         Text(.bushel)
           .font(.system(size: 36.0))
           .fontWeight(.bold)
 
-        if (marketplace.subscriptionEndDate ?? .distantPast) > .now {
+        if isActiveSubscription {
           Text(.welcomePro)
             .font(.system(size: 36.0))
             .fontWeight(.bold)

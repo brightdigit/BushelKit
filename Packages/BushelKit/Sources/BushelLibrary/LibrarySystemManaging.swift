@@ -7,7 +7,7 @@ import BushelCore
 import BushelLogging
 import Foundation
 
-public protocol LibrarySystemManaging: Loggable {
+public protocol LibrarySystemManaging: Loggable, Sendable {
   var allAllowedFileTypes: [FileType] { get }
   func resolve(_ id: VMSystemID) -> any LibrarySystem
   func resolveSystemFor(url: URL) -> VMSystemID?
@@ -30,6 +30,13 @@ public extension LibrarySystemManaging {
     return resolve(systemID)
   }
 
+  @Sendable
+  func releaseCollectionMetadata(forSystem id: VMSystemID) -> any ReleaseCollectionMetadata {
+    let system = self.resolve(id)
+    return system.releaseCollectionMetadata
+  }
+
+  @Sendable
   func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled) -> MetadataLabel {
     let system = self.resolve(id)
     return system.label(fromMetadata: metadata)

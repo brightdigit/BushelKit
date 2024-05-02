@@ -9,13 +9,13 @@
   import Foundation
   import StoreKit
 
-  public class StoreListener: Loggable, MarketListener {
+  public final class StoreListener: Loggable, MarketListener, Sendable {
     public static var loggingCategory: BushelLogging.Category {
       .market
     }
 
     // swiftlint:disable:next implicitly_unwrapped_optional
-    var updateListener: Task<Void, Never>!
+    private var updateListener: Task<Void, Never>!
     weak var observer: (any MarketObserver)?
     var hasCurrentEntitlements: Bool = false
 

@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelFactoryViews
   import BushelLogging
   import BushelMachine
   import Foundation
@@ -14,15 +15,24 @@
   public struct MachineScene: Scene, Loggable {
     static let minimumWidth = 512.0
     static let idealSessionWidth = 1920.0
-
+    let system: VMSystemID?
     public var body: some Scene {
       WindowGroup("New Machine...", for: MachineBuildRequest.self) { request in
-        #if os(macOS)
-          ConfigurationView(request: request).presentedWindowStyle(.hiddenTitleBar)
-        #else
-          ConfigurationView(request: request)
-        #endif
+        if let system {
+          DialogView(system: system, request: request).frame(width: 700, height: 400)
+        } else {
+          #if os(macOS)
+            ConfigurationView(request: request).presentedWindowStyle(.hiddenTitleBar)
+          #else
+            ConfigurationView(request: request)
+          #endif
+        }
       }
+      #if os(macOS)
+      .windowStyle(.hiddenTitleBar)
+      .windowResizability(.contentSize)
+      #endif
+
       DocumentScene()
       #if os(macOS)
         WindowGroup(for: SessionRequest.self) { request in
@@ -33,7 +43,9 @@
       #endif
     }
 
-    public init() {}
+    public init(system: VMSystemID? = nil) {
+      self.system = system
+    }
   }
 
 #endif

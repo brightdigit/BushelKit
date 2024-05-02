@@ -11,7 +11,7 @@
   import SwiftUI
 
   private struct LibrarySystemManagerKey: EnvironmentKey {
-    static var defaultValue: any LibrarySystemManaging =
+    static let defaultValue: any LibrarySystemManaging =
       LibrarySystemManager(.init(), fileTypeBasedOnURL: { _ in nil })
   }
 
@@ -31,7 +31,7 @@
 
     func librarySystemManager(
       @LibrarySystemBuilder builder: () -> [any LibrarySystem],
-      fileTypeBasedOnURL: @escaping (URL) -> FileType?
+      fileTypeBasedOnURL: @Sendable @escaping (URL) -> FileType?
     ) -> some Scene {
       self.librarySystemManager(
         LibrarySystemManager(

@@ -24,6 +24,7 @@ cache:
       files:
         - Package.resolved
     paths:
+      - Packages/RadiantKit/.build
       - Packages/BushelKit/.build
       - ~/.swiftpm
   - key:
@@ -42,7 +43,8 @@ cache:
     - xcodes select $XCODE_VERSION
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
-build spm macos:
+    
+build spm macos bushelkit:
   stage: build
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -71,14 +73,42 @@ build spm macos:
     - echo ${XCRESULT}    
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
 
-
+build spm macos radiantkit:
+    stage: build
+    rules:
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      - if: $CI_PIPELINE_SOURCE == "push"
+      - if: $APPSTORE_DEPLOY == null
+    tags:
+        - macos
+    artifacts:
+      paths:
+        - cobertura.xml
+      reports:
+        coverage_report:
+          coverage_format: cobertura
+          path: cobertura.xml
+    script:
+      - xcodes select $XCODE_VERSION
+      - MINT_ARGS="-n -m Mintfile --silent"
+      - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
+      - pushd Packages/RadiantKit
+      - xcodebuild -resolvePackageDependencies
+      - xcodebuild build -quiet -scheme RadiantKit -derivedDataPath Build -destination "OS=17.4,name=iPhone 15" &>/dev/null || true
+      - xcodebuild build -quiet -scheme RadiantKit -derivedDataPath Build -destination "OS=17.4,name=iPhone 15"
+      - xcodebuild test -scheme RadiantKit -sdk iphonesimulator17.4 -destination "OS=17.4,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
+      - popd
+      - XCRESULT=$(find . -path "./Packages/RadiantKit/Build/Logs/Test/Test-RadiantKit-*.xcresult")
+      - echo ${XCRESULT}    
+      - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+      
 upload spm macos coverage:
   stage: build
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $APPSTORE_DEPLOY == null
-  needs: ["build spm macos"]
+  needs: ["build spm macos bushelkit","build spm macos radiantkit"]
   image: ellerbrock/alpine-bash-curl-ssl
   artifacts:
     paths:
@@ -86,7 +116,7 @@ upload spm macos coverage:
   script:
     - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F xcode15 -F macos
 
-build spm linux:
+build spm linux bushelkit:
   stage: build
   only:
     - merge_requests
@@ -95,7 +125,7 @@ build spm linux:
   except:
     variables:
       - $APPSTORE_DEPLOY
-  image: swift:5.9.0-jammy
+  image: swift:5.10-jammy
   script:
     - cd Packages/BushelKit
     - swift build
@@ -104,6 +134,25 @@ build spm linux:
     - apt-get update -y
     - apt-get install -y curl
     - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
+
+build spm linux radiantkit:
+    stage: build
+    only:
+      - merge_requests
+      - main
+      - /^v\d+.\d+.\d+(-\w+\.\d+)?$/
+    except:
+      variables:
+        - $APPSTORE_DEPLOY
+    image: swift:5.10-jammy
+    script:
+      - cd Packages/RadiantKit
+      - swift build
+      - swift test --enable-code-coverage
+      - llvm-cov export -format="lcov" .build/x86_64-unknown-linux-gnu/debug/RadiantKitPackageTests.xctest -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > cobertura.xml
+      - apt-get update -y
+      - apt-get install -y curl
+      - bash <(curl https://codecov.io/bash) -t $CODECOV_TOKEN -F spm -F linux 
 
 lint lenient:
   except:
@@ -120,6 +169,24 @@ lint strict:
   variables:
    LINT_MODE: "STRICT"
   <<: *lint_template  
+
+match:
+  stage: lint
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  tags:
+    - macos  
+  only:
+    variables:
+      - $MATCH
+  script:
+    - rbenv rehash
+    - rbenv exec bundle install
+    - rbenv exec bundle exec fastlane match appstore --additional_cert_types=mac_installer_distribution --readonly
 
 testflight:
   stage: deploy

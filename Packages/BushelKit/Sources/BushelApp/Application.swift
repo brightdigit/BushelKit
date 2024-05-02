@@ -37,6 +37,14 @@
       .application
     }
 
+    var defaultSystem: VMSystemID? {
+      #if arch(arm64) && os(macOS)
+        MacOSVirtualizationSystem.systemID
+      #else
+        nil
+      #endif
+    }
+
     var body: some Scene {
       Group {
         #if os(macOS)
@@ -45,7 +53,7 @@
         #endif
 
         LibraryScene()
-        MachineScene()
+        MachineScene(system: defaultSystem)
 
         MarketScene()
         OnboardingScene()

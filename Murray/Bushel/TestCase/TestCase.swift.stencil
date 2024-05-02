@@ -1,0 +1,13 @@
+//
+// {{name|firstUppercase}}.swift
+// Copyright (c) 2023 BrightDigit.
+//
+
+import Bushel{{module}}
+import XCTest
+
+final class {{name|firstUppercase}}Tests: XCTestCase {
+  func testNotImplemented () {
+    XCTFail("No tests implemented")
+  }
+}

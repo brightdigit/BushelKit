@@ -14,6 +14,7 @@
     }
   }
 
+  @available(*, deprecated, message: "Use RadiantKit.")
   public struct IdentifiableView: Identifiable, View {
     let content: any View
     public let id: UUID
@@ -24,6 +25,11 @@
 
     public init(_ content: any View, id: UUID = .init()) {
       self.content = content
+      self.id = id
+    }
+
+    public init(_ content: @escaping () -> some View, id: UUID = .init()) {
+      self.content = content()
       self.id = id
     }
   }

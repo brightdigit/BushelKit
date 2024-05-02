@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct MachineStorageSpecification: Codable, Identifiable, Equatable {
+public struct MachineStorageSpecification: Codable, Identifiable, Equatable, Sendable {
   public let id: UUID
   public var size: UInt64
   public var label: String
@@ -19,8 +19,15 @@ public struct MachineStorageSpecification: Codable, Identifiable, Equatable {
 }
 
 public extension MachineStorageSpecification {
-  static let `default`: MachineStorageSpecification = .init(
-    label: "macOS System",
+  // swiftlint:disable:next force_unwrapping
+  private static let defaultPrimaryID = UUID(uuidString: "70fe323b-efc9-410f-b642-bc8e15636a49")!
+  internal static let defaultPrimary: MachineStorageSpecification = .init(
+    id: Self.defaultPrimaryID, label: "", size: Self.defaultSize
+  )
+  static let defaultSize = UInt64(64 * 1024 * 1024 * 1024)
+  static func `default`(forSystem system: any MachineSystem) -> MachineStorageSpecification { .init(
+    label: system.defaultStorageLabel,
     size: UInt64(64 * 1024 * 1024 * 1024)
   )
+  }
 }

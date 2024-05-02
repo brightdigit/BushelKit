@@ -6,10 +6,11 @@
 import BushelCore
 import Foundation
 
-public protocol LibrarySystem {
+public protocol LibrarySystem: Sendable {
   var id: VMSystemID { get }
   var shortName: String { get }
   var allowedContentTypes: Set<FileType> { get }
+  var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
   func metadata(fromURL url: URL) async throws -> ImageMetadata
   func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
 }

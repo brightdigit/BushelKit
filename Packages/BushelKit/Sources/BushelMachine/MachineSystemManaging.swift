@@ -8,7 +8,7 @@ import BushelLogging
 import Foundation
 
 /// A collection of machine systems for managing virtual machines
-public protocol MachineSystemManaging {
+public protocol MachineSystemManaging: Sendable {
   /// Resolve the ``MachineSystem`` based on the ``VMSystemID``
   /// - Parameter id: id of the system to resolve.
   /// - Returns: The resulting ``MachineSystem``

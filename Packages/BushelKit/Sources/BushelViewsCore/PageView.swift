@@ -4,14 +4,14 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelLogging
   import SwiftUI
 
-  public struct PageView: View, Loggable {
+  @available(*, deprecated, message: "Use PageView from RadiantKit.")
+  public struct PageView: View {
     @Environment(\.dismiss) var dismiss
     @State private var currentPageID: IdentifiableView.ID?
 
-    private let onDimiss: (() -> Void)?
+    private let onDimiss: (@Sendable () -> Void)?
     private let pages: [IdentifiableView]
 
     public var body: some View {
@@ -19,7 +19,7 @@
         if page.id == currentPageID {
           AnyView(
             page.content
-              .environment(\.nextPage, NextPageAction(self.showNextPage))
+              .environment(\.nextPage, NextPageAction { self.showNextPage() })
           )
           .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if currentPageID == nil, !pages.isEmpty {
@@ -63,7 +63,7 @@
         assert(pages.count == nextIndex)
 
         if pages.count != nextIndex {
-          Self.logger.error("Invalid page index \(nextIndex) > \(pages.count)")
+          // Self.logger.error("Invalid page index \(nextIndex) > \(pages.count)")
         }
 
         self.onDimiss?()

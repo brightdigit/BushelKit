@@ -8,6 +8,6 @@ struct BushelLibraryTests: TestTarget {
     BushelLibrary()
     BushelCoreWax()
     BushelLibraryWax()
-    BushelTestUtlities()
+    BushelTestUtilities()
   }
 }

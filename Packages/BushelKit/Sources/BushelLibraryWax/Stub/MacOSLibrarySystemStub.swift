@@ -18,6 +18,9 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
   public var id: VMSystemID
   public var shortName: String = "macOS"
   public var allowedContentTypes: Set<FileType> = .init()
+  public var releaseCollectionMetadata: any BushelCore.ReleaseCollectionMetadata {
+    fatalError("Not Implemented")
+  }
 
   public init(id: VMSystemID) {
     self.id = id

@@ -25,7 +25,7 @@
   private struct HubViewKey: EnvironmentKey {
     typealias Value = ViewValue
 
-    static var defaultValue: ViewValue = .init { _ in
+    static let defaultValue: ViewValue = .init { _ in
       EmptyView()
     }
   }

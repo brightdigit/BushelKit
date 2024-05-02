@@ -9,12 +9,13 @@
   import OSLog
 
   @Observable
-  public class CopyOperation<ValueType: BinaryInteger>: Identifiable {
+  public final class CopyOperation<ValueType: BinaryInteger & Sendable>: Identifiable, Sendable {
     let sourceURL: URL
     let destinationURL: URL
     public let totalValue: ValueType?
     let timeInterval: TimeInterval
-    let fileManager: FileManager
+    let getSize: @Sendable (URL) async throws -> ValueType?
+    let copyFile: @Sendable (CopyPaths) async throws -> Void
     public var currentValue = ValueType.zero
     var timer: Timer?
     let logger: Logger?
@@ -23,21 +24,26 @@
       sourceURL
     }
 
-    internal init(
-      fileManager: FileManager,
+    public init(
       sourceURL: URL,
       destinationURL: URL,
       totalValue: ValueType?,
-      timeInterval: TimeInterval = 1.0,
-      logger: Logger? = nil
+      timeInterval: TimeInterval,
+      logger: Logger?,
+      getSize: @escaping @Sendable (URL) async throws -> ValueType?,
+      copyFile: @escaping @Sendable (CopyPaths) async throws -> Void
     ) {
-      assert(sourceURL.isFileURL)
-      self.fileManager = fileManager
       self.sourceURL = sourceURL
       self.destinationURL = destinationURL
       self.totalValue = totalValue
       self.timeInterval = timeInterval
+      self.getSize = getSize
+      self.copyFile = copyFile
       self.logger = logger
+    }
+
+    private func updateValue(_ currentValue: ValueType) {
+      self.currentValue = currentValue
     }
 
     @MainActor
@@ -47,22 +53,17 @@
           timer.invalidate()
           return
         }
-        let attributes: [FileAttributeKey: Any]?
-        do {
-          attributes = try weakSelf.fileManager
-            .attributesOfItem(atPath: weakSelf.destinationURL.path(percentEncoded: false))
-        } catch {
-          weakSelf.logger?.error("Unable to get current filesize of: \(weakSelf.destinationURL)")
-          attributes = nil
-        }
-        if let currentValue = attributes?[.size] as? ValueType {
-          self?.currentValue = currentValue
-        }
-        if let totalValue = weakSelf.totalValue {
-          guard weakSelf.currentValue < totalValue else {
-            weakSelf.logger?.debug("Copy is complete based on size. Quitting timer.")
-            weakSelf.killTimer()
-            return
+
+        Task {
+          if let currentValue = try await weakSelf.getSize(weakSelf.destinationURL) {
+            weakSelf.updateValue(currentValue)
+          }
+          if let totalValue = weakSelf.totalValue {
+            guard weakSelf.currentValue < totalValue else {
+              weakSelf.logger?.debug("Copy is complete based on size. Quitting timer.")
+              weakSelf.killTimer()
+              return
+            }
           }
         }
       }
@@ -71,20 +72,15 @@
     public func execute() async throws {
       self.logger?.debug("Starting Copy operating")
       await starTimer()
-      return try await withCheckedThrowingContinuation { continuation in
-        do {
-          try self.fileManager.copyItem(at: self.sourceURL, to: self.destinationURL)
-        } catch {
-          self.logger?.error("Error Copying: \(error)")
-          self.killTimer()
-          continuation.resume(throwing: error)
-          return
-        }
-        self.logger?.debug("Copy is done. Quitting timer.")
+      do {
+        try await self.copyFile(.init(fromURL: sourceURL, toURL: destinationURL))
+      } catch {
+        self.logger?.error("Error Copying: \(error)")
         self.killTimer()
-
-        continuation.resume()
+        throw error
       }
+      self.logger?.debug("Copy is done. Quitting timer.")
+      self.killTimer()
     }
 
     private func killTimer() {
@@ -94,29 +90,6 @@
 
     deinit {
       self.killTimer()
-    }
-  }
-
-  internal extension CopyOperation where ValueType == Int {
-    convenience init(
-      fileManager: FileManager,
-      sourceURL: URL,
-      destinationURL: URL,
-      timeInterval: TimeInterval = 1.0,
-      logger: Logger? = nil
-    ) throws {
-      let attributes = try fileManager.attributesOfItem(atPath: sourceURL.path())
-      let totalValue = attributes[.size] as? Int
-      assert(totalValue != nil)
-
-      self.init(
-        fileManager: fileManager,
-        sourceURL: sourceURL,
-        destinationURL: destinationURL,
-        totalValue: totalValue,
-        timeInterval: timeInterval,
-        logger: logger
-      )
     }
   }
 

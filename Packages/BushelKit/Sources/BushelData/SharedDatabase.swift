@@ -7,7 +7,7 @@
   import Foundation
   import SwiftData
 
-  public struct SharedDatabase {
+  public struct SharedDatabase: Sendable {
     public static let shared: SharedDatabase = .init()
 
     public let schemas: [any PersistentModel.Type]

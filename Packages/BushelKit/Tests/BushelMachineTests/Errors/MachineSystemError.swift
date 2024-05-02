@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelTestUtlities
+import BushelTestUtilities
 import Foundation
 
 internal struct MachineSystemError: MockError {

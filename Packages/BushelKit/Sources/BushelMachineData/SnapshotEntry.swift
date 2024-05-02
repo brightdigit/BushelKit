@@ -11,7 +11,7 @@
   import SwiftData
 
   @Model
-  public final class SnapshotEntry {
+  public final class SnapshotEntry: Sendable {
     public var name: String
     public var snapshotID: UUID
     public var createdAt: Date

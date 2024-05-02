@@ -5,7 +5,7 @@
 
 import Foundation
 
-public enum MarketError: Error {
+public enum MarketError: Error, Sendable {
   case networkError(URLError)
   case unknownError(any Error)
 }

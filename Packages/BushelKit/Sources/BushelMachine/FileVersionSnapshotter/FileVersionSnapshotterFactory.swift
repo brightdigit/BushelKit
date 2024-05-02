@@ -9,7 +9,7 @@
 
   public struct FileVersionSnapshotterFactory: SnapshotterFactory {
     public static var systemID: SnapshotterID {
-      "fileVersion"
+      .fileVersion
     }
 
     public init() {}
