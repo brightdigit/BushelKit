@@ -106,3 +106,9 @@ public struct ReleaseCollection {
     return self.releases[index]
   }
 }
+
+public extension ReleaseCollection {
+  var isEmpty: Bool {
+    self.releases.allSatisfy(\.images.isEmpty)
+  }
+}

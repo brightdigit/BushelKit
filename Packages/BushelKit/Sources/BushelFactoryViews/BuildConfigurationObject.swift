@@ -36,6 +36,8 @@
 
     internal var isAlertPresented: Bool = false
 
+    internal var promptForLibrary: Bool = false
+
     internal var activeBuild: MachineBuilderActivity? {
       willSet {
         self.lastDestinationURL = self.activeBuild?.id ?? self.lastDestinationURL
@@ -95,7 +97,11 @@
     @ObservationIgnored
     internal var buildRequest: MachineBuildRequest?
 
-    internal private(set) var releases: ReleaseCollection?
+    internal private(set) var releases: ReleaseCollection? {
+      didSet {
+        self.promptForLibrary = releases?.isEmpty ?? false
+      }
+    }
 
     internal var specificationConfiguration: SpecificationConfiguration?
 
