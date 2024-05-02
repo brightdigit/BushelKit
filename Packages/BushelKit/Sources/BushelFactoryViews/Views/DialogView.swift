@@ -30,6 +30,11 @@
     @Environment(\.machineSystemManager) private var systemManager
     @Environment(\.openWindow) private var openWindow
 
+    #if os(macOS)
+      @Environment(\.newLibrary) private var newLibrary
+      @Environment(\.openLibrary) private var openLibrary
+    #endif
+
     var installerImageRepository: any InstallerImageRepository {
       self.machineRestoreImageDBFrom(database)
     }
@@ -84,6 +89,35 @@
           onCompleted: self.dismissWindow
         )
       })
+      .alert(
+        Text(.machineImagesEmptyTitle),
+        isPresented: self.$object.promptForLibrary,
+        actions: {
+          #if os(macOS)
+            Button {
+              self.newLibrary(with: openWindow)
+              self.dismissWindow()
+            } label: {
+              Text(.machineImagesEmptyNewLibrary)
+            }
+            Button {
+              self.openLibrary(with: openWindow)
+              self.dismissWindow()
+            } label: {
+              Text(.machineImagesEmptyAddLibrary)
+            }
+          #endif
+          Button(
+            role: .cancel
+          ) {
+            self.dismissWindow()
+          } label: {
+            Text(.cancel)
+          }
+        }, message: {
+          Text(.machineImagesEmptyMessage)
+        }
+      )
       .nsWindowAdaptor(self.setupNSWindow)
       .onAppear {
         self.object.beginSetupWith(
