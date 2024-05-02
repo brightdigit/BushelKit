@@ -12,7 +12,7 @@ import Foundation
 #endif
 
 public extension MachineError {
-  enum Details {
+  enum Details: Sendable {
     private struct UnknownError: Error {
       private init() {}
       // swiftlint:disable:next strict_fileprivate
@@ -62,12 +62,12 @@ public extension MachineError {
 
       case let .missingProperty(property):
         return "Missing object property: \(property)"
-      case let .snapshot:
+      case .snapshot:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return SnapshotError.description(from: error)
 
-      case let .session:
+      case .session:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to contnue with session: \(error.localizedDescription)"

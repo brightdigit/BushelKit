@@ -11,13 +11,13 @@
   import BushelMachine
 
   import BushelMachineData
-  import BushelSessionUI
+  import BushelScreenCore
   import BushelViewsCore
   import SwiftData
   import SwiftUI
 
   @Observable
-  class MachineObject: Loggable {
+  final class MachineObject: Loggable, Sendable {
     typealias Machine = (any BushelMachine.Machine)
 
     var machine: Machine {
@@ -141,7 +141,9 @@
     }
 
     deinit {
-      self.machine.removeObservation(withID: observationID)
+      Task { @MainActor in
+        self.machine.removeObservation(withID: observationID)
+      }
     }
   }
 
@@ -171,7 +173,7 @@
   }
 
   extension Optional where Wrapped == MachineObject {
-    func navigationTitle(
+    @MainActor func navigationTitle(
       default defaultValue: String
     ) -> String {
       self?.navigationTitle ?? defaultValue

@@ -4,7 +4,7 @@
 //
 
 import Foundation
-public enum MachineState: Int {
+public enum MachineState: Int, Sendable {
   /// Initial state before the virtual machine is started.
   case stopped = 0
 

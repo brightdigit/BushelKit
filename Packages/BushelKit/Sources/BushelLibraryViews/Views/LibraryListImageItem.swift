@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelAccessibility
   import BushelCore
   import BushelLibrary
   import SwiftUI
@@ -33,7 +34,10 @@
       .fixedSize()
       .accessibilityElement(children: .contain)
       .accessibilityIdentifier(
-        "library:" + accessibilityTitle + ":images:" + libraryItem.id.uuidString
+        Library.libraryImageItem(
+          accessibilityTitle,
+          libraryItem.id.uuidString
+        ).identifier
       )
       .accessibilityLabel(libraryItem.name)
     }

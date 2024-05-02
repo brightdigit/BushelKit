@@ -8,9 +8,11 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelDataCore
+  import BushelFactoryViews
   import BushelLocalization
   import BushelLogging
   import BushelMachine
+  import BushelMachineEnvironment
   import BushelViewsCore
   import Observation
   import SwiftData

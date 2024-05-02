@@ -6,7 +6,7 @@
 import BushelCore
 @testable import BushelLibrary
 import BushelLibraryWax
-import BushelTestUtlities
+import BushelTestUtilities
 import XCTest
 
 internal final class LibraryImageFileTests: XCTestCase {

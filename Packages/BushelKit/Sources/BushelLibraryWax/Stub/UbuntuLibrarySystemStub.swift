@@ -8,6 +8,10 @@ import BushelLibrary
 import Foundation
 
 public struct UbuntuLibrarySystemStub: LibrarySystem {
+  public var releaseCollectionMetadata: any BushelCore.ReleaseCollectionMetadata {
+    fatalError("Not Implemented")
+  }
+
   public var id: VMSystemID
   public var shortName: String = "ubuntu"
   public var allowedContentTypes: Set<FileType> = .init()

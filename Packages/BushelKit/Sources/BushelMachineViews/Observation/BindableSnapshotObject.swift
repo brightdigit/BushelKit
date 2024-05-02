@@ -6,11 +6,11 @@
 #if canImport(SwiftUI)
   import SwiftUI
   @Observable
-  class BindableSnapshotObject {
-    let snapshot: () async -> Bindable<SnapshotObject>?
+  final class BindableSnapshotObject: Sendable {
+    let snapshot: @Sendable () async -> Bindable<SnapshotObject>?
     var bindableSnapshot: Bindable<SnapshotObject>?
 
-    internal init(snapshot: @escaping () async -> Bindable<SnapshotObject>?) {
+    internal init(snapshot: @escaping @Sendable () async -> Bindable<SnapshotObject>?) {
       self.snapshot = snapshot
 
       Task {

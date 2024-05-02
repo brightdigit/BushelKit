@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public enum BuilderProperty: String, Equatable {
+public enum BuilderProperty: String, Equatable, Sendable {
   case hardwareModel
   case machineIdentifier
 }

@@ -5,6 +5,7 @@
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
   import BushelCore
+  import BushelFactory
   import BushelLogging
   import BushelMachine
   import Foundation
@@ -76,10 +77,8 @@
       using database: any InstallerImageRepository
     ) {
       do {
-        try result.flatMap { url in
-          Result {
-            try self.beginCreateBuilder(url, using: database)
-          }
+        try result.map { url in
+          self.beginCreateBuilder(url, using: database)
         }
         .get()
       } catch let error as ConfigurationError {
@@ -99,7 +98,7 @@
           let builder = try await parameters.manager.createBuilder(
             for: configuration,
             image: parameters.image,
-            at: url.appendingPathComponent(URL.bushel.paths.machineDataDirectoryName)
+            withDataDirectoryAt: url.appendingPathComponent(URL.bushel.paths.machineDataDirectoryName)
           )
           self.builder = .init(builder: builder)
         } catch let error as BuilderError {

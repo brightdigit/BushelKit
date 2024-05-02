@@ -15,6 +15,7 @@
 
     public init(_: FileType.Type) {}
 
+    @MainActor
     public func callAsFunction(with openWindow: OpenWindowAction) {
       let openPanel = NSOpenPanel()
       openPanel.allowedContentTypes = [UTType(fileType: FileType.fileType)]
@@ -31,6 +32,7 @@
   }
 
   public extension OpenWindowAction {
+    @MainActor
     func callAsFunction(_ valueType: (some FileTypeSpecification).Type) {
       OpenFilePanel(valueType)(with: self)
     }

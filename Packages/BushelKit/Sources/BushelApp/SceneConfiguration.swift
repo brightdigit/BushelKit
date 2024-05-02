@@ -26,6 +26,8 @@
 
     let systems: [any System]
 
+    let xpcService: String
+
     let schemas: [any PersistentModel.Type] =
       .all
 
@@ -41,7 +43,13 @@
       SharedDatabase.shared.database
     }
 
-    internal init(@SystemBuilder _ systems: @escaping () -> [any System]) {
+    internal init(
+      // swiftlint:disable:next force_unwrapping
+      xpcService: String = Bundle.main.xpcService!,
+      @SystemBuilder _ systems: @escaping () -> [any System]
+    ) {
+      self.xpcService = xpcService
+
       self.systems = systems()
     }
 

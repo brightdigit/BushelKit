@@ -15,6 +15,7 @@
   import UniformTypeIdentifiers
 
   struct WelcomeTitleView: View, Loggable {
+    @Environment(\.marketplace) var marketplace
     var body: some View {
       HStack {
         Spacer()
@@ -25,9 +26,7 @@
 
             WelcomeLogoTitleLabelView()
           }
-          .accessibilityLabel(
-            String(localizedUsingID: LocalizedStringID.bushel)
-          )
+          .accessibilityElement(children: .contain)
           Spacer(minLength: 10.0)
           WelcomeActionListView()
             .padding(20.0)

@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelAccessibility
   import BushelLibrary
   import BushelLibraryEnvironment
   import BushelLocalization
@@ -39,59 +40,65 @@
           items: object.object?.library.items,
           selectedItem: self.$object.selectedItem,
           librarySystemManager: librarySystemManager
-        ).accessibilityIdentifier("library:" + title + ":list")
-          .navigationSplitViewColumnWidth(min: 400, ideal: 400)
-          .onChange(of: self.file?.url, self.object.onURLChange(from:to:))
-          .onChange(of: self.object.selectedItem, self.object.onSelectionChange)
-          .onAppear(perform: {
-            self.object.loadURL(
-              self.file?.url,
-              withDatabase: self.database,
-              using: self.librarySystemManager
-            )
-          })
-          .sheet(
-            isPresented: self.$object.presentHubModal,
-            selectedHubImage: self.$object.selectedHubImage,
-            onDismiss: self.object.onHubImageSelected,
-            self.hubView
+        )
+        .accessibilityLabel("Library for \(title)")
+        .accessibilityIdentifier(
+          Library.libraryList(title).identifier
+        )
+        .navigationSplitViewColumnWidth(min: 400, ideal: 400)
+        .onChange(of: self.file?.url, self.object.onURLChange(from:to:))
+        .onChange(of: self.object.selectedItem, self.object.onSelectionChange)
+        .onAppear(perform: {
+          self.object.loadURL(
+            self.file?.url,
+            withDatabase: self.database,
+            using: self.librarySystemManager
           )
-          .sheet(item: self.$object.restoreImageImportProgress, content: { request in
-            ProgressOperationView(request) {
-              Image.resource($0)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 80, height: 80)
-                .mask { Circle() }
-                .overlay { Circle().stroke() }
-                .padding(.horizontal)
-            }
-          })
-          .fileExporter(
-            isPresented: self.$object.presentFileExporter,
-            document: CodablePackageDocument<Library>(),
-            defaultFilename: "Library.bshrilib",
-            onCompletion: { result in
-              self.file = self.object.restoreImageFileFrom(result: result)
-            }
-          )
+        })
+        .sheet(
+          isPresented: self.$object.presentHubModal,
+          selectedHubImage: self.$object.selectedHubImage,
+          onDismiss: self.object.onHubImageSelected,
+          self.hubView
+        )
+        .sheet(item: self.$object.restoreImageImportProgress, content: { request in
+          ProgressOperationView(request) {
+            Image.resource($0)
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+              .frame(width: 80, height: 80)
+              .mask { Circle() }
+              .overlay { Circle().stroke() }
+              .padding(.horizontal)
+          }
+        })
+        .fileExporter(
+          isPresented: self.$object.presentFileExporter,
+          document: CodablePackageDocument<BushelLibrary.Library>(),
+          defaultFilename: "Library.bshrilib",
+          onCompletion: { result in
+            self.file = self.object.restoreImageFileFrom(result: result)
+          }
+        )
       } detail: {
-        if var image = self.object.bindableImage {
+        if let image = self.object.bindableImage {
           @Bindable var bindableImage = image
           let system = self.librarySystemManager.resolve(image.metadata.vmSystemID)
           ImageView(
             image: _bindableImage,
             system: system,
-            onSave: self.onSave
+            onSave: {
+              self.onSave()
+            }
           )
-          .accessibilityIdentifier("library:" + title + ":selected")
+          .accessibilityIdentifier(
+            Library.selectedLibrary(title).identifier
+          )
         } else {
           #warning("If no image add buttons to add/download image.")
           Text(.selectImage)
         }
       }
-      .accessibilityIdentifier("library:" + title)
-      .accessibilityLabel("Library for \(title)")
       .confirmationDialog(
         "Delete Image",
         isPresented: self.$object.presentDeleteImageConfirmation,

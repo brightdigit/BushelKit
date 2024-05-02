@@ -8,7 +8,7 @@
   import AppKit
   import BushelLogging
   import Virtualization
-  class VirtualizationScreenViewController: NSViewController, Loggable {
+  final class VirtualizationScreenViewController: NSViewController, Loggable, Sendable {
     static var loggingCategory: BushelLogging.Category {
       .view
     }

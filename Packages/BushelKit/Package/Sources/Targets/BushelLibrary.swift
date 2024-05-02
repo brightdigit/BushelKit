@@ -8,5 +8,6 @@ struct BushelLibrary: Target {
     BushelLogging()
     BushelCore()
     BushelMacOSCore()
+    BushelAccessibility()
   }
 }

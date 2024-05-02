@@ -27,7 +27,7 @@ internal final class MachineSystemTests: XCTestCase {
     _ = try await sut.createBuilder(
       for: .sampleMachineSetupConfiguration,
       image: .sampleInstallerImage,
-      at: .bushelappURL
+      withDataDirectoryAt: .bushelappURL
     )
 
     XCTAssertTrue(sut.isCreateBuiderForConfigurationCalled)

@@ -33,7 +33,7 @@ import BushelMachine
       self.machineObject?.canRequestStop ?? false
     }
 
-    func begin(_ closure: @escaping (any BushelMachine.Machine) async throws -> Void) {
+    func begin(_ closure: @escaping @Sendable (any BushelMachine.Machine) async throws -> Void) {
       guard let machine = machineObject?.machine else {
         assertionFailure("Missing machine to start with.")
         return
@@ -77,19 +77,24 @@ import BushelMachine
     func onStateChanged(
       from oldValue: MachineState,
       to newValue: MachineState,
+      withPurchase hasPurchased: Bool,
       shutdownOption: MachineShutdownActionOption?,
-      _ completed: @escaping () -> Void
+      _ completed: @escaping @Sendable @MainActor () -> Void
     ) {
-      self.updateWindowSize()
-      if
-        !self.isRestarting,
-        oldValue != .stopped,
-        newValue == .stopped,
-        !self.keepWindowOpenOnShutdown ||
-        shutdownOption == .closeWindow {
-        self.hasIntialStarted = false
-        self.startSnapshot(.init(), options: .discardable)
-        completed()
+      Task { @MainActor in
+        self.updateWindowSize()
+        if
+          !self.isRestarting,
+          oldValue != .stopped,
+          newValue == .stopped,
+          !self.keepWindowOpenOnShutdown ||
+          shutdownOption == .closeWindow {
+          self.hasIntialStarted = false
+          if hasPurchased {
+            self.startSnapshot(.init(), options: .discardable)
+          }
+          completed()
+        }
       }
     }
   }

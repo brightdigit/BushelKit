@@ -7,6 +7,7 @@ environment:
     package: Packages/BushelKit
     packageTargets: '{{paths.packageSources}}/Targets'
     sources: '{{paths.package}}/Sources'
+    tests: '{{paths.package}}/Tests'
 plugins:
     shell:
       after:

@@ -15,6 +15,7 @@ public extension MachineConfiguration {
       majorVersion: 1,
       minorVersion: 0,
       patchVersion: 0
-    )
+    ),
+    storage: [.init(label: "", size: MachineStorageSpecification.defaultSize)]
   )
 }

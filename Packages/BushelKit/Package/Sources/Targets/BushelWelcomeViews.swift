@@ -11,5 +11,8 @@ struct BushelWelcomeViews: Target {
     BushelLocalization()
     BushelOnboardingEnvironment()
     BushelMarketEnvironment()
+    BushelMessage()
+    BushelSessionEnvironment()
+    BushelAccessibility()
   }
 }

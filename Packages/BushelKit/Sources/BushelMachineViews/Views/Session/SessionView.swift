@@ -16,6 +16,7 @@
   import StoreKit
   import SwiftUI
 
+  @MainActor
   struct SessionView: View, Loggable {
     // swiftlint:disable:next implicitly_unwrapped_optional
     var timer: AnyPublisher<Date, Never>!
@@ -124,9 +125,11 @@
         self.object.onStateChanged(
           from: $0,
           to: $1,
-          shutdownOption: self.machineShutdownActionOption,
-          self.onShutdown
-        )
+          withPurchase: marketplace.purchased,
+          shutdownOption: self.machineShutdownActionOption
+        ) {
+          self.onShutdown()
+        }
       }
       .navigationTitle(
         self.object.machineObject.navigationTitle(default: "Loading Session...")
@@ -162,10 +165,11 @@
       self.object.setCloseButtonAction(self.sessionCloseButtonActionOption)
     }
 
+    @MainActor
     func onShutdown() {
-      Task {
+      Task { @MainActor in
         try await Task.sleep(for: .seconds(2))
-        await requestReview()
+        requestReview()
       }
       self.dismiss()
     }

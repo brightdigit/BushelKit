@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelAccessibility
   import SwiftUI
   import UniformTypeIdentifiers
 
@@ -18,18 +19,26 @@
           Button("Import File...") {
             self.object.presentFileImporter = true
           }
-          .accessibilityIdentifier("library:" + title + ":toolbar:plus:import")
+          .accessibilityIdentifier(
+            Library.libraryToolbarAction(
+              title, "import"
+            ).identifier
+          )
           .accessibilityLabel("Import File")
           Button("Download From Hub...") {
             self.object.presentHubModal = true
           }
-          .accessibilityIdentifier("library:" + title + ":toolbar:plus:download")
+          .accessibilityIdentifier(
+            Library.libraryToolbarAction(
+              title, "download"
+            ).identifier
+          )
           .accessibilityLabel("Download From Hub")
         } label: {
           Image(systemName: "plus")
         }
         .accessibilityLabel("Add Image to Library")
-        .accessibilityIdentifier("library:" + title + ":toolbar:plus")
+        .accessibilityIdentifier(Library.libraryToolbar(title).identifier)
         .accessibilityAction(.default) {
           self.object.presentFileImporter = true
         }
@@ -50,7 +59,11 @@
             Spacer()
           }.frame(height: 12).contentShape(Rectangle())
         }
-        .accessibilityIdentifier("library:" + title + ":toolbar:minus")
+        .accessibilityIdentifier(
+          Library.libraryToolbarAction(
+            title, "minus"
+          ).identifier
+        )
         .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
         .disabled(self.object.selectedItem == nil)
 

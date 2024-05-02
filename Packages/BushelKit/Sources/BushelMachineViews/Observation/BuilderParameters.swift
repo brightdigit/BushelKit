@@ -5,6 +5,7 @@
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
   import BushelCore
+  import BushelFactory
   import BushelMachine
   import Foundation
   struct BuilderParameters {

@@ -21,3 +21,8 @@ procedures:
   description: An item named Struct created from scaffold
   items:
   - Struct/Struct.yml
+- name: TestCase
+  description: A test case created from scaffold
+  items:
+  - TestCase/TestCase.yml
+  

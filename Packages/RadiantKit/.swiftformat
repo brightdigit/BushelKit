@@ -1,0 +1,5 @@
+--indent 2
+--header "\n{file}\nCopyright (c) {year} BrightDigit.\n"
+--commas inline
+--exclude .build, DerivedData
+--disable redundantSelf,wrapMultilineStatementBraces,genericExtensions

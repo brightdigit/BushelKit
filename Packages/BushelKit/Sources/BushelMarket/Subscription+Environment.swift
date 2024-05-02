@@ -6,7 +6,7 @@
 import Foundation
 
 public extension Subscription {
-  enum Environment {
+  enum Environment: Sendable {
     case production
 
     case sandbox

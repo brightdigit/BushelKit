@@ -24,6 +24,10 @@
       .macOS
     }
 
+    public let defaultStorageLabel: String = "macOS System"
+
+    public let defaultSnapshotSystem: BushelCore.SnapshotterID = .fileVersion
+
     public init() {}
 
     public func machine(

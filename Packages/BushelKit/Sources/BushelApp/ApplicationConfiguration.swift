@@ -12,7 +12,7 @@
   import SwiftData
   import SwiftUI
 
-  protocol ApplicationConfiguration {
+  protocol ApplicationConfiguration: Sendable {
     associatedtype LibraryFileType: InitializableFileTypeSpecification
     associatedtype MachineFileType: FileTypeSpecification
     associatedtype HubViewType: View
@@ -24,6 +24,8 @@
     var modelContainer: ModelContainer { get }
 
     var database: any Database { get }
+
+    var xpcService: String { get }
 
     func hubView(_ image: Binding<(any InstallImage)?>) -> HubViewType
 

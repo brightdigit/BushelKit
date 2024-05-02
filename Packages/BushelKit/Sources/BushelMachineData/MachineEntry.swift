@@ -12,7 +12,7 @@
   import SwiftData
 
   @Model
-  public final class MachineEntry: Loggable {
+  public final class MachineEntry: Loggable, Sendable {
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 
@@ -45,6 +45,8 @@
     public var memory: Int
     public var networkConfigurations: [NetworkConfiguration]
     public var graphicsConfigurations: [GraphicsConfiguration]
+    @Attribute(.unique)
+    public internal(set) var machineIdentifer: UInt64?
 
     @Attribute(originalName: "vmSystemID")
     private var vmSystemIDRawValue: String
@@ -98,8 +100,10 @@
       self.networkConfigurations = machine.configuration.networkConfigurations
       self.graphicsConfigurations = machine.configuration.graphicsConfigurations
       self.vmSystemIDRawValue = machine.configuration.vmSystemID.rawValue
+      self.machineIdentifer = machine.machineIdentifer
       self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
       self.buildVersion = osInstalled?.buildVersion
+      self.machineIdentifer = machine.machineIdentifer
       self.createdAt = createdAt
       self.lastOpenedAt = lastOpenedAt
     }
@@ -112,6 +116,10 @@
 
     var operatingSystemVersionDescription: String {
       self.operatingSystemVersionString ?? ""
+    }
+
+    var machineIdentifierHex: String {
+      self.machineIdentifer.map { String($0, radix: 16) } ?? ""
     }
   }
 #endif

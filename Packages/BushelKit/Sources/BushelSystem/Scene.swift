@@ -25,6 +25,7 @@
     ) -> some Scene {
       self
         .metadataLabelProvider(librarySystemManager.labelForSystem)
+        .releaseCollectionProvider(librarySystemManager.releaseCollectionMetadata(forSystem:))
         .environment(
           \.librarySystemManager,
           librarySystemManager

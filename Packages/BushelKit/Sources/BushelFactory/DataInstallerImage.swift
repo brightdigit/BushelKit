@@ -13,7 +13,7 @@
   import Foundation
   import SwiftData
 
-  class DataInstallerImage: InstallerImage, Loggable {
+  final class DataInstallerImage: InstallerImage, Loggable, Sendable {
     let entry: LibraryImageEntry
     let database: any Database
     let metadata: Metadata

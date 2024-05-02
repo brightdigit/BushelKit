@@ -12,7 +12,7 @@ internal final class MachinePrimaryStorageSizeTests: XCTestCase {
 
     assertPrimaryStorageSizeFloat(
       sut: sut,
-      against: MachineStorageSpecification.default.size
+      against: MachineStorageSpecification.defaultSize
     )
   }
 

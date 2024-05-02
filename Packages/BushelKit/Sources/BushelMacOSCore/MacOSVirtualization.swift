@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-public enum MacOSVirtualization {
+public enum MacOSVirtualization: Sendable {
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)
 
   public static let shortName = "macOS"
@@ -23,17 +23,43 @@ public enum MacOSVirtualization {
     return shortName.appending(" (\(buildVersion))")
   }
 
-  public static func imageName(for metadata: any OperatingSystemInstalled) -> String {
-    "OSVersions/".appending(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion))
+  public static func imageNameWithDefault(
+    forMajorVersion majorVersion: Int,
+    _ defaultCodeName: String? = nil
+  ) -> String {
+    let defaultCodeName = defaultCodeName ?? majorVersion.description
+    let codeName = self.codeNameFor(majorVersion: majorVersion, withDefault: defaultCodeName)
+    return "OSVersions/\(codeName)"
   }
 
-  public static func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
-    operatingSystemVersion.macOSReleaseName ?? operatingSystemVersion.majorVersion.description
+  public static func imageName(forMajorVersion majorVersion: Int) -> String? {
+    guard let codeName = codeNameFor(majorVersion: majorVersion) else {
+      assertionFailure("Missing Code Name for v\(majorVersion)")
+      return nil
+    }
+    return "OSVersions/\(codeName)"
+  }
+
+  public static func imageName(for metadata: any OperatingSystemInstalled) -> String {
+    let majorVersion = metadata.operatingSystemVersion.majorVersion
+    return imageNameWithDefault(forMajorVersion: majorVersion)
+  }
+
+  public static func codeNameFor(majorVersion: Int) -> String? {
+    OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion)
+  }
+
+  public static func codeNameWithDefaultFor(majorVersion: Int) -> String {
+    self.codeNameFor(majorVersion: majorVersion, withDefault: majorVersion.description)
+  }
+
+  public static func codeNameFor(majorVersion: Int, withDefault defaultName: String) -> String {
+    OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion) ?? defaultName
   }
 
   public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String {
     // swiftlint:disable:next line_length
-    "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
+    "macOS \(codeNameWithDefaultFor(majorVersion: metadata.operatingSystemVersion.majorVersion)) \(metadata.operatingSystemVersion)"
   }
 
   public static func defaultName(fromMetadata metadata: any OperatingSystemInstalled) -> String {
@@ -46,8 +72,8 @@ public enum MacOSVirtualization {
       defaultName: self.defaultName(fromMetadata: metadata),
       imageName: self.imageName(for: metadata),
       systemName: self.shortName,
-      versionName: MacOSVirtualization.codeNameFor(
-        operatingSystemVersion: metadata.operatingSystemVersion
+      versionName: MacOSVirtualization.codeNameWithDefaultFor(
+        majorVersion: metadata.operatingSystemVersion.majorVersion
       )
     )
   }
