@@ -4,7 +4,7 @@ packages:
 environment:
   paths:
     packageSources: '{{paths.package}}/Package/Sources'
-    package: Packages/BushelKit
+    package: Packages/BushelApp
     packageTargets: '{{paths.packageSources}}/Targets'
     sources: '{{paths.package}}/Sources'
     tests: '{{paths.package}}/Tests'

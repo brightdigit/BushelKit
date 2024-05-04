@@ -1,0 +1,4 @@
+targets:
+- BushelLibrary
+- BushelLibraryViews
+- BushelLogging

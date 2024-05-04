@@ -60,7 +60,7 @@ public extension Version {
     return "\(self.marketingSemVer) \(prereleaseLabel.label) \(buildNumber - prereleaseLabel.baseNumber)"
   }
 
-  /// Creates a new `Version` instance by parsing a marketing version string, build number string, 
+  /// Creates a new `Version` instance by parsing a marketing version string, build number string,
   /// and optional prerelease label.
   ///
   /// - Parameters:

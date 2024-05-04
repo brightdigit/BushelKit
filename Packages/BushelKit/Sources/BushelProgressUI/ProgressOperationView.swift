@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelAccessibility
+  // import BushelAccessibility
   import SwiftUI
 
   public struct ProgressOperationView<Icon: View, ProgressText: View>: View {
@@ -16,12 +16,12 @@
     public var body: some View {
       VStack {
         HStack {
-          icon().accessibilityIdentifier(Progress.icon.identifier)
+          icon() // .accessibilityIdentifier(Progress.icon.identifier)
           VStack(alignment: .leading) {
             Text(title)
               .lineLimit(1)
               .font(.title)
-              .accessibilityIdentifier(Progress.title.identifier)
+              // .accessibilityIdentifier(Progress.title.identifier)
               .accessibilityLabel(title)
             HStack {
               if let totalValue = progress.totalValue {
@@ -30,7 +30,7 @@
                 ProgressView(value: progress.currentValue)
               }
             }
-            .accessibilityIdentifier(Progress.view.identifier)
+            // .accessibilityIdentifier(Progress.view.identifier)
             text(progress)
           }
         }

@@ -3,22 +3,22 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelLocalization
+// import BushelLocalization
 
-public struct SpecificationTemplate: Identifiable, Sendable, Equatable {
-  public let nameID: LocalizedStringID
+public struct SpecificationTemplate<Name: Hashable>: Identifiable, Sendable, Equatable {
+  public let nameID: Name
   public let idealStorage: Int
   public let systemImageName: String
 
   let memoryWithin: @Sendable (any CalculationParameters) -> Int
   let cpuWithin: @Sendable (any CalculationParameters) -> Int
 
-  public var id: LocalizedStringID {
+  public var id: Name {
     nameID
   }
 
-  internal init(
-    nameID: LocalizedStringID,
+  public init(
+    nameID: Name,
     systemImageName: String,
     idealStorage: Int,
     memoryWithin: @escaping @Sendable (any CalculationParameters) -> Int,
@@ -31,7 +31,7 @@ public struct SpecificationTemplate: Identifiable, Sendable, Equatable {
     self.idealStorage = idealStorage
   }
 
-  public static func == (lhs: SpecificationTemplate, rhs: SpecificationTemplate) -> Bool {
+  public static func == (lhs: Self, rhs: Self) -> Bool {
     lhs.id == rhs.id
   }
 
