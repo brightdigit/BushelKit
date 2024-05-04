@@ -8,7 +8,7 @@ import BushelLibrary
 import BushelMachine
 import Foundation
 
-extension InstallerImage.Metadata {
+public extension InstallerImage.Metadata {
   init(
     labelName: String,
     imageMetadata: ImageMetadata,
