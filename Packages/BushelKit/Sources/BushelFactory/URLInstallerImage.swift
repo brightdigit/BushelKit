@@ -9,23 +9,23 @@ import BushelLogging
 import BushelMachine
 import Foundation
 
-struct URLInstallerImage: InstallerImage, Loggable, Sendable {
-  var libraryID: LibraryIdentifier? {
+public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
+  public var libraryID: LibraryIdentifier? {
     .url(url)
   }
 
-  let imageID: UUID
+  public let imageID: UUID
 
   let url: URL
 
-  let metadata: Metadata
+  public let metadata: Metadata
   init(imageID: UUID, url: URL, metadata: URLInstallerImage.Metadata) {
     self.imageID = imageID
     self.url = url
     self.metadata = metadata
   }
 
-  init(imageID: UUID, url: URL, _ labelProvider: @escaping MetadataLabelProvider) throws {
+  public init(imageID: UUID, url: URL, _ labelProvider: @escaping MetadataLabelProvider) throws {
     let library = try Library(contentsOf: url)
 
     guard let image = library.items.first(where: { $0.id == imageID }) else {
@@ -40,7 +40,7 @@ struct URLInstallerImage: InstallerImage, Loggable, Sendable {
     self.init(imageID: imageID, url: url, metadata: metadata)
   }
 
-  func getURL() throws -> URL {
+  public func getURL() throws -> URL {
     url
   }
 }

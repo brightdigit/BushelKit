@@ -8,7 +8,7 @@ import Foundation
 
 public extension MachineConfiguration {
   init(
-    configurable: any MachineConfigurable
+    configurable: some MachineConfigurable
   ) throws {
     guard let machineSystem = configurable.machineSystem else {
       throw ConfigurationError.missingSystemManager
@@ -32,7 +32,7 @@ public extension MachineConfiguration {
   init(
     restoreImage: any InstallerImage,
     machineSystem: any MachineSystem,
-    specificationConfiguration: SpecificationConfiguration
+    specificationConfiguration: SpecificationConfiguration<some Any>
   ) {
     let storage = MachineStorageSpecification(
       label: machineSystem.defaultStorageLabel,

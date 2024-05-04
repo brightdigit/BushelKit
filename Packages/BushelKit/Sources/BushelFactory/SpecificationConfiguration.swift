@@ -6,11 +6,7 @@
 import BushelCore
 import BushelMachine
 
-public struct SpecificationConfiguration: Equatable, Sendable {
-  static let fullMemoryRange = 1 ... 11
-  static let fullStorageRange = 36 ... 42
-  public static let fullStorageBoundsRange: ClosedRange<Float> = .init(intRange: fullStorageRange)
-
+public struct SpecificationConfiguration<Name: Hashable>: Equatable, Sendable {
   public let configurationRange: ConfigurationRange
   public let memoryIndexRange: ClosedRange<Float>
   private var updatingValues = false
@@ -24,7 +20,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
     return storage > 0
   }
 
-  public var template: SpecificationTemplate? {
+  public var template: SpecificationTemplate<Name>? {
     didSet {
       if let template {
         self.updatingValues = true
@@ -35,7 +31,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
             Self.binarySearch(
               for: $0,
               using: { Self.memoryValue(forIndex: $0) },
-              within: Self.fullMemoryRange
+              within: Specifications.fullMemoryRange
             )
           }
         )
@@ -50,7 +46,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
         self.storageIndex = Self.binarySearch(
           for: .init(template.idealStorage),
           using: { Self.storageValue(forIndex: $0) },
-          within: Self.fullStorageRange
+          within: Specifications.fullStorageRange
         )
         self.updatingValues = false
       }
@@ -60,7 +56,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
   public var cpuCount: Float = 1 {
     didSet {
       if !updatingValues {
-        self.template = nil
+        self.template = .none
       }
     }
   }
@@ -87,7 +83,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
 
   public init(
     range: ConfigurationRange = .default,
-    template: SpecificationTemplate? = nil,
+    template: SpecificationTemplate<Name>? = nil,
     cpuCount: Float = 1,
     memoryIndex: Float = 1,
     storageIndex: Float = 36
@@ -105,7 +101,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
         upper: Self.binarySearch(
           for: configurationRange.memory.upperBound,
           using: { Self.memoryValue(forIndex: $0) },
-          within: SpecificationConfiguration.fullMemoryRange
+          within: Specifications.fullMemoryRange
         )
       )
     )
