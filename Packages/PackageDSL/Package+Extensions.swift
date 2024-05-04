@@ -1,6 +1,7 @@
 //
 // Package+Extensions.swift
 // Copyright (c) 2024 BrightDigit.
+// Licensed under MIT License
 //
 
 import PackageDescription
@@ -18,6 +19,7 @@ public extension Package {
         } else {
             var pathComponents = #filePath.split(separator: "/")
             pathComponents.removeLast()
+            // swift-format-ignore: NeverForceUnwrap
             packageName = String(pathComponents.last!)
         }
         let allTestTargets = testTargets()
@@ -41,8 +43,14 @@ public extension Package {
         let packageDeps = Dictionary(
             grouping: packageTargetDependencies,
             by: { $0.package.packageName }
-        ).values.compactMap(\.first).map(\.package.dependency)
-        self.init(name: packageName, products: products, dependencies: packageDeps, targets: packgeTargets)
+        )
+        .values.compactMap(\.first).map(\.package.dependency)
+        self.init(
+            name: packageName,
+            products: products,
+            dependencies: packageDeps,
+            targets: packgeTargets
+        )
     }
 }
 

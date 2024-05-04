@@ -17,10 +17,12 @@ public enum SwiftSettingsBuilder {
 public static func buildPartialBlock(first: SwiftSetting) -> [SwiftSetting] {
 [first]
 }
-public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting) -> [SwiftSetting] {
+public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting)
+-> [SwiftSetting] {
 accumulated + [next]
 }
-public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting]) -> [SwiftSetting] {
+public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting])
+-> [SwiftSetting] {
 accumulated + next
 }
 public static func buildPartialBlock(first: [SwiftSetting]) -> [SwiftSetting] {
@@ -29,12 +31,16 @@ first
 public static func buildPartialBlock(first: any SwiftSettingsConvertible) -> [SwiftSetting] {
 first.swiftSettings()
 }
-public static func buildPartialBlock(accumulated: [SwiftSetting], next: any SwiftSettingsConvertible) -> [SwiftSetting] {
+public static func buildPartialBlock(
+accumulated: [SwiftSetting],
+next: any SwiftSettingsConvertible
+) -> [SwiftSetting] {
 accumulated + next.swiftSettings()
 }
 }
 extension _PackageDescription_Target {
-static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = []) -> _PackageDescription_Target {
+static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = [])
+-> _PackageDescription_Target {
 let dependencies = entry.dependencies.map(\.targetDepenency)
 switch entry.targetType {
 case .executable:
@@ -128,8 +134,14 @@ by: { $0.name }
 let packageDeps = Dictionary(
 grouping: packageTargetDependencies,
 by: { $0.package.packageName }
-).values.compactMap(\.first).map(\.package.dependency)
-self.init(name: packageName, products: products, dependencies: packageDeps, targets: packgeTargets)
+)
+.values.compactMap(\.first).map(\.package.dependency)
+self.init(
+name: packageName,
+products: products,
+dependencies: packageDeps,
+targets: packgeTargets
+)
 }
 }
 public extension Package {
@@ -154,10 +166,10 @@ self
 }
 var targetDepenency: _PackageDescription_TargetDependency {
 switch dependency.kind {
-case let .sourceControl(name: name, location: location, requirement: _):
+case .sourceControl(let name, let location, requirement: _):
 let packageName = name ?? location.packageName
 return .product(name: productName, package: packageName)
-case let .fileSystem(name: name, path: path):
+case let .fileSystem(name, path):
 if let packageName = name ?? path.components(separatedBy: "/").last {
 return .product(name: productName, package: packageName)
 } else {
@@ -173,11 +185,11 @@ return .byName(name: productName)
 extension PackageDependency {
 var packageName: String {
 switch dependency.kind {
-case let .sourceControl(name: name, location: location, requirement: _):
+case .sourceControl(let name, let location, requirement: _):
 return name ?? location.packageName ?? self.name
-case let .fileSystem(name: name, path: path):
+case let .fileSystem(name, path):
 return name ?? path.packageName ?? self.name
-case let .registry(id: id, requirement: _):
+case .registry(let id, requirement: _):
 return id
 @unknown default:
 return name
@@ -272,10 +284,12 @@ first
 public static func buildPartialBlock(first: any Product) -> [any Product] {
 [first]
 }
-public static func buildPartialBlock(accumulated: [any Product], next: any Product) -> [any Product] {
+public static func buildPartialBlock(accumulated: [any Product], next: any Product)
+-> [any Product] {
 accumulated + [next]
 }
-public static func buildPartialBlock(accumulated: [any Product], next: [any Product]) -> [any Product] {
+public static func buildPartialBlock(accumulated: [any Product], next: [any Product])
+-> [any Product] {
 accumulated + next
 }
 }
@@ -350,97 +364,97 @@ public typealias _PackageDescription_TargetDependency = PackageDescription.Targe
 public typealias _PackageDescription_PackageDependency = PackageDescription.Package.Dependency
 public struct GlobalActorIsolatedTypesUsability: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct RegionBasedIsolation: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct TransferringArgsAndResults: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct AccessLevelOnImport: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct NestedProtocols: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct VariadicGenerics: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct BitwiseCopyable: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct NoncopyableGenerics: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct MoveOnlyPartialConsumption: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct IsolatedAny: SwiftSettingFeature {
 public var featureState: FeatureState {
-.experimental
+return .experimental
 }
 }
 public struct GlobalConcurrency: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct InferSendableFromCaptures: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct DeprecateApplicationMain: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct FullTypedThrows: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct ImportObjcForwardDeclarations: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct DynamicActorIsolation: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct IsolatedDefaultValues: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct InternalImportsByDefault: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct DisableOutwardActorInference: SwiftSettingFeature {
 public var featureState: FeatureState {
-.upcoming
+return .upcoming
 }
 }
 public struct Ounchecked: UnsafeFlag {}
@@ -582,7 +596,8 @@ func appending(_ testTargets: any TestTargets) -> Self
 }
 @resultBuilder
 public enum GroupBuilder<U> {
-public static func buildPartialBlock<T: GroupBuildable>(accumulated: [U], next: T) -> [U] where T.Output == U {
+public static func buildPartialBlock<T: GroupBuildable>(accumulated: [U], next: T) -> [U]
+where T.Output == U {
 accumulated + T.output(from: [next])
 }
 public static func buildPartialBlock<T: GroupBuildable>(first: T) -> [U] where T.Output == U {
@@ -597,7 +612,12 @@ var packageName: String? {
 split(separator: "/").last?.split(separator: ".").first.map(String.init)
 }
 func camelToSnakeCase(withSeparator separator: String = "-") -> String {
-separator + enumerated().reduce("") { $0 + ($1.offset > 0 && $1.element.isUppercase ? separator : "") + String($1.element).lowercased() }
+separator
++ enumerated()
+.reduce("") {
+$0 + ($1.offset > 0 && $1.element.isUppercase ? separator : "")
++ String($1.element).lowercased()
+}
 }
 }
 public struct Group<T> {
@@ -660,10 +680,12 @@ first
 static func buildPartialBlock(first: any TestTarget) -> any TestTargets {
 [first]
 }
-static func buildPartialBlock(accumulated: any TestTargets, next: any TestTarget) -> any TestTargets {
+static func buildPartialBlock(accumulated: any TestTargets, next: any TestTarget)
+-> any TestTargets {
 accumulated + [next]
 }
-static func buildPartialBlock(accumulated: any TestTargets, next: any TestTargets) -> any TestTargets {
+static func buildPartialBlock(accumulated: any TestTargets, next: any TestTargets)
+-> any TestTargets {
 accumulated.appending(next)
 }
 }

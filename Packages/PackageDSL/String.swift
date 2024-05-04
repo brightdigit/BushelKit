@@ -1,6 +1,7 @@
 //
 // String.swift
 // Copyright (c) 2024 BrightDigit.
+// Licensed under MIT License
 //
 
 extension String {
@@ -9,6 +10,11 @@ extension String {
     }
 
     func camelToSnakeCase(withSeparator separator: String = "-") -> String {
-        separator + enumerated().reduce("") { $0 + ($1.offset > 0 && $1.element.isUppercase ? separator : "") + String($1.element).lowercased() }
+        separator
+            + enumerated()
+            .reduce("") {
+                $0 + ($1.offset > 0 && $1.element.isUppercase ? separator : "")
+                    + String($1.element).lowercased()
+            }
     }
 }

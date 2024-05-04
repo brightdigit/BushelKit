@@ -1,12 +1,14 @@
 //
 // _PackageDescription_Target.swift
 // Copyright (c) 2024 BrightDigit.
+// Licensed under MIT License
 //
 
 import PackageDescription
 
 extension _PackageDescription_Target {
-    static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = []) -> _PackageDescription_Target {
+    static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = [])
+        -> _PackageDescription_Target {
         let dependencies = entry.dependencies.map(\.targetDepenency)
         switch entry.targetType {
         case .executable:
