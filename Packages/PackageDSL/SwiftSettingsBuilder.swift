@@ -1,6 +1,7 @@
 //
 // SwiftSettingsBuilder.swift
 // Copyright (c) 2024 BrightDigit.
+// Licensed under MIT License
 //
 
 import PackageDescription
@@ -11,11 +12,13 @@ public enum SwiftSettingsBuilder {
         [first]
     }
 
-    public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting) -> [SwiftSetting] {
+    public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting)
+        -> [SwiftSetting] {
         accumulated + [next]
     }
 
-    public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting]) -> [SwiftSetting] {
+    public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting])
+        -> [SwiftSetting] {
         accumulated + next
     }
 
@@ -27,7 +30,10 @@ public enum SwiftSettingsBuilder {
         first.swiftSettings()
     }
 
-    public static func buildPartialBlock(accumulated: [SwiftSetting], next: any SwiftSettingsConvertible) -> [SwiftSetting] {
+    public static func buildPartialBlock(
+        accumulated: [SwiftSetting],
+        next: any SwiftSettingsConvertible
+    ) -> [SwiftSetting] {
         accumulated + next.swiftSettings()
     }
 }
