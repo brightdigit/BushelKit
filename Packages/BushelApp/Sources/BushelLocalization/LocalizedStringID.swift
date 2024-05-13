@@ -3,7 +3,6 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-// swiftlint:disable type_body_length file_length
 public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   // swiftlint:disable identifier_name
   case bushel
@@ -101,7 +100,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case automaticallyTakeSnapshotsTooltip // "Automatically Take Snapshots"
   case settingsGeneralTab
   case settingsAdvancedTab
-  case settingsTestTab
+  case settingsFeaturesTab
   case settingsAboutTab
   case databaseBookmarks
   case databaseLibraries
@@ -207,6 +206,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case settingsResetAllConfirmationButton
   case settingsResetUserSettingsLabel
   case settingsMachineShutdown
+  case settingsFeaturesNewMachineDialogLabel
+  case settingsFeaturesNewMachineDialogDescription
   case requestReview
 
   // swiftlint:enable identifier_name

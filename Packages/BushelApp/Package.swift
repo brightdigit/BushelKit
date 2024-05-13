@@ -412,6 +412,12 @@ public var featureState: FeatureState {
 return .experimental
 }
 }
+public struct StrictConcurrency: SwiftSettingFeature {
+public let featureState: FeatureState
+public init (featureState: FeatureState = .experimental) {
+self.featureState = featureState
+}
+}
 public struct GlobalConcurrency: SwiftSettingFeature {
 public var featureState: FeatureState {
 return .upcoming
@@ -757,6 +763,8 @@ BushelMarket()
 BushelWax()
 BushelXPCSession()
 BushelFactoryRepository()
+BushelFeatureFlags()
+BushelAnalytics()
 }
 }
 struct BushelUITests: Product, Target {
@@ -776,12 +784,27 @@ BushelCore()
 BushelLogging()
 }
 }
+struct BushelAnalyticsEnvironment: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+BushelAnalyticsCore()
+}
+}
 struct BushelMarketEnvironment: Target {
 var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
 BushelMarket()
+BushelFeatureFlags()
 BushelEnvironmentCore()
+}
+}
+struct BushelAnalytics: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+BushelAnalyticsCore()
 }
 }
 struct BushelFactoryViews: Target {
@@ -799,6 +822,7 @@ var dependencies: any Dependencies {
 BushelLogging()
 BushelCore()
 BushelMachine()
+BushelDataCore()
 BushelLocalization()
 }
 }
@@ -862,6 +886,7 @@ BushelScreenCore()
 BushelFactoryViews()
 BushelMachineEnvironment()
 BushelMarketEnvironment()
+BushelFeatureFlags()
 }
 }
 struct BushelData: Target {
@@ -895,6 +920,13 @@ BushelMarketEnvironment()
 BushelMessage()
 BushelSessionEnvironment()
 BushelAccessibility()
+}
+}
+struct BushelAnalyticsCore: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+AviaryInsights()
 }
 }
 struct BushelMachineMacOS: Target {
@@ -937,6 +969,13 @@ BushelLogging()
 BushelCore()
 BushelLibrary()
 BushelLocalization()
+}
+}
+struct BushelAnalyticsEvents: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+BushelAnalyticsCore()
 }
 }
 struct BushelFactoryRepository: Target {
@@ -1003,6 +1042,13 @@ BushelLogging()
 BushelDataCore()
 }
 }
+struct BushelFeatureFlags: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+FeatherQuill()
+}
+}
 struct BushelDataCore: Target {
 var dependencies: any Dependencies {
 BushelCore()
@@ -1015,6 +1061,7 @@ BushelData()
 BushelLocalization()
 BushelMarketEnvironment()
 BushelOnboardingEnvironment()
+BushelFeatureFlags()
 }
 }
 struct BushelXPCSession: Target {
@@ -1091,6 +1138,11 @@ BushelService()
 struct BushelSessionTests: TestTarget {
 var dependencies: any Dependencies {
 BushelSession()
+}
+}
+struct AviaryInsights: PackageDependency, TargetDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/brightdigit/AviaryInsights.git", from: "1.0.0-alpha.2")
 }
 }
 struct FelinePine: PackageDependency, TargetDependency {
@@ -1178,6 +1230,11 @@ var package: PackageDependency {
 BushelKit()
 }
 }
+struct FeatherQuill: PackageDependency, TargetDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/brightdigit/FeatherQuill.git", from: "1.0.0-alpha.2")
+}
+}
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(path: "../RadiantKit")
@@ -1207,6 +1264,7 @@ BushelServiceTests()
 BushelSessionTests()
 },
 swiftSettings: {
+StrictConcurrency()
 Group("Experimental") {
 AccessLevelOnImport()
 BitwiseCopyable()

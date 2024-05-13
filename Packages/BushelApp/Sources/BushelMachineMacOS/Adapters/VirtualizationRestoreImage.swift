@@ -10,11 +10,6 @@
   public struct VirtualizationRestoreImage: Sendable {
     public let image: VZMacOSRestoreImage
     public let url: URL
-
-    internal init(image: VZMacOSRestoreImage, url: URL) {
-      self.image = image
-      self.url = url
-    }
   }
 
   extension VirtualizationRestoreImage {

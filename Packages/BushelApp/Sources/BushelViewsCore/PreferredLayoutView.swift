@@ -49,14 +49,14 @@
     }
   }
 
-  public extension PreferredLayoutView where ValueType: Comparable {
-    init(content: @escaping (Value<ValueType>) -> Content) {
+  extension PreferredLayoutView where ValueType: Comparable {
+    public init(content: @escaping (Value<ValueType>) -> Content) {
       self.init(reduce: max, content: content)
     }
   }
 
-  public extension View {
-    func apply<V>(
+  extension View {
+    public func apply<V>(
       _ keyPath: KeyPath<GeometryProxy, V>,
       with valueType: Value<V>
     ) -> some View {
@@ -65,7 +65,7 @@
       }
     }
 
-    func apply<V>(
+    public func apply<V>(
       _ keyPath: KeyPath<GeometryProxy, V>,
       with valueType: Value<V>,
       backgroundView: @escaping () -> some View

@@ -12,7 +12,7 @@
   public struct OpenWindowWithValueAction<ValueType: Sendable>: Sendable {
     public static var `default`: Self {
       .init { value, action in
-        Self.defaultClosure(value, with: action)
+        defaultClosure(value, with: action)
       }
     }
 

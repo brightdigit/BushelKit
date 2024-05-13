@@ -17,8 +17,8 @@ public struct MarketplaceSettings: Sendable {
   }
 }
 
-private extension Bundle {
-  var groupIDs: [String]? {
+extension Bundle {
+  fileprivate var groupIDs: [String]? {
     guard let dictionaryValue = self.object(forInfoDictionaryKey: "BrightDigitStoreGroupIDList") else {
       return nil
     }
@@ -31,8 +31,8 @@ private extension Bundle {
   }
 }
 
-private extension MarketplaceSettings {
-  init?(bundle: Bundle = .main) {
+extension MarketplaceSettings {
+  fileprivate init?(bundle: Bundle = .main) {
     guard let groupIDs = bundle.groupIDs else {
       return nil
     }

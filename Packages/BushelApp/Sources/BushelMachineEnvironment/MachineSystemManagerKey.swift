@@ -15,15 +15,15 @@
       MachineSystemManager([])
   }
 
-  public extension EnvironmentValues {
-    var machineSystemManager: any MachineSystemManaging {
+  extension EnvironmentValues {
+    public var machineSystemManager: any MachineSystemManaging {
       get { self[MachineSystemManagerKey.self] }
       set { self[MachineSystemManagerKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func machineSystemManager(
+  extension Scene {
+    public func machineSystemManager(
       _ systemManager: any MachineSystemManaging
     ) -> some Scene {
       self.environment(\.machineSystemManager, systemManager)

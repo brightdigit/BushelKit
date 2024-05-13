@@ -12,78 +12,107 @@
   struct SpecificationsView: View {
     let label: MetadataLabel
     let configuration: MachineConfiguration
+
     var body: some View {
       VStack(alignment: .leading) {
-        HStack {
-          Text(label.systemName).fontWeight(.black)
-          Text(label.versionName)
-        }.font(.system(size: 32))
+        machineLabel()
 
-        HStack(spacing: 3.0) {
-          Text(.version).fontWeight(.light)
-          Text(configuration.operatingSystemVersion.description).fontWeight(.light)
-          if let buildVersion = configuration.buildVersion {
-            Text(buildVersion).fontWeight(.light)
-          }
-        }.font(.system(size: 14.0))
+        osLabel()
 
-        MachineSpecView(
-          systemName: "cpu.fill"
-        ) {
-          Text(LocalizedStringID.machineDetailsChip)
-        } value: {
-          Text(localizedUsingID: LocalizedDictionaryID.cpuCount, arguments: configuration.cpuCount)
-        }
+        cpuSpecifications()
 
-        MachineSpecView(
-          systemName: "memorychip.fill"
-        ) {
-          Text(LocalizedStringID.machineDetailsMemorySize)
-        } value: {
-          Text(
-            ByteCountFormatStyle.FormatInput(configuration.memory),
-            format: .byteCount(style: .memory)
-          )
-        }
+        memorySpecifications()
 
-        ForEach(self.configuration.storage) {
-          StorageDevicesView(storageDevice: $0)
-        }
+        storage()
 
-        ForEach(
-          self.configuration.graphicsConfigurations
-        ) { config in
-          ForEach(config.displays) { display in
-            MachineSpecView(
-              systemName: "display"
-            ) {
-              Text(.machineDetailsDisplay)
-            } value: {
-              Text(
-                localizedUsingID: LocalizedDictionaryID.displayResolution,
-                arguments: display.widthInPixels,
-                display.heightInPixels,
-                display.pixelsPerInch
-              )
-            }
-          }
-        }
+        graphics()
 
-        ForEach(self.configuration.networkConfigurations) { _ in
-          MachineSpecView(
-            systemName: "network"
-          ) {
-            Text(LocalizedStringID.machineDetailsNetworkName)
-          } value: {
-            Text(.machineDetailsNetworkNat)
-          }
-        }
+        network()
       }
     }
 
     internal init(label: MetadataLabel, configuration: MachineConfiguration) {
       self.label = label
       self.configuration = configuration
+    }
+
+    private func machineLabel() -> some View {
+      HStack {
+        Text(label.systemName).fontWeight(.black)
+        Text(label.versionName)
+      }.font(.system(size: 32))
+    }
+
+    private func osLabel() -> some View {
+      HStack(spacing: 3.0) {
+        Text(.version).fontWeight(.light)
+        Text(configuration.operatingSystemVersion.description).fontWeight(.light)
+        if let buildVersion = configuration.buildVersion {
+          Text(buildVersion).fontWeight(.light)
+        }
+      }.font(.system(size: 14.0))
+    }
+
+    private func cpuSpecifications() -> MachineSpecView {
+      MachineSpecView(
+        systemName: "cpu.fill"
+      ) {
+        Text(LocalizedStringID.machineDetailsChip)
+      } value: {
+        Text(localizedUsingID: LocalizedDictionaryID.cpuCount, arguments: configuration.cpuCount)
+      }
+    }
+
+    private func memorySpecifications() -> MachineSpecView {
+      MachineSpecView(
+        systemName: "memorychip.fill"
+      ) {
+        Text(LocalizedStringID.machineDetailsMemorySize)
+      } value: {
+        Text(
+          ByteCountFormatStyle.FormatInput(configuration.memory),
+          format: .byteCount(style: .memory)
+        )
+      }
+    }
+
+    private func graphics() -> some View {
+      ForEach(
+        self.configuration.graphicsConfigurations
+      ) { config in
+        ForEach(config.displays) { display in
+          MachineSpecView(
+            systemName: "display"
+          ) {
+            Text(.machineDetailsDisplay)
+          } value: {
+            Text(
+              localizedUsingID: LocalizedDictionaryID.displayResolution,
+              arguments: display.widthInPixels,
+              display.heightInPixels,
+              display.pixelsPerInch
+            )
+          }
+        }
+      }
+    }
+
+    private func network() -> ForEach<[NetworkConfiguration], UUID, MachineSpecView> {
+      ForEach(self.configuration.networkConfigurations) { _ in
+        MachineSpecView(
+          systemName: "network"
+        ) {
+          Text(LocalizedStringID.machineDetailsNetworkName)
+        } value: {
+          Text(.machineDetailsNetworkNat)
+        }
+      }
+    }
+
+    private func storage() -> ForEach<[MachineStorageSpecification], UUID, StorageDevicesView> {
+      ForEach(self.configuration.storage) {
+        StorageDevicesView(storageDevice: $0)
+      }
     }
   }
 

@@ -47,19 +47,19 @@
       = .default
   }
 
-  public extension EnvironmentValues {
-    var installerImageRepository: Transformation<any Database, any InstallerImageRepository> {
+  extension EnvironmentValues {
+    public var installerImageRepository: Transformation<any Database, any InstallerImageRepository> {
       get { self[InstallerImageRepositoryKey.self] }
       set { self[InstallerImageRepositoryKey.self] = newValue }
     }
   }
 
-  private extension Transformation<any Database, any InstallerImageRepository> {
-    static let `default`: Self = .init { _ in DefaultInstallerImageRepository.instance }
+  extension Transformation<any Database, any InstallerImageRepository> {
+    fileprivate static let `default`: Self = .init { _ in DefaultInstallerImageRepository.instance }
   }
 
-  public extension Scene {
-    func installerImageRepository(
+  extension Scene {
+    public func installerImageRepository(
       _ database: @Sendable @escaping (any Database) -> any InstallerImageRepository
     ) -> some Scene {
       self.environment(\.installerImageRepository, .init(database))

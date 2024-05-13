@@ -14,8 +14,8 @@
     static let defaultValue: OpenMachineAction = .default
   }
 
-  public extension EnvironmentValues {
-    var openMachine: OpenMachineAction {
+  extension EnvironmentValues {
+    public var openMachine: OpenMachineAction {
       get { self[OpenMachineKey.self] }
       set {
         self[OpenMachineKey.self] = newValue
@@ -24,14 +24,14 @@
   }
 
   @available(*, deprecated, message: "Use on Scene only.")
-  public extension View {
-    func openMachine(
+  extension View {
+    public func openMachine(
       _ closure: @escaping @MainActor @Sendable (OpenWindowAction) -> Void
     ) -> some View {
       environment(\.openMachine, .init(closure: closure))
     }
 
-    func openMachine<FileType: FileTypeSpecification>(
+    public func openMachine<FileType: FileTypeSpecification>(
       _: FileType.Type
     ) -> some View {
       openMachine {
@@ -40,14 +40,14 @@
     }
   }
 
-  public extension Scene {
-    func openMachine(
+  extension Scene {
+    public func openMachine(
       _ closure: @escaping @MainActor @Sendable (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.openMachine, .init(closure: closure))
     }
 
-    func openMachine<FileType: FileTypeSpecification>(
+    public func openMachine<FileType: FileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {
       openMachine(OpenFilePanel<FileType>().callAsFunction(with:))

@@ -9,5 +9,6 @@ struct BushelSettingsViews: Target {
     BushelLocalization()
     BushelMarketEnvironment()
     BushelOnboardingEnvironment()
+    BushelFeatureFlags()
   }
 }

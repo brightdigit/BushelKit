@@ -12,8 +12,8 @@
 
   import SwiftUI
 
-  public extension Scene {
-    func session(
+  extension Scene {
+    public func session(
       _ initializer: @escaping @Sendable () throws -> any SessionService
     ) -> some Scene {
       self.environment(\.session, InitializedSession(initializer: initializer))

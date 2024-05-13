@@ -11,31 +11,31 @@
   import Foundation
 
   @Observable
-  final class HubObject: Loggable, Sendable {
-    static var loggingCategory: BushelLogging.Category {
+  internal final class HubObject: Loggable, Sendable {
+    internal static var loggingCategory: BushelLogging.Category {
       .observation
     }
 
-    var hubs: [Hub]
+    internal var hubs: [Hub]
 
-    var selectedHub: Hub? {
+    internal var selectedHub: Hub? {
       didSet {
         self.invalidate()
       }
     }
 
-    var selectedImage: HubImage?
+    internal private(set) var selectedImage: HubImage?
 
-    var hubImages = [Hub.ID: [HubImage]]() {
+    internal private(set) var hubImages = [Hub.ID: [HubImage]]() {
       didSet {
         invalidate()
       }
     }
 
-    var images: [HubImage]?
-    var error: (any Error)?
+    internal private(set) var images: [HubImage]?
+    internal private(set) var error: (any Error)?
 
-    var selectedHubID: Hub.ID? {
+    internal var selectedHubID: Hub.ID? {
       didSet {
         let hub: Hub? = if let selectedHubID {
           hubs.first(where: {
@@ -49,7 +49,7 @@
       }
     }
 
-    var selectedImageID: HubImage.ID? {
+    internal var selectedImageID: HubImage.ID? {
       didSet {
         guard let selectedImageID else {
           return
@@ -84,7 +84,7 @@
       self.selectedImageID = selectedImageID
     }
 
-    func invalidate() {
+    private func invalidate() {
       if let selectedHub {
         if let images = self.hubImages[selectedHub.id] {
           self.images = images

@@ -10,8 +10,8 @@ public protocol Icon {
   var name: String { get }
 }
 
-public extension RawRepresentable where Self: Icon, RawValue == String {
-  var name: String {
+extension RawRepresentable where Self: Icon, RawValue == String {
+  public var name: String {
     [Self.namespace, rawValue].joined(separator: "/")
   }
 }

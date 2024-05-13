@@ -28,14 +28,14 @@
     }
   }
 
-  private extension MetadataLabel {
+  extension MetadataLabel {
     @Sendable
-    init(_: VMSystemID, _: any OperatingSystemInstalled) {
+    fileprivate init(_: VMSystemID, _: any OperatingSystemInstalled) {
       self.init()
     }
 
     @Sendable
-    init() {
+    fileprivate init() {
       self.init(
         operatingSystemLongName: "",
         defaultName: "",
@@ -46,24 +46,24 @@
     }
   }
 
-  public extension EnvironmentValues {
-    var metadataLabelProvider: MetadataLabelProviderAction {
+  extension EnvironmentValues {
+    public var metadataLabelProvider: MetadataLabelProviderAction {
       get { self[MetadataLabelProviderKey.self] }
       set { self[MetadataLabelProviderKey.self] = newValue }
     }
   }
 
   @available(*, deprecated, message: "Use on Scene only.")
-  public extension View {
-    func metadataLabelProvider(
+  extension View {
+    public func metadataLabelProvider(
       _ closure: @escaping BushelCore.MetadataLabelProvider
     ) -> some View {
       self.environment(\.metadataLabelProvider, .init(closure: closure))
     }
   }
 
-  public extension Scene {
-    func metadataLabelProvider(
+  extension Scene {
+    public func metadataLabelProvider(
       _ closure: @escaping BushelCore.MetadataLabelProvider
     ) -> some Scene {
       self.environment(\.metadataLabelProvider, .init(closure: closure))

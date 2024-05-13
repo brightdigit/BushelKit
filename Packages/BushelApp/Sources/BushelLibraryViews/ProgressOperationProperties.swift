@@ -9,8 +9,8 @@
   import BushelProgressUI
   import Foundation
 
-  public extension ProgressOperationProperties {
-    init(system: any LibrarySystem, metadata: ImageMetadata, operation: any ProgressOperation<Int>) {
+  extension ProgressOperationProperties {
+    public init(system: any LibrarySystem, metadata: ImageMetadata, operation: any ProgressOperation<Int>) {
       let label = system.label(fromMetadata: metadata)
       self.init(
         imageName: label.imageName,

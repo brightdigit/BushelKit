@@ -13,7 +13,7 @@
       .view
     }
 
-    var isEnabled: Bool = true {
+    var isEnabled = true {
       didSet {
         Self.logger.debug("Updating first responder \(self.isEnabled) for \(self.window != nil)")
         if isEnabled {

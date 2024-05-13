@@ -8,8 +8,8 @@
   import Foundation
   import SwiftUI
 
-  public extension EnvironmentKey where Value: DefaultableViewValue {
-    static var defaultValue: Value {
+  extension EnvironmentKey where Value: DefaultableViewValue {
+    public static var defaultValue: Value {
       Value.default
     }
   }

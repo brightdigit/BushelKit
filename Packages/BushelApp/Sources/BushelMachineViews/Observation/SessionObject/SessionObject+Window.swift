@@ -9,10 +9,10 @@
   import Foundation
   import SwiftUI
 
-  public extension CGSize {
+  extension CGSize {
     @available(*, deprecated, message: "Should use BushelCore")
     @inlinable
-    func resizing(
+    public func resizing(
       toAspectRatio aspectRatio: CGFloat,
       minimumWidth: CGFloat,
       withAdditionalHeight additionalHeight: CGFloat

@@ -22,17 +22,15 @@
     }
 
     public func handle(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
-      for filter in filters {
-        if filter(issue) {
-          return true
-        }
+      for filter in filters where filter(issue) {
+        return true
       }
       return false
     }
   }
 
-  public extension IssueHandler {
-    static func `default`(
+  extension IssueHandler {
+    public static func `default`(
       closeButtonSize: CGSize
     ) -> IssueHandler {
       .init {

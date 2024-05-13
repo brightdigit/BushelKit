@@ -8,8 +8,8 @@
   import Foundation
   import SwiftUI
 
-  public extension AppStorage where Value: ExpressibleByNilLiteral {
-    init<AppStoredType: AppStored>(
+  extension AppStorage where Value: ExpressibleByNilLiteral {
+    public init<AppStoredType: AppStored>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -21,7 +21,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -32,7 +32,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -43,7 +43,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -54,7 +54,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -65,7 +65,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -77,8 +77,8 @@
     }
   }
 
-  public extension AppStorage {
-    init<AppStoredType: AppStored, R>(
+  extension AppStorage {
+    public init<AppStoredType: AppStored, R>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == R?,
@@ -91,7 +91,7 @@
       )
     }
 
-    init<AppStoredType: AppStored, R>(
+    public init<AppStoredType: AppStored, R>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == R?,

@@ -30,8 +30,8 @@
     }
   }
 
-  public extension GuidedLabeledContent where Description == GuidedLabeledContentDescriptionView {
-    init(
+  extension GuidedLabeledContent where Description == GuidedLabeledContentDescriptionView {
+    public init(
       _ content: @escaping () -> Content,
       label: @escaping () -> Label,
       text: @escaping () -> Text,

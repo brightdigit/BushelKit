@@ -14,7 +14,7 @@ final class CalculationParametersTests: XCTestCase {
     let expectedPassingValue: Int = .random(in: 1 ... 100)
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 1 ... 50,
-      valueRange: 100 ... 1000
+      valueRange: 100 ... 1_000
     ) { passedValue in
       defer {
         exp.fulfill()
@@ -33,7 +33,7 @@ final class CalculationParametersTests: XCTestCase {
     let expectedPassingValue: Int = .random(in: 1 ... 100)
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 1 ... 50,
-      valueRange: 100 ... 1000
+      valueRange: 100 ... 1_000
     ) { passedValue in
       XCTFail("Shouldn't be called")
       return passedValue
@@ -51,7 +51,7 @@ final class CalculationParametersTests: XCTestCase {
   func testFloats() {
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 0.1 ... 50.1,
-      valueRange: 99.1 ... 1000.1
+      valueRange: 99.1 ... 1_000.1
     ) { passedValue in
       XCTFail("Shouldn't be called")
       return passedValue
@@ -60,7 +60,7 @@ final class CalculationParametersTests: XCTestCase {
     XCTAssertEqual(specCalcParameters.indexRange.lowerBound, 1)
     XCTAssertEqual(specCalcParameters.indexRange.upperBound, 50)
     XCTAssertEqual(specCalcParameters.valueRange.lowerBound, 100)
-    XCTAssertEqual(specCalcParameters.valueRange.upperBound, 1000)
+    XCTAssertEqual(specCalcParameters.valueRange.upperBound, 1_000)
   }
 
   func testValue() {

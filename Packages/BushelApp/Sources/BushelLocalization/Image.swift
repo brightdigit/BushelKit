@@ -6,8 +6,8 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  public extension Image {
-    static func resource(_ name: String) -> Image {
+  extension Image {
+    public static func resource(_ name: String) -> Image {
       Image(name, bundle: .module)
     }
   }

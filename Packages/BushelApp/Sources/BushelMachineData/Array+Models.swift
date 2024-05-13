@@ -13,8 +13,8 @@
     MachineEntry.self
   ]
 
-  public extension Array where Element == any PersistentModel.Type {
-    static var machine: [any PersistentModel.Type] {
+  extension Array where Element == any PersistentModel.Type {
+    public static var machine: [any PersistentModel.Type] {
       _models
     }
   }

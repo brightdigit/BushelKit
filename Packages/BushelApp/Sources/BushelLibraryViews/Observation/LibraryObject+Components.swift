@@ -12,7 +12,7 @@
   import SwiftData
 
   extension LibraryObject {
-    struct Components {
+    internal struct Components {
       internal init(
         library: Library,
         entry: LibraryEntry,
@@ -25,10 +25,10 @@
         self.system = system
       }
 
-      let library: Library
-      let entry: LibraryEntry
-      let database: any Database
-      let system: any LibrarySystemManaging
+      internal let library: Library
+      internal let entry: LibraryEntry
+      internal let database: any Database
+      internal let system: any LibrarySystemManaging
 
       private static func entry(
         from item: LibraryEntry?,

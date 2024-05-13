@@ -7,8 +7,10 @@
 
   import BushelCore
   import BushelData
+  import BushelFeatureFlags
   import BushelLogging
   import BushelMachine
+  import BushelMarketEnvironment
   import BushelOnboardingCore
   import BushelOnboardingViews
   import BushelSystem
@@ -20,7 +22,7 @@
 
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {
-    func configure<
+    internal func configure<
       MachineFileType: FileTypeSpecification,
       LibraryFileType: InitializableFileTypeSpecification
     >(
@@ -31,7 +33,7 @@
       self.configure(SceneConfiguration<MachineFileType, LibraryFileType>(systems))
     }
 
-    func configure(
+    internal func configure(
       _ configuration: some ApplicationConfiguration
     ) -> some View {
       #if os(macOS)
@@ -55,8 +57,8 @@
   }
 
   #if os(macOS)
-    public extension Scene {
-      func onboardingWindow<SingleWindowViewType: SingleWindowView>(
+    extension Scene {
+      public func onboardingWindow<SingleWindowViewType: SingleWindowView>(
         _ view: SingleWindowViewType.Type
       ) -> some Scene where SingleWindowViewType.Value == OnboardingWindowValue {
         self.environment(\.onboardingWindow, view.Value.default)
@@ -65,7 +67,7 @@
   #endif
 
   extension Scene {
-    func configure<
+    internal func configure<
       MachineFileType: FileTypeSpecification,
       LibraryFileType: InitializableFileTypeSpecification
     >(
@@ -76,7 +78,7 @@
       self.configure(SceneConfiguration<MachineFileType, LibraryFileType>(systems))
     }
 
-    func configure(
+    internal func configure(
       _ configuration: some ApplicationConfiguration
     ) -> some Scene {
       let logger = BushelLogging.logger(forCategory: .application)

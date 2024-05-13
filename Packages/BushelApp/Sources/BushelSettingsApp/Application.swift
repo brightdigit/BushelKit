@@ -11,8 +11,8 @@
     // var appDelegate: AppDelegate { get }
   }
 
-  public extension Application {
-    var body: some Scene {
+  extension Application {
+    public var body: some Scene {
       Group {
         Settings(purchaseScreenValue: 0)
       }

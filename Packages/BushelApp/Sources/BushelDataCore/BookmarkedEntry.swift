@@ -12,8 +12,8 @@
     var bookmarkData: BookmarkData? { get }
   }
 
-  public extension BookmarkedEntry {
-    func accessibleURL(from database: any Database) async throws -> BookmarkURL {
+  extension BookmarkedEntry {
+    public func accessibleURL(from database: any Database) async throws -> BookmarkURL {
       guard let bookmarkData = self.bookmarkData else {
         throw BookmarkedErrorType.missingBookmark()
       }

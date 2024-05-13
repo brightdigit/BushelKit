@@ -17,7 +17,7 @@
           .resizable()
           .aspectRatio(contentMode: .fit)
           .frame(width: 40)
-          .layoutPriority(1000)
+          .layoutPriority(1_000)
           .padding(.trailing, 4.0)
         VStack(alignment: .leading, spacing: 2.0) {
           Text(properties.titleID)

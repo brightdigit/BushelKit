@@ -16,30 +16,30 @@
   import SwiftData
   import SwiftUI
 
-  struct SceneConfiguration<
+  internal struct SceneConfiguration<
     MachineFileType: FileTypeSpecification,
     LibraryFileType: InitializableFileTypeSpecification
   >: ApplicationConfiguration, Loggable {
-    static var loggingCategory: BushelLogging.Category {
+    internal static var loggingCategory: BushelLogging.Category {
       .application
     }
 
-    let systems: [any System]
+    internal let systems: [any System]
 
-    let xpcService: String
+    internal let xpcService: String
 
-    let schemas: [any PersistentModel.Type] =
+    internal let schemas: [any PersistentModel.Type] =
       .all
 
-    var allowedOpenFileTypes: [FileType] {
+    internal var allowedOpenFileTypes: [FileType] {
       [.virtualMachine, .restoreImageLibrary]
     }
 
-    var modelContainer: ModelContainer {
+    internal var modelContainer: ModelContainer {
       SharedDatabase.shared.modelContainer
     }
 
-    var database: any Database {
+    internal var database: any Database {
       SharedDatabase.shared.database
     }
 
@@ -53,11 +53,11 @@
       self.systems = systems()
     }
 
-    func installerImageRepository(_ database: any Database) -> any InstallerImageRepository {
+    internal func installerImageRepository(_ database: any Database) -> any InstallerImageRepository {
       DatabaseInstallerRepository(database: database)
     }
 
-    func openFileURL(_ url: URL, openWindow: OpenWindowAction) {
+    internal func openFileURL(_ url: URL, openWindow: OpenWindowAction) {
       if let file = MachineFile.documentFile(from: url) {
         openWindow(value: file)
       } else if let file = LibraryFile.documentFile(from: url) {
@@ -68,7 +68,7 @@
       }
     }
 
-    func hubView(_ image: Binding<(any InstallImage)?>) -> some View {
+    internal func hubView(_ image: Binding<(any InstallImage)?>) -> some View {
       HubView(selectedHubImage: image)
     }
   }

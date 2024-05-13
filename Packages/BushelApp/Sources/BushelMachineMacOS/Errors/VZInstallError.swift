@@ -14,8 +14,8 @@
     func codeMatches(_ code: VZError.Code) -> Bool
   }
 
-  public extension VZInstallError {
-    func installationFailure() -> InstallFailure? {
+  extension VZInstallError {
+    public func installationFailure() -> InstallFailure? {
       guard self.isVZError else {
         return nil
       }

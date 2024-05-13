@@ -9,8 +9,8 @@
   import SwiftData
   import SwiftUI
 
-  struct DefaultDatabase: Database {
-    struct NotImplmentedError: Error {
+  private struct DefaultDatabase: Database {
+    private struct NotImplmentedError: Error {
       static let instance = NotImplmentedError()
     }
 
@@ -55,15 +55,15 @@
     }
   }
 
-  public extension EnvironmentValues {
-    var database: any Database {
+  extension EnvironmentValues {
+    public var database: any Database {
       get { self[DatabaseKey.self] }
       set { self[DatabaseKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func database(
+  extension Scene {
+    public func database(
       _ database: any Database
     ) -> some Scene {
       self.environment(\.database, database)
@@ -71,8 +71,8 @@
   }
 
   @available(*, deprecated, message: "This is a fix for a bug. Use Scene only eventually.")
-  public extension View {
-    func database(
+  extension View {
+    public func database(
       _ database: any Database
     ) -> some View {
       self.environment(\.database, database)

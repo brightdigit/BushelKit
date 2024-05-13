@@ -11,7 +11,7 @@
   import SwiftUI
 
   public struct HubContentRow: View {
-    let label: MetadataLabel
+    private let label: MetadataLabel
 
     public var body: some View {
       PreferredLayoutView { value in
@@ -37,7 +37,7 @@
   }
 
   extension HubContentRow {
-    init(manager: any LibrarySystemManaging, metadata: ImageMetadata) {
+    internal init(manager: any LibrarySystemManaging, metadata: ImageMetadata) {
       let label = manager.labelForSystem(
         metadata.vmSystemID,
         metadata: metadata

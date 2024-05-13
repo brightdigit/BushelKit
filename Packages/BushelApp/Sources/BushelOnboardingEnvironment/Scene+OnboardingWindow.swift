@@ -14,15 +14,15 @@
     typealias Value = OnboardingWindowValue
   }
 
-  public extension EnvironmentValues {
-    var onboardingWindow: OnboardingWindowValue {
+  extension EnvironmentValues {
+    public var onboardingWindow: OnboardingWindowValue {
       get { self[OnboardingWindowValueKey.self] }
       set { self[OnboardingWindowValueKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func onboardingWindow(
+  extension Scene {
+    public func onboardingWindow(
       _ value: OnboardingWindowValue
     ) -> some Scene {
       self.environment(\.onboardingWindow, value)

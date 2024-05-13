@@ -8,11 +8,11 @@
   import BushelLocalization
   import SwiftUI
 
-  struct ReleaseList: View {
-    @Binding var releaseSelection: ReleaseSelected
-    let releases: ReleaseCollection
-    let headerText: String
-    var body: some View {
+  internal struct ReleaseList: View {
+    @Binding private var releaseSelection: ReleaseSelected
+    private let releases: ReleaseCollection
+    private let headerText: String
+    internal var body: some View {
       LabeledContent(headerText) {
         HStack {
           ForEach(releases.releases) { release in
@@ -42,6 +42,16 @@
             .shadow(color: .black, radius: 2, x: 1, y: 1)
         }
       }
+    }
+
+    internal init(
+      releaseSelection: Binding<ReleaseSelected>,
+      releases: ReleaseCollection,
+      headerText: String
+    ) {
+      self._releaseSelection = releaseSelection
+      self.releases = releases
+      self.headerText = headerText
     }
   }
 

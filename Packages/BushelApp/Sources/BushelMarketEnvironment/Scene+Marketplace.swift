@@ -14,8 +14,8 @@
     static let defaultValue: Marketplace = .default
   }
 
-  public extension EnvironmentValues {
-    var marketplace: Marketplace {
+  extension EnvironmentValues {
+    public var marketplace: Marketplace {
       get { self[MarketplaceKey.self] }
       set {
         self[MarketplaceKey.self] = newValue
@@ -23,8 +23,8 @@
     }
   }
 
-  public extension Scene {
-    func marketplace(
+  extension Scene {
+    public func marketplace(
       for groupIDs: [String],
       listener: @autoclosure () -> any MarketListener,
       onChangeOf scenePhase: ScenePhase

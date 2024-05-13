@@ -32,9 +32,9 @@
     }
   }
 
-  public extension OpenFileURLAction {
+  extension OpenFileURLAction {
     @MainActor
-    func callAsFunction(ofFileTypes fileTypes: [FileType], using openWindow: OpenWindowAction) {
+    public func callAsFunction(ofFileTypes fileTypes: [FileType], using openWindow: OpenWindowAction) {
       OpenAnyFilePanel(fileTypes: fileTypes).callAsFunction(with: self, using: openWindow)
     }
   }

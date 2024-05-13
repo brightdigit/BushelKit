@@ -6,27 +6,27 @@
 import BushelCore
 import Foundation
 
-enum ImportRequest {
+internal enum ImportRequest {
   case remote(url: URL, metadata: ImageMetadata)
   case local(url: URL)
 
   var url: URL {
     switch self {
     case .remote(url: let url, metadata: _):
-      return url
+      url
 
     case let .local(url: url):
-      return url
+      url
     }
   }
 
   var metadata: ImageMetadata? {
     switch self {
     case .remote(url: _, metadata: let metadata):
-      return metadata
+      metadata
 
     default:
-      return nil
+      nil
     }
   }
 
@@ -35,10 +35,10 @@ enum ImportRequest {
     func startAccessingSecurityScopedResource() -> Bool? {
       switch self {
       case let .local(url: url):
-        return url.startAccessingSecurityScopedResource()
+        url.startAccessingSecurityScopedResource()
 
       default:
-        return nil
+        nil
       }
     }
 
@@ -46,10 +46,10 @@ enum ImportRequest {
     func stopAccessingSecurityScopedResource() -> Void? {
       switch self {
       case let .local(url: url):
-        return url.stopAccessingSecurityScopedResource()
+        url.stopAccessingSecurityScopedResource()
 
       default:
-        return nil
+        nil
       }
     }
   #endif

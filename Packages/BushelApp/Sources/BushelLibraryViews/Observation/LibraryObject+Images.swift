@@ -78,7 +78,7 @@
       }
     }
 
-    func importImage(
+    internal func importImage(
       _ images: ImportRequest,
       setProgress: @MainActor @Sendable @escaping (ProgressOperationView.Properties?) -> Void
     ) async throws {
@@ -118,7 +118,7 @@
       try await accessibleBookmark.stopAccessing(updateTo: database)
     }
 
-    func deleteImage(withID id: UUID) async throws {
+    internal func deleteImage(withID id: UUID) async throws {
       guard let database else {
         throw LibraryError.missingInitializedProperty(.database)
       }
@@ -142,7 +142,7 @@
       try await accessibleBookmark.stopAccessing(updateTo: database)
     }
 
-    func syncronize() async throws {
+    internal func syncronize() async throws {
       guard let database else {
         throw LibraryError.missingInitializedProperty(.database)
       }

@@ -1,6 +1,30 @@
 //
-// SliderStepperView.swift
-// Copyright (c) 2024 BrightDigit.
+//  SliderStepperView.swift
+//  RadiantKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 #if canImport(SwiftUI)
@@ -8,12 +32,12 @@
 
   @MainActor
   public struct SliderStepperView<Content: View, Label: View, TitleType>: View {
-    let title: TitleType
-    let label: @Sendable (TitleType) -> Label
-    @Binding var value: Float
-    let bounds: ClosedRange<Float>
-    let step: Float
-    let content: @Sendable (TitleType) -> Content
+    private let title: TitleType
+    private let label: @Sendable (TitleType) -> Label
+    private let bounds: ClosedRange<Float>
+    private let step: Float
+    private let content: @Sendable (TitleType) -> Content
+    @Binding private var value: Float
 
     public var body: some View {
       LabeledContent {

@@ -10,8 +10,8 @@
   import Foundation
   import StoreKit
 
-  public extension Subscription.Offer.Kind {
-    init(_ type: StoreKit.Transaction.OfferType) {
+  extension Subscription.Offer.Kind {
+    public init(_ type: StoreKit.Transaction.OfferType) {
       switch type {
       case .code:
         self = .code

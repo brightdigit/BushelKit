@@ -36,9 +36,9 @@
     }
   }
 
-  public extension OpenWindowAction {
+  extension OpenWindowAction {
     @MainActor
-    func callAsFunction(newFileOf valueType: (some InitializableFileTypeSpecification).Type) {
+    public func callAsFunction(newFileOf valueType: (some InitializableFileTypeSpecification).Type) {
       NewFilePanel(valueType)(with: self)
     }
   }

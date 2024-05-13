@@ -70,7 +70,7 @@
   }
 
   extension LibraryImageEntry {
-    convenience init(
+    internal convenience init(
       library: LibraryEntry,
       file: LibraryImageFile,
       using database: any Database
@@ -92,7 +92,7 @@
       try await database.save()
     }
 
-    func syncronizeFile(
+    internal func syncronizeFile(
       _ file: LibraryImageFile,
       withLibrary library: LibraryEntry,
       using database: any Database
@@ -111,8 +111,8 @@
     }
   }
 
-  public extension ImageMetadata {
-    init(entry: LibraryImageEntry) {
+  extension ImageMetadata {
+    public init(entry: LibraryImageEntry) {
       self.init(
         isImageSupported: entry.isImageSupported,
         buildVersion: entry.buildVersion,

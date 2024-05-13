@@ -15,8 +15,8 @@
     static let defaultValue: OpenLibraryAction = .default
   }
 
-  public extension EnvironmentValues {
-    var openLibrary: OpenLibraryAction {
+  extension EnvironmentValues {
+    public var openLibrary: OpenLibraryAction {
       get { self[OpenLibraryKey.self] }
       set {
         self[OpenLibraryKey.self] = newValue
@@ -24,14 +24,14 @@
     }
   }
 
-  public extension Scene {
-    func openLibrary(
+  extension Scene {
+    public func openLibrary(
       _ closure: @escaping @MainActor (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.openLibrary, .init(closure: closure))
     }
 
-    func openLibrary<FileType: FileTypeSpecification>(
+    public func openLibrary<FileType: FileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {
       openLibrary(OpenFilePanel<FileType>().callAsFunction(with:))

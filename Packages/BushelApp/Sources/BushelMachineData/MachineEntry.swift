@@ -109,16 +109,16 @@
     }
   }
 
-  public extension MachineEntry {
-    var lastOpenedDescription: String {
+  extension MachineEntry {
+    public var lastOpenedDescription: String {
       self.lastOpenedAt?.description ?? ""
     }
 
-    var operatingSystemVersionDescription: String {
+    public var operatingSystemVersionDescription: String {
       self.operatingSystemVersionString ?? ""
     }
 
-    var machineIdentifierHex: String {
+    public var machineIdentifierHex: String {
       self.machineIdentifer.map { String($0, radix: 16) } ?? ""
     }
   }

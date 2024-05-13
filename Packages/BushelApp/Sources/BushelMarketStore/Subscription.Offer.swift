@@ -10,8 +10,8 @@
   import Foundation
   import StoreKit
 
-  public extension Subscription.Offer {
-    init?(renewal: Product.SubscriptionInfo.RenewalInfo) {
+  extension Subscription.Offer {
+    public init?(renewal: Product.SubscriptionInfo.RenewalInfo) {
       guard
         let type = renewal.offerType.flatMap(Subscription.Offer.Kind.init),
         let id = renewal.offerID else {

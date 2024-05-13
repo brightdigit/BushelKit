@@ -7,6 +7,7 @@
   import BushelLocalization
   import Foundation
   import TipKit
+
   @available(*, unavailable)
   struct LibraryTip: Tip {
     var title: Text {

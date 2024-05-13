@@ -9,9 +9,9 @@
   import Foundation
   import Observation
 
-  public extension FileManager {
+  extension FileManager {
     #warning("logging-note: let's log that a url is getting copied/downloaded")
-    static func fileOperationProgress(
+    public static func fileOperationProgress(
       from sourceURL: URL,
       to destinationURL: URL,
       totalValue: Int?,

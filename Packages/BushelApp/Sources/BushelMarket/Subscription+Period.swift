@@ -5,8 +5,8 @@
 
 import Foundation
 
-public extension Subscription {
-  struct Period: Sendable {
+extension Subscription {
+  public struct Period: Sendable {
     public enum Unit: Sendable {
       case year
       case month

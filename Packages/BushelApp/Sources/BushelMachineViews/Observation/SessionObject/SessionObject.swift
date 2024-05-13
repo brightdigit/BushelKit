@@ -20,8 +20,8 @@
   @Observable
   final class SessionObject: Loggable, MachineObjectParent, SessionFramable, Sendable {
     var url: URL?
-    var alertIsPresented: Bool = false
-    var presentConfirmCloseAlert: Bool = false
+    var alertIsPresented = false
+    var presentConfirmCloseAlert = false
     var toolbarHeight: CGFloat = 24.0 + 28.0
     var screenSettings = ScreenSettings()
 
@@ -33,7 +33,7 @@
     var isRestarting = false
     var sessionCloseButtonActionOption: SessionCloseButtonActionOption?
 
-    var waitingForShutdown: Bool = false
+    var waitingForShutdown = false
 
     var machineObject: MachineObject?
 
@@ -43,7 +43,7 @@
       }
     }
 
-    var initializedWindowSize: Bool = false
+    var initializedWindowSize = false
 
     @ObservationIgnored
     weak var windowDelegate: (any NSWindowDelegate)?

@@ -71,15 +71,15 @@
     }
   }
 
-  public extension EnvironmentValues {
-    var releaseCollectionProvider: ReleaseCollectionMetadataAction {
+  extension EnvironmentValues {
+    public var releaseCollectionProvider: ReleaseCollectionMetadataAction {
       get { self[ReleaseCollectionMetadataActionKey.self] }
       set { self[ReleaseCollectionMetadataActionKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func releaseCollectionProvider(
+  extension Scene {
+    public func releaseCollectionProvider(
       _ closure: @escaping BushelCore.ReleaseCollectionMetadataProvider
     ) -> some Scene {
       self.environment(\.releaseCollectionProvider, .init(closure: closure))

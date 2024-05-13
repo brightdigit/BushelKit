@@ -11,14 +11,14 @@
 
   public typealias OpenWindowWithAction = OpenWindowWithValueAction<Void>
 
-  public extension OpenWindowWithAction {
-    init(closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void) {
+  extension OpenWindowWithAction {
+    public init(closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void) {
       self.init { _, action in
         closure(action)
       }
     }
 
-    @MainActor func callAsFunction(with openWidow: OpenWindowAction) {
+    @MainActor public func callAsFunction(with openWidow: OpenWindowAction) {
       closure((), openWidow)
     }
   }

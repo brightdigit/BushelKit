@@ -8,74 +8,85 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  struct ToolbarView: View {
+  internal struct ToolbarView: View {
     let title: String
     let allAllowedContentTypes: [UTType]
     @Bindable var object: DocumentObject
 
-    var body: some View {
-      HStack {
-        Menu {
-          Button("Import File...") {
-            self.object.presentFileImporter = true
-          }
-          .accessibilityIdentifier(
-            Library.libraryToolbarAction(
-              title, "import"
-            ).identifier
-          )
-          .accessibilityLabel("Import File")
-          Button("Download From Hub...") {
-            self.object.presentHubModal = true
-          }
-          .accessibilityIdentifier(
-            Library.libraryToolbarAction(
-              title, "download"
-            ).identifier
-          )
-          .accessibilityLabel("Download From Hub")
-        } label: {
-          Image(systemName: "plus")
-        }
-        .accessibilityLabel("Add Image to Library")
-        .accessibilityIdentifier(Library.libraryToolbar(title).identifier)
-        .accessibilityAction(.default) {
+    var addMenu: some View {
+      Menu {
+        Button("Import File...") {
           self.object.presentFileImporter = true
-        }
-        .accessibilityAction(named: "Download From Hub") {
-          self.object.presentHubModal = true
-        }
-        .fileImporter(
-          isPresented: self.$object.presentFileImporter,
-          allowedContentTypes: allAllowedContentTypes,
-          onCompletion: self.object.onFileImporterCompleted
-        )
-        Button {
-          self.object.queueRemovalSelectedItem()
-        } label: {
-          VStack {
-            Spacer()
-            Image(systemName: "minus")
-            Spacer()
-          }.frame(height: 12).contentShape(Rectangle())
         }
         .accessibilityIdentifier(
           Library.libraryToolbarAction(
-            title, "minus"
+            title, "import"
           ).identifier
         )
-        .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
-        .disabled(self.object.selectedItem == nil)
+        .accessibilityLabel("Import File")
+        Button("Download From Hub...") {
+          self.object.presentHubModal = true
+        }
+        .accessibilityIdentifier(
+          Library.libraryToolbarAction(
+            title, "download"
+          ).identifier
+        )
+        .accessibilityLabel("Download From Hub")
+      } label: {
+        Image(systemName: "plus")
+      }
+      .accessibilityLabel("Add Image to Library")
+      .accessibilityIdentifier(Library.libraryToolbar(title).identifier)
+      .accessibilityAction(.default) {
+        self.object.presentFileImporter = true
+      }
+      .accessibilityAction(named: "Download From Hub") {
+        self.object.presentHubModal = true
+      }
+      .fileImporter(
+        isPresented: self.$object.presentFileImporter,
+        allowedContentTypes: allAllowedContentTypes,
+        onCompletion: self.object.onFileImporterCompleted
+      )
+    }
 
-        Button {
-          self.object.beginSyncronize()
-        } label: {
-          VStack {
-            Spacer()
-            Image(systemName: "arrow.clockwise")
-            Spacer()
-          }
-        }.frame(height: 12).contentShape(Rectangle()).hidden()
+    var removeButton: some View {
+      Button {
+        self.object.queueRemovalSelectedItem()
+      } label: {
+        VStack {
+          Spacer()
+          Image(systemName: "minus")
+          Spacer()
+        }.frame(height: 12).contentShape(Rectangle())
+      }
+      .accessibilityIdentifier(
+        Library.libraryToolbarAction(
+          title, "minus"
+        ).identifier
+      )
+      .opacity(self.object.selectedItem == nil ? 0.5 : 1.0)
+      .disabled(self.object.selectedItem == nil)
+    }
+
+    var syncronizeButton: some View {
+      Button {
+        self.object.beginSyncronize()
+      } label: {
+        VStack {
+          Spacer()
+          Image(systemName: "arrow.clockwise")
+          Spacer()
+        }
+      }.frame(height: 12).contentShape(Rectangle()).hidden()
+    }
+
+    var body: some View {
+      HStack {
+        addMenu
+        removeButton
+        syncronizeButton
         Spacer()
       }
       .buttonStyle(.plain)

@@ -50,12 +50,12 @@
     }
   }
 
-  public extension LibraryEntry {
-    var imageCount: Int {
+  extension LibraryEntry {
+    public var imageCount: Int {
       self.images?.count ?? 0
     }
 
-    convenience init(
+    public convenience init(
       bookmarkData: BookmarkData,
       library: Library,
       withDatabase database: any Database
@@ -71,7 +71,7 @@
       try await database.save()
     }
 
-    func synchronizeWith(_ library: Library, using database: any Database) async throws {
+    public func synchronizeWith(_ library: Library, using database: any Database) async throws {
       let entryMap: [UUID: LibraryImageEntry] = .init(uniqueKeysWithValues: images?.map {
         ($0.imageID, $0)
       } ?? [])
@@ -108,7 +108,7 @@
     }
 
     @discardableResult
-    func appendImage(
+    public func appendImage(
       file: LibraryImageFile,
       using database: any Database
     ) async throws -> LibraryImageEntry {

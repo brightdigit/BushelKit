@@ -8,10 +8,10 @@
   import BushelHub
   import SwiftUI
 
-  struct HubDetailView: View {
-    let image: HubImage?
-    @Environment(\.librarySystemManager) var librarySystemManager
-    var body: some View {
+  internal struct HubDetailView: View {
+    private let image: HubImage?
+    @Environment(\.librarySystemManager) private var librarySystemManager
+    internal var body: some View {
       if let image {
         VStack(alignment: .leading, spacing: 4.0) {
           let label = librarySystemManager.labelForSystem(
@@ -41,6 +41,10 @@
       } else {
         Text(.hubNoneSelected)
       }
+    }
+
+    internal init(image: HubImage? = nil) {
+      self.image = image
     }
   }
 

@@ -35,15 +35,15 @@
     }
   }
 
-  public extension EnvironmentValues {
-    var session: any Session {
+  extension EnvironmentValues {
+    public var session: any Session {
       get { self[SessionKey.self] }
       set { self[SessionKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func session(
+  extension Scene {
+    public func session(
       _ session: any Session
     ) -> some Scene {
       self.environment(\.session, session)

@@ -30,7 +30,7 @@
         .init(
           id: .init(),
           label: "Lorem Ipsum",
-          size: 256 * 1024 * 1024 * 1024
+          size: 256 * 1_024 * 1_024 * 1_024
         )
       )
     }

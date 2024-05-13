@@ -1,6 +1,30 @@
 //
-// SortComparator+Linux.swift
-// Copyright (c) 2024 BrightDigit.
+//  SortComparator+Linux.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import Foundation
@@ -195,14 +219,14 @@ import Foundation
   }
 
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  public extension Sequence {
+  extension Sequence {
     /// Returns the elements of the sequence, sorted using the given comparator
     /// to compare elements.
     ///
     /// - Parameters:
     ///   - comparator: the comparator to use in ordering elements
     /// - Returns: an array of the elements sorted using `comparator`.
-    func sorted<Comparator: SortComparator>(using comparator: Comparator) -> [Element] where Comparator.Compared == Element {
+    public func sorted<Comparator: SortComparator>(using comparator: Comparator) -> [Element] where Comparator.Compared == Element {
       self.sorted {
         comparator.compare($0, $1) == .orderedAscending
       }
@@ -217,7 +241,7 @@ import Foundation
     ///   sorting the sequence's elements. Any subsequent comparators are used
     ///   to further refine the order of elements with equal values.
     /// - Returns: an array of the elements sorted using `comparators`.
-    func sorted<Comparator: SortComparator>(using comparators: some Sequence<Comparator>) -> [Element] where
+    public func sorted<Comparator: SortComparator>(using comparators: some Sequence<Comparator>) -> [Element] where
       Element == Comparator.Compared {
       self.sorted {
         comparators.compare($0, $1) == .orderedAscending
@@ -226,7 +250,7 @@ import Foundation
   }
 
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  public extension Sequence {
+  extension Sequence {
     /// If `lhs` is ordered before `rhs` in the ordering described by the given
     /// sequence of `SortComparator`s
     ///
@@ -234,7 +258,7 @@ import Foundation
     /// comparator to be used in sorting the sequence's elements. Any subsequent
     /// comparators are used to further refine the order of elements with equal
     /// values.
-    func compare<Comparator: SortComparator>(_ lhs: Comparator.Compared, _ rhs: Comparator.Compared) -> ComparisonResult where Element == Comparator {
+    public func compare<Comparator: SortComparator>(_ lhs: Comparator.Compared, _ rhs: Comparator.Compared) -> ComparisonResult where Element == Comparator {
       for comparator in self {
         let result = comparator.compare(lhs, rhs)
         if result != .orderedSame { return result }
@@ -244,11 +268,11 @@ import Foundation
   }
 
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  public extension MutableCollection where Self: RandomAccessCollection {
+  extension MutableCollection where Self: RandomAccessCollection {
     /// Sorts the collection using the given comparator to compare elements.
     /// - Parameters:
     ///     - comparator: the sort comparator used to compare elements.
-    mutating func sort<Comparator: SortComparator>(using comparator: Comparator) where Comparator.Compared == Element {
+    public mutating func sort<Comparator: SortComparator>(using comparator: Comparator) where Comparator.Compared == Element {
       self.sort {
         comparator.compare($0, $1) == .orderedAscending
       }
@@ -262,7 +286,7 @@ import Foundation
     ///   first comparator specifies the primary comparator to be used in
     ///   sorting the sequence's elements. Any subsequent comparators are used
     ///   to further refine the order of elements with equal values.
-    mutating func sort<Comparator: SortComparator>(using comparators: some Sequence<Comparator>) where Element == Comparator.Compared {
+    public mutating func sort<Comparator: SortComparator>(using comparators: some Sequence<Comparator>) where Element == Comparator.Compared {
       self.sort {
         comparators.compare($0, $1) == .orderedAscending
       }
@@ -270,3 +294,4 @@ import Foundation
   }
 
 #endif
+// swiftlint:enable all

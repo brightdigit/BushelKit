@@ -9,7 +9,7 @@
   import BushelLibrary
   import SwiftUI
 
-  struct LibraryListImageItem: View {
+  internal struct LibraryListImageItem: View {
     let libraryItem: LibraryImageFile
     let label: MetadataLabel
     let accessibilityTitle: String

@@ -60,12 +60,10 @@
 
   struct WelcomeActionButton_Previews: PreviewProvider {
     static var previews: some View {
-      // swiftlint:disable multiline_arguments_brackets
       WelcomeActionButton(
         imageSystemName: "plus.app",
         titleID: .welcomeNewMachineTitle
       ) {}
-      // swiftlint:enable multiline_arguments_brackets
     }
   }
 #endif

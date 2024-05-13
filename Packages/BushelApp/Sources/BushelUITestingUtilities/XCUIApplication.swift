@@ -8,8 +8,8 @@
   import BushelMacOSCore
   import XCTest
 
-  public extension XCUIApplication {
-    static func launchBushel(withFlags flags: LaunchOptions) -> XCUIApplication {
+  extension XCUIApplication {
+    public static func launchBushel(withFlags flags: LaunchOptions) -> XCUIApplication {
       let app = XCUIApplication()
 
       if flags.contains(.resetApplication) {
@@ -28,7 +28,7 @@
     }
 
     @discardableResult
-    func runLibraryCreation(specifications: LibrarySpecification) throws -> XCUIElement {
+    public func runLibraryCreation(specifications: LibrarySpecification) throws -> XCUIElement {
       let contents = try FileManager.default.contentsOfDirectory(
         at: specifications.imageSourceDirectory,
         includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey]

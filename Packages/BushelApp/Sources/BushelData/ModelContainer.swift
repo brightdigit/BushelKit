@@ -21,7 +21,7 @@
         if EnvironmentConfiguration.shared.disallowDatabaseRebuild {
           assertionFailure(error: error)
         }
-        Self.logger.error("Unable to read database. Rebuilding the database.")
+        logger.error("Unable to read database. Rebuilding the database.")
         // swiftlint:disable:next force_try
         try! ModelContainer().deleteAllData()
         return self.forTypes(forTypes)

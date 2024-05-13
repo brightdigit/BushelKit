@@ -10,8 +10,8 @@
   import Foundation
   import StoreKit
 
-  public extension Subscription.Environment {
-    init(_ enviromnent: AppStore.Environment) {
+  extension Subscription.Environment {
+    public init(_ enviromnent: AppStore.Environment) {
       switch enviromnent {
       case .production:
         self = .production

@@ -18,6 +18,7 @@
   import SwiftData
   import SwiftUI
 
+  // swiftlint:disable:next type_body_length
   public struct ConfigurationView: View, Loggable {
     @Binding var buildRequest: MachineBuildRequest?
     @State var buildResult: Result<URL, BuilderError>?
@@ -77,7 +78,7 @@
         Slider(
           value: self.$object.configuration.memory,
           in: self.object.range.memory,
-          step: 1 * 1024 * 1024 * 1024
+          step: 1 * 1_024 * 1_024 * 1_024
         ).layoutPriority(100)
 
         Text(
@@ -90,7 +91,7 @@
         Stepper(
           value: self.$object.configuration.memory,
           in: self.object.range.memory,
-          step: 1 * 1024 * 1024 * 1024
+          step: 1 * 1_024 * 1_024 * 1_024
         ) {
           Text(LocalizedStringID.machineDetailsMemoryName)
         }
@@ -128,7 +129,7 @@
         HStack {
           Slider(
             value: self.$object.configuration.primaryStorageSizeFloat,
-            in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024)
+            in: (8 * 1_024 * 1_024 * 1_024) ... (128 * 1_024 * 1_024 * 1_024)
           )
           .layoutPriority(100)
           Text(
@@ -140,8 +141,8 @@
           .opacity(0.8)
           Stepper(
             value: self.$object.configuration.primaryStorageSizeFloat,
-            in: (8 * 1024 * 1024 * 1024) ... (128 * 1024 * 1024 * 1024),
-            step: 1 * 1024 * 1024 * 1024
+            in: (8 * 1_024 * 1_024 * 1_024) ... (128 * 1_024 * 1_024 * 1_024),
+            step: 1 * 1_024 * 1_024 * 1_024
           ) {
             Text(LocalizedStringID.machineDetailsMemoryName)
           }

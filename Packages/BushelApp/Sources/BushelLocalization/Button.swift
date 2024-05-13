@@ -6,8 +6,8 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  public extension Button where Label == Text {
-    init(role: ButtonRole? = nil, _ type: LocalizedStringID, action: @escaping () -> Void) {
+  extension Button where Label == Text {
+    public init(role: ButtonRole? = nil, _ type: LocalizedStringID, action: @escaping () -> Void) {
       self.init(role: role, action: action) {
         Text(type)
       }

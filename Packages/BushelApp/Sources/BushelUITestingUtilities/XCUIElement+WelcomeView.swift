@@ -6,8 +6,8 @@
 #if os(macOS)
   import XCTest
 
-  public extension XCUIElement {
-    func startNewLibrary(
+  extension XCUIElement {
+    public func startNewLibrary(
       withName name: String,
       inDirectoryPath directoryPath: String,
       viewElementFromApp app: XCUIApplication

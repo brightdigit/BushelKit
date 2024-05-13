@@ -7,8 +7,8 @@
 
   import SwiftData
 
-  struct FetchIdentifiableError<Model: FetchIdentifiable>: Error {
-    let array: [Model]
+  internal struct FetchIdentifiableError<Model: FetchIdentifiable>: Error {
+    private let array: [Model]
 
     internal init(array: [Model]) {
       assert(array.count != 1)
@@ -24,8 +24,8 @@
     static func model(from array: [Self]) throws -> Self
   }
 
-  public extension FetchIdentifiable {
-    static func model(from array: [Self]) throws -> Self {
+  extension FetchIdentifiable {
+    public static func model(from array: [Self]) throws -> Self {
       assert(array.count == 1)
       guard let item = array.first else {
         throw FetchIdentifiableError(array: array)

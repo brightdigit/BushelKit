@@ -16,15 +16,15 @@
 
   extension PurchaseWindowValue: DefaultableViewValue {}
 
-  public extension EnvironmentValues {
-    var purchaseWindow: PurchaseWindowValue {
+  extension EnvironmentValues {
+    public var purchaseWindow: PurchaseWindowValue {
       get { self[PurchaseWindowValueKey.self] }
       set { self[PurchaseWindowValueKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func purchaseWindow(
+  extension Scene {
+    public func purchaseWindow(
       _ value: PurchaseWindowValue
     ) -> some Scene {
       self.environment(\.purchaseWindow, value)

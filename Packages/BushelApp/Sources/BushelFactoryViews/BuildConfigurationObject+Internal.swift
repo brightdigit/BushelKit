@@ -12,18 +12,18 @@
 
   extension BuildConfigurationObject {
     @discardableResult
-    func withError(_ error: any Error) -> ConfigurationError {
+    internal func withError(_ error: any Error) -> ConfigurationError {
       self.withError(.unknownError(error))
     }
 
     @discardableResult
-    func withError(_ error: ConfigurationError) -> ConfigurationError {
+    internal func withError(_ error: ConfigurationError) -> ConfigurationError {
       assertionFailure(error: error)
       self.error = error
       return error
     }
 
-    func beginSetupWith(
+    internal func beginSetupWith(
       systemManager: any MachineSystemManaging,
       releaseCollectionProvider: @escaping ReleaseCollectionMetadataProvider,
       imageRepository: any InstallerImageRepository,
@@ -43,7 +43,7 @@
       }
     }
 
-    func buildRequestChangedTo(_ request: MachineBuildRequest?) {
+    internal func buildRequestChangedTo(_ request: MachineBuildRequest?) {
       guard let request else {
         return
       }
@@ -55,13 +55,13 @@
       updateSelection(basedOn: request)
     }
 
-    func presentFileDialog() {
+    internal func presentFileDialog() {
       if self.prepareBuild() {
         self.presentFileExporter = true
       }
     }
 
-    func beginBuild(result: Result<URL, any Error>) {
+    internal func beginBuild(result: Result<URL, any Error>) {
       let url: URL
       do {
         url = try result.get()
@@ -74,7 +74,7 @@
       self.beginBuild(at: url)
     }
 
-    func machineURL(fromBuildResult buildResult: Result<URL, BuilderError>?) -> URL? {
+    internal func machineURL(fromBuildResult buildResult: Result<URL, BuilderError>?) -> URL? {
       switch buildResult {
       case let .failure(error):
         self.error = .machineBuilderError(error)

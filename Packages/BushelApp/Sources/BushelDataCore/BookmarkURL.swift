@@ -9,9 +9,9 @@
   import Foundation
 
   public struct BookmarkURL {
-    let data: BookmarkData
+    private let data: BookmarkData
     public let url: URL
-    let databaseError: (any Error) -> any Error
+    private let databaseError: (any Error) -> any Error
 
     internal init(data: BookmarkData, url: URL, databaseError: @escaping (any Error) -> any Error) {
       self.data = data

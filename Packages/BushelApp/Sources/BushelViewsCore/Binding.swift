@@ -8,8 +8,8 @@
 
   import SwiftUI
 
-  public extension Binding {
-    func map<T>(to get: @escaping (Value) -> T, from set: @escaping (T) -> Value) -> Binding<T> {
+  extension Binding {
+    public func map<T>(to get: @escaping (Value) -> T, from set: @escaping (T) -> Value) -> Binding<T> {
       .init {
         get(self.wrappedValue)
       } set: {

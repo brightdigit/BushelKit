@@ -32,12 +32,12 @@
     var scenePhase: ScenePhase { get }
   }
 
-  public extension Application {
-    static var loggingCategory: BushelLogging.Category {
+  extension Application {
+    public static var loggingCategory: BushelLogging.Category {
       .application
     }
 
-    var defaultSystem: VMSystemID? {
+    public var defaultSystem: VMSystemID? {
       #if arch(arm64) && os(macOS)
         MacOSVirtualizationSystem.systemID
       #else
@@ -45,7 +45,7 @@
       #endif
     }
 
-    var body: some Scene {
+    public var body: some Scene {
       Group {
         #if os(macOS)
           WelcomeScene()

@@ -6,8 +6,8 @@
 #if canImport(SwiftData)
   import SwiftData
 
-  public extension Array where Element == any PersistentModel.Type {
-    static var all: [any PersistentModel.Type] {
+  extension Array where Element == any PersistentModel.Type {
+    public static var all: [any PersistentModel.Type] {
       [core, library, .machine].flatMap { $0 }
     }
   }

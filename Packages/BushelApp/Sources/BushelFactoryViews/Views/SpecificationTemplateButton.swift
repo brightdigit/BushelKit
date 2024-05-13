@@ -14,14 +14,15 @@
   import BushelLocalization
   import SwiftUI
 
-  struct SpecificationTemplateButton: View {
-    let option: SpecificationTemplate<LocalizedStringID>
-    @Binding var template: SpecificationTemplate<LocalizedStringID>?
-    var isSelected: Bool {
+  internal struct SpecificationTemplateButton: View {
+    private let option: SpecificationTemplate<LocalizedStringID>
+    @Binding private var template: SpecificationTemplate<LocalizedStringID>?
+
+    private var isSelected: Bool {
       option.id == template?.id
     }
 
-    var body: some View {
+    internal var body: some View {
       Button(action: {
         self.template = option
       }, label: {
@@ -43,6 +44,14 @@
             .padding(-4.0)
         }.opacity(isSelected ? 1.0 : 0.8).padding()
       }).buttonStyle(.plain)
+    }
+
+    internal init(
+      option: SpecificationTemplate<LocalizedStringID>,
+      template: Binding<SpecificationTemplate<LocalizedStringID>?>
+    ) {
+      self.option = option
+      self._template = template
     }
   }
 

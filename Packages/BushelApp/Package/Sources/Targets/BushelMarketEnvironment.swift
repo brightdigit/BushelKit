@@ -8,6 +8,7 @@ struct BushelMarketEnvironment: Target {
     BushelCore()
     BushelLogging()
     BushelMarket()
+    BushelFeatureFlags()
     BushelEnvironmentCore()
   }
 }
