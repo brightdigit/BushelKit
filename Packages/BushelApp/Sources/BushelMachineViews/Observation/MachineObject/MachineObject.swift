@@ -45,11 +45,11 @@
     }
 
     var state: MachineState = .stopped
-    var canStart: Bool = false
-    var canStop: Bool = false
-    var canPause: Bool = false
-    var canResume: Bool = false
-    var canRequestStop: Bool = false
+    var canStart = false
+    var canStop = false
+    var canPause = false
+    var canResume = false
+    var canRequestStop = false
 
     var selectedSnapshot: Snapshot.ID?
     var updatingSnapshotMetadata = false

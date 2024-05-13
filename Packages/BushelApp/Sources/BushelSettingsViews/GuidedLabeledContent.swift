@@ -9,8 +9,8 @@
   import Foundation
   import SwiftUI
 
-  public extension GuidedLabeledContent where Description == GuidedLabeledContentDescriptionView {
-    init(
+  extension GuidedLabeledContent where Description == GuidedLabeledContentDescriptionView {
+    public init(
       _ source: any LocalizedID,
       _ content: @escaping () -> Content,
       label: @escaping () -> Label,

@@ -10,6 +10,7 @@
   import SwiftUI
 
   import UniformTypeIdentifiers
+
   public struct CodablePackageDocument<T: CodablePackage>: FileDocument {
     enum ReadError: Error {
       case missingConfigurationAtKey(String)
@@ -54,8 +55,8 @@
     }
   }
 
-  public extension CodablePackageDocument where T: InitializablePackage {
-    init() {
+  extension CodablePackageDocument where T: InitializablePackage {
+    public init() {
       self.init(configuration: .init())
     }
   }

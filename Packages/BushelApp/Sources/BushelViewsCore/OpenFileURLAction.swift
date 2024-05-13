@@ -19,15 +19,15 @@
 
   public typealias OpenFileURLAction = OpenWindowURLAction
 
-  public extension EnvironmentValues {
-    var openFileURL: OpenFileURLAction {
+  extension EnvironmentValues {
+    public var openFileURL: OpenFileURLAction {
       get { self[OpenFileURLKey.self] }
       set { self[OpenFileURLKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func openFileURL(
+  extension Scene {
+    public func openFileURL(
       _ closure: @escaping @Sendable (URL, OpenWindowAction) -> Void
     ) -> some Scene {
       self.environment(\.openFileURL, .init(closure: closure))
@@ -35,8 +35,8 @@
   }
 
   @available(*, deprecated, message: "Use on Scene only.")
-  public extension View {
-    func openFileURL(
+  extension View {
+    public func openFileURL(
       _ closure: @escaping @Sendable (URL, OpenWindowAction) -> Void
     ) -> some View {
       self.environment(\.openFileURL, .init(closure: closure))

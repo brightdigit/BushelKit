@@ -9,9 +9,9 @@
   import SwiftUI
 
   public struct InstallerView: View, Loggable {
-    @Environment(\.dismiss) var dismiss
-    @Binding var buildResult: Result<URL, BuilderError>?
-    var installationObject: InstallerObject
+    @Environment(\.dismiss) private var dismiss
+    @Binding private var buildResult: Result<URL, BuilderError>?
+    private var installationObject: InstallerObject
 
     public var body: some View {
       VStack {

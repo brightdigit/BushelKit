@@ -12,7 +12,7 @@
   import Foundation
 
   extension InstallerImage.Metadata {
-    init(
+    internal init(
       entry: LibraryImageEntry,
       _ labelProvider: @escaping MetadataLabelProvider
     ) {

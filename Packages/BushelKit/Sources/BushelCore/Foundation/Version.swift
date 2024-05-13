@@ -1,12 +1,37 @@
 //
-// Version.swift
-// Copyright (c) 2024 BrightDigit.
+//  Version.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import Foundation
 
 #if canImport(os)
   import os.log
+
   public typealias Logger = os.Logger
 #endif
 
@@ -29,11 +54,11 @@ public struct Version: CustomStringConvertible, Sendable {
   }
 
   /// The semantic version component of this version.
-  let marketingSemVer: Semver
+  public let marketingSemVer: Semver
   /// The build number associated with this version.
-  let buildNumber: Int
+  public let buildNumber: Int
   /// An optional prerelease label, indicating a non-release version.
-  let prereleaseLabel: PrereleaseLabel?
+  public let prereleaseLabel: PrereleaseLabel?
 
   /// Creates a new `Version` instance with the provided components.
   internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil) {
@@ -43,16 +68,16 @@ public struct Version: CustomStringConvertible, Sendable {
   }
 }
 
-public extension Version {
+extension Version {
   #if canImport(os)
-    nonisolated(unsafe) static let logger: Logger = .init(
+    public nonisolated(unsafe) static let logger: Logger = .init(
       subsystem: Bundle.main.bundleIdentifier ?? "Bushel",
       category: "application"
     )
   #endif
 
   /// A formatted description of this version, suitable for display.
-  var description: String {
+  public var description: String {
     guard let prereleaseLabel else {
       return self.marketingSemVer.description
     }
@@ -68,7 +93,11 @@ public extension Version {
   ///   - buildNumberString: The build number string (e.g., "10").
   ///   - prereleaseLabel: An optional prerelease label (e.g., "beta-1").
   /// - Returns: A new `Version` instance if parsing is successful, otherwise nil.
-  init?(marketingVersionText: String, buildNumberString: String, prereleaseLabel: PrereleaseLabel? = nil) {
+  public init?(
+    marketingVersionText: String,
+    buildNumberString: String,
+    prereleaseLabel: PrereleaseLabel? = nil
+  ) {
     let marketingSemVer: Semver
     do {
       marketingSemVer = try Semver(string: marketingVersionText)
@@ -100,7 +129,7 @@ public extension Version {
   ///
   /// - Parameter bundle: The bundle to read information from (defaults to the main bundle).
   /// - Returns: A new `Version` instance if information is successfully retrieved, otherwise nil.
-  init?(bundle: Bundle = .main) {
+  public init?(bundle: Bundle = .main) {
     self.init(objectForInfoDictionaryKey: bundle.object(forInfoDictionaryKey:))
   }
 
@@ -116,7 +145,7 @@ public extension Version {
   /// - Parameter objectForInfoDictionaryKey: A function that takes a key value (as a string)
   ///   and returns the corresponding value from the Info.plist dictionary.
   /// - Returns: A new `Version` instance if information is successfully retrieved, otherwise nil.
-  init?(objectForInfoDictionaryKey: @escaping (String) -> Any?) {
+  public init?(objectForInfoDictionaryKey: @escaping (String) -> Any?) {
     self.init { key in
       objectForInfoDictionaryKey(key.value)
     }
@@ -139,12 +168,12 @@ public extension Version {
       return nil
     }
 
-    let prereleaseLabel: PrereleaseLabel?
-    if let prereleaseDictionary = objectForInfoDictionaryKey(.prelease) as? [String: Any] {
-      prereleaseLabel = .init(dictionary: prereleaseDictionary)
-    } else {
-      prereleaseLabel = nil
-    }
+    let prereleaseLabel: PrereleaseLabel? =
+      if let prereleaseDictionary = objectForInfoDictionaryKey(.prelease) as? [String: Any] {
+        .init(dictionary: prereleaseDictionary)
+      } else {
+        nil
+      }
 
     self.init(
       marketingVersionText: marketingVersionText,
@@ -159,7 +188,7 @@ public extension Version {
   /// - Parameter length: The desired length of the hexadecimal string.
   ///                     If omitted, no padding is applied.
   /// - Returns: A hexadecimal string representing the build number.
-  func buildNumberHex(withLength length: Int? = 8) -> String {
+  public func buildNumberHex(withLength length: Int? = 8) -> String {
     let hexString = String(buildNumber, radix: 16)
     guard let length else {
       return hexString
@@ -168,20 +197,24 @@ public extension Version {
   }
 }
 
-public extension Bundle {
+extension Bundle {
+  // swiftlint:disable force_unwrapping
   /// Accesses the application version from the main bundle.
-  // swiftlint:disable:next force_unwrapping
-  static let applicationVersion: Version = Bundle.main.version!
+  public static let applicationVersion: Version = Bundle.main.version!
+  // swiftlint:enable force_unwrapping
   /// Accesses a formatted representation of the application version.
-  static let applicationVersionFormatted: VersionFormatted = .init(version: Bundle.applicationVersion)
+  public static let applicationVersionFormatted: VersionFormatted =
+    .init(version: Bundle.applicationVersion)
 
   /// Retrieves a `Version` instance for this bundle, if available.
-  var version: Version? {
+  public var version: Version? {
     .init(bundle: self)
   }
 
   /// Retrieves the name of the XPC service associated with this bundle, if available.
-  var xpcService: String? {
-    self.object(forInfoDictionaryKey: "BrightDigitXPCService") as? String
+  public var xpcService: String? {
+    self.object(
+      forInfoDictionaryKey: "BrightDigitXPCService"
+    ) as? String
   }
 }

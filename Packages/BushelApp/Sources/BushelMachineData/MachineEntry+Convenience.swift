@@ -11,8 +11,8 @@
   import Foundation
   import SwiftData
 
-  public extension MachineEntry {
-    convenience init(
+  extension MachineEntry {
+    public convenience init(
       url: URL,
       machine: any Machine,
       osInstalled: (any OperatingSystemInstalled)?,
@@ -35,7 +35,7 @@
       )
     }
 
-    convenience init(
+    public convenience init(
       bookmarkData: BookmarkData,
       machine: any Machine,
       osInstalled: (any OperatingSystemInstalled)?,
@@ -67,7 +67,7 @@
       try await database.save()
     }
 
-    func synchronizeWith(
+    public func synchronizeWith(
       _ machine: any Machine,
       osInstalled: (any OperatingSystemInstalled)?,
       using database: any Database

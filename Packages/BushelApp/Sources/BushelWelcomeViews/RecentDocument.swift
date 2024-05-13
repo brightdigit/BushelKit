@@ -25,15 +25,6 @@
     let path: String
     let text: String
     let updatedAt: Date
-
-    internal init(id: UUID, url: URL, name: String, path: String, text: String, updatedAt: Date) {
-      self.id = id
-      self.url = url
-      self.name = name
-      self.path = path
-      self.text = text
-      self.updatedAt = updatedAt
-    }
   }
 
   extension RecentDocument {

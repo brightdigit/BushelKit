@@ -10,8 +10,8 @@
   import Foundation
   import StoreKit
 
-  public extension Subscription.Period {
-    init?(subscription: Product.SubscriptionPeriod) {
+  extension Subscription.Period {
+    public init?(subscription: Product.SubscriptionPeriod) {
       self.init(unit: .init(subscription.unit), value: subscription.value)
     }
   }

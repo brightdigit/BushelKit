@@ -6,8 +6,8 @@
 #if os(macOS)
   import XCTest
 
-  public extension XCUIElement {
-    func openFile(atPath path: String) {
+  extension XCUIElement {
+    public func openFile(atPath path: String) {
       let openButton = self.buttons["Open"]
       let whereButton = self.popUpButtons["Where:"]
       XCTAssert(whereButton.exists)

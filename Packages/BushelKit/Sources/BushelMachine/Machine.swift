@@ -1,6 +1,30 @@
 //
-// Machine.swift
-// Copyright (c) 2024 BrightDigit.
+//  Machine.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCore
@@ -73,20 +97,20 @@ public protocol Machine: Loggable, Sendable {
   func removeObservation(withID id: UUID) -> Bool
 }
 
-public extension Machine {
-  static var loggingCategory: BushelLogging.Category {
+extension Machine {
+  public static var loggingCategory: BushelLogging.Category {
     .machine
   }
 
   @discardableResult
-  func removeObservation(withID id: UUID?) -> Bool {
+  public func removeObservation(withID id: UUID?) -> Bool {
     if let id {
       return self.removeObservation(withID: id)
     }
     return false
   }
 
-  func syncronizeSnapshots(
+  public func syncronizeSnapshots(
     using provider:
     any SnapshotProvider,
     options: SnapshotSyncronizeOptions
@@ -103,7 +127,7 @@ public extension Machine {
   }
 
   @discardableResult
-  func createNewSnapshot(
+  public func createNewSnapshot(
     request: SnapshotRequest,
     options: SnapshotOptions,
     using provider: any SnapshotProvider
@@ -119,7 +143,7 @@ public extension Machine {
     return try await snapshotter.createNewSnapshot(of: self, request: request, options: options)
   }
 
-  func deleteSnapshot(
+  public func deleteSnapshot(
     _ snapshot: Snapshot,
     using provider: any SnapshotProvider
   ) throws {
@@ -134,7 +158,7 @@ public extension Machine {
     return try snapshotter.deleteSnapshot(snapshot, from: self)
   }
 
-  func restoreSnapshot(
+  public func restoreSnapshot(
     _ snapshot: Snapshot,
     using provider: any SnapshotProvider
   ) async throws {
@@ -149,7 +173,7 @@ public extension Machine {
     return try await snapshotter.restoreSnapshot(snapshot, to: self)
   }
 
-  func exportSnapshot(
+  public func exportSnapshot(
     _ snapshot: Snapshot,
     to url: URL,
     using provider: any SnapshotProvider

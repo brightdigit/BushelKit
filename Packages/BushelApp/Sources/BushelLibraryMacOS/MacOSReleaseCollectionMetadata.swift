@@ -11,15 +11,15 @@ import OperatingSystemVersion
 #if canImport(Virtualization) && arch(arm64)
 
   internal struct MacOSReleaseCollectionMetadata: ReleaseCollectionMetadata {
-    typealias InstallerReleaseType = MacOSRelease
+    internal typealias InstallerReleaseType = MacOSRelease
 
     internal static let macosReleases: any ReleaseCollectionMetadata =
       MacOSReleaseCollectionMetadata(
         majorVersions: OperatingSystemVersion.availableMajorVersions(onlyVirtualizationSupported: true)
       )
-    let releases: [MacOSRelease]
-    let customVersionsAllowed: Bool
-    let prefix: String
+    internal let releases: [MacOSRelease]
+    internal let customVersionsAllowed: Bool
+    internal let prefix: String
 
     private init(
       releases: [MacOSRelease],

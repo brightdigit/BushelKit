@@ -14,11 +14,11 @@
   import BushelLocalization
   import SwiftUI
 
-  struct OperatingSystemSelectionButton: View {
-    @Binding var selectedMajorVersion: ReleaseSelected
-    let release: ReleaseMetadata
+  internal struct OperatingSystemSelectionButton: View {
+    @Binding private var selectedMajorVersion: ReleaseSelected
+    private let release: ReleaseMetadata
 
-    var isSelected: Bool {
+    private var isSelected: Bool {
       guard case let .version(value) = selectedMajorVersion else {
         return false
       }
@@ -26,7 +26,7 @@
       return value == self.release
     }
 
-    var body: some View {
+    internal var body: some View {
       Button {
         self.selectedMajorVersion = .version(release)
       } label: {
@@ -59,7 +59,7 @@
       .disabled(release.images.isEmpty)
     }
 
-    init(selectedMajorVersion: Binding<ReleaseSelected>, release: ReleaseMetadata) {
+    internal init(selectedMajorVersion: Binding<ReleaseSelected>, release: ReleaseMetadata) {
       self._selectedMajorVersion = selectedMajorVersion
       self.release = release
     }

@@ -14,5 +14,6 @@ struct BushelMachineViews: Target {
     BushelFactoryViews()
     BushelMachineEnvironment()
     BushelMarketEnvironment()
+    BushelFeatureFlags()
   }
 }

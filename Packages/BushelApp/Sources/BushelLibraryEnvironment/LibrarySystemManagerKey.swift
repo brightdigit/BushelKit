@@ -15,21 +15,21 @@
       LibrarySystemManager(.init(), fileTypeBasedOnURL: { _ in nil })
   }
 
-  public extension EnvironmentValues {
-    var librarySystemManager: any LibrarySystemManaging {
+  extension EnvironmentValues {
+    public var librarySystemManager: any LibrarySystemManaging {
       get { self[LibrarySystemManagerKey.self] }
       set { self[LibrarySystemManagerKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func librarySystemManager(
+  extension Scene {
+    public func librarySystemManager(
       _ systemManager: any LibrarySystemManaging
     ) -> some Scene {
       self.environment(\.librarySystemManager, systemManager)
     }
 
-    func librarySystemManager(
+    public func librarySystemManager(
       @LibrarySystemBuilder builder: () -> [any LibrarySystem],
       fileTypeBasedOnURL: @Sendable @escaping (URL) -> FileType?
     ) -> some Scene {

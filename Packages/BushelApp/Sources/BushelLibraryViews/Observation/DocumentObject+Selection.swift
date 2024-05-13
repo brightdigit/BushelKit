@@ -8,8 +8,9 @@
   import BushelLibrary
   import Foundation
   import SwiftData
+
   extension DocumentObject {
-    func onHubImageSelected() {
+    internal func onHubImageSelected() {
       guard let selectedHubImage else {
         return
       }
@@ -33,7 +34,7 @@
       }
     }
 
-    func restoreImageFileFrom(result: Result<URL, any Error>) -> LibraryFile? {
+    internal func restoreImageFileFrom(result: Result<URL, any Error>) -> LibraryFile? {
       let newResult: Result<URL, LibraryError>
       do {
         newResult = try assertionFailure(result: result)
@@ -55,7 +56,7 @@
       }
     }
 
-    func onFileImporterCompleted(_ result: Result<URL, any Error>) {
+    internal func onFileImporterCompleted(_ result: Result<URL, any Error>) {
       let newResult: Result<URL, LibraryError>
       do {
         newResult = try assertionFailure(result: result)
@@ -90,7 +91,7 @@
       }
     }
 
-    func queueRemovalSelectedItem() {
+    internal func queueRemovalSelectedItem() {
       guard let selectedItem else {
         Self.logger.error("There is no selected item to queue.")
         assertionFailure("There is no selected item to queue.")
@@ -101,7 +102,7 @@
       self.presentDeleteImageConfirmation = true
     }
 
-    func cancelRemovalSelectedItem(withID id: UUID) {
+    internal func cancelRemovalSelectedItem(withID id: UUID) {
       guard let selectedItem else {
         Self.logger.error("There is no selected item to remove from queue.")
         assertionFailure("There is no selected item to remove from queue.")
@@ -112,7 +113,7 @@
       self.queuedRemovalSelectedImageID = nil
     }
 
-    func deleteSelectedItem(withID id: UUID) async {
+    internal func deleteSelectedItem(withID id: UUID) async {
       guard let selectedItem else {
         Self.logger.error("There is no selected item to delete.")
         assertionFailure("There is no selected item to delete.")
@@ -142,7 +143,7 @@
       }
     }
 
-    func onSelectionChange() {
+    internal func onSelectionChange() {
       guard let object else {
         Self.logger.error("There is object to select from.")
         assertionFailure("There is object to select from.")

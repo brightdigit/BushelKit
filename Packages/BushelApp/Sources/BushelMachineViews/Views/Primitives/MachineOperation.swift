@@ -17,12 +17,6 @@ struct MachineOperation: Identifiable, Equatable {
   let id: UUID
   let label: String?
   let type: OperationType
-
-  init(id: UUID, label: String?, type: OperationType) {
-    self.id = id
-    self.label = label
-    self.type = type
-  }
 }
 
 extension MachineOperation {

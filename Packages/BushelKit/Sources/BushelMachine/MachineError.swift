@@ -1,6 +1,30 @@
 //
-// MachineError.swift
-// Copyright (c) 2024 BrightDigit.
+//  MachineError.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCore
@@ -22,8 +46,8 @@ public struct MachineError: LocalizedError, Loggable {
     .library
   }
 
-  let innerError: (any Error)?
-  let details: Details
+  public let innerError: (any Error)?
+  public let details: Details
 
   public var errorDescription: String? {
     details.errorDescription(fromError: innerError)
@@ -74,8 +98,8 @@ public struct MachineError: LocalizedError, Loggable {
   }
 }
 
-public extension MachineError {
-  static func fromSessionAction(error: any Error) -> MachineError {
+extension MachineError {
+  public static func fromSessionAction(error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
     } else {
@@ -83,7 +107,7 @@ public extension MachineError {
     }
   }
 
-  static func fromExportSnapshotError(_ error: any Error) -> MachineError {
+  public static func fromExportSnapshotError(_ error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
     } else if error is SnapshotError {
@@ -95,7 +119,7 @@ public extension MachineError {
     }
   }
 
-  static func fromSnapshotError(_ error: any Error) -> any Error {
+  public static func fromSnapshotError(_ error: any Error) -> any Error {
     if error is MachineError {
       error
     } else if error is SnapshotError {
@@ -105,27 +129,27 @@ public extension MachineError {
     }
   }
 
-  static func missingProperty(_ property: ObjectProperty) -> MachineError {
+  public static func missingProperty(_ property: ObjectProperty) -> MachineError {
     .init(details: .missingProperty(property))
   }
 
-  static func bookmarkError(_ error: BookmarkError) -> MachineError {
+  public static func bookmarkError(_ error: BookmarkError) -> MachineError {
     .init(details: .bookmarkError, innerError: error)
   }
 
-  static func bookmarkError(_ error: any Error) throws -> MachineError {
+  public static func bookmarkError(_ error: any Error) throws -> MachineError {
     try .init(innerError: error, as: BookmarkError.self, details: .bookmarkError)
   }
 
-  static func accessDeniedError(_ error: (any Error)?, at url: URL) -> MachineError {
+  public static func accessDeniedError(_ error: (any Error)?, at url: URL) -> MachineError {
     MachineError(details: .accessDeniedLibraryAt(url), innerError: error)
   }
 
-  static func corruptedError(_ error: any Error, at url: URL) -> MachineError {
+  public static func corruptedError(_ error: any Error, at url: URL) -> MachineError {
     MachineError(details: .corruptedAt(url), innerError: error)
   }
 
-  static func fromDatabaseError(_ error: any Error) -> MachineError {
+  public static func fromDatabaseError(_ error: any Error) -> MachineError {
     MachineError(details: .database, innerError: error)
   }
 }

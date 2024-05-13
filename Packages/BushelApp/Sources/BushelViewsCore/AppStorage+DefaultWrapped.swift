@@ -8,8 +8,8 @@
   import Foundation
   import SwiftUI
 
-  public extension AppStorage {
-    init<AppStoredType: DefaultWrapped>(
+  extension AppStorage {
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Bool,
@@ -21,7 +21,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Int,
@@ -33,7 +33,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Double,
@@ -45,7 +45,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == String,
@@ -57,7 +57,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == URL,
@@ -69,7 +69,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Data,
@@ -81,7 +81,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,
@@ -94,7 +94,7 @@
       )
     }
 
-    init<AppStoredType: DefaultWrapped>(
+    public init<AppStoredType: DefaultWrapped>(
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
     ) where AppStoredType.Value == Value,

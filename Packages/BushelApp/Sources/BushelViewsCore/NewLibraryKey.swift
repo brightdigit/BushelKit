@@ -14,8 +14,8 @@
     static let defaultValue: NewLibraryAction = .default
   }
 
-  public extension EnvironmentValues {
-    var newLibrary: NewLibraryAction {
+  extension EnvironmentValues {
+    public var newLibrary: NewLibraryAction {
       get { self[NewLibraryKey.self] }
       set {
         self[NewLibraryKey.self] = newValue
@@ -24,14 +24,14 @@
   }
 
   @available(*, deprecated, message: "Use on Scene only.")
-  public extension View {
-    func newLibrary(
+  extension View {
+    public func newLibrary(
       _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
     ) -> some View {
       environment(\.newLibrary, .init(closure: closure))
     }
 
-    func newLibrary<FileType: InitializableFileTypeSpecification>(
+    public func newLibrary<FileType: InitializableFileTypeSpecification>(
       _: FileType.Type
     ) -> some View {
       newLibrary {
@@ -40,14 +40,14 @@
     }
   }
 
-  public extension Scene {
-    func newLibrary(
+  extension Scene {
+    public func newLibrary(
       _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.newLibrary, .init(closure: closure))
     }
 
-    func newLibrary<FileType: InitializableFileTypeSpecification>(
+    public func newLibrary<FileType: InitializableFileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {
       newLibrary {

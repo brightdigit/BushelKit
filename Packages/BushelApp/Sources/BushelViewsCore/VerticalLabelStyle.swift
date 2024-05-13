@@ -29,8 +29,8 @@
     }
   }
 
-  public extension LabeledContentStyle {
-    static func vertical(
+  extension LabeledContentStyle {
+    public static func vertical(
       alignment: HorizontalAlignment = .leading,
       labelFont: Font = .subheadline,
       labelPaddingEdgeInsets: EdgeInsets = .init(top: 0, leading: 2.0, bottom: 0.0, trailing: 0.0)

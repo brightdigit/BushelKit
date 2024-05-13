@@ -9,8 +9,8 @@
   import XPC
 
   @available(iOS, unavailable)
-  public extension InitializedSession {
-    convenience init(xpcService: String) {
+  extension InitializedSession {
+    public convenience init(xpcService: String) {
       self.init {
         try XPCSession(xpcService: xpcService)
       }

@@ -10,8 +10,8 @@
   import BushelMarketStore
   import SwiftUI
 
-  public extension Scene {
-    func marketplace(
+  extension Scene {
+    public func marketplace(
       onChangeOf scenePhase: ScenePhase,
       for groupIDs: [String] = MarketplaceSettings.default.groupIDs
     ) -> some Scene {

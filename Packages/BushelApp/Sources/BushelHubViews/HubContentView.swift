@@ -10,13 +10,13 @@
   import BushelLocalization
   import SwiftUI
 
-  struct HubContentView: View {
-    let hubID: String?
-    let images: [HubImage]?
-    @Environment(\.librarySystemManager) var librarySystemManager
-    @Binding var selectedImageID: HubImage.ID?
+  internal struct HubContentView: View {
+    private let hubID: String?
+    private let images: [HubImage]?
+    @Environment(\.librarySystemManager) private var librarySystemManager
+    @Binding private var selectedImageID: HubImage.ID?
 
-    var body: some View {
+    internal var body: some View {
       if self.hubID == nil {
         Text(.hubNoneSelected)
       } else if let images {

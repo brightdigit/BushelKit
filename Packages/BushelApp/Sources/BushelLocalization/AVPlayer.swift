@@ -11,14 +11,15 @@ public enum VideoResource {
   import AVKit
   import Foundation
 
-  public extension AVPlayer {
-    static var defaultResourceFileExtension: String {
+  extension AVPlayer {
+    public static var defaultResourceFileExtension: String {
       VideoResource.defaultFileExtension
     }
 
-    static func resource(
+    public static func resource(
       _ name: String,
       extension fileExtension: String = defaultResourceFileExtension
+      // swiftlint:disable:next implicitly_unwrapped_optional
     ) -> AVPlayer! {
       let url = Bundle.module.url(forResource: name, withExtension: fileExtension)
       return url.map(AVPlayer.init(url:))

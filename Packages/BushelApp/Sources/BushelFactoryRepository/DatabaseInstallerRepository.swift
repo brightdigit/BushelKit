@@ -13,7 +13,7 @@
   import SwiftData
 
   public struct DatabaseInstallerRepository: InstallerImageRepository {
-    let database: any Database
+    private let database: any Database
 
     public init(database: any Database) {
       self.database = database
@@ -37,7 +37,7 @@
     ) async throws -> (any BushelMachine.InstallerImage)? {
       switch library {
       case let .bookmarkID(bookmarkDataID):
-        return try await DataInstallerImage(
+        try await DataInstallerImage(
           id: id,
           bookmarkDataID: bookmarkDataID,
           database: database,
@@ -45,14 +45,14 @@
         )
 
       case .none:
-        return try await DataInstallerImage(
+        try await DataInstallerImage(
           id: id,
           database: database,
           labelProvider
         )
 
       case let .url(url):
-        return try URLInstallerImage(imageID: id, url: url, labelProvider)
+        try URLInstallerImage(imageID: id, url: url, labelProvider)
       }
     }
 

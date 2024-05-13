@@ -11,8 +11,8 @@
   import SwiftUI
 
   @available(iOS, unavailable)
-  public extension Scene {
-    func session(
+  extension Scene {
+    public func session(
       _ xpcService: String
     ) -> some Scene {
       self.environment(\.session, InitializedSession(xpcService: xpcService))

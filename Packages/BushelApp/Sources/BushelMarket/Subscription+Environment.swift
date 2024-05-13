@@ -5,8 +5,8 @@
 
 import Foundation
 
-public extension Subscription {
-  enum Environment: Sendable {
+extension Subscription {
+  public enum Environment: Sendable {
     case production
 
     case sandbox

@@ -5,8 +5,8 @@
 
 import Foundation
 
-public extension Subscription {
-  struct Offer: Sendable {
+extension Subscription {
+  public struct Offer: Sendable {
     public enum Kind: Sendable {
       case introductory
 

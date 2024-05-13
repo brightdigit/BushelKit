@@ -5,19 +5,24 @@
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
   import BushelCore
+  import BushelFeatureFlags
   import BushelLogging
   import BushelMarket
   import Foundation
   import Observation
 
   @Observable
-  public final class Marketplace: Loggable, MarketObserver, Sendable {
+  public final class Marketplace: Loggable, MarketObserver, Sendable, UserEvaluatorComponent {
     private static var shared = [Int: Marketplace]()
 
     internal static let `default` = Marketplace(groupIDs: [], listener: EmptyMarketListener.shared)
 
     public static var loggingCategory: BushelLogging.Category {
       .market
+    }
+
+    public static var evaluatingValue: UserAudience {
+      .proSubscriber
     }
 
     public let groupIDs: [String]
@@ -56,6 +61,8 @@
       assert(shared.isEmpty)
 
       let marketplace = Marketplace(groupIDs: groupIDs, listener: listener())
+
+      UserEvaluator.register(marketplace)
       shared[id] = marketplace
       return marketplace
     }
@@ -86,17 +93,21 @@
       self.storeListener?.invalidate()
     }
 
+    public func evaluate(_: UserAudience) -> Bool {
+      self.purchased
+    }
+
     deinit {
       self.storeListener = nil
     }
   }
 
-  public extension Marketplace {
-    var subscriptionEndDate: Date? {
+  extension Marketplace {
+    public var subscriptionEndDate: Date? {
       self.subscriptions?.compactMap(\.renewalDate).max()
     }
 
-    var purchased: Bool {
+    public var purchased: Bool {
       guard let subscriptionEndDate else {
         return false
       }

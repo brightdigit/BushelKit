@@ -7,8 +7,8 @@
   import Foundation
   import SwiftUI
 
-  public extension View {
-    func onGeometry(_ action: @escaping (GeometryProxy) -> Void) -> some View {
+  extension View {
+    public func onGeometry(_ action: @escaping (GeometryProxy) -> Void) -> some View {
       self.overlay {
         GeometryReader(content: { geometry in
           Color.clear.onAppear(perform: {

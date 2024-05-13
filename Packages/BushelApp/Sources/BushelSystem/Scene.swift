@@ -17,8 +17,8 @@
   import SwiftData
   import SwiftUI
 
-  public extension Scene {
-    func register(
+  extension Scene {
+    public func register(
       _ librarySystemManager: LibrarySystemManager,
       _ machineSystemManager: MachineSystemManager,
       _ hubs: [Hub]
@@ -37,7 +37,7 @@
         .environment(\.hubs, hubs)
     }
 
-    func registerSystems(
+    public func registerSystems(
       _ systems: [any System]
     ) -> some Scene {
       let (librarySystems, machineSystems, hubs) = systems.reduce(
@@ -62,7 +62,7 @@
       return register(librarySystemManager, machineSystemManager, hubs)
     }
 
-    func registerSystems(
+    public func registerSystems(
       @SystemBuilder _ systems: @escaping () -> [any System]
     ) -> some Scene {
       self.registerSystems(systems())

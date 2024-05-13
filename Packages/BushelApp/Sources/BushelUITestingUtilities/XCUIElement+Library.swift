@@ -8,7 +8,7 @@
   import Foundation
   import XCTest
 
-  public extension XCUIElement {
+  extension XCUIElement {
     private func openImportDialog() -> XCUIElement {
       let plusButton = self.descendants(matching: .menuButton)
         .matching(identifier: "library:\(self.title):toolbar:plus")
@@ -31,7 +31,7 @@
       return openSheet
     }
 
-    func createLibraryImage(byImporting ipswURL: URL) -> XCUIElement {
+    public func createLibraryImage(byImporting ipswURL: URL) -> XCUIElement {
       let ipswPath = ipswURL.path
       let imageList = self.outlines["library:\(self.title):list"]
       let osMetadata = OperatingSystemMetadata(basedOnURL: ipswURL)
@@ -87,7 +87,7 @@
       )
     }
 
-    func importImage(_ ipswURL: URL) throws {
+    public func importImage(_ ipswURL: URL) throws {
       let newChild = self.createLibraryImage(byImporting: ipswURL)
       newChild.click()
       XCTAssert(newChild.isSelected)

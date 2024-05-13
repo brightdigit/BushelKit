@@ -15,24 +15,24 @@
     static let defaultValue = [FileType]()
   }
 
-  public extension EnvironmentValues {
-    var allowedOpenFileTypes: [FileType] {
+  extension EnvironmentValues {
+    public var allowedOpenFileTypes: [FileType] {
       get { self[AllowedOpenFileTypesKey.self] }
       set { self[AllowedOpenFileTypesKey.self] = newValue }
     }
   }
 
   @available(*, deprecated, message: "Use on Scene only.")
-  public extension View {
-    func allowedOpenFileTypes(
+  extension View {
+    public func allowedOpenFileTypes(
       _ fileTypes: [FileType]
     ) -> some View {
       self.environment(\.allowedOpenFileTypes, fileTypes)
     }
   }
 
-  public extension Scene {
-    func allowedOpenFileTypes(
+  extension Scene {
+    public func allowedOpenFileTypes(
       _ fileTypes: [FileType]
     ) -> some Scene {
       self.environment(\.allowedOpenFileTypes, fileTypes)

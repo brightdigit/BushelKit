@@ -12,8 +12,8 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  public extension Library {
-    struct NewCommands: View, Loggable {
+  extension Library {
+    public struct NewCommands: View, Loggable {
       public init() {}
 
       @Environment(\.newLibrary) private var newLibrary
@@ -27,7 +27,7 @@
     }
 
     @available(*, deprecated, message: "Use single open panel...")
-    struct OpenCommands: View, Loggable {
+    public struct OpenCommands: View, Loggable {
       public init() {}
 
       @Environment(\.openWindow) private var openWindow

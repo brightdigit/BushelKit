@@ -16,11 +16,11 @@
 
   @MainActor
   public struct DialogView: View, Loggable {
-    let system: VMSystemID
-    @State var windowInitialized = false
-    @Binding var buildRequest: MachineBuildRequest?
-    @State var object: BuildConfigurationObject
-    @State var buildResult: Result<URL, BuilderError>?
+    private let system: VMSystemID
+    @State private var windowInitialized = false
+    @Binding private var buildRequest: MachineBuildRequest?
+    @State private var object: BuildConfigurationObject
+    @State private var buildResult: Result<URL, BuilderError>?
 
     @Environment(\.database) private var database
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
@@ -35,7 +35,7 @@
       @Environment(\.openLibrary) private var openLibrary
     #endif
 
-    var installerImageRepository: any InstallerImageRepository {
+    private var installerImageRepository: any InstallerImageRepository {
       self.machineRestoreImageDBFrom(database)
     }
 
@@ -147,7 +147,7 @@
       }
     }
 
-    var listenForExport: some View {
+    private var listenForExport: some View {
       Group {
         if let machineConfiguration = object.machineConfiguration {
           Color.clear

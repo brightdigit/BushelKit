@@ -33,8 +33,8 @@
     }
   }
 
-  public extension View {
-    func nsWindowDelegateAdaptor(
+  extension View {
+    public func nsWindowDelegateAdaptor(
       _ binding: Binding<(any NSWindowDelegate)?>,
       _ delegate: @autoclosure () -> any NSWindowDelegate
     ) -> some View {

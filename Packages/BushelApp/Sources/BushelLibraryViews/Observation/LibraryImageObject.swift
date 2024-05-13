@@ -14,18 +14,18 @@
   import SwiftUI
 
   @Observable
-  final class LibraryImageObject: Loggable, Sendable {
-    var library: LibraryObject
-    var entry: LibraryImageEntry
-    let index: Int
+  internal final class LibraryImageObject: Loggable, Sendable {
+    internal var library: LibraryObject
+    internal private(set) var entry: LibraryImageEntry
+    private let index: Int
 
-    var metadata: ImageMetadata
+    internal private(set) var metadata: ImageMetadata
 
-    var isDeleted: Bool {
+    internal var isDeleted: Bool {
       !library.library.items.indices.contains(index)
     }
 
-    var name: String {
+    internal var name: String {
       didSet {
         self.library.library.items[index].name = self.name
         self.entry.name = self.name
@@ -40,7 +40,7 @@
       self.metadata = library.library.items[index].metadata
     }
 
-    func save() async {
+    internal func save() async {
       library.updateMetadata(metadata, at: index)
       Self.logger.debug("Saving \(self.entry.name)")
       do {

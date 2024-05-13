@@ -13,7 +13,7 @@ final class SpecificationTemplateTests: XCTestCase {
     let template = SpecificationTemplate(
       nameID: .aboutSocialHeader,
       systemImageName: .randomLowerCaseAlphaNumberic(),
-      idealStorage: .random(in: 10 ... 1000)
+      idealStorage: .random(in: 10 ... 1_000)
     ) { _ in
       expectedMemoryIndex
     } cpuWithin: { _ in

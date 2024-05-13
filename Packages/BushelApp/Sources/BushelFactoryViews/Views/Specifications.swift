@@ -8,8 +8,8 @@ import BushelLocalization
 import Foundation
 
 extension Specifications {
-  enum Options {
-    static let basic: SpecificationTemplate<LocalizedStringID> = .init(
+  internal enum Options {
+    internal static let basic: SpecificationTemplate<LocalizedStringID> = .init(
       nameID: .machineDialogSpecTemplateNameBasic,
       systemImageName: "apple.terminal",
       idealStorage: 64 * .bytesPerGB,
@@ -17,7 +17,7 @@ extension Specifications {
       cpuWithin: Specifications.Handlers.min
     )
 
-    static let developer: SpecificationTemplate<LocalizedStringID> = .init(
+    internal static let developer: SpecificationTemplate<LocalizedStringID> = .init(
       nameID: .machineDialogSpecTemplateNameDeveloper,
       systemImageName: "hammer.fill",
       idealStorage: 128 * .bytesPerGB,
@@ -25,7 +25,7 @@ extension Specifications {
       cpuWithin: Developer.cpuWithin(_:)
     )
 
-    static let maximum: SpecificationTemplate<LocalizedStringID> = .init(
+    internal static let maximum: SpecificationTemplate<LocalizedStringID> = .init(
       nameID: .machineDialogSpecTemplateNameMaximum,
       systemImageName: "bolt.fill",
       idealStorage: 512 * .bytesPerGB,
@@ -33,7 +33,7 @@ extension Specifications {
       cpuWithin: Specifications.Handlers.max
     )
 
-    static let all: [SpecificationTemplate<LocalizedStringID>] = [
+    internal static let all: [SpecificationTemplate<LocalizedStringID>] = [
       Self.basic,
       Self.developer,
       Self.maximum

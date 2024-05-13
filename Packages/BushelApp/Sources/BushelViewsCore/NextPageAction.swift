@@ -27,9 +27,9 @@
     }
   }
 
-  public extension EnvironmentValues {
+  extension EnvironmentValues {
     @available(*, deprecated, message: "Use RadiantKit.")
-    var nextPage: NextPageAction {
+    public var nextPage: NextPageAction {
       get { self[NextPageKey.self] }
       set {
         self[NextPageKey.self] = newValue

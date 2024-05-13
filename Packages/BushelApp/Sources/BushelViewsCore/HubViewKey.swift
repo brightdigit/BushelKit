@@ -30,15 +30,15 @@
     }
   }
 
-  public extension EnvironmentValues {
-    var hubView: ViewValue {
+  extension EnvironmentValues {
+    public var hubView: ViewValue {
       get { self[HubViewKey.self] }
       set { self[HubViewKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func hubView(
+  extension Scene {
+    public func hubView(
       _ view: @escaping (Binding<(any InstallImage)?>) -> some View
     ) -> some Scene {
       self.environment(\.hubView, .init(content: view))
@@ -46,16 +46,16 @@
   }
 
   @available(*, deprecated, message: "Use on Scene only.")
-  public extension View {
-    func hubView(
+  extension View {
+    public func hubView(
       _ view: @escaping (Binding<(any InstallImage)?>) -> some View
     ) -> some View {
       self.environment(\.hubView, .init(content: view))
     }
   }
 
-  public extension View {
-    func sheet(
+  extension View {
+    public func sheet(
       isPresented: Binding<Bool>,
       selectedHubImage: Binding<(any InstallImage)?>,
       onDismiss: (() -> Void)? = nil,

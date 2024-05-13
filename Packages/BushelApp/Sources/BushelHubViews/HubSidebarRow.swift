@@ -8,16 +8,16 @@
   import Foundation
   import SwiftUI
 
-  struct HubSidebarRow: View {
-    struct Properties {
-      let text: String
-      let count: Int?
-      let image: () -> Image
+  internal struct HubSidebarRow: View {
+    internal struct Properties {
+      internal let text: String
+      internal let count: Int?
+      internal let image: () -> Image
     }
 
-    let properties: Properties
+    private let properties: Properties
 
-    var body: some View {
+    internal var body: some View {
       PreferredLayoutView { value in
         HStack {
           self

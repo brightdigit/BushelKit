@@ -8,15 +8,15 @@
   import Foundation
 
   @Observable
-  final class InstallerObject: Sendable {
+  internal final class InstallerObject: Sendable {
     private let builder: any MachineBuilder
 
-    var url: URL {
+    internal var url: URL {
       builder.url
     }
 
-    private(set) var percentCompleted: Double = 0.0
-    var id: UUID?
+    internal private(set) var percentCompleted: Double = 0.0
+    private var id: UUID?
 
     internal init(builder: any MachineBuilder, percentCompleted: Double = 0.0) {
       self.builder = builder
@@ -31,7 +31,7 @@
     }
 
     @MainActor
-    func build() async throws {
+    internal func build() async throws {
       try await self.builder.build()
     }
 

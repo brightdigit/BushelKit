@@ -32,7 +32,7 @@
       }
     }
 
-    @State var isAdvancedButtonsVisible: Bool = false
+    @State var isAdvancedButtonsVisible = false
     @State var error: AdvancedSettingsError?
     @State var confimResetUserSettings = false
     @State var confimClearDatbase = false
@@ -41,7 +41,7 @@
     @Environment(\.database) private var database
 
     var body: some View {
-      // swiftlint:disable:next closure_body_length
+      // swiftlint:disable closure_body_length
       Form {
         Section {
           GuidedLabeledContent(
@@ -132,9 +132,8 @@
           }
         }
       }
-
+      // swiftlint:enable closure_body_length
       .formStyle(.grouped)
-
       .confirmationDialog(
         Text(.settingsResetUserSettingsConfirmationTitle),
         isPresented: self.$confimResetUserSettings,

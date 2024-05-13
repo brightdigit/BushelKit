@@ -14,7 +14,7 @@
   @Observable
   final class DocumentObject: Loggable, MachineObjectParent, Sendable {
     var url: URL?
-    var alertIsPresented: Bool = false
+    var alertIsPresented = false
     var error: MachineError? {
       didSet {
         alertIsPresented = (error != nil) || alertIsPresented

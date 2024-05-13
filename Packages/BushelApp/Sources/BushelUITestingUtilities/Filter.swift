@@ -6,6 +6,7 @@
 #if os(macOS)
   import Foundation
   import XCTest
+
   public struct Filter: AuditIssueFilter {
     let closure: AuditIssueFilterClosure
 

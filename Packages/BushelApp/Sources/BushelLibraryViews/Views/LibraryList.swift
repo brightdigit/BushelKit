@@ -7,7 +7,7 @@
   import BushelLibrary
   import SwiftUI
 
-  struct LibraryList: View {
+  internal struct LibraryList: View {
     typealias Item = LibraryListImageItem
 
     let accessibilityTitle: String

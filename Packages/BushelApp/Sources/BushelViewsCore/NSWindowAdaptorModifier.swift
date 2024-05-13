@@ -52,16 +52,17 @@ import Foundation
       }
     }
 
-    public extension View {
-      func nsWindowAdaptor(_ callback: @escaping (NSWindow?) -> Void) -> some View {
+    extension View {
+      public func nsWindowAdaptor(_ callback: @escaping (NSWindow?) -> Void) -> some View {
         self.modifier(NSWindowAdaptorModifier(callback: callback))
       }
     }
   #else
-    public extension View {
-      func nsWindowAdaptor(_: @escaping (Any?) -> Void) -> some View {
+    extension View {
+      public func nsWindowAdaptor(_: @escaping (Any?) -> Void) -> some View {
         self
       }
     }
   #endif
+  // swiftlint:enable strict_fileprivate
 #endif

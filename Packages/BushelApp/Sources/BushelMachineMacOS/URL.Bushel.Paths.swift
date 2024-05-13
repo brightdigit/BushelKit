@@ -6,12 +6,12 @@
 import BushelCore
 import Foundation
 
-public extension URL.Bushel.Paths {
-  struct VZMacValues: VZMac {
+extension URL.Bushel.Paths {
+  public struct VZMacValues: VZMac {
     enum Defaults {
-      public static let auxiliaryStorageFileName: String = "auxiliary.storage"
-      public static let hardwareModelFileName: String = "hardware.model.bin"
-      public static let machineIdentifierFileName: String = "machine.identifier.bin"
+      static let auxiliaryStorageFileName: String = "auxiliary.storage"
+      static let hardwareModelFileName: String = "hardware.model.bin"
+      static let machineIdentifierFileName: String = "machine.identifier.bin"
     }
 
     public let auxiliaryStorageFileName = Defaults.auxiliaryStorageFileName
@@ -21,7 +21,7 @@ public extension URL.Bushel.Paths {
     public static let `default`: any VZMac = VZMacValues()
   }
 
-  var vzMac: any VZMac {
+  public var vzMac: any VZMac {
     VZMacValues.default
   }
 }

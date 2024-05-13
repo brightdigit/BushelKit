@@ -8,8 +8,8 @@
   import Foundation
   import SwiftUI
 
-  public extension AppStorage {
-    init<AppStoredType: AppStored>(
+  extension AppStorage {
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -22,7 +22,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -35,7 +35,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -48,7 +48,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -61,7 +61,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -74,7 +74,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -87,7 +87,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil
@@ -101,7 +101,7 @@
       )
     }
 
-    init<AppStoredType: AppStored>(
+    public init<AppStoredType: AppStored>(
       wrappedValue: Value,
       for type: AppStoredType.Type,
       store: UserDefaults? = nil

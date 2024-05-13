@@ -10,11 +10,11 @@
   import RadiantKit
   import SwiftUI
 
-  struct SpecificationConfigurationView: View, Sendable {
-    @Binding var isNextReady: Bool
-    @Binding var configuration: SpecificationConfiguration<LocalizedStringID>
+  internal struct SpecificationConfigurationView: View, Sendable {
+    @Binding private var isNextReady: Bool
+    @Binding private var configuration: SpecificationConfiguration<LocalizedStringID>
 
-    var body: some View {
+    internal var body: some View {
       Form {
         LabeledContent("Specifications") {
           HStack {
@@ -64,7 +64,10 @@
       }
     }
 
-    internal init(isNextReady: Binding<Bool>, configuration: Binding<SpecificationConfiguration<LocalizedStringID>>) {
+    internal init(
+      isNextReady: Binding<Bool>,
+      configuration: Binding<SpecificationConfiguration<LocalizedStringID>>
+    ) {
       self._isNextReady = isNextReady
       self._configuration = configuration
     }

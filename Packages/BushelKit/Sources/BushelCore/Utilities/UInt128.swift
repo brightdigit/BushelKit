@@ -1,6 +1,30 @@
 //
-// UInt128.swift
-// Copyright (c) 2024 BrightDigit.
+//  UInt128.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 // swiftlint:disable all
@@ -309,7 +333,7 @@ extension UInt128: FixedWidthInteger {
     var sum: UInt64 = 0
     var overflowCount: UInt64 = 0
 
-    addends.forEach { addend in
+    for addend in addends {
       let interimSum = sum.addingReportingOverflow(addend)
       if interimSum.overflow {
         overflowCount += 1
@@ -414,10 +438,10 @@ extension UInt128: FixedWidthInteger {
 
 // MARK: - BinaryInteger Conformance
 
-public extension UInt128 {
+extension UInt128 {
   // MARK: Instance Properties
 
-  static var bitWidth: Int { 128 }
+  public static var bitWidth: Int { 128 }
 }
 
 extension UInt128: BinaryInteger {
@@ -735,7 +759,7 @@ extension UInt128: Codable {
 
 // MARK: - Deprecated API
 
-public extension UInt128 {
+extension UInt128 {
   /// Initialize a UInt128 value from a string.
   ///
   /// - parameter source: the string that will be converted into a
@@ -743,7 +767,7 @@ public extension UInt128 {
   ///   but can be prefixed with `0b` for base2, `0o` for base8
   ///   or `0x` for base16.
   @available(swift, deprecated: 3.2, renamed: "init(_:)")
-  static func fromUnparsedString(_ source: String) throws -> UInt128 {
+  public static func fromUnparsedString(_ source: String) throws -> UInt128 {
     guard let result = UInt128(source) else {
       throw UInt128Errors.invalidString
     }
@@ -760,7 +784,7 @@ public extension UInt128 {
     "The ExpressibleByStringLiteral conformance has been removed. Use failable initializer instead.",
     renamed: "init(_:)"
   )
-  init(stringLiteral value: StringLiteralType) {
+  public init(stringLiteral value: StringLiteralType) {
     self.init()
 
     if let result = UInt128._valueFromString(value) {
@@ -771,8 +795,8 @@ public extension UInt128 {
 
 // MARK: - BinaryFloatingPoint Interworking
 
-public extension BinaryFloatingPoint {
-  init(_ value: UInt128) {
+extension BinaryFloatingPoint {
+  public init(_ value: UInt128) {
     precondition(
       value.value.upperBits == 0,
       "Value is too large to fit into a BinaryFloatingPoint until a 128bit BinaryFloatingPoint type is defined."
@@ -780,7 +804,7 @@ public extension BinaryFloatingPoint {
     self.init(value.value.lowerBits)
   }
 
-  init?(exactly value: UInt128) {
+  public init?(exactly value: UInt128) {
     if value.value.upperBits > 0 {
       return nil
     }
@@ -790,7 +814,7 @@ public extension BinaryFloatingPoint {
 
 // MARK: - String Interworking
 
-public extension String {
+extension String {
   /// Creates a string representing the given value in base 10, or some other
   /// specified base.
   ///
@@ -800,7 +824,7 @@ public extension String {
   ///     at least 2 and at most 36. The default is 10.
   ///   - uppercase: Pass `true` to use uppercase letters to represent numerals
   ///     or `false` to use lowercase letters. The default is `false`.
-  init(_ value: UInt128, radix: Int = 10, uppercase: Bool = false) {
+  public init(_ value: UInt128, radix: Int = 10, uppercase: Bool = false) {
     self = value._valueToString(radix: radix, uppercase: uppercase)
   }
 }
@@ -818,10 +842,10 @@ extension UInt128 {
 
   static func _determineRadixFromString(_ string: String) -> Int {
     switch string.prefix(2) {
-    case "0b": return 2
-    case "0o": return 8
-    case "0x": return 16
-    default: return 10
+    case "0b": 2
+    case "0o": 8
+    case "0x": 16
+    default: 10
     }
   }
 }

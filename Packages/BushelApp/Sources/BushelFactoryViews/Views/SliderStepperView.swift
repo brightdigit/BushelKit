@@ -9,8 +9,8 @@
   import RadiantKit
   import SwiftUI
 
-  public extension SliderStepperView where TitleType == LocalizedStringID, Label == Text {
-    init(
+  extension SliderStepperView where TitleType == LocalizedStringID, Label == Text {
+    public init(
       titleID: LocalizedStringID,
       value: Binding<Float>,
       bounds: ClosedRange<Float>,

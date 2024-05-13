@@ -10,8 +10,8 @@
   import Foundation
   import StoreKit
 
-  public extension Subscription.Period.Unit {
-    init(_ unit: Product.SubscriptionPeriod.Unit) {
+  extension Subscription.Period.Unit {
+    public init(_ unit: Product.SubscriptionPeriod.Unit) {
       switch unit {
       case .day:
         self = .day

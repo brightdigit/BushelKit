@@ -21,11 +21,11 @@ extension LocalizedStringID {
         })
 
       static func begin(_ report: @autoclosure () -> Assert = Assert()) {
-        if Self.loadedValues {
+        if loadedValues {
           return
         }
         report().assert()
-        Self.loadedValues = true
+        loadedValues = true
       }
 
       func assert() {

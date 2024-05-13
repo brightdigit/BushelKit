@@ -15,8 +15,8 @@
     static let defaultValue: [Hub] = []
   }
 
-  public extension EnvironmentValues {
-    var hubs: [Hub] {
+  extension EnvironmentValues {
+    public var hubs: [Hub] {
       get { self[HubsKey.self] }
       set { self[HubsKey.self] = newValue }
     }

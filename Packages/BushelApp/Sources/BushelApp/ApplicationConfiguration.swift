@@ -12,7 +12,7 @@
   import SwiftData
   import SwiftUI
 
-  protocol ApplicationConfiguration: Sendable {
+  internal protocol ApplicationConfiguration: Sendable {
     associatedtype LibraryFileType: InitializableFileTypeSpecification
     associatedtype MachineFileType: FileTypeSpecification
     associatedtype HubViewType: View

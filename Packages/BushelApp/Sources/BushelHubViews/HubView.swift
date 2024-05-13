@@ -10,10 +10,10 @@
   import SwiftUI
 
   public struct HubView: View {
-    @Environment(\.hubs) var hubs
-    @Environment(\.dismiss) var dismiss
-    @Binding var selectedHubImage: (any InstallImage)?
-    @State var object: HubObject
+    @Environment(\.hubs) private var hubs
+    @Environment(\.dismiss) private var dismiss
+    @Binding private var selectedHubImage: (any InstallImage)?
+    @State private var object: HubObject
     public var body: some View {
       NavigationSplitView {
         HubSidebarView(
@@ -47,7 +47,7 @@
       })
     }
 
-    init(selectedHubImage: Binding<(any InstallImage)?>, object: HubObject) {
+    private init(selectedHubImage: Binding<(any InstallImage)?>, object: HubObject) {
       self._selectedHubImage = selectedHubImage
       self._object = .init(wrappedValue: object)
     }

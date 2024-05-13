@@ -14,16 +14,16 @@ public protocol System: Sendable {
   var hubs: [Hub] { get }
 }
 
-public extension System {
-  var library: (any LibrarySystem)? {
+extension System {
+  public var library: (any LibrarySystem)? {
     nil
   }
 
-  var machine: (any MachineSystem)? {
+  public var machine: (any MachineSystem)? {
     nil
   }
 
-  var hubs: [Hub] {
+  public var hubs: [Hub] {
     []
   }
 }

@@ -10,6 +10,7 @@ struct BushelMachineEnvironment: Target {
     BushelLogging()
     BushelCore()
     BushelMachine()
+    BushelDataCore()
     BushelLocalization()
   }
 }

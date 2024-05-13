@@ -7,12 +7,12 @@
   import BushelCore
   import SwiftUI
 
-  struct RestoreImageSelectorView: View {
-    let releasePrefix: String
-    @Binding var object: BuildConfigurationObject
-    @Binding var isNextReady: Bool
+  internal struct RestoreImageSelectorView: View {
+    private let releasePrefix: String
+    @Binding private var object: BuildConfigurationObject
+    @Binding private var isNextReady: Bool
 
-    var body: some View {
+    internal var body: some View {
       if let releases = object.releases {
         Form {
           Section {
@@ -43,6 +43,16 @@
           self.isNextReady = newValue != nil
         }
       }
+    }
+
+    internal init(
+      releasePrefix: String,
+      object: Binding<BuildConfigurationObject>,
+      isNextReady: Binding<Bool>
+    ) {
+      self.releasePrefix = releasePrefix
+      self._object = object
+      self._isNextReady = isNextReady
     }
   }
 

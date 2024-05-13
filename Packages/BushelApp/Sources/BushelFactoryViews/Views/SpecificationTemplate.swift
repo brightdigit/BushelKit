@@ -14,15 +14,16 @@
   import BushelLocalization
   import SwiftUI
 
+  extension SpecificationTemplate where Name == LocalizedStringID {
+    internal static var basic: Self {
+      Specifications.Options.basic
+    }
+  }
+
   extension Array where Element == SpecificationTemplate<LocalizedStringID> {
-    static var options: Self {
+    internal static var options: Self {
       Specifications.Options.all
     }
   }
 
-  extension SpecificationTemplate where Name == LocalizedStringID {
-    static var basic: Self {
-      Specifications.Options.basic
-    }
-  }
 #endif

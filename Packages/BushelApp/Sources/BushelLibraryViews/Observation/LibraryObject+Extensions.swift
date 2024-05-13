@@ -13,7 +13,7 @@
   import SwiftUI
 
   extension LibraryObject {
-    func save() async throws {
+    internal func save() async throws {
       guard let database else {
         throw LibraryError.missingInitializedProperty(.database)
       }
@@ -32,7 +32,7 @@
       try await accessibleBookmark.stopAccessing(updateTo: database)
     }
 
-    func libraryImageObject(withID id: UUID?) async -> LibraryImageObject? {
+    internal func libraryImageObject(withID id: UUID?) async -> LibraryImageObject? {
       Self.logger.debug("Creating Bindable Image for \(id?.uuidString ?? "nil")")
       guard let id else {
         Self.logger.debug("No id for image")
@@ -67,7 +67,7 @@
       return LibraryImageObject(index: index, library: self, entry: entry)
     }
 
-    func bindableImage(withID id: UUID?) async -> Bindable<LibraryImageObject>? {
+    internal func bindableImage(withID id: UUID?) async -> Bindable<LibraryImageObject>? {
       await self.libraryImageObject(withID: id).map(Bindable.init(wrappedValue:))
     }
   }

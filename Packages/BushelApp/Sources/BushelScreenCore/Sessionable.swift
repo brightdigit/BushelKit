@@ -13,8 +13,8 @@
     func view(_ settings: Binding<ScreenSettingsType>) -> Content
   }
 
-  public extension Sessionable {
-    func anyView(_ settings: Binding<ScreenSettingsType>) -> AnyView {
+  extension Sessionable {
+    public func anyView(_ settings: Binding<ScreenSettingsType>) -> AnyView {
       .init(self.view(settings))
     }
   }

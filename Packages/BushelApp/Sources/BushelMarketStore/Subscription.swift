@@ -10,8 +10,8 @@
   import Foundation
   import StoreKit
 
-  public extension Subscription {
-    init?(transaction: Transaction) async {
+  extension Subscription {
+    public init?(transaction: Transaction) async {
       let renewalInfo = try? await transaction.subscriptionStatus?.renewalInfo.payloadValue
       let groupID = transaction.subscriptionGroupID
 
@@ -30,7 +30,7 @@
       )
     }
 
-    init(
+    public init(
       groupID: String,
       renewal: Product.SubscriptionInfo.RenewalInfo,
       products: [Product.ID: Product],

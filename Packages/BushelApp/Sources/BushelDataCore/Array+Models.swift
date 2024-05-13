@@ -11,8 +11,8 @@
     BookmarkData.self
   ]
 
-  public extension Array where Element == any PersistentModel.Type {
-    static var core: [any PersistentModel.Type] {
+  extension Array where Element == any PersistentModel.Type {
+    public static var core: [any PersistentModel.Type] {
       _models
     }
   }

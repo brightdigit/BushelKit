@@ -14,9 +14,9 @@ internal final class MachineSystemSpy: MachineSystem, Sendable {
 
   internal var id: VMSystemID { "spyOS" }
 
-  private(set) var isCreateBuiderForConfigurationCalled: Bool = false
-  private(set) var isMachineAtURLCalled: Bool = false
-  private(set) var isRestoreImageFromCalled: Bool = false
+  private(set) var isCreateBuiderForConfigurationCalled = false
+  private(set) var isMachineAtURLCalled = false
+  private(set) var isRestoreImageFromCalled = false
 
   private let result: Result<Void, MachineSystemError>
 

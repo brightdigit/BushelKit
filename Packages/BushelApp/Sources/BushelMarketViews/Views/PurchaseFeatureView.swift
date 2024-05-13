@@ -25,7 +25,6 @@
             .font(.system(size: properties.fontSize))
             .fontWeight(.bold)
           Text(.key(item.descriptionID))
-
             .opacity(0.8)
         }
       }

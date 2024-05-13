@@ -14,9 +14,9 @@
   import SwiftUI
 
   @Observable
-  final class LibraryObject: Loggable, Sendable {
-    var library: Library
-    var entry: LibraryEntry
+  internal final class LibraryObject: Loggable, Sendable {
+    internal var library: Library
+    internal private(set) var entry: LibraryEntry
 
     @ObservationIgnored
     internal private(set) var database: (any Database)?
@@ -36,7 +36,7 @@
       self.entry = entry
     }
 
-    func updateMetadata(_ metadata: ImageMetadata, at index: Int) {
+    internal func updateMetadata(_ metadata: ImageMetadata, at index: Int) {
       guard self.library.items.indices.contains(index) else {
         // swiftlint:disable:next line_length
         Self.logger.warning("Can't update deleted image \(metadata.vmSystemID.rawValue) \(metadata.operatingSystemVersion) at \(index)")

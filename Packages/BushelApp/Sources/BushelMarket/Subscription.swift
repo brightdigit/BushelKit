@@ -46,8 +46,8 @@ public struct Subscription: Sendable {
   }
 }
 
-public extension Optional where Wrapped == [Subscription] {
-  mutating func merge(with updatedSubscriptions: [Subscription]) {
+extension Optional where Wrapped == [Subscription] {
+  public mutating func merge(with updatedSubscriptions: [Subscription]) {
     guard let oldSubscriptions = self else {
       self = updatedSubscriptions
       return

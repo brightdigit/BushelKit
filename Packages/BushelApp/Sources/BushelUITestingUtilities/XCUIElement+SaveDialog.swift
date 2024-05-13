@@ -6,8 +6,8 @@
 #if os(macOS)
   import XCTest
 
-  public extension XCUIElement {
-    func createNewFile(_ pathWithoutExtension: String) {
+  extension XCUIElement {
+    public func createNewFile(_ pathWithoutExtension: String) {
       let savePanelTextField = self.textFields["saveAsNameTextField"]
       XCTAssert(savePanelTextField.exists)
       savePanelTextField.typeKey(.delete, modifierFlags: [])

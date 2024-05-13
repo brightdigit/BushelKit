@@ -69,12 +69,12 @@
     }
   }
 
-  public extension SnapshotEntry {
-    var operatingSystemVersionDescription: String {
+  extension SnapshotEntry {
+    public var operatingSystemVersionDescription: String {
       self.operatingSystemVersionString ?? ""
     }
 
-    convenience init(
+    public convenience init(
       _ snapshot: Snapshot,
       machine: MachineEntry,
       database: any Database,
@@ -95,7 +95,7 @@
       try await database.save()
     }
 
-    func syncronizeSnapshot(
+    public func syncronizeSnapshot(
       _ snapshot: Snapshot,
       machine: MachineEntry,
       database: any Database,

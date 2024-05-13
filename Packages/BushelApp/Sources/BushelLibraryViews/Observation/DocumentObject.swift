@@ -17,9 +17,9 @@
   import SwiftUI
 
   @Observable
-  final class DocumentObject: Loggable, Sendable {
-    var restoreImageImportProgress: ProgressOperationProperties?
-    var object: LibraryObject? {
+  internal final class DocumentObject: Loggable, Sendable {
+    internal var restoreImageImportProgress: ProgressOperationProperties?
+    internal var object: LibraryObject? {
       didSet {
         Task { @MainActor in
           self.bindableImage = await self.object?.libraryImageObject(withID: self.selectedItem)
@@ -27,8 +27,8 @@
       }
     }
 
-    var error: LibraryError?
-    var selectedItem: LibraryImageFile.ID? {
+    internal var error: LibraryError?
+    internal var selectedItem: LibraryImageFile.ID? {
       didSet {
         Task { @MainActor in
           self.bindableImage = await self.object?.libraryImageObject(withID: self.selectedItem)
@@ -37,16 +37,16 @@
       }
     }
 
-    var selectedHubImage: (any InstallImage)?
-    var presentFileImporter = false
-    var presentFileExporter = false
-    var presentHubModal = false
-    var presentDeleteImageConfirmation = false
-    var queuedRemovalSelectedImageID: LibraryImageFile.ID?
+    internal var selectedHubImage: (any InstallImage)?
+    internal var presentFileImporter = false
+    internal var presentFileExporter = false
+    internal var presentHubModal = false
+    internal var presentDeleteImageConfirmation = false
+    internal var queuedRemovalSelectedImageID: LibraryImageFile.ID?
 
-    var bindableImage: LibraryImageObject?
+    internal var bindableImage: LibraryImageObject?
 
-    var queuedRemovalSelectedImage: LibraryImageFile? {
+    internal var queuedRemovalSelectedImage: LibraryImageFile? {
       guard let queuedRemovalSelectedImageID else {
         return nil
       }
@@ -57,7 +57,7 @@
       return file
     }
 
-    var presentErrorAlert: Bool {
+    internal var presentErrorAlert: Bool {
       get {
         self.error != nil
       }
@@ -67,10 +67,10 @@
     }
 
     @ObservationIgnored
-    var database: (any Database)?
+    internal var database: (any Database)?
 
     @ObservationIgnored
-    var librarySystemManager: (any LibrarySystemManaging)?
+    internal var librarySystemManager: (any LibrarySystemManaging)?
 
     internal init(
       restoreImageImportProgress: ProgressOperationProperties? = nil,

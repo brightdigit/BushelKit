@@ -18,5 +18,7 @@ struct BushelApp: Product, Target {
     BushelWax()
     BushelXPCSession()
     BushelFactoryRepository()
+    BushelFeatureFlags()
+    BushelAnalytics()
   }
 }

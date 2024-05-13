@@ -8,8 +8,8 @@
   import SwiftUI
 
   public struct ConfigurationAlertActions: View {
-    let destinationURL: () -> URL?
-    let onCompleted: () -> Void
+    private let destinationURL: () -> URL?
+    private let onCompleted: () -> Void
     public var body: some View {
       if let destinationURL = self.destinationURL() {
         Button("Yes, Delete the Machine.", role: .destructive) {

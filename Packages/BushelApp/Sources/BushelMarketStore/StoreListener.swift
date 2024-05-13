@@ -17,16 +17,9 @@
     // swiftlint:disable:next implicitly_unwrapped_optional
     private var updateListener: Task<Void, Never>!
     weak var observer: (any MarketObserver)?
-    var hasCurrentEntitlements: Bool = false
+    var hasCurrentEntitlements = false
 
     public init() {}
-
-    public func initialize(for observer: any MarketObserver) {
-      self.observer = observer
-      self.updateListener = Self.listenerFor(self)
-
-      self.invalidate()
-    }
 
     private static func listenerFor(_ marketplace: StoreListener) -> Task<Void, Never> {
       Task {
@@ -57,7 +50,7 @@
     }
 
     static func fetchSubscriptionStatus(for groupID: String) async throws -> [Subscription] {
-      Self.logger.debug("Fetching subscription with group id \(groupID)")
+      logger.debug("Fetching subscription with group id \(groupID)")
 
       let statuses = try await Product.SubscriptionInfo.status(for: groupID)
 
@@ -79,6 +72,13 @@
       return renewalInfos.map {
         Subscription(groupID: groupID, renewal: $0, products: products)
       }
+    }
+
+    public func initialize(for observer: any MarketObserver) {
+      self.observer = observer
+      self.updateListener = Self.listenerFor(self)
+
+      self.invalidate()
     }
 
     public func invalidate() {

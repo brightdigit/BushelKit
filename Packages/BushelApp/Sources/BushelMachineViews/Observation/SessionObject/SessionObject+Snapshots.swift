@@ -7,6 +7,7 @@ import BushelMachine
 
 #if canImport(Observation) && os(macOS) && canImport(SwiftUI) && canImport(SwiftData)
   import BushelCore
+
   extension SessionObject {
     func stop(saveSnapshot request: SnapshotRequest?) {
       guard let machineObject, let url else {

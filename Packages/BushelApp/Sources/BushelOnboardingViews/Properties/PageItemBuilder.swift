@@ -27,7 +27,7 @@
     }
 
     static func buildArray(_ components: [PageType]) -> [any View] {
-      components.map(Self.viewForPage)
+      components.map(viewForPage)
     }
 
     static func buildPartialBlock(first: PageItem) -> [any View] {
@@ -43,7 +43,7 @@
     }
 
     static func buildPartialBlock(accumulated: [any View], next: FeatureList) -> [any View] {
-      accumulated + [Self.viewForPage(.features(next.features))]
+      accumulated + [viewForPage(.features(next.features))]
     }
   }
 #endif

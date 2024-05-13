@@ -70,6 +70,7 @@ cache:
   tags:
     - macos
   script:
+    - if [ "$LINT_MODE" = "STRICT" ]; then find . -type f -name ".gitrepo" -exec false {} +; fi
     - ./Scripts/packages.sh
     - git diff --exit-code
     - xcodes select $XCODE_VERSION

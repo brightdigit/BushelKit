@@ -11,7 +11,7 @@
 
   @available(iOS 16.0, visionOS 1.0, macOS 13.0, *)
   struct AboutFeedbackView: View {
-    @State var isAdvancedButtonsVisible: Bool = true
+    @State var isAdvancedButtonsVisible = true
     @Environment(\.openURL) var openURL
     @Environment(\.openWindow) var openWindow
     @Environment(\.requestReview) var requestReview

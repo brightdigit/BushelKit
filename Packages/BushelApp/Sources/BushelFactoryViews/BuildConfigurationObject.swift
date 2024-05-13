@@ -18,7 +18,7 @@
 
     internal let system: VMSystemID
 
-    internal var presentFileExporter: Bool = false
+    internal var presentFileExporter = false
 
     @ObservationIgnored
     private var labelProvider: MetadataLabelProvider?
@@ -35,9 +35,9 @@
       }
     }
 
-    internal var isAlertPresented: Bool = false
+    internal var isAlertPresented = false
 
-    internal var promptForLibrary: Bool = false
+    internal var promptForLibrary = false
 
     internal var activeBuild: MachineBuilderActivity? {
       willSet {
@@ -80,7 +80,7 @@
       }
     }
 
-    private(set) var availableVersions: [SelectedVersion] = []
+    internal private(set) var availableVersions: [SelectedVersion] = []
 
     internal var selectedBuildImage: SelectedVersion = .none {
       didSet {

@@ -21,14 +21,16 @@
     init()
   }
 
-  public extension SingleWindowView {
-    init(_: Binding<Value>) {
+  extension SingleWindowView {
+    public init(_: Binding<Value>) {
       self.init()
     }
   }
 
-  public extension WindowGroup {
-    init<V: SingleWindowView>(singleOf _: V.Type) where Content == PresentedWindowContent<V.Value, V> {
+  extension WindowGroup {
+    public init<V: SingleWindowView>(
+      singleOf _: V.Type
+    ) where Content == PresentedWindowContent<V.Value, V> {
       self.init { value in
         V(value)
       } defaultValue: {

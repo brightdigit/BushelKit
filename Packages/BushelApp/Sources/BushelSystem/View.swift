@@ -18,8 +18,8 @@
   import SwiftUI
 
   @available(*, deprecated, message: "Use on Scene instead.")
-  public extension View {
-    func register(
+  extension View {
+    public func register(
       _ librarySystemManager: LibrarySystemManager,
       _ machineSystemManager: MachineSystemManager,
       _ hubs: [Hub]
@@ -37,7 +37,7 @@
         .environment(\.hubs, hubs)
     }
 
-    func registerSystems(
+    public func registerSystems(
       _ systems: [any System]
     ) -> some View {
       let (librarySystems, machineSystems, hubs) = systems.reduce(
@@ -62,7 +62,7 @@
       return register(librarySystemManager, machineSystemManager, hubs)
     }
 
-    func registerSystems(
+    public func registerSystems(
       @SystemBuilder _ systems: @escaping () -> [any System]
     ) -> some View {
       self.registerSystems(systems())

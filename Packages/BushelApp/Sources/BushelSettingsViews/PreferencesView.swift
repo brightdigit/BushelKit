@@ -13,7 +13,7 @@
   public struct PreferencesView<PurchaseScreenValue: Codable & Hashable>:
     View {
     private enum Tabs: Hashable {
-      case general, advanced, about
+      case general, advanced, features, about
     }
 
     @Environment(\.openWindow) var openWindow
@@ -28,7 +28,11 @@
             Label(.settingsGeneralTab, systemImage: "gear")
           }
           .tag(Tabs.general)
-
+        FeatureListView()
+          .tabItem {
+            Label(.settingsFeaturesTab, systemImage: "list.star")
+          }
+          .tag(Tabs.features)
         AdvancedSettingsView()
           .tabItem {
             Label(.settingsAdvancedTab, systemImage: "wrench.and.screwdriver.fill")
@@ -62,8 +66,8 @@
     PreferencesView<Int>(purchaseScreenValue: 0)
   }
 
-  public extension Settings {
-    init<PurchaseScreenValue: Codable & Hashable>(
+  extension Settings {
+    public init<PurchaseScreenValue: Codable & Hashable>(
       purchaseScreenValue: PurchaseScreenValue
     ) where Content == PreferencesView<PurchaseScreenValue> {
       self.init {

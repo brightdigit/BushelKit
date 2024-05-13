@@ -13,21 +13,21 @@
   import Foundation
   import SwiftData
 
-  final class DataInstallerImage: InstallerImage, Loggable, Sendable {
-    let entry: LibraryImageEntry
-    let database: any Database
-    let metadata: Metadata
+  internal final class DataInstallerImage: InstallerImage, Loggable, Sendable {
+    private let entry: LibraryImageEntry
+    private let database: any Database
+    internal let metadata: Metadata
 
-    var libraryID: LibraryIdentifier? {
+    internal var libraryID: LibraryIdentifier? {
       assert(self.entry.library != nil)
       return (self.entry.library?.bookmarkDataID).map(LibraryIdentifier.bookmarkID)
     }
 
-    var imageID: UUID {
+    internal var imageID: UUID {
       entry.imageID
     }
 
-    var vmSystemID: BushelCore.VMSystemID {
+    internal var vmSystemID: BushelCore.VMSystemID {
       entry.vmSystemID
     }
 
@@ -41,7 +41,7 @@
       self.metadata = .init(entry: entry, labelProvider)
     }
 
-    func getURL() async throws -> URL {
+    internal func getURL() async throws -> URL {
       assert(self.entry.library != nil)
       guard let bookmarkData = self.entry.library?.bookmarkData else {
         let error = InstallerImageError(imageID: imageID, type: .missingBookmark, libraryID: libraryID)
@@ -69,7 +69,7 @@
   }
 
   extension DataInstallerImage {
-    convenience init?(
+    internal convenience init?(
       id: UUID,
       database: any Database,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
@@ -87,7 +87,7 @@
       self.init(entry: images, database: database, labelProvider)
     }
 
-    convenience init?(
+    internal convenience init?(
       id: UUID,
       bookmarkDataID: UUID,
       database: any Database,

@@ -10,14 +10,14 @@
   import BushelLocalization
   import SwiftUI
 
-  struct ImageView: View, Sendable {
-    @Environment(\.openWindow) var openWindow
-    @Bindable var image: LibraryImageObject
-    let system: any LibrarySystem
-    @State var metadataLabel: MetadataLabel
-    var onSave: @Sendable () -> Void
+  internal struct ImageView: View, Sendable {
+    @Environment(\.openWindow) private var openWindow
+    @Bindable private var image: LibraryImageObject
+    @State private var metadataLabel: MetadataLabel
+    private let system: any LibrarySystem
+    private var onSave: @Sendable () -> Void
 
-    var body: some View {
+    internal var body: some View {
       VStack {
         HStack(alignment: .top) {
           Image.resource(metadataLabel.imageName)
@@ -85,7 +85,7 @@
       self._metadataLabel = State(initialValue: initialValue)
     }
 
-    func save() async {
+    private func save() async {
       guard !self.image.isDeleted else {
         return
       }
@@ -93,7 +93,7 @@
       self.onSave()
     }
 
-    func beginSave() {
+    internal func beginSave() {
       guard !self.image.isDeleted else {
         return
       }

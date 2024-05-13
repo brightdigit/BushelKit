@@ -321,6 +321,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Show All Items in Recent Documents */
 "settings_filter_recent_documents_none" = "Both Machines and Libraries";
 
+/* Redesign Feature Flag Label */
+"settings_features_new_machine_dialog_label" = "Introducing the Redesigned Machine Builder!";
+
+/* Redesign Feature Flag Description */
+"settings_features_new_machine_dialog_description" = "This streamlined feature guides you through configuring your virtual machine, from selecting the macOS version to fine-tuning settings.";
+
 /* Clears all recent documents. */
 "settings_clear_all_recent_documents" = "Clear All Recent Documents";
 
@@ -369,8 +375,8 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Confirmation button for clearing the entire database and resetting all application settings. */
 "settings_reset_all_confirmation_button" = "Yes, Clear the Entire Database";
 
-/* Settings Test Tab */
-"settings_test_tab" = "Lab";
+/* Settings Features Tab */
+"settings_features_tab" = "Features";
 
 /* Settings Advanced Tab */
 "settings_advanced_tab" = "Advanced";

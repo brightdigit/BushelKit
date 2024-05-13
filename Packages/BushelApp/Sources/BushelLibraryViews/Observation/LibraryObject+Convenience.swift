@@ -12,7 +12,7 @@
   import SwiftData
 
   extension LibraryObject {
-    convenience init(components: Components) {
+    internal convenience init(components: Components) {
       self.init(
         library: components.library,
         entry: components.entry,
@@ -21,7 +21,7 @@
       )
     }
 
-    convenience init(
+    internal convenience init(
       _ url: URL,
       withDatabase database: any Database,
       using librarySystemManager: any LibrarySystemManaging
@@ -59,7 +59,7 @@
       }
     }
 
-    func matchesURL(_ url: URL) -> Bool {
+    internal func matchesURL(_ url: URL) -> Bool {
       guard let bookmarkData = entry.bookmarkData else {
         assertionFailure("Missing bookmark to compare")
         return false
@@ -68,7 +68,7 @@
       return url.standardizedFileURL.path == bookmarkData.path
     }
 
-    func beginImport(
+    internal func beginImport(
       _ request: ImportRequest,
       setProgressWith setProgress:
       @MainActor @Sendable @escaping (ProgressOperationView.Properties?) -> Void,

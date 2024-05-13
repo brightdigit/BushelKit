@@ -5,6 +5,7 @@
 
 import BushelMachineData
 import BushelMessageCore
+
 #if canImport(SwiftData)
   private let _messageTypes: [any Message.Type] = [
     MachineNameListRequest.self
@@ -13,8 +14,8 @@ import BushelMessageCore
   private let _messageTypes: [any Message.Type] = []
 #endif
 
-public extension Array where Element == any Message.Type {
-  static var machine: [any Message.Type] {
+extension Array where Element == any Message.Type {
+  public static var machine: [any Message.Type] {
     _messageTypes
   }
 }

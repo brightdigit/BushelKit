@@ -6,8 +6,9 @@
 #if canImport(SwiftUI)
   import BushelViewsCore
   import SwiftUI
-  public extension PageView {
-    init(
+
+  extension PageView {
+    public init(
       onDismiss: (() -> Void)? = nil,
       @PageItemBuilder items: () -> [any View]
     ) {

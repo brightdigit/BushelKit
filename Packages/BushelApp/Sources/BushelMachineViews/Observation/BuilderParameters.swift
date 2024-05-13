@@ -8,6 +8,7 @@
   import BushelFactory
   import BushelMachine
   import Foundation
+
   struct BuilderParameters {
     let manager: any MachineSystem
     let image: any InstallerImage

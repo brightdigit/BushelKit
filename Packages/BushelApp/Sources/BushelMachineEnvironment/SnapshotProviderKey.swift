@@ -15,21 +15,21 @@
       SnapshotterRepository()
   }
 
-  public extension EnvironmentValues {
-    var snapshotProvider: any SnapshotProvider {
+  extension EnvironmentValues {
+    public var snapshotProvider: any SnapshotProvider {
       get { self[SnapshotProviderKey.self] }
       set { self[SnapshotProviderKey.self] = newValue }
     }
   }
 
-  public extension Scene {
-    func snapshotProvider(
+  extension Scene {
+    public func snapshotProvider(
       _ snapshotProvider: any SnapshotProvider
     ) -> some Scene {
       self.environment(\.snapshotProvider, snapshotProvider)
     }
 
-    func snapshotProvider(
+    public func snapshotProvider(
       _ factories: [any SnapshotterFactory]
     ) -> some Scene {
       self.snapshotProvider(SnapshotterRepository(factories: factories))

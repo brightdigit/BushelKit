@@ -9,8 +9,9 @@
   import BushelLibrary
   import Foundation
   import SwiftData
+
   extension DocumentObject {
-    func loadURL(
+    internal func loadURL(
       _ url: URL?,
       withDatabase database: any Database,
       using librarySystemManager: any LibrarySystemManaging
@@ -55,7 +56,7 @@
       }
     }
 
-    func onURLChange(from oldValue: URL?, to newValue: URL?) {
+    internal func onURLChange(from oldValue: URL?, to newValue: URL?) {
       guard oldValue != newValue else {
         Self.logger.debug("New value is the same.")
         return

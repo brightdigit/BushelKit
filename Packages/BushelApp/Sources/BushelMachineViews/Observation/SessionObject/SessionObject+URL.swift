@@ -10,6 +10,7 @@
   import BushelMachine
   import Foundation
   import SwiftData
+
   extension SessionObject {
     func loadURL(
       _ url: URL,

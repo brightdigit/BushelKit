@@ -32,26 +32,26 @@
     var leftSpacer: Bool {
       switch (alignment, layoutDirection) {
       case (.trailing, .leftToRight):
-        return true
+        true
 
       case (.leading, .rightToLeft):
-        return true
+        true
 
       default:
-        return false
+        false
       }
     }
 
     var rightSpacer: Bool {
       switch (alignment, layoutDirection) {
       case (.leading, .leftToRight):
-        return true
+        true
 
       case (.trailing, .rightToLeft):
-        return true
+        true
 
       default:
-        return false
+        false
       }
     }
 

@@ -6,8 +6,8 @@
 import BushelMessageCore
 import Foundation
 
-public extension Array where Element == any Message.Type {
-  static var all: [any Message.Type] {
+extension Array where Element == any Message.Type {
+  public static var all: [any Message.Type] {
     [Array.machine].flatMap { $0 }
   }
 }

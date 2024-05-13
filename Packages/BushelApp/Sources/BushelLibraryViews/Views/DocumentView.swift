@@ -14,21 +14,21 @@
   import Observation
   import SwiftUI
 
-  struct DocumentView: View, Loggable {
+  internal struct DocumentView: View, Loggable {
     @Environment(\.librarySystemManager) private var librarySystemManager
     @Environment(\.database) private var database
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.hubView) var hubView
+    @Environment(\.hubView) private var hubView
 
-    @State var object: DocumentObject
+    @State private var object: DocumentObject
     @Binding var file: LibraryFile?
 
-    var title: String {
+    private var title: String {
       self.file?.url.lastPathComponent ?? "Untitled"
     }
 
-    var body: some View {
+    internal var body: some View {
       NavigationSplitView {
         ToolbarView(
           title: self.title,

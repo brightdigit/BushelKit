@@ -42,7 +42,7 @@
       }
     }
 
-    var isAlertPresented: Bool = false
+    var isAlertPresented = false
 
     @ObservationIgnored
     internal private(set) var systemManager: (any MachineSystemManaging)?
@@ -50,9 +50,9 @@
     @ObservationIgnored
     internal private(set) var labelProvider: MetadataLabelProvider?
 
-    var presentFileExporter: Bool = false
+    var presentFileExporter = false
 
-    var presentImageSelection: Bool = false {
+    var presentImageSelection = false {
       didSet {
         guard let labelProvider else {
           assertionFailure("Missing label Provider")
