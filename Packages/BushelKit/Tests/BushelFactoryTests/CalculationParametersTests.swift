@@ -1,20 +1,44 @@
 //
-// CalculationParametersTests.swift
-// Copyright (c) 2024 BrightDigit.
+//  CalculationParametersTests.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCoreWax
 @testable import BushelFactory
 import XCTest
 
-final class CalculationParametersTests: XCTestCase {
-  func testIndexForValue() {
+internal final class CalculationParametersTests: XCTestCase {
+  internal func testIndexForValue() {
     let exp = expectation(description: "Called Closure")
     let expectedValue: Int = .random(in: 1 ... 100)
     let expectedPassingValue: Int = .random(in: 1 ... 100)
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 1 ... 50,
-      valueRange: 100 ... 1000
+      valueRange: 100 ... 1_000
     ) { passedValue in
       defer {
         exp.fulfill()
@@ -27,13 +51,13 @@ final class CalculationParametersTests: XCTestCase {
     wait(for: [exp], timeout: 5.0)
   }
 
-  func testValueUsing() {
+  internal func testValueUsing() {
     let exp = expectation(description: "Called Closure")
     let expectedValue: Int = .random(in: 1 ... 100)
     let expectedPassingValue: Int = .random(in: 1 ... 100)
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 1 ... 50,
-      valueRange: 100 ... 1000
+      valueRange: 100 ... 1_000
     ) { passedValue in
       XCTFail("Shouldn't be called")
       return passedValue
@@ -48,10 +72,10 @@ final class CalculationParametersTests: XCTestCase {
     wait(for: [exp], timeout: 5.0)
   }
 
-  func testFloats() {
+  internal func testFloats() {
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 0.1 ... 50.1,
-      valueRange: 99.1 ... 1000.1
+      valueRange: 99.1 ... 1_000.1
     ) { passedValue in
       XCTFail("Shouldn't be called")
       return passedValue
@@ -60,10 +84,10 @@ final class CalculationParametersTests: XCTestCase {
     XCTAssertEqual(specCalcParameters.indexRange.lowerBound, 1)
     XCTAssertEqual(specCalcParameters.indexRange.upperBound, 50)
     XCTAssertEqual(specCalcParameters.valueRange.lowerBound, 100)
-    XCTAssertEqual(specCalcParameters.valueRange.upperBound, 1000)
+    XCTAssertEqual(specCalcParameters.valueRange.upperBound, 1_000)
   }
 
-  func testValue() {
+  internal func testValue() {
     let indexRange: ClosedRange<Int> = .random(startingIn: 0 ... 100, withSizeWithin: 10 ... 20)
 
     let valueRange: ClosedRange<Int> = .random(startingIn: 0 ... 100, withSizeWithin: 10 ... 20)

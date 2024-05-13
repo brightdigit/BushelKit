@@ -1,6 +1,30 @@
 //
-// MachineChange.swift
-// Copyright (c) 2024 BrightDigit.
+//  MachineChange.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCore
@@ -51,13 +75,13 @@ public struct MachineChange: Sendable {
     public var description: String {
       switch self {
       case let .property(change):
-        return "property: \(change.property.rawValue)"
+        "property: \(change.property.rawValue)"
       case .guestDidStop:
-        return "guestDidStop"
+        "guestDidStop"
       case .stopWithError:
-        return "stopWithError"
+        "stopWithError"
       case .networkDetatchedWithError:
-        return "networkDetatchedWithError"
+        "networkDetatchedWithError"
       }
     }
   }
@@ -71,8 +95,8 @@ public struct MachineChange: Sendable {
   }
 }
 
-public extension MachineChange.PropertyChange {
-  init?(keyPath: String?, new: (any Sendable)? = nil, old: (any Sendable)? = nil) {
+extension MachineChange.PropertyChange {
+  public init?(keyPath: String?, new: (any Sendable)? = nil, old: (any Sendable)? = nil) {
     guard let property = keyPath.flatMap(MachineChange.Property.init(rawValue:)) else {
       return nil
     }

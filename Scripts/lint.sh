@@ -17,13 +17,16 @@ function lint_swift_package() {
 	
 	if [ -z "$CI" ]; then
 		$MINT_RUN swiftformat .
-		$MINT_RUN swiftlint autocorrect
+		$MINT_RUN swiftlint --fix
 	else 
 		set -e
 	fi
 	
 	#$MINT_RUN periphery scan 
-	$MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
+	
+	if test -f .stringslint.yml; then
+		$MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
+	fi
 	$MINT_RUN swiftformat --lint $SWIFTFORMAT_OPTIONS .
 	$MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
 	
@@ -52,15 +55,12 @@ fi
 pushd $PACKAGE_PARENT_DIR
 
 for packageDirectory in $PACKAGE_PARENT_DIR/*; do 
+    DIR_NAME=`basename $packageDirectory`
+	if [ "$DIR_NAME" == "PackageDSL" ]; then
+	  continue
+	fi
 	lint_swift_package "$packageDirectory" &
 done
 
 wait
-# if [ -z "$SRCROOT" ]; then
-# 	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-# 	PACKAGE_DIR="${SCRIPT_DIR}/../Packages/BushelKit"
-# else
-# 	PACKAGE_DIR="${SRCROOT}/Packages/BushelKit" 	
-# fi
-
 

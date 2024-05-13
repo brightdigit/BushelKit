@@ -1,13 +1,37 @@
 //
-// URL+Wax.swift
-// Copyright (c) 2024 BrightDigit.
+//  URL+Wax.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 // swiftlint:disable line_length
 import Foundation
 
-public extension URL {
-  static let urlsString = """
+extension URL {
+  public static let urlsString = """
   http://parallels.com/interdum.jpg?sed=primis&ante=in&vivamus=faucibus&tortor=orci&duis=luctus&mattis=et&egestas=ultrices&metus=posuere&aenean=cubilia&fermentum=curae&donec=donec&ut=pharetra&mauris=magna&eget=vestibulum&massa=aliquet&tempor=ultrices&convallis=erat&nulla=tortor&neque=sollicitudin&libero=mi&convallis=sit&eget=amet&eleifend=lobortis&luctus=sapien&ultricies=sapien&eu=non&nibh=mi&quisque=integer&id=ac&justo=neque&sit=duis
   https://mac.com/mattis/odio/donec/vitae.jpg?mi=nulla&pede=nunc&malesuada=purus&in=phasellus&imperdiet=in&et=felis&commodo=donec&vulputate=semper&justo=sapien&in=a&blandit=libero&ultrices=nam&enim=dui&lorem=proin&ipsum=leo&dolor=odio&sit=porttitor&amet=id&consectetuer=consequat&adipiscing=in&elit=consequat&proin=ut&interdum=nulla&mauris=sed&non=accumsan&ligula=felis&pellentesque=ut&ultrices=at&phasellus=dolor&id=quis&sapien=odio&in=consequat&sapien=varius&iaculis=integer
   http://amazon.de/duis/bibendum.aspx?posuere=convallis&cubilia=duis&curae=consequat
@@ -135,14 +159,16 @@ public extension URL {
   https://tamu.edu/potenti/in/eleifend/quam/a/odio.json?sed=cursus&accumsan=urna&felis=ut&ut=tellus&at=nulla&dolor=ut&quis=erat&odio=id&consequat=mauris&varius=vulputate&integer=elementum&ac=nullam&leo=varius&pellentesque=nulla&ultrices=facilisi&mattis=cras&odio=non&donec=velit&vitae=nec&nisi=nisi&nam=vulputate&ultrices=nonummy&libero=maecenas&non=tincidunt&mattis=lacus&pulvinar=at&nulla=velit&pede=vivamus&ullamcorper=vel&augue=nulla&a=eget&suscipit=eros&nulla=elementum&elit=pellentesque&ac=quisque&nulla=porta&sed=volutpat&vel=erat&enim=quisque&sit=erat&amet=eros&nunc=viverra&viverra=eget&dapibus=congue&nulla=eget&suscipit=semper&ligula=rutrum&in=nulla&lacus=nunc&curabitur=purus&at=phasellus&ipsum=in&ac=felis&tellus=donec&semper=semper&interdum=sapien
   """
 
-  static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines).compactMap(URL.init(string:))
+  public static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines).compactMap(URL.init(string:))
 
-  static func randomHTTP() -> URL {
+  public static func randomHTTP() -> URL {
     // swiftlint:disable:next force_unwrapping
     urls.randomElement()!
   }
 
-  static func randomFile(usingFileManager fileManager: FileManager = .default) -> URL {
+  public static func randomFile(usingFileManager fileManager: FileManager = .default) -> URL {
     fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
   }
 }
+
+// swiftlint:enable line_length

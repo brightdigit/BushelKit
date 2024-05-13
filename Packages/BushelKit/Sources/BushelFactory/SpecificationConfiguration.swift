@@ -1,16 +1,36 @@
 //
-// SpecificationConfiguration.swift
-// Copyright (c) 2024 BrightDigit.
+//  SpecificationConfiguration.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCore
 import BushelMachine
 
-public struct SpecificationConfiguration: Equatable, Sendable {
-  static let fullMemoryRange = 1 ... 11
-  static let fullStorageRange = 36 ... 42
-  public static let fullStorageBoundsRange: ClosedRange<Float> = .init(intRange: fullStorageRange)
-
+public struct SpecificationConfiguration<Name: Hashable>: Equatable, Sendable {
   public let configurationRange: ConfigurationRange
   public let memoryIndexRange: ClosedRange<Float>
   private var updatingValues = false
@@ -24,7 +44,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
     return storage > 0
   }
 
-  public var template: SpecificationTemplate? {
+  public var template: SpecificationTemplate<Name>? {
     didSet {
       if let template {
         self.updatingValues = true
@@ -35,7 +55,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
             Self.binarySearch(
               for: $0,
               using: { Self.memoryValue(forIndex: $0) },
-              within: Self.fullMemoryRange
+              within: Specifications.fullMemoryRange
             )
           }
         )
@@ -50,7 +70,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
         self.storageIndex = Self.binarySearch(
           for: .init(template.idealStorage),
           using: { Self.storageValue(forIndex: $0) },
-          within: Self.fullStorageRange
+          within: Specifications.fullStorageRange
         )
         self.updatingValues = false
       }
@@ -60,7 +80,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
   public var cpuCount: Float = 1 {
     didSet {
       if !updatingValues {
-        self.template = nil
+        self.template = .none
       }
     }
   }
@@ -87,7 +107,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
 
   public init(
     range: ConfigurationRange = .default,
-    template: SpecificationTemplate? = nil,
+    template: SpecificationTemplate<Name>? = nil,
     cpuCount: Float = 1,
     memoryIndex: Float = 1,
     storageIndex: Float = 36
@@ -105,7 +125,7 @@ public struct SpecificationConfiguration: Equatable, Sendable {
         upper: Self.binarySearch(
           for: configurationRange.memory.upperBound,
           using: { Self.memoryValue(forIndex: $0) },
-          within: SpecificationConfiguration.fullMemoryRange
+          within: Specifications.fullMemoryRange
         )
       )
     )
@@ -149,19 +169,19 @@ public struct SpecificationConfiguration: Equatable, Sendable {
     }
   }
 
-  static func storageValue(forIndex index: Int) -> Int {
+  private static func storageValue(forIndex index: Int) -> Int {
     Int(self.storageValue(forIndex: Float(index)))
   }
 
-  static func storageValue(forIndex index: Float) -> Int64 {
+  private static func storageValue(forIndex index: Float) -> Int64 {
     Int64(1 << Int(index))
   }
 
-  static func memoryValue(forIndex index: Float) -> Int64 {
-    Int64(Self.memoryValue(forIndex: Int(index)))
+  private static func memoryValue(forIndex index: Float) -> Int64 {
+    Int64(memoryValue(forIndex: Int(index)))
   }
 
-  static func memoryValue(forIndex index: Int) -> Int {
+  private static func memoryValue(forIndex index: Int) -> Int {
     guard index > 0 else {
       return 0
     }

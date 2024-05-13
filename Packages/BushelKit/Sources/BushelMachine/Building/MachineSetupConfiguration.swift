@@ -1,6 +1,30 @@
 //
-// MachineSetupConfiguration.swift
-// Copyright (c) 2024 BrightDigit.
+//  MachineSetupConfiguration.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCore
@@ -36,7 +60,7 @@ public struct MachineSetupConfiguration {
     restoreImageID: UUID? = nil,
     storage: [MachineStorageSpecification],
     cpuCount: Float = 1,
-    memory: Float = (8 * 1024 * 1024 * 1024),
+    memory: Float = (8 * 1_024 * 1_024 * 1_024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()]
   ) {
@@ -55,7 +79,7 @@ public struct MachineSetupConfiguration {
     restoreImageID: UUID? = nil,
     storage: [MachineStorageSpecification]? = nil,
     cpuCount: Float = 1,
-    memory: Float = (8 * 1024 * 1024 * 1024),
+    memory: Float = (8 * 1_024 * 1_024 * 1_024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()]
   ) {
@@ -69,8 +93,8 @@ public struct MachineSetupConfiguration {
   }
 }
 
-public extension MachineSetupConfiguration {
-  var primaryStorage: MachineStorageSpecification {
+extension MachineSetupConfiguration {
+  public var primaryStorage: MachineStorageSpecification {
     get {
       storage.first ?? .defaultPrimary
     }
@@ -79,7 +103,7 @@ public extension MachineSetupConfiguration {
     }
   }
 
-  var primaryStorageSizeFloat: Float {
+  public var primaryStorageSizeFloat: Float {
     get {
       Float(self.primaryStorage.size)
     }
@@ -89,14 +113,14 @@ public extension MachineSetupConfiguration {
   }
 
   @available(*, deprecated)
-  init(request: MachineBuildRequest?) {
+  public init(request: MachineBuildRequest?) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,
       restoreImageID: request?.restoreImage?.imageID
     )
   }
 
-  init(request: MachineBuildRequest?, system: any MachineSystem) {
+  public init(request: MachineBuildRequest?, system: any MachineSystem) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,
       restoreImageID: request?.restoreImage?.imageID,
@@ -104,7 +128,7 @@ public extension MachineSetupConfiguration {
     )
   }
 
-  mutating func updating(forRequest request: MachineBuildRequest?) {
+  public mutating func updating(forRequest request: MachineBuildRequest?) {
     self.restoreImageID = request?.restoreImage?.imageID
     self.libraryID = request?.restoreImage?.libraryID
   }

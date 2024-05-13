@@ -1,6 +1,6 @@
 name: Bushel
 options:
-  preGenCommand: ./Scripts/package.sh
+  preGenCommand: ./Scripts/packages.sh
   bundleIdPrefix: com.brightdigit
   developmentLanguage: en
   deploymentTarget:
@@ -18,8 +18,8 @@ settings:
   OTHER_SWIFT_FLAGS: -Xfrontend -enable-actor-data-race-checks -Xfrontend -warn-concurrency
   ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: false
 packages:
-  BushelKit:
-    path: ./Packages/BushelKit
+  BushelApp:
+    path: ./Packages/BushelApp
   RadiantKit:
     path: ./Packages/RadiantKit
 targetTemplates:
@@ -30,7 +30,7 @@ targetTemplates:
       environmentVariables:
         DISABLE_ASSERTION_FAILURE_FOR_ERROR: ${DISABLE_ASSERTION_FAILURE_FOR_ERROR}
     dependencies:
-      - package: BushelKit
+      - package: BushelApp
         product: Bushel${packageName}App
       - sdk: Virtualization.framework
     info:
@@ -125,7 +125,7 @@ targets:
         XPCService:
           ServiceType: Application
     dependencies:
-      - package: BushelKit
+      - package: BushelApp
         product: BushelService
       - sdk: Virtualization.framework
     entitlements:
@@ -167,7 +167,7 @@ targets:
       testTargets:
         - Bushel-UITests
     dependencies:
-      - package: BushelKit
+      - package: BushelApp
         product: BushelUITests
     settings:
       TEST_TARGET_NAME: Bushel
