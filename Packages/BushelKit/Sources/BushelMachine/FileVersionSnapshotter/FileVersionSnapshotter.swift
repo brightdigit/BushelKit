@@ -1,6 +1,30 @@
 //
-// FileVersionSnapshotter.swift
-// Copyright (c) 2024 BrightDigit.
+//  FileVersionSnapshotter.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 #if os(macOS)
@@ -8,26 +32,26 @@
   import BushelLogging
   import Foundation
 
-  struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
-    static var loggingCategory: BushelLogging.Category {
+  public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
+    public static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
-    let fileManager: FileManager
+    internal let fileManager: FileManager
 
-    init(fileManager: FileManager = .default) {
+    internal init(fileManager: FileManager = .default) {
       self.fileManager = fileManager
     }
 
-    init(for _: MachineType.Type, fileManager: FileManager = .default) {
+    internal init(for _: MachineType.Type, fileManager: FileManager = .default) {
       self.init(fileManager: fileManager)
     }
 
-    init(for _: MachineType, fileManager: FileManager = .default) {
+    internal init(for _: MachineType, fileManager: FileManager = .default) {
       self.init(fileManager: fileManager)
     }
 
-    func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
+    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
@@ -47,7 +71,7 @@
       machine.finishedWithSnapshot(snapshot, by: .export)
     }
 
-    func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) throws {
+    public func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) throws {
       let paths = try machine.beginSnapshot()
       let oldSnapshots = try self.fileManager.dataDictionary(directoryAt: paths.snapshotCollectionURL)
 
@@ -85,14 +109,14 @@
       machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 
-    func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) throws {
+    public func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
       try fileVersion.remove(with: self.fileManager)
       machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
-    func saveSnapshot(
+    public func saveSnapshot(
       forVersion version: NSFileVersion,
       to snapshotCollectionURL: URL,
       withRequest request: SnapshotRequest = .init(),
@@ -124,7 +148,7 @@
     }
 
     @discardableResult
-    func createNewSnapshot(
+    public func createNewSnapshot(
       of machine: MachineType,
       request: SnapshotRequest,
       options: SnapshotOptions

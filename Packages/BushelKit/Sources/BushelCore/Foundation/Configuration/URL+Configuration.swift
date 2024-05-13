@@ -1,12 +1,36 @@
 //
-// URL+Configuration.swift
-// Copyright (c) 2024 BrightDigit.
+//  URL+Configuration.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import Foundation
 
-public extension URL {
-  struct Bushel: Sendable {
+extension URL {
+  public struct Bushel: Sendable {
     internal init(
       scheme: String,
       privacyPolicy: URL,
@@ -42,7 +66,7 @@ public extension URL {
     }
   }
 
-  static var bushel: Bushel {
+  public static var bushel: Bushel {
     .shared
   }
 }
@@ -61,19 +85,19 @@ extension URL.Bushel {
     public let snapshotsDirectoryName = Defaults.snapshotsDirectoryName
     public let machineJSONFileName = Defaults.machineJSONFileName
     public let restoreLibraryJSONFileName = Defaults.restoreLibraryJSONFileName
-    enum Defaults {
-      public static let restoreImagesDirectoryName = "Restore Images"
-      public static let machineDataDirectoryName = "data"
-      public static let snapshotsDirectoryName = "snapshots"
-      public static let machineJSONFileName = "machine.json"
-      public static let restoreLibraryJSONFileName = "metadata.json"
+    private enum Defaults {
+      fileprivate static let restoreImagesDirectoryName = "Restore Images"
+      fileprivate static let machineDataDirectoryName = "data"
+      fileprivate static let snapshotsDirectoryName = "snapshots"
+      fileprivate static let machineJSONFileName = "machine.json"
+      fileprivate static let restoreLibraryJSONFileName = "metadata.json"
     }
   }
 
   // swiftlint:disable:next force_unwrapping strict_fileprivate
   fileprivate static let shared: URL.Bushel = .init()!
 
-  init?(bundle: Bundle = .main) {
+  private init?(bundle: Bundle = .main) {
     guard let urlTypes = bundle.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]] else {
       return nil
     }
@@ -91,7 +115,7 @@ extension URL.Bushel {
     self.init(scheme: scheme, dictionary: dictionary)
   }
 
-  init?(scheme: String, dictionary: [String: String]) {
+  private init?(scheme: String, dictionary: [String: String]) {
     guard let privacyPolicy = dictionary[Key.privacyPolicy.rawValue].flatMap(URL.init(string:)) else {
       print("missing key \(Key.privacyPolicy)")
       return nil

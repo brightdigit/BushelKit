@@ -1,6 +1,30 @@
 //
-// MachineConfiguration.swift
-// Copyright (c) 2024 BrightDigit.
+//  MachineConfiguration.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelCore
@@ -22,7 +46,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   /// CPU Count
   public var cpuCount: Int = 1
   /// Amount of Memory
-  public var memory: Int = (128 * 1024 * 1024 * 1024)
+  public var memory: Int = (128 * 1_024 * 1_024 * 1_024)
   /// Netwoking Configuration
   public var networkConfigurations: [NetworkConfiguration]
   /// Graphics Configuration
@@ -38,12 +62,12 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     buildVersion: String? = nil,
     storage: [MachineStorageSpecification],
     cpuCount: Int = 1,
-    memory: Int = (128 * 1024 * 1024 * 1024),
+    memory: Int = (128 * 1_024 * 1_024 * 1_024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()],
     snapshots: [Snapshot] = []
   ) {
-    assert(memory.isMultiple(of: 1024 * 1024))
+    assert(memory.isMultiple(of: 1_024 * 1_024))
     self.restoreImageFile = restoreImageFile
     self.vmSystemID = vmSystemID
     self.snapshotSystemID = snapshotSystemID
@@ -58,8 +82,8 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   }
 }
 
-public extension MachineConfiguration {
-  init(setup: MachineSetupConfiguration, restoreImageFile: any InstallerImage) {
+extension MachineConfiguration {
+  public init(setup: MachineSetupConfiguration, restoreImageFile: any InstallerImage) {
     self.init(
       restoreImageFile: restoreImageFile.identifier,
       vmSystemID: restoreImageFile.metadata.vmSystemID,
@@ -74,7 +98,7 @@ public extension MachineConfiguration {
     )
   }
 
-  init(snapshot: Snapshot, original: MachineConfiguration) {
+  public init(snapshot: Snapshot, original: MachineConfiguration) {
     self.init(
       restoreImageFile: original.restoreImageFile,
       vmSystemID: original.vmSystemID,

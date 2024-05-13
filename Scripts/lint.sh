@@ -17,7 +17,7 @@ function lint_swift_package() {
 	
 	if [ -z "$CI" ]; then
 		$MINT_RUN swiftformat .
-		$MINT_RUN swiftlint autocorrect
+		$MINT_RUN swiftlint --fix
 	else 
 		set -e
 	fi

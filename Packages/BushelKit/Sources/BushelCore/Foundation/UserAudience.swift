@@ -1,5 +1,5 @@
 //
-//  TimeInterval+Snapshots.swift
+//  UserAudience.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,9 +29,29 @@
 
 import Foundation
 
-extension TimeInterval {
-  public enum Snapshot {
-    public static let intervalIncrements: TimeInterval = 15.0
-    public static let defaultInterval: TimeInterval = 5.0
+public struct UserAudience: OptionSet, Sendable {
+  public typealias RawValue = Int
+
+  public static let proSubscriber: UserAudience = .init(rawValue: 1)
+  public static let testFlightBeta: UserAudience = .init(rawValue: 2)
+  public static let any: UserAudience = .init(rawValue: .max)
+  public static let `default`: UserAudience = [.testFlightBeta, proSubscriber]
+  public static let none: UserAudience = []
+  public static var availableValues: UserAudience {
+    .default
   }
+
+  public var rawValue: Int
+
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
+
+//  public static func includes(_ value: UserAudience) -> Bool {
+//    guard value.rawValue > 0 else {
+//      return false
+//    }
+//    let value: Bool = .random()
+//    return value
+//  }
 }

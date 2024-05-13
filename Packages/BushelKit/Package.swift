@@ -412,6 +412,12 @@ public var featureState: FeatureState {
 return .experimental
 }
 }
+public struct StrictConcurrency: SwiftSettingFeature {
+public let featureState: FeatureState
+public init (featureState: FeatureState = .experimental) {
+self.featureState = featureState
+}
+}
 public struct GlobalConcurrency: SwiftSettingFeature {
 public var featureState: FeatureState {
 return .upcoming
@@ -902,6 +908,7 @@ BushelMachineTests()
 BushelFactoryTests()
 },
 swiftSettings: {
+StrictConcurrency()
 Group("Experimental") {
 AccessLevelOnImport()
 BitwiseCopyable()

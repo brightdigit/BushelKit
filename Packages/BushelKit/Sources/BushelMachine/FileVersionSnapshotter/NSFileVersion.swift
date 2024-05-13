@@ -1,23 +1,47 @@
 //
-// NSFileVersion.swift
-// Copyright (c) 2024 BrightDigit.
+//  NSFileVersion.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 #if !os(Linux)
   import Foundation
 
   extension NSFileVersion {
-    struct VersionDataSet {
-      let fileVersion: NSFileVersion
-      let url: URL
+    internal struct VersionDataSet {
+      internal let fileVersion: NSFileVersion
+      internal let url: URL
 
-      func remove(with fileManager: FileManager) throws {
+      internal func remove(with fileManager: FileManager) throws {
         try fileVersion.remove()
         try fileManager.removeItem(at: url)
       }
     }
 
-    var persistentIdentifierData: Data {
+    internal var persistentIdentifierData: Data {
       get throws {
         try NSKeyedArchiver.archivedData(
           withRootObject: self.persistentIdentifier,
@@ -27,7 +51,7 @@
     }
 
     @available(iOS, unavailable)
-    static func addOfItem(
+    internal static func addOfItem(
       at url: URL,
       withContentsOf contentsURL: URL,
       options: SnapshotOptions
@@ -45,7 +69,7 @@
       return version
     }
 
-    static func version(
+    internal static func version(
       itemAt url: URL,
       forPersistentIdentifierData identifierData: Data
     ) throws -> NSFileVersion {
@@ -66,7 +90,7 @@
       return version
     }
 
-    static func version(
+    internal static func version(
       withID snapshotID: UUID,
       basedOn paths: SnapshotPaths
     ) throws -> VersionDataSet {
@@ -83,13 +107,13 @@
       return .init(fileVersion: version, url: identifierDataFileURL)
     }
 
-    func writePersistentIdentifier(to snapshotFileURL: URL) throws {
+    internal func writePersistentIdentifier(to snapshotFileURL: URL) throws {
       try persistentIdentifierData.write(to: snapshotFileURL)
     }
   }
 
   extension NSFileVersion.AddingOptions {
-    init(options: SnapshotOptions) {
+    internal init(options: SnapshotOptions) {
       self = options.contains(.byMoving) ? [.byMoving] : []
     }
   }

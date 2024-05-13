@@ -1,15 +1,39 @@
 //
-// LibraryImageFileTaskParameters.swift
-// Copyright (c) 2024 BrightDigit.
+//  LibraryImageFileTaskParameters.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
 //
 
 import BushelLogging
 import Foundation
 
-struct LibraryImageFileTaskParameters: Sendable {
-  let system: any LibrarySystem
-  let id: UUID
-  let url: URL
+private struct LibraryImageFileTaskParameters: Sendable {
+  private let system: any LibrarySystem
+  fileprivate let id: UUID
+  fileprivate let url: URL
 
   private init(system: any LibrarySystem, id: UUID, url: URL) {
     self.system = system
@@ -17,7 +41,7 @@ struct LibraryImageFileTaskParameters: Sendable {
     self.url = url
   }
 
-  init?(url: URL, manager: any LibrarySystemManaging) {
+  fileprivate init?(url: URL, manager: any LibrarySystemManaging) {
     guard
       let id = UUID(uuidString: url.deletingPathExtension().lastPathComponent),
       let systemID = manager.resolveSystemFor(url: url) else {
@@ -28,13 +52,13 @@ struct LibraryImageFileTaskParameters: Sendable {
     self.init(system: system, id: id, url: url)
   }
 
-  func resolve() async throws -> LibraryImageFile {
+  fileprivate func resolve() async throws -> LibraryImageFile {
     try await system.restoreImageLibraryItemFile(fromURL: url, id: id)
   }
 }
 
-public extension TaskGroup<LibraryImageFile?> {
-  mutating func addLibraryImageFileTask(
+extension TaskGroup<LibraryImageFile?> {
+  public mutating func addLibraryImageFileTask(
     forURL imageFileURL: URL,
     librarySystemManager: any LibrarySystemManaging,
     logger: Logger
