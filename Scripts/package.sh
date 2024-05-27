@@ -8,7 +8,7 @@ output_file=Package.swift
 
 cd $PACKAGE_DIR
 echo "// swift-tools-version: $swift_tools_version" > $input_file
-find ../PackageDSL -name '*.swift' -type f -exec cat {} + >> $input_file
+find ../PackageDSL/Sources/PackageDSL -name '*.swift' -type f -exec cat {} + >> $input_file
 find Package/Sources -mindepth 2 -type f -name '*.swift' -not -path '*/\.*' -exec cat {} + >> $input_file
 cat Package/Sources/*.swift >> $input_file
 

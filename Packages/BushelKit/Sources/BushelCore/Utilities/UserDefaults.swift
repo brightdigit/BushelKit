@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  UserDefaults.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,28 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+extension UserDefaults {
+  public func bool(forKey key: String, defaultValue: Bool) -> Bool {
+    guard self.object(forKey: key) == nil else {
+      return self.bool(forKey: key)
+    }
+
+    return defaultValue
+  }
+
+  public func value<AppStoredType: AppStored>(
+    for _: AppStoredType.Type,
+    defaultValue: AppStoredType.Value
+  ) -> AppStoredType.Value where AppStoredType.Value == Bool {
+    self.bool(forKey: AppStoredType.key, defaultValue: defaultValue)
+  }
+
+  public func value<AppStoredType: DefaultWrapped>(
+    for _: AppStoredType.Type,
+    defaultValue: AppStoredType.Value = AppStoredType.default
+  ) -> AppStoredType.Value where AppStoredType.Value == Bool {
+    self.bool(forKey: AppStoredType.key, defaultValue: defaultValue)
+  }
 }

@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  MachineBuilderObserver.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+public protocol MachineBuilderObserver {
+  func getID() async -> UUID?
 }

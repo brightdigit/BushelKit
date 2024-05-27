@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  AsyncReducer.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,33 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+public actor AsyncReducer<
+  AsyncSequenceType: AsyncSequence & Sendable
+> where AsyncSequenceType.Element: Sendable {
+  private let sequence: AsyncSequenceType
+  private var currentElements: [AsyncSequenceType.Element]?
+
+  public var elements: [AsyncSequenceType.Element] {
+    get async throws {
+      if let currentElements {
+        return currentElements
+      }
+      return try await self.reduce()
+    }
+  }
+
+  public init(sequence: AsyncSequenceType) {
+    self.sequence = sequence
+  }
+
+  private func reduce() async throws -> [AsyncSequenceType.Element] {
+    var elements = [AsyncSequenceType.Element]()
+    for try await element in sequence {
+      elements.append(element)
+    }
+    currentElements = elements
+    return elements
+  }
 }

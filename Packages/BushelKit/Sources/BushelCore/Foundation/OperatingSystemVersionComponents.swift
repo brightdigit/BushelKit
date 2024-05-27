@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  OperatingSystemVersionComponents.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+public struct OperatingSystemVersionComponents: Sendable {
+  public let buildVersion: String?
+  public let operatingSystemVersion: OperatingSystemVersion
 }

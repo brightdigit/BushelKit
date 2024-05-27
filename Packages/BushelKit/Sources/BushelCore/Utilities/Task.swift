@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  Task.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,33 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+extension Task where Success == Never, Failure == Never {
+  public static func sleepForSecondsBetween(
+    _ value: Int,
+    and otherValue: Int,
+    _ onError: @escaping @Sendable (any Error) -> Void
+  ) async {
+    let toleranceSeconds: Int
+    let durationSeconds: Int
+
+    let minimumSeconds = min(value, otherValue)
+    let maximumSeconds = max(value, otherValue)
+
+    let range = maximumSeconds - minimumSeconds
+    toleranceSeconds = Int.random(in: 1 ... (range / 2))
+
+    durationSeconds = .random(in: minimumSeconds ... (maximumSeconds - toleranceSeconds))
+
+    do {
+      try await Self.sleep(
+        for: .seconds(durationSeconds),
+        tolerance: .seconds(toleranceSeconds)
+      )
+    } catch {
+      assertionFailure(error: error)
+      onError(error)
+    }
+  }
 }

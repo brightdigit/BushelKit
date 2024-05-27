@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  ObservationCollection.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,31 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
-import Foundation
+#if canImport(ObjectiveC)
+  import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
-}
+  public actor ObservationCollection {
+    private var observations = [UUID: NSKeyValueObservation]()
+
+    public init() {}
+
+    public func append(_ observation: NSKeyValueObservation, withID id: UUID) {
+      assert(observations[id] == nil)
+      self.observations[id] = observation
+    }
+
+    public func remove(withID id: UUID) -> Bool {
+      self.observations.removeValue(forKey: id) != nil
+    }
+
+    private func removeAll() {
+      self.observations.removeAll()
+    }
+
+    public nonisolated func clear() {
+      Task {
+        await self.removeAll()
+      }
+    }
+  }
+#endif

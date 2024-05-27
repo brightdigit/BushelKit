@@ -30,7 +30,7 @@
 import Foundation
 
 extension Result {
-  public init(catching body: () async throws -> Success) async where Failure == any Error {
+  public init(catching body: @Sendable () async throws -> Success) async where Failure == any Error {
     do {
       self = try await .success(body())
     } catch {

@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  Initialization.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,26 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+@MainActor
+public final class Initialization {
+  public static let begin = Initialization()
+  private var isCompleted = false
+
+  private init() {}
+
+  public nonisolated func callAsFunction(_ closure: @Sendable @escaping () -> Void) {
+    Task {
+      await self.execute(closure)
+    }
+  }
+
+  func execute(_ closure: @escaping () -> Void) {
+    guard !isCompleted else {
+      return
+    }
+    self.isCompleted = true
+    closure()
+  }
 }

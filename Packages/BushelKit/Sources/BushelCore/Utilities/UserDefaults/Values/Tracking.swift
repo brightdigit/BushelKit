@@ -1,5 +1,5 @@
 //
-//  MachineConfigurable.swift
+//  Tracking.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,18 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
 import Foundation
 
-public protocol MachineConfigurable {
-  associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get async }
-  var selectedBuildImage: SelectedVersion { get async }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
+public enum Tracking {
+  public enum Error: DefaultWrapped {
+    public static let keyType: KeyType = .reflecting
+    public typealias Value = Bool
+    public static var `default`: Bool = true
+  }
+
+  public enum Analytics: DefaultWrapped {
+    public static let keyType: KeyType = .reflecting
+    public typealias Value = Bool
+    public static var `default`: Bool = true
+  }
 }
