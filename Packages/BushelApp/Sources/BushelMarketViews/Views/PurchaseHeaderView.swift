@@ -9,7 +9,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct PurchaseHeaderView: View {
+  internal struct PurchaseHeaderView: View {
     typealias Properties = PurchaseHeaderViewProperties
 
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast

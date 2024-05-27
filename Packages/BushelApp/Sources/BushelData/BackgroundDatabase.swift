@@ -66,10 +66,10 @@
     }
 
     public func fetch<T>(
-      _ descriptor: FetchDescriptor<T>
-    ) async throws -> [T] where T: PersistentModel & Sendable {
+      _ selectDescriptor: @escaping @Sendable () -> FetchDescriptor<T>
+    ) async throws -> [T] where T: Sendable, T: PersistentModel {
       assert(isMainThread: false)
-      return try await self.database.fetch(descriptor)
+      return try await self.database.fetch(selectDescriptor)
     }
 
     public func delete(_ model: some PersistentModel & Sendable) async {

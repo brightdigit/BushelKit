@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct WelcomeActionButton: View {
+  internal struct WelcomeActionButton: View {
     @Environment(\.colorScheme) var colorScheme
     let imageSystemName: String
 
@@ -58,7 +58,7 @@
     }
   }
 
-  struct WelcomeActionButton_Previews: PreviewProvider {
+  internal struct WelcomeActionButton_Previews: PreviewProvider {
     static var previews: some View {
       WelcomeActionButton(
         imageSystemName: "plus.app",

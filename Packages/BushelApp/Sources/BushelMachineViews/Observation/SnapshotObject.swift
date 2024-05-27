@@ -9,8 +9,9 @@
   import BushelMachineData
   import SwiftUI
 
+  @MainActor
   @Observable
-  final class SnapshotObject: Sendable {
+  internal final class SnapshotObject: Sendable {
     let initialSnapshot: Snapshot
     let entry: SnapshotEntry
     let index: Int

@@ -10,7 +10,8 @@
   import BushelMarketEnvironment
   import SwiftUI
 
-  struct WelcomeLogoTitleLabelView: View {
+  @MainActor
+  internal struct WelcomeLogoTitleLabelView: View {
     @Environment(\.marketplace) var marketplace
 
     private var isActiveSubscription: Bool {

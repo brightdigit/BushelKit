@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct PurchaseFeatureViewProperties {
+internal struct PurchaseFeatureViewProperties {
   static let small: Self = .init(imageWidth: 32.0, fontSize: 12.0)
   static let extraLarge: Self = .init(imageWidth: 50.0, fontSize: 16.0)
 

@@ -55,9 +55,11 @@
       updateSelection(basedOn: request)
     }
 
-    internal func presentFileDialog() {
-      if self.prepareBuild() {
-        self.presentFileExporter = true
+    internal nonisolated func presentFileDialog() {
+      Task { @MainActor in
+        if await self.prepareBuild() {
+          self.presentFileExporter = true
+        }
       }
     }
 

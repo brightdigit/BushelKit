@@ -14,7 +14,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  struct WelcomeTitleView: View, Loggable {
+  internal struct WelcomeTitleView: View, Loggable {
     @Environment(\.marketplace) var marketplace
     var body: some View {
       HStack {
@@ -37,7 +37,7 @@
     }
   }
 
-  struct WelcomeTitleView_Previews: PreviewProvider {
+  internal struct WelcomeTitleView_Previews: PreviewProvider {
     static var previews: some View {
       WelcomeTitleView()
     }

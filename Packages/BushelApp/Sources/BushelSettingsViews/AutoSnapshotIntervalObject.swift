@@ -10,7 +10,8 @@
   import Foundation
   import SwiftUI
 
-  typealias AutoSnapshotIntervalObject = TransformedValueObject<Double, TimeInterval, DateComponents>
+  internal typealias AutoSnapshotIntervalObject =
+    TransformedValueObject<Double, TimeInterval, DateComponents>
 
   extension AutoSnapshotIntervalObject {
     convenience init(inputValue: Double = 1.0) {

@@ -1,5 +1,5 @@
 variables:
-  XCODE_VERSION: "15.3"
+  XCODE_VERSION: "15.4"
   FF_USE_FASTZIP: "true"
   TRANSFER_METER_FREQUENCY: "2s"
   ARTIFACT_COMPRESSION_LEVEL: "fastest"
@@ -56,9 +56,9 @@ cache:
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/$PACKAGE_NAME
     - xcodebuild -resolvePackageDependencies
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.4,name=iPhone 15" &>/dev/null || true
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.4,name=iPhone 15"
-    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator17.4 -destination "OS=17.4,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.5,name=iPhone 15" &>/dev/null || true
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.5,name=iPhone 15"
+    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator17.5 -destination "OS=17.5,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
     - popd
     - XCRESULT=$(find . -path "./Packages/$PACKAGE_NAME/Build/Logs/Test/Test-$SCHEME_NAME-*.xcresult")
     - echo ${XCRESULT}    
@@ -70,6 +70,17 @@ cache:
   tags:
     - macos
   script:
+    - |
+      if [ -n "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" ]; then
+        BRANCH_NAME="$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME";
+      else
+        BRANCH_NAME="$CI_COMMIT_REF_NAME";
+      fi
+      echo "Branch name: $BRANCH_NAME"
+      if [[ "$BRANCH_NAME" =~ STRICT ]] || [[ "$BRANCH_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-\w+\.[0-9]+)?$ ]]; then
+        export LINT_MODE=STRICT;
+      fi
+      echo "Lint mode: $LINT_MODE"
     - if [ "$LINT_MODE" = "STRICT" ]; then find . -type f -name ".gitrepo" -exec false {} +; fi
     - ./Scripts/packages.sh
     - git diff --exit-code
@@ -147,21 +158,11 @@ build spm linux radiantkit:
   variables:
     PACKAGE_NAME: "RadiantKit"
 
-lint lenient:
+lint:
   except:
     variables:
       - $APPSTORE_DEPLOY
-  only:
-    - merge_requests
   <<: *lint_template
-
-lint strict:
-  only:
-    - /^v\d+\.\d+\.\d+(-\w+\.\d+)?$/
-    - /STRICT/
-  variables:
-   LINT_MODE: "STRICT"
-  <<: *lint_template  
 
 match:
   stage: lint

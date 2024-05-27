@@ -12,19 +12,19 @@
   import Foundation
   import SwiftData
 
-  struct MachineObjectComponents {
+  internal struct MachineObjectComponents: Sendable {
     typealias Machine = (any BushelMachine.Machine)
 
     let bookmarkData: BookmarkData
     let machine: Machine
-    let restoreImage: (any OperatingSystemInstalled)?
+    let restoreImage: OperatingSystemVersionComponents?
     let existingEntry: MachineEntry?
     let configuration: MachineObjectConfiguration
     let label: MetadataLabel
 
     internal init(
       machine: Machine,
-      restoreImage: (any OperatingSystemInstalled)?,
+      restoreImage: OperatingSystemVersionComponents?,
       configuration: MachineObjectConfiguration,
       existingEntry: MachineEntry?,
       bookmarkData: BookmarkData,
@@ -51,7 +51,7 @@
     ) async throws {
       let newURL: URL
       do {
-        newURL = try await bookmarkData.fetchURL(using: configuration.database, withURL: configuration.url)
+        newURL = try await bookmarkData.fetchURL(using: configuration.database)
       } catch {
         throw try MachineError.bookmarkError(error)
       }
@@ -85,7 +85,7 @@
 
       self.init(
         machine: machine,
-        restoreImage: restoreImage,
+        restoreImage: restoreImage?.components,
         configuration: configuration,
         existingEntry: existingEntry,
         bookmarkData: bookmarkData,
@@ -106,16 +106,18 @@
 
       machinePredicate.fetchLimit = 1
 
-      let items: [MachineEntry]
+      let item: MachineEntry?
       do {
-        items = try await configuration.database.fetch(machinePredicate)
+        item = try await configuration.database.first(
+          where: #Predicate { $0.bookmarkDataID == bookmarkDataID }
+        )
       } catch {
         throw MachineError.fromDatabaseError(error)
       }
       try await self.init(
         configuration: configuration,
         bookmarkData: bookmarkData,
-        existingEntry: items.first
+        existingEntry: item
       )
 
       do {

@@ -30,7 +30,7 @@
 import BushelCore
 import Foundation
 
-public struct SnapshotSyncronizeOptions: OptionSet {
+public struct SnapshotSyncronizeOptions: OptionSet, Sendable {
   public typealias RawValue = Int
 
   public let rawValue: Int

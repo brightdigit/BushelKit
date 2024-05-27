@@ -9,6 +9,7 @@
   import BushelHubEnvironment
   import SwiftUI
 
+  @MainActor
   public struct HubView: View {
     @Environment(\.hubs) private var hubs
     @Environment(\.dismiss) private var dismiss

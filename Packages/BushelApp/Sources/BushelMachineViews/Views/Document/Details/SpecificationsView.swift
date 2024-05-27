@@ -9,7 +9,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct SpecificationsView: View {
+  internal struct SpecificationsView: View {
     let label: MetadataLabel
     let configuration: MachineConfiguration
 

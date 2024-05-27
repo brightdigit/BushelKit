@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct MachineSpecView: View {
+  internal struct MachineSpecView: View {
     let systemName: String
     let valueView: Text
     let labelView: Text
@@ -33,7 +33,7 @@
     }
   }
 
-  struct MachineSpecView_Previews: PreviewProvider {
+  internal struct MachineSpecView_Previews: PreviewProvider {
     static var previews: some View {
       MachineSpecView(
         systemName: "cpu.fill"

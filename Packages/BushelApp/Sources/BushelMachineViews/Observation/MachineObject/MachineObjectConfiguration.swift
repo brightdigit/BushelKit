@@ -7,17 +7,20 @@
 
   import BushelCore
   import BushelDataCore
+  import BushelDataMonitor
   import BushelMachine
+  import Combine
   import Foundation
   import SwiftData
 
-  struct MachineObjectConfiguration {
+  internal struct MachineObjectConfiguration: Sendable {
     let url: URL
     let restoreImageDB: any InstallerImageRepository
     let database: any Database
     let systemManager: any MachineSystemManaging
     let labelProvider: MetadataLabelProvider
     let snapshotFactory: any SnapshotProvider
+    let databasePublisherFactory: @Sendable (String) -> any Publisher<any DatabaseChangeSet, Never>
 
     internal init(
       url: URL,
@@ -25,7 +28,8 @@
       database: any Database,
       systemManager: any MachineSystemManaging,
       snapshotFactory: any SnapshotProvider,
-      labelProvider: @escaping MetadataLabelProvider
+      labelProvider: @escaping MetadataLabelProvider,
+      databasePublisherFactory: @escaping @Sendable (String) -> any Publisher<any DatabaseChangeSet, Never>
     ) {
       self.url = url
       self.restoreImageDB = restoreImageDB
@@ -33,6 +37,7 @@
       self.systemManager = systemManager
       self.labelProvider = labelProvider
       self.snapshotFactory = snapshotFactory
+      self.databasePublisherFactory = databasePublisherFactory
     }
   }
 
@@ -43,7 +48,8 @@
       systemManager: any MachineSystemManaging,
       snapshotterFactory: any SnapshotProvider,
       installerImageRepositoryFrom: @escaping (any Database) -> any InstallerImageRepository,
-      labelProvider: @escaping MetadataLabelProvider
+      labelProvider: @escaping MetadataLabelProvider,
+      databasePublisherFactory: @escaping @Sendable (String) -> any Publisher<any DatabaseChangeSet, Never>
     ) {
       self.init(
         url: url,
@@ -51,7 +57,8 @@
         database: database,
         systemManager: systemManager,
         snapshotFactory: snapshotterFactory,
-        labelProvider: labelProvider
+        labelProvider: labelProvider,
+        databasePublisherFactory: databasePublisherFactory
       )
     }
   }

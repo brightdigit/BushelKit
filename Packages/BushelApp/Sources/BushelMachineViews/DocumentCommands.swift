@@ -11,7 +11,8 @@
   import SwiftData
   import SwiftUI
 
-  struct DocumentCommands: Commands {
+  @MainActor
+  internal struct DocumentCommands: Commands {
     let object: DocumentObject?
 
     var body: some Commands {

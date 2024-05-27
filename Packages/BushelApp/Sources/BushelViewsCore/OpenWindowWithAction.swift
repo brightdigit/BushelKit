@@ -11,6 +11,7 @@
 
   public typealias OpenWindowWithAction = OpenWindowWithValueAction<Void>
 
+  @MainActor
   extension OpenWindowWithAction {
     public init(closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void) {
       self.init { _, action in

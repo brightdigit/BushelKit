@@ -5,7 +5,7 @@
 
 import BushelLocalization
 
-struct FeatureItem: Identifiable {
+internal struct FeatureItem: Identifiable {
   let icon: any Icon
   let titleID: LocalizedStringID
   let descriptionID: LocalizedStringID

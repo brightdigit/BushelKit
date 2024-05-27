@@ -6,13 +6,16 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelDataCore
+  import BushelDataMonitor
   import BushelLogging
   import BushelMachine
+  import Combine
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @Observable
-  final class DocumentObject: Loggable, MachineObjectParent, Sendable {
+  internal final class DocumentObject: Loggable, MachineObjectParent, Sendable {
     var url: URL?
     var alertIsPresented = false
     var error: MachineError? {
@@ -57,7 +60,8 @@
       restoreImageDBfrom: @escaping @Sendable (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
-      _ labelProvider: @escaping MetadataLabelProvider
+      _ labelProvider: @escaping MetadataLabelProvider,
+      databasePublisherFactory: @escaping (String) -> any Publisher<any DatabaseChangeSet, Never>
     ) {
       guard let url else {
         Self.logger.info("No url to load.")
@@ -71,7 +75,8 @@
             restoreImageDBfrom: restoreImageDBfrom,
             snapshotFactory: snapshotFactory,
             using: systemManager,
-            labelProvider
+            labelProvider,
+            databasePublisherFactory: databasePublisherFactory
           )
       }
     }
@@ -82,13 +87,15 @@
       restoreImageDBfrom: @escaping (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
-      _ labelProvider: @escaping MetadataLabelProvider
+      _ labelProvider: @escaping MetadataLabelProvider,
+      databasePublisherFactory: @escaping @Sendable (String) -> any Publisher<any DatabaseChangeSet, Never>
     ) async {
       Self.logger.info("Loading Machine at \(url)")
       self.database = database
       self.systemManager = systemManager
       do {
         let machineObject = try await MachineObject(
+          id: "machine",
           parent: self,
           configuration: .init(
             url: url,
@@ -96,7 +103,8 @@
             systemManager: systemManager,
             snapshotterFactory: snapshotFactory,
             installerImageRepositoryFrom: restoreImageDBfrom,
-            labelProvider: labelProvider
+            labelProvider: labelProvider,
+            databasePublisherFactory: databasePublisherFactory
           )
         )
         self.machineObject = machineObject

@@ -7,7 +7,8 @@
   import BushelMachine
   import SwiftUI
 
-  struct SnapshotActionsView: View {
+  @MainActor
+  internal struct SnapshotActionsView: View {
     let snapshot: Snapshot
     let deleting: (Snapshot) -> Void
     let exporting: (Snapshot) -> Void

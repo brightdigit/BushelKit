@@ -5,7 +5,8 @@
 
 import Foundation
 
-protocol SessionFramable {
+@MainActor
+internal protocol SessionFramable {
   var aspectRatio: CGFloat? { get }
   var toolbarHeight: CGFloat { get }
   var idealWidth: CGFloat { get }

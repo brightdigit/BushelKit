@@ -9,7 +9,7 @@
   import BushelMachine
   import Foundation
 
-  struct BuilderParameters {
+  internal struct BuilderParameters {
     let manager: any MachineSystem
     let image: any InstallerImage
     internal init(manager: any MachineSystem, image: any InstallerImage) {
@@ -18,26 +18,26 @@
     }
 
     internal init(object: ConfigurationObject, using database: any InstallerImageRepository) async throws {
-      guard let systemManager = object.systemManager else {
+      guard let systemManager = await object.systemManager else {
         let error = ConfigurationError.missingSystemManager
         assertionFailure(error: error)
         throw error
       }
 
-      guard let restoreImageID = object.configuration.restoreImageID else {
+      guard let restoreImageID = await object.configuration.restoreImageID else {
         let error = ConfigurationError.missingRestoreImageID
         assertionFailure(error: error)
         throw error
       }
 
       guard
-        let labelProvider = object.labelProvider,
+        let labelProvider = await object.labelProvider,
         let image = try await database.image(
           withID: restoreImageID,
           library: object.configuration.libraryID,
           labelProvider
         ) else {
-        let error = ConfigurationError.restoreImageNotFound(
+        let error = await ConfigurationError.restoreImageNotFound(
           restoreImageID,
           library: object.configuration.libraryID
         )

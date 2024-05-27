@@ -6,7 +6,8 @@
 import BushelMachine
 import Foundation
 
-protocol SessionToolbarAgent {
+@MainActor
+internal protocol SessionToolbarAgent {
   var canStart: Bool { get }
 
   var canStop: Bool { get }

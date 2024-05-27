@@ -12,7 +12,7 @@
   import SwiftData
   import SwiftUI
 
-  struct WelcomeRecentDocumentsView: View, Loggable {
+  internal struct WelcomeRecentDocumentsView: View, Loggable {
     let recentDocumentsTypeFilter: DocumentTypeFilter
     let recentDocumentsClearDate: Date?
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
@@ -27,6 +27,7 @@
         } else {
           List {
             RecentDocumentsList(
+              publisherID: "welcome",
               recentDocumentsClearDate: recentDocumentsClearDate,
               recentDocumentsTypeFilter: recentDocumentsTypeFilter,
               isEmpty: self.$isEmpty

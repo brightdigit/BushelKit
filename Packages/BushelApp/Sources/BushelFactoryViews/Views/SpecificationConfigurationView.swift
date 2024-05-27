@@ -10,6 +10,7 @@
   import RadiantKit
   import SwiftUI
 
+  @MainActor
   internal struct SpecificationConfigurationView: View, Sendable {
     @Binding private var isNextReady: Bool
     @Binding private var configuration: SpecificationConfiguration<LocalizedStringID>

@@ -7,7 +7,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct ImageListItem: View {
+  internal struct ImageListItem: View {
     let image: ConfigurationImage
 
     var body: some View {

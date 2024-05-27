@@ -25,12 +25,14 @@
 
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {
+    @MainActor
     public func newLibrary(
       _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
     ) -> some View {
       environment(\.newLibrary, .init(closure: closure))
     }
 
+    @MainActor
     public func newLibrary<FileType: InitializableFileTypeSpecification>(
       _: FileType.Type
     ) -> some View {
@@ -41,12 +43,14 @@
   }
 
   extension Scene {
+    @MainActor
     public func newLibrary(
       _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.newLibrary, .init(closure: closure))
     }
 
+    @MainActor
     public func newLibrary<FileType: InitializableFileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {

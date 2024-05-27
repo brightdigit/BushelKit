@@ -8,16 +8,16 @@
   import Foundation
   import SwiftUI
 
-  public struct ViewValue {
-    let content: (Binding<(any InstallImage)?>) -> AnyView
+  public struct ViewValue: Sendable {
+    let content: @Sendable @MainActor (Binding<(any InstallImage)?>) -> AnyView
 
-    public init(content: @escaping (Binding<(any InstallImage)?>) -> some View) {
+    public init(content: @Sendable @escaping @MainActor (Binding<(any InstallImage)?>) -> some View) {
       self.content = { image in
         AnyView(content(image))
       }
     }
 
-    func callAsFunction(_ selectedHubImage: Binding<(any InstallImage)?>) -> some View {
+    @MainActor func callAsFunction(_ selectedHubImage: Binding<(any InstallImage)?>) -> some View {
       content(selectedHubImage)
     }
   }
@@ -25,7 +25,7 @@
   private struct HubViewKey: EnvironmentKey {
     typealias Value = ViewValue
 
-    static let defaultValue: ViewValue = .init { _ in
+    static let defaultValue = ViewValue { _ in
       EmptyView()
     }
   }
@@ -38,8 +38,9 @@
   }
 
   extension Scene {
+    @MainActor
     public func hubView(
-      _ view: @escaping (Binding<(any InstallImage)?>) -> some View
+      _ view: @Sendable @escaping @MainActor (Binding<(any InstallImage)?>) -> some View
     ) -> some Scene {
       self.environment(\.hubView, .init(content: view))
     }
@@ -47,18 +48,20 @@
 
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {
+    @MainActor
     public func hubView(
-      _ view: @escaping (Binding<(any InstallImage)?>) -> some View
+      _ view: @Sendable @escaping @MainActor (Binding<(any InstallImage)?>) -> some View
     ) -> some View {
       self.environment(\.hubView, .init(content: view))
     }
   }
 
   extension View {
+    @MainActor
     public func sheet(
       isPresented: Binding<Bool>,
       selectedHubImage: Binding<(any InstallImage)?>,
-      onDismiss: (() -> Void)? = nil,
+      onDismiss: (@MainActor () -> Void)? = nil,
       _ viewValue: ViewValue
     ) -> some View {
       self.sheet(isPresented: isPresented, onDismiss: onDismiss) {

@@ -7,7 +7,7 @@ import BushelCoreWax
 @testable import BushelFactory
 import XCTest
 
-final class CalculationParametersTests: XCTestCase {
+internal final class CalculationParametersTests: XCTestCase {
   func testIndexForValue() {
     let exp = expectation(description: "Called Closure")
     let expectedValue: Int = .random(in: 1 ... 100)

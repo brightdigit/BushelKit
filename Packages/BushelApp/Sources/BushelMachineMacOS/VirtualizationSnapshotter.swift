@@ -9,7 +9,7 @@ import Foundation
 
 #if canImport(Virtualization) && arch(arm64)
 
-  struct VirtualizationSnapshotter: Snapshotter {
+  internal struct VirtualizationSnapshotter: Snapshotter {
     typealias MachineType = VirtualizationMachine
 
     static let vmSystemID: SnapshotterID = "macOSApple"

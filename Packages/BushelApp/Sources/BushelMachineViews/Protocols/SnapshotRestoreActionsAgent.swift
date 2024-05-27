@@ -6,7 +6,7 @@
 import BushelMachine
 import Foundation
 
-protocol SnapshotRestoreActionsAgent {
+internal protocol SnapshotRestoreActionsAgent {
   func cancelRestoreSnapshot(_ snapshot: Snapshot)
   func beginRestoreSnapshot(
     _ snapshot: Snapshot,

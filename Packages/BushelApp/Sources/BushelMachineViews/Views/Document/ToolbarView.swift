@@ -8,7 +8,7 @@
   import Foundation
   import SwiftUI
 
-  struct ToolbarView: View {
+  internal struct ToolbarView: View {
     let url: URL?
     let canSaveSnapshot: Bool
     let canStart: Bool

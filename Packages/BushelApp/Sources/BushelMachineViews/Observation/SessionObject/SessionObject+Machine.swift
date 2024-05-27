@@ -33,13 +33,15 @@ import BushelMachine
       self.machineObject?.canRequestStop ?? false
     }
 
-    func begin(_ closure: @escaping @Sendable (any BushelMachine.Machine) async throws -> Void) {
-      guard let machine = machineObject?.machine else {
-        assertionFailure("Missing machine to start with.")
-        return
-      }
+    nonisolated func begin(
+      _ closure: @escaping @Sendable (any BushelMachine.Machine) async throws -> Void
+    ) {
       Task {
         @MainActor in
+        guard let machine = machineObject?.machine else {
+          assertionFailure("Missing machine to start with.")
+          return
+        }
         do {
           try await closure(machine)
         } catch {
@@ -48,14 +50,14 @@ import BushelMachine
       }
     }
 
-    func beginShutdown() {
+    nonisolated func beginShutdown() {
       self.begin {
         try await $0.requestStop()
       }
     }
 
     func beginForceRestart() {
-      self.begin { machine in
+      self.begin { @MainActor machine in
         self.isRestarting = true
         try await machine.stop()
         try await machine.start()

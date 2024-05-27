@@ -75,7 +75,7 @@
       self.window = window ?? self.window
     }
 
-    @MainActor func updateWindowSize() {
+    func updateWindowSize() {
       guard !self.initializedWindowSize else {
         return
       }

@@ -7,7 +7,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct SocialLinkView: View {
+  internal struct SocialLinkView: View {
     @Environment(\.openURL) var openURL
     let imageName: String
     let title: String

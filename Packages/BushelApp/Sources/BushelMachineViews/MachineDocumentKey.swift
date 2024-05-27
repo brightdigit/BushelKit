@@ -11,7 +11,7 @@
   import SwiftData
   import SwiftUI
 
-  struct MachineDocumentKey: FocusedValueKey {
+  internal struct MachineDocumentKey: FocusedValueKey {
     typealias Value = DocumentObject
   }
 

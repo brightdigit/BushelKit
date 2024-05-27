@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct SnapshotTableView: View {
+  internal struct SnapshotTableView: View {
     @State private var sortOrder = [
       KeyPathComparator(\Snapshot.createdAt, order: .reverse)
     ]

@@ -6,8 +6,9 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
+  @MainActor
   @Observable
-  final class BindableSnapshotObject: Sendable {
+  internal final class BindableSnapshotObject: Sendable {
     let snapshot: @Sendable () async -> Bindable<SnapshotObject>?
     var bindableSnapshot: Bindable<SnapshotObject>?
 

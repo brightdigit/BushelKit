@@ -9,7 +9,7 @@
   import SwiftData
   import SwiftUI
 
-  struct DebugDatabaseView: View {
+  internal struct DebugDatabaseView: View {
     @Query var bookmarks: [BookmarkData]
     @Query var libraries: [LibraryEntry]
     @Query(filter: #Predicate<LibraryImageEntry> {

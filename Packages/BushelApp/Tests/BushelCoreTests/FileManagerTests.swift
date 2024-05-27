@@ -7,7 +7,7 @@
 import BushelCoreWax
 import XCTest
 
-final class FileManagerTests: XCTestCase {
+internal final class FileManagerTests: XCTestCase {
   // Skipped, because cannot be tested.
 //  func testSuccessfulCreateFile() throws {
 //    let sut = FileManager.default

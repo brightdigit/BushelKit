@@ -17,8 +17,7 @@
   #else
     import Logger
   #endif
-
-  struct RecentDocument: Identifiable {
+  internal struct RecentDocument: Identifiable, Sendable {
     let id: UUID
     let url: URL
     let name: String
@@ -30,18 +29,19 @@
   extension RecentDocument {
     init?(
       bookmarkData: BookmarkData,
-      logger: Logger,
+      logger: @Sendable @escaping @autoclosure () -> Logger,
       using database: any Database,
-      fileManager: FileManager = .default
+      fileManager: @Sendable () -> FileManager = { .default }
     ) async {
       let bookmarkID = bookmarkData.bookmarkID
       let updatedAt = bookmarkData.updatedAt
+      let logger = logger()
       guard let url = await Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: database) else {
         return nil
       }
 
       do {
-        guard try fileManager.relationship(of: .trashDirectory, toItemAt: url) == .other else {
+        guard try fileManager().relationship(of: .trashDirectory, toItemAt: url) == .other else {
           return nil
         }
       } catch {
@@ -61,22 +61,13 @@
     }
 
     static func fetchURL(
-      forBookmark originBookmark: BookmarkData,
+      forBookmark bookmark: BookmarkData,
       logger: Logger,
       using database: any Database
     ) async -> URL? {
       let url: URL
-
-      let bookmark: BookmarkData
       do {
-        bookmark = try await database.switchContextFor(model: originBookmark)
-      } catch {
-        logger.error("Unable to switch context with database.")
-        assertionFailure(error: error)
-        return nil
-      }
-      do {
-        url = try await bookmark.fetchURL(using: database, withURL: nil)
+        url = try await bookmark.fetchURL(using: database)
       } catch let error as NSError where error.code == 259 {
         logger.notice("Removing invalid bookmark: \(bookmark.path)")
         await database.delete(bookmark)

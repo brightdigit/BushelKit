@@ -10,7 +10,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  public struct OpenFilePanel<FileType: FileTypeSpecification> {
+  public struct OpenFilePanel<FileType: FileTypeSpecification>: Sendable {
     public init() {}
 
     public init(_: FileType.Type) {}
@@ -32,8 +32,7 @@
   }
 
   extension OpenWindowAction {
-    @MainActor
-    public func callAsFunction(_ valueType: (some FileTypeSpecification).Type) {
+    @MainActor public func callAsFunction(_ valueType: (some FileTypeSpecification).Type) {
       OpenFilePanel(valueType)(with: self)
     }
   }

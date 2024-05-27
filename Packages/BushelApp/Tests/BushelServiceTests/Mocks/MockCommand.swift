@@ -7,7 +7,7 @@
   @testable import BushelService
   import Foundation
 
-  struct MockCommand: Command {
+  internal struct MockCommand: Command {
     let message: MockMessage
     let error: MockError
     internal init(message: MockMessage = .init(), error: MockError = .init()) {

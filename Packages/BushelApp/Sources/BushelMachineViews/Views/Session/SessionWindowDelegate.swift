@@ -9,10 +9,8 @@
   import Foundation
 
   @MainActor
-  class SessionWindowDelegate: NSObject, NSWindowDelegate, Loggable {
-    static var loggingCategory: BushelLogging.Category {
-      .view
-    }
+  internal class SessionWindowDelegate: NSObject, NSWindowDelegate, Loggable {
+    nonisolated static let loggingCategory: BushelLogging.Category = .view
 
     // swiftlint:disable:next implicitly_unwrapped_optional
     weak var object: SessionObject!
@@ -52,7 +50,9 @@
     }
 
     deinit {
-      object.windowDelegate = nil
+      MainActor.assumeIsolated {
+        object.windowDelegate = nil
+      }
     }
   }
 #endif

@@ -36,7 +36,7 @@
     private let label: @Sendable (TitleType) -> Label
     private let bounds: ClosedRange<Float>
     private let step: Float
-    private let content: @Sendable (TitleType) -> Content
+    private let content: @Sendable @MainActor (TitleType) -> Content
     @Binding private var value: Float
 
     public var body: some View {
@@ -73,7 +73,7 @@
       value: Binding<Float>,
       bounds: ClosedRange<Float>,
       step: Float,
-      content: @escaping @Sendable (TitleType) -> Content
+      content: @escaping @MainActor @Sendable (TitleType) -> Content
     ) {
       self.title = title
       self.label = label

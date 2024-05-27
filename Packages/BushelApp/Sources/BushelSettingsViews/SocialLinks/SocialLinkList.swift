@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct SocialLinkList<LabelType: View>: View {
+  internal struct SocialLinkList<LabelType: View>: View {
     let items: [SocialLink]
     let alignment: HorizontalAlignment
     let header: () -> LabelType

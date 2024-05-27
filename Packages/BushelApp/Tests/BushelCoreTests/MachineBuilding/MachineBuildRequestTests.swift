@@ -6,7 +6,7 @@
 @testable import BushelCore
 import XCTest
 
-final class MachineBuildRequestTests: XCTestCase {
+internal final class MachineBuildRequestTests: XCTestCase {
   func testNillMachineRestoreImageIdentifier() {
     let sut = MachineBuildRequest(restoreImage: nil)
 

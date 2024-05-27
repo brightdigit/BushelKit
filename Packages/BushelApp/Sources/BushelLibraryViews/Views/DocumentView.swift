@@ -14,6 +14,7 @@
   import Observation
   import SwiftUI
 
+  @MainActor
   internal struct DocumentView: View, Loggable {
     @Environment(\.librarySystemManager) private var librarySystemManager
     @Environment(\.database) private var database

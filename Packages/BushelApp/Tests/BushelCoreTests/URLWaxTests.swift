@@ -6,7 +6,7 @@
 @testable import BushelCore
 import XCTest
 
-final class URLWaxTests: XCTestCase {
+internal final class URLWaxTests: XCTestCase {
   func testRandomHTTP() {
     let sut = URL.randomHTTP()
 

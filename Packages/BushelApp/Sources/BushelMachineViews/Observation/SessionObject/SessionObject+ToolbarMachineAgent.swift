@@ -13,29 +13,32 @@ import BushelMachine
       self.canRequestStop
     }
 
-    func start() {
+    nonisolated func start() {
       self.begin {
         try await $0.start()
       }
     }
 
-    func pause() {
+    nonisolated func pause() {
       self.begin {
         try await $0.pause()
       }
     }
 
-    func resume() {
+    nonisolated func resume() {
       self.begin {
         try await $0.resume()
       }
     }
 
-    func snapshot(_ request: BushelMachine.SnapshotRequest, options: BushelMachine.SnapshotOptions) {
+    nonisolated func snapshot(
+      _ request: BushelMachine.SnapshotRequest,
+      options: BushelMachine.SnapshotOptions
+    ) {
       self.startSnapshot(request, options: options)
     }
 
-    func pressPowerButton() {
+    nonisolated func pressPowerButton() {
       self.beginShutdown()
     }
   }

@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  struct AboutPurchaseView<PurchaseScreenValue: Codable & Hashable>: View {
+  internal struct AboutPurchaseView<PurchaseScreenValue: Codable & Hashable>: View {
     @Environment(\.openWindow) var openWindow
     let subscriptionEndDate: Date?
     let purchaseScreenValue: PurchaseScreenValue

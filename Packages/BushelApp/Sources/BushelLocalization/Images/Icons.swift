@@ -55,7 +55,7 @@ public enum Icons {
     case mp3 = "092-mp3"
   }
 
-  enum California: String, Icon, CaseIterable {
+  internal enum California: String, Icon, CaseIterable {
     static let namespace: String = "Icons/California"
 
     case sanDiego = "054-san-diego"
@@ -72,7 +72,7 @@ public enum Icons {
     case kitty = "080-kitty"
   }
 
-  enum Fruit: String, Icon {
+  internal enum Fruit: String, Icon {
     static let namespace: String = "Icons/Fruit"
     case apple = "023-apple"
     case apple001 = "024-apple-1"

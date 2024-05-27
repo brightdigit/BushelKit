@@ -78,7 +78,7 @@
       _ snapshot: Snapshot,
       machine: MachineEntry,
       database: any Database,
-      withOS osInstalled: (any OperatingSystemInstalled)? = nil
+      withOS osInstalled: OperatingSystemVersionComponents? = nil
     ) async throws {
       self.init(
         name: snapshot.name,
@@ -99,7 +99,7 @@
       _ snapshot: Snapshot,
       machine: MachineEntry,
       database: any Database,
-      withOS osInstalled: (any OperatingSystemInstalled)? = nil
+      withOS osInstalled: OperatingSystemVersionComponents? = nil
     ) async throws {
       self.snapshotID = snapshot.id
       self.createdAt = snapshot.createdAt

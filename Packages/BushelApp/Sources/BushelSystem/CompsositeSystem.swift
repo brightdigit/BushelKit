@@ -7,7 +7,7 @@ import BushelHub
 import BushelLibrary
 import BushelMachine
 
-struct CompsositeSystem: System {
+internal struct CompsositeSystem: System {
   let libraryClosure: (@Sendable () -> any LibrarySystem)?
   let machineClosure: (@Sendable () -> any MachineSystem)?
   let hubsClosure: (@Sendable () -> [Hub])?

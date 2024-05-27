@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-enum PageType: Identifiable {
+internal enum PageType: Identifiable {
   case item(PageItem)
   case features([FeatureItem])
 

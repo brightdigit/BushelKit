@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct SocialLinkListHeader: View {
+  internal struct SocialLinkListHeader: View {
     let titleID: any LocalizedID
     var body: some View {
       Text(titleID).textCase(.lowercase).italic().fontWeight(.thin)

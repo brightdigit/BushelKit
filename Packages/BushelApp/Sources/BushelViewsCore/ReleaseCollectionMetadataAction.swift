@@ -11,7 +11,7 @@
 
   private enum DefaultReleaseCollectionProvider: ReleaseCollectionMetadata {
     case value
-    enum InstallerReleaseType: InstallerRelease {
+    internal enum InstallerReleaseType: InstallerRelease {
       var majorVersion: Int {
         self.id
       }

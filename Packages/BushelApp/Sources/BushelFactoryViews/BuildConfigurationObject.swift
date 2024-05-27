@@ -12,13 +12,14 @@
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @Observable
   internal final class BuildConfigurationObject: Loggable, Sendable, MachineConfigurable {
-    internal static let loggingCategory: BushelLogging.Category = .observation
+    internal nonisolated static let loggingCategory: BushelLogging.Category = .observation
 
     internal let system: VMSystemID
 
-    internal var presentFileExporter = false
+    @MainActor internal var presentFileExporter = false
 
     @ObservationIgnored
     private var labelProvider: MetadataLabelProvider?
@@ -155,10 +156,10 @@
     }
 
     @discardableResult
-    internal func prepareBuild() -> Bool {
+    internal func prepareBuild() async -> Bool {
       let machineConfiguration: MachineConfiguration
       do {
-        machineConfiguration = try MachineConfiguration(configurable: self)
+        machineConfiguration = try await MachineConfiguration(configurable: self)
       } catch let error as ConfigurationError {
         Self.logger.error("Error preparing build: \(self.withError(error))")
         return false

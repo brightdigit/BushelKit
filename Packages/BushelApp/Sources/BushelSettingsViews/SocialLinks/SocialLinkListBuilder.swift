@@ -4,7 +4,7 @@
 //
 
 @resultBuilder
-enum SocialLinkListBuilder {
+internal enum SocialLinkListBuilder {
   static func buildPartialBlock(first: SocialLink) -> [SocialLink] {
     [first]
   }

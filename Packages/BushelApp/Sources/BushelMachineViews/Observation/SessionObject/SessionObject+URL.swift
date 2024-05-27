@@ -7,7 +7,9 @@
 
   import BushelCore
   import BushelDataCore
+  import BushelDataMonitor
   import BushelMachine
+  import Combine
   import Foundation
   import SwiftData
 
@@ -18,11 +20,12 @@
       restoreImageDBfrom: @escaping (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
-
-      labelProvider: @escaping MetadataLabelProvider
+      labelProvider: @escaping MetadataLabelProvider,
+      databasePublisherFactory: @escaping @Sendable (String) -> some Publisher<any DatabaseChangeSet, Never>
     ) async {
       do {
         self.machineObject = try await MachineObject(
+          id: "session",
           parent: self,
           configuration: .init(
             url: url,
@@ -30,7 +33,8 @@
             systemManager: systemManager,
             snapshotterFactory: snapshotFactory,
             installerImageRepositoryFrom: restoreImageDBfrom,
-            labelProvider: labelProvider
+            labelProvider: labelProvider,
+            databasePublisherFactory: databasePublisherFactory
           )
         )
         self.url = url

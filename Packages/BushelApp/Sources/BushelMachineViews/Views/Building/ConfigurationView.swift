@@ -18,7 +18,8 @@
   import SwiftData
   import SwiftUI
 
-  // swiftlint:disable:next type_body_length
+  // swiftlint:disable type_body_length
+  @MainActor
   public struct ConfigurationView: View, Loggable {
     @Binding var buildRequest: MachineBuildRequest?
     @State var buildResult: Result<URL, BuilderError>?
@@ -254,7 +255,11 @@
           )
         }
         .sheet(item: self.$object.builder, content: { builder in
-          InstallerView(buildResult: self.$buildResult, builder: builder.builder)
+          InstallerView(
+            buildResult: self.$buildResult,
+            builder: builder.builder
+          )
+          .fixedSize(horizontal: true, vertical: true)
         })
         .sheet(isPresented: self.$object.presentImageSelection, content: {
           ImageListSelectionView(
@@ -295,7 +300,15 @@
     }
   }
 
+  // swiftlint:enable type_body_length
+
   extension ConfigurationView {
+    init(request: Binding<MachineBuildRequest?>, system: any MachineSystem) {
+      let object = ConfigurationObject(configuration: .init(request: request.wrappedValue, system: system))
+      self.init(request: request, object: object)
+    }
+
+    @available(*, deprecated, message: "Pass the MachineSystem as well.")
     init(request: Binding<MachineBuildRequest?>) {
       let object = ConfigurationObject(configuration: .init(request: request.wrappedValue))
       self.init(request: request, object: object)

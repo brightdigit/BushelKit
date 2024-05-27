@@ -60,15 +60,23 @@
     }
 
     public func fetch<T>(
-      _ descriptor: FetchDescriptor<T>
+      _ selectDescriptor: @escaping @Sendable () -> FetchDescriptor<T>
+    ) async throws -> [T] where T: Sendable, T: PersistentModel {
+      assert(isMainThread: false)
+      Self.logger.debug("Fetch begun: \(T.self)")
+      return try self.modelContext.fetch(selectDescriptor())
+    }
+
+    public func fetch<T>(
+      _ selectDescriptor: FetchDescriptor<T>
     ) async throws -> [T] where T: PersistentModel & Sendable {
       assert(isMainThread: false)
       Self.logger.debug("Fetch begun: \(T.self)")
-      return try self.modelContext.fetch(descriptor)
+      return try self.modelContext.fetch(selectDescriptor)
     }
 
-    public func contextMatchesModel(_ model: some PersistentModel) async -> Bool {
-      model.modelContext == self.modelContext
+    public func contextMatchesModel(_: some PersistentModel) async -> Bool {
+      true
     }
   }
 #endif

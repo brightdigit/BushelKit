@@ -20,7 +20,7 @@
 
       let libraryURL: URL
       do {
-        libraryURL = try await bookmarkData.fetchURL(using: database, withURL: nil)
+        libraryURL = try await bookmarkData.fetchURL(using: database)
       } catch {
         throw try BookmarkedErrorType.bookmarkError(error)
       }

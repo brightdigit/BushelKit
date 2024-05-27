@@ -11,6 +11,7 @@
   import SwiftUI
 
   extension Scene {
+    @MainActor
     public func marketplace(
       onChangeOf scenePhase: ScenePhase,
       for groupIDs: [String] = MarketplaceSettings.default.groupIDs

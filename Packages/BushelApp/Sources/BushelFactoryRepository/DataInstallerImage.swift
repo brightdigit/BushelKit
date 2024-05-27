@@ -49,7 +49,7 @@
         assertionFailure(error: error)
         throw error
       }
-      let libraryURL = try await bookmarkData.fetchURL(using: database, withURL: nil)
+      let libraryURL = try await bookmarkData.fetchURL(using: database)
       guard libraryURL.startAccessingSecurityScopedResource() else {
         let error = InstallerImageError(
           imageID: imageID,
@@ -74,17 +74,14 @@
       database: any Database,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws {
-      var imagePredicate = FetchDescriptor<LibraryImageEntry>(
-        predicate: #Predicate { $0.imageID == id }
-      )
-      imagePredicate.fetchLimit = 1
-      guard let images = try await database.fetch(imagePredicate).first else {
+      let entry: LibraryImageEntry? = try await database.first(where: #Predicate { $0.imageID == id })
+      guard let entry else {
         return nil
       }
-      guard images.library != nil else {
+      guard entry.library != nil else {
         return nil
       }
-      self.init(entry: images, database: database, labelProvider)
+      self.init(entry: entry, database: database, labelProvider)
     }
 
     internal convenience init?(
@@ -98,8 +95,10 @@
       )
 
       libraryPredicate.fetchLimit = 1
-      let items = try await database.fetch(libraryPredicate)
-      guard let library = items.first else {
+      let library: LibraryEntry? = try await database.first(
+        where: #Predicate { $0.bookmarkDataID == bookmarkDataID }
+      )
+      guard let library else {
         return nil
       }
       guard let images = library.images?.first(where: { $0.imageID == id }) else {

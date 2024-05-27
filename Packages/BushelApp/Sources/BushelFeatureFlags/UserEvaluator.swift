@@ -32,7 +32,7 @@ public actor UserEvaluator {
 
     for (_, registration) in registrations {
       avialableValues.formUnion(type(of: registration).evaluatingValue)
-      audienceMatches.formUnion(registration.evaluateValue(for: audience))
+      await audienceMatches.formUnion(registration.evaluateValue(for: audience))
     }
 
     assert(avialableValues == .availableValues)

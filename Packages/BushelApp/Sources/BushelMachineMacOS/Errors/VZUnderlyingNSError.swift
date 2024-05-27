@@ -6,7 +6,7 @@
 #if canImport(Virtualization)
   import Virtualization
 
-  struct VZUnderlyingNSError: VZUnderlyingError {
+  internal struct VZUnderlyingNSError: VZUnderlyingError {
     let domain: VZError.UnderlyingError.Domain
 
     let code: VZError.UnderlyingError.Code

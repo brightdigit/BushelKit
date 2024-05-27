@@ -6,6 +6,7 @@
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import BushelData
+  import BushelFeedbackEnvironment
   import BushelLocalization
   import BushelViewsCore
   import StoreKit
@@ -19,21 +20,30 @@
       @Environment(\.openURL) private var openURL
       @Environment(\.openWindow) private var openWindow
       @Environment(\.onboardingWindow) private var onboardingWindow
+      @Environment(\.userFeedback) private var userFeedbackEnabled
+      @Environment(\.provideFeedback) private var provideFeedback
       @Environment(\.requestReview) private var requestReview
 
       public var body: some View {
-        Button(openURL, URL.bushel.contactMailTo) {
-          Text(.contactUs)
-        }
-        Button(.requestReview) {
-          requestReview()
-        }
-        Button(.menuOnboarding) {
-          openWindow(value: onboardingWindow)
-        }
-        Divider()
-        Button(openURL, URL.bushel.support) {
-          Text(.menuHelpBushel)
+        Group {
+          Button(openURL, URL.bushel.contactMailTo) {
+            Text(.contactUs)
+          }
+          Button(.requestReview) {
+            requestReview()
+          }
+          Button(.menuOnboarding) {
+            openWindow(value: onboardingWindow)
+          }
+          if userFeedbackEnabled.value {
+            Button(.menuProvideFeedback) {
+              openWindow(value: provideFeedback)
+            }
+          }
+          Divider()
+          Button(openURL, URL.bushel.support) {
+            Text(.menuHelpBushel)
+          }
         }
       }
     }

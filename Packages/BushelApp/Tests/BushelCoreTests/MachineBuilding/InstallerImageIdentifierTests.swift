@@ -6,7 +6,7 @@
 @testable import BushelCore
 import XCTest
 
-final class InstallerImageIdentifierTests: XCTestCase {
+internal final class InstallerImageIdentifierTests: XCTestCase {
   func testFailedInitializeFromEmptyString() {
     let sut = InstallerImageIdentifier(string: "")
 

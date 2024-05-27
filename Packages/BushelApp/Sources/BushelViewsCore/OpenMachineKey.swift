@@ -25,12 +25,14 @@
 
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {
+    @MainActor
     public func openMachine(
       _ closure: @escaping @MainActor @Sendable (OpenWindowAction) -> Void
     ) -> some View {
       environment(\.openMachine, .init(closure: closure))
     }
 
+    @MainActor
     public func openMachine<FileType: FileTypeSpecification>(
       _: FileType.Type
     ) -> some View {
@@ -41,16 +43,20 @@
   }
 
   extension Scene {
+    @MainActor
     public func openMachine(
       _ closure: @escaping @MainActor @Sendable (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.openMachine, .init(closure: closure))
     }
 
+    @MainActor
     public func openMachine<FileType: FileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {
-      openMachine(OpenFilePanel<FileType>().callAsFunction(with:))
+      openMachine { action in
+        OpenFilePanel<FileType>().callAsFunction(with: action)
+      }
     }
   }
 

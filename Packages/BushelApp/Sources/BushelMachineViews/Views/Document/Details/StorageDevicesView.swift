@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct StorageDevicesView: View {
+  internal struct StorageDevicesView: View {
     let storageDevice: MachineStorageSpecification
     var body: some View {
       MachineSpecView(
@@ -23,7 +23,7 @@
     }
   }
 
-  struct StorageDevicesView_Previews: PreviewProvider {
+  internal struct StorageDevicesView_Previews: PreviewProvider {
     static var previews: some View {
       StorageDevicesView(
         storageDevice:

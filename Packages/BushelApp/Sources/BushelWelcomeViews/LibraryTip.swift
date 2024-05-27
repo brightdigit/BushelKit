@@ -9,7 +9,7 @@
   import TipKit
 
   @available(*, unavailable)
-  struct LibraryTip: Tip {
+  internal struct LibraryTip: Tip {
     var title: Text {
       Text(.tipLibraryTitle)
     }

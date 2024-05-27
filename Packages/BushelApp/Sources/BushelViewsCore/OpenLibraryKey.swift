@@ -25,16 +25,20 @@
   }
 
   extension Scene {
+    @MainActor
     public func openLibrary(
-      _ closure: @escaping @MainActor (OpenWindowAction) -> Void
+      _ closure: @escaping @Sendable @MainActor (OpenWindowAction) -> Void
     ) -> some Scene {
       environment(\.openLibrary, .init(closure: closure))
     }
 
+    @MainActor
     public func openLibrary<FileType: FileTypeSpecification>(
       _: FileType.Type
     ) -> some Scene {
-      openLibrary(OpenFilePanel<FileType>().callAsFunction(with:))
+      openLibrary { action in
+        OpenFilePanel<FileType>().callAsFunction(with: action)
+      }
     }
   }
 

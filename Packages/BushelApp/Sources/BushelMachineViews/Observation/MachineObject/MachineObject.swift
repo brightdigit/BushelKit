@@ -10,14 +10,17 @@
   import BushelLogging
   import BushelMachine
 
+  import BushelDataMonitor
   import BushelMachineData
   import BushelScreenCore
   import BushelViewsCore
+  import Combine
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @Observable
-  final class MachineObject: Loggable, Sendable {
+  internal final class MachineObject: Loggable, Sendable {
     typealias Machine = (any BushelMachine.Machine)
 
     var machine: Machine {
@@ -78,6 +81,10 @@
 
     let snapshotFactory: any SnapshotProvider
 
+    let databaseChangePublicist: AnyPublisher<any DatabaseChangeSet, Never>
+
+    var cancellable: AnyCancellable?
+
     weak var parent: (any MachineObjectParent)?
 
     var error: MachineError? {
@@ -98,7 +105,8 @@
       label: MetadataLabel,
       database: any Database,
       systemManager: any MachineSystemManaging,
-      snapshotFactory: any SnapshotProvider
+      snapshotFactory: any SnapshotProvider,
+      databaseChangePublicist: AnyPublisher<any DatabaseChangeSet, Never>
     ) {
       self.parent = parent
       self.machine = machine
@@ -107,6 +115,7 @@
       self.database = database
       self.systemManager = systemManager
       self.snapshotFactory = snapshotFactory
+      self.databaseChangePublicist = databaseChangePublicist
 
       self.observationID = machine.beginObservation { change in
         Task { @MainActor in
@@ -115,6 +124,15 @@
       }
       Task { @MainActor in
         self.machineUpdated(machine)
+      }
+
+      self.cancellable = self.databaseChangePublicist.compactMap { update in
+        Self.logger.debug("Received Database Update")
+        return update.update(contains: ["SnapshotEntry"]) ? () : nil
+      }
+      .receive(on: DispatchQueue.main)
+      .sink {
+        self.refreshSnapshots()
       }
     }
 
@@ -153,6 +171,7 @@
     }
 
     convenience init(
+      id: String,
       parent: any MachineObjectParent,
       configuration: MachineObjectConfiguration
     ) async throws {
@@ -160,6 +179,7 @@
         configuration: configuration
       )
       let entry: MachineEntry = try await .basedOnComponents(components)
+      let databaseChangePublicist = configuration.databasePublisherFactory(id).eraseToAnyPublisher()
       self.init(
         parent: parent,
         machine: components.machine,
@@ -167,7 +187,8 @@
         label: components.label,
         database: configuration.database,
         systemManager: configuration.systemManager,
-        snapshotFactory: configuration.snapshotFactory
+        snapshotFactory: configuration.snapshotFactory,
+        databaseChangePublicist: databaseChangePublicist
       )
     }
   }

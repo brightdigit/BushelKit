@@ -10,9 +10,10 @@
   import BushelLogging
   import Foundation
 
+  @MainActor
   @Observable
   internal final class HubObject: Loggable, Sendable {
-    internal static var loggingCategory: BushelLogging.Category {
+    internal nonisolated static var loggingCategory: BushelLogging.Category {
       .observation
     }
 

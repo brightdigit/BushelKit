@@ -17,7 +17,7 @@
   import SwiftUI
 
   extension MachineObject {
-    struct DeleteSnapshotRequest: Sendable {
+    internal struct DeleteSnapshotRequest: Sendable {
       static var loggingCategory: BushelLogging.Category {
         .machine
       }
@@ -52,7 +52,7 @@
       }
     }
 
-    struct SnapshotSelection {
+    internal struct SnapshotSelection {
       internal init(id: Snapshot.ID, configurationURL: URL, index: Int) {
         self.id = id
         self.configurationURL = configurationURL
@@ -153,11 +153,7 @@
       }
 
       do {
-        return try await database.fetch(
-          FetchDescriptor<SnapshotEntry>(
-            predicate: #Predicate { $0.snapshotID == id }
-          )
-        ).first
+        return try await database.first(where: #Predicate { $0.snapshotID == id })
       } catch {
         Self.logger.error("Error fetching entry \(selection.id) from database: \(error)")
         assertionFailure(error: error)
@@ -218,25 +214,31 @@
       self.machine = machine
     }
 
-    func queueRestoringSnapshot(_ snapshot: Snapshot) {
-      confirmingRestoreSnapshot = snapshot
-      presentRestoreConfirmation = true
+    nonisolated func queueRestoringSnapshot(_ snapshot: Snapshot) {
+      Task { @MainActor in
+        confirmingRestoreSnapshot = snapshot
+        presentRestoreConfirmation = true
+      }
     }
 
-    func queueDeletingSnapshot(_ snapshot: Snapshot) {
-      confirmingRemovingSnapshot = snapshot
-      presentDeleteConfirmation = true
+    nonisolated func queueDeletingSnapshot(_ snapshot: Snapshot) {
+      Task { @MainActor in
+        confirmingRemovingSnapshot = snapshot
+        presentDeleteConfirmation = true
+      }
     }
 
-    func queueExportingSnapshot(_ snapshot: Snapshot) {
-      self.exportingSnapshot = (
-        snapshot,
-        CodablePackageDocument(configuration: self.machine.configuration)
-      )
-      self.presentExportingSnapshot = true
+    nonisolated func queueExportingSnapshot(_ snapshot: Snapshot) {
+      Task { @MainActor in
+        self.exportingSnapshot = (
+          snapshot,
+          CodablePackageDocument(configuration: self.machine.configuration)
+        )
+        self.presentExportingSnapshot = true
+      }
     }
 
-    func deleteSnapshot(_ snapshot: Snapshot?, at url: URL?) {
+    nonisolated func deleteSnapshot(_ snapshot: Snapshot?, at url: URL?) {
       Task {
         await self.deletingSnapshot(snapshot, at: url)
       }
@@ -271,9 +273,11 @@
       self.confirmingRemovingSnapshot = nil
     }
 
-    func cancelDeleteSnapshot(_ snapshot: Snapshot?) {
-      assert(snapshot?.id == confirmingRemovingSnapshot?.id)
-      self.confirmingRemovingSnapshot = nil
+    nonisolated func cancelDeleteSnapshot(_ snapshot: Snapshot?) {
+      Task { @MainActor in
+        assert(snapshot?.id == confirmingRemovingSnapshot?.id)
+        self.confirmingRemovingSnapshot = nil
+      }
     }
 
     func syncronizeSnapshots(at url: URL, options: SnapshotSyncronizeOptions) async throws {
@@ -307,14 +311,14 @@
       }
     }
 
-    func beginRestoreSnapshot(
+    nonisolated func beginRestoreSnapshot(
       _ snapshot: Snapshot,
       at url: URL,
       takeCurrentSnapshot request: SnapshotRequest?
     ) {
-      assert(snapshot.id == confirmingRestoreSnapshot?.id)
-      currentOperation = .restoringSnapshot(snapshot)
-      Task {
+      Task { @MainActor in
+        assert(snapshot.id == confirmingRestoreSnapshot?.id)
+        currentOperation = .restoringSnapshot(snapshot)
         defer {
           currentOperation = nil
         }
@@ -385,12 +389,15 @@
       }
     }
 
-    func cancelRestoreSnapshot(_ snapshot: Snapshot) {
-      assert(snapshot.id == confirmingRestoreSnapshot?.id)
-      self.confirmingRestoreSnapshot = nil
+    nonisolated func cancelRestoreSnapshot(_ snapshot: Snapshot) {
+      Task { @MainActor in
+        assert(snapshot.id == confirmingRestoreSnapshot?.id)
+        self.confirmingRestoreSnapshot = nil
+      }
     }
 
     func refreshSnapshots() {
+      Self.logger.debug("Refreshing Snapshots")
       self.snapshotIDs = self.machine.configuration.snapshots.map(\.id)
     }
   }

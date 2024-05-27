@@ -22,12 +22,14 @@ import BushelMachine
       }
     }
 
-    func startSnapshot(_ request: SnapshotRequest, options: SnapshotOptions) {
-      guard let machineObject, let url else {
-        assertionFailure("Missing machine or url.")
-        return
+    nonisolated func startSnapshot(_ request: SnapshotRequest, options: SnapshotOptions) {
+      Task { @MainActor in
+        guard let machineObject, let url else {
+          assertionFailure("Missing machine or url.")
+          return
+        }
+        machineObject.beginSavingSnapshot(request, options: options, at: url)
       }
-      machineObject.beginSavingSnapshot(request, options: options, at: url)
     }
 
     func beginSnapshot() {

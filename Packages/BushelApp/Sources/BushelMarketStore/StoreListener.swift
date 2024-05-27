@@ -4,12 +4,13 @@
 //
 
 #if canImport(StoreKit)
+  import BushelCore
   import BushelLogging
   import BushelMarket
   import Foundation
   import StoreKit
 
-  public final class StoreListener: Loggable, MarketListener, Sendable {
+  public final actor StoreListener: Loggable, MarketListener {
     public static var loggingCategory: BushelLogging.Category {
       .market
     }
@@ -22,7 +23,7 @@
     public init() {}
 
     private static func listenerFor(_ marketplace: StoreListener) -> Task<Void, Never> {
-      Task {
+      Task { [marketplace] in
         for await update in StoreKit.Transaction.updates {
           if let transaction = try? update.payloadValue {
             await marketplace.updateSubscriptionStatus()
@@ -74,21 +75,31 @@
       }
     }
 
-    public func initialize(for observer: any MarketObserver) {
+    public nonisolated func initialize(for observer: any MarketObserver) {
+      Task {
+        await self.initializeObserver(observer)
+      }
+    }
+
+    private func initializeObserver(_ observer: any MarketObserver) {
       self.observer = observer
       self.updateListener = Self.listenerFor(self)
 
       self.invalidate()
     }
 
-    public func invalidate() {
+    public nonisolated func invalidate() {
       Task {
-        if !hasCurrentEntitlements {
-          await self.updateCurrentEntitlements()
-          self.hasCurrentEntitlements = true
-        }
-        await self.updateSubscriptionStatus()
+        await self.awaitInvalidate()
       }
+    }
+
+    private func awaitInvalidate() async {
+      if !hasCurrentEntitlements {
+        await self.updateCurrentEntitlements()
+        self.hasCurrentEntitlements = true
+      }
+      await self.updateSubscriptionStatus()
     }
 
     private func updateSubscriptionStatus() async {
@@ -113,7 +124,7 @@
     }
 
     func updateCurrentEntitlements() async {
-      let subscriptions = await Transaction.currentEntitlements.compactMap { result -> Subscription? in
+      let sequence = Transaction.currentEntitlements.compactMap { result -> Subscription? in
         guard let transaction = try? result.payloadValue else {
           return nil
         }
@@ -121,10 +132,14 @@
         await transaction.finish()
         return subscription
       }
-      .reduce(
-        into: [Subscription]()
-      ) { partialResult, subscription in
-        partialResult.append(subscription)
+      let feed = AsyncReducer(sequence: sequence)
+      let subscriptions: [Subscription]
+      do {
+        subscriptions = try await feed.elements
+      } catch {
+        assertionFailure(error: error)
+        Self.logger.error("Unable to get subscriptions: \(error)")
+        return
       }
       observer?.onSubscriptionUpdate(.success(subscriptions))
     }
@@ -134,4 +149,5 @@
       self.updateListener = nil
     }
   }
+
 #endif

@@ -140,5 +140,6 @@ public
 Docker/*/www
 !Docker/*/www/.gitkeep
 .package.source
+.vscode
 
 !FeatureFlagsApp/FeatureFlagsApp.xcodeproj

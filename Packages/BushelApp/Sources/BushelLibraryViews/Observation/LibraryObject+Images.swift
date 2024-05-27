@@ -51,7 +51,7 @@
         timeInterval: 1.0,
         logger: Self.logger
       )
-      await setProgress(
+      setProgress(
         .init(system: system, metadata: imageFile.metadata, operation: progress)
       )
 

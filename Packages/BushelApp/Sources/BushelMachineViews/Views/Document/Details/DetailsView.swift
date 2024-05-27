@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct DetailsView: View {
+  internal struct DetailsView: View {
     var machineObject: MachineObject?
     var body: some View {
       HStack {

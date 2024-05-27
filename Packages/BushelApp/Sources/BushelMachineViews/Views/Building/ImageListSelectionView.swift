@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  struct ImageListSelectionView: View {
+  internal struct ImageListSelectionView: View {
     let images: [ConfigurationImage]?
 
     @State var promptForLibrary = false

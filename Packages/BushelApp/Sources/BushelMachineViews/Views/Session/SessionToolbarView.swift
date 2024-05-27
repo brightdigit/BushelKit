@@ -11,7 +11,8 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct SessionToolbarView: View {
+  @MainActor
+  internal struct SessionToolbarView: View {
     @Binding var screenSettings: ScreenSettings
     @Binding var sessionAutomaticSnapshotsEnabled: Bool
     @Binding var keepWindowOpenOnShutdown: Bool

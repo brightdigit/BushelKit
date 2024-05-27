@@ -28,23 +28,16 @@
     ) async throws {
       let bookmarkData: BookmarkData
       bookmarkData = try await BookmarkData.resolveURL(url, with: database)
-
       let bookmarkDataID = bookmarkData.bookmarkID
-      var libraryPredicate = FetchDescriptor<LibraryEntry>(
-        predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID }
-      )
-
-      libraryPredicate.fetchLimit = 1
-
-      let items: [LibraryEntry]
+      let item: LibraryEntry?
       do {
-        items = try await database.fetch(libraryPredicate)
+        item = try await database.first(where: #Predicate { $0.bookmarkDataID == bookmarkDataID })
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }
 
       let components = try await Components(
-        item: items.first,
+        item: item,
         bookmarkData: bookmarkData,
         url: url,
         withDatabase: database,
@@ -72,7 +65,7 @@
       _ request: ImportRequest,
       setProgressWith setProgress:
       @MainActor @Sendable @escaping (ProgressOperationView.Properties?) -> Void,
-      onError: @escaping @Sendable (any Error) -> Void
+      onError: @MainActor @escaping @Sendable (any Error) -> Void
     ) {
       Task {
         do {

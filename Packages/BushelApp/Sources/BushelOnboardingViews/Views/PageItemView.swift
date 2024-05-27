@@ -9,7 +9,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct PageItemView: View {
+  internal struct PageItemView: View {
     @Environment(\.nextPage) var nextPage
 
     let titleID: LocalizedStringID

@@ -12,8 +12,9 @@
   import Observation
   import SwiftData
 
+  @MainActor
   @Observable
-  final class ConfigurationObject: Loggable, Sendable {
+  internal final class ConfigurationObject: Loggable, Sendable {
     var sheetSelectedRestoreImageID: UUID? {
       didSet {
         self.configuration.restoreImageID = sheetSelectedRestoreImageID

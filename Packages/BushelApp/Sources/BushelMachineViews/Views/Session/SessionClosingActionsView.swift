@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct SessionClosingActionsView: View {
+  internal struct SessionClosingActionsView: View {
     @Environment(\.purchaseWindow) var purchaseWindow
     @Environment(\.marketplace) var marketplace
     @Environment(\.openWindow) var openWindow

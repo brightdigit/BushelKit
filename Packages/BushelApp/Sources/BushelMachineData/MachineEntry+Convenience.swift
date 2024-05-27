@@ -15,7 +15,7 @@
     public convenience init(
       url: URL,
       machine: any Machine,
-      osInstalled: (any OperatingSystemInstalled)?,
+      osInstalled: OperatingSystemVersionComponents?,
       restoreImageID: UUID,
       name: String,
       createdAt: Date,
@@ -38,7 +38,7 @@
     public convenience init(
       bookmarkData: BookmarkData,
       machine: any Machine,
-      osInstalled: (any OperatingSystemInstalled)?,
+      osInstalled: OperatingSystemVersionComponents?,
       restoreImageID: UUID,
       name: String,
       createdAt: Date,
@@ -69,7 +69,7 @@
 
     public func synchronizeWith(
       _ machine: any Machine,
-      osInstalled: (any OperatingSystemInstalled)?,
+      osInstalled: OperatingSystemVersionComponents?,
       using database: any Database
     ) async throws {
       self.machineIdentifer = machine.machineIdentifer

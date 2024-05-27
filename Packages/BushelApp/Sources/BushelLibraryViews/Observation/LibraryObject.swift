@@ -13,8 +13,9 @@
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @Observable
-  internal final class LibraryObject: Loggable, Sendable {
+  internal final class LibraryObject: Loggable {
     internal var library: Library
     internal private(set) var entry: LibraryEntry
 

@@ -9,7 +9,7 @@ import BushelFactory
 import BushelMachine
 import XCTest
 
-final class ReleaseCollectionTests: XCTestCase {
+internal final class ReleaseCollectionTests: XCTestCase {
   struct TestParameters {
     let customReleaseCount: Int
     let expectedFirstMajorVersion: Int

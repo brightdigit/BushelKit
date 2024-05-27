@@ -5,7 +5,7 @@
 
 import BushelCore
 
-struct FeatureList {
+internal struct FeatureList {
   let features: [FeatureItem]
 
   internal init(@ArrayBuilder<FeatureItem> _ features: () -> [FeatureItem]) {

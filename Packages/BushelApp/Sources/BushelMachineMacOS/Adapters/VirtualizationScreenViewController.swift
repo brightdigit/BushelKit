@@ -4,13 +4,14 @@
 //
 
 #if canImport(AppKit) && canImport(Virtualization)
-
   import AppKit
   import BushelLogging
+  import Foundation
   import Virtualization
 
-  final class VirtualizationScreenViewController: NSViewController, Loggable, Sendable {
-    static var loggingCategory: BushelLogging.Category {
+  @MainActor
+  internal final class VirtualizationScreenViewController: NSViewController, Loggable {
+    nonisolated static var loggingCategory: BushelLogging.Category {
       .view
     }
 
@@ -29,7 +30,10 @@
           observation = newMachine.observe(
             \.state,
             options: [.initial],
-            changeHandler: self.onVirtualMachine(_:stateChange:)
+            changeHandler: { machine, change in Task { @MainActor [machine] in
+              self.onVirtualMachine(machine, stateChange: change)
+            }
+            }
           )
           Self.logger.debug("Observing new machine state")
         }

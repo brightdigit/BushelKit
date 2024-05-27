@@ -4,67 +4,52 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
+  import BushelCore
   import BushelLogging
   import BushelMachine
   import Foundation
   import Virtualization
 
-  final class VirtualizationMachineBuilder: MachineBuilder, Loggable, Sendable {
+  internal final class VirtualizationMachineBuilder: MachineBuilder, Loggable {
     static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
     let url: URL
 
-    private var observations = [UUID: NSKeyValueObservation]()
+    private let observations = ObservationCollection()
 
-    let installer: VZMacOSInstaller
+    private let installer: VirtualizationInstaller
 
-    init(url: URL, installer: VZMacOSInstaller) {
+    init(url: URL, installer: @Sendable @escaping () throws -> VZMacOSInstaller) {
       self.url = url
-      self.installer = installer
+      self.installer = .init(installer: installer)
     }
 
     @MainActor
     func build() async throws {
-      let seconds: Int = .random(in: 10 ... 20)
-      try await withCheckedThrowingContinuation { continuation in
-        Task { @MainActor in
-          installer.install { result in
-            Task {
-              Self.logger.debug("waiting for file lock on auxillary for \(seconds) secs.")
-              do {
-                try await Task.sleep(for: .seconds(seconds))
-              } catch {
-                Self.logger.error("Unable to sleep for \(seconds) secs: \(error)")
-              }
-              continuation.resume(with: result)
-            }
-          }
-        }
-      }
+      try await self.installer.build()
     }
 
-    func observePercentCompleted(_ onUpdate: @Sendable @escaping (Double) -> Void) -> UUID {
-      let observation = self.installer.progress.observe(
-        \.fractionCompleted,
-        options: [.new, .initial]
-      ) { progress, _ in
-        Self.logger.debug("Installlation at \(progress.fractionCompleted)")
-        onUpdate(progress.fractionCompleted)
-      }
+    nonisolated func observePercentCompleted(_ onUpdate: @Sendable @escaping (Double) -> Void) -> UUID {
       let id = UUID()
-      self.observations[id] = observation
+      Task {
+        let observation = await self.installer.observe(onUpdate)
+        assert(observation != nil)
+        if let observation {
+          await observations.append(observation, withID: id)
+        }
+      }
       return id
     }
 
-    func removeObserver(_ id: UUID) -> Bool {
+    func removeObserver(_ id: UUID) async -> Bool {
       Self.logger.debug("Removing Observer")
-      return self.observations.removeValue(forKey: id) != nil
+      return await self.observations.remove(withID: id)
     }
 
     deinit {
-      self.observations.removeAll()
+      self.observations.clear()
     }
   }
 #endif

@@ -6,7 +6,7 @@
 @testable import BushelCore
 import XCTest
 
-final class BookmarkErrorTests: XCTestCase {
+internal final class BookmarkErrorTests: XCTestCase {
   func testDatabaseError() {
     let expectedError = BushelCoreTestError.database
 

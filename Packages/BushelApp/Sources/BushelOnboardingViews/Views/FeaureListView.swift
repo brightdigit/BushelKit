@@ -9,7 +9,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct FeaureListView: View {
+  internal struct FeaureListView: View {
     @Environment(\.nextPage) var nextPage
     let features: [FeatureItemView.Properties]
     var body: some View {

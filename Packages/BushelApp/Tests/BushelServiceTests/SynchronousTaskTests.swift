@@ -6,7 +6,7 @@
 @testable import BushelService
 import XCTest
 
-final class SynchronousTaskTests: XCTestCase {
+internal final class SynchronousTaskTests: XCTestCase {
   func testSuccessfulRun() throws {
     let startTime = Date()
     let timeout: DispatchTime = .now() + .seconds(5)

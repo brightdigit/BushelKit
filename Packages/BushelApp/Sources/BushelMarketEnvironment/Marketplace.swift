@@ -11,17 +11,21 @@
   import Foundation
   import Observation
 
+  @MainActor
   @Observable
   public final class Marketplace: Loggable, MarketObserver, Sendable, UserEvaluatorComponent {
     private static var shared = [Int: Marketplace]()
 
-    internal static let `default` = Marketplace(groupIDs: [], listener: EmptyMarketListener.shared)
+    internal nonisolated static let `default` = Marketplace(
+      groupIDs: [],
+      listener: EmptyMarketListener.shared
+    )
 
-    public static var loggingCategory: BushelLogging.Category {
+    public nonisolated static var loggingCategory: BushelLogging.Category {
       .market
     }
 
-    public static var evaluatingValue: UserAudience {
+    public nonisolated static var evaluatingValue: UserAudience {
       .proSubscriber
     }
 
@@ -32,24 +36,22 @@
     @ObservationIgnored
     var storeListener: (any MarketListener)?
 
-    private init(
+    private nonisolated init(
       groupIDs: [String],
-      subscriptions: [Subscription]? = nil,
-      error: (any Error)? = nil,
-      listener: @autoclosure () -> any MarketListener
+      listener: @autoclosure @escaping @Sendable () -> any MarketListener
     ) {
       self.groupIDs = groupIDs
-      self.subscriptions = subscriptions
-      self.error = error
 
-      let storeListener = listener()
-      self.storeListener = storeListener
-      storeListener.initialize(for: self)
+      Task { @MainActor in
+        let storeListener = listener()
+        self.storeListener = storeListener
+        storeListener.initialize(for: self)
+      }
     }
 
     public static func createFor(
       groupIDs: [String],
-      listener: @autoclosure () -> any MarketListener
+      listener: @autoclosure @Sendable @escaping () -> any MarketListener
     ) -> Marketplace {
       let id = Set(groupIDs).hashValue
 
@@ -67,7 +69,7 @@
       return marketplace
     }
 
-    public func onSubscriptionUpdate(_ result: Result<[Subscription], MarketError>) {
+    public nonisolated func onSubscriptionUpdate(_ result: Result<[Subscription], MarketError>) {
       Task { @MainActor in
         switch result {
         case let .success(subscriptions):
@@ -98,7 +100,9 @@
     }
 
     deinit {
-      self.storeListener = nil
+      MainActor.assumeIsolated {
+        self.storeListener = nil
+      }
     }
   }
 

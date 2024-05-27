@@ -7,7 +7,7 @@ import BushelCore
 import BushelMachine
 import Foundation
 
-struct ConfigurationImage: Identifiable {
+internal struct ConfigurationImage: Identifiable {
   let installerImage: any InstallerImage
 
   var id: UUID {
