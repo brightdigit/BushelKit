@@ -16,6 +16,7 @@
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @Observable
   internal final class DocumentObject: Loggable, Sendable {
     internal var restoreImageImportProgress: ProgressOperationProperties?

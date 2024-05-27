@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct PurchaseFeatureView: View {
+  internal struct PurchaseFeatureView: View {
     typealias Properties = PurchaseFeatureViewProperties
 
     let properties: Properties

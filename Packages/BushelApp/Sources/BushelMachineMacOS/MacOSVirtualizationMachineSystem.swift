@@ -48,14 +48,6 @@
       MacOSVirtualization.configurationRange
     }
 
-    #warning("shendy-note: where this is used, I couldn't find its use somewhere")
-    public func validateConfiguration(
-      _ configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
-      to url: URL
-    ) throws {
-      try self.validatedMachineConfiguration(for: configuration, at: url)
-    }
-
     @discardableResult
     func validatedMachineConfiguration(
       for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
@@ -79,16 +71,14 @@
       for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
       at url: URL
     ) throws -> any MachineBuilder {
-      let machineConfiguration = try self.validatedMachineConfiguration(for: configuration, at: url)
-
-      let virtualMachine = VZVirtualMachine(configuration: machineConfiguration)
-
-      let installer = VZMacOSInstaller(
-        virtualMachine: virtualMachine,
-        restoringFromImageAt: configuration.restoreImage.url
-      )
-
-      return VirtualizationMachineBuilder(url: url, installer: installer)
+      VirtualizationMachineBuilder(url: url, installer: {
+        let machineConfiguration = try self.validatedMachineConfiguration(for: configuration, at: url)
+        let virtualMachine = VZVirtualMachine(configuration: machineConfiguration)
+        return VZMacOSInstaller(
+          virtualMachine: virtualMachine,
+          restoringFromImageAt: configuration.restoreImage.url
+        )
+      })
     }
   }
 #endif

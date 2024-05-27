@@ -1,5 +1,24 @@
 {
+  "originHash" : "a9b313f7d182cf71373fde298e5967364740de88a040cafadaf0d93da5aaa9a4",
   "pins" : [
+    {
+      "identity" : "aviaryinsights",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/AviaryInsights.git",
+      "state" : {
+        "revision" : "faa3ce44e7c621f887caa8194611fe0acd2a57de",
+        "version" : "1.0.0-alpha.2"
+      }
+    },
+    {
+      "identity" : "featherquill",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/FeatherQuill.git",
+      "state" : {
+        "revision" : "65070dce4cc17fdd8f5b78e588129f57d3dd5afb",
+        "version" : "1.0.0-alpha.2"
+      }
+    },
     {
       "identity" : "felinepine",
       "kind" : "remoteSourceControl",
@@ -25,6 +44,15 @@
       "state" : {
         "revision" : "bd3c70eb38da109ec6be9958e80ee495125d3232",
         "version" : "1.0.0-beta.1"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa",
+      "state" : {
+        "revision" : "7fc7ca43967e2980d8691a8e017c118a84133aac",
+        "version" : "8.26.0"
       }
     },
     {
@@ -59,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "32e8d724467f8fe623624570367e3d50c5638e46",
-        "version" : "1.5.2"
+        "revision" : "e97a6fcb1ab07462881ac165fdbb37f067e205d5",
+        "version" : "1.5.4"
       }
     },
     {
@@ -82,5 +110,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

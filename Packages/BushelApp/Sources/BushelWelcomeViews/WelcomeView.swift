@@ -14,7 +14,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct WelcomeView: SingleWindowView, Loggable {
+  internal struct WelcomeView: SingleWindowView, Loggable {
     @Environment(\.session) var session
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.openWindow) var openWindow

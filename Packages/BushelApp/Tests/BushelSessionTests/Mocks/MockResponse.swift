@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct MockResponse: Codable, Equatable {
+internal struct MockResponse: Codable, Equatable {
   let id: UUID
   internal init(id: UUID = .init()) {
     self.id = id

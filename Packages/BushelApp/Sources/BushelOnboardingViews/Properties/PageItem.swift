@@ -5,7 +5,7 @@
 
 import BushelLocalization
 
-struct PageItem: Identifiable {
+internal struct PageItem: Identifiable {
   let id: String
   let titleID: LocalizedStringID
   let subtitleID: LocalizedStringID

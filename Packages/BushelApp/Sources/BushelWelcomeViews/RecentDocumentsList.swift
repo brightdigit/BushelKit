@@ -6,16 +6,18 @@
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import BushelData
+  import BushelDataMonitor
   import BushelLogging
+  import Combine
   import SwiftData
   import SwiftUI
 
-  struct RecentDocumentsList<ItemView: View>: View, Loggable {
-    let recentDocumentsClearDate: Date
-    let recentDocumentsTypeFilter: DocumentTypeFilter
+  @MainActor
+  internal struct RecentDocumentsList<ItemView: View>: View, Loggable {
+    let publisherID: String
 
     @Binding var isEmpty: Bool
-    @Query var bookmarks: [BookmarkData]
+    @Environment(\.databaseChangePublicist) private var createDbPublisher
     @Environment(\.database) private var database
     @State var object: RecentDocumentsObject
 
@@ -31,58 +33,43 @@
           ProgressView()
         }
       }
-      .onChange(of: self.bookmarks) { _, _ in
-        object.updateBookmarks(self.bookmarks, using: self.database)
-      }
+      .onReceive(self.object.dbPublisher, perform: { update in
+        Self.logger.debug("Received Update For \(self.publisherID)")
+        object.updateBookmarks(update, using: self.database)
+      })
       .onAppear {
-        object.updateBookmarks(self.bookmarks, using: self.database)
+        object.updateBookmarks(nil, using: self.database)
+        self.object.beginPublishing {
+          self.createDbPublisher(id: self.publisherID)
+        }
+        Self.logger.debug("Publsher List for \(publisherID)")
       }
       .onChange(of: self.object.isEmpty) { _, newValue in
+        Self.logger.debug("EmptyCheck List for \(publisherID)")
         self.isEmpty = newValue
+      }
+      .onDisappear {
+        Self.logger.debug("Disapear \(publisherID)")
       }
     }
 
     internal init(
+      publisherID: String,
       recentDocumentsClearDate: Date?,
       recentDocumentsTypeFilter: DocumentTypeFilter,
       isEmpty: Binding<Bool>,
-      bookmarksQuery: Query<Array<BookmarkData>.Element, [BookmarkData]>? = nil,
-      object: RecentDocumentsObject = RecentDocumentsObject(),
       forEach: @escaping (RecentDocument) -> ItemView
     ) {
+      Self.logger.debug("Creating List for \(publisherID)")
       let recentDocumentsClearDate = recentDocumentsClearDate ?? .distantPast
-      self._bookmarks = bookmarksQuery ??
-        Self.queryBasedOn(
-          recentDocumentsTypeFilter: recentDocumentsTypeFilter,
-          recentDocumentsClearDate: recentDocumentsClearDate
-        )
-      self.recentDocumentsClearDate = recentDocumentsClearDate
-      self.recentDocumentsTypeFilter = recentDocumentsTypeFilter
+      let object = RecentDocumentsObject(
+        typeFilter: recentDocumentsTypeFilter,
+        clearDate: recentDocumentsClearDate
+      )
+      self.publisherID = publisherID
       self._isEmpty = isEmpty
       self._object = .init(wrappedValue: object)
       self.forEach = forEach
-    }
-
-    static func queryBasedOn(
-      recentDocumentsTypeFilter: DocumentTypeFilter,
-      recentDocumentsClearDate: Date
-    ) -> Query<Array<BookmarkData>.Element, [BookmarkData]> {
-      let sort = \BookmarkData.updatedAt
-      let order = SortOrder.reverse
-      let filter: Predicate<BookmarkData>
-      let searchStrings = recentDocumentsTypeFilter.searchStrings
-      Self.logger.debug("Querying for \(searchStrings)")
-      if let libraryFilter = searchStrings.first {
-        filter = #Predicate {
-          $0.updatedAt > recentDocumentsClearDate && !$0.path.localizedStandardContains(libraryFilter)
-        }
-      } else {
-        filter = #Predicate {
-          $0.updatedAt > recentDocumentsClearDate
-        }
-      }
-
-      return Query(filter: filter, sort: sort, order: order)
     }
   }
 

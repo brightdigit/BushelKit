@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  struct IdentifiableViewModifier: ViewModifier {
+  internal struct IdentifiableViewModifier: ViewModifier {
     let id: UUID
 
     func body(content: Content) -> some View {

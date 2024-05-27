@@ -7,7 +7,7 @@
 import Foundation
 import XCTest
 
-final class LibraryIdentifierTests: XCTestCase {
+internal final class LibraryIdentifierTests: XCTestCase {
   func testBookmarkIDFromString() {
     let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
 

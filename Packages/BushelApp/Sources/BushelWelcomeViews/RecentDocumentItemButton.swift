@@ -7,7 +7,7 @@
   import BushelAccessibility
   import SwiftUI
 
-  struct RecentDocumentItemButton: View {
+  internal struct RecentDocumentItemButton: View {
     let document: RecentDocument
     @Environment(\.openWindow) var openWindow
     @Environment(\.openFileURL) var openFileURL

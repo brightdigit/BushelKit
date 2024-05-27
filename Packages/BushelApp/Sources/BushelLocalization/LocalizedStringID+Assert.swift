@@ -7,7 +7,7 @@ import Foundation
 
 extension LocalizedStringID {
   #if DEBUG && !os(Linux)
-    struct Assert {
+    internal struct Assert {
       private static var loadedValues = false
 
       private static let stringsDictionary = { url in

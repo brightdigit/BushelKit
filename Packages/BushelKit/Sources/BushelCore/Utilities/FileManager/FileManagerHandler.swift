@@ -54,13 +54,9 @@ public actor FileManagerHandler: FileHandler {
       do {
         try self.fileManager().copyItem(at: fromURL, to: toURL)
       } catch {
-        // self.logger?.error("Error Copying: \(error)")
-        // self.killTimer()
         continuation.resume(throwing: error)
         return
       }
-      // self.logger?.debug("Copy is done. Quitting timer.")
-      // self.killTimer()
 
       continuation.resume(returning: ())
     }

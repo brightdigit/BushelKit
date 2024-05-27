@@ -8,7 +8,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct AboutProductView<PurchaseScreenValue: Codable & Hashable>: View {
+  internal struct AboutProductView<PurchaseScreenValue: Codable & Hashable>: View {
     let version: Version
     let subscriptionEndDate: Date?
     let purchaseScreenValue: PurchaseScreenValue

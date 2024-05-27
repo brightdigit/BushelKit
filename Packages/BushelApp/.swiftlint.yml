@@ -20,7 +20,7 @@ opt_in_rules:
   - expiring_todo
   # - explicit_acl
   - explicit_init
-  # - explicit_top_level_acl
+  - explicit_top_level_acl
   # - fallthrough
   - fatal_error_message
   - file_name

@@ -6,7 +6,8 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  struct SnapshotDetailsView: View {
+  @MainActor
+  internal struct SnapshotDetailsView: View {
     var bindableSnapshotObject: BindableSnapshotObject
     let saveAction: (SnapshotObject) -> Void
 
@@ -24,7 +25,7 @@
     }
 
     internal init(
-      snapshot: @escaping () async -> Bindable<SnapshotObject>?,
+      snapshot: @Sendable @escaping () async -> Bindable<SnapshotObject>?,
       save: @escaping (SnapshotObject) -> Void
     ) {
       self.bindableSnapshotObject = .init(snapshot: snapshot)

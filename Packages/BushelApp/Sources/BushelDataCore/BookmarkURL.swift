@@ -8,12 +8,16 @@
   import BushelCore
   import Foundation
 
-  public struct BookmarkURL {
+  public struct BookmarkURL: Sendable {
     private let data: BookmarkData
     public let url: URL
-    private let databaseError: (any Error) -> any Error
+    private let databaseError: @Sendable (any Error) -> any Error
 
-    internal init(data: BookmarkData, url: URL, databaseError: @escaping (any Error) -> any Error) {
+    internal init(
+      data: BookmarkData,
+      url: URL,
+      databaseError: @escaping @Sendable (any Error) -> any Error
+    ) {
       self.data = data
       self.url = url
       self.databaseError = databaseError

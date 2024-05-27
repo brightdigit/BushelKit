@@ -33,16 +33,16 @@ import Foundation
 extension MachineConfiguration {
   public init(
     configurable: some MachineConfigurable
-  ) throws {
-    guard let machineSystem = configurable.machineSystem else {
+  ) async throws {
+    guard let machineSystem = await configurable.machineSystem else {
       throw ConfigurationError.missingSystemManager
     }
 
-    guard let image = configurable.selectedBuildImage.image else {
+    guard let image = await configurable.selectedBuildImage.image else {
       throw ConfigurationError.missingRestoreImageID
     }
 
-    guard let specificationConfiguration = configurable.specificationConfiguration else {
+    guard let specificationConfiguration = await configurable.specificationConfiguration else {
       throw ConfigurationError.missingSpecifications
     }
 

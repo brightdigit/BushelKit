@@ -31,7 +31,7 @@ import BushelCore
 import Foundation
 
 /// Writable configuration used for setting up and configuring a new machine.
-public struct MachineSetupConfiguration {
+public struct MachineSetupConfiguration: Sendable {
   /// Identifier to access the install image
   public var libraryID: LibraryIdentifier?
   /// Optional identifier to the restore library
@@ -112,7 +112,7 @@ extension MachineSetupConfiguration {
     }
   }
 
-  @available(*, deprecated)
+  @available(*, deprecated, message: "Pass the MachineSystem as well.")
   public init(request: MachineBuildRequest?) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,

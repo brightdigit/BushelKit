@@ -27,7 +27,7 @@ internal actor SynchronousTask<T: Sendable>: Sendable {
   }
 }
 
-func wait<T: Sendable>(
+internal func wait<T: Sendable>(
   _ timeout: DispatchTime = .distantFuture,
   for closure: @escaping @Sendable () async throws -> T
 ) throws -> T {

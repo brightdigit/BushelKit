@@ -11,7 +11,8 @@
   import BushelMachineEnvironment
   import SwiftUI
 
-  struct DocumentView: View, Loggable {
+  @MainActor
+  internal struct DocumentView: View, Loggable {
     @State var object = DocumentObject()
 
     @Environment(\.machineSystemManager) var systemManager
@@ -21,9 +22,11 @@
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
     @Environment(\.snapshotProvider) private var snapshotProvider
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.databaseChangePublicist) private var databasePublisherFactory
 
     @Binding var machineFile: MachineFile?
 
+    #warning("What happens when you delete a file")
     #warning("maybe to log changes of onChange")
     #warning("make sure onAppear is printed so we be aware of what the machineFile.url was")
     var body: some View {
@@ -85,7 +88,8 @@
           restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
           snapshotFactory: snapshotProvider,
           using: systemManager,
-          metadataLabelProvider.callAsFunction(_:_:)
+          metadataLabelProvider.callAsFunction(_:_:),
+          databasePublisherFactory: self.databasePublisherFactory.callAsFunction(id:)
         )
     }
   }

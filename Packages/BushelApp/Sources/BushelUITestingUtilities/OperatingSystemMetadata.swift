@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-struct OperatingSystemMetadata {
+internal struct OperatingSystemMetadata {
   let osVersionComponents: [String]
   let build: String
 

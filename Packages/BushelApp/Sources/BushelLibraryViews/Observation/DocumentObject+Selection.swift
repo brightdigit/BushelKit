@@ -26,7 +26,7 @@
         .remote(url: url, metadata: selectedHubImage.metadata)
       ) {
         self.restoreImageImportProgress = $0
-      } onError: { error in
+      } onError: { @MainActor error in
         Self.logger.error("Unable to import \(url): \(error)")
         self.error = assertionFailure(error: error) { error in
           Self.logger.critical("Unknown error: \(error)")
@@ -82,7 +82,7 @@
           .local(url: url)
         ) {
           self.restoreImageImportProgress = $0
-        } onError: { error in
+        } onError: { @MainActor error in
           Self.logger.error("Unable to import \(url): \(error)")
           self.error = assertionFailure(error: error) { error in
             Self.logger.critical("Unknown error: \(error)")

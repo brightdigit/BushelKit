@@ -6,7 +6,7 @@
 #if canImport(Virtualization) && arch(arm64)
 
   extension VirtualizationMachine {
-    enum PreviousAction {
+    internal enum PreviousAction {
       case pause
       case start
     }

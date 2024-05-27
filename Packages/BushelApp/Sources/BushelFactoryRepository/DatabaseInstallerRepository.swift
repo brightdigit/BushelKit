@@ -23,8 +23,8 @@
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws -> [any BushelMachine.InstallerImage] {
       try await database.delete(model: LibraryImageEntry.self, where: #Predicate { $0.library == nil })
-      let imagePredicate = FetchDescriptor<LibraryImageEntry>()
-      let images = try await database.fetch(imagePredicate)
+
+      let images: [LibraryImageEntry] = try await database.fetchAll()
       return images.map { entry in
         DataInstallerImage(entry: entry, database: database, labelProvider)
       }
@@ -64,11 +64,11 @@
       }
 
       let imageID = image.imageID
-      var libraryPredicate = FetchDescriptor<LibraryImageEntry>(
-        predicate: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
-      )
-      libraryPredicate.fetchLimit = 1
-      guard let imageEntry = try await database.fetch(libraryPredicate).first else {
+      let imageEntry: LibraryImageEntry? = try await database
+        .first(
+          where: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
+        )
+      guard let imageEntry else {
         return .notFound
       }
 

@@ -17,11 +17,10 @@
   }
 
   public protocol FetchIdentifiable: PersistentModel, Sendable {
-    var modelFetchDescriptor: FetchDescriptor<Self> {
-      get
-    }
-
     static func model(from array: [Self]) throws -> Self
+
+    @Sendable
+    func selectDescriptor() -> FetchDescriptor<Self>
   }
 
   extension FetchIdentifiable {

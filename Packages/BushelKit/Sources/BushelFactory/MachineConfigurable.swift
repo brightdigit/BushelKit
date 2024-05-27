@@ -32,7 +32,7 @@ import Foundation
 
 public protocol MachineConfigurable {
   associatedtype Name: Hashable
-  var machineSystem: (any MachineSystem)? { get }
-  var selectedBuildImage: SelectedVersion { get }
-  var specificationConfiguration: SpecificationConfiguration<Name>? { get }
+  var machineSystem: (any MachineSystem)? { get async }
+  var selectedBuildImage: SelectedVersion { get async }
+  var specificationConfiguration: SpecificationConfiguration<Name>? { get async }
 }

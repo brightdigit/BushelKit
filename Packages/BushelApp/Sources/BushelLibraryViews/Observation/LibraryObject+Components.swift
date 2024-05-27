@@ -62,13 +62,13 @@
       internal init(
         item: LibraryEntry?,
         bookmarkData: BookmarkData,
-        url: URL,
+        url _: URL,
         withDatabase database: any Database,
         using librarySystemManager: any LibrarySystemManaging
       ) async throws {
         let newURL: URL
         do {
-          newURL = try await bookmarkData.fetchURL(using: database, withURL: url)
+          newURL = try await bookmarkData.fetchURL(using: database)
         } catch {
           throw try LibraryError.bookmarkError(error)
         }

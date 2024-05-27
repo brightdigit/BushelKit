@@ -6,7 +6,7 @@
 import BushelSession
 import XCTest
 
-final class InitializedSessionTests: XCTestCase {
+internal final class InitializedSessionTests: XCTestCase {
   func testSession() async throws {
     let service = MockService()
     let session = InitializedSession {

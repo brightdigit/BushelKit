@@ -6,7 +6,7 @@
 @testable import BushelCore
 import XCTest
 
-final class TransformationTests: XCTestCase {
+internal final class TransformationTests: XCTestCase {
   func testTransformAsFunction() {
     let sut = Transformation<Int, String>(intToString)
 

@@ -7,7 +7,7 @@
   import SwiftUI
 
   @available(iOS, unavailable)
-  struct SnapshotsView: View {
+  internal struct SnapshotsView: View {
     let url: URL?
     var machineObject: MachineObject?
     var body: some View {

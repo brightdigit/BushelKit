@@ -7,10 +7,10 @@
   import Foundation
   import SwiftData
 
-  class ItemModel: PersistentModel {
-    static var schemaMetadata: [Schema.PropertyMetadata] = .init()
+  internal class ItemModel: PersistentModel, Sendable {
+    static let schemaMetadata: [Schema.PropertyMetadata] = .init()
 
-    var id: UUID
+    let id: UUID
 
     // swiftlint:disable:next implicitly_unwrapped_optional
     var backingData: (any BackingData<ItemModel>)! = nil

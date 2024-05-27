@@ -9,7 +9,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct GeneralSettingsView: View {
+  internal struct GeneralSettingsView: View {
     @State
     private var recentDocumentsTypeFilterSelection =
       DocumentTypeFilterOption.machinesAndLibraries.rawValue

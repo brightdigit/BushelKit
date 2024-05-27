@@ -7,7 +7,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct FeatureItemView: View {
+  internal struct FeatureItemView: View {
     typealias Properties = FeatureItem
 
     let properties: Properties

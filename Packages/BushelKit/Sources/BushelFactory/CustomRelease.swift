@@ -55,7 +55,7 @@ public struct CustomRelease: InstallerRelease {
 }
 
 extension InstallerRelease {
-  var isCustom: Bool {
+  internal var isCustom: Bool {
     self is CustomRelease
   }
 }

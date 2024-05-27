@@ -24,13 +24,13 @@
       if let bookmarkData = self._bookmarkData {
         return bookmarkData
       }
-      let descriptor = FetchDescriptor(
+      let selectDescriptor = FetchDescriptor(
         predicate: #Predicate<BookmarkData> {
           $0.bookmarkID == bookmarkDataID
         }
       )
       do {
-        self._bookmarkData = try modelContext?.fetch(descriptor).first
+        self._bookmarkData = try modelContext?.fetch(selectDescriptor).first
       } catch {
         assertionFailure(error: error)
       }
@@ -84,7 +84,7 @@
     internal init(
       bookmarkData: BookmarkData,
       machine: any Machine,
-      osInstalled: (any OperatingSystemInstalled)?,
+      osInstalled: OperatingSystemVersionComponents?,
       restoreImageID: UUID,
       name: String,
       createdAt: Date,

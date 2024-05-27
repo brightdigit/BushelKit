@@ -8,7 +8,7 @@
   import Foundation
   import SwiftData
 
-  class MockDatabase: Database {
+  internal final class MockDatabase: Database {
     var didRequestCount: Int?
     func contextMatchesModel(_: some PersistentModel) async -> Bool {
       false
@@ -16,8 +16,10 @@
 
     func delete(where _: Predicate<some PersistentModel>?) async throws {}
 
-    func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
-      guard let count = descriptor.fetchLimit else {
+    func fetch<T>(
+      _ descriptor: @escaping @Sendable () -> FetchDescriptor<T>
+    ) async throws -> [T] where T: Sendable, T: PersistentModel {
+      guard let count = descriptor().fetchLimit else {
         return []
       }
       self.didRequestCount = count

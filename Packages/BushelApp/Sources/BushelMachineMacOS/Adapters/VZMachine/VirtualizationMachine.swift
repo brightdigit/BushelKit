@@ -10,7 +10,7 @@
   import Virtualization
 
   #warning("make actor?")
-  final class VirtualizationMachine: NSObject, Machine {
+  internal final class VirtualizationMachine: NSObject, Machine {
     let url: URL
     var configuration: MachineConfiguration
     let machine: VZVirtualMachine

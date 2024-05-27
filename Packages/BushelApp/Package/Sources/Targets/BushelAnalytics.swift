@@ -7,6 +7,6 @@ struct BushelAnalytics: Target {
   var dependencies: any Dependencies {
     BushelCore()
     BushelLogging()
-    BushelAnalyticsCore()
+    AviaryInsights()
   }
 }

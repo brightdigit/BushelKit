@@ -27,10 +27,13 @@
 
     var xpcService: String { get }
 
+    @MainActor
     func hubView(_ image: Binding<(any InstallImage)?>) -> HubViewType
 
+    @Sendable
     func installerImageRepository(_ database: any Database) -> any InstallerImageRepository
 
+    @Sendable
     func openFileURL(_ url: URL, openWindow: OpenWindowAction)
   }
 

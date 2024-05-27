@@ -11,7 +11,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
-  struct WelcomeActionListView: View, Loggable {
+  internal struct WelcomeActionListView: View, Loggable {
     @Environment(\.openWindow) var openWindow
     @Environment(\.openFileURL) var openFileURL
     #if os(macOS)
@@ -48,7 +48,7 @@
             do {
               let currentURL = try result.get()
               let bookmark = try await BookmarkData.resolveURL(currentURL, with: database)
-              url = try await bookmark.fetchURL(using: database, withURL: currentURL)
+              url = try await bookmark.fetchURL(using: database)
             } catch {
               Self.logger.error("Unable to open machine: \(error)")
               assertionFailure(error: error)

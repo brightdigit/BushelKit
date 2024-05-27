@@ -31,6 +31,13 @@
       throw NotImplmentedError.instance
     }
 
+    func fetch<T>(
+      _: @escaping () -> FetchDescriptor<T>
+    ) async throws -> [T] where T: Sendable, T: PersistentModel {
+      assertionFailure("No Database Set.")
+      throw NotImplmentedError.instance
+    }
+
     func delete(_: some PersistentModel) async {
       assertionFailure("No Database Set.")
     }

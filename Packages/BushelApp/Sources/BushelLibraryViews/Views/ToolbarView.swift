@@ -8,6 +8,7 @@
   import SwiftUI
   import UniformTypeIdentifiers
 
+  @MainActor
   internal struct ToolbarView: View {
     let title: String
     let allAllowedContentTypes: [UTType]

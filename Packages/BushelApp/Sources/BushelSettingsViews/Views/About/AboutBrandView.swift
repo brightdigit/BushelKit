@@ -8,7 +8,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct AboutBrandView: View {
+  internal struct AboutBrandView: View {
     @Environment(\.openURL) var openURL
     let creditsHeaderID: any LocalizedID
     let wordmarkImageResourceName: String

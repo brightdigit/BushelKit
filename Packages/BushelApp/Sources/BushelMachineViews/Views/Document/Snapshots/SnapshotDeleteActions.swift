@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct SnapshotDeleteActions: View, Loggable {
+  internal struct SnapshotDeleteActions: View, Loggable {
     let url: URL?
     let snapshot: Snapshot
     let delete: (Snapshot?, URL?) -> Void

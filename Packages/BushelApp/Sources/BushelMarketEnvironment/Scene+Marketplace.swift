@@ -24,9 +24,10 @@
   }
 
   extension Scene {
+    @MainActor
     public func marketplace(
       for groupIDs: [String],
-      listener: @autoclosure () -> any MarketListener,
+      listener: @autoclosure @Sendable @escaping () -> any MarketListener,
       onChangeOf scenePhase: ScenePhase
     ) -> some Scene {
       let marketplace = Marketplace.createFor(groupIDs: groupIDs, listener: listener())

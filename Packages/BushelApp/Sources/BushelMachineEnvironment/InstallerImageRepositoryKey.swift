@@ -12,7 +12,7 @@
   import SwiftUI
 
   private struct DefaultInstallerImageRepository: InstallerImageRepository {
-    struct NotImplmentedError: Swift.Error {
+    internal struct NotImplmentedError: Swift.Error {
       static let instance = NotImplmentedError()
     }
 

@@ -7,7 +7,7 @@
   import SwiftUI
 
   @resultBuilder
-  enum PageItemBuilder {
+  internal enum PageItemBuilder {
     static func viewForPage(_ page: PageType) -> any View {
       switch page {
       case let .features(features):

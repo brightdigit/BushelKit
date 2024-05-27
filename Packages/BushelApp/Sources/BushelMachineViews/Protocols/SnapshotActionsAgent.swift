@@ -5,7 +5,7 @@
 
 import BushelMachine
 
-protocol SnapshotActionsAgent {
+internal protocol SnapshotActionsAgent {
   func queueRestoringSnapshot(_ snapshot: Snapshot)
   func queueDeletingSnapshot(_ snapshot: Snapshot)
   func queueExportingSnapshot(_ snapshot: Snapshot)

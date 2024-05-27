@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-struct VersionEvaluator: UserEvaluatorComponent {
+internal struct VersionEvaluator: UserEvaluatorComponent {
   static let evaluatingValue: BushelCore.UserAudience = .testFlightBeta
 
   func evaluate(_: BushelCore.UserAudience) -> Bool {

@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct PurchaseHeaderViewProperties {
+internal struct PurchaseHeaderViewProperties {
   static let extraLarge: Self = .init(
     logoHeight: 120,
     headerFontSize: 36.0,

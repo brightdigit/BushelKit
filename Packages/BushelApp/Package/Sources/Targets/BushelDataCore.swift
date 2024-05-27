@@ -7,5 +7,6 @@ struct BushelDataCore: Target {
   var dependencies: any Dependencies {
     BushelCore()
     BushelLogging()
+    OperatingSystemVersion()
   }
 }

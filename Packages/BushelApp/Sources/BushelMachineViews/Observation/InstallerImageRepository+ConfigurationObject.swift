@@ -47,7 +47,7 @@
     func imageBasedOn(
       _ restoreImageID: UUID,
       libraryID: LibraryIdentifier?,
-      logger: Logger,
+      logger: @autoclosure @escaping @Sendable () -> Logger,
       _ labelProvider: MetadataLabelProvider?
     ) async throws -> (any InstallerImage)? {
       guard let database = self else {
@@ -58,7 +58,7 @@
       return try await database.imageBasedOn(
         restoreImageID,
         libraryID: libraryID,
-        logger: logger,
+        logger: logger(),
         labelProvider
       )
     }

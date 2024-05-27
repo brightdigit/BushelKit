@@ -18,11 +18,13 @@ public static func buildPartialBlock(first: SwiftSetting) -> [SwiftSetting] {
 [first]
 }
 public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting)
--> [SwiftSetting] {
+-> [SwiftSetting]
+{
 accumulated + [next]
 }
 public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting])
--> [SwiftSetting] {
+-> [SwiftSetting]
+{
 accumulated + next
 }
 public static func buildPartialBlock(first: [SwiftSetting]) -> [SwiftSetting] {
@@ -40,7 +42,8 @@ accumulated + next.swiftSettings()
 }
 extension _PackageDescription_Target {
 static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = [])
--> _PackageDescription_Target {
+-> _PackageDescription_Target
+{
 let dependencies = entry.dependencies.map(\.targetDepenency)
 switch entry.targetType {
 case .executable:
@@ -75,14 +78,14 @@ case library
 case executable
 }
 public protocol UnsafeFlag: SwiftSettingConvertible, _Named {
-var unsafeFlagArgument: String { get }
+var unsafeFlagArguments: [String] { get }
 }
-public extension UnsafeFlag {
-var unsafeFlagArgument: String {
-name.camelToSnakeCase()
+extension UnsafeFlag {
+public var unsafeFlagArguments: [String] {
+[name.camelToSnakeCaseFlag()]
 }
-var setting: SwiftSetting {
-.unsafeFlags([unsafeFlagArgument])
+public var setting: SwiftSetting {
+.unsafeFlags(unsafeFlagArguments)
 }
 }
 extension Product where Self: Target {
@@ -98,8 +101,8 @@ case .executable:
 }
 }
 }
-public extension Package {
-convenience init(
+extension Package {
+public convenience init(
 name: String? = nil,
 @ProductsBuilder entries: @escaping () -> [any Product],
 @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [any TestTarget]() },
@@ -144,14 +147,14 @@ targets: packgeTargets
 )
 }
 }
-public extension Package {
-func supportedPlatforms(
+extension Package {
+public func supportedPlatforms(
 @SupportedPlatformBuilder supportedPlatforms: @escaping () -> any SupportedPlatforms
 ) -> Package {
 platforms = .init(supportedPlatforms())
 return self
 }
-func defaultLocalization(_ defaultLocalization: LanguageTag) -> Package {
+public func defaultLocalization(_ defaultLocalization: LanguageTag) -> Package {
 self.defaultLocalization = defaultLocalization
 return self
 }
@@ -169,7 +172,7 @@ switch dependency.kind {
 case .sourceControl(let name, let location, requirement: _):
 let packageName = name ?? location.packageName
 return .product(name: productName, package: packageName)
-case let .fileSystem(name, path):
+case .fileSystem(let name, let path):
 if let packageName = name ?? path.components(separatedBy: "/").last {
 return .product(name: productName, package: packageName)
 } else {
@@ -187,7 +190,7 @@ var packageName: String {
 switch dependency.kind {
 case .sourceControl(let name, let location, requirement: _):
 return name ?? location.packageName ?? self.name
-case let .fileSystem(name, path):
+case .fileSystem(let name, let path):
 return name ?? path.packageName ?? self.name
 case .registry(let id, requirement: _):
 return id
@@ -205,13 +208,13 @@ public protocol _Depending {
 @DependencyBuilder
 var dependencies: any Dependencies { get }
 }
-public extension _Depending {
-var dependencies: any Dependencies {
+extension _Depending {
+public var dependencies: any Dependencies {
 [Dependency]()
 }
 }
-public extension _Depending {
-func allDependencies() -> [Dependency] {
+extension _Depending {
+public func allDependencies() -> [Dependency] {
 dependencies.compactMap {
 $0 as? _Depending
 }
@@ -222,8 +225,8 @@ $0.allDependencies()
 }
 }
 public protocol TestTarget: Target, GroupBuildable {}
-public extension TestTarget {
-var targetType: TargetType {
+extension TestTarget {
+public var targetType: TargetType {
 .test
 }
 }
@@ -232,7 +235,8 @@ enum DependencyBuilder {
 static func buildPartialBlock(first: Dependency) -> any Dependencies {
 [first]
 }
-static func buildPartialBlock(accumulated: any Dependencies, next: Dependency) -> any Dependencies {
+static func buildPartialBlock(accumulated: any Dependencies, next: Dependency) -> any Dependencies
+{
 accumulated + [next]
 }
 }
@@ -247,20 +251,20 @@ var swiftSettings: [SwiftSetting] { get }
 var resources: [Resource] { get }
 var path: String? { get }
 }
-public extension Target {
-var targetType: TargetType {
+extension Target {
+public var targetType: TargetType {
 .regular
 }
-var targetDepenency: _PackageDescription_TargetDependency {
+public var targetDepenency: _PackageDescription_TargetDependency {
 .target(name: name)
 }
-var swiftSettings: [SwiftSetting] {
+public var swiftSettings: [SwiftSetting] {
 []
 }
-var resources: [Resource] {
+public var resources: [Resource] {
 []
 }
-var path: String? {
+public var path: String? {
 nil
 }
 }
@@ -271,8 +275,8 @@ func appending(_ dependencies: any Dependencies) -> Self
 public protocol SwiftSettingConvertible: SwiftSettingsConvertible {
 var setting: SwiftSetting { get }
 }
-public extension SwiftSettingConvertible {
-func swiftSettings() -> [SwiftSetting] {
+extension SwiftSettingConvertible {
+public func swiftSettings() -> [SwiftSetting] {
 [setting]
 }
 }
@@ -285,11 +289,13 @@ public static func buildPartialBlock(first: any Product) -> [any Product] {
 [first]
 }
 public static func buildPartialBlock(accumulated: [any Product], next: any Product)
--> [any Product] {
+-> [any Product]
+{
 accumulated + [next]
 }
 public static func buildPartialBlock(accumulated: [any Product], next: [any Product])
--> [any Product] {
+-> [any Product]
+{
 accumulated + next
 }
 }
@@ -344,8 +350,8 @@ public enum FeatureState {
 case upcoming
 case experimental
 }
-public extension FeatureState {
-func swiftSetting(name: String) -> SwiftSetting {
+extension FeatureState {
+public func swiftSetting(name: String) -> SwiftSetting {
 switch self {
 case .experimental:
 .enableExperimentalFeature(name)
@@ -467,6 +473,18 @@ public struct Ounchecked: UnsafeFlag {}
 public struct ParseableOutput: UnsafeFlag {}
 public struct EmitObjcHeader: UnsafeFlag {}
 public struct EnableLibraryEvolution: UnsafeFlag {}
+struct WarnLongExpressionTypeChecking : UnsafeFlag {
+internal init(milliseconds: Int) {
+self.milliseconds = milliseconds
+}
+let milliseconds : Int
+var unsafeFlagArguments: [String] {
+[
+"-Xfrontend",
+"-warn-long-expression-type-checking=\(milliseconds)"
+]
+}
+}
 public struct DisableIncrementalImports: UnsafeFlag {}
 public struct WarnImplicitOverrides: UnsafeFlag {}
 public struct ParseSil: UnsafeFlag {}
@@ -488,6 +506,18 @@ public struct Static: UnsafeFlag {}
 public struct EmitClangHeaderNonmodularIncludes: UnsafeFlag {}
 public struct SaveOptimizationRecord: UnsafeFlag {}
 public struct RcacheCompileJob: UnsafeFlag {}
+struct WarnLongFunctionBodies : UnsafeFlag {
+internal init(milliseconds: Int) {
+self.milliseconds = milliseconds
+}
+let milliseconds : Int
+var unsafeFlagArguments: [String] {
+[
+"-Xfrontend",
+"-warn-long-function-bodies=\(milliseconds)"
+]
+}
+}
 public struct DisableAutolinkingRuntimeCompatibilityConcurrency: UnsafeFlag {}
 public struct RmoduleRecovery: UnsafeFlag {}
 public struct EmitIr: UnsafeFlag {}
@@ -617,7 +647,7 @@ extension String {
 var packageName: String? {
 split(separator: "/").last?.split(separator: ".").first.map(String.init)
 }
-func camelToSnakeCase(withSeparator separator: String = "-") -> String {
+func camelToSnakeCaseFlag(withSeparator separator: String = "-") -> String {
 separator
 + enumerated()
 .reduce("") {
@@ -639,16 +669,16 @@ public protocol Product: _Named, GroupBuildable {
 var productTargets: [Target] { get }
 var productType: ProductType { get }
 }
-public extension Product {
-var productType: ProductType {
+extension Product {
+public var productType: ProductType {
 .library
 }
 }
 public protocol SwiftSettingsConvertible: GroupBuildable where Output == SwiftSetting {
 func swiftSettings() -> [SwiftSetting]
 }
-public extension SwiftSettingsConvertible {
-static func output(from array: [Self]) -> [SwiftSetting] {
+extension SwiftSettingsConvertible {
+public static func output(from array: [Self]) -> [SwiftSetting] {
 array.flatMap {
 $0.swiftSettings()
 }
@@ -657,8 +687,8 @@ $0.swiftSettings()
 public protocol _Named {
 var name: String { get }
 }
-public extension _Named {
-var name: String {
+extension _Named {
+public var name: String {
 "\(Self.self)"
 }
 }
@@ -687,22 +717,24 @@ static func buildPartialBlock(first: any TestTarget) -> any TestTargets {
 [first]
 }
 static func buildPartialBlock(accumulated: any TestTargets, next: any TestTarget)
--> any TestTargets {
+-> any TestTargets
+{
 accumulated + [next]
 }
 static func buildPartialBlock(accumulated: any TestTargets, next: any TestTargets)
--> any TestTargets {
+-> any TestTargets
+{
 accumulated.appending(next)
 }
 }
 public protocol SwiftSettingFeature: _Named, SwiftSettingConvertible {
 var featureState: FeatureState { get }
 }
-public extension SwiftSettingFeature {
-var featureState: FeatureState {
+extension SwiftSettingFeature {
+public var featureState: FeatureState {
 .upcoming
 }
-var setting: SwiftSetting {
+public var setting: SwiftSetting {
 featureState.swiftSetting(name: name)
 }
 }
@@ -765,6 +797,9 @@ BushelXPCSession()
 BushelFactoryRepository()
 BushelFeatureFlags()
 BushelAnalytics()
+BushelDataMonitor()
+BushelBookmarkService()
+BushelCanary()
 }
 }
 struct BushelUITests: Product, Target {
@@ -784,11 +819,11 @@ BushelCore()
 BushelLogging()
 }
 }
-struct BushelAnalyticsEnvironment: Target {
+struct BushelFeedbackViews: Target {
 var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
-BushelAnalyticsCore()
+BushelFeedbackCore()
 }
 }
 struct BushelMarketEnvironment: Target {
@@ -804,7 +839,7 @@ struct BushelAnalytics: Target {
 var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
-BushelAnalyticsCore()
+AviaryInsights()
 }
 }
 struct BushelFactoryViews: Target {
@@ -850,7 +885,20 @@ BushelViewsCore()
 BushelProgressUI()
 }
 }
+struct BushelDataMonitor: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+}
+}
 struct BushelScreenCore: Target {}
+struct BushelBookmarkService: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+BushelDataMonitor()
+}
+}
 struct BushelLibraryData: Target {
 var dependencies: any Dependencies {
 BushelLibrary()
@@ -873,6 +921,7 @@ BushelWelcomeViews()
 BushelHubViews()
 BushelMarketViews()
 BushelOnboardingViews()
+BushelFeedbackViews()
 }
 }
 struct BushelMachineViews: Target {
@@ -887,6 +936,7 @@ BushelFactoryViews()
 BushelMachineEnvironment()
 BushelMarketEnvironment()
 BushelFeatureFlags()
+BushelDataMonitor()
 }
 }
 struct BushelData: Target {
@@ -911,22 +961,25 @@ BushelEnvironmentCore()
 BushelOnboardingCore()
 }
 }
+struct BushelFeedbackCore: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+BushelEnvironmentCore()
+Sentry()
+}
+}
 struct BushelWelcomeViews: Target {
 var dependencies: any Dependencies {
 BushelData()
+BushelDataMonitor()
 BushelLocalization()
 BushelOnboardingEnvironment()
 BushelMarketEnvironment()
 BushelMessage()
 BushelSessionEnvironment()
 BushelAccessibility()
-}
-}
-struct BushelAnalyticsCore: Target {
-var dependencies: any Dependencies {
-BushelCore()
-BushelLogging()
-AviaryInsights()
+BushelFeedbackEnvironment()
 }
 }
 struct BushelMachineMacOS: Target {
@@ -942,6 +995,13 @@ BushelLibraryMacOS()
 BushelMachineMacOS()
 BushelHubMacOS()
 BushelSystem()
+}
+}
+struct BushelCanary: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+Sentry()
 }
 }
 struct BushelSession: Target {
@@ -969,13 +1029,6 @@ BushelLogging()
 BushelCore()
 BushelLibrary()
 BushelLocalization()
-}
-}
-struct BushelAnalyticsEvents: Target {
-var dependencies: any Dependencies {
-BushelCore()
-BushelLogging()
-BushelAnalyticsCore()
 }
 }
 struct BushelFactoryRepository: Target {
@@ -1053,6 +1106,14 @@ struct BushelDataCore: Target {
 var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
+OperatingSystemVersion()
+}
+}
+struct BushelFeedbackEnvironment: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+BushelEnvironmentCore()
 }
 }
 struct BushelSettingsViews: Target {
@@ -1062,6 +1123,7 @@ BushelLocalization()
 BushelMarketEnvironment()
 BushelOnboardingEnvironment()
 BushelFeatureFlags()
+BushelFeedbackEnvironment()
 }
 }
 struct BushelXPCSession: Target {
@@ -1143,6 +1205,11 @@ BushelSession()
 struct AviaryInsights: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/AviaryInsights.git", from: "1.0.0-alpha.2")
+}
+}
+struct SentryCocoa: PackageDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/getsentry/sentry-cocoa", from: "8.26.0")
 }
 }
 struct FelinePine: PackageDependency, TargetDependency {
@@ -1245,6 +1312,16 @@ var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.4")
 }
 }
+struct SentrySwiftUI: TargetDependency {
+var package: PackageDependency {
+SentryCocoa()
+}
+}
+struct Sentry: TargetDependency {
+var package: PackageDependency {
+SentryCocoa()
+}
+}
 struct ArgumentParser: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0")
@@ -1288,6 +1365,8 @@ InferSendableFromCaptures()
 InternalImportsByDefault()
 IsolatedDefaultValues()
 }
+WarnLongFunctionBodies(milliseconds: 100)
+WarnLongExpressionTypeChecking(milliseconds: 100)
 }
 )
 .supportedPlatforms {

@@ -6,6 +6,8 @@
 import BushelMachine
 import Foundation
 
-protocol MachineObjectParent: AnyObject {
+@MainActor
+internal protocol MachineObjectParent: AnyObject {
+  @MainActor
   var error: MachineError? { get set }
 }

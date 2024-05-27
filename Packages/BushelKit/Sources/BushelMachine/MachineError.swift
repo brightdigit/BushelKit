@@ -35,7 +35,7 @@ import Foundation
   import FoundationNetworking
 #endif
 
-public struct MachineError: LocalizedError, Loggable {
+public struct MachineError: LocalizedError, Loggable, Sendable {
   public enum ObjectProperty: Sendable {
     case url
     case machine

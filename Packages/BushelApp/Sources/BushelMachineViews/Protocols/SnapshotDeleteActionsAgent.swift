@@ -6,7 +6,7 @@
 import BushelMachine
 import Foundation
 
-protocol SnapshotDeleteActionsAgent {
+internal protocol SnapshotDeleteActionsAgent {
   func cancelDeleteSnapshot(_ snapshot: Snapshot?)
   func deleteSnapshot(_ snapshot: Snapshot?, at url: URL?)
 }

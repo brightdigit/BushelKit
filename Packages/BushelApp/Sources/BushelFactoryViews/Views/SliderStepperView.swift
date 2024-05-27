@@ -15,7 +15,7 @@
       value: Binding<Float>,
       bounds: ClosedRange<Float>,
       step: Float = 1.0,
-      _ content: @Sendable @escaping (LocalizedStringID) -> Content
+      _ content: @Sendable @MainActor @escaping (LocalizedStringID) -> Content
     ) {
       self.init(
         title: titleID,

@@ -15,7 +15,7 @@
   @available(macOS 14.0, *)
   @available(iOS, unavailable)
   public final class Service: ServiceInterface {
-    struct NoDefinedMessageTypeError: Error {}
+    internal struct NoDefinedMessageTypeError: Error {}
 
     public let database: any Database
     let messageTypes: [any Message.Type]

@@ -130,6 +130,9 @@
 /* Launch Onboarding from the Menu */
 "menu_onboarding" = "Launch Onboarding";
 
+/* Provide Feedback from the Menu */
+"menu_provide_feedback" = "Provide Feedback...";
+
 /* Welcome Action Button title for creating new machine */
 "welcome_pro" = "Pro";
 
@@ -232,6 +235,15 @@
 /* Machine Details Network NAT Value */
 "machine_details_network_nat" = "NAT";
 
+/* Installer View Authorizing Text */
+"installer_text_authorizing" = "Authorizing...";
+
+/* Installer View Progress Text */
+"installer_text_progress" = "Installation at %i%%...";
+
+/* Installer View Completing Text */
+"installer_text_completing" = "Finishing...";
+
 /* Machine Details Display Value */
 "%d x %d %dppi" = "%d x %d %dppi";
 
@@ -321,11 +333,29 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Show All Items in Recent Documents */
 "settings_filter_recent_documents_none" = "Both Machines and Libraries";
 
+/* Settings Enable Error Tracking */
+"settings_error_tracking_enabled_text" = "Enable error tracking to help us identify and fix issues. You can disable it at any time.";
+
+/* Settings Enable Analytics Tracking */
+"settings_analytics_tracking_enabled_text" = "Enable analytics to help us improve your experience. You can disable this feature at any time.";
+
 /* Redesign Feature Flag Label */
 "settings_features_new_machine_dialog_label" = "Introducing the Redesigned Machine Builder!";
 
 /* Redesign Feature Flag Description */
 "settings_features_new_machine_dialog_description" = "This streamlined feature guides you through configuring your virtual machine, from selecting the macOS version to fine-tuning settings.";
+
+/* Bookmark Monitor Feature Flag Label */
+"settings_features_bookmark_service_label" = "Continuous Document Monitoring";
+
+/* Bookmark Monitor Feature Flag Description */
+"settings_features_bookmark_service_description" = "Automatically keep your libraries and machines updated for seamless access and integration. This new feature continually monitors documents, ensuring you always have them at your fingertips.";
+
+/* User Feedback Feature Flag Label */
+"settings_features_user_feedback_label" = "New User Feedback Form!";
+
+/* User Feedback Feature Flag Description */
+"settings_features_user_feedback_description" = "We've added a new user feedback form to the About page and the help menu for you to try.";
 
 /* Clears all recent documents. */
 "settings_clear_all_recent_documents" = "Clear All Recent Documents";
@@ -626,3 +656,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Love the App? */
 "request_review" = "Love the App?";
+
+/* Send Feedback Button */
+"feedback_send" = "Send Feedback";
+
+/* Send Feedback Message Placeholder */
+"feedback_message" = "Message";
+
+/* Send Feedback Description */
+"feedback_description" = "We value your feedback! Please share your thoughts and suggestions to help us improve.";
+
+/* Send Feedback Email Label */
+"feedback_email" = "Email Address";

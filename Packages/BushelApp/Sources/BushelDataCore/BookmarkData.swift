@@ -26,16 +26,6 @@
     @Attribute
     public var createdAt: Date
 
-    @Transient
-    public var modelFetchDescriptor: FetchDescriptor<BookmarkData> {
-      let id = self.bookmarkID
-      var descriptor = FetchDescriptor<BookmarkData>(predicate: #Predicate { input in
-        input.bookmarkID == id
-      })
-      descriptor.fetchLimit = 1
-      return descriptor
-    }
-
     private convenience init(url: URL, bookmarkData: Data) {
       let path = url.standardizedFileURL.path
       self.init(path: path, bookmarkData: bookmarkData)
@@ -84,20 +74,16 @@
 
     public static func resolveURL(_ url: URL, with database: any Database) async throws -> BookmarkData {
       let path = url.standardizedFileURL.path
-      var predicate = FetchDescriptor<BookmarkData>(
-        predicate: #Predicate { $0.path == path }
-      )
-      predicate.fetchLimit = 1
-      let items: [BookmarkData]
+      let item: BookmarkData?
       do {
-        items = try await database.fetch(predicate)
+        item = try await database.first(where: #Predicate { $0.path == path })
       } catch {
         throw BookmarkError.databaseError(error)
       }
-      if let item = items.first {
+      if let item {
         Self.logger.debug("Refresh Bookmark for \(url, privacy: .public) with ID: \(item.bookmarkID)")
         do {
-          try await item.refreshBookmark(using: database, withURL: url)
+          try await item.refreshBookmark(using: database)
         } catch {
           throw BookmarkError.accessDeniedError(error, at: url)
         }
@@ -106,6 +92,15 @@
       } else {
         return try await creteNewBookmarkFromURL(url, database)
       }
+    }
+
+    public func selectDescriptor() -> FetchDescriptor<BookmarkData> {
+      let id = self.bookmarkID
+      var selectDescriptor = FetchDescriptor<BookmarkData>(predicate: #Predicate { input in
+        input.bookmarkID == id
+      })
+      selectDescriptor.fetchLimit = 1
+      return selectDescriptor
     }
 
     public func update(using database: any Database, at updateAt: Date = Date()) async throws {
@@ -133,16 +128,39 @@
       }
     }
 
-    private func refreshBookmark(using database: any Database, withURL newURL: URL?) async throws {
-      _ = try await fetchURL(using: database, withURL: newURL)
+    private func refreshBookmark(using database: any Database) async throws {
+      _ = try await fetchURL(using: database)
     }
 
-    public func fetchURL(using database: any Database, withURL _: URL?) async throws -> URL {
+    public func fetchURL(using database: any Database) async throws -> URL {
       var isStale = false
       let url = try URL(resolvingSecurityScopeBookmarkData: data, bookmarkDataIsStale: &isStale)
       Self.logger.debug("Bookmark for \(url, privacy: .public) stale: \(isStale)")
       try await updateURL(url, withNewBookmarkData: isStale, using: database)
       return url
+    }
+  }
+
+  extension BookmarkData {
+    public static func fetchURLs<Key: Hashable & Sendable>(
+      from bookmarks: [BookmarkData],
+      using database: any Database,
+      keyBy key: @Sendable @escaping (BookmarkData) async throws -> Key
+    ) async throws -> [Key: URL] {
+      try await withThrowingTaskGroup(of: (Key, URL).self, returning: [Key: URL].self) { group in
+        for bookmark in bookmarks {
+          group.addTask {
+            async let key = key(bookmark)
+            async let url = bookmark.fetchURL(using: database)
+            return try await (key, url)
+          }
+        }
+
+        return try await group.reduce(into: [Key: URL]()) { partialResult, tuple in
+          assert(partialResult[tuple.0] == nil)
+          partialResult[tuple.0] = tuple.1
+        }
+      }
     }
   }
 #endif

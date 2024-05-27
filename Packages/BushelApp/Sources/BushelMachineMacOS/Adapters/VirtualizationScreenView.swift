@@ -10,7 +10,7 @@
   import SwiftUI
   import Virtualization
 
-  struct VirtualizationScreenView: NSViewControllerRepresentable, Loggable {
+  internal struct VirtualizationScreenView: NSViewControllerRepresentable, Loggable {
     typealias NSViewControllerType = VirtualizationScreenViewController
 
     static var loggingCategory: BushelLogging.Category {

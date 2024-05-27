@@ -35,6 +35,7 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
   case noSupportedConfigurationImage(MetadataLabel, isSupported: Bool)
   case installationFailure(InstallFailure)
   case restoreImage(any InstallerImage, RestoreImageFailure, withError: any Error)
+  case missingInitialization
 
   public typealias Property = BuilderProperty
 
@@ -63,6 +64,8 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     case let .restoreImage(image, _, withError: error):
       // swiftlint:disable:next line_length
       "Restore Image \"\(image.metadata.shortName)\" could not loaded due to error: \(error.localizedDescription)"
+    case .missingInitialization:
+      "Missing Installer Initialization"
     }
   }
 

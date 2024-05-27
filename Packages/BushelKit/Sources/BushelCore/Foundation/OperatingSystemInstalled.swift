@@ -33,3 +33,9 @@ public protocol OperatingSystemInstalled {
   var buildVersion: String? { get }
   var operatingSystemVersion: OperatingSystemVersion { get }
 }
+
+extension OperatingSystemInstalled {
+  public var components: OperatingSystemVersionComponents {
+    .init(buildVersion: self.buildVersion, operatingSystemVersion: self.operatingSystemVersion)
+  }
+}

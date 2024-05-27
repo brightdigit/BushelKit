@@ -10,5 +10,6 @@ struct BushelSettingsViews: Target {
     BushelMarketEnvironment()
     BushelOnboardingEnvironment()
     BushelFeatureFlags()
+    BushelFeedbackEnvironment()
   }
 }

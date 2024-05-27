@@ -11,7 +11,7 @@
   import SwiftData
   import SwiftUI
 
-  struct DocumentScene: Scene {
+  internal struct DocumentScene: Scene {
     @FocusedValue(\.machineDocument) var object
     var body: some Scene {
       WindowGroup(for: MachineFile.self) { file in

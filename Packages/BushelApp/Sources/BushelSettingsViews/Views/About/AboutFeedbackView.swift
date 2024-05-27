@@ -4,19 +4,23 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelFeatureFlags
+  import BushelFeedbackEnvironment
   import BushelLocalization
   import BushelOnboardingEnvironment
   import BushelViewsCore
   import SwiftUI
 
   @available(iOS 16.0, visionOS 1.0, macOS 13.0, *)
-  struct AboutFeedbackView: View {
+  internal struct AboutFeedbackView: View {
     @State var isAdvancedButtonsVisible = true
     @Environment(\.openURL) var openURL
     @Environment(\.openWindow) var openWindow
     @Environment(\.requestReview) var requestReview
     @Environment(\.onboardingWindow) var onboardingWindow
     @Environment(\.purchaseWindow) var purchaseWindow
+    @Environment(\.userFeedback) var userFeedback
+    @Environment(\.provideFeedback) var provideFeedback
     let alignment: HorizontalAlignment
     let spacing: CGFloat
     let titleID: LocalizedStringID
@@ -42,6 +46,11 @@
           Button(.requestReview) {
             self.requestReview()
           }.isHidden(self.isAdvancedButtonsVisible)
+          if userFeedback.value {
+            Button(LocalizedStringID.menuProvideFeedback) {
+              self.openWindow(value: provideFeedback)
+            }
+          }
           Button(openURL, buttonURL) {
             Image(systemName: "envelope.fill")
             Text(buttonTextID)

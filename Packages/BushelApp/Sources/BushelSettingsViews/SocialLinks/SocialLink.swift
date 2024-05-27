@@ -6,7 +6,7 @@
 import BushelCore
 import Foundation
 
-struct SocialLink: Identifiable {
+internal struct SocialLink: Identifiable {
   let socialImageName: String
   let title: String
   let name: String

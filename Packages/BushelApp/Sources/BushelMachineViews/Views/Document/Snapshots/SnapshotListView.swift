@@ -12,11 +12,13 @@
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @available(iOS, unavailable)
-  struct SnapshotListView: View {
+  internal struct SnapshotListView: View {
     let url: URL?
-    @Query private var snapshots: [SnapshotEntry]
+    // @Query private var snapshots: [SnapshotEntry]
     @Environment(\.metadataLabelProvider) private var metadataLabelProvider
+
     @Environment(\.marketplace) private var marketplace
     @Environment(\.openWindow) private var openWindow
     @Environment(\.purchaseWindow) private var purchaseWindow
@@ -60,10 +62,6 @@
           requestReview()
         }
       }
-
-      .onChange(of: self.snapshots) {
-        self.object.refreshSnapshots()
-      }
       .fileExporter(
         isPresented: $object.presentExportingSnapshot,
         document: object.exportingSnapshot?.1,
@@ -99,13 +97,10 @@
     internal init(
       url: URL?,
       object: MachineObject,
-      snapshotsQuery: Query<Array<SnapshotEntry>.Element, [SnapshotEntry]>? = nil
+      snapshotsQuery _: Query<Array<SnapshotEntry>.Element, [SnapshotEntry]>? = nil
     ) {
       self.url = url
       let bookmarkDataID = object.entry.bookmarkDataID
-      self._snapshots = snapshotsQuery ?? Query(filter: #Predicate { snapshot in
-        snapshot.machine?.bookmarkDataID == bookmarkDataID
-      })
       self.object = object
     }
   }

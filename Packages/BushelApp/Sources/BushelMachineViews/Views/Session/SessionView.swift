@@ -17,7 +17,7 @@
   import SwiftUI
 
   @MainActor
-  struct SessionView: View, Loggable {
+  internal struct SessionView: View, Loggable {
     // swiftlint:disable:next implicitly_unwrapped_optional
     var timer: AnyPublisher<Date, Never>!
 
@@ -45,6 +45,7 @@
     @Environment(\.marketplace) private var marketplace
     @Environment(\.openWindow) private var openWindow
     @Environment(\.purchaseWindow) private var purchaseWindow
+    @Environment(\.databaseChangePublicist) private var databasePublisherFactory
 
     @Environment(\.requestReview) var requestReview
 
@@ -191,7 +192,8 @@
             restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
             snapshotFactory: self.snapshotProvider,
             using: systemManager,
-            labelProvider: self.labelProvider.callAsFunction(_:_:)
+            labelProvider: self.labelProvider.callAsFunction(_:_:),
+            databasePublisherFactory: databasePublisherFactory.callAsFunction(id:)
           )
         }
       }

@@ -87,6 +87,13 @@ platform :mac do
       fail_on_missing: true,
       keep_original: false
     )
+    
+    sentry_debug_files_upload(
+      auth_token: ENV['SENTRY_AUTH_TOKEN'],
+      org_slug: 'brightdigit',
+      project_slug: 'bushel-macos',
+      include_sources: true,
+    )
   end
 
   desc "Push a new beta build to TestFlight"

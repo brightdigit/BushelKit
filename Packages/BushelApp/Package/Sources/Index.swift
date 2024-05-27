@@ -43,6 +43,8 @@ let package = Package(
       InternalImportsByDefault()
       IsolatedDefaultValues()
     }
+    WarnLongFunctionBodies(milliseconds: 100)
+    WarnLongExpressionTypeChecking(milliseconds: 100)
   }
 )
 .supportedPlatforms {

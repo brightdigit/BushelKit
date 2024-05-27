@@ -13,8 +13,8 @@
       .machine
     }
 
-    static let oneMegabyte: UInt64 = (1_024 * 1_024)
-    static let minimumHardDiskSize = UInt64(64 * 1_024 * 1_024 * 1_024)
+    static let oneMegabyte: UInt64 = 1_024 * 1_024
+    static let minimumHardDiskSize: UInt64 = 64 * 1_024 * 1_024 * 1_024
 
     convenience init(
       toDirectory machineDirectory: URL,

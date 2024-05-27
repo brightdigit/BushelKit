@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  struct OperationView: View {
+  internal struct OperationView: View {
     let operation: MachineOperation
 
     var body: some View {

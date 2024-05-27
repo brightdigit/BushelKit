@@ -7,7 +7,7 @@
 import BushelCoreWax
 import XCTest
 
-final class VirtualizationDataTests: XCTestCase {
+internal final class VirtualizationDataTests: XCTestCase {
   private func randomVirtualizationDataTest() throws {
     let expectedMachineIdentifier =
       MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502 ... UInt64.max))

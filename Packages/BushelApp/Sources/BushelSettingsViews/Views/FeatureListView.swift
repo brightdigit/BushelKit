@@ -7,24 +7,54 @@
   import BushelFeatureFlags
   import BushelLocalization
   import BushelViewsCore
+  import FeatherQuill
   import SwiftUI
 
-  struct FeatureListView: View {
+  internal struct FeatureListView: View {
     @Environment(\.newDesignFeature) var newDesign
+    @Environment(\.userFeedback) var userFeedback
+
     var body: some View {
       Form {
+        Self.section(
+          for: newDesign,
+          label: LocalizedStringID.settingsFeaturesNewMachineDialogLabel,
+          description: LocalizedStringID.settingsFeaturesNewMachineDialogDescription
+        ) { bindingValue in
+          Toggle(.enabled, isOn: bindingValue)
+        }
+
         Section {
           GuidedLabeledContent(
-            LocalizedStringID.settingsFeaturesNewMachineDialogDescription
+            LocalizedStringID.settingsFeaturesUserFeedbackDescription
           ) {
-            Toggle(.enabled, isOn: self.newDesign.bindingValue)
+            Toggle(.enabled, isOn: self.userFeedback.bindingValue)
           } label: {
-            Text(.settingsFeaturesNewMachineDialogLabel)
+            Text(LocalizedStringID.settingsFeaturesUserFeedbackLabel)
           }
-          .disabled(!newDesign.isAvailable)
-          .opacity(newDesign.isAvailable ? 1.0 : 0.5)
+          .disabled(!userFeedback.isAvailable)
+          .opacity(userFeedback.isAvailable ? 1.0 : 0.5)
         }
       }.formStyle(.grouped)
+    }
+
+    static func section<ValueType>(
+      for feature: Feature<ValueType, some Any>,
+      label: LocalizedID,
+      description: LocalizedID,
+      _ content: @escaping (Binding<ValueType>) -> some View
+    ) -> some View {
+      Section {
+        GuidedLabeledContent(
+          description
+        ) {
+          content(feature.bindingValue)
+        } label: {
+          Text(label)
+        }
+        .disabled(!feature.isAvailable)
+        .opacity(feature.isAvailable ? 1.0 : 0.5)
+      }
     }
   }
 

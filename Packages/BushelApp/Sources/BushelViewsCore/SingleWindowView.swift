@@ -16,6 +16,7 @@
     private init() {}
   }
 
+  @MainActor
   public protocol SingleWindowView: View {
     associatedtype Value: DefaultableViewValue = SingleWindowViewValue<Self>
     init()
@@ -28,6 +29,7 @@
   }
 
   extension WindowGroup {
+    @MainActor
     public init<V: SingleWindowView>(
       singleOf _: V.Type
     ) where Content == PresentedWindowContent<V.Value, V> {

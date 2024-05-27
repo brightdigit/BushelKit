@@ -12,7 +12,7 @@
   import UniformTypeIdentifiers
 
   public struct CodablePackageDocument<T: CodablePackage>: FileDocument {
-    enum ReadError: Error {
+    internal enum ReadError: Error {
       case missingConfigurationAtKey(String)
     }
 

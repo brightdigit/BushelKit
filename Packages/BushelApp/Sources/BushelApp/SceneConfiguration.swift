@@ -19,7 +19,7 @@
   internal struct SceneConfiguration<
     MachineFileType: FileTypeSpecification,
     LibraryFileType: InitializableFileTypeSpecification
-  >: ApplicationConfiguration, Loggable {
+  >: ApplicationConfiguration, Loggable, Sendable {
     internal static var loggingCategory: BushelLogging.Category {
       .application
     }
@@ -68,6 +68,7 @@
       }
     }
 
+    @MainActor
     internal func hubView(_ image: Binding<(any InstallImage)?>) -> some View {
       HubView(selectedHubImage: image)
     }

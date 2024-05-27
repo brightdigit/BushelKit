@@ -4,7 +4,7 @@
 //
 
 public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
-  // swiftlint:disable identifier_name
+  // swiftlint:disable identifier_name file_length
   case bushel
   case upgradePurchase
   case proFeatures
@@ -45,6 +45,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case menuHelpBushel
   case menuClear
   case menuOnboarding
+  case menuProvideFeedback
   case welcomePro
   case welcomeToBushel
   case welcomeNewMachineTitle
@@ -85,6 +86,9 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case hubLastModified
   case hubURL
   case hubNoneSelected
+  case installerTextAuthorizing
+  case installerTextProgress
+  case installerTextCompleting
   case sessionForceRestartTitle
   case sessionForceRestartButton
   case sessionForceRestartMessage
@@ -206,9 +210,19 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case settingsResetAllConfirmationButton
   case settingsResetUserSettingsLabel
   case settingsMachineShutdown
+  case settingsErrorTrackingEnabledText
+  case settingsAnalyticsTrackingEnabledText
   case settingsFeaturesNewMachineDialogLabel
   case settingsFeaturesNewMachineDialogDescription
+  case settingsFeaturesBookmarkServiceLabel
+  case settingsFeaturesBookmarkServiceDescription
+  case settingsFeaturesUserFeedbackLabel
+  case settingsFeaturesUserFeedbackDescription
   case requestReview
+  case feedbackSend
+  case feedbackMessage
+  case feedbackDescription
+  case feedbackEmail
 
   // swiftlint:enable identifier_name
   public var keyValue: String {

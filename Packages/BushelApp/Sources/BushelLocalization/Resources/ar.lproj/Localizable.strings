@@ -16,6 +16,12 @@
 /* Button for starting VM */
 "start_machine" = "تشغيل الجهاز";
 
+/* Button for pause VM */
+"pause_machine" = "إيقاف الجهاز مؤقتا";
+
+/* Button for resume VM */
+"resume_machine" = "استئناف الجهاز";
+
 /* Open Window for VM */
 "open_machine" = "إفتح جهاز";
 
@@ -23,7 +29,7 @@
 "snapshot_machine" = "خذ لقطة";
 
 /* Button label for when to build machine */
-"build_machine" = "إبدأ";
+"build_machine" = "إنشاء";
 
 /* Title for upgrading to "Bushel Pro" */
 "upgrade_purchase" = "انتقل للنسخة الإحترافية";
@@ -144,6 +150,36 @@
 
 /* Machine Details Operating System Label */
 "name" = "الإسم";
+
+/* Machine Building Dialog Choose OS */
+"machine_dialog_choose_o_s" = "اختر نظام التشغيل للجهاز الجديد:";
+
+/* Machine Building Dialog Choose Specifications */
+"machine_dialog_choose_specifications" = "اختر مواصفات جهازك الجديد:";
+
+/* Machine Building Dialog Custom Release */
+"machine_dialog_release_custom" = "مخصص";
+
+/* Machine Building Dialog Build Picker Title */
+"machine_dialog_build_picker" = "إنشاء";
+
+/* Machine Building Dialog CPU Field Label */
+"machine_dialog_cpus_name" = "وحدات المعالجة المركزية (CPUs)";
+
+/* Machine Building Dialog Memory Field Label */
+"machine_dialog_memory_name" = "الذاكرة";
+
+/* Machine Building Dialog Storage Field Label */
+"machine_dialog_storage_name" = "قرص التخزين";
+
+/* Machine Building Dialog Specification Basic Template Name */
+"machine_dialog_spec_template_name_basic" = "أساسى";
+
+/* Machine Building Dialog Specification Developer Template Name */
+"machine_dialog_spec_template_name_developer" = "المبرمج";
+
+/* Machine Building Dialog Specification Maximum Template Name */
+"machine_dialog_spec_template_name_maximum" = "القصوى";
 
 /* Machine Configuration Choose Button */
 "machine_images_choose" = "اختر";
@@ -285,6 +321,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Show All Items in Recent Documents */
 "settings_filter_recent_documents_none" = "كلا من الأجهزة والمكتبات";
 
+/* Redesign Feature Flag Label */
+"settings_features_new_machine_dialog_label" = "أداة بناء الأجهزة: تصميم جديد، إمكانيات جديدة!";
+
+/* Redesign Feature Flag Description */
+"settings_features_new_machine_dialog_description" = "هذه الميزة المُبسطة ترشدك خلال عملية إعداد جهازك الإفتراضي، بدءًا من اختيار إصدار macOS وصولاً إلى ضبط الإعدادات بدقة.";
+
 /* Clears all recent documents. */
 "settings_clear_all_recent_documents" = "مسح جميع الملفات الحديثة";
 
@@ -333,8 +375,8 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Confirmation button for clearing the entire database and resetting all application settings. */
 "settings_reset_all_confirmation_button" = "نعم، قم بمسح قاعدة البيانات بأكملها";
 
-/* Settings Test Tab */
-"settings_test_tab" = "المعمل";
+/* Settings Features Tab */
+"settings_features_tab" = "ميزات";
 
 /* Settings Advanced Tab */
 "settings_advanced_tab" = "متقدم";
@@ -394,6 +436,9 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Keep Window Open on Shutdown Tooltip */
 "keep_window_open_on_shutdown" = "ابقى الشاشة مفتوحة عند إيقاف التشغيل";
+
+/* Automatically Take Snapshots */
+"automatically_take_snapshots_tooltip" = "حفظ اللقطات تلقائيا";
 
 /* Progress Operation Text */
 "operation_progress_text" = "%@/%@ (%@%%)";
@@ -535,6 +580,12 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Library Delete Image Confirmation */
 "library_delete_confirmation" = "هل أنت متأكد أنك تريد حذف ٪@؟";
+
+/* Library Image Confirm Delete Image Yes */
+"library_confirm_delete_yes" = "نعم، قم بحذف قرص الإقلاع";
+
+/* Library Image Confirm Delete Image Cancel */
+"library_confirm_delete_cancel" = "إلغاء";
 
 /* Image not supported */
 "library_unsupported_image" = "قرص الإقلاع غير مدعوم لل Virtualization";

@@ -18,6 +18,7 @@
       Menu {
         if !isEmpty {
           RecentDocumentsList(
+            publisherID: "menu",
             recentDocumentsClearDate: recentDocumentsClearDate,
             recentDocumentsTypeFilter: recentDocumentsTypeFilter,
             isEmpty: self.$isEmpty

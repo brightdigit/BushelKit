@@ -7,7 +7,7 @@ import BushelCore
 import Foundation
 
 extension SynchronousTask {
-  class Wait: Sendable {
+  internal class Wait: Sendable {
     internal init(till timeout: DispatchTime = .distantFuture) {
       self.timeout = timeout
     }

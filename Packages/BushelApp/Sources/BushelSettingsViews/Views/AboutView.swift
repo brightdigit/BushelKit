@@ -10,7 +10,7 @@
   import BushelViewsCore
   import SwiftUI
 
-  struct AboutView<PurchaseScreenValue: Codable & Hashable>: View {
+  internal struct AboutView<PurchaseScreenValue: Codable & Hashable>: View {
     @Environment(\.openWindow) var openWindow
     @Environment(\.openURL) var openURL
 

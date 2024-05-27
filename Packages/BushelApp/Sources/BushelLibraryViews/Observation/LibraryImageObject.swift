@@ -13,6 +13,7 @@
   import SwiftData
   import SwiftUI
 
+  @MainActor
   @Observable
   internal final class LibraryImageObject: Loggable, Sendable {
     internal var library: LibraryObject

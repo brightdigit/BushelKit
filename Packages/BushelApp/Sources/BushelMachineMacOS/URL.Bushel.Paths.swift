@@ -8,7 +8,7 @@ import Foundation
 
 extension URL.Bushel.Paths {
   public struct VZMacValues: VZMac {
-    enum Defaults {
+    internal enum Defaults {
       static let auxiliaryStorageFileName: String = "auxiliary.storage"
       static let hardwareModelFileName: String = "hardware.model.bin"
       static let machineIdentifierFileName: String = "machine.identifier.bin"

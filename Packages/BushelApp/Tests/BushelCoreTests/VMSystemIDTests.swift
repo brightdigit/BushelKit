@@ -6,7 +6,7 @@
 @testable import BushelCore
 import XCTest
 
-final class VMSystemIDTests: XCTestCase {
+internal final class VMSystemIDTests: XCTestCase {
   func testExpressibleByStringInterpolation() {
     let sut: VMSystemID = "86F07806-1F75-4E77-AA1C-BC33DD96A9DC"
 

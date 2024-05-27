@@ -10,12 +10,13 @@
   import BushelLocalization
   import SwiftUI
 
+  @MainActor
   internal struct ImageView: View, Sendable {
     @Environment(\.openWindow) private var openWindow
     @Bindable private var image: LibraryImageObject
     @State private var metadataLabel: MetadataLabel
     private let system: any LibrarySystem
-    private var onSave: @Sendable () -> Void
+    private var onSave: @Sendable @MainActor () -> Void
 
     internal var body: some View {
       VStack {
@@ -75,7 +76,7 @@
     internal init(
       image: Bindable<LibraryImageObject>,
       system: any LibrarySystem,
-      onSave: @escaping @Sendable () -> Void
+      onSave: @escaping @MainActor @Sendable () -> Void
     ) {
       self._image = image
       self.system = system

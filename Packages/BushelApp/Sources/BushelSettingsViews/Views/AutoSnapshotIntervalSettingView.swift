@@ -8,7 +8,7 @@
   import BushelLocalization
   import SwiftUI
 
-  struct AutoSnapshotIntervalSettingView: View {
+  internal struct AutoSnapshotIntervalSettingView: View {
     @AppStorage(for: AutomaticSnapshots.Enabled.self)
     var automaticSnapshotEnabled: Bool
     @AppStorage(for: AutomaticSnapshots.Value.self)

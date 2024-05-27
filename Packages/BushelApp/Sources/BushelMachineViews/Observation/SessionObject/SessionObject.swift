@@ -17,8 +17,9 @@
     import FoundationNetworking
   #endif
 
+  @MainActor
   @Observable
-  final class SessionObject: Loggable, MachineObjectParent, SessionFramable, Sendable {
+  internal final class SessionObject: Loggable, MachineObjectParent, SessionFramable, Sendable {
     var url: URL?
     var alertIsPresented = false
     var presentConfirmCloseAlert = false

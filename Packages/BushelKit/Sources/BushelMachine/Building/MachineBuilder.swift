@@ -33,6 +33,16 @@ public protocol MachineBuilder: Sendable {
   var url: URL { get }
   func observePercentCompleted(_ onUpdate: @escaping @Sendable (Double) -> Void) -> UUID
   @discardableResult
-  func removeObserver(_ id: UUID) -> Bool
+  func removeObserver(_ id: UUID) async -> Bool
   func build() async throws
+}
+
+extension MachineBuilder {
+  public func removeObserver(_ observer: any MachineBuilderObserver) {
+    Task {
+      if let id = await observer.getID() {
+        await self.removeObserver(id)
+      }
+    }
+  }
 }

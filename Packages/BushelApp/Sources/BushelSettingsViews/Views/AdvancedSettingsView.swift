@@ -3,7 +3,9 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
+// swiftlint:disable file_length
 #if canImport(SwiftUI)
+  import BushelCore
   import BushelData
   import BushelLocalization
   import BushelLogging
@@ -14,8 +16,8 @@
   #warning("Show number of machines and images")
   #warning("Show current size")
   @MainActor
-  struct AdvancedSettingsView: View, Loggable, Sendable {
-    enum AdvancedSettingsError: LocalizedError {
+  internal struct AdvancedSettingsView: View, Loggable, Sendable {
+    internal enum AdvancedSettingsError: LocalizedError {
       case databaseError(SwiftDataError)
       case missingBundleIdentifer
       case unknownError(any Error)
@@ -38,6 +40,13 @@
     @State var confimClearDatbase = false
     @State var confirmClearAllSettings = false
     @State var presentDebugDatabaseView = false
+
+    @AppStorage(for: Tracking.Error.self)
+    var errorTrackingEnabled
+
+    @AppStorage(for: Tracking.Analytics.self)
+    var analyticsTrackingEnabled
+
     @Environment(\.database) private var database
 
     var body: some View {
@@ -107,6 +116,27 @@
             self.isAdvancedButtonsVisible.toggle()
           }.keyboardShortcut(KeyEquivalent("d"), modifiers: [.command, .option, .control])
             .opacity(0.0)
+        }
+
+        Section {
+          LabeledContent {
+            Toggle(
+              isOn: self.$errorTrackingEnabled
+            ) {
+              Text(LocalizedStringID.enabled)
+            }
+          } label: {
+            Text(LocalizedStringID.settingsErrorTrackingEnabledText)
+          }
+          LabeledContent {
+            Toggle(
+              isOn: self.$analyticsTrackingEnabled
+            ) {
+              Text(LocalizedStringID.enabled)
+            }
+          } label: {
+            Text(LocalizedStringID.settingsAnalyticsTrackingEnabledText)
+          }
         }
 
         if self.isAdvancedButtonsVisible {

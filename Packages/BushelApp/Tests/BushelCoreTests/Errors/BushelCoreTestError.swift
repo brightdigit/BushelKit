@@ -5,7 +5,7 @@
 
 import BushelTestUtilities
 
-struct BushelCoreTestError: MockError {
+internal struct BushelCoreTestError: MockError {
   static let database = Self(value: "database")
   static let accessDenied = Self(value: "accessDenied")
 

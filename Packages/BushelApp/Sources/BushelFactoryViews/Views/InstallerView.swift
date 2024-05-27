@@ -4,14 +4,17 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelCore
   import BushelLogging
   import BushelMachine
   import SwiftUI
 
-  public struct InstallerView: View, Loggable {
+  @MainActor
+  public struct InstallerView: View, Loggable, Sendable {
     @Environment(\.dismiss) private var dismiss
     @Binding private var buildResult: Result<URL, BuilderError>?
     private var installationObject: InstallerObject
+    let scale: Double = 1.0
 
     public var body: some View {
       VStack {
@@ -19,12 +22,17 @@
           .resource("Logo-Monochrome")
           .resizable()
           .aspectRatio(contentMode: .fit)
-          .frame(width: 50.0)
-          .padding(20.0)
-        ProgressView(value: installationObject.percentCompleted).tint(.white)
+          .frame(width: 50.0 * scale)
+          .padding(20.0 * scale)
+        ProgressView(value: installationObject.fractionCompleted)
+        Text(
+          localizedUsingID: installationObject.textLocalizedID,
+          arguments: installationObject.percentTextValue
+        ).font(.caption)
       }
-      .padding(100.0)
-      .padding(.horizontal, 100)
+      .tint(.white)
+      .padding(100.0 * scale)
+      .padding(.horizontal, 100 * scale)
       .background(Color.black)
       .onAppear {}
       .task { @Sendable in
@@ -37,7 +45,9 @@
         switch buildResult {
         case let .success(url):
           Self.logger.debug("Finished building VM at \(url)")
-
+          await Task.sleepForSecondsBetween(10, and: 20) { error in
+            Self.logger.error("Unable to sleep: \(error.localizedDescription)")
+          }
         case let .failure(error):
           Self.logger.error("Error building VM: \(error)")
         }
@@ -55,11 +65,11 @@
     public init(
       buildResult: Binding<Result<URL, BuilderError>?>,
       builder: any MachineBuilder,
-      percentCompleted: Double = 0.0
+      fractionCompleted: Double? = nil
     ) {
       self.init(
         buildResult: buildResult,
-        installationObject: .init(builder: builder, percentCompleted: percentCompleted)
+        installationObject: .init(builder: builder, fractionCompleted: fractionCompleted)
       )
     }
   }

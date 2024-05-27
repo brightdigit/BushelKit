@@ -6,7 +6,7 @@
 import BushelFactory
 import XCTest
 
-final class SpecificationConfigurationTests: XCTestCase {
+internal final class SpecificationConfigurationTests: XCTestCase {
   func testTemplateUpdate() {
     var configuration = SpecificationConfiguration()
     configuration.template = .basic

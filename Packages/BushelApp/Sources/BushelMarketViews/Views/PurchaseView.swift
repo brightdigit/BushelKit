@@ -8,11 +8,13 @@
   import BushelLocalization
   import BushelLogging
   import BushelMarket
+  import BushelMarketEnvironment
   import BushelViewsCore
   import Foundation
   import StoreKit
   import SwiftUI
 
+  @MainActor
   public struct PurchaseView: SingleWindowView, Loggable {
     public typealias Value = PurchaseWindowValue
 

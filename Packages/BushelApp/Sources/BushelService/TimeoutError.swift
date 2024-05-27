@@ -5,6 +5,6 @@
 
 import Foundation
 
-struct TimeoutError: Error {
+internal struct TimeoutError: Error {
   let timeout: DispatchTime
 }

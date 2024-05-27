@@ -8,7 +8,7 @@ import BushelSessionCore
 import Foundation
 
 public final class InitializedSession: Session {
-  struct NotInitializedError: Error {}
+  internal struct NotInitializedError: Error {}
 
   private let initializer: @Sendable () throws -> any SessionService
   private var session: (any SessionService)?

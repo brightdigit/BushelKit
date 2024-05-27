@@ -6,7 +6,8 @@
 import BushelCore
 import Foundation
 
-public protocol BookmarkedError: Error {
+public protocol BookmarkedError: Error, Sendable {
+  @Sendable
   static func databaseError(_ error: any Error) -> Self
   static func bookmarkError(_ error: any Error) throws -> Self
   static func missingBookmark() -> Self

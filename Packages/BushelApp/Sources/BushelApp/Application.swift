@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelCanary
   import BushelCore
   import BushelData
   import BushelFactory
@@ -45,6 +46,7 @@
       #endif
     }
 
+    @MainActor
     public var body: some Scene {
       Group {
         #if os(macOS)
@@ -57,6 +59,7 @@
 
         MarketScene()
         OnboardingScene()
+        FeedbackScene()
       }
       .commands(content: {
         CommandGroup(replacing: .newItem) {

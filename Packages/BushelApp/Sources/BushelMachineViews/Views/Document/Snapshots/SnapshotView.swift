@@ -8,7 +8,7 @@
   import BushelMachine
   import SwiftUI
 
-  struct SnapshotView: View {
+  internal struct SnapshotView: View {
     @Environment(\.purchaseWindow) private var purchaseWindow
     @Environment(\.openWindow) private var openWindow
     @Environment(\.marketplace) private var marketplace

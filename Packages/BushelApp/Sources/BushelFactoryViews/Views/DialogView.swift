@@ -132,6 +132,7 @@
           buildResult: self.$buildResult,
           builder: build.builder
         )
+        .fixedSize(horizontal: true, vertical: true)
       })
       .onChange(of: self.buildRequest, initial: true) { _, newValue in
         self.object.buildRequestChangedTo(newValue)
@@ -142,7 +143,6 @@
           return
         }
         self.openWindow(value: MachineFile(url: machineURL))
-        #warning("fix auxilary file lock.")
         self.dismissWindow()
       }
     }
