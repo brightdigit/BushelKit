@@ -10,6 +10,12 @@
 
   internal final class MockDatabase: Database {
     var didRequestCount: Int?
+
+    func existingModel<T>(for _: PersistentIdentifier) async throws -> T?
+      where T: Sendable, T: PersistentModel {
+      ItemModel() as? T
+    }
+
     func contextMatchesModel(_: some PersistentModel) async -> Bool {
       false
     }

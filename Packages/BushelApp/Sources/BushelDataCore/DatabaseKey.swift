@@ -51,8 +51,9 @@
       throw NotImplmentedError.instance
     }
 
-    func contextMatchesModel(_: some PersistentModel) -> Bool {
-      false
+    func existingModel<T>(for _: PersistentIdentifier) throws -> T? where T: Sendable, T: PersistentModel {
+      assertionFailure("No Database Set.")
+      throw NotImplmentedError.instance
     }
   }
 

@@ -75,8 +75,11 @@
       return try self.modelContext.fetch(selectDescriptor)
     }
 
-    public func contextMatchesModel(_: some PersistentModel) async -> Bool {
-      true
+    public func existingModel<T>(
+      for objectID: PersistentIdentifier
+    ) async throws -> T? where T: Sendable, T: PersistentModel {
+      try self.modelContext.existingModel(for: objectID)
     }
   }
+
 #endif

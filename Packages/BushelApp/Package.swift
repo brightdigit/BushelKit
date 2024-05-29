@@ -823,6 +823,7 @@ struct BushelFeedbackViews: Target {
 var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
+BushelViewsCore()
 BushelFeedbackCore()
 }
 }

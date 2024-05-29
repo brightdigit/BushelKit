@@ -74,7 +74,9 @@
       database: any Database,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws {
-      let entry: LibraryImageEntry? = try await database.first(where: #Predicate { $0.imageID == id })
+      let entry: LibraryImageEntry? = try await database.fetch {
+        FetchDescriptor(predicate: #Predicate { $0.imageID == id })
+      }.first
       guard let entry else {
         return nil
       }
@@ -95,9 +97,10 @@
       )
 
       libraryPredicate.fetchLimit = 1
-      let library: LibraryEntry? = try await database.first(
-        where: #Predicate { $0.bookmarkDataID == bookmarkDataID }
-      )
+      let library: LibraryEntry? = try await database.fetch { FetchDescriptor(predicate:
+        #Predicate { $0.bookmarkDataID == bookmarkDataID })
+      }.first
+
       guard let library else {
         return nil
       }

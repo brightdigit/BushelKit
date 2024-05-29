@@ -76,7 +76,8 @@
       let path = url.standardizedFileURL.path
       let item: BookmarkData?
       do {
-        item = try await database.first(where: #Predicate { $0.path == path })
+        item = try await database.fetch { FetchDescriptor(predicate: #Predicate { $0.path == path }) }.first
+        // }(where: #Predicate { $0.path == path })
       } catch {
         throw BookmarkError.databaseError(error)
       }

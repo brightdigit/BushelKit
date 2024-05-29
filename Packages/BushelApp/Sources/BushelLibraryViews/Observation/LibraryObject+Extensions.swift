@@ -49,9 +49,13 @@
         entry = entryChild
       } else {
         do {
-          entry = try await database?.fetch(
-            #Predicate { $0.imageID == id }
-          ).first
+          entry = try await database?.fetch {
+            FetchDescriptor(
+              predicate:
+              #Predicate { $0.imageID == id }
+            )
+          }
+          .first
         } catch {
           Self.logger.error("Error fetching entry \(id) from database: \(error)")
           assertionFailure(error: error)
