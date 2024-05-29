@@ -87,8 +87,11 @@
       return try await self.database.save()
     }
 
-    public func contextMatchesModel(_ model: some PersistentModel & Sendable) async -> Bool {
-      await self.database.contextMatchesModel(model)
+    public func existingModel<T>(
+      for objectID: PersistentIdentifier
+    ) async throws -> T? where T: Sendable, T: PersistentModel {
+      assert(isMainThread: false)
+      return try await self.database.existingModel(for: objectID)
     }
   }
 #endif

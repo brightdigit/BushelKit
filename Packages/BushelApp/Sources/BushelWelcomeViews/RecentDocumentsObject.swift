@@ -69,22 +69,10 @@
         return
       }
       let bookmarks: [BookmarkData]?
-      let sort = \BookmarkData.updatedAt
-      let order = SortOrder.reverse
-      let filter: Predicate<BookmarkData>
-      let searchStrings = typeFilter.searchStrings
-      Self.logger.debug("Querying for \(searchStrings)")
-      if let libraryFilter = searchStrings.first {
-        filter = #Predicate {
-          $0.updatedAt > clearDate && !$0.path.localizedStandardContains(libraryFilter)
-        }
-      } else {
-        filter = #Predicate {
-          $0.updatedAt > clearDate
-        }
-      }
       do {
-        bookmarks = try await database.fetch(filter, sortBy: [.init(sort, order: order)])
+        bookmarks = try await database.fetch {
+          FetchDescriptor(typeFilter: self.typeFilter, clearDate: self.clearDate)
+        }
       } catch {
         Self.logger.error("Unable to fetch bookmarks")
         bookmarks = nil
@@ -123,6 +111,26 @@
       return [value.deleted, value.inserted, value.updated].contains { collection in
         collection.contains(where: { $0.entityName == "BookmarkData" })
       }
+    }
+  }
+
+  extension FetchDescriptor<BookmarkData> {
+    init(typeFilter: DocumentTypeFilter, clearDate: Date) {
+      let sort = \BookmarkData.updatedAt
+      let order = SortOrder.reverse
+      let filter: Predicate<BookmarkData>
+      let searchStrings = typeFilter.searchStrings
+      // Self.logger.debug("Querying for \(searchStrings)")
+      if let libraryFilter = searchStrings.first {
+        filter = #Predicate {
+          $0.updatedAt > clearDate && !$0.path.localizedStandardContains(libraryFilter)
+        }
+      } else {
+        filter = #Predicate {
+          $0.updatedAt > clearDate
+        }
+      }
+      self.init(predicate: filter, sortBy: [.init(sort, order: order)])
     }
   }
 #endif

@@ -61,7 +61,7 @@
       snapshotFactory: any SnapshotProvider,
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider,
-      databasePublisherFactory: @escaping (String) -> any Publisher<any DatabaseChangeSet, Never>
+      databasePublisherFactory: @escaping @Sendable (String) -> any Publisher<any DatabaseChangeSet, Never>
     ) {
       guard let url else {
         Self.logger.info("No url to load.")

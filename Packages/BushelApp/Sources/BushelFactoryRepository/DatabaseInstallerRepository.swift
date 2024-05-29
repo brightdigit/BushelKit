@@ -24,7 +24,7 @@
     ) async throws -> [any BushelMachine.InstallerImage] {
       try await database.delete(model: LibraryImageEntry.self, where: #Predicate { $0.library == nil })
 
-      let images: [LibraryImageEntry] = try await database.fetchAll()
+      let images: [LibraryImageEntry] = try await database.fetch { FetchDescriptor() }
       return images.map { entry in
         DataInstallerImage(entry: entry, database: database, labelProvider)
       }
@@ -65,9 +65,12 @@
 
       let imageID = image.imageID
       let imageEntry: LibraryImageEntry? = try await database
-        .first(
-          where: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
-        )
+        .fetch {
+          FetchDescriptor(
+            predicate: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
+          )
+        }.first
+
       guard let imageEntry else {
         return .notFound
       }

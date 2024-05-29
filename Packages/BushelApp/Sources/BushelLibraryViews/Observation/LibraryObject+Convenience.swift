@@ -31,7 +31,9 @@
       let bookmarkDataID = bookmarkData.bookmarkID
       let item: LibraryEntry?
       do {
-        item = try await database.first(where: #Predicate { $0.bookmarkDataID == bookmarkDataID })
+        item = try await database.fetch {
+          FetchDescriptor(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
+        }.first
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }

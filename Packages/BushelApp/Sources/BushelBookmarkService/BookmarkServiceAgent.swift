@@ -46,17 +46,20 @@
       forIDs ids: [PersistentIdentifier],
       from database: any Database
     ) async throws -> [BookmarkEventMetadata] {
-      let newBookmarks: [BookmarkData] = try await database.fetch(
-        #Predicate<BookmarkData> {
-          ids.contains($0.persistentModelID)
-        }
-      )
+      let newBookmarks: [BookmarkData] = try await database.fetch {
+        FetchDescriptor(
+          predicate:
+          #Predicate<BookmarkData> {
+            ids.contains($0.persistentModelID)
+          }
+        )
+      }
 
       return try await Self.dispatchSourceMap(for: newBookmarks, from: database)
     }
 
     func initialize() async throws {
-      let bookmarks: [BookmarkData] = try await database.fetchAll()
+      let bookmarks: [BookmarkData] = try await database.fetch { FetchDescriptor() }
       let sources = try await Self.dispatchSourceMap(for: bookmarks, from: database)
       await self.addEntries(sources)
     }
@@ -66,9 +69,7 @@
       let url = metadata.url
       let persistentModelID = metadata.id
       Self.logger.debug("Updating Database for \(persistentModelID.id.hashValue)")
-      let bookmark: BookmarkData? = try await database.first(
-        where: #Predicate { $0.persistentModelID == persistentModelID }
-      )
+      let bookmark: BookmarkData? = try await database.existingModel(for: persistentModelID)
       assert(bookmark != nil)
       guard let bookmark else {
         Self.logger.error("Missing Bookmark at: \(url)")

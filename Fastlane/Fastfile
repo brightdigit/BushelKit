@@ -61,6 +61,10 @@ platform :mac do
       overwrite_screenshots: true
     )
   end
+  
+  lane :update_certificates do 
+    match(type: "appstore", additional_cert_types: "mac_installer_distribution", keychain_password: ENV['FASTLANE_KEYCHAIN_PASSWORD'])
+  end
 
   lane :archive do
     api_key = app_store_connect_api_key(
@@ -69,7 +73,7 @@ platform :mac do
       key_content: ENV['SPACESHIP_CONNECT_API_KEY_CONTENT']
     )
 
-    match(type: "appstore", additional_cert_types: "mac_installer_distribution", keychain_password: ENV['FASTLANE_KEYCHAIN_PASSWORD'])
+    update_certificates
     build_app(
       output_directory: "public",
       build_path: "public",

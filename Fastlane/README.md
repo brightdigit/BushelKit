@@ -31,6 +31,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### mac update_certificates
+
+```sh
+[bundle exec] fastlane mac update_certificates
+```
+
+
+
 ### mac archive
 
 ```sh

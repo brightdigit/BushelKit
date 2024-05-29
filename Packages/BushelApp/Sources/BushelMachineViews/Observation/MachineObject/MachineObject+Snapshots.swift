@@ -153,7 +153,9 @@
       }
 
       do {
-        return try await database.first(where: #Predicate { $0.snapshotID == id })
+        return try await database.fetch {
+          FetchDescriptor(predicate: #Predicate { $0.snapshotID == id })
+        }.first
       } catch {
         Self.logger.error("Error fetching entry \(selection.id) from database: \(error)")
         assertionFailure(error: error)
