@@ -9,6 +9,7 @@
   import BushelFeedbackEnvironment
   import BushelLocalization
   import BushelViewsCore
+  import BushelWishListEnvironment
   import StoreKit
   import SwiftData
   import SwiftUI
@@ -23,6 +24,10 @@
       @Environment(\.userFeedback) private var userFeedbackEnabled
       @Environment(\.provideFeedback) private var provideFeedback
       @Environment(\.requestReview) private var requestReview
+      @Environment(\.wishList) private var wishList
+
+      @AppStorage(for: Tracking.Error.self)
+      var errorTrackingEnabled
 
       public var body: some View {
         Group {
@@ -35,10 +40,13 @@
           Button(.menuOnboarding) {
             openWindow(value: onboardingWindow)
           }
-          if userFeedbackEnabled.value {
+          if userFeedbackEnabled.value, errorTrackingEnabled {
             Button(.menuProvideFeedback) {
               openWindow(value: provideFeedback)
             }
+          }
+          Button(.menuWishList) {
+            openWindow(value: wishList)
           }
           Divider()
           Button(openURL, URL.bushel.support) {

@@ -46,6 +46,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case menuClear
   case menuOnboarding
   case menuProvideFeedback
+  case menuWishList
   case welcomePro
   case welcomeToBushel
   case welcomeNewMachineTitle

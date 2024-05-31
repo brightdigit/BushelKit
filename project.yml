@@ -69,6 +69,8 @@ targetTemplates:
         BrightDigitXPCService: ${bundleIdPrefix}.BushelXPC
         Sentry:
           DSN: https://0702167a293f6722329ad00476520db4@o919385.ingest.us.sentry.io/4507307052105728
+        WishKit:
+          APIKey: E97E7359-8F7A-43DD-B8FC-D447B4A46DD8
     sources:
       - path: "Support/macOS"
         name: macOS
