@@ -215,8 +215,6 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case settingsAnalyticsTrackingEnabledText
   case settingsFeaturesNewMachineDialogLabel
   case settingsFeaturesNewMachineDialogDescription
-  case settingsFeaturesBookmarkServiceLabel
-  case settingsFeaturesBookmarkServiceDescription
   case settingsFeaturesUserFeedbackLabel
   case settingsFeaturesUserFeedbackDescription
   case requestReview
