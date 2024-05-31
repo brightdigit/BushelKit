@@ -1,13 +1,13 @@
 {
-  "originHash" : "ce7edd216caf0ecbd229cb3733f8cd754ff74c384bbe104a34772dae064e9421",
+  "originHash" : "5e917cd2e45d3aca5e0c1b372ec318d2e071b1ee1181289fa678fe20b3c64735",
   "pins" : [
     {
       "identity" : "aviaryinsights",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/AviaryInsights.git",
       "state" : {
-        "revision" : "faa3ce44e7c621f887caa8194611fe0acd2a57de",
-        "version" : "1.0.0-alpha.2"
+        "revision" : "6dcd80af858d8f0da2142d8df0e8e689e260a44b",
+        "version" : "1.0.0-beta.1"
       }
     },
     {

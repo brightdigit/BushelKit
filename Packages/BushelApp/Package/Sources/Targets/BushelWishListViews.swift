@@ -9,6 +9,7 @@ struct BushelWishListViews: Target {
     BushelLogging()
     BushelViewsCore()
     BushelWishListEnvironment()
+    BushelMarketEnvironment()
     WishKit()
   }
 }
