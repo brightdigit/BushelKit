@@ -4,11 +4,13 @@
 //
 
 #if canImport(SwiftUI) && os(macOS)
+  import BushelCore
   import BushelFeatureFlags
   import BushelFeedbackEnvironment
   import BushelLocalization
   import BushelOnboardingEnvironment
   import BushelViewsCore
+  import BushelWishListEnvironment
   import SwiftUI
 
   @available(iOS 16.0, visionOS 1.0, macOS 13.0, *)
@@ -21,6 +23,11 @@
     @Environment(\.purchaseWindow) var purchaseWindow
     @Environment(\.userFeedback) var userFeedback
     @Environment(\.provideFeedback) var provideFeedback
+    @Environment(\.wishList) var wishList
+
+    @AppStorage(for: Tracking.Error.self)
+    var errorTrackingEnabled
+
     let alignment: HorizontalAlignment
     let spacing: CGFloat
     let titleID: LocalizedStringID
@@ -46,7 +53,10 @@
           Button(.requestReview) {
             self.requestReview()
           }.isHidden(self.isAdvancedButtonsVisible)
-          if userFeedback.value {
+          Button(.menuWishList) {
+            self.openWindow(value: self.wishList)
+          }
+          if userFeedback.value, errorTrackingEnabled {
             Button(LocalizedStringID.menuProvideFeedback) {
               self.openWindow(value: provideFeedback)
             }

@@ -16,5 +16,6 @@ struct BushelWelcomeViews: Target {
     BushelSessionEnvironment()
     BushelAccessibility()
     BushelFeedbackEnvironment()
+    BushelWishListEnvironment()
   }
 }

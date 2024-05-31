@@ -133,6 +133,9 @@
 /* Provide Feedback from the Menu */
 "menu_provide_feedback" = "Provide Feedback...";
 
+/* Request a Feature from the Menu */
+"menu_wish_list" = "Request a Feature...";
+
 /* Welcome Action Button title for creating new machine */
 "welcome_pro" = "Pro";
 

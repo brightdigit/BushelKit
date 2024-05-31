@@ -44,7 +44,7 @@ extension _PackageDescription_Target {
 static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = [])
 -> _PackageDescription_Target
 {
-let dependencies = entry.dependencies.map(\.targetDepenency)
+let dependencies = entry.dependencies.map(\.targetDependency)
 switch entry.targetType {
 case .executable:
 return .executableTarget(
@@ -167,14 +167,14 @@ extension PackageDependency where Self: TargetDependency {
 var package: any PackageDependency {
 self
 }
-var targetDepenency: _PackageDescription_TargetDependency {
+var targetDependency: _PackageDescription_TargetDependency {
 switch dependency.kind {
 case .sourceControl(let name, let location, requirement: _):
-let packageName = name ?? location.packageName
-return .product(name: productName, package: packageName)
+let packageName = name ?? location.packageName ?? self.packageName
+return .product(name: productName, package: packageName, condition: self.condition)
 case .fileSystem(let name, let path):
 if let packageName = name ?? path.components(separatedBy: "/").last {
-return .product(name: productName, package: packageName)
+return .product(name: productName, package: packageName, condition: self.condition)
 } else {
 return .byName(name: productName)
 }
@@ -255,7 +255,7 @@ extension Target {
 public var targetType: TargetType {
 .regular
 }
-public var targetDepenency: _PackageDescription_TargetDependency {
+public var targetDependency: _PackageDescription_TargetDependency {
 .target(name: name)
 }
 public var swiftSettings: [SwiftSetting] {
@@ -641,7 +641,7 @@ T.output(from: [first])
 }
 }
 public protocol Dependency {
-var targetDepenency: _PackageDescription_TargetDependency { get }
+var targetDependency: _PackageDescription_TargetDependency { get }
 }
 extension String {
 var packageName: String? {
@@ -695,14 +695,16 @@ public var name: String {
 protocol TargetDependency: Dependency, _Named {
 var productName: String { get }
 var package: PackageDependency { get }
+var condition: TargetDependencyCondition? { get }
 }
 extension TargetDependency {
 var productName: String {
 name
 }
-var targetDepenency: _PackageDescription_TargetDependency {
-.product(name: name, package: package.packageName)
+var targetDependency: _PackageDescription_TargetDependency {
+.product(name: name, package: package.packageName, condition: condition)
 }
+var condition: TargetDependencyCondition? { return nil }
 }
 public protocol SupportedPlatforms: Sequence where Element == SupportedPlatform {
 init<S>(_ s: S) where S.Element == SupportedPlatform, S: Sequence

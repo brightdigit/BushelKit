@@ -22,6 +22,7 @@
   import BushelViews
   import BushelViewsCore
   import BushelVirtualization
+  import BushelWishListViews
   import SwiftData
   import SwiftUI
 
@@ -60,6 +61,7 @@
         MarketScene()
         OnboardingScene()
         FeedbackScene()
+        WishScene()
       }
       .commands(content: {
         CommandGroup(replacing: .newItem) {

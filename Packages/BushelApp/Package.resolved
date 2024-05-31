@@ -1,5 +1,5 @@
 {
-  "originHash" : "a9b313f7d182cf71373fde298e5967364740de88a040cafadaf0d93da5aaa9a4",
+  "originHash" : "ce7edd216caf0ecbd229cb3733f8cd754ff74c384bbe104a34772dae064e9421",
   "pins" : [
     {
       "identity" : "aviaryinsights",
@@ -107,6 +107,24 @@
       "state" : {
         "revision" : "6efbfda5276bbbc8b4fec5d744f0ecd8c784eb47",
         "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "wishkit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wishkit/wishkit-ios.git",
+      "state" : {
+        "revision" : "3e1943861d3ba6acceb253b089c1df54521133b8",
+        "version" : "4.1.1"
+      }
+    },
+    {
+      "identity" : "wishkit-ios-shared",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wishkit/wishkit-ios-shared.git",
+      "state" : {
+        "revision" : "118c9c482e4ad57c65d664283516425b98616483",
+        "version" : "1.4.3"
       }
     }
   ],
