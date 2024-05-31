@@ -348,12 +348,6 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Redesign Feature Flag Description */
 "settings_features_new_machine_dialog_description" = "This streamlined feature guides you through configuring your virtual machine, from selecting the macOS version to fine-tuning settings.";
 
-/* Bookmark Monitor Feature Flag Label */
-"settings_features_bookmark_service_label" = "Continuous Document Monitoring";
-
-/* Bookmark Monitor Feature Flag Description */
-"settings_features_bookmark_service_description" = "Automatically keep your libraries and machines updated for seamless access and integration. This new feature continually monitors documents, ensuring you always have them at your fingertips.";
-
 /* User Feedback Feature Flag Label */
 "settings_features_user_feedback_label" = "New User Feedback Form!";
 
@@ -620,6 +614,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Image not supported */
 "library_unsupported_image" = "This image is not supported via Virtualization";
+
+/* Title for Snapshot Limit Alert */
+"snapshot_limit_title" = "Snapshot Limit Reached";
+
+/* Message for Snapshot Limit Message */
+"snapshot_limit_message" = "You have reached the maximum snapshot limit for free users. To continue creating snapshots and enjoy additional benefits, consider upgrading to Bushel Pro.";
+
+/* Snapshot Limit_upgrade button */
+"snapshot_limit_upgrade_button" = "Upgrade Now";
 
 /* Snapshot Details Property Name */
 "snapshot_details_property_name" = "Name";
