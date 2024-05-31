@@ -7,6 +7,6 @@ import Foundation
 
 struct AviaryInsights: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/AviaryInsights.git", from: "1.0.0-alpha.2")
+    .package(url: "https://github.com/brightdigit/AviaryInsights.git", from: "1.0.0-beta.1")
   }
 }
