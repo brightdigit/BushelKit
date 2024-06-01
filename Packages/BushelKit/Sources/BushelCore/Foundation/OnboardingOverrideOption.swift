@@ -1,5 +1,5 @@
 //
-//  EnvironmentConfiguration.swift
+//  OnboardingOverrideOption.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,36 +29,25 @@
 
 import Foundation
 
-public struct EnvironmentConfiguration: CustomReflectable, Sendable {
-  public enum Key: String {
-    case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
-    case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
-    case onboardingOveride = "ONBOARDING_OVERRIDE"
-    case resetApplication = "RESET_APPLICATION"
+public enum OnboardingOverrideOption: String, EnvironmentValue {
+  case skip
+  case force
+  case none
+
+  public static var `default`: OnboardingOverrideOption = .none
+}
+
+extension OnboardingOverrideOption {
+  public func shouldBasedOn(date: Date?) -> Bool {
+    switch (self, date) {
+    case (.skip, _):
+      false
+    case (.force, _):
+      true
+    case (.none, .some):
+      false
+    case (.none, .none):
+      true
+    }
   }
-
-  public static let shared: EnvironmentConfiguration = .init()
-
-  @EnvironmentProperty(Key.disableAssertionFailureForError)
-  public var disableAssertionFailureForError: Bool
-
-  @EnvironmentProperty(Key.disallowDatabaseRebuild)
-  public var disallowDatabaseRebuild: Bool
-
-  @EnvironmentProperty(Key.onboardingOveride)
-  public var onboardingOveride: OnboardingOverrideOption
-
-  @EnvironmentProperty(Key.resetApplication)
-  public var resetApplication: Bool
-
-  public var customMirror: Mirror {
-    Mirror(self, children: [
-      "disableAssertionFailureForError": disableAssertionFailureForError,
-      "disallowDatabaseRebuild": disallowDatabaseRebuild,
-      "onboardingOveride": onboardingOveride,
-      "resetApplication": resetApplication
-    ])
-  }
-
-  internal init() {}
 }
