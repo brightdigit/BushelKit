@@ -11,4 +11,4 @@ We're excited to announce a major update to Bushel just in time for your favorit
 
 Thank you for using Bushel! We look forward to seeing what you build with these new features. 
 
-Happy coding! 🚀
+Happy coding!
