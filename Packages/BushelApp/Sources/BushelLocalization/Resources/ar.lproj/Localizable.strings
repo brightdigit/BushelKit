@@ -91,6 +91,9 @@
 /* Contact Us Button */
 "contact_us" = "اتصل بنا";
 
+/* Join Discourse Button */
+"join_discourse" = "انضم إلى مجتمعنا على منصة Discourse";
+
 /* Import image button */
 "import_image" = "استيراد قرص إقلاع";
 
@@ -598,6 +601,42 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Onboarding Feature Item macOS Restore Image Management Description */
 "onboarding_feature_item_restore_image_management_description" = "قم بتبسيط عملية تثبيت إصدارات macOS من خلال التعامل بفعالية مع أقراص الإقلاع الخاصة بتنصيب ال OS.";
+
+/* Title for the feature: Overall Performance Improvements */
+"onboarding_feature_item_overall_performance_improvements_title" = "تحسينات شاملة في الأداء";
+
+/* Description for the feature: Overall Performance Improvements */
+"onboarding_feature_item_overall_performance_improvements_description" = "استمتع بتجربة محسّنة بفضل التحسينات المتوافقة مع Swift 6.";
+
+/* Title for the feature: WishKit Integration */
+"onboarding_feature_item_wishkit_integration_title" = "إضافة WishKit";
+
+/* Description for the feature: WishKit Integration */
+"onboarding_feature_item_wishkit_integration_description" = "يمكنك الآن طلب التصويت على الميزات الجديدة مباشرة داخل التطبيق.";
+
+/* Title for the feature: Improved Document Management */
+"onboarding_feature_item_improved_document_management_title" = "تحسين إدارة الملفات";
+
+/* Description for the feature: Improved Document Management */
+"onboarding_feature_item_improved_document_management_description" = "تتبع أفضل للملفات المنقولة والمحذوفة للأجهزة والمكتبات.";
+
+/* Title for the feature: Enhanced Error Tracking and User Feedback */
+"onboarding_feature_item_enhanced_error_tracking_title" = "تحسين تتبع الأخطاء وآراء المستخدمين";
+
+/* Description for the feature: Enhanced Error Tracking and User Feedback */
+"onboarding_feature_item_enhanced_error_tracking_description" = "نعمل على تحسين أداء التطبيق باستمرار من خلال تتبع الأخطاء وجمع آرائك وتعليقاتك.";
+
+/* Title for the feature: Brand New Machine Creation Dialog */
+"onboarding_feature_item_new_machine_creation_dialog_title" = "واجهة جديدة لإنشاء الأجهزة";
+
+/* Description for the feature: Brand New Machine Creation Dialog */
+"onboarding_feature_item_new_machine_creation_dialog_description" = "تم إعادة تصميم واجهة إنشاء الأجهزة لتكون أكثر سهولة في الاستخدام.";
+
+/* Title for the feature: Improved Installation Screen */
+"onboarding_feature_item_improved_installation_screen_title" = "شاشة تثبيت محسنة";
+
+/* Description for the feature: Improved Installation Screen */
+"onboarding_feature_item_improved_installation_screen_description" = "مؤشرات تقدم أكثر تفصيلاً لإبقائك على اطلاع أثناء عمليات التثبيت.";
 
 /* Library Tip Title */
 "tip_library_title" = "قم بتخزين أقراص الإقلاع";
