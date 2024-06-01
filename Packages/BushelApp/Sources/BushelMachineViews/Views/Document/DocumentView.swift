@@ -23,6 +23,8 @@
     @Environment(\.snapshotProvider) private var snapshotProvider
     @Environment(\.dismiss) private var dismiss
     @Environment(\.databaseChangePublicist) private var databasePublisherFactory
+    @Environment(\.marketplace) private var marketplace
+    @Environment(\.purchaseWindow) private var purchaseWindow
 
     @Binding var machineFile: MachineFile?
 
@@ -46,14 +48,19 @@
         ToolbarView(
           url: self.object.url,
           canSaveSnapshot: self.object.canSaveSnapshot,
+          allowedToSaveSnapshot: self.object.allowedToSaveSnapshot,
           canStart: self.object.machineObject?.canStart ?? false,
-          saveSnapshot: self.object.beginSavingSnapshot
+          saveSnapshot: self.object.beginSavingSnapshot,
+          purchasePrompt: self.$object.purchasePrompt
         )
       }
       .focusedSceneValue(\.machineDocument, object)
       // here
       .onChange(of: self.machineFile?.url) {
         self.beginLoadingURL($1)
+      }
+      .onChange(of: self.marketplace.purchased) { _, newValue in
+        self.object.purchased = newValue
       }
       // here
       .onAppear {
@@ -65,6 +72,11 @@
       .sheet(item: self.$object.currentOperation, content: { (operation: MachineOperation) in
         OperationView(operation: operation)
       })
+      .alertForSnapshotLimit(
+        isPresented: self.$object.purchasePrompt,
+        open: self.openWindow,
+        purchaseWindow: self.purchaseWindow
+      )
       .alert(
         isPresented: self.$object.alertIsPresented,
         error: self.object.error
@@ -87,6 +99,7 @@
           withDatabase: database,
           restoreImageDBfrom: machineRestoreImageDBFrom.callAsFunction(_:),
           snapshotFactory: snapshotProvider,
+          purchased: marketplace.purchased,
           using: systemManager,
           metadataLabelProvider.callAsFunction(_:_:),
           databasePublisherFactory: self.databasePublisherFactory.callAsFunction(id:)

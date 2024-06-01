@@ -139,7 +139,7 @@
           .environment(\.databaseChangePublicist, .init(dbWatcher: DataMonitor.shared))
           .session(configuration.xpcService)
           .provideFeedback(FeedbackView.self)
-          .onboardingWindow(OnboardingView.self)
+          .onboardingWindow(FujiFeaturesView.self)
           .hubView {
             configuration.hubView($0)
           }

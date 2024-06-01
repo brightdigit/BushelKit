@@ -3,12 +3,26 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
+import BushelCore
 import BushelMachine
+import BushelMarket
 
 #if canImport(Observation) && os(macOS) && canImport(SwiftUI) && canImport(SwiftData)
-  import BushelCore
 
   extension SessionObject: SessionToolbarAgent {
+    var allowedToSaveSnapshot: Bool {
+      assert(purchased != nil)
+      if purchased == true {
+        return true
+      }
+
+      guard let machineObject else {
+        return false
+      }
+
+      return machineObject.snapshotIDs.count < PaywallConfiguration.shared.maximumNumberOfFreeSnapshots
+    }
+
     var canPressPowerButton: Bool {
       self.canRequestStop
     }

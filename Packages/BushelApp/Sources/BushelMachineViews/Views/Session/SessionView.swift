@@ -66,7 +66,7 @@
             sessionAutomaticSnapshotsEnabled: self.$object.sessionAutomaticSnapshotsEnabled,
             keepWindowOpenOnShutdown: self.$object.keepWindowOpenOnShutdown,
             isForceRestartRequested: self.$object.isForceRestartRequested,
-
+            purchasePrompt: self.$object.purchasePrompt,
             agent: self.object,
             onGeometryProxy: self.object.toolbarProxy
           )
@@ -114,6 +114,7 @@
       .onAppear(perform: self.beginLoadingURL)
       .onChange(of: self.object.canStart, self.object.onCanStartChange)
       .onChange(of: self.marketplace.purchased) { _, newValue in
+        self.object.purchased = newValue
         guard newValue, self.sessionCloseButtonActionOption == .saveSnapshotAndForceTurnOff else {
           return
         }
@@ -134,6 +135,12 @@
       }
       .navigationTitle(
         self.object.machineObject.navigationTitle(default: "Loading Session...")
+      )
+
+      .alertForSnapshotLimit(
+        isPresented: self.$object.purchasePrompt,
+        open: self.openWindow,
+        purchaseWindow: self.purchaseWindow
       )
       .alert(
         isPresented: self.$object.alertIsPresented,

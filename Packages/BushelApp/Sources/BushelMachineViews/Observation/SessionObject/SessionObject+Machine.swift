@@ -83,6 +83,7 @@ import BushelMachine
       shutdownOption: MachineShutdownActionOption?,
       _ completed: @escaping @Sendable @MainActor () -> Void
     ) {
+      self.purchased = purchased
       Task { @MainActor in
         self.updateWindowSize()
         if

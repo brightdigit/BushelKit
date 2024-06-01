@@ -104,5 +104,8 @@ public enum Icons {
     case restoreImageManagement = "RestoreImageManagement"
     case versions = "Versions"
     case library = "Library"
+    case builder = "Builder"
+    case installation = "Installation"
+    case performance = "Performance"
   }
 }

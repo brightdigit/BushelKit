@@ -9,6 +9,8 @@
   import BushelDataMonitor
   import BushelLogging
   import BushelMachine
+  import BushelMarket
+  import BushelMarketEnvironment
   import Combine
   import SwiftData
   import SwiftUI
@@ -18,6 +20,9 @@
   internal final class DocumentObject: Loggable, MachineObjectParent, Sendable {
     var url: URL?
     var alertIsPresented = false
+    var purchasePrompt = false
+    // swiftlint:disable:next discouraged_optional_boolean
+    var purchased: Bool?
     var error: MachineError? {
       didSet {
         alertIsPresented = (error != nil) || alertIsPresented
@@ -27,7 +32,24 @@
     var machineObject: MachineObject?
 
     var canSaveSnapshot: Bool {
-      url != nil && machineObject != nil
+      url != nil && machineObject != nil && purchased != nil
+    }
+
+    var allowedToSaveSnapshot: Bool {
+      assert(self.purchased != nil)
+      guard canSaveSnapshot else {
+        return false
+      }
+
+      if purchased == true {
+        return true
+      }
+
+      guard let machineObject else {
+        return false
+      }
+
+      return machineObject.snapshotIDs.count < PaywallConfiguration.shared.maximumNumberOfFreeSnapshots
     }
 
     @ObservationIgnored
@@ -59,6 +81,7 @@
       withDatabase database: any Database,
       restoreImageDBfrom: @escaping @Sendable (any Database) -> any InstallerImageRepository,
       snapshotFactory: any SnapshotProvider,
+      purchased: Bool,
       using systemManager: any MachineSystemManaging,
       _ labelProvider: @escaping MetadataLabelProvider,
       databasePublisherFactory: @escaping @Sendable (String) -> any Publisher<any DatabaseChangeSet, Never>
@@ -67,6 +90,7 @@
         Self.logger.info("No url to load.")
         return
       }
+      self.purchased = purchased
       Task {
         await self
           .loadURL(
@@ -143,6 +167,13 @@
     }
 
     func beginSavingSnapshot(_ request: SnapshotRequest) {
+      assert(self.allowedToSaveSnapshot)
+      guard self.allowedToSaveSnapshot else {
+        Self.logger.error(
+          "This should not be called when the user does not have permission to create another snapshot."
+        )
+        return
+      }
       self.beginSavingSnapshot(request, options: [])
     }
 

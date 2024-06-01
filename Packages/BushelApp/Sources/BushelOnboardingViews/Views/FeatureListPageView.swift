@@ -1,15 +1,15 @@
 //
-// FeaureListView.swift
+// FeatureListPageView.swift
 // Copyright (c) 2024 BrightDigit.
 //
 
 #if canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
-  import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
-  internal struct FeaureListView: View {
+  internal struct FeatureListPageView: View {
     @Environment(\.nextPage) var nextPage
     let features: [FeatureItemView.Properties]
     var body: some View {

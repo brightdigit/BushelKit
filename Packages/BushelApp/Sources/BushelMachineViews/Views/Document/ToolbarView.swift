@@ -11,14 +11,20 @@
   internal struct ToolbarView: View {
     let url: URL?
     let canSaveSnapshot: Bool
+    let allowedToSaveSnapshot: Bool
     let canStart: Bool
     let saveSnapshot: (SnapshotRequest) -> Void
 
+    @Binding var purchasePrompt: Bool
     @Environment(\.openWindow) var openWindow
 
     var body: some View {
       Button {
-        self.saveSnapshot(.init())
+        if allowedToSaveSnapshot {
+          self.saveSnapshot(.init())
+        } else {
+          self.purchasePrompt = true
+        }
       } label: {
         Image(systemName: "camera")
         Text(.snapshotMachine)

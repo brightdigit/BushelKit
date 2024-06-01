@@ -1,5 +1,5 @@
 //
-// OnboardingView.swift
+// LegacyOnboardingView.swift
 // Copyright (c) 2024 BrightDigit.
 //
 
@@ -9,18 +9,20 @@
   import BushelLogging
   import BushelOnboardingCore
   import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
-  public struct OnboardingView: SingleWindowView, Loggable {
-    public typealias Value = OnboardingWindowValue
-    @AppStorage(for: Onboarding.NorthernSpy.self) private var onboardedAt: Date?
+  @available(*, deprecated)
+  public struct LegacyOnboardingView: SingleWindowView, Loggable {
+    @Environment(\.dismiss) var dismiss
+    // @AppStorage(for: Onboarding.NorthernSpy.self) private var onboardedAt: Date?
     @State var windowInitialized = false
 
     #warning("shendy-note: this might need to have adaptive frame to screen size")
     public var body: some View {
       PageView(onDismiss: self.onDismiss) {
         PageItem.welcome
-        FeatureList()
+        FeatureList.legacyOnboarding()
         PageItem.library
         PageItem.hub
         PageItem.machine
@@ -33,9 +35,8 @@
 
     public init() {}
 
-    private func onDismiss() {
-      self.onboardedAt = Date()
-      Self.logger.debug("Completed Onboarding")
+    private func onDismiss(_: DismissParameters) {
+      self.dismiss()
     }
 
     #if os(macOS)
@@ -57,6 +58,6 @@
   }
 
   #Preview {
-    OnboardingView()
+    LegacyOnboardingView()
   }
 #endif

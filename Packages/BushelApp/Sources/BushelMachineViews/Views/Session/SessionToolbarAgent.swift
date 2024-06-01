@@ -18,6 +18,8 @@ internal protocol SessionToolbarAgent {
 
   var canPressPowerButton: Bool { get }
 
+  var allowedToSaveSnapshot: Bool { get }
+
   func start()
   func pause()
   func resume()

@@ -21,7 +21,7 @@
     @Environment(\.onboardingWindow) var onboardingWindow
     @AppStorage(for: RecentDocuments.TypeFilter.self) private var recentDocumentsTypeFilter
     @AppStorage(for: RecentDocuments.ClearDate.self) private var recentDocumentsClearDate
-    @AppStorage(for: Onboarding.NorthernSpy.self) private var onboardedAt
+    @AppStorage(for: Onboarding.Fuji.self) private var onboardedAt
     var body: some View {
       HStack {
         WelcomeTitleView()
@@ -57,7 +57,7 @@
           Self.logger.error("Unable to wait for task")
           return
         }
-        if onboardedAt == nil, !EnvironmentConfiguration.shared.skipOnboarding {
+        if EnvironmentConfiguration.shared.onboardingOveride.shouldBasedOn(date: self.onboardedAt) {
           Self.logger.debug("not onboarded, opening onboarding window")
           openWindow(value: onboardingWindow)
         }
