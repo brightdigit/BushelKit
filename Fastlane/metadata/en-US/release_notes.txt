@@ -1,1 +1,14 @@
-* Fixes to Recent Menu
+We're excited to announce a major update to Bushel just in time for your favorite developer conference! This release brings significant improvements and new features to enhance your development experience.
+
+**What's New:**
+
+- **Brand New Machine Creation Dialog**: A redesigned interface for creating new machines, making the process more intuitive.
+- **Improved Installation Screen**: More descriptive progress indicators to keep you informed during installations.
+- **WishKit Integration**: Now you can request and vote on new features directly within the app.
+- **Improved Document Management**: Better tracking of moved and deleted files for Machines and Libraries.
+- **Overall Performance Improvements**: Enhanced performance to prepare for Swift 6, ensuring a smoother and faster experience.
+- **Enhanced Error Tracking and User Feedback**: Improved systems to catch errors and collect your valuable feedback.
+
+Thank you for using Bushel! We look forward to seeing what you build with these new features. 
+
+Happy coding! 🚀

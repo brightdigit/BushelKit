@@ -20,7 +20,7 @@ extension Subscription {
       self.value = value
     }
 
-    let unit: Unit
-    let value: Int
+    public let unit: Unit
+    public let value: Int
   }
 }

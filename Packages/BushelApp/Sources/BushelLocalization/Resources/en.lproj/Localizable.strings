@@ -74,7 +74,7 @@
 "about_social_header" = "Follow Us At";
 
 /* BrightDigit Copyright */
-"copyright_brightdigit" = "© BrightDigit, LLC 2023";
+"copyright_brightdigit" = "© BrightDigit, LLC 2024";
 
 /* Version name */
 "version" = "Version";
@@ -90,6 +90,9 @@
 
 /* Contact Us Button */
 "contact_us" = "Contact Us";
+
+/* Join Discourse Button */
+"join_discourse" = "Join Our Discourse";
 
 /* Import image button */
 "import_image" = "Import Image";
@@ -130,8 +133,14 @@
 /* Launch Onboarding from the Menu */
 "menu_onboarding" = "Launch Onboarding";
 
+/* Launch Onboarding from the Menu */
+"whats_new" = "What's New in Bushel";
+
 /* Provide Feedback from the Menu */
 "menu_provide_feedback" = "Provide Feedback...";
+
+/* Request a Feature from the Menu */
+"menu_wish_list" = "Request a Feature...";
 
 /* Welcome Action Button title for creating new machine */
 "welcome_pro" = "Pro";
@@ -344,12 +353,6 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Redesign Feature Flag Description */
 "settings_features_new_machine_dialog_description" = "This streamlined feature guides you through configuring your virtual machine, from selecting the macOS version to fine-tuning settings.";
-
-/* Bookmark Monitor Feature Flag Label */
-"settings_features_bookmark_service_label" = "Continuous Document Monitoring";
-
-/* Bookmark Monitor Feature Flag Description */
-"settings_features_bookmark_service_description" = "Automatically keep your libraries and machines updated for seamless access and integration. This new feature continually monitors documents, ensuring you always have them at your fingertips.";
 
 /* User Feedback Feature Flag Label */
 "settings_features_user_feedback_label" = "New User Feedback Form!";
@@ -600,6 +603,42 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Onboarding Feature Item macOS Restore Image Management Description */
 "onboarding_feature_item_restore_image_management_description" = "Simplify the installation of macOS versions by effectively handling restore images for OS installations.";
 
+/* Title for the feature: Overall Performance Improvements */
+"onboarding_feature_item_overall_performance_improvements_title" = "Overall Performance Improvements";
+
+/* Description for the feature: Overall Performance Improvements */
+"onboarding_feature_item_overall_performance_improvements_description" = "Enhanced performance to prepare for Swift 6, ensuring a smoother and faster experience.";
+
+/* Title for the feature: WishKit Integration */
+"onboarding_feature_item_wishkit_integration_title" = "WishKit Integration";
+
+/* Description for the feature: WishKit Integration */
+"onboarding_feature_item_wishkit_integration_description" = "Now you can request and vote on new features directly within the app.";
+
+/* Title for the feature: Improved Document Management */
+"onboarding_feature_item_improved_document_management_title" = "Improved Document Management";
+
+/* Description for the feature: Improved Document Management */
+"onboarding_feature_item_improved_document_management_description" = "Better tracking of moved and deleted files for Machines and Libraries.";
+
+/* Title for the feature: Enhanced Error Tracking and User Feedback */
+"onboarding_feature_item_enhanced_error_tracking_title" = "Enhanced Error Tracking and User Feedback";
+
+/* Description for the feature: Enhanced Error Tracking and User Feedback */
+"onboarding_feature_item_enhanced_error_tracking_description" = "Improved systems to catch errors and collect your valuable feedback.";
+
+/* Title for the feature: Brand New Machine Creation Dialog */
+"onboarding_feature_item_new_machine_creation_dialog_title" = "Brand New Machine Creation Dialog";
+
+/* Description for the feature: Brand New Machine Creation Dialog */
+"onboarding_feature_item_new_machine_creation_dialog_description" = "A redesigned interface for creating new machines, making the process more intuitive.";
+
+/* Title for the feature: Improved Installation Screen */
+"onboarding_feature_item_improved_installation_screen_title" = "Improved Installation Screen";
+
+/* Description for the feature: Improved Installation Screen */
+"onboarding_feature_item_improved_installation_screen_description" = "More descriptive progress indicators to keep you informed during installations.";
+
 /* Library Tip Title */
 "tip_library_title" = "Store your OS restore images";
 
@@ -617,6 +656,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Image not supported */
 "library_unsupported_image" = "This image is not supported via Virtualization";
+
+/* Title for Snapshot Limit Alert */
+"snapshot_limit_title" = "Snapshot Limit Reached";
+
+/* Message for Snapshot Limit Message */
+"snapshot_limit_message" = "You have reached the maximum snapshot limit for free users. To continue creating snapshots and enjoy additional benefits, consider upgrading to Bushel Pro.";
+
+/* Snapshot Limit_upgrade button */
+"snapshot_limit_upgrade_button" = "Upgrade Now";
 
 /* Snapshot Details Property Name */
 "snapshot_details_property_name" = "Name";

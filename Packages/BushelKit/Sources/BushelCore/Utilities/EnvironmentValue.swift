@@ -29,8 +29,30 @@
 
 import Foundation
 
-public protocol EnvironmentValue: LosslessStringConvertible, Sendable {
+public protocol EnvironmentValue: Sendable {
   static var `default`: Self { get }
+  var environmentStringValue: String { get }
+  init?(environmentStringValue: String)
+}
+
+extension EnvironmentValue where Self: LosslessStringConvertible {
+  public var environmentStringValue: String {
+    self.description
+  }
+
+  public init?(environmentStringValue: String) {
+    self.init(environmentStringValue)
+  }
+}
+
+extension EnvironmentValue where Self: RawRepresentable, RawValue == String {
+  public var environmentStringValue: String {
+    self.rawValue
+  }
+
+  public init?(environmentStringValue: String) {
+    self.init(rawValue: environmentStringValue)
+  }
 }
 
 extension Bool: EnvironmentValue {

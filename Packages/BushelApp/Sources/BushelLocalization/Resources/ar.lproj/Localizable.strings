@@ -74,7 +74,7 @@
 "about_social_header" = "تابعنا على";
 
 /* BrightDigit Copyright */
-"copyright_brightdigit" = "© BrightDigit, LLC 2023";
+"copyright_brightdigit" = "© BrightDigit, LLC 2024";
 
 /* Version name */
 "version" = "الإصدار";
@@ -129,6 +129,12 @@
 
 /* Launch Onboarding from the Menu */
 "menu_onboarding" = "تشغيل شاشة التمهيد";
+
+/* Provide Feedback from the Menu */
+"menu_provide_feedback" = "شاركنا رأيك...";
+
+/* Request a Feature from the Menu */
+"menu_wish_list" = "طلب إضافة ميزة...";
 
 /* Welcome Action Button title for creating new machine */
 "welcome_pro" = "نسخة احترافية";
@@ -232,6 +238,15 @@
 /* Machine Details Network NAT Value */
 "machine_details_network_nat" = "إعدادات ال NAT";
 
+/* Installer View Authorizing Text */
+"installer_text_authorizing" = "التثبيت - التهيئة...";
+
+/* Installer View Progress Text */
+"installer_text_progress" = "التثبيت - %i%%...";
+
+/* Installer View Completing Text */
+"installer_text_completing" = "التثبيت - الانهاء...";
+
 /* Machine Details Display Value */
 "%d x %d %dppi" = "%d x %d %dppi";
 
@@ -321,11 +336,23 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Show All Items in Recent Documents */
 "settings_filter_recent_documents_none" = "كلا من الأجهزة والمكتبات";
 
+/* Settings Enable Error Tracking */
+"settings_error_tracking_enabled_text" = "تفعيل تتبع الأخطاء لمساعدتنا في تحديد المشاكل وحلها. يمكنك تعطيله في أي وقت.";
+
+/* Settings Enable Analytics Tracking */
+"settings_analytics_tracking_enabled_text" = "تفعيل التحليلات لمساعدتنا في تحسين تجربتك. يمكنك تعطيل هذه الميزة في أي وقت.";
+
 /* Redesign Feature Flag Label */
 "settings_features_new_machine_dialog_label" = "أداة بناء الأجهزة: تصميم جديد، إمكانيات جديدة!";
 
 /* Redesign Feature Flag Description */
 "settings_features_new_machine_dialog_description" = "هذه الميزة المُبسطة ترشدك خلال عملية إعداد جهازك الإفتراضي، بدءًا من اختيار إصدار macOS وصولاً إلى ضبط الإعدادات بدقة.";
+
+/* User Feedback Feature Flag Label */
+"settings_features_user_feedback_label" = "إستمارة جديدة لآراء المستخدمين!";
+
+/* User Feedback Feature Flag Description */
+"settings_features_user_feedback_description" = "أضفنا استمارة جديدة لمشاركة آرائك في صفحة "حول" وقائمة "مساعدة"، جربها وقت الحاجة.";
 
 /* Clears all recent documents. */
 "settings_clear_all_recent_documents" = "مسح جميع الملفات الحديثة";
@@ -590,6 +617,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 /* Image not supported */
 "library_unsupported_image" = "قرص الإقلاع غير مدعوم لل Virtualization";
 
+/* Title for Snapshot Limit Alert */
+"snapshot_limit_title" = " تم بلوغ الحد الأقصى للقطات";
+
+/* Message for Snapshot Limit Message */
+"snapshot_limit_message" = "لقد وصلت إلى الحد الأقصى المسموح به من اللقطات للمستخدمين المجانيين. للتمتع بمزايا إضافية والاستمرار في إنشاء اللقطات يمكنك الترقية إلى Bushel Pro";
+
+/* Snapshot Limit_upgrade button */
+"snapshot_limit_upgrade_button" = "ترقية الآن";
+
 /* Snapshot Details Property Name */
 "snapshot_details_property_name" = "الإسم";
 
@@ -629,3 +665,15 @@ Explanation of automatic snapshots functionality. Bushel has the ability to peri
 
 /* Love the App? */
 "request_review" = "أعجبك التطبيق؟";
+
+/* Send Feedback Button */
+"feedback_send" = "أرسل لنا رأيك";
+
+/* Send Feedback Message Placeholder */
+"feedback_message" = "تعليقك";
+
+/* Send Feedback Description */
+"feedback_description" = "رأيك يهمنا! شاركنا بأفكارك واقتراحاتك لتساعدنا على التحسن والتطور.";
+
+/* Send Feedback Email Label */
+"feedback_email" = "البريد الإلكترونى";

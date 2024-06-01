@@ -6,7 +6,7 @@
 import BushelLocalization
 
 extension FeatureList {
-  init() {
+  internal static func legacyOnboarding() -> FeatureList {
     self.init {
       FeatureItem(
         featureIcon: .localizationAndAccessibility,

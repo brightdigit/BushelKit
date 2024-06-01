@@ -33,7 +33,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   public enum Key: String {
     case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
     case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
-    case skipOnboarding = "SKIP_ONBOARDING"
+    case onboardingOveride = "ONBOARDING_OVERRIDE"
     case resetApplication = "RESET_APPLICATION"
   }
 
@@ -45,8 +45,8 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   @EnvironmentProperty(Key.disallowDatabaseRebuild)
   public var disallowDatabaseRebuild: Bool
 
-  @EnvironmentProperty(Key.skipOnboarding)
-  public var skipOnboarding: Bool
+  @EnvironmentProperty(Key.onboardingOveride)
+  public var onboardingOveride: OnboardingOverrideOption
 
   @EnvironmentProperty(Key.resetApplication)
   public var resetApplication: Bool
@@ -55,7 +55,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
     Mirror(self, children: [
       "disableAssertionFailureForError": disableAssertionFailureForError,
       "disallowDatabaseRebuild": disallowDatabaseRebuild,
-      "skipOnboarding": skipOnboarding,
+      "onboardingOveride": onboardingOveride,
       "resetApplication": resetApplication
     ])
   }

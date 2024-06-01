@@ -18,6 +18,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case name
   case ok
   case contactUs
+  case joinDiscourse
   case startMachine
   case pauseMachine
   case resumeMachine
@@ -46,6 +47,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case menuClear
   case menuOnboarding
   case menuProvideFeedback
+  case menuWishList
+  case whatsNew
   case welcomePro
   case welcomeToBushel
   case welcomeNewMachineTitle
@@ -153,6 +156,18 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case onboardingFeatureItemVersionsDescription
   case onboardingFeatureItemLibraryTitle
   case onboardingFeatureItemLibraryDescription
+  case onboardingFeatureItemImprovedInstallationScreenTitle
+  case onboardingFeatureItemEnhancedErrorTrackingTitle
+  case onboardingFeatureItemOverallPerformanceImprovementsDescription
+  case onboardingFeatureItemNewMachineCreationDialogDescription
+  case onboardingFeatureItemImprovedInstallationScreenDescription
+  case onboardingFeatureItemWishkitIntegrationTitle
+  case onboardingFeatureItemEnhancedErrorTrackingDescription
+  case onboardingFeatureItemImprovedDocumentManagementDescription
+  case onboardingFeatureItemOverallPerformanceImprovementsTitle
+  case onboardingFeatureItemNewMachineCreationDialogTitle
+  case onboardingFeatureItemImprovedDocumentManagementTitle
+  case onboardingFeatureItemWishkitIntegrationDescription
   case onboardingDoneButton
   case onboardingNextButton
   case tipLibraryTitle
@@ -161,6 +176,9 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case libraryConfirmDeleteYes
   case libraryConfirmDeleteCancel
   case libraryUnsupportedImage
+  case snapshotLimitTitle
+  case snapshotLimitMessage
+  case snapshotLimitUpgradeButton
   case snapshotDetailsPropertySize
   case snapshotDetailsPropertyDicardable
   case snapshotDetailsPropertyName
@@ -214,8 +232,6 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case settingsAnalyticsTrackingEnabledText
   case settingsFeaturesNewMachineDialogLabel
   case settingsFeaturesNewMachineDialogDescription
-  case settingsFeaturesBookmarkServiceLabel
-  case settingsFeaturesBookmarkServiceDescription
   case settingsFeaturesUserFeedbackLabel
   case settingsFeaturesUserFeedbackDescription
   case requestReview

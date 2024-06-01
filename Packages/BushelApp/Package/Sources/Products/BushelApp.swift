@@ -23,5 +23,6 @@ struct BushelApp: Product, Target {
     BushelDataMonitor()
     BushelBookmarkService()
     BushelCanary()
+    BushelWishListViews()
   }
 }

@@ -22,6 +22,7 @@
   import BushelViews
   import BushelViewsCore
   import BushelVirtualization
+  import BushelWishListViews
   import SwiftData
   import SwiftUI
 
@@ -38,13 +39,11 @@
       .application
     }
 
-    public var defaultSystem: VMSystemID? {
-      #if arch(arm64) && os(macOS)
+    #if canImport(Virtualization) && arch(arm64)
+      public var defaultSystem: VMSystemID {
         MacOSVirtualizationSystem.systemID
-      #else
-        nil
-      #endif
-    }
+      }
+    #endif
 
     @MainActor
     public var body: some Scene {
@@ -55,11 +54,16 @@
         #endif
 
         LibraryScene()
-        MachineScene(system: defaultSystem)
+        #if canImport(Virtualization) && arch(arm64)
+          MachineScene(system: defaultSystem)
+        #else
+          MachineScene()
+        #endif
 
         MarketScene()
         OnboardingScene()
         FeedbackScene()
+        WishScene()
       }
       .commands(content: {
         CommandGroup(replacing: .newItem) {

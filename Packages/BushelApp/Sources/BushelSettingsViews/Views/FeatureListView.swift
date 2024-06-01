@@ -11,31 +11,27 @@
   import SwiftUI
 
   internal struct FeatureListView: View {
-    @Environment(\.newDesignFeature) var newDesign
     @Environment(\.userFeedback) var userFeedback
 
     var body: some View {
       Form {
         Self.section(
-          for: newDesign,
-          label: LocalizedStringID.settingsFeaturesNewMachineDialogLabel,
-          description: LocalizedStringID.settingsFeaturesNewMachineDialogDescription
+          userFeedback,
+          label: .settingsFeaturesUserFeedbackLabel,
+          description: .settingsFeaturesUserFeedbackDescription
         ) { bindingValue in
           Toggle(.enabled, isOn: bindingValue)
         }
-
-        Section {
-          GuidedLabeledContent(
-            LocalizedStringID.settingsFeaturesUserFeedbackDescription
-          ) {
-            Toggle(.enabled, isOn: self.userFeedback.bindingValue)
-          } label: {
-            Text(LocalizedStringID.settingsFeaturesUserFeedbackLabel)
-          }
-          .disabled(!userFeedback.isAvailable)
-          .opacity(userFeedback.isAvailable ? 1.0 : 0.5)
-        }
       }.formStyle(.grouped)
+    }
+
+    static func section<ValueType>(
+      _ feature: Feature<ValueType, some Any>,
+      label: LocalizedStringID,
+      description: LocalizedStringID,
+      _ content: @escaping (Binding<ValueType>) -> some View
+    ) -> some View {
+      section(for: feature, label: label, description: description, content)
     }
 
     static func section<ValueType>(

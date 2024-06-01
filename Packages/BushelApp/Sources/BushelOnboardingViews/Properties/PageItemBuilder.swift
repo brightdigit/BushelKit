@@ -11,7 +11,7 @@
     static func viewForPage(_ page: PageType) -> any View {
       switch page {
       case let .features(features):
-        FeaureListView(features: features)
+        FeatureListPageView(features: features)
 
       case let .item(item):
         PageItemView(item)

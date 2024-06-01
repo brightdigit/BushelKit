@@ -7,11 +7,12 @@
   import Foundation
   import SwiftUI
 
+  @available(*, unavailable, message: "Use RadiantKit.")
   private struct NextPageKey: EnvironmentKey, Sendable {
     static let defaultValue: NextPageAction = .default
   }
 
-  @available(*, deprecated, message: "Use RadiantKit.")
+  @available(*, unavailable, message: "Use RadiantKit.")
   public struct NextPageAction: Sendable {
     static let `default`: NextPageAction = .init {
       assertionFailure()
@@ -28,7 +29,7 @@
   }
 
   extension EnvironmentValues {
-    @available(*, deprecated, message: "Use RadiantKit.")
+    @available(*, unavailable, message: "Use RadiantKit.")
     public var nextPage: NextPageAction {
       get { self[NextPageKey.self] }
       set {

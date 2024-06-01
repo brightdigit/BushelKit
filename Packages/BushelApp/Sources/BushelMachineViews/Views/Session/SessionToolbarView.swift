@@ -17,6 +17,7 @@
     @Binding var sessionAutomaticSnapshotsEnabled: Bool
     @Binding var keepWindowOpenOnShutdown: Bool
     @Binding var isForceRestartRequested: Bool
+    @Binding var purchasePrompt: Bool
 
     @AppStorage(for: Preference.MachineShutdownAction.self)
     var machineShutdownActionOption: MachineShutdownActionOption?
@@ -87,7 +88,11 @@
       )
       .help(Text(.sessionCaptureSystemKeysToggle))
       Button {
-        self.agent.snapshot(.init(), options: [])
+        if self.agent.allowedToSaveSnapshot {
+          self.agent.snapshot(.init(), options: [])
+        } else {
+          self.purchasePrompt = true
+        }
       } label: {
         Image(systemName: "camera")
       }

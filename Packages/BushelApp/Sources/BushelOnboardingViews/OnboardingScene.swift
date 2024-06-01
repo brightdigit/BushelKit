@@ -12,7 +12,7 @@
 
   public struct OnboardingScene: Scene {
     public var body: some Scene {
-      WindowGroup(singleOf: OnboardingView.self)
+      WindowGroup(singleOf: FujiFeaturesView.self)
       #if os(macOS)
         .windowStyle(.hiddenTitleBar)
       #endif

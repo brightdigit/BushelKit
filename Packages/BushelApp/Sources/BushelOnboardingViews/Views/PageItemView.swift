@@ -7,6 +7,7 @@
   import AVKit
   import BushelLocalization
   import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
   internal struct PageItemView: View {

@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
-  @available(*, deprecated, message: "Use PageView from RadiantKit.")
+  @available(*, unavailable, message: "Use PageView from RadiantKit.")
   public struct PageView: View {
     @Environment(\.dismiss) var dismiss
     @State private var currentPageID: IdentifiableView.ID?
@@ -19,12 +19,12 @@
         if page.id == currentPageID {
           AnyView(
             page.content
-              .environment(\.nextPage, NextPageAction { self.showNextPage() })
+            //    .environment(\.nextPage, NextPageAction { self.showNextPage() })
           )
           .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if currentPageID == nil, !pages.isEmpty {
           Color.clear.onAppear {
-            self.currentPageID = pages.first?.id
+            //            self.currentPageID = pages.first?.id
           }
         }
       }.transition(
@@ -71,7 +71,7 @@
 
         return
       }
-      currentPageID = pages[currentIndex + 1].id
+      // currentPageID = pages[currentIndex + 1].id
     }
   }
 #endif

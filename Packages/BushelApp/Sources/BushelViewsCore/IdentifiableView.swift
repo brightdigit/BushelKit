@@ -6,6 +6,7 @@
 #if canImport(SwiftUI)
   import SwiftUI
 
+  @available(*, unavailable, message: "Use RadiantKit.")
   internal struct IdentifiableViewModifier: ViewModifier {
     let id: UUID
 
@@ -14,7 +15,7 @@
     }
   }
 
-  @available(*, deprecated, message: "Use RadiantKit.")
+  @available(*, unavailable, message: "Use RadiantKit.")
   public struct IdentifiableView: Identifiable, View {
     let content: any View
     public let id: UUID
@@ -35,6 +36,7 @@
   }
 
   extension View {
+    @available(*, unavailable, message: "Use RadiantKit.")
     func id(_ id: UUID) -> some View {
       self.modifier(IdentifiableViewModifier(id: id))
     }

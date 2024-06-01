@@ -10,4 +10,6 @@ import Foundation
 internal protocol MachineObjectParent: AnyObject {
   @MainActor
   var error: MachineError? { get set }
+
+  var allowedToSaveSnapshot: Bool { get }
 }

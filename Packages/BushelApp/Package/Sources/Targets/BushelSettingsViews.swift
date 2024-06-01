@@ -11,5 +11,6 @@ struct BushelSettingsViews: Target {
     BushelOnboardingEnvironment()
     BushelFeatureFlags()
     BushelFeedbackEnvironment()
+    BushelWishListEnvironment()
   }
 }

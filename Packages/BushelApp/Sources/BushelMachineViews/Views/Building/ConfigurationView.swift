@@ -19,6 +19,7 @@
   import SwiftUI
 
   // swiftlint:disable type_body_length
+  @available(*, unavailable)
   @MainActor
   public struct ConfigurationView: View, Loggable {
     @Binding var buildRequest: MachineBuildRequest?
@@ -240,7 +241,7 @@
         .onChange(of: self.object.configuration.restoreImageID, self.object.onRestoreImageChange(from:to:))
         .onChange(of: self.buildResult) { _, newValue in
           guard let machineURL = self.object.machineURL(fromBuildResult: newValue) else {
-            self.buildResult = nil
+            // self.buildResult = nil
             return
           }
           self.openWindow(value: MachineFile(url: machineURL))
@@ -301,7 +302,7 @@
   }
 
   // swiftlint:enable type_body_length
-
+  @available(*, unavailable)
   extension ConfigurationView {
     init(request: Binding<MachineBuildRequest?>, system: any MachineSystem) {
       let object = ConfigurationObject(configuration: .init(request: request.wrappedValue, system: system))
