@@ -199,6 +199,14 @@
       options: SnapshotOptions,
       at url: URL
     ) async throws {
+      assert(self.parent?.allowedToSaveSnapshot == true)
+      guard self.parent?.allowedToSaveSnapshot == true else {
+        Self.logger.error(
+          "This should not be called when the user does not have permission to create another snapshot."
+        )
+        return
+      }
+
       let snapshot: Snapshot
       snapshot = try await machine.createNewSnapshot(
         request: request,

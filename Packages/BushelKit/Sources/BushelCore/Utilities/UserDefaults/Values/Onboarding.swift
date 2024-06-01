@@ -30,7 +30,14 @@
 import Foundation
 
 public enum Onboarding {
+  @available(*, unavailable, message: "No longer needed.")
   public enum NorthernSpy: AppStored {
+    public static let keyType: KeyType = .reflecting
+    public typealias Value = Date?
+  }
+
+  /// Onboarding Flag for v1.2.0
+  public enum Fuji: AppStored {
     public static let keyType: KeyType = .reflecting
     public typealias Value = Date?
   }

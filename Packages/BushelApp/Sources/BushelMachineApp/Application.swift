@@ -19,7 +19,11 @@
 
   extension Application {
     public var body: some Scene {
-      MachineScene(system: .macOS)
+      #if canImport(Virtualization) && arch(arm64)
+        MachineScene(system: .macOS)
+      #else
+        MachineScene()
+      #endif
     }
   }
 #endif

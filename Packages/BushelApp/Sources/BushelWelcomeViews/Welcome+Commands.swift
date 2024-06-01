@@ -31,14 +31,14 @@
 
       public var body: some View {
         Group {
+          Button(.whatsNew) {
+            openWindow(value: onboardingWindow)
+          }
           Button(openURL, URL.bushel.contactMailTo) {
             Text(.contactUs)
           }
           Button(.requestReview) {
             requestReview()
-          }
-          Button(.menuOnboarding) {
-            openWindow(value: onboardingWindow)
           }
           if userFeedbackEnabled.value, errorTrackingEnabled {
             Button(.menuProvideFeedback) {
@@ -49,6 +49,9 @@
             openWindow(value: wishList)
           }
           Divider()
+          Button(openURL, URL.bushel.discourse) {
+            Text(.joinDiscourse)
+          }
           Button(openURL, URL.bushel.support) {
             Text(.menuHelpBushel)
           }

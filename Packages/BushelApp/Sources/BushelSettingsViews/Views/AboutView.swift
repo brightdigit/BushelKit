@@ -26,7 +26,10 @@
           purchaseScreenValue: purchaseScreenValue
         )
         Divider()
-        AboutFeedbackView(buttonURL: .bushel.contactMailTo)
+        AboutFeedbackView(
+          discourseURL: .bushel.discourse,
+          contactUsEmailURL: .bushel.contactMailTo
+        )
         Divider()
         AboutBrandView(websiteURL: .bushel.company) {
           SocialLink.podcast
