@@ -36,7 +36,7 @@
     }
 
     var allowedToSaveSnapshot: Bool {
-      assert(self.purchased != nil)
+      assert(self.purchased != nil || self.machineObject == nil)
       guard canSaveSnapshot else {
         return false
       }

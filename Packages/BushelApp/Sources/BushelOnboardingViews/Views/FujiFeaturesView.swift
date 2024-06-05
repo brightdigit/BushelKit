@@ -4,6 +4,7 @@
 //
 
 #if canImport(SwiftUI)
+  import BushelCore
   import BushelOnboardingCore
   import BushelViewsCore
   import SwiftUI
@@ -11,6 +12,7 @@
   public struct FujiFeaturesView: SingleWindowView {
     public typealias Value = OnboardingWindowValue
 
+    @AppStorage(for: Onboarding.Fuji.self) private var onboardedAt
     @Environment(\.dismiss) var dismiss
 
     public var body: some View {
@@ -52,6 +54,7 @@
           descriptionID: .onboardingFeatureItemLibraryDescription
         )
       } _: {
+        self.onboardedAt = Date()
         self.dismiss()
       }
     }
