@@ -9,7 +9,7 @@ settings:
   DEVELOPMENT_TEAM: MLT7M394S7
   CODE_SIGN_IDENTITY: "Apple Development"
   MARKETING_VERSION: "1.2.1"
-  CURRENT_PROJECT_VERSION: 108
+  CURRENT_PROJECT_VERSION: 109
   bundleIdPrefix: com.brightdigit
   PRODUCT_NAME: Bushel
   DEAD_CODE_STRIPING: true
@@ -69,9 +69,6 @@ targetTemplates:
           DSN: https://0702167a293f6722329ad00476520db4@o919385.ingest.us.sentry.io/4507307052105728
         WishKit:
           APIKey: E97E7359-8F7A-43DD-B8FC-D447B4A46DD8
-        BrightDigitPrereleaseInfo:
-          Label: beta
-          Base: 107
     sources:
       - path: "Support/macOS"
         name: macOS
