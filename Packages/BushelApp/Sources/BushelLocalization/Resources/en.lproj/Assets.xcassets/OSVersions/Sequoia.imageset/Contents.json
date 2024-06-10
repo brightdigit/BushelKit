@@ -1,0 +1,22 @@
+{
+  "images" : [
+    {
+      "filename" : "macOS15-beta-wallpaper.jpg",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "macOS15-beta-wallpaper-dark.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
