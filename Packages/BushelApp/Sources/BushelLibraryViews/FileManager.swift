@@ -10,7 +10,7 @@
   import Observation
 
   extension FileManager {
-    #warning("logging-note: let's log that a url is getting copied/downloaded")
+    @MainActor
     public static func fileOperationProgress(
       from sourceURL: URL,
       to destinationURL: URL,
@@ -18,20 +18,23 @@
       timeInterval: TimeInterval,
       logger: Logger?
     ) throws -> any ProgressOperation<Int> {
+      assert(logger != nil)
       if sourceURL.isFileURL {
         let fileHandler = FileManagerHandler(fileManager: {
           self.default
         })
+        logger?.debug("Copying file \(sourceURL) to \(destinationURL)")
         return CopyOperation(
           sourceURL: sourceURL,
           destinationURL: destinationURL,
           totalValue: totalValue,
           timeInterval: timeInterval,
           logger: logger,
-          getSize: { try await fileHandler.getSize($0) },
+          getSize: { try fileHandler.getSize($0) },
           copyFile: { try await fileHandler.copyFile($0) }
         )
       } else {
+        logger?.debug("Downloading file \(sourceURL) to \(destinationURL)")
         return DownloadOperation(
           sourceURL: sourceURL,
           destinationURL: destinationURL,
@@ -42,8 +45,8 @@
   }
 
   extension FileHandler {
-    func getSize(_ url: URL) async throws -> Int? {
-      try await self.attributesAt(url).get(.size)
+    func getSize(_ url: URL) throws -> Int? {
+      try self.attributesAt(url).get(.size)
     }
 
     func copyFile(_ paths: CopyPaths) async throws {

@@ -125,6 +125,7 @@
       .formStyle(.grouped)
       .onChange(of: self.recentDocumentsTypeFilterSelection) { _, newValue in
         guard let newTypeFilter = DocumentTypeFilterOption(rawValue: newValue)?.typeFilter else {
+          assertionFailure("Invalid Type")
           return
         }
         guard newTypeFilter != self.recentDocumentsTypeFilter else {
@@ -132,7 +133,7 @@
         }
         self.recentDocumentsTypeFilter = newTypeFilter
       }
-      .onChange(of: self.recentDocumentsTypeFilter) { _, newValue in
+      .onChange(of: self.recentDocumentsTypeFilter, initial: true) { _, newValue in
         let newSelection = DocumentTypeFilterOption(filter: newValue)
         guard newSelection.rawValue != self.recentDocumentsTypeFilterSelection else {
           return

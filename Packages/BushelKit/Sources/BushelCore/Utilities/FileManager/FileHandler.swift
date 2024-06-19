@@ -34,6 +34,6 @@ import Foundation
 #endif
 
 public protocol FileHandler: Sendable {
-  func attributesAt(_ url: URL) async throws -> any AttributeSet
+  func attributesAt(_ url: URL) throws -> any AttributeSet
   func copy(at fromURL: URL, to toURL: URL) async throws
 }

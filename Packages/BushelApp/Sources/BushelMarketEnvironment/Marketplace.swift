@@ -36,16 +36,23 @@
     @ObservationIgnored
     var storeListener: (any MarketListener)?
 
+    private var shouldBeginUpdatesOnIntialization = false
+
     private nonisolated init(
       groupIDs: [String],
       listener: @autoclosure @escaping @Sendable () -> any MarketListener
     ) {
       self.groupIDs = groupIDs
 
+      Self.logger.debug("Creating Marketplace")
       Task { @MainActor in
         let storeListener = listener()
         self.storeListener = storeListener
         storeListener.initialize(for: self)
+        Self.logger.debug("Initialized StoreListener")
+        if shouldBeginUpdatesOnIntialization {
+          storeListener.invalidate()
+        }
       }
     }
 
@@ -91,8 +98,12 @@
     }
 
     func beginUpdates() {
-      assert(self.storeListener != nil)
-      self.storeListener?.invalidate()
+      Self.logger.debug("Beginning Updates")
+      guard let storeListener else {
+        self.shouldBeginUpdatesOnIntialization = true
+        return
+      }
+      storeListener.invalidate()
     }
 
     public func evaluate(_: UserAudience) -> Bool {
