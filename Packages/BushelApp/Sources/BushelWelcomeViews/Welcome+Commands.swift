@@ -73,8 +73,6 @@
     public struct OpenCommands: View {
       public init() {}
 
-      @AppStorage(for: RecentDocuments.TypeFilter.self) private var recentDocumentsTypeFilter
-      @AppStorage(for: RecentDocuments.ClearDate.self) private var recentDocumentsClearDate
       @Environment(\.openWindow) private var openWindow
       @Environment(\.openFileURL) private var openFileURL
       @Environment(\.allowedOpenFileTypes) private var allowedOpenFileTypes
@@ -83,12 +81,7 @@
         Button(.menuOpen) {
           openFileURL(ofFileTypes: allowedOpenFileTypes, using: openWindow)
         }
-        RecentDocumentsMenu(
-          recentDocumentsClearDate: recentDocumentsClearDate,
-          recentDocumentsTypeFilter: recentDocumentsTypeFilter
-        ) {
-          recentDocumentsClearDate = .init()
-        }
+        RecentDocumentsMenu()
       }
     }
   }

@@ -89,6 +89,7 @@
     }
 
     public nonisolated func invalidate() {
+      Self.logger.debug("Beginning Store Refresh")
       Task {
         await self.awaitInvalidate()
       }

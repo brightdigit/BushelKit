@@ -62,7 +62,11 @@
     }
 
     func notifyRegisration(_ update: any DatabaseChangeSet) {
+      guard !update.isEmpty else {
+        return
+      }
       Self.logger.debug("Notifying of Update")
+
       self.registrations.notify(update)
     }
   }

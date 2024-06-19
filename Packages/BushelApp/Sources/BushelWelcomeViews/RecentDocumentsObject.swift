@@ -24,8 +24,25 @@
     @ObservationIgnored
     private var database: (any Database)?
     private var lastUpdate: Date?
-    private let typeFilter: DocumentTypeFilter
-    private let clearDate: Date
+    private var typeFilter: DocumentTypeFilter? {
+      willSet {
+        if self.database != nil {
+          Task {
+            await self.invalidate()
+          }
+        }
+      }
+    }
+
+    private var clearDate: Date? {
+      willSet {
+        if self.database != nil {
+          Task {
+            await self.invalidate()
+          }
+        }
+      }
+    }
 
     internal private(set) var dbPublisher: AnyPublisher<any DatabaseChangeSet, Never>
     private(set) var recentDocuments: [RecentDocument]? {
@@ -37,12 +54,8 @@
     private(set) var isEmpty = true
 
     internal init(
-      typeFilter: DocumentTypeFilter,
-      clearDate: Date,
       dbPublisher: AnyPublisher<any DatabaseChangeSet, Never> = Empty().eraseToAnyPublisher()
     ) {
-      self.typeFilter = typeFilter
-      self.clearDate = clearDate
       self.dbPublisher = dbPublisher
     }
 
@@ -57,6 +70,13 @@
       }
     }
 
+    internal func setup(clearDate: Date?, withFilter typeFilter: DocumentTypeFilter?) {
+      self.clearDate = clearDate ?? self.clearDate
+      self.typeFilter = typeFilter ?? self.typeFilter
+
+      assert(self.typeFilter != nil)
+    }
+
     func beginPublishing<PublisherType: Publisher>(
       _ factory: @escaping () -> PublisherType
     ) where PublisherType.Failure == Never, PublisherType.Output == any DatabaseChangeSet {
@@ -64,14 +84,15 @@
     }
 
     private func invalidate() async {
-      guard let database else {
+      guard let database, let typeFilter else {
         assertionFailure()
         return
       }
+      let clearDate = self.clearDate ?? .distantPast
       let bookmarks: [BookmarkData]?
       do {
         bookmarks = try await database.fetch {
-          FetchDescriptor(typeFilter: self.typeFilter, clearDate: self.clearDate)
+          FetchDescriptor(typeFilter: typeFilter, clearDate: clearDate)
         }
       } catch {
         Self.logger.error("Unable to fetch bookmarks")

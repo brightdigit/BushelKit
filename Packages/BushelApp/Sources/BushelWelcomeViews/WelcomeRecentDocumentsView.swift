@@ -20,24 +20,22 @@
     @State var isEmpty = false
 
     var body: some View {
-      Group {
-        if isEmpty {
-          Text(.welcomeNoRecentDocuments)
-            .opacity(colorSchemeContrast == .standard ? 0.75 : 1.0)
-        } else {
-          List {
-            RecentDocumentsList(
-              publisherID: "welcome",
-              recentDocumentsClearDate: recentDocumentsClearDate,
-              recentDocumentsTypeFilter: recentDocumentsTypeFilter,
-              isEmpty: self.$isEmpty
-            ) { document in
-              RecentDocumentItemButton(document: document)
-            }
+      ZStack {
+        List {
+          RecentDocumentsList(
+            publisherID: "welcome",
+            isEmpty: self.$isEmpty
+          ) { document in
+            RecentDocumentItemButton(document: document)
           }
-          .listStyle(SidebarListStyle())
-          .padding(-20)
         }
+        .listStyle(SidebarListStyle())
+        .padding(-20)
+        .isHidden(isEmpty)
+
+        Text(.welcomeNoRecentDocuments)
+          .opacity(colorSchemeContrast == .standard ? 0.75 : 1.0)
+          .isHidden(!isEmpty)
       }
     }
   }

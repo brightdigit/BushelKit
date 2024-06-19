@@ -18,7 +18,7 @@
 
   @MainActor
   @Observable
-  internal final class DocumentObject: Loggable, Sendable {
+  internal final class DocumentObject: Loggable {
     internal var restoreImageImportProgress: ProgressOperationProperties?
     internal var object: LibraryObject? {
       didSet {

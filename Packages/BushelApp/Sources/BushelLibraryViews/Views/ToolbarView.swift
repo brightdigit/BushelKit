@@ -16,7 +16,7 @@
 
     var addMenu: some View {
       Menu {
-        Button("Import File...") {
+        Button("Import File...") { @MainActor in
           self.object.presentFileImporter = true
         }
         .accessibilityIdentifier(

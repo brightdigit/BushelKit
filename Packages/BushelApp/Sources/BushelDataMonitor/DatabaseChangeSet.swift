@@ -11,6 +11,10 @@
   }
 
   extension DatabaseChangeSet {
+    var isEmpty: Bool {
+      inserted.isEmpty && deleted.isEmpty && updated.isEmpty
+    }
+
     public func update(
       of types: Set<DatabaseChangeType> = .all,
       contains filteringEntityNames: Set<String>

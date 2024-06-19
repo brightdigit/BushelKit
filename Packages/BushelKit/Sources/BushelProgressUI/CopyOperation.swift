@@ -32,13 +32,14 @@
   import Observation
   import OSLog
 
+  @MainActor
   @Observable
-  public final class CopyOperation<ValueType: BinaryInteger & Sendable>: Identifiable, Sendable {
+  public final class CopyOperation<ValueType: BinaryInteger & Sendable>: Identifiable {
     private let sourceURL: URL
     private let destinationURL: URL
     public let totalValue: ValueType?
     private let timeInterval: TimeInterval
-    private let getSize: @Sendable (URL) async throws -> ValueType?
+    private nonisolated let getSize: @Sendable (URL) throws -> ValueType?
     private let copyFile: @Sendable (CopyPaths) async throws -> Void
     public var currentValue = ValueType.zero
     private var timer: Timer?
@@ -54,7 +55,7 @@
       totalValue: ValueType?,
       timeInterval: TimeInterval,
       logger: Logger?,
-      getSize: @escaping @Sendable (URL) async throws -> ValueType?,
+      getSize: @escaping @Sendable (URL) throws -> ValueType?,
       copyFile: @escaping @Sendable (CopyPaths) async throws -> Void
     ) {
       self.sourceURL = sourceURL
@@ -66,28 +67,47 @@
       self.logger = logger
     }
 
-    private func updateValue(_ currentValue: ValueType) {
-      self.currentValue = currentValue
+    private nonisolated func updateValue(_ currentValue: ValueType) {
+      Task {
+        await self.updatingValue(currentValue)
+      }
     }
 
-    @MainActor
+    private func updatingValue(_ currentValue: ValueType) {
+      self.currentValue = currentValue
+      if let totalValue = self.totalValue {
+        guard self.currentValue < totalValue else {
+          self.logger?.debug("Copy is complete based on size. Quitting timer.")
+          self.killTimer()
+          return
+        }
+      } else {
+        self.logger?.warning("Total size is missing")
+      }
+    }
+
     private func starTimer() {
       timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { [weak self] timer in
         guard let weakSelf = self else {
           timer.invalidate()
           return
         }
-
+        weakSelf.logger?.debug("Timer On")
+        assert(weakSelf.logger != nil)
         Task {
-          if let currentValue = try await weakSelf.getSize(weakSelf.destinationURL) {
-            weakSelf.updateValue(currentValue)
+          let currentValue: ValueType?
+          do {
+            currentValue = try await weakSelf.getSize(weakSelf.destinationURL)
+          } catch {
+            weakSelf.logger?.error("Unable to get size: \(error)")
+            assertionFailure("Unable to get size: \(error)")
+            currentValue = nil
           }
-          if let totalValue = weakSelf.totalValue {
-            guard weakSelf.currentValue < totalValue else {
-              weakSelf.logger?.debug("Copy is complete based on size. Quitting timer.")
-              weakSelf.killTimer()
-              return
-            }
+          if let currentValue {
+            weakSelf.updateValue(currentValue)
+            weakSelf.logger?.debug("Updating size to: \(currentValue)")
+          } else {
+            weakSelf.logger?.warning("Unable to get size")
           }
         }
       }
@@ -110,10 +130,6 @@
     private func killTimer() {
       timer?.invalidate()
       timer = nil
-    }
-
-    deinit {
-      self.killTimer()
     }
   }
 

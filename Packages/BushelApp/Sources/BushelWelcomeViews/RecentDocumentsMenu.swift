@@ -5,36 +5,34 @@
 
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
+  import Combine
   import SwiftUI
 
   public struct RecentDocumentsMenu: View {
-    let recentDocumentsClearDate: Date?
-    let recentDocumentsTypeFilter: DocumentTypeFilter
-    let clearMenu: () -> Void
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openFileURL) private var openFileURL
     @State var isEmpty = false
+    let clearTrigger = PassthroughSubject<Void, Never>()
     public var body: some View {
       Menu {
-        if !isEmpty {
-          RecentDocumentsList(
-            publisherID: "menu",
-            recentDocumentsClearDate: recentDocumentsClearDate,
-            recentDocumentsTypeFilter: recentDocumentsTypeFilter,
-            isEmpty: self.$isEmpty
-          ) { document in
-            Button {
-              openFileURL(document.url, with: openWindow)
-            } label: {
-              Image(nsImage: NSWorkspace.shared.icon(forFile: document.path))
-              Text(document.url.lastPathComponent)
-            }
+        RecentDocumentsList(
+          publisherID: "menu",
+          isEmpty: self.$isEmpty,
+          clearTrigger: clearTrigger
+        ) { document in
+          Button {
+            openFileURL(document.url, with: openWindow)
+          } label: {
+            Image(nsImage: NSWorkspace.shared.icon(forFile: document.path))
+            Text(document.url.lastPathComponent)
           }
+        }
 
+        if !isEmpty {
           Divider()
         }
         Button("Clear Menu") {
-          clearMenu()
+          clearTrigger.send()
         }.disabled(self.isEmpty)
       } label: {
         Text(.menuOpenRecent)
