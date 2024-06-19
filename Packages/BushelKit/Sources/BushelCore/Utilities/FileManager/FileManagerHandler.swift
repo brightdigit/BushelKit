@@ -33,14 +33,14 @@ import Foundation
   import FoundationNetworking
 #endif
 
-public actor FileManagerHandler: FileHandler {
+public struct FileManagerHandler: FileHandler {
   private let fileManager: @Sendable () -> FileManager
 
   public init(fileManager: @Sendable @escaping () -> FileManager) {
     self.fileManager = fileManager
   }
 
-  public func attributesAt(_ url: URL) async throws -> any AttributeSet {
+  public func attributesAt(_ url: URL) throws -> any AttributeSet {
     #if canImport(FoundationNetworking)
       let dictionary = try self.fileManager().attributesOfItem(atPath: url.path)
     #else
