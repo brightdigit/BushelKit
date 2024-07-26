@@ -4,8 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  import RadiantKit
-  import SwiftUI
+  public import RadiantKit
+
+  public import SwiftUI
 
   extension PageView {
     public init(

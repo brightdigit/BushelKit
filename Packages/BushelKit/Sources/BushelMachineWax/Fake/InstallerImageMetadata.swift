@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
-import Foundation
+public import BushelMachine
+
+public import Foundation
 
 extension InstallerImageMetadata {
   public init(operatingSystem: OperatingSystemVersion) {

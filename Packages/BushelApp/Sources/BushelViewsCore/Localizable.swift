@@ -3,9 +3,11 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelCore
-import BushelLocalization
-import Foundation
+public import BushelCore
+
+public import BushelLocalization
+
+public import Foundation
 
 extension Localizable {
   public func localizedID(default defaultValue: any LocalizedID) -> any LocalizedID {

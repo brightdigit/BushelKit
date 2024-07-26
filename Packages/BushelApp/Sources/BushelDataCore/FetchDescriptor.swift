@@ -4,12 +4,12 @@
 //
 
 #if canImport(SwiftData)
-  import Foundation
+  public import Foundation
 
-  import SwiftData
+  public import SwiftData
 
   extension FetchDescriptor {
-    internal init(predicate: Predicate<T>? = nil, sortBy: [SortDescriptor<T>] = [], fetchLimit: Int?) {
+    public init(predicate: Predicate<T>? = nil, sortBy: [SortDescriptor<T>] = [], fetchLimit: Int?) {
       self.init(predicate: predicate, sortBy: sortBy)
 
       self.fetchLimit = fetchLimit

@@ -17,7 +17,7 @@
   }
 
   #if canImport(CoreData)
-    import CoreData
+    public import CoreData
 
     extension ManagedObjectMetadata {
       init?(managedObject: NSManagedObject) {

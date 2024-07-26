@@ -5,10 +5,14 @@
 
 #if canImport(AppKit) && canImport(SwiftUI)
   import AppKit
-  import BushelCore
-  import Foundation
-  import SwiftUI
-  import UniformTypeIdentifiers
+
+  public import BushelCore
+
+  public import Foundation
+
+  public import SwiftUI
+
+  public import UniformTypeIdentifiers
 
   public struct NewFilePanel<FileType: InitializableFileTypeSpecification>: Sendable {
     public init() {}

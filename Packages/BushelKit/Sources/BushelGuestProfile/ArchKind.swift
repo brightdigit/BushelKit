@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum ArchKind: String, Codable, Equatable, Sendable {
   case archArm = "arch_arm"

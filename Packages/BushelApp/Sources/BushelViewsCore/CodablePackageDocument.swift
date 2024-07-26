@@ -4,12 +4,14 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
+  public import BushelCore
   import BushelUT
-  import Foundation
-  import SwiftUI
 
-  import UniformTypeIdentifiers
+  public import Foundation
+
+  public import SwiftUI
+
+  public import UniformTypeIdentifiers
 
   public struct CodablePackageDocument<T: CodablePackage>: FileDocument {
     internal enum ReadError: Error {

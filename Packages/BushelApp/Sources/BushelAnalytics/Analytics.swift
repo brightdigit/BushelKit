@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import AviaryInsights
+public import AviaryInsights
 import BushelCore
 import Foundation
 

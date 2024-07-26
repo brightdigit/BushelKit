@@ -5,7 +5,8 @@
 
 #if canImport(AppKit) && canImport(SwiftUI)
   import AppKit
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct NSWindowDelegateAdaptorModifier: ViewModifier {
     @Binding var binding: (any NSWindowDelegate)?

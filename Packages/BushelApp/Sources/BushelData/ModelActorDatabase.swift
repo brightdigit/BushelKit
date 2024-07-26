@@ -5,9 +5,12 @@
 
 #if canImport(SwiftData)
   import BushelCore
-  import BushelLogging
-  import Foundation
-  import SwiftData
+
+  public import BushelLogging
+
+  public import Foundation
+
+  public import SwiftData
 
   @ModelActor
   public actor ModelActorDatabase: Database, Loggable {

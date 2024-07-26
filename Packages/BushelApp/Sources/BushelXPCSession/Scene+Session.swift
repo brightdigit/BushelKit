@@ -8,7 +8,7 @@
   import BushelSessionCore
   import XPC
 
-  import SwiftUI
+  public import SwiftUI
 
   @available(iOS, unavailable)
   extension Scene {

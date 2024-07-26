@@ -29,8 +29,9 @@
 
 #if canImport(Virtualization) && arch(arm64)
 
-  import BushelCore
-  import Virtualization
+  public import BushelCore
+
+  public import Virtualization
 
   extension ImageMetadata {
     internal init(

@@ -5,10 +5,13 @@
 
 #if canImport(StoreKit)
   import BushelCore
-  import BushelLogging
-  import BushelMarket
+
+  public import BushelLogging
+
+  public import BushelMarket
   import Foundation
-  import StoreKit
+
+  public import StoreKit
 
   extension Subscription.Offer {
     public init?(renewal: Product.SubscriptionInfo.RenewalInfo) {

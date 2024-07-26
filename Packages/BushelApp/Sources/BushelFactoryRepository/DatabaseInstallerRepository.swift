@@ -5,11 +5,14 @@
 
 #if canImport(SwiftData)
 
-  import BushelCore
-  import BushelData
+  public import BushelCore
+
+  public import BushelData
   import BushelFactory
-  import BushelMachine
-  import Foundation
+
+  public import BushelMachine
+
+  public import Foundation
   import SwiftData
 
   public struct DatabaseInstallerRepository: InstallerImageRepository {
@@ -66,7 +69,7 @@
       let imageID = image.imageID
       let imageEntry: LibraryImageEntry? = try await database
         .fetch {
-          FetchDescriptor(
+          FetchDescriptor<LibraryImageEntry>(
             predicate: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
           )
         }.first

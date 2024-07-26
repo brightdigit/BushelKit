@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct BookmarkError: Error, Sendable {
   public enum Details: Equatable, Sendable {

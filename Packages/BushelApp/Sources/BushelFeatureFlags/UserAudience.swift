@@ -3,7 +3,8 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelCore
-import FeatherQuill
+public import BushelCore
+
+public import FeatherQuill
 
 extension UserAudience: UserType {}

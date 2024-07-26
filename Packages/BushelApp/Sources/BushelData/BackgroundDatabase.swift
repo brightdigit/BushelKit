@@ -7,8 +7,10 @@
 
   import BushelCore
   import BushelLogging
-  import Foundation
-  import SwiftData
+
+  public import Foundation
+
+  public import SwiftData
   import SwiftUI
 
   public final class BackgroundDatabase: Database {

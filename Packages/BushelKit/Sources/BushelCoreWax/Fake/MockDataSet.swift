@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+package import BushelCore
+
+public import Foundation
 
 private let hardwareModelFormatString = """
 <?xml version="1.0" encoding="UTF-8"?>

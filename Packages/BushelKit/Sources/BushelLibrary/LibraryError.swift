@@ -29,12 +29,14 @@
 
 // swiftlint:disable file_length
 
-import BushelCore
-import BushelLogging
-import Foundation
+public import BushelCore
+
+public import BushelLogging
+
+public import Foundation
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+  public import FoundationNetworking
 #endif
 
 public struct LibraryError: LocalizedError, Loggable {

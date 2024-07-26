@@ -4,11 +4,14 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import BushelCore
+  public import BushelCore
   import BushelFeatureFlags
-  import BushelLogging
-  import BushelMarket
-  import Foundation
+
+  public import BushelLogging
+
+  public import BushelMarket
+
+  public import Foundation
   import Observation
 
   @MainActor

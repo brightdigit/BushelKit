@@ -4,11 +4,13 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import BushelLibrary
+  public import BushelCore
+
+  public import BushelLibrary
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct LibrarySystemManagerKey: EnvironmentKey {
     static let defaultValue: any LibrarySystemManaging =

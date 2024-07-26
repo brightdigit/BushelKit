@@ -3,9 +3,10 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelHub
+public import BushelHub
 import BushelMacOSCore
-import BushelSystem
+
+public import BushelSystem
 import Foundation
 
 public struct MockSystem: System {

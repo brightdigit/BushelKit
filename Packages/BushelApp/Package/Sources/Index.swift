@@ -19,7 +19,7 @@ let package = Package(
     BushelSessionTests()
   },
   swiftSettings: {
-    StrictConcurrency()
+    StrictConcurrency(featureState: .upcoming)
     Group("Experimental") {
       AccessLevelOnImport()
       BitwiseCopyable()

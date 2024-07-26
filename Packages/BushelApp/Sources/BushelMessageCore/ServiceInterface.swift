@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelDataCore
+public import BushelDataCore
 
 public protocol ServiceInterface: Sendable {
   #if canImport(SwiftData)

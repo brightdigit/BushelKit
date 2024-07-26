@@ -4,9 +4,10 @@
 //
 
 #if arch(arm64) && canImport(Virtualization)
-  import BushelLogging
+  public import BushelLogging
   import BushelMachine
-  import Virtualization
+
+  public import Virtualization
 
   extension VZVirtualMachineConfiguration: Loggable {
     public static var loggingCategory: BushelLogging.Category {

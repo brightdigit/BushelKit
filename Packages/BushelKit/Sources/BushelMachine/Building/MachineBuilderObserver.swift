@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
-public protocol MachineBuilderObserver {
+public protocol MachineBuilderObserver: Sendable {
   func getID() async -> UUID?
 }

@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
+@MainActor
 public protocol ProgressOperation<ValueType>: Identifiable, Sendable where ID == URL {
   associatedtype ValueType: BinaryInteger & Sendable
   var currentValue: ValueType { get }

@@ -4,12 +4,15 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import BushelCore
-  import BushelLibrary
-  import BushelProgressUI
+  public import BushelCore
+
+  public import BushelLibrary
+
+  public import BushelProgressUI
   import Foundation
 
   extension ProgressOperationProperties {
+    @MainActor
     public init(system: any LibrarySystem, metadata: ImageMetadata, operation: any ProgressOperation<Int>) {
       let label = system.label(fromMetadata: metadata)
       self.init(

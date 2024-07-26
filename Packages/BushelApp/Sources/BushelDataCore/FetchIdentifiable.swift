@@ -5,7 +5,7 @@
 
 #if canImport(SwiftData)
 
-  import SwiftData
+  public import SwiftData
 
   internal struct FetchIdentifiableError<Model: FetchIdentifiable>: Error {
     private let array: [Model]

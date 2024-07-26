@@ -6,11 +6,12 @@
 #if canImport(SwiftUI)
 
   import BushelMessageCore
-  import BushelSessionCore
+
+  public import BushelSessionCore
   import BushelSessionEnvironment
   import Foundation
 
-  import SwiftUI
+  public import SwiftUI
 
   extension Scene {
     public func session(

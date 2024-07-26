@@ -4,9 +4,11 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import BushelCore
-  import BushelProgressUI
-  import Foundation
+  public import BushelCore
+
+  public import BushelProgressUI
+
+  public import Foundation
   import Observation
 
   extension FileManager {
@@ -30,7 +32,7 @@
           totalValue: totalValue,
           timeInterval: timeInterval,
           logger: logger,
-          getSize: { try fileHandler.getSize($0) },
+          getSize: { try fileHandler.sizeOf($0) },
           copyFile: { try await fileHandler.copyFile($0) }
         )
       } else {
@@ -45,10 +47,6 @@
   }
 
   extension FileHandler {
-    func getSize(_ url: URL) throws -> Int? {
-      try self.attributesAt(url).get(.size)
-    }
-
     func copyFile(_ paths: CopyPaths) async throws {
       try await self.copy(at: paths.fromURL, to: paths.toURL)
     }

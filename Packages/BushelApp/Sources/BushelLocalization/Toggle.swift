@@ -6,7 +6,7 @@
 import Foundation
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   public typealias ToggleLabel = SwiftUI.Label<Text, Image>
 

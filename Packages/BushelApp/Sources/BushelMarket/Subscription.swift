@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import Foundation
+public import Foundation
 
 public struct Subscription: Sendable {
   public let groupID: String

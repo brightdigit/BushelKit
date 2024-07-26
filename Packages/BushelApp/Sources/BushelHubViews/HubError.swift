@@ -3,8 +3,9 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelHub
-import Foundation
+public import BushelHub
+
+public import Foundation
 
 public enum HubError: LocalizedError {
   case missingImagesForID(HubImage.ID)

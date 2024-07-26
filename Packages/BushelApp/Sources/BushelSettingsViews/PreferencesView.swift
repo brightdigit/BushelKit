@@ -8,7 +8,8 @@
   import BushelLocalization
   import BushelMarketEnvironment
   import StoreKit
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct PreferencesView<PurchaseScreenValue: Codable & Hashable>:
     View {

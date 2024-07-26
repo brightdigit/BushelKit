@@ -4,7 +4,7 @@
 //
 
 #if canImport(Combine) && canImport(SwiftData)
-  import Combine
+  public import Combine
 
   private struct NeverDatabaseMonitor: DatabaseMonitoring {
     func register(_: any AgentRegister, force _: Bool) {

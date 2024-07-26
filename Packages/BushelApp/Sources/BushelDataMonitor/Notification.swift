@@ -4,8 +4,9 @@
 //
 
 #if canImport(CoreData)
-  import CoreData
-  import Foundation
+  public import CoreData
+
+  public import Foundation
 
   extension Notification {
     func managedObjects(key: String) -> Set<ManagedObjectMetadata>? {

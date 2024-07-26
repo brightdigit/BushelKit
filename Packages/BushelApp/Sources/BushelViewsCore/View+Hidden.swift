@@ -5,7 +5,7 @@
 
 #if canImport(SwiftUI)
 
-  import SwiftUI
+  public import SwiftUI
 
   extension View {
     public func isHidden(_ value: Bool) -> some View {

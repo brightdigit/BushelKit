@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum DocumentTypeFilterOption: Int, CaseIterable, Identifiable, Localizable, Sendable {
   case machinesOnly

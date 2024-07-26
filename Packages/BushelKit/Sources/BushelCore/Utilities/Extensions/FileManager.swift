@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 #if os(Linux)
   public typealias FileSize = Int
@@ -37,7 +37,7 @@ import Foundation
 
 extension FileManager {
   public struct CreationError: Error {
-    public enum Source {
+    public enum Source: Sendable {
       case open
       case ftruncate
       case close

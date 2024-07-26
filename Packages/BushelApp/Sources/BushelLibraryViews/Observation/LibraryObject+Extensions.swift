@@ -50,9 +50,8 @@
       } else {
         do {
           entry = try await database?.fetch {
-            FetchDescriptor(
-              predicate:
-              #Predicate { $0.imageID == id }
+            FetchDescriptor<LibraryImageEntry>(
+              predicate: #Predicate { $0.imageID == id }
             )
           }
           .first

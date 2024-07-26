@@ -4,8 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  import Foundation
-  import SwiftUI
+  public import Foundation
+
+  public import SwiftUI
 
   public struct Value<Value> {
     private let value: Value?

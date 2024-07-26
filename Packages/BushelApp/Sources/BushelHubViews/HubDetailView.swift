@@ -4,9 +4,11 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import BushelHub
-  import SwiftUI
+  public import BushelCore
+
+  public import BushelHub
+
+  public import SwiftUI
 
   internal struct HubDetailView: View {
     private let image: HubImage?

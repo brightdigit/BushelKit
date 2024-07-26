@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension Button where Label == Text {
     public init(role: ButtonRole? = nil, _ type: LocalizedStringID, action: @escaping () -> Void) {

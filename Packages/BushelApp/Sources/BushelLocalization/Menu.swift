@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension Menu where Label == Text {
     init(_ type: LocalizedStringID, @ViewBuilder content: () -> Content) {

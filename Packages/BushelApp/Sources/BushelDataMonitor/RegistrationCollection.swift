@@ -4,8 +4,9 @@
 //
 
 #if canImport(SwiftData)
-  import BushelLogging
-  import Foundation
+  public import BushelLogging
+
+  public import Foundation
 
   internal actor RegistrationCollection: Loggable {
     static var loggingCategory: BushelLogging.Category {

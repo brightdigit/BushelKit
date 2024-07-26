@@ -5,7 +5,8 @@
 
 #if canImport(Virtualization)
   import Foundation
-  import Virtualization
+
+  public import Virtualization
 
   extension NSError: VZInstallError {
     public var isVZError: Bool {

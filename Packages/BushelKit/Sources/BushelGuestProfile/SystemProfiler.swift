@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct SystemProfiler: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {

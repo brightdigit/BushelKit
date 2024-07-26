@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   @available(*, unavailable, message: "Use RadiantKit.")
   internal struct IdentifiableViewModifier: ViewModifier {

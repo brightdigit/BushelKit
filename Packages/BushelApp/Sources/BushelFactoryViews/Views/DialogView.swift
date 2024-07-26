@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
+  public import BushelCore
   import BushelLocalization
   import BushelLogging
   import BushelMachine
@@ -12,7 +12,8 @@
   import BushelViewsCore
   import RadiantKit
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   @MainActor
   public struct DialogView: View, Loggable {

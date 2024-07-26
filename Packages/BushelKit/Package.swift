@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 import Foundation
 import PackageDescription
 extension _PackageDescription_Product {
@@ -241,7 +241,7 @@ accumulated + [next]
 }
 }
 extension LanguageTag {
-static let english: LanguageTag = "en"
+nonisolated(unsafe) static let english: LanguageTag = "en"
 }
 public protocol Target: _Depending, Dependency, _Named {
 var targetType: TargetType { get }
@@ -914,7 +914,7 @@ var dependency: Package.Dependency {
 }
 struct ArgumentParser: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0")
+.package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0")
 }
 }
 let package = Package(
@@ -956,15 +956,8 @@ TransferringArgsAndResults()
 VariadicGenerics()
 }
 Group("Upcoming") {
-DeprecateApplicationMain()
-DisableOutwardActorInference()
-DynamicActorIsolation()
 FullTypedThrows()
-GlobalConcurrency()
-ImportObjcForwardDeclarations()
-InferSendableFromCaptures()
 InternalImportsByDefault()
-IsolatedDefaultValues()
 }
 WarnLongFunctionBodies(milliseconds: 50)
 WarnLongExpressionTypeChecking(milliseconds: 50)

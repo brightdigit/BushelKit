@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI)
 
-  import BushelCore
-  import Foundation
-  import SwiftUI
+  public import BushelCore
+
+  public import Foundation
+
+  public import SwiftUI
 
   public struct OpenWindowWithValueAction<ValueType: Sendable>: Sendable {
     public static var `default`: Self {

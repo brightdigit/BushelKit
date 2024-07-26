@@ -8,7 +8,8 @@
   import BushelMarketEnvironment
   import BushelViewsCore
   import BushelWishListEnvironment
-  import SwiftUI
+
+  public import SwiftUI
   @preconcurrency import WishKit
 
   internal struct WishListView: View, SingleWindowView, Loggable {

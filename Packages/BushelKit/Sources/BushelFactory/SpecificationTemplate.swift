@@ -29,7 +29,7 @@
 
 // import BushelLocalization
 
-public struct SpecificationTemplate<Name: Hashable>: Identifiable, Sendable, Equatable {
+public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Sendable, Equatable {
   public let nameID: Name
   public let idealStorage: Int
   public let systemImageName: String

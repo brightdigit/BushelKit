@@ -5,7 +5,8 @@
 
 #if canImport(SwiftData)
   import BushelCore
-  import Foundation
+
+  public import Foundation
 
   public protocol BookmarkedEntry {
     associatedtype BookmarkedErrorType: BookmarkedError

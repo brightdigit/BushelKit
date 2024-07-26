@@ -4,12 +4,15 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import BushelDataCore
-  import BushelMachine
+  public import BushelCore
+
+  public import BushelDataCore
+
+  public import BushelMachine
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct DefaultInstallerImageRepository: InstallerImageRepository {
     internal struct NotImplmentedError: Swift.Error {

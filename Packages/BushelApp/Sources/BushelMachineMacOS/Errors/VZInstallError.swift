@@ -4,8 +4,9 @@
 //
 
 #if canImport(Virtualization)
-  import BushelMachine
-  import Virtualization
+  public import BushelMachine
+
+  public import Virtualization
 
   public protocol VZInstallError: InstallFailureError {
     var isVZError: Bool { get }

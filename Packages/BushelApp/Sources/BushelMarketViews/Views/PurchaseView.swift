@@ -7,12 +7,14 @@
   import BushelCore
   import BushelLocalization
   import BushelLogging
-  import BushelMarket
+
+  public import BushelMarket
   import BushelMarketEnvironment
   import BushelViewsCore
   import Foundation
   import StoreKit
-  import SwiftUI
+
+  public import SwiftUI
 
   @MainActor
   public struct PurchaseView: SingleWindowView, Loggable {

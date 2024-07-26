@@ -5,9 +5,12 @@
 
 #if canImport(SwiftData)
   import BushelCore
-  import BushelLogging
-  import Foundation
-  import SwiftData
+
+  public import BushelLogging
+
+  public import Foundation
+
+  public import SwiftData
 
   @Model
   public final class BookmarkData:
@@ -76,8 +79,12 @@
       let path = url.standardizedFileURL.path
       let item: BookmarkData?
       do {
-        item = try await database.fetch { FetchDescriptor(predicate: #Predicate { $0.path == path }) }.first
-        // }(where: #Predicate { $0.path == path })
+        item = try await database.fetch {
+          FetchDescriptor<BookmarkData>(
+            predicate: #Predicate { $0.path == path },
+            fetchLimit: 1
+          )
+        }.first
       } catch {
         throw BookmarkError.databaseError(error)
       }

@@ -8,8 +8,9 @@
 //
 
 #if canImport(CoreData) && canImport(SwiftData)
-  import CoreData
-  import Foundation
+  public import CoreData
+
+  public import Foundation
   import SwiftData
 
   // Model to represent identifier implementation as JSON

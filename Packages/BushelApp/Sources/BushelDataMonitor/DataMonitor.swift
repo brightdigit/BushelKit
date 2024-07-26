@@ -5,10 +5,14 @@
 
 #if canImport(Combine) && canImport(SwiftData) && canImport(CoreData)
   import BushelCore
-  import BushelLogging
-  import Combine
-  import CoreData
-  import Foundation
+
+  public import BushelLogging
+
+  public import Combine
+
+  public import CoreData
+
+  public import Foundation
   import SwiftData
 
   public actor DataMonitor: DatabaseMonitoring, Loggable {

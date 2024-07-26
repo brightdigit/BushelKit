@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
 import Foundation
 
 public struct MacOSRelease: InstallerRelease {

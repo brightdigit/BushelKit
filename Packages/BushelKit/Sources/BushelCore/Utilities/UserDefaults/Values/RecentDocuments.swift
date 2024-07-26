@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum RecentDocuments {
   public enum TypeFilter: AppStored, DefaultWrapped {

@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
+@MainActor
 public struct PreviewOperation<ValueType: BinaryInteger & Sendable>: ProgressOperation {
   public let currentValue: ValueType
 
@@ -46,3 +47,7 @@ public struct PreviewOperation<ValueType: BinaryInteger & Sendable>: ProgressOpe
 
   public func cancel() {}
 }
+
+#if canImport(FoundationNetworking)
+  extension URL: @unchecked Sendable {}
+#endif

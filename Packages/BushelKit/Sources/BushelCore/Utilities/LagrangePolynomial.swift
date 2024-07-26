@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
   public typealias RawValue = String

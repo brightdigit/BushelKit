@@ -10,7 +10,7 @@
   import SwiftUI
 
   extension VirtualizationMachine: Sessionable {
-    func view(_ settings: Binding<ScreenSettings>) -> some View {
+    @MainActor func view(_ settings: Binding<ScreenSettings>) -> some View {
       VirtualizationScreenView(virtualMachine: self.machine, settings: settings)
     }
   }

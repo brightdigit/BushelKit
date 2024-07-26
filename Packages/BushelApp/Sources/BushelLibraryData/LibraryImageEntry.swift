@@ -4,12 +4,16 @@
 //
 
 #if canImport(SwiftData)
-  import BushelCore
-  import BushelDataCore
-  import BushelLibrary
+  public import BushelCore
+
+  public import BushelDataCore
+
+  public import BushelLibrary
   import BushelLogging
-  import Foundation
-  import SwiftData
+
+  public import Foundation
+
+  public import SwiftData
 
   #warning("I think we need to log the operations running for this entry")
   @Model

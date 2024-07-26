@@ -4,9 +4,11 @@
 //
 
 #if canImport(SwiftData)
-  import BushelLogging
-  import Foundation
-  import SwiftData
+  public import BushelLogging
+
+  public import Foundation
+
+  public import SwiftData
 
   public protocol Database: Sendable, Loggable {
     func delete<T>(_ model: T) async where T: PersistentModel & Sendable

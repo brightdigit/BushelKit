@@ -10,7 +10,7 @@
   import BushelLocalization
   import BushelLogging
   import BushelViewsCore
-  @preconcurrency import SwiftData
+  import SwiftData
   import SwiftUI
 
   #warning("Show number of machines and images")

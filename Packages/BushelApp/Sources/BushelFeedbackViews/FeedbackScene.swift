@@ -7,7 +7,8 @@
 
   import BushelViewsCore
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct FeedbackScene: Scene {
     public var body: some Scene {

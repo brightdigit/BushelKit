@@ -5,14 +5,16 @@
 
 #if canImport(SwiftUI)
   import BushelCanary
-  import BushelCore
+
+  public import BushelCore
   import BushelData
   import BushelFactory
   import BushelHub
   import BushelHubIPSW
   import BushelLibrary
   import BushelLibraryData
-  import BushelLogging
+
+  public import BushelLogging
   import BushelMachine
   import BushelMarketEnvironment
   import BushelMarketStore
@@ -24,13 +26,15 @@
   import BushelVirtualization
   import BushelWishListViews
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   #if DEBUG
     import BushelWax
   #endif
 
   public protocol Application: App, Loggable {
+    @MainActor
     var scenePhase: ScenePhase { get }
   }
 

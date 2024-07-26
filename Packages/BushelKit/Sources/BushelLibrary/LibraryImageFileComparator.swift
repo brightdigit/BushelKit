@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
   public typealias Compared = LibraryImageFile

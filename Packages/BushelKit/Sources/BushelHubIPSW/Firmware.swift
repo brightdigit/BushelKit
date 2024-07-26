@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
-import IPSWDownloads
+public import BushelCore
+
+public import Foundation
+
+public import IPSWDownloads
 
 extension Firmware: OperatingSystemInstalled {
   private struct InvalidURLError: Error {

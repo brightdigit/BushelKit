@@ -28,20 +28,71 @@
 //
 
 #if canImport(Combine) && canImport(Observation) && (os(macOS) || os(iOS))
-  import Combine
-  import Foundation
+  public import Combine
+
+  public import Foundation
+
+  private protocol DownloadObserver {
+    func finishedDownloadingTo(_ location: URL)
+    func progressUpdated(_ progress: DownloadUpdate)
+    func didComplete(withError error: Error?)
+  }
+
+  private actor ObserverContainer {
+    private var observer: DownloadObserver?
+
+    nonisolated func on(_ closure: @escaping @Sendable (DownloadObserver) -> Void) {
+      Task {
+        await self.withObserver(closure)
+      }
+    }
+
+    private func withObserver(_ closure: @escaping @Sendable (DownloadObserver) -> Void) {
+      assert(self.observer != nil)
+      guard let observer else {
+        return
+      }
+
+      closure(observer)
+    }
+  }
+
+  private final class DownloadDelegate: NSObject, URLSessionDownloadDelegate {
+    let container = ObserverContainer()
+
+    func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+      container.on { observer in
+        observer.finishedDownloadingTo(location)
+      }
+    }
+
+    func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didWriteData _: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+      container.on { observer in
+        observer.progressUpdated(.init(totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite))
+      }
+    }
+
+    func urlSession(_: URLSession, task _: URLSessionTask, didCompleteWithError error: (any Error)?) {
+      container.on { observer in
+        observer.didComplete(withError: error)
+      }
+    }
+  }
+
+  internal struct DownloadUpdate: Sendable {
+    internal let totalBytesWritten: Int64
+    internal let totalBytesExpectedToWrite: Int64?
+  }
 
   @Observable
-  public final class ObservableDownloader: NSObject, URLSessionDownloadDelegate, Sendable {
+  public final class ObservableDownloader: DownloadObserver {
     internal struct DownloadRequest {
       internal let downloadSourceURL: URL
       internal let destinationFileURL: URL
     }
 
-    internal struct DownloadUpdate: Sendable {
-      internal let totalBytesWritten: Int64
-      internal let totalBytesExpectedToWrite: Int64?
-    }
+    @ObservationIgnored
+    private var delegate: DownloadDelegate!
 
     public internal(set) var totalBytesWritten: Int64 = 0
     public internal(set) var totalBytesExpectedToWrite: Int64?
@@ -85,12 +136,15 @@
       queue: OperationQueue? = nil
     ) {
       self.totalBytesExpectedToWrite = totalBytesExpectedToWrite.map(Int64.init(_:))
-      super.init()
+
+      let delegate = DownloadDelegate()
       self.session = URLSession(
         configuration: configuration ?? .default,
-        delegate: self,
+        delegate: delegate,
         delegateQueue: queue
       )
+
+      self.delegate = delegate
 
       self.cancellables = setupPublishers(self)
     }
@@ -107,9 +161,10 @@
     public func begin(
       from downloadSourceURL: URL,
       to destinationFileURL: URL,
-      _ completion: @escaping (Result<Void, any Error>
+      _ completion: @escaping @Sendable (Result<Void, any Error>
       ) -> Void
     ) {
+      #warning("Requires Testing")
       assert(self.completion == nil)
       self.completion = completion
       requestSubject.send(
@@ -117,31 +172,15 @@
       )
     }
 
-    public func urlSession(
-      _: URLSession,
-      downloadTask _: URLSessionDownloadTask,
-      didFinishDownloadingTo location: URL
-    ) {
+    func finishedDownloadingTo(_ location: URL) {
       locationURLSubject.send(location)
     }
 
-    public func urlSession(
-      _: URLSession,
-      downloadTask _: URLSessionDownloadTask,
-      didWriteData _: Int64,
-      totalBytesWritten: Int64,
-      totalBytesExpectedToWrite: Int64
-    ) {
-      self.downloadUpdate.send(
-        .init(totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
-      )
+    func progressUpdated(_ progress: DownloadUpdate) {
+      self.downloadUpdate.send(progress)
     }
 
-    public func urlSession(
-      _: URLSession,
-      task _: URLSessionTask,
-      didCompleteWithError error: (any Error)?
-    ) {
+    func didComplete(withError error: (any Error)?) {
       guard let error else {
         // Handle success case.
         return

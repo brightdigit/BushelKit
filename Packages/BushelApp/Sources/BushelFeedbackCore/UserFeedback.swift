@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import Foundation
+public import Foundation
 #if canImport(Sentry)
   import Sentry
 

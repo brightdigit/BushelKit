@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
-import Foundation
+public import BushelCore
+
+public import BushelLogging
+
+public import Foundation
 
 public protocol LibrarySystemManaging: Loggable, Sendable {
   var allAllowedFileTypes: [FileType] { get }

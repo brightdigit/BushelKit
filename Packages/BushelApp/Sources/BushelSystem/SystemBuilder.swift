@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelHub
+public import BushelHub
 import BushelLibrary
 import BushelMachine
 

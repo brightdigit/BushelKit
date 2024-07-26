@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct MachineBuilderActivity: Identifiable, Sendable {
   public let builder: any MachineBuilder

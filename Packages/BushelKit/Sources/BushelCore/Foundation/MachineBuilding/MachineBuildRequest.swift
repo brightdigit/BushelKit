@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct MachineBuildRequest: Codable, Hashable, Sendable {
   public let restoreImage: InstallerImageIdentifier?

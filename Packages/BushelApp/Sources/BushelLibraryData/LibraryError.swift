@@ -3,9 +3,11 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelDataCore
-import BushelLibrary
-import Foundation
+public import BushelDataCore
+
+public import BushelLibrary
+
+public import Foundation
 
 extension LibraryError: BookmarkedError {
   public static func databaseError(_ error: any Error) -> BushelLibrary.LibraryError {

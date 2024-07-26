@@ -4,7 +4,8 @@
 //
 
 import BushelMachineData
-import BushelMessageCore
+
+public import BushelMessageCore
 
 #if canImport(SwiftData)
   private let _messageTypes: [any Message.Type] = [

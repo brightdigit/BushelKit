@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import ArgumentParser
+public import ArgumentParser
 import Foundation
 
 public struct Machine: ParsableCommand {

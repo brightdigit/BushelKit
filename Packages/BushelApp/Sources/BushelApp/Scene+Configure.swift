@@ -13,19 +13,23 @@
   import BushelDataCore
   import BushelDataMonitor
   import BushelFeatureFlags
-  import BushelFeedbackEnvironment
+
+  public import BushelFeedbackEnvironment
   import BushelFeedbackViews
   import BushelLogging
   import BushelMachine
   import BushelMarketEnvironment
-  import BushelOnboardingCore
+
+  public import BushelOnboardingCore
   import BushelOnboardingViews
   import BushelSystem
-  import BushelViewsCore
+
+  public import BushelViewsCore
   import BushelXPCSession
   import Combine
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {

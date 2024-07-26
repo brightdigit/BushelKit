@@ -4,8 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  import Foundation
-  import SwiftUI
+  public import Foundation
+
+  public import SwiftUI
 
   private struct DatabaseChangePublicistKey: EnvironmentKey {
     typealias Value = DatabaseChangePublicist

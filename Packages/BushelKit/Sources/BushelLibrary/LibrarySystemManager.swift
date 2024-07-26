@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
-import Foundation
+public import BushelCore
+
+public import BushelLogging
+
+public import Foundation
 
 public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendable {
   public let fileTypeBasedOnURL: @Sendable (URL) -> FileType?

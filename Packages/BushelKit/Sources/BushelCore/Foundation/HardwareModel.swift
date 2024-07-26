@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-import OperatingSystemVersion
+public import Foundation
+
+public import OperatingSystemVersion
 
 public struct HardwareModel: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {

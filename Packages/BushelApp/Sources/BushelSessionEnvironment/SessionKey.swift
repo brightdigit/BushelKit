@@ -6,10 +6,12 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelMessageCore
-  import BushelSessionCore
+
+  public import BushelSessionCore
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct DefaultSession: Session {
     private struct NotImplementatedError: Error {}

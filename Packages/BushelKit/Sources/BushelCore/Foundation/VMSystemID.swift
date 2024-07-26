@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, Sendable {
   public typealias StringLiteralType = String

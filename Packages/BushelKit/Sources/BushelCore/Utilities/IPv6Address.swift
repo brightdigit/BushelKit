@@ -28,7 +28,7 @@
 //
 
 // swiftlint:disable all
-import Foundation
+public import Foundation
 
 public typealias IPv6Address = UInt128
 

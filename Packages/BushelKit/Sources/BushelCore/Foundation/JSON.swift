@@ -27,19 +27,34 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum JSON {
-  public static let encoder: JSONEncoder = {
-    let value = JSONEncoder()
-    value.outputFormatting = .prettyPrinted
-    value.dateEncodingStrategy = .iso8601
-    return value
-  }()
+  #if canImport(FoundationNetworking)
+    public nonisolated(unsafe) static let encoder: JSONEncoder = {
+      let value = JSONEncoder()
+      value.outputFormatting = .prettyPrinted
+      value.dateEncodingStrategy = .iso8601
+      return value
+    }()
 
-  public static let decoder: JSONDecoder = {
-    let value = JSONDecoder()
-    value.dateDecodingStrategy = .iso8601
-    return value
-  }()
+    public nonisolated(unsafe) static let decoder: JSONDecoder = {
+      let value = JSONDecoder()
+      value.dateDecodingStrategy = .iso8601
+      return value
+    }()
+  #else
+    public static let encoder: JSONEncoder = {
+      let value = JSONEncoder()
+      value.outputFormatting = .prettyPrinted
+      value.dateEncodingStrategy = .iso8601
+      return value
+    }()
+
+    public static let decoder: JSONDecoder = {
+      let value = JSONDecoder()
+      value.dateDecodingStrategy = .iso8601
+      return value
+    }()
+  #endif
 }

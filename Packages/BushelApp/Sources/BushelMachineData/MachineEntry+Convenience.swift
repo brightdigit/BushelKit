@@ -4,11 +4,14 @@
 //
 
 #if canImport(SwiftData)
-  import BushelCore
-  import BushelDataCore
+  public import BushelCore
+
+  public import BushelDataCore
   import BushelLogging
-  import BushelMachine
-  import Foundation
+
+  public import BushelMachine
+
+  public import Foundation
   import SwiftData
 
   extension MachineEntry {

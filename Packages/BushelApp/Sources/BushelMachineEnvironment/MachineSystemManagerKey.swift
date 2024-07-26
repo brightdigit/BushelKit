@@ -4,11 +4,13 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import BushelMachine
+  public import BushelCore
+
+  public import BushelMachine
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct MachineSystemManagerKey: EnvironmentKey {
     static let defaultValue: any MachineSystemManaging =
