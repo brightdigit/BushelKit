@@ -8,7 +8,8 @@
   import BushelLibrary
   import BushelLibraryMacOS
   import BushelLibraryViews
-  import SwiftUI
+
+  public import SwiftUI
   import UniformTypeIdentifiers
 
   public protocol Application: App {

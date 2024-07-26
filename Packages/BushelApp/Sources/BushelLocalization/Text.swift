@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension Text {
     public init(_ source: LocalizedStringID) {

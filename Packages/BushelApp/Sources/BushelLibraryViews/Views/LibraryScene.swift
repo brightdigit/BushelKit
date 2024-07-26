@@ -9,7 +9,8 @@
   import BushelLibraryData
   import BushelLogging
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
   import UniformTypeIdentifiers
 
   public struct LibraryScene: Scene, Loggable {

@@ -6,7 +6,8 @@
 #if canImport(SwiftData)
   import BushelDataCore
   import Foundation
-  import SwiftData
+
+  public import SwiftData
 
   private let _models: [any PersistentModel.Type] = [
     SnapshotEntry.self,

@@ -5,7 +5,8 @@
 
 #if canImport(SwiftUI)
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
 
   extension Image {
     public init(icon: any Icon) {

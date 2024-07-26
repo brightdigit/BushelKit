@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
+
 #if canImport(UniformTypeIdentifiers)
-  import UniformTypeIdentifiers
+  public import UniformTypeIdentifiers
 
   extension FileManager {
     public func createTemporaryFile(for source: UTType) -> URL {

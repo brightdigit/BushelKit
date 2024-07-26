@@ -32,7 +32,7 @@
       let item: LibraryEntry?
       do {
         item = try await database.fetch {
-          FetchDescriptor(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
+          FetchDescriptor<LibraryEntry>(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
         }.first
       } catch {
         throw LibraryError.fromDatabaseError(error)

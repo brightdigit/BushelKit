@@ -3,8 +3,9 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelMessageCore
-import BushelSessionCore
+public import BushelMessageCore
+
+public import BushelSessionCore
 import Foundation
 
 public final class InitializedSession: Session {

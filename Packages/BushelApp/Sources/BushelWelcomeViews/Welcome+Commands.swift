@@ -12,7 +12,8 @@
   import BushelWishListEnvironment
   import StoreKit
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   public enum Welcome {
     public struct HelpCommands: View {

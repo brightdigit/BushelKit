@@ -6,8 +6,10 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
-  import RadiantKit
-  import SwiftUI
+
+  public import RadiantKit
+
+  public import SwiftUI
 
   internal struct FeatureListView: View {
     let titleID: LocalizedID

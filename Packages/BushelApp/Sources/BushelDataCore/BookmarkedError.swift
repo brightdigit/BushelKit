@@ -4,7 +4,8 @@
 //
 
 import BushelCore
-import Foundation
+
+public import Foundation
 
 public protocol BookmarkedError: Error, Sendable {
   @Sendable

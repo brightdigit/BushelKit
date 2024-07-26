@@ -33,7 +33,7 @@
     @Sendable
     func installerImageRepository(_ database: any Database) -> any InstallerImageRepository
 
-    @Sendable
+    @MainActor
     func openFileURL(_ url: URL, openWindow: OpenWindowAction)
   }
 

@@ -8,10 +8,13 @@
   import BushelLibraryMacOS
   import BushelMachineMacOS
 
-  import BushelCore
-  import BushelHub
-  import BushelLibrary
-  import BushelMachine
+  public import BushelCore
+
+  public import BushelHub
+
+  public import BushelLibrary
+
+  public import BushelMachine
   import BushelSystem
 
   public struct MacOSVirtualizationSystem: System, MacOSVirtualizationHubProvider {

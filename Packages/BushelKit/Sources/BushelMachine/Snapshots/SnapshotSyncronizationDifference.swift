@@ -27,10 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
 
-public struct SnapshotSyncronizationDifference {
+public import Foundation
+
+public struct SnapshotSyncronizationDifference: Sendable {
   public let addedSnapshots: [Snapshot]
   public let snapshotIDs: [UUID]
 }

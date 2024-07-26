@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI)
 
-  import BushelCore
-  import Foundation
-  import SwiftUI
+  public import BushelCore
+
+  public import Foundation
+
+  public import SwiftUI
 
   private struct OpenFileURLKey: EnvironmentKey, Sendable {
     typealias Value = OpenFileURLAction
@@ -28,7 +30,7 @@
 
   extension Scene {
     public func openFileURL(
-      _ closure: @escaping @Sendable (URL, OpenWindowAction) -> Void
+      _ closure: @escaping @Sendable @MainActor (URL, OpenWindowAction) -> Void
     ) -> some Scene {
       self.environment(\.openFileURL, .init(closure: closure))
     }
@@ -37,7 +39,7 @@
   @available(*, deprecated, message: "Use on Scene only.")
   extension View {
     public func openFileURL(
-      _ closure: @escaping @Sendable (URL, OpenWindowAction) -> Void
+      _ closure: @Sendable @escaping @MainActor (URL, OpenWindowAction) -> Void
     ) -> some View {
       self.environment(\.openFileURL, .init(closure: closure))
     }

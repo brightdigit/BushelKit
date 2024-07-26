@@ -5,7 +5,8 @@
 
 #if canImport(SwiftData)
   import Foundation
-  import SwiftData
+
+  public import SwiftData
 
   public struct SharedDatabase: Sendable {
     public static let shared: SharedDatabase = .init()

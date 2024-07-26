@@ -4,9 +4,11 @@
 //
 
 #if canImport(Combine) && canImport(SwiftData)
-  import BushelLogging
-  @preconcurrency import Combine
-  import Foundation
+  public import BushelLogging
+
+  @preconcurrency public import Combine
+
+  public import Foundation
 
   internal actor PublishingAgent: DataAgent, Loggable {
     private enum SubscriptionEvent: Sendable {
@@ -72,7 +74,7 @@
 
     func sendUpdate(_ update: any DatabaseChangeSet) {
       Task { @MainActor in
-        self.subject.send(update)
+        await self.subject.send(update)
       }
     }
 

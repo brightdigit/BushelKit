@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension Button {
     public init(_ openURL: OpenURLAction, _ url: URL, @ViewBuilder _ label: () -> Label) {

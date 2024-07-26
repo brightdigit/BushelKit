@@ -75,7 +75,7 @@
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws {
       let entry: LibraryImageEntry? = try await database.fetch {
-        FetchDescriptor(predicate: #Predicate { $0.imageID == id })
+        FetchDescriptor<LibraryImageEntry>(predicate: #Predicate { $0.imageID == id })
       }.first
       guard let entry else {
         return nil
@@ -92,13 +92,11 @@
       database: any Database,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws {
-      var libraryPredicate = FetchDescriptor<LibraryEntry>(
-        predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID }
-      )
-
-      libraryPredicate.fetchLimit = 1
-      let library: LibraryEntry? = try await database.fetch { FetchDescriptor(predicate:
-        #Predicate { $0.bookmarkDataID == bookmarkDataID })
+      let library: LibraryEntry? = try await database.fetch {
+        FetchDescriptor<LibraryEntry>(
+          predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID },
+          fetchLimit: 1
+        )
       }.first
 
       guard let library else {

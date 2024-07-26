@@ -28,9 +28,10 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import Foundation
+  public import Foundation
   import Observation
 
+  @MainActor
   @Observable
   public final class DownloadOperation<ValueType: BinaryInteger & Sendable>:
 
@@ -41,7 +42,7 @@
     private let sourceURL: URL
     private let destinationURL: URL
 
-    public var id: URL {
+    public nonisolated var id: URL {
       sourceURL
     }
 
@@ -72,8 +73,10 @@
     }
 
     public func execute() async throws {
-      try await withCheckedThrowingContinuation {
-        self.download.begin(from: self.sourceURL, to: self.destinationURL, $0.resume(with:))
+      try await withCheckedThrowingContinuation { continuation in
+        self.download.begin(from: self.sourceURL, to: self.destinationURL) { result in
+          continuation.resume(with: result)
+        }
       }
     }
   }

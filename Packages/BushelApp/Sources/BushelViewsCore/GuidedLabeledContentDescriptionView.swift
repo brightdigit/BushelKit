@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   public struct GuidedLabeledContentDescriptionView: View {
     public enum Alignment {

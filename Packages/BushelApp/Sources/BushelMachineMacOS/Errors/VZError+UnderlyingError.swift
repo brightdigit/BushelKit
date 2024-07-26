@@ -4,7 +4,7 @@
 //
 
 #if canImport(Virtualization)
-  import Virtualization
+  public import Virtualization
 
   extension VZError {
     public enum UnderlyingError {

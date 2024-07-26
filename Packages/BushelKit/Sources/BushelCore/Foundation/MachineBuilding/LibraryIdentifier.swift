@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum LibraryIdentifier: CustomStringConvertible, Hashable, Sendable {
   case url(URL)

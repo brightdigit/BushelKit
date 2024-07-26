@@ -8,7 +8,7 @@ public protocol LocalizedID {
 }
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension LocalizedID {
     public var key: LocalizedStringKey {

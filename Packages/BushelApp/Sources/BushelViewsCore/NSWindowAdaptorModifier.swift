@@ -3,9 +3,10 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import Foundation
+public import Foundation
+
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   #if canImport(AppKit)
     import AppKit

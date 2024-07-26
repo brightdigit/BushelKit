@@ -28,7 +28,7 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import Foundation
+  public import Foundation
 
   public struct ProgressOperationProperties: Identifiable, Sendable {
     internal let imageName: String

@@ -4,9 +4,11 @@
 //
 
 #if canImport(SwiftData)
-  import BushelDataCore
-  import BushelDataMonitor
-  import Foundation
+  public import BushelDataCore
+
+  public import BushelDataMonitor
+
+  public import Foundation
 
   public struct BookmarkService: AgentRegister {
     public typealias AgentType = BookmarkServiceAgent

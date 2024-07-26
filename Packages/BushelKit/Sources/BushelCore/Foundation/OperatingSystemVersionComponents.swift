@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct OperatingSystemVersionComponents: Sendable {
   public let buildVersion: String?

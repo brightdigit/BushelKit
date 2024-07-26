@@ -4,8 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import SwiftUI
+  public import BushelCore
+
+  public import SwiftUI
 
   public struct GuidedLabeledContent<Label: View, Content: View, Description: View>: View {
     let content: () -> Content

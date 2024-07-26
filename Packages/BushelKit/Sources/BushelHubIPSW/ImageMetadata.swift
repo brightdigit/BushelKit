@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import IPSWDownloads
+public import BushelCore
+
+public import IPSWDownloads
 
 extension ImageMetadata {
   public init(firmware: Firmware) throws {

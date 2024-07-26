@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension Image {
     public static func resource(_ name: String) -> Image {

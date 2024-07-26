@@ -8,7 +8,8 @@
   import BushelEnvironmentCore
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct ProvideFeedbackWindowValue: DefaultableViewValue {
     public static let `default` = ProvideFeedbackWindowValue()

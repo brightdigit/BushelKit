@@ -3,8 +3,9 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 extension URL.Bushel.Paths {
   public struct VZMacValues: VZMac {

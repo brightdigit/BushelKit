@@ -28,9 +28,10 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import Foundation
+  public import Foundation
   import Observation
-  import OSLog
+
+  public import OSLog
 
   @MainActor
   @Observable
@@ -45,7 +46,7 @@
     private var timer: Timer?
     private let logger: Logger?
 
-    public var id: URL {
+    public nonisolated var id: URL {
       sourceURL
     }
 

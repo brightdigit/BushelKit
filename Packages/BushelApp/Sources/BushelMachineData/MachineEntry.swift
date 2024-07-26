@@ -4,12 +4,17 @@
 //
 
 #if canImport(SwiftData)
-  import BushelCore
-  import BushelDataCore
-  import BushelLogging
-  import BushelMachine
-  import Foundation
-  import SwiftData
+  public import BushelCore
+
+  public import BushelDataCore
+
+  public import BushelLogging
+
+  public import BushelMachine
+
+  public import Foundation
+
+  public import SwiftData
 
   @Model
   public final class MachineEntry: Loggable, Sendable {

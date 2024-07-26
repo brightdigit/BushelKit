@@ -28,14 +28,15 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import Foundation
+  public import Foundation
   import Observation
 
+  @MainActor
   @Observable
-  public final class FileOperationProgress<ValueType: BinaryInteger>: Identifiable, Sendable {
+  public final class FileOperationProgress<ValueType: BinaryInteger>: Identifiable {
     public let operation: any ProgressOperation<ValueType>
 
-    public var id: URL {
+    public nonisolated var id: URL {
       operation.id
     }
 

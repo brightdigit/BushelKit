@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import FelinePine
+public import protocol FelinePine.LoggingSystem
 
 public enum BushelLogging: LoggingSystem, Sendable {
   public enum Category: String, CaseIterable, Sendable {

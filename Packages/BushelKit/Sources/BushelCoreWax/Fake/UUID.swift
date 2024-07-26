@@ -28,7 +28,8 @@
 //
 
 import BushelCore
-import Foundation
+
+public import Foundation
 
 extension UUID {
   // swiftlint:disable:next force_unwrapping

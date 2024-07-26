@@ -5,9 +5,12 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import Foundation
-  import SwiftData
-  import SwiftUI
+
+  public import Foundation
+
+  public import SwiftData
+
+  public import SwiftUI
 
   private struct DefaultDatabase: Database {
     private struct NotImplmentedError: Error {

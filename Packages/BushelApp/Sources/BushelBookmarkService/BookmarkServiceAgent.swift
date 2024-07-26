@@ -4,10 +4,13 @@
 //
 
 #if canImport(SwiftData)
-  import BushelDataCore
-  import BushelDataMonitor
-  import BushelLogging
-  import Foundation
+  public import BushelDataCore
+
+  public import BushelDataMonitor
+
+  public import BushelLogging
+
+  public import Foundation
   import SwiftData
 
   public actor BookmarkServiceAgent: DataAgent, Loggable {

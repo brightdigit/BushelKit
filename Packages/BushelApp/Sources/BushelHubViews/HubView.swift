@@ -4,10 +4,12 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import BushelHub
+  public import BushelCore
+
+  public import BushelHub
   import BushelHubEnvironment
-  import SwiftUI
+
+  public import SwiftUI
 
   @MainActor
   public struct HubView: View {

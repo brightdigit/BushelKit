@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelMessageCore
+public import BushelMessageCore
 import Foundation
 
 extension Array where Element == any Message.Type {

@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelHub
+
+  public import BushelHub
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct HubsKey: EnvironmentKey {
     typealias Value = [Hub]

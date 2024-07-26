@@ -4,8 +4,9 @@
 //
 
 #if canImport(Combine) && canImport(SwiftData)
-  @preconcurrency import Combine
-  import Foundation
+  @preconcurrency public import Combine
+
+  public import Foundation
 
   internal struct PublishingRegister: AgentRegister {
     let id: String

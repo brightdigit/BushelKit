@@ -28,8 +28,9 @@
 //
 
 #if canImport(Combine)
-  import Combine
-  import Foundation
+  public import Combine
+
+  public import Foundation
 
   #warning("logging-note: can we have some operators for logging the recieved stuff in these subscriptions")
   public struct SetupPublishers {

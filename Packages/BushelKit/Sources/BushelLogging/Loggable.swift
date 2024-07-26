@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import protocol FelinePine.Loggable
-@_exported import typealias FelinePine.Logger
+public import FelinePine
 
 public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}

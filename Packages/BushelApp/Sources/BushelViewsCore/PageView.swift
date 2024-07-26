@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   @available(*, unavailable, message: "Use PageView from RadiantKit.")
   public struct PageView: View {

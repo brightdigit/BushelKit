@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
+public import XCTest
 
 extension XCTestCase {
   public func decode<T: Decodable>(

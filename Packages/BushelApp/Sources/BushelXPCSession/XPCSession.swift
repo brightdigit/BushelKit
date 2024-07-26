@@ -5,8 +5,10 @@
 
 #if canImport(XPC)
   import BushelSession
-  import BushelSessionCore
-  import XPC
+
+  public import BushelSessionCore
+
+  public import XPC
 
   @available(macOS 14.0, *)
   extension XPCSession: SessionService {

@@ -1381,7 +1381,7 @@ BushelServiceTests()
 BushelSessionTests()
 },
 swiftSettings: {
-StrictConcurrency()
+StrictConcurrency(featureState: .upcoming)
 Group("Experimental") {
 AccessLevelOnImport()
 BitwiseCopyable()

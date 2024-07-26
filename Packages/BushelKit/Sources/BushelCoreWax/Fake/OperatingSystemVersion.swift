@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+package import Foundation
 
 package extension OperatingSystemVersion {
   package static func random() -> OperatingSystemVersion {

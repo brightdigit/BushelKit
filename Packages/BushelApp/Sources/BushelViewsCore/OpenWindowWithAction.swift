@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI)
 
-  import BushelCore
-  import Foundation
-  import SwiftUI
+  public import BushelCore
+
+  public import Foundation
+
+  public import SwiftUI
 
   public typealias OpenWindowWithAction = OpenWindowWithValueAction<Void>
 

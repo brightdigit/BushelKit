@@ -50,26 +50,14 @@
       }
     }
 
-    #warning("logging-note: let's log the else case of these guards")
     // swiftlint:disable:next block_based_kvo
     override func observeValue(
-      forKeyPath keyPath: String?,
+      forKeyPath _: String?,
       of _: Any?,
-      change: [NSKeyValueChangeKey: Any]?,
+      change _: [NSKeyValueChangeKey: Any]?,
       context _: UnsafeMutableRawPointer?
     ) {
-      guard let keyPath else {
-        return
-      }
-      guard let propertyUpdate = MachineChange.PropertyChange(
-        keyPath: keyPath,
-        new: change?[.newKey],
-        old: change?[.oldKey]
-      ) else {
-        return
-      }
-
-      notifyObservers(.property(propertyUpdate))
+      notifyObservers(.property)
     }
 
     deinit {

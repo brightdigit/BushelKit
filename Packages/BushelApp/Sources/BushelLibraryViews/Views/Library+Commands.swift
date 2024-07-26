@@ -5,11 +5,13 @@
 
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
-  import BushelLibrary
+
+  public import BushelLibrary
   import BushelLogging
   import BushelViewsCore
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
   import UniformTypeIdentifiers
 
   extension Library {

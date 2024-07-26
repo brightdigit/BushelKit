@@ -6,8 +6,10 @@
 #if canImport(SwiftData)
   import BushelCore
   import BushelDataCore
-  import BushelLogging
-  import SwiftData
+
+  public import BushelLogging
+
+  public import SwiftData
 
   extension ModelContainer: Loggable {
     public static var loggingCategory: BushelLogging.Category {

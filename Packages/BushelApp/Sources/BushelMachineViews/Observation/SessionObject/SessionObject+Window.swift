@@ -6,7 +6,8 @@
 #if canImport(Observation) && os(macOS) && canImport(SwiftUI) && canImport(SwiftData)
   import AppKit
   import BushelCore
-  import Foundation
+
+  public import Foundation
   import SwiftUI
 
   extension CGSize {

@@ -4,8 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  import Foundation
-  import SwiftUI
+  public import Foundation
+
+  public import SwiftUI
 
   extension View {
     public func onGeometry(_ action: @escaping (GeometryProxy) -> Void) -> some View {

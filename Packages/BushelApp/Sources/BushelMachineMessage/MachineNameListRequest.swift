@@ -5,7 +5,8 @@
 
 #if canImport(SwiftData)
   import BushelMachineData
-  import BushelMessageCore
+
+  public import BushelMessageCore
   import SwiftData
 
   public struct MachineNameListRequest: Message {

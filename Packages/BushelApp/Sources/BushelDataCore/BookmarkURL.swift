@@ -6,7 +6,8 @@
 #if canImport(SwiftData)
 
   import BushelCore
-  import Foundation
+
+  public import Foundation
 
   public struct BookmarkURL: Sendable {
     private let data: BookmarkData

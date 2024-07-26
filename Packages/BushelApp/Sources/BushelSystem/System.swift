@@ -3,9 +3,11 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelHub
-import BushelLibrary
-import BushelMachine
+public import BushelHub
+
+public import BushelLibrary
+
+public import BushelMachine
 import Foundation
 
 public protocol System: Sendable {

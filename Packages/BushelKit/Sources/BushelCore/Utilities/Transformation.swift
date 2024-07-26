@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct Transformation<T, U>: Sendable {
   private let closure: @Sendable (T) -> U

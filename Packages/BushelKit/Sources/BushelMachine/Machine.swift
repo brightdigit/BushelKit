@@ -27,12 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
-import Foundation
+public import BushelCore
+
+public import BushelLogging
+
+public import Foundation
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 #endif
 
 public protocol Machine: Loggable, Sendable {

@@ -28,7 +28,7 @@
 //
 
 #if canImport(ObjectiveC)
-  import Foundation
+  public import Foundation
 
   public actor ObservationCollection {
     private var observations = [UUID: NSKeyValueObservation]()

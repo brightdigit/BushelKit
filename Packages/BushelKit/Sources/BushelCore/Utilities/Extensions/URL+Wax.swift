@@ -28,7 +28,7 @@
 //
 
 // swiftlint:disable line_length
-import Foundation
+public import Foundation
 
 extension URL {
   public static let urlsString = """

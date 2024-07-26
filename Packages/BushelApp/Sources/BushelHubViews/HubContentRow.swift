@@ -4,11 +4,12 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
+  public import BushelCore
   import BushelLibrary
   import BushelLocalization
   import BushelViewsCore
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct HubContentRow: View {
     private let label: MetadataLabel

@@ -4,11 +4,15 @@
 //
 
 #if canImport(SwiftData)
-  import BushelCore
-  import BushelDataCore
-  import BushelMachine
-  import Foundation
-  import SwiftData
+  public import BushelCore
+
+  public import BushelDataCore
+
+  public import BushelMachine
+
+  public import Foundation
+
+  public import SwiftData
 
   @Model
   public final class SnapshotEntry: Sendable {

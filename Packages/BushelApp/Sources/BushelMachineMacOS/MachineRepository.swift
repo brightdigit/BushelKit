@@ -5,10 +5,11 @@
 
 #if canImport(Virtualization) && arch(arm64)
   import BushelCore
-  import BushelLogging
+
+  public import BushelLogging
   import BushelMachine
   import Foundation
-  @preconcurrency import Virtualization
+  import Virtualization
 
   public actor MachineRepository: Loggable {
     public static var loggingCategory: BushelLogging.Category {

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum SpextRuntimeEnvironment: String, Codable, Equatable, Sendable {
   case spextArchX86 = "spext_arch_x86"

@@ -4,7 +4,7 @@
 //
 
 #if canImport(XPC)
-  import BushelSession
+  public import BushelSession
   import BushelSessionCore
   import XPC
 

@@ -5,7 +5,8 @@
 
 #if canImport(Sentry)
   import BushelCore
-  import Foundation
+
+  public import Foundation
   import Sentry
 
   public enum Canary {

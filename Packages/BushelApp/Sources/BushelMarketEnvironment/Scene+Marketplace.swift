@@ -4,11 +4,15 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import BushelLogging
-  import BushelMarket
-  import Foundation
-  import SwiftUI
+  public import BushelCore
+
+  public import BushelLogging
+
+  public import BushelMarket
+
+  public import Foundation
+
+  public import SwiftUI
 
   private struct MarketplaceKey: EnvironmentKey {
     static let defaultValue: Marketplace = .default

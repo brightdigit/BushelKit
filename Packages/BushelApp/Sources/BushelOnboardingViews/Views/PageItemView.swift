@@ -7,8 +7,10 @@
   import AVKit
   import BushelLocalization
   import BushelViewsCore
-  import RadiantKit
-  import SwiftUI
+
+  public import RadiantKit
+
+  public import SwiftUI
 
   internal struct PageItemView: View {
     @Environment(\.nextPage) var nextPage

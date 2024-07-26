@@ -33,20 +33,24 @@ import XCTest
 
 internal final class VirtualizationDataTests: XCTestCase {
   private func randomVirtualizationDataTest() throws {
-    let expectedMachineIdentifier =
-      MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502 ... UInt64.max))
-    let expectedHardwareModel =
-      HardwareModel(dataRepresentationVersion: 1, minimumSupportedOS: .random(), platformVersion: 2)
+    #if canImport(FoundationNetworking)
+      XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
+    #else
+      let expectedMachineIdentifier =
+        MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502 ... UInt64.max))
+      let expectedHardwareModel =
+        HardwareModel(dataRepresentationVersion: 1, minimumSupportedOS: .random(), platformVersion: 2)
 
-    let dataSet = try MockDataSet(
-      machineIdentifier: expectedMachineIdentifier,
-      hardwareModel: expectedHardwareModel
-    )
+      let dataSet = try MockDataSet(
+        machineIdentifier: expectedMachineIdentifier,
+        hardwareModel: expectedHardwareModel
+      )
 
-    let virtualizationData = try VirtualizationData(at: dataSet, using: .init())
+      let virtualizationData = try VirtualizationData(at: dataSet, using: .init())
 
-    XCTAssertEqual(virtualizationData.hardwareModel, expectedHardwareModel)
-    XCTAssertEqual(virtualizationData.machineIdentifier, expectedMachineIdentifier)
+      XCTAssertEqual(virtualizationData.hardwareModel, expectedHardwareModel)
+      XCTAssertEqual(virtualizationData.machineIdentifier, expectedMachineIdentifier)
+    #endif
   }
 
   internal func testSuccessfulParsing() throws {

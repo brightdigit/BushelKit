@@ -4,9 +4,11 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import Foundation
-  import SwiftUI
+  public import BushelCore
+
+  public import Foundation
+
+  public import SwiftUI
 
   public struct ViewValue: Sendable {
     let content: @Sendable @MainActor (Binding<(any InstallImage)?>) -> AnyView

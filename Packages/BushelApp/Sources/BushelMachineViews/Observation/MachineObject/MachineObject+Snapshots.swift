@@ -6,15 +6,17 @@
 // swiftlint:disable file_length
 
 #if canImport(SwiftUI)
-  import BushelCore
+  public import BushelCore
   import BushelDataCore
   import BushelLogging
   import BushelMachine
   import BushelMachineData
   import BushelViewsCore
-  import Foundation
+
+  public import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   extension MachineObject {
     internal struct DeleteSnapshotRequest: Sendable {
@@ -154,7 +156,7 @@
 
       do {
         return try await database.fetch {
-          FetchDescriptor(predicate: #Predicate { $0.snapshotID == id })
+          FetchDescriptor<SnapshotEntry>(predicate: #Predicate { $0.snapshotID == id })
         }.first
       } catch {
         Self.logger.error("Error fetching entry \(selection.id) from database: \(error)")

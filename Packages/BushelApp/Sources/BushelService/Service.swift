@@ -5,12 +5,13 @@
 
 #if canImport(SwiftData) && canImport(XPC)
   import BushelCore
-  import BushelData
+
+  public import BushelData
   import BushelMessage
   import BushelMessageCore
   import Foundation
   import SwiftData
-  @preconcurrency import XPC
+  import XPC
 
   @available(macOS 14.0, *)
   @available(iOS, unavailable)

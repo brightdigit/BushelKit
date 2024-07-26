@@ -27,10 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelMachine
+public import BushelCore
 
-public struct SpecificationConfiguration<Name: Hashable>: Equatable, Sendable {
+public import BushelMachine
+
+public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, Sendable {
   public let configurationRange: ConfigurationRange
   public let memoryIndexRange: ClosedRange<Float>
   private var updatingValues = false

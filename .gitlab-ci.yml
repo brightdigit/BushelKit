@@ -55,13 +55,13 @@ cache:
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/$PACKAGE_NAME
     - xcodebuild -resolvePackageDependencies
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.5,name=iPhone 15" &>/dev/null || true
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.5,name=iPhone 15"
-    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator17.5 -destination "OS=17.5,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 15" &>/dev/null || true
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 15"
+    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator18.0 -destination "OS=18.0,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
     - popd
     - XCRESULT=$(find . -path "./Packages/$PACKAGE_NAME/Build/Logs/Test/Test-$SCHEME_NAME-*.xcresult")
     - echo ${XCRESULT}    
-    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+#    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
 
 
 .lint_template: &lint_template
@@ -132,7 +132,7 @@ upload spm macos coverage:
   except:
     variables:
       - $APPSTORE_DEPLOY
-  image: swift:5.10-jammy
+  image: swiftlang/swift:nightly-6.0-jammy
   script:
     - cd Packages/$PACKAGE_NAME
     - swift build

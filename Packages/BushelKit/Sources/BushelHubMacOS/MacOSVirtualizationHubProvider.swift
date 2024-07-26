@@ -29,7 +29,8 @@
 
 #if canImport(Virtualization) && arch(arm64)
   import BushelCore
-  import BushelHub
+
+  public import BushelHub
   import BushelMacOSCore
   import Foundation
   import Virtualization
@@ -43,7 +44,7 @@
 
     @Sendable
     fileprivate static func hubImages() async throws -> [HubImage] {
-      let restoreImage = try await VZMacOSRestoreImage.fetchLatestSupported()
+      let restoreImage = try await VZMacOSRestoreImage.unsafeFetchLatestSupported()
       let imageMetadata = try await ImageMetadata(vzRestoreImage: restoreImage, url: restoreImage.url)
 
       return [

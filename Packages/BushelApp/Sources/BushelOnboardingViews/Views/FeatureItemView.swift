@@ -5,7 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelLocalization
-  import SwiftUI
+
+  public import SwiftUI
 
   internal struct FeatureItemView: View {
     typealias Properties = FeatureItem

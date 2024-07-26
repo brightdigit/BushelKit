@@ -9,7 +9,8 @@
   import BushelMachine
   import BushelViewsCore
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
   import UniformTypeIdentifiers
 
   public enum Machine {

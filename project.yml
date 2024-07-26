@@ -15,7 +15,8 @@ settings:
   DEAD_CODE_STRIPING: true
   LINT_MODE: ${LINT_MODE}
   SWIFT_STRICT_CONCURRENCY: complete
-  OTHER_SWIFT_FLAGS: -Xfrontend -enable-actor-data-race-checks -Xfrontend -warn-concurrency
+  SWIFT_VERSION: 6
+  _EXPERIMENTAL_SWIFT_EXPLICIT_MODULES: true
   ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: false
 packages:
   BushelApp:
@@ -40,7 +41,7 @@ targetTemplates:
         ITSAppUsesNonExemptEncryption: false
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        NSHumanReadableCopyright: Copyright (c) 2023 BrightDigit
+        NSHumanReadableCopyright: Copyright (c) 2024 BrightDigit
         LSApplicationCategoryType: public.app-category.developer-tools
         BrightDigitStoreGroupIDList:
           - 21016280

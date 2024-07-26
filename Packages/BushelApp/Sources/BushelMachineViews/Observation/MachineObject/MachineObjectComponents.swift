@@ -109,7 +109,7 @@
       let item: MachineEntry?
       do {
         item = try await configuration.database.fetch {
-          FetchDescriptor(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
+          FetchDescriptor<MachineEntry>(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
         }.first
       } catch {
         throw MachineError.fromDatabaseError(error)

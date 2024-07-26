@@ -3,9 +3,10 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelCore
+public import BushelCore
 import BushelMacOSCore
-import Foundation
+
+public import Foundation
 import OperatingSystemVersion
 
 #if canImport(Virtualization) && arch(arm64)

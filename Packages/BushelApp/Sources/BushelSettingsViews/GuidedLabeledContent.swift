@@ -10,7 +10,7 @@
   import SwiftUI
 
   extension GuidedLabeledContent where Description == GuidedLabeledContentDescriptionView {
-    public init(
+    internal init(
       _ source: any LocalizedID,
       _ content: @escaping () -> Content,
       label: @escaping () -> Label,

@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelMessageCore
+public import BushelMessageCore
 
 public protocol Session: Sendable {
   var isInitialized: Bool { get }

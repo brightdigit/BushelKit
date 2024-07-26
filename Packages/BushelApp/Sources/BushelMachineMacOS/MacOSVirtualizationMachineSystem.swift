@@ -5,11 +5,13 @@
 
 #if canImport(Virtualization) && arch(arm64)
 
-  import BushelCore
+  public import BushelCore
   import BushelLogging
-  import BushelMachine
+
+  public import BushelMachine
   import BushelMacOSCore
-  import Foundation
+
+  public import Foundation
   import SwiftUI
   import Virtualization
 

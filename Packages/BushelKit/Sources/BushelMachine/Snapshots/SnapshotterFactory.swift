@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
+public import BushelCore
+
+public import BushelLogging
 
 public protocol SnapshotterFactory: Loggable, Sendable {
   static var systemID: SnapshotterID { get }

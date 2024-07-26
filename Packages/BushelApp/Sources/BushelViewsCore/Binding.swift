@@ -4,9 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  import Foundation
+  public import Foundation
 
-  import SwiftUI
+  public import SwiftUI
 
   extension Binding {
     public func map<T>(to get: @escaping (Value) -> T, from set: @escaping (T) -> Value) -> Binding<T> {

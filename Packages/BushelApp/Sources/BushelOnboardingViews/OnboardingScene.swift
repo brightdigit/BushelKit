@@ -8,7 +8,8 @@
   import BushelLogging
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct OnboardingScene: Scene {
     public var body: some Scene {

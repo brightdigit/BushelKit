@@ -28,7 +28,7 @@
 //
 
 #if canImport(ObjectiveC)
-  import Foundation
+  public import Foundation
 
   internal class KVNSObservation: KVObservation {
     internal let observed: NSObject

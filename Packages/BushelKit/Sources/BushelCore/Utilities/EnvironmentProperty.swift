@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 @propertyWrapper
 public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {

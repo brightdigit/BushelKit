@@ -5,7 +5,8 @@
 
 #if canImport(SwiftUI) && canImport(AppKit)
   import AVKit
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct Video: NSViewRepresentable {
     let player: AVPlayer?
