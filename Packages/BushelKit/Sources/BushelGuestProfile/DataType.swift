@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public protocol SystemProfileType: Decodable {
   static var dataType: DataType { get }

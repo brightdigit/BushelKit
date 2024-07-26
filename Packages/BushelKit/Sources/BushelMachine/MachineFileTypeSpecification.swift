@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 public enum MachineFileTypeSpecification: FileTypeSpecification {
   public static let fileType: FileType = .virtualMachine

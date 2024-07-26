@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
   public let id: UUID

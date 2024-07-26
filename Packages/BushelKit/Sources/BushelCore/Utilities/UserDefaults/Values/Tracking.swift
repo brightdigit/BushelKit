@@ -27,18 +27,18 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum Tracking {
   public enum Error: DefaultWrapped {
     public static let keyType: KeyType = .reflecting
     public typealias Value = Bool
-    public static var `default`: Bool = true
+    public static let `default`: Bool = true
   }
 
   public enum Analytics: DefaultWrapped {
     public static let keyType: KeyType = .reflecting
     public typealias Value = Bool
-    public static var `default`: Bool = true
+    public static let `default`: Bool = true
   }
 }

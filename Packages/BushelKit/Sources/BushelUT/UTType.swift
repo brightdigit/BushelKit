@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
+
 #if canImport(UniformTypeIdentifiers)
-  import UniformTypeIdentifiers
+  public import UniformTypeIdentifiers
 
   extension UTType {
     public init(fileType: FileType) {

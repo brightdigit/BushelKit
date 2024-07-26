@@ -27,8 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
+#if canImport(FoundationNetworking)
+  extension OperatingSystemVersion: @unchecked Sendable {}
+#endif
 extension OperatingSystemVersion {
   private static let codeNames: [Int: String] = [
     11: "Big Sur",

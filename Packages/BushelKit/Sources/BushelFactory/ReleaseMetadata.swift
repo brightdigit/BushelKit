@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelMachine
-import Foundation
+public import BushelCore
+
+public import BushelMachine
+
+public import Foundation
 
 public struct ReleaseMetadata: Identifiable, Equatable {
   public let metadata: any InstallerRelease

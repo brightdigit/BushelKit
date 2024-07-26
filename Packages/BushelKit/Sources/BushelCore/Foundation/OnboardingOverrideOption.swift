@@ -27,14 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum OnboardingOverrideOption: String, EnvironmentValue {
   case skip
   case force
   case none
 
-  public static var `default`: OnboardingOverrideOption = .none
+  public static let `default`: OnboardingOverrideOption = .none
 }
 
 extension OnboardingOverrideOption {

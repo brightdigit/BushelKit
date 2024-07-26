@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
-import Foundation
+public import BushelCore
+
+public import BushelLogging
+
+public import Foundation
 
 /// A collection of machine systems for managing virtual machines
 public protocol MachineSystemManaging: Sendable {

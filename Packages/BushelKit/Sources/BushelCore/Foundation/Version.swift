@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 #if canImport(os)
-  import os.log
+  public import os.log
 
   public typealias Logger = os.Logger
 #endif

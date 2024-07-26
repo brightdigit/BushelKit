@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 @MainActor
 public final class Initialization {
@@ -36,13 +36,13 @@ public final class Initialization {
 
   private init() {}
 
-  public nonisolated func callAsFunction(_ closure: @Sendable @escaping () -> Void) {
+  public nonisolated func callAsFunction(_ closure: @MainActor @Sendable @escaping () -> Void) {
     Task {
       await self.execute(closure)
     }
   }
 
-  func execute(_ closure: @escaping () -> Void) {
+  func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {
     guard !isCompleted else {
       return
     }

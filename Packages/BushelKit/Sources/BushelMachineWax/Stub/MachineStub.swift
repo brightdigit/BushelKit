@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
-import Foundation
+public import BushelMachine
+
+public import Foundation
 
 public struct MachineStub: Machine {
   public var machineIdentifer: UInt64? {

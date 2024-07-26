@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 /// Writable configuration used for setting up and configuring a new machine.
 public struct MachineSetupConfiguration: Sendable {

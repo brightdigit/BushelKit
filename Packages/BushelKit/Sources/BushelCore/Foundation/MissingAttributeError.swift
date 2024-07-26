@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct MissingAttributeError: LocalizedError {
   public enum HeaderName: String {
@@ -65,3 +65,7 @@ extension FileAttributeKey {
     }
   }
 }
+
+#if canImport(FoundationNetworking)
+  extension FileAttributeKey: @unchecked Sendable {}
+#endif

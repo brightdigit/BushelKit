@@ -32,16 +32,18 @@ import XCTest
 
 internal final class TransformationTests: XCTestCase {
   func testTransformAsFunction() {
-    let sut = Transformation<Int, String>(intToString)
+    let sut = Transformation<Int, String> {
+      Self.intToString($0)
+    }
 
     let value = 3
-    let expectedValue = intToString(value)
+    let expectedValue = Self.intToString(value)
     let actualValue = sut(value)
 
     XCTAssertEqual(actualValue, expectedValue)
   }
 
-  private func intToString(_ value: Int) -> String {
+  private static func intToString(_ value: Int) -> String {
     "\(value)"
   }
 }

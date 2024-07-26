@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
 import BushelMacOSCore
-import Foundation
+
+public import Foundation
 
 extension ImageMetadata {
   public enum Previews {

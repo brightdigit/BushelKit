@@ -27,7 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 public typealias MachineFile = DocumentFile<MachineFileTypeSpecification>

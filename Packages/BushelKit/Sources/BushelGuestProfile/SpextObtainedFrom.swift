@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum SpextObtainedFrom: String, Codable, Equatable, Sendable {
   case spextApple = "spext_apple"

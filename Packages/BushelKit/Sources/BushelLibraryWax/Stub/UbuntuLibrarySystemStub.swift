@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLibrary
-import Foundation
+public import BushelCore
+
+public import BushelLibrary
+
+public import Foundation
 
 public struct UbuntuLibrarySystemStub: LibrarySystem {
   public var releaseCollectionMetadata: any BushelCore.ReleaseCollectionMetadata {

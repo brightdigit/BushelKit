@@ -27,10 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLibrary
-import BushelMachine
-import Foundation
+public import BushelCore
+
+public import BushelLibrary
+
+public import BushelMachine
+
+public import Foundation
 
 extension InstallerImage.Metadata {
   public init(

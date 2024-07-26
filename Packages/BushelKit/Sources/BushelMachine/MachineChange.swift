@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 #if canImport(SwiftUI)
   import SwiftUI
@@ -50,32 +51,16 @@ public struct MachineChange: Sendable {
     case socketDevices
   }
 
-  public struct PropertyChange: CustomStringConvertible, Sendable {
-    public let property: Property
-    public let new: (any Sendable)?
-    public let old: (any Sendable)?
-
-    public var description: String {
-      "\(property): \(String(describing: old)) -> \(String(describing: new))"
-    }
-
-    public init(property: Property, new: (any Sendable)? = nil, old: (any Sendable)? = nil) {
-      self.property = property
-      self.new = new
-      self.old = old
-    }
-  }
-
   public enum Event: Sendable, CustomStringConvertible {
-    case property(PropertyChange)
+    case property
     case guestDidStop
     case stopWithError(any Error)
     case networkDetatchedWithError(any Error)
 
     public var description: String {
       switch self {
-      case let .property(change):
-        "property: \(change.property.rawValue)"
+      case let .property:
+        "property"
       case .guestDidStop:
         "guestDidStop"
       case .stopWithError:
@@ -92,14 +77,5 @@ public struct MachineChange: Sendable {
   public init(source: any Machine, event: MachineChange.Event) {
     self.event = event
     self.source = source
-  }
-}
-
-extension MachineChange.PropertyChange {
-  public init?(keyPath: String?, new: (any Sendable)? = nil, old: (any Sendable)? = nil) {
-    guard let property = keyPath.flatMap(MachineChange.Property.init(rawValue:)) else {
-      return nil
-    }
-    self.init(property: property, new: new, old: old)
   }
 }

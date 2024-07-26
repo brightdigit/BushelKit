@@ -27,8 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelLogging
-import Foundation
+public import BushelLogging
+
+public import FelinePine
+
+public import Foundation
 
 private struct LibraryImageFileTaskParameters: Sendable {
   private let system: any LibrarySystem

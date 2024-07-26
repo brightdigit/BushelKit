@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum SpprefpaneSupport: String, Codable, Equatable, Sendable {
   case spprefpaneSupportApple = "spprefpane_support_apple"

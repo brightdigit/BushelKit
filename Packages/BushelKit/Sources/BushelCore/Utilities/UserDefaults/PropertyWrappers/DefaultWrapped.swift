@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public protocol DefaultWrapped: AppStored {
   static var `default`: Value { get }

@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelMachine
+public import BushelCore
+
+public import BushelMachine
 
 public struct ReleaseCollection {
   public let firstMajorVersion: Int

@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCoreWax
-import BushelMachine
+public import BushelCoreWax
+
+public import BushelMachine
 import Foundation
 
 extension MachineBuildConfiguration where RestoreImageType == RestoreImageStub {

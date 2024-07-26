@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct DocumentFile<FileType: FileTypeSpecification>: Codable, Hashable {
   public let url: URL

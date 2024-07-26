@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
-public enum SnapshotDifference: String {
+public enum SnapshotDifference: String, Sendable {
   case append
   case remove
   case restored

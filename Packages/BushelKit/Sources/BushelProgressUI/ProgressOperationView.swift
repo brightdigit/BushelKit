@@ -28,8 +28,7 @@
 //
 
 #if canImport(SwiftUI)
-  // import BushelAccessibility
-  import SwiftUI
+  public import SwiftUI
 
   public struct ProgressOperationView<Icon: View, ProgressText: View>: View {
     private let progress: FileOperationProgress<Int>

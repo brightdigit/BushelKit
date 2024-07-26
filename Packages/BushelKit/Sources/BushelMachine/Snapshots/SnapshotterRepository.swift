@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
 
 public struct SnapshotterRepository: SnapshotProvider {
   private let dictionary: [SnapshotterID: any SnapshotterFactory]

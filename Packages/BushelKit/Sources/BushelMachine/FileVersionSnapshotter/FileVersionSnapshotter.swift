@@ -28,9 +28,11 @@
 //
 
 #if os(macOS)
-  import BushelCore
-  import BushelLogging
-  import Foundation
+  public import BushelCore
+
+  public import BushelLogging
+
+  public import Foundation
 
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
     public static var loggingCategory: BushelLogging.Category {
@@ -51,11 +53,11 @@
       self.init(fileManager: fileManager)
     }
 
-    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
+    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
-      let exportedConfiguration = MachineConfiguration(snapshot: snapshot, original: machine.configuration)
+      let exportedConfiguration = await MachineConfiguration(snapshot: snapshot, original: machine.configuration)
       let data = try JSON.encoder.encode(exportedConfiguration)
       let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
       let newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)

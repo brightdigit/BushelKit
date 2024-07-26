@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
 
 public struct CustomRelease: InstallerRelease {
   public static let instance = CustomRelease()

@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 ///  Used by the `MachineSystem` to build a new virtual machine.
 public struct MachineBuildConfiguration<RestoreImageType: Sendable>: Sendable {
