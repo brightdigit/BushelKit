@@ -193,7 +193,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sorgfältig hergestellt von"
+            "value" : "Mit Sorgfalt hergestellt von"
           }
         },
         "en" : {
@@ -277,7 +277,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wir sind für dich da! Egal, ob du Fragen hast, auf Probleme stößt oder eine Funktion anfragen möchtest, zögere nicht, uns zu kontaktieren. Dein Feedback und deine Anregungen sind für uns von unschätzbarem Wert."
+            "value" : "Wir sind für dich da! Egal, ob du Fragen hast, auf Probleme stößt oder einen Vorschlag für ein neues Feature hast, zögere nicht, uns zu kontaktieren. Dein Feedback und deine Anregungen sind für uns von unschätzbarem Wert."
           }
         },
         "en" : {
@@ -445,7 +445,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Baue"
+            "value" : "Bauen"
           }
         },
         "en" : {
@@ -487,7 +487,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scheffel"
+            "value" : "Bushel"
           }
         },
         "en" : {
@@ -655,7 +655,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Session erstellen..."
+            "value" : "Erstelle Session…"
           }
         },
         "en" : {
@@ -739,7 +739,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bilder"
+            "value" : "Abbilder"
           }
         },
         "en" : {
@@ -949,7 +949,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bild herunterladen"
+            "value" : "Abbild herunterladen"
           }
         },
         "en" : {
@@ -1117,7 +1117,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E‑Mail-Adresse"
+            "value" : "E‑Mail Adresse"
           }
         },
         "en" : {
@@ -1285,7 +1285,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zuletzt modifiziert"
+            "value" : "Zuletzt geändert"
           }
         },
         "en" : {
@@ -1327,7 +1327,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keine Ausgewählt"
+            "value" : "Keine ausgewählt"
           }
         },
         "en" : {
@@ -1411,7 +1411,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bild importieren"
+            "value" : "Abbild importieren"
           }
         },
         "en" : {
@@ -1453,7 +1453,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Ermächtigung..."
+            "value" : "Erteile Autorisierung…"
           }
         },
         "en" : {
@@ -1495,7 +1495,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Fertigstellung..."
+            "value" : "Vorgang wird abgeschlossen…"
           }
         },
         "en" : {
@@ -1579,7 +1579,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nimm an unserem Diskurs teil"
+            "value" : "Nimm an unserer Unterhaltung teil"
           }
         },
         "en" : {
@@ -1705,7 +1705,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ja, Bild löschen"
+            "value" : "Ja, Abbild löschen"
           }
         },
         "en" : {
@@ -1789,7 +1789,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieses Bild wird nicht über Virtualisierung unterstützt"
+            "value" : "Dieses Abbild wird nicht über Virtualisierung unterstützt"
           }
         },
         "en" : {
@@ -2041,7 +2041,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Graf"
+            "value" : "Anzahl"
           }
         },
         "en" : {
@@ -2167,7 +2167,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Display"
+            "value" : "Bildschirm"
           }
         },
         "en" : {
@@ -2755,7 +2755,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eigene"
+            "value" : "Sonderanfertigung"
           }
         },
         "en" : {
@@ -3049,7 +3049,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Es sind bereits Bilder verfügbar. Möchtest du eine bestehende Bibliothek hinzufügen oder eine neue Bildbibliothek erstellen?"
+            "value" : "Es sind bereits Abbilder verfügbar. Möchtest du eine bestehende Bibliothek hinzufügen oder eine neue Abbildbibliothek erstellen?"
           }
         },
         "en" : {
@@ -3133,7 +3133,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keine Bilder verfügbar"
+            "value" : "Keine Abbilder verfügbar"
           }
         },
         "en" : {
@@ -3175,7 +3175,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Möchtest du den ausgefallenen Rechner löschen?"
+            "value" : "Möchtest du den fehlgeschlagenen Rechner löschen?"
           }
         },
         "en" : {
@@ -3301,7 +3301,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sparen"
+            "value" : "Sichern"
           }
         },
         "en" : {
@@ -3427,7 +3427,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scheffel Hilfe"
+            "value" : "Bushel Hilfe"
           }
         },
         "en" : {
@@ -3469,7 +3469,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Bibliothek..."
+            "value" : "Bibliothek..."
           }
         },
         "en" : {
@@ -3511,7 +3511,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Maschine..."
+            "value" : "Maschine..."
           }
         },
         "en" : {
@@ -3805,7 +3805,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ein Feature anfordern..."
+            "value" : "Ein Feature vorschlagen…"
           }
         },
         "en" : {
@@ -3973,7 +3973,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Herzlichen Glückwunsch, du bist jetzt mit den Werkzeugen ausgestattet, um deine Entwicklungsreise mit Bushel zu beschleunigen. Es ist an der Zeit, deiner Kreativität freien Lauf zu lassen, grenzenlos zu testen und dir in der Welt der App-Entwicklung einen Namen zu machen. Alles beginnt mit der Erstellung deiner Bibliothek von Wiederherstellungsbildern. Lege noch heute los und erlebe die wahre Kraft von Bushel - deinem ultimativen Begleiter bei der Entwicklung außergewöhnlicher Apps für macOS."
+            "value" : "Herzlichen Glückwunsch, du bist jetzt mit den Werkzeugen ausgestattet, um deine Entwicklungsreise mit Bushel zu beschleunigen. Es ist an der Zeit, deiner Kreativität freien Lauf zu lassen, grenzenlos zu testen und dir in der Welt der App-Entwicklung einen Namen zu machen. Alles beginnt mit der Erstellung deiner Bibliothek von Wiederherstellungsabbildern. Lege noch heute los und erlebe die wahre Kraft von Bushel - deinem ultimativen Begleiter bei der Entwicklung außergewöhnlicher Apps für macOS."
           }
         },
         "en" : {
@@ -4099,7 +4099,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Nutzer können die macOS-Version, die CPU, den Arbeitsspeicher und den Festplattenspeicher auswählen und so ihre virtuelle Umgebung genau auf ihre Bedürfnisse abstimmen."
+            "value" : "Nutzer können die macOS-Version, die CPU, den Arbeitsspeicher und den Festplattenspeicher auswählen und so ihre virtuelle Umgebung genau auf ihre Bedürfnisse abstimmen."
           }
         },
         "en" : {
@@ -4351,7 +4351,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mehr anschauliche Fortschrittsanzeigen, um dich während der Installation auf dem Laufenden zu halten."
+            "value" : "Anschaulichere Fortschrittsanzeigen, um dich während der Installation auf dem Laufenden zu halten."
           }
         },
         "en" : {
@@ -4435,7 +4435,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verwalte eine umfangreiche Sammlung von macOS-Wiederherstellungsbildern in deiner Bibliothek und erweitere deine Möglichkeiten, indem du dich mit Online-Hubs verbindest."
+            "value" : "Verwalte eine umfangreiche Sammlung von macOS-Wiederherstellungsabbildern in deiner Bibliothek und erweitere deine Möglichkeiten, indem du dich mit Online-Hubs verbindest."
           }
         },
         "en" : {
@@ -4519,7 +4519,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rationalisiere den Prozess des Testens deiner Apps für verschiedene Lokalisierungen, Zugänglichkeitseinstellungen und Nutzererfahrungen."
+            "value" : "Vereinfache den Prozess des Testens deiner Apps für verschiedene Lokalisierungen, Zugänglichkeitseinstellungen und Nutzererfahrungen."
           }
         },
         "en" : {
@@ -5443,7 +5443,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einführung in die Bushel Library"
+            "value" : "Einführung in die Bushel Bibliothek"
           }
         },
         "en" : {
@@ -5989,7 +5989,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pause Maschine"
+            "value" : "Maschine pausieren"
           }
         },
         "en" : {
@@ -6409,7 +6409,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neueste Dokumente"
+            "value" : "Zuletzt verwendete Dokumente"
           }
         },
         "en" : {
@@ -6535,7 +6535,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lebenslauf Maschine"
+            "value" : "Pause beenden"
           }
         },
         "en" : {
@@ -8761,7 +8761,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Frag den Benutzer"
+            "value" : "Benutzer fragen"
           }
         },
         "en" : {
@@ -8803,7 +8803,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schaltfläche Schließen"
+            "value" : "Schließen-Schaltfläche"
           }
         },
         "en" : {
