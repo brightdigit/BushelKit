@@ -157,7 +157,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d x %d %dppi"
+            "value" : "%1$d x %2$d %3$dppi"
           }
         },
         "es" : {
@@ -175,7 +175,49 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "d x %d %dppi"
+            "value" : "%d x %d %dppi"
+          }
+        }
+      }
+    },
+    "There was an error restoring the snapshot: %@" : {
+      "comment" : "Snapshot Restoration Error",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدث خطأ أثناء استعادة اللقطة: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei der Wiederherstellung des Schnappschusses ist ein Fehler aufgetreten: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an error restoring the snapshot: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se ha producido un error al restaurar la instantánea: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une erreur s'est produite lors de la restauration de l'instantané : %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スナップショットのリストア時にエラーが発生しました:%@"
           }
         }
       }
@@ -217,7 +259,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "丁寧に作られた"
+            "value" : "Carefully Crafted by"
           }
         }
       }
@@ -259,7 +301,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "お問い合わせ"
+            "value" : "お問い合わせはこちら"
           }
         }
       }
@@ -301,7 +343,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "私たちがお手伝いするご質問がある場合も、問題が発生した場合も、機能をリクエストしたい場合も、遠慮なくご連絡を。皆様からのフィードバックやご意見は、私たちにとってかけがえのないものである。"
+            "value" : "お手伝いが必要なご質問がある場合や、問題が発生した場合、機能をリクエストしたい場合は、遠慮なくご連絡を。皆様からのフィードバックやご意見は、開発者にとってかけがえのないものです。"
           }
         }
       }
@@ -343,7 +385,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "フォローする"
+            "value" : "ソーシャルアカウント"
           }
         }
       }
@@ -385,7 +427,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PROサブスクリプションは終了する："
+            "value" : "Proサブスクリプションの終了:"
           }
         }
       }
@@ -511,7 +553,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェル"
+            "value" : "Bushel"
           }
         }
       }
@@ -679,7 +721,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セッションを作る"
+            "value" : "セッションの作成"
           }
         }
       }
@@ -805,7 +847,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "図書館"
+            "value" : "ライブラリ"
           }
         }
       }
@@ -847,7 +889,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "機械"
+            "value" : "マシン"
           }
         }
       }
@@ -889,7 +931,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップ写真"
+            "value" : "スナップショット"
           }
         }
       }
@@ -973,7 +1015,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画像をダウンロードする"
+            "value" : "イメージをダウンロード"
           }
         }
       }
@@ -1057,7 +1099,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オン"
+            "value" : "有効にする"
           }
         }
       }
@@ -1099,7 +1141,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "私たちはあなたのフィードバックを大切にする！ご意見、ご感想をお寄せください。"
+            "value" : "私たちは皆さんのフィードバックを大切にしています！ご意見、ご感想をお寄せください。"
           }
         }
       }
@@ -1477,7 +1519,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "...を許可する。"
+            "value" : "オーソライズ中..."
           }
         }
       }
@@ -1519,7 +1561,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仕上げ..."
+            "value" : "終了中..."
           }
         }
       }
@@ -1561,7 +1603,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "i%%でインストール..."
+            "value" : "%i %%インストール済み..."
           }
         }
       }
@@ -1603,7 +1645,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ディスカッションに参加する"
+            "value" : "Discourse(フォーラム)に参加する"
           }
         }
       }
@@ -1645,7 +1687,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "シャットダウン時にウィンドウを開けておく"
+            "value" : "シャットダウン時にウィンドウを開いたままにする"
           }
         }
       }
@@ -1729,7 +1771,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、画像を削除する"
+            "value" : "イメージを削除する"
           }
         }
       }
@@ -1771,7 +1813,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本当に削除したいのか？"
+            "value" : "本当に %@ を削除しますか？"
           }
         }
       }
@@ -1813,7 +1855,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このイメージは仮想化ではサポートされていない"
+            "value" : "このイメージは仮想化をサポートしていません"
           }
         }
       }
@@ -1897,7 +1939,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、スナップショットを削除する"
+            "value" : "スナップショットを削除する"
           }
         }
       }
@@ -1939,7 +1981,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "キャンセル、このスナップショットを復元しない"
+            "value" : "スナップショットを復元しない"
           }
         }
       }
@@ -1981,7 +2023,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、現在の状態を保存する"
+            "value" : "現在の状態を保存する"
           }
         }
       }
@@ -2023,7 +2065,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "いや、現在の状態を上書きするだけだ"
+            "value" : "現在の状態を上書きする"
           }
         }
       }
@@ -2233,7 +2275,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "メモリー"
+            "value" : "メモリ"
           }
         }
       }
@@ -2359,7 +2401,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ナット"
+            "value" : "NAT"
           }
         }
       }
@@ -2611,7 +2653,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しいマシンのオペレーティング・システムを選ぶ："
+            "value" : "新しいマシンのオペレーティングシステムの選択:"
           }
         }
       }
@@ -2653,7 +2695,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しいマシンの仕様を選ぶ："
+            "value" : "新しいマシンの仕様の選択:"
           }
         }
       }
@@ -2737,7 +2779,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "メモリー"
+            "value" : "メモリ"
           }
         }
       }
@@ -3073,7 +3115,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "利用可能な既存の画像がある。既存のライブラリを追加するか、新しい画像ライブラリを作成するか？"
+            "value" : "利用可能な既存のイメージがあります。既存のライブラリを追加するか、新しい画像ライブラリを作成しますか？"
           }
         }
       }
@@ -3115,7 +3157,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しいライブラリーを作成する"
+            "value" : "新しいライブラリを作成する"
           }
         }
       }
@@ -3157,7 +3199,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "利用可能な画像はない"
+            "value" : "利用可能なイメージがありません"
           }
         }
       }
@@ -3199,7 +3241,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "故障したマシンを削除するか？"
+            "value" : "失敗したマシンを削除しますか？"
           }
         }
       }
@@ -3241,7 +3283,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "輸出"
+            "value" : "エクスポート"
           }
         }
       }
@@ -3283,7 +3325,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "復元する"
+            "value" : "復元"
           }
         }
       }
@@ -3325,7 +3367,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "節約"
+            "value" : "保存"
           }
         }
       }
@@ -3367,7 +3409,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "これでインストールされる："
+            "value" : "インストールされるマシン:"
           }
         }
       }
@@ -3451,7 +3493,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェル・ヘルプ"
+            "value" : "Bushelヘルプ"
           }
         }
       }
@@ -3493,7 +3535,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "図書館..."
+            "value" : "ライブラリ..."
           }
         }
       }
@@ -3577,7 +3619,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新規"
+            "value" : "新規作成"
           }
         }
       }
@@ -3619,7 +3661,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オンボーディングを開始する"
+            "value" : "チュートリアルを開始する"
           }
         }
       }
@@ -3661,7 +3703,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オープン..."
+            "value" : "開く..."
           }
         }
       }
@@ -3703,7 +3745,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近のオープン"
+            "value" : "最近の履歴"
           }
         }
       }
@@ -3745,7 +3787,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "フィードバックを提供する"
+            "value" : "フィードバックを送信する"
           }
         }
       }
@@ -3787,7 +3829,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェルへようこそ"
+            "value" : "Bushelへようこそ"
           }
         }
       }
@@ -3829,7 +3871,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "機能リクエスト..."
+            "value" : "機能をリクエスト..."
           }
         }
       }
@@ -3997,7 +4039,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "おめでとう、あなたは今、Bushelであなたの開発の旅をスーパーチャージするためのツールを装備している。あなたの創造性を解き放ち、制限なくテストし、アプリ開発の世界であなたの足跡を残す時が来た。すべては、リストア画像のライブラリを作成することから始まる。今すぐ始めて、Bushelの真のパワーを体験しよう。"
+            "value" : "おめでとう、今、開発の旅を便利にするためのツール、Bushelを手に入れました。あなたの創造性を解き放ち、制限なしのテストとともに、アプリ開発の世界での一歩を残す時が来ました。まずは、リストアイメージのライブラリを作成することから始まります。今すぐ、Bushelの真のパワーを体験しましょう。"
           }
         }
       }
@@ -4039,7 +4081,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "macOSのテストと開発の新時代へようこそ。"
+            "value" : "macOSにおける、テストと開発の新時代へようこそ。"
           }
         }
       }
@@ -4081,7 +4123,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bushelであなたの開発の旅に力を与えよう！"
+            "value" : "Bushelであなたの開発の旅にパワーを与えよう！"
           }
         }
       }
@@ -4123,7 +4165,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ユーザーは、macOSのバージョン、CPU、メモリ、ディスク容量を選択し、仮想環境をニーズに合わせてカスタマイズできる。"
+            "value" : "ユーザーは、macOSのバージョン、CPU、メモリ、ディスク容量を選択し、仮想環境をニーズに合わせてカスタマイズできます。"
           }
         }
       }
@@ -4207,7 +4249,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "エラーを発見し、貴重なフィードバックを収集するシステムを改善した。"
+            "value" : "エラーを発見しフィードバックを収集するシステムを改善"
           }
         }
       }
@@ -4291,7 +4333,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンとライブラリの移動および削除されたファイルの追跡を改善。"
+            "value" : "マシンとライブラリの移動および削除されたファイルの追跡を改善"
           }
         }
       }
@@ -4333,7 +4375,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文書管理の改善"
+            "value" : "ドキュメント管理の改善"
           }
         }
       }
@@ -4375,7 +4417,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "より分かりやすい進捗インジケータで、インストール中に常に情報を得ることができる。"
+            "value" : "より分かりやすいインジケータで、インストール中に常に進捗を知ることができるようになりました"
           }
         }
       }
@@ -4417,7 +4459,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "インストール画面の改善"
+            "value" : "改善されたインストール画面"
           }
         }
       }
@@ -4459,7 +4501,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ライブラリからmacOS復元イメージの膨大なコレクションにアクセスして管理し、オンラインHubに接続して選択肢を広げる。"
+            "value" : "ライブラリからmacOS復元イメージの膨大なコレクションにアクセスして管理できるようにし、さらにオンラインHubに接続することで選択肢を拡大しました"
           }
         }
       }
@@ -4501,7 +4543,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ライブラリーとハブの統合"
+            "value" : "統合されたライブラリとハブ"
           }
         }
       }
@@ -4543,7 +4585,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "異なるローカライゼーション、アクセシビリティ設定、ユーザーエクスペリエンスに対応したアプリのテストプロセスを効率化する。"
+            "value" : "異なるローカライゼーション、アクセシビリティ設定、ユーザーエクスペリエンスに対応したアプリのテストプロセスを効率化"
           }
         }
       }
@@ -4585,7 +4627,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "簡単なローカライゼーションとアクセシビリティ・テスト"
+            "value" : "簡単なローカライゼーションとアクセシビリティテスト"
           }
         }
       }
@@ -4627,7 +4669,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しいマシンを作成するためのインターフェイスが一新され、より直感的に操作できるようになった。"
+            "value" : "新しいマシンを作成するためのインターフェイスが一新され、より直感的に操作できるようになりました"
           }
         }
       }
@@ -4711,7 +4753,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swift 6に対応するためにパフォーマンスが強化され、よりスムーズで高速なエクスペリエンスが保証される。"
+            "value" : "Swift 6に対応するためにパフォーマンスが強化され、よりスムーズで高速な体験が保証されるようになりました"
           }
         }
       }
@@ -4795,7 +4837,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OSインストール用のリストアイメージを効果的に処理することで、macOSバージョンのインストールを簡素化する。"
+            "value" : "OSインストール用のリストアイメージを効果的に処理することで、macOSバージョンのインストールが簡素化されました"
           }
         }
       }
@@ -4837,7 +4879,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "macOS 復元イメージ管理"
+            "value" : "macOS復元イメージ管理"
           }
         }
       }
@@ -4879,7 +4921,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "物理マシンの損傷を心配することなく、新鮮な仮想マシン上で安全にスタートアップ・スクリプトを実行できる。"
+            "value" : "物理マシンへのダメージを心配することなく、新鮮な仮想マシン上で安全にスタートアップスクリプトを実行できます"
           }
         }
       }
@@ -4963,7 +5005,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットをキャプチャしてロールバックすることで、テストや実験、不可逆的な変更を避けるためのセーフティネットを提供する。"
+            "value" : "スナップショットをキャプチャしてロールバックすることで、テストや実験、不可逆的な変更を避けるためのセーフティネットを提供しています"
           }
         }
       }
@@ -5005,7 +5047,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショット管理"
+            "value" : "スナップショットの管理"
           }
         }
       }
@@ -5047,7 +5089,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "幅広いmacOSバージョンでアプリケーションをテストし、互換性と最適なパフォーマンスを保証する。"
+            "value" : "幅広いmacOSバージョンでアプリケーションをテストし、互換性と最適なパフォーマンスを保証しています"
           }
         }
       }
@@ -5089,7 +5131,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "macOSのバージョンを超えてテストする"
+            "value" : "多くのmacOSのバージョンでのテスト"
           }
         }
       }
@@ -5131,7 +5173,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリ内で直接、新機能のリクエストや投票ができるようになった。"
+            "value" : "アプリ内で直接、新機能のリクエストや投票ができるようになりました"
           }
         }
       }
@@ -5173,7 +5215,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ウィッシュキットとの統合"
+            "value" : "WishKitとの統合"
           }
         }
       }
@@ -5215,7 +5257,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェルで何ができるのか？"
+            "value" : "Bushelでできること"
           }
         }
       }
@@ -5257,7 +5299,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ウェブから直接Bushelライブラリにリストアイメージをダウンロードし、インポートすることがいかに簡単であるかを発見しよう。Bushel Hubを使えば、macOSの最新バージョンにシームレスに対応できる。"
+            "value" : "ウェブから直接Bushelライブラリにリストアイメージをダウンロードし、インポートすることは簡単です。Bushel Hubを使えば、macOSの最新バージョンにシームレスに対応できます。"
           }
         }
       }
@@ -5341,7 +5383,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェルハブを発見する"
+            "value" : "Bushel Hubを見つましょう"
           }
         }
       }
@@ -5383,7 +5425,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仮想マシンに様々なバージョンのmacOSをインストールするプロセスを簡素化する。"
+            "value" : "仮想マシンに様々なバージョンのmacOSをインストールするプロセスを簡素化します。"
           }
         }
       }
@@ -5425,7 +5467,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "あなたのmacOSバージョン・リポジトリ"
+            "value" : "あなたのmacOSバージョンリポジトリ"
           }
         }
       }
@@ -5467,7 +5509,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェル・ライブラリーの紹介"
+            "value" : "Bushelライブラリの紹介"
           }
         }
       }
@@ -5509,7 +5551,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bushelで仮想マシンを作成し、カスタマイズの旅に出よう。macOSのバージョンの選択から、CPU数、メモリ、ディスク容量などの指定まで、あなたの手で。"
+            "value" : "Bushelで仮想マシンを作成し、カスタマイズしてみましょう。macOSのバージョンの選択から、CPU数、メモリ、ディスク容量などの指定まで、あなたの手で。"
           }
         }
       }
@@ -5551,7 +5593,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "バーチャルMacを細部までカスタマイズする"
+            "value" : "バーチャルMacを細部までカスタマイズしましょう"
           }
         }
       }
@@ -5593,7 +5635,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "理想の仮想マシンを作る"
+            "value" : "理想的な仮想マシンを作りましょう"
           }
         }
       }
@@ -5677,7 +5719,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットが開発プロセスにどのような革命をもたらすか、いつでも安定した状態に簡単にロールバックできることを知っていながら、大胆不敵にテストに没頭することを可能にする方法を探る。Bushelのスナップショット機能を使えば、仮想マシンのテスト、ブレーク、ロールバックがかつてないほど簡単になる。"
+            "value" : "スナップショットが開発プロセスにどのような革命をもたらすか、いつでも安定した状態に簡単にロールバックできる安心感と一緒に、大胆不敵にテストに没頭することを可能にする方法を探りましょう。Bushelのスナップショット機能を使えば、仮想マシンのテスト、停止、ロールバックがかつてないほど簡単になります。"
           }
         }
       }
@@ -5719,7 +5761,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自信を持ってテスト、ブレーク、ロールバックする"
+            "value" : "安心してテスト、停止、ロールバックしましょう"
           }
         }
       }
@@ -5761,7 +5803,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットの力を活用する"
+            "value" : "スナップショットの力を活用しましょう"
           }
         }
       }
@@ -5803,7 +5845,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bushelは、macOS上での包括的なアプリケーションのテストと開発のための強力なツールで開発者を支援する。Bushelの直感的で効率的なツールを使って、macOS仮想マシンのパワーをフルに活用する方法を学ぼう。"
+            "value" : "Bushelは、macOS上での包括的なアプリケーションのテストと開発のための強力なツールで開発者をします。Bushelの直感的で効率的なツールを使って、macOS仮想マシンのパワーをフルに活用する方法を学びましょう。"
           }
         }
       }
@@ -5845,7 +5887,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開発経験を高める！"
+            "value" : "開発経験を高めましょう！"
           }
         }
       }
@@ -5887,7 +5929,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェルへようこそ"
+            "value" : "Bushelへようこそ"
           }
         }
       }
@@ -5929,7 +5971,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オープン・マシン"
+            "value" : "マシンを開く"
           }
         }
       }
@@ -5953,7 +5995,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@/%@ (%@%%)"
+            "value" : "%1$@/%2$@ (%3$@%%)"
           }
         },
         "es" : {
@@ -6013,7 +6055,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ポーズマシン"
+            "value" : "マシンを一時停止する"
           }
         }
       }
@@ -6097,7 +6139,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "強化されたスナップショット・ツール、改善された仮想マシン・サイズ管理などの高度な機能にアクセスできる..."
+            "value" : "強化されたスナップショットツール、改善された仮想マシン・サイズ管理などの高度な機能にアクセスできます..."
           }
         }
       }
@@ -6139,7 +6181,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bushel Proにアップグレードして、開発ワークフローを強化しよう。  開発ワークフローをシームレスかつセキュアにする高度な機能を利用できる。"
+            "value" : "Bushel Proにアップグレードして、開発ワークフローを強化しましょう。  開発ワークフローをシームレスかつセキュアにする高度な機能を利用できます。"
           }
         }
       }
@@ -6181,7 +6223,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "定期的な自動スナップショットで進捗状況を保護する。"
+            "value" : "定期的な自動スナップショットで進捗状況を保護します。"
           }
         }
       }
@@ -6265,7 +6307,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "シャットダウン時にスナップショットを行い、即座にバックアップを行う。"
+            "value" : "シャットダウン時にスナップショットを行い、即座にバックアップを行います。"
           }
         }
       }
@@ -6349,7 +6391,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットを整理し、追加メモで注釈を付ける。"
+            "value" : "スナップショットを整理し、追加メモで注釈を付けることができます。"
           }
         }
       }
@@ -6475,7 +6517,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリが好きか？"
+            "value" : "このアプリが好きですか？"
           }
         }
       }
@@ -6559,7 +6601,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "レジュメ・マシン"
+            "value" : "マシンを再開する"
           }
         }
       }
@@ -6643,7 +6685,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画像を選択する"
+            "value" : "イメージを選択する"
           }
         }
       }
@@ -6769,7 +6811,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、強制再起動。"
+            "value" : "強制再起動する"
           }
         }
       }
@@ -6811,7 +6853,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本当にマシンを強制的に再起動したいのか？"
+            "value" : "本当にマシンを強制的に再起動しますか？"
           }
         }
       }
@@ -6979,7 +7021,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンをどのようにシャットダウンしたいか？"
+            "value" : "マシンをどのようにシャットダウンしますか？"
           }
         }
       }
@@ -7021,7 +7063,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "シャットダウンマシン"
+            "value" : "マシンをシャットダウン"
           }
         }
       }
@@ -7063,7 +7105,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オフにする"
+            "value" : "電源をオフにする"
           }
         }
       }
@@ -7189,7 +7231,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アクティブ・セッション"
+            "value" : "アクティブなセッション"
           }
         }
       }
@@ -7273,7 +7315,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アナリティクスを有効にして、お客様の体験を向上させる。この機能はいつでも無効にできる。"
+            "value" : "アナリティクスを有効にして、体験を向上させる。この機能はいつでも無効にできます。"
           }
         }
       }
@@ -7315,7 +7357,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bushelには仮想マシンのスナップショットを定期的に取得する機能があり、いつでもロールバックできる。スナップショットを取得する頻度が高いほど、より多くのディスクスペースを占有するが、マシンをより細かくロールバックできる。各スナップショットは廃棄可能としてマークされ、後で簡単にフィルタリングして削除できる。"
+            "value" : "Bushelには仮想マシンのスナップショットを定期的に取得する機能があり、いつでもロールバックできます。スナップショットを取得する頻度が高いほど、より多くのディスクスペースを占有しますが、マシンをより細かくロールバックできます。各スナップショットは廃棄可能としてマークされ、後で簡単にフィルタリングし、削除できます。"
           }
         }
       }
@@ -7357,7 +7399,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "定期的にスナップショットを撮る："
+            "value" : "定期的にスナップショットを撮る:"
           }
         }
       }
@@ -7399,7 +7441,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "よくあること"
+            "value" : "頻繁"
           }
         }
       }
@@ -7441,7 +7483,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "かろうじて"
+            "value" : "少なめ"
           }
         }
       }
@@ -7483,7 +7525,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "どのくらいの頻度か："
+            "value" : "頻度:"
           }
         }
       }
@@ -7525,7 +7567,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべて"
+            "value" : "間隔"
           }
         }
       }
@@ -7567,7 +7609,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップ写真"
+            "value" : "スナップショット"
           }
         }
       }
@@ -7609,7 +7651,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近の文書をすべて消去する"
+            "value" : "最近のドキュメントをすべて消去する"
           }
         }
       }
@@ -7651,7 +7693,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、データベース全体を消去する"
+            "value" : "データベース全体を消去する"
           }
         }
       }
@@ -7693,7 +7735,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用中のライブラリやマシンのデータベースをすべて消去してもいいのか？"
+            "value" : "使用中のライブラリやマシンのデータベースをすべて消去してもよろしいでしょうか？"
           }
         }
       }
@@ -7735,7 +7777,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "クリアデータベース"
+            "value" : "データベースをクリアします"
           }
         }
       }
@@ -7777,7 +7819,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "クリアデータベース"
+            "value" : "データベースをクリア"
           }
         }
       }
@@ -7819,7 +7861,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近の文書を消去する"
+            "value" : "最近のドキュメントを消去"
           }
         }
       }
@@ -7861,7 +7903,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データベース・シートを開く"
+            "value" : "データベースシートを開く"
           }
         }
       }
@@ -7945,7 +7987,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "エラートラッキングを有効にして、問題の特定と解決に役立てる。いつでも無効にできる。"
+            "value" : "エラートラッキングを有効にして、問題の特定と解決に役立てる。この機能はいつでも無効にできます。"
           }
         }
       }
@@ -7987,7 +8029,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "この合理化された機能は、macOSバージョンの選択から設定の微調整まで、仮想マシンの設定をガイドする。"
+            "value" : "この簡素化された機能は、macOSバージョンの選択から設定の微調整まで、仮想マシンの設定をガイドします。"
           }
         }
       }
@@ -8029,7 +8071,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再設計されたマシンビルダーを紹介する！"
+            "value" : "再設計されたマシンビルダーを紹介します！"
           }
         }
       }
@@ -8071,7 +8113,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "特徴"
+            "value" : "機能"
           }
         }
       }
@@ -8113,7 +8155,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アバウト・ページとヘルプ・メニューに新しいユーザー・フィードバック・フォームを追加したので、試してみてほしい。"
+            "value" : "情報ページとヘルプメニューに新しいユーザーフィードバックフォームを是非お試しください！"
           }
         }
       }
@@ -8155,7 +8197,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新規ユーザー・フィードバック・フォーム"
+            "value" : "新しいユーザーフィードバックフォーム"
           }
         }
       }
@@ -8197,7 +8239,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "タイプを含む："
+            "value" : "種類:"
           }
         }
       }
@@ -8239,7 +8281,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "機械のみ"
+            "value" : "マシンのみ"
           }
         }
       }
@@ -8281,7 +8323,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンもライブラリーも"
+            "value" : "マシンとライブラリ"
           }
         }
       }
@@ -8365,7 +8407,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンをシャットダウンする："
+            "value" : "マシンのシャットダウン時:"
           }
         }
       }
@@ -8449,7 +8491,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、データベース全体を消去する"
+            "value" : "データベース全体を消去する"
           }
         }
       }
@@ -8491,7 +8533,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本当にデータベースをすべて消去し、アプリケーションの設定をすべてリセットしたいのか？"
+            "value" : "本当にデータベースをすべて消去し、アプリケーションの設定をすべてリセットしますか？"
           }
         }
       }
@@ -8533,7 +8575,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべての設定とデータをリセットする"
+            "value" : "すべての設定とデータをリセットします"
           }
         }
       }
@@ -8575,7 +8617,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべての設定とデータをリセットする"
+            "value" : "すべての設定とデータをリセット"
           }
         }
       }
@@ -8617,7 +8659,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "はい、すべてのユーザー設定をリセットする"
+            "value" : "すべてのユーザー設定をリセットする"
           }
         }
       }
@@ -8659,7 +8701,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本当にすべてのユーザー設定をリセットしたいのか？"
+            "value" : "本当にすべてのユーザー設定をリセットしますか？"
           }
         }
       }
@@ -8701,7 +8743,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべてのユーザー設定をリセットする"
+            "value" : "すべてのユーザー設定をリセットします"
           }
         }
       }
@@ -8743,7 +8785,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべてのユーザー設定をリセットする"
+            "value" : "すべてのユーザー設定をリセット"
           }
         }
       }
@@ -8785,7 +8827,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ユーザーに聞く"
+            "value" : "確認する"
           }
         }
       }
@@ -8911,7 +8953,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "クローズボタンが必要である："
+            "value" : "閉じるボタンを押した際:"
           }
         }
       }
@@ -9205,7 +9247,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無料ユーザーのスナップショット上限に達した。スナップショットの作成を継続し、さらなるメリットを享受するには、Bushel Proへのアップグレードをご検討ください。"
+            "value" : "無料ユーザーにおけるスナップショット作成の上限に達しました。スナップショットの作成を継続し、さらなるメリットを享受するには、Bushel Proへのアップグレードをご検討ください。"
           }
         }
       }
@@ -9247,7 +9289,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットの限界に達した"
+            "value" : "スナップショット作成の上限に達しました"
           }
         }
       }
@@ -9373,7 +9415,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スタートマシン"
+            "value" : "マシンを開始"
           }
         }
       }
@@ -9415,7 +9457,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "まだだ。"
+            "value" : "検討します"
           }
         }
       }
@@ -9462,48 +9504,6 @@
         }
       }
     },
-    "There was an error restoring the snapshot: %@" : {
-      "comment" : "Snapshot Restoration Error",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "حدث خطأ أثناء استعادة اللقطة: %@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bei der Wiederherstellung des Schnappschusses ist ein Fehler aufgetreten: %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "There was an error restoring the snapshot: %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se ha producido un error al restaurar la instantánea: %@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Une erreur s'est produite lors de la restauration de l'instantané : %@"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スナップショットのリストアにエラーが発生した：%@"
-          }
-        }
-      }
-    },
     "tip_library_message" : {
       "comment" : "Library Tip Message",
       "extractionState" : "manual",
@@ -9541,7 +9541,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しい仮想マシンを構築する前に、オペレーティング・システムのバージョンごとに異なるリストア・イメージを保存するためのライブラリを作成しよう。"
+            "value" : "新しい仮想マシンを構築する前に、OSバージョンごとにリストアイメージを保存するためのライブラリを作成しましょう。"
           }
         }
       }
@@ -9583,7 +9583,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OSの復元イメージを保存する"
+            "value" : "OSの復元イメージを保存します"
           }
         }
       }
@@ -9625,7 +9625,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゴー・プロ"
+            "value" : "Proにアップグレード"
           }
         }
       }
@@ -9835,7 +9835,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近の書類はない"
+            "value" : "最近のドキュメントはありません"
           }
         }
       }
@@ -9877,7 +9877,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "プロ"
+            "value" : "Pro"
           }
         }
       }
@@ -9919,7 +9919,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画像ライブラリを開始する"
+            "value" : "イメージライブラリを開始する"
           }
         }
       }
@@ -9961,7 +9961,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェルへようこそ"
+            "value" : "Bushelへようこそ"
           }
         }
       }
@@ -10045,7 +10045,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブッシェルの新機能"
+            "value" : "Bushelの新機能"
           }
         }
       }
