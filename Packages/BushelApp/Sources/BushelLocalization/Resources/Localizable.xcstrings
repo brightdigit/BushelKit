@@ -157,7 +157,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$d x %2$d %3$dppi"
+            "value" : "%d x %d %dppi"
           }
         },
         "es" : {
@@ -176,48 +176,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d x %d %dppi"
-          }
-        }
-      }
-    },
-    "There was an error restoring the snapshot: %@" : {
-      "comment" : "Snapshot Restoration Error",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "حدث خطأ أثناء استعادة اللقطة: %@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bei der Wiederherstellung des Schnappschusses ist ein Fehler aufgetreten: %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "There was an error restoring the snapshot: %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se ha producido un error al restaurar la instantánea: %@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Une erreur s'est produite lors de la restauration de l'instantané : %@"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スナップショットのリストア時にエラーが発生しました:%@"
           }
         }
       }
@@ -469,7 +427,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動的にスナップショットを撮る"
+            "value" : "自動的にスナップショットを作成"
           }
         }
       }
@@ -1477,7 +1435,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画像をインポートする"
+            "value" : "イメージをインポート"
           }
         }
       }
@@ -1771,7 +1729,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "イメージを削除する"
+            "value" : "イメージを削除"
           }
         }
       }
@@ -1939,7 +1897,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットを削除する"
+            "value" : "スナップショットを削除"
           }
         }
       }
@@ -2023,7 +1981,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "現在の状態を保存する"
+            "value" : "現在の状態を保存"
           }
         }
       }
@@ -2065,7 +2023,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "現在の状態を上書きする"
+            "value" : "現在の状態を上書き"
           }
         }
       }
@@ -3073,7 +3031,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "既存のライブラリを追加する"
+            "value" : "既存のライブラリを追加"
           }
         }
       }
@@ -3115,7 +3073,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "利用可能な既存のイメージがあります。既存のライブラリを追加するか、新しい画像ライブラリを作成しますか？"
+            "value" : "利用可能な既存のイメージがあります。既存のライブラリを追加するか、新しいイメージライブラリを作成しますか？"
           }
         }
       }
@@ -3157,7 +3115,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しいライブラリを作成する"
+            "value" : "新しいライブラリを作成"
           }
         }
       }
@@ -3661,7 +3619,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "チュートリアルを開始する"
+            "value" : "チュートリアルを開始"
           }
         }
       }
@@ -3787,7 +3745,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "フィードバックを送信する"
+            "value" : "フィードバックを送信"
           }
         }
       }
@@ -5995,7 +5953,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@/%2$@ (%3$@%%)"
+            "value" : "%@/%@ (%@%%)"
           }
         },
         "es" : {
@@ -6055,7 +6013,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンを一時停止する"
+            "value" : "マシンを一時停止"
           }
         }
       }
@@ -6559,7 +6517,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "購入した商品を復元する"
+            "value" : "購入した商品を復元"
           }
         }
       }
@@ -6601,7 +6559,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンを再開する"
+            "value" : "マシンを再開"
           }
         }
       }
@@ -6643,7 +6601,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ライブラリに保存する"
+            "value" : "ライブラリに保存"
           }
         }
       }
@@ -6685,7 +6643,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "イメージを選択する"
+            "value" : "イメージを選択"
           }
         }
       }
@@ -6727,7 +6685,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ディスプレイを自動的に再構成する"
+            "value" : "ディスプレイを自動的に再構成"
           }
         }
       }
@@ -6769,7 +6727,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "システムキーをキャプチャする"
+            "value" : "システムキーをキャプチャ"
           }
         }
       }
@@ -6811,7 +6769,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "強制再起動する"
+            "value" : "強制再起動"
           }
         }
       }
@@ -6895,7 +6853,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マシンを強制再起動する"
+            "value" : "マシンを強制再起動"
           }
         }
       }
@@ -6979,7 +6937,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状態を保存してオフにする"
+            "value" : "状態を保存してオフ"
           }
         }
       }
@@ -7105,7 +7063,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "電源をオフにする"
+            "value" : "電源をオフ"
           }
         }
       }
@@ -7651,7 +7609,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近のドキュメントをすべて消去する"
+            "value" : "最近のドキュメントをすべて消去"
           }
         }
       }
@@ -7693,7 +7651,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データベース全体を消去する"
+            "value" : "データベース全体を消去"
           }
         }
       }
@@ -7945,7 +7903,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データベーステーブルを表示する"
+            "value" : "データベーステーブルを表示"
           }
         }
       }
@@ -8491,7 +8449,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データベース全体を消去する"
+            "value" : "データベース全体を消去"
           }
         }
       }
@@ -8659,7 +8617,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべてのユーザー設定をリセットする"
+            "value" : "すべてのユーザー設定をリセット"
           }
         }
       }
@@ -8827,7 +8785,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "確認する"
+            "value" : "確認"
           }
         }
       }
@@ -8911,7 +8869,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "強制的にオフにする"
+            "value" : "強制的にオフ"
           }
         }
       }
@@ -9331,7 +9289,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今すぐアップグレードする"
+            "value" : "今すぐアップグレード"
           }
         }
       }
@@ -9373,7 +9331,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スナップショットを撮る"
+            "value" : "スナップショットを作成"
           }
         }
       }
@@ -9500,6 +9458,48 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "利用規約"
+          }
+        }
+      }
+    },
+    "There was an error restoring the snapshot: %@" : {
+      "comment" : "Snapshot Restoration Error",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدث خطأ أثناء استعادة اللقطة: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei der Wiederherstellung des Schnappschusses ist ein Fehler aufgetreten: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an error restoring the snapshot: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se ha producido un error al restaurar la instantánea: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une erreur s'est produite lors de la restauration de l'instantané : %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スナップショットのリストア時にエラーが発生しました:%@"
           }
         }
       }
@@ -9667,7 +9667,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "にアップグレードする。"
+            "value" : "アップグレードが必要です"
           }
         }
       }
@@ -9793,7 +9793,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新しいマシンを作成する"
+            "value" : "新しいマシンを作成"
           }
         }
       }
@@ -9919,7 +9919,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "イメージライブラリを開始する"
+            "value" : "イメージライブラリを開始"
           }
         }
       }
