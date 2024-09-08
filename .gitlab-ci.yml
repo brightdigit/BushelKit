@@ -1,5 +1,4 @@
 variables:
-  XCODE_VERSION: "15.4"
   FF_USE_FASTZIP: "true"
   TRANSFER_METER_FREQUENCY: "2s"
   ARTIFACT_COMPRESSION_LEVEL: "fastest"
@@ -84,7 +83,7 @@ cache:
     - if [ "$LINT_MODE" = "STRICT" ]; then find . -type f -name ".gitrepo" -exec false {} +; fi
     - ./Scripts/packages.sh
     - git diff --exit-code
-    - xcodes select $XCODE_VERSION
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
     - brew install mint
     - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
     
