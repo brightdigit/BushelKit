@@ -7,7 +7,8 @@
   import BushelCore
   import BushelLibrary
   import BushelLibraryData
-  import BushelLogging
+
+  public import BushelLogging
   import SwiftData
 
   public import SwiftUI

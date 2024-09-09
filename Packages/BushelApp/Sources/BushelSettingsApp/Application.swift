@@ -5,7 +5,8 @@
 
 #if canImport(SwiftUI) && os(macOS)
   import BushelSettingsViews
-  import SwiftUI
+
+  public import SwiftUI
 
   public protocol Application: App {
     // var appDelegate: AppDelegate { get }

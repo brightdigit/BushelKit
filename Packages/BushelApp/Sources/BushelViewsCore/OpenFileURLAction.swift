@@ -5,7 +5,7 @@
 
 #if canImport(SwiftUI)
 
-  public import BushelCore
+  import BushelCore
 
   public import Foundation
 

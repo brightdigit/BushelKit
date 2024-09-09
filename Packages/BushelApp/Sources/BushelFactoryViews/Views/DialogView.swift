@@ -6,7 +6,8 @@
 #if canImport(SwiftUI)
   public import BushelCore
   import BushelLocalization
-  import BushelLogging
+
+  public import BushelLogging
   import BushelMachine
   import BushelMachineEnvironment
   import BushelViewsCore

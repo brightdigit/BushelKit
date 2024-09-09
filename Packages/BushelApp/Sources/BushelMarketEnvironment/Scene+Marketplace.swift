@@ -4,13 +4,13 @@
 //
 
 #if canImport(SwiftUI)
-  public import BushelCore
+  import BushelCore
 
-  public import BushelLogging
+  import BushelLogging
 
   public import BushelMarket
 
-  public import Foundation
+  import Foundation
 
   public import SwiftUI
 

@@ -52,7 +52,7 @@ public protocol MachineSystem: Sendable {
   func createBuilder(
     for configuration: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
-  ) throws -> any MachineBuilder
+  ) async throws -> any MachineBuilder
 
   /// Creates a machine based on the url and configuration.
   /// - Parameters:

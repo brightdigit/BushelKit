@@ -8,11 +8,11 @@
 
   public import BushelCore
 
-  public import Foundation
+  import Foundation
 
   public import SwiftUI
 
-  public import UniformTypeIdentifiers
+  import UniformTypeIdentifiers
 
   public struct NewFilePanel<FileType: InitializableFileTypeSpecification>: Sendable {
     public init() {}

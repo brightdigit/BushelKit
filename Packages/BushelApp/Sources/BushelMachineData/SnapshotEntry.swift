@@ -8,6 +8,8 @@
 
   public import BushelDataCore
 
+  public import DataThespian
+
   public import BushelMachine
 
   public import Foundation
@@ -15,7 +17,7 @@
   public import SwiftData
 
   @Model
-  public final class SnapshotEntry: Sendable {
+  public final class SnapshotEntry {
     public var name: String
     public var snapshotID: UUID
     public var createdAt: Date
@@ -80,10 +82,8 @@
 
     public convenience init(
       _ snapshot: Snapshot,
-      machine: MachineEntry,
-      database: any Database,
       withOS osInstalled: OperatingSystemVersionComponents? = nil
-    ) async throws {
+    ) {
       self.init(
         name: snapshot.name,
         snapshotID: snapshot.id,
@@ -94,15 +94,38 @@
         operatingSystemVersion: osInstalled?.operatingSystemVersion ?? snapshot.operatingSystemVersion,
         buildVersion: osInstalled?.buildVersion ?? snapshot.buildVersion
       )
-      await database.insert(self)
-      self.machine = machine
-      try await database.save()
     }
 
     public func syncronizeSnapshot(
       _ snapshot: Snapshot,
-      machine: MachineEntry,
-      database: any Database,
+      model _: ModelID<MachineEntry>,
+      withOS osInstalled: OperatingSystemVersionComponents? = nil
+    ) throws {
+      self.snapshotID = snapshot.id
+      self.createdAt = snapshot.createdAt
+      if let osInstalled {
+        self.buildVersion = osInstalled.buildVersion
+        self.operatingSystemVersion = osInstalled.operatingSystemVersion
+      }
+      self.machine = machine
+    }
+
+    public func syncronizeSnapshot(
+      _ snapshot: Snapshot,
+      withOS osInstalled: OperatingSystemVersionComponents? = nil
+    ) throws {
+      self.snapshotID = snapshot.id
+      self.createdAt = snapshot.createdAt
+      if let osInstalled {
+        self.buildVersion = osInstalled.buildVersion
+        self.operatingSystemVersion = osInstalled.operatingSystemVersion
+      }
+    }
+
+    public func syncronizeSnapshot(
+      _ snapshot: Snapshot,
+      model _: ModelID<MachineEntry>,
+      database _: any Database,
       withOS osInstalled: OperatingSystemVersionComponents? = nil
     ) async throws {
       self.snapshotID = snapshot.id
@@ -112,7 +135,15 @@
         self.operatingSystemVersion = osInstalled.operatingSystemVersion
       }
       self.machine = machine
-      try await database.save()
+    }
+
+    public static func syncronizeSnapshotModel(_ model: ModelID<SnapshotEntry>, with snapshot: Snapshot,
+                                               machineModel: ModelID<MachineEntry>,
+                                               using database: any Database,
+                                               withOS osInstalled: OperatingSystemVersionComponents? = nil) async throws {
+      try await database.with(model) { snapshotEntry in
+        try snapshotEntry.syncronizeSnapshot(snapshot, model: machineModel, withOS: osInstalled)
+      }
     }
   }
 

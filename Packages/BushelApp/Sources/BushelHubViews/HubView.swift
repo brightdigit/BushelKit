@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   public import BushelCore
 
-  public import BushelHub
+  import BushelHub
   import BushelHubEnvironment
 
   public import SwiftUI

@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  public import BushelCore
+  import BushelCore
   import BushelLibrary
   import BushelLocalization
   import BushelViewsCore

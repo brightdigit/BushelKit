@@ -29,7 +29,7 @@
 
 public import Foundation
 
-public protocol CodablePackage: Codable {
+public protocol CodablePackage: Sendable, Codable {
   static var decoder: JSONDecoder { get }
   static var encoder: JSONEncoder { get }
   static var configurationFileWrapperKey: String { get }

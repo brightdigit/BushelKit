@@ -12,16 +12,17 @@ struct WishKit: PackageDependency, TargetDependency {
   }
 
   var condition: TargetDependencyCondition? {
-    .onlyApple
+    .onlyApple()
   }
 }
 
 extension TargetDependencyCondition {
-  static let onlyApple: TargetDependencyCondition? = .when(platforms: [
+  nonisolated static func onlyApple() -> TargetDependencyCondition? { .when(platforms: [
     .iOS,
     .macOS,
     .tvOS,
     .watchOS,
     .macCatalyst
   ])
+  }
 }

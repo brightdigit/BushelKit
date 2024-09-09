@@ -7,7 +7,9 @@ import BushelCore
 import Foundation
 
 extension SynchronousTask {
-  internal class Wait: Sendable {
+  #warning("Remove @unchecked Sendable")
+  #warning("Update XPC.")
+  internal final class Wait: @unchecked Sendable {
     internal init(till timeout: DispatchTime = .distantFuture) {
       self.timeout = timeout
     }

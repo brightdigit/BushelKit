@@ -7,4 +7,4 @@ public import BushelCore
 
 public import FeatherQuill
 
-extension UserAudience: UserType {}
+extension UserAudience: @retroactive UserType {}

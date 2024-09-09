@@ -11,7 +11,7 @@
   public import BushelMarket
   import Foundation
 
-  public import StoreKit
+  import StoreKit
 
   public final actor StoreListener: Loggable, MarketListener {
     public static var loggingCategory: BushelLogging.Category {
@@ -106,13 +106,15 @@
       await self.updateSubscriptionStatus()
     }
 
+    @MainActor
     private func updateSubscriptionStatus() async {
-      assert(self.observer != nil)
-      guard let observer else {
+      guard let observer = await self.observer else {
+        assertionFailure("Missing OBserver for StoreListener.")
         return
       }
+      let groupIDs = observer.groupIDs
       let result = await Result {
-        try await Self.fetchSubscriptionStatus(for: observer.groupIDs)
+        try await Self.fetchSubscriptionStatus(for: groupIDs)
       }.mapError { error in
         guard let error = error as? StoreKitError else {
           return MarketError.unknownError(error)

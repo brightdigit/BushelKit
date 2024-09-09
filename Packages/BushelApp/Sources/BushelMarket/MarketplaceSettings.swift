@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public import Foundation
+import Foundation
 
 public struct MarketplaceSettings: Sendable {
   // swiftlint:disable:next force_unwrapping

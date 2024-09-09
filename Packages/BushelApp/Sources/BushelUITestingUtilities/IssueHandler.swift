@@ -4,8 +4,9 @@
 //
 
 #if os(macOS)
-  import Foundation
-  import XCTest
+  public import Foundation
+
+  public import XCTest
 
   public struct IssueHandler {
     let filters: [AuditIssueFilterClosure]
@@ -21,6 +22,7 @@
       self.init(filters: body())
     }
 
+    @MainActor
     public func handle(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
       for filter in filters where filter(issue) {
         return true
@@ -30,6 +32,7 @@
   }
 
   extension IssueHandler {
+    @MainActor
     public static func `default`(
       closeButtonSize: CGSize
     ) -> IssueHandler {

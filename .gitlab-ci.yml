@@ -51,7 +51,7 @@ cache:
 
 .build_spm_macos: &build_spm_macos
   script:
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode-beta.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/$PACKAGE_NAME
     - xcodebuild -resolvePackageDependencies
@@ -205,7 +205,7 @@ testflight:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode-beta.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
@@ -231,6 +231,6 @@ production:
   script:
     - rbenv rehash
     - rbenv exec bundle install
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode-beta.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane production

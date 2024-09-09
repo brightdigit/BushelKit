@@ -21,6 +21,8 @@ settings:
 packages:
   BushelApp:
     path: ./Packages/BushelApp
+  BushelKit:
+    path: ./Packages/BushelKit
   RadiantKit:
     path: ./Packages/RadiantKit
 targetTemplates:

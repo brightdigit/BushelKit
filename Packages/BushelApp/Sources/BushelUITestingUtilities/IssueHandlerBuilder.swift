@@ -21,17 +21,23 @@
       accumulated + [next]
     }
 
+    @MainActor
     public static func buildPartialBlock(
       first: any AuditIssueFilter
     ) -> [AuditIssueFilterClosure] {
-      buildPartialBlock(first: first.callAsFunction(_:))
+      buildPartialBlock { issue in
+        first.callAsFunction(issue)
+      }
     }
 
+    @MainActor
     public static func buildPartialBlock(
       accumulated: [AuditIssueFilterClosure],
       next: any AuditIssueFilter
     ) -> [AuditIssueFilterClosure] {
-      buildPartialBlock(accumulated: accumulated, next: next.callAsFunction(_:))
+      buildPartialBlock(accumulated: accumulated) { issue in
+        next.callAsFunction(issue)
+      }
     }
   }
 #endif

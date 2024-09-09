@@ -7,13 +7,15 @@
 
   public import BushelCore
 
-  public import BushelData
+  import BushelData
   import BushelFactory
 
   public import BushelMachine
 
   public import Foundation
   import SwiftData
+
+  public import DataThespian
 
   public struct DatabaseInstallerRepository: InstallerImageRepository {
     private let database: any Database
@@ -27,9 +29,10 @@
     ) async throws -> [any BushelMachine.InstallerImage] {
       try await database.delete(model: LibraryImageEntry.self, where: #Predicate { $0.library == nil })
 
-      let images: [LibraryImageEntry] = try await database.fetch { FetchDescriptor() }
-      return images.map { entry in
-        DataInstallerImage(entry: entry, database: database, labelProvider)
+      return try await database.fetch(LibraryImageEntry.self) { images in
+        images.map { entry in
+          DataInstallerImage(entry: entry, database: database, labelProvider)
+        }
       }
     }
 
@@ -40,19 +43,10 @@
     ) async throws -> (any BushelMachine.InstallerImage)? {
       switch library {
       case let .bookmarkID(bookmarkDataID):
-        try await DataInstallerImage(
-          id: id,
-          bookmarkDataID: bookmarkDataID,
-          database: database,
-          labelProvider
-        )
+        try await DataInstallerImage.fromDatabase(database, withImageID: id, bookmarkDataID: bookmarkDataID, labelProvider)
 
       case .none:
-        try await DataInstallerImage(
-          id: id,
-          database: database,
-          labelProvider
-        )
+        try await DataInstallerImage.fromDatabase(database, withImageID: id, labelProvider)
 
       case let .url(url):
         try URLInstallerImage(imageID: id, url: url, labelProvider)
@@ -67,18 +61,14 @@
       }
 
       let imageID = image.imageID
-      let imageEntry: LibraryImageEntry? = try await database
-        .fetch {
-          FetchDescriptor<LibraryImageEntry>(
-            predicate: #Predicate { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID }
-          )
-        }.first
 
-      guard let imageEntry else {
+      let imageModel: ModelID? = try await database.first(#Predicate<LibraryImageEntry> { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID })
+
+      guard let imageModel else {
         return .notFound
       }
 
-      await database.delete(imageEntry)
+      await database.delete(imageModel)
       return nil
     }
   }

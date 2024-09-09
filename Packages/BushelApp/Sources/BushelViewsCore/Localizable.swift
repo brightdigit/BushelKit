@@ -7,7 +7,7 @@ public import BushelCore
 
 public import BushelLocalization
 
-public import Foundation
+import Foundation
 
 extension Localizable {
   public func localizedID(default defaultValue: any LocalizedID) -> any LocalizedID {

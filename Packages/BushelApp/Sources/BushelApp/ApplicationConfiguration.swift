@@ -6,9 +6,9 @@
 #if canImport(SwiftUI)
 
   import BushelCore
-  import BushelDataCore
   import BushelMachine
   import BushelSystem
+  import DataThespian
   import SwiftData
   import SwiftUI
 

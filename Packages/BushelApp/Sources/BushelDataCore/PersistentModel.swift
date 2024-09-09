@@ -6,7 +6,7 @@
 #if canImport(SwiftData)
   public import BushelLogging
 
-  public import Foundation
+  import Foundation
 
   public import SwiftData
 

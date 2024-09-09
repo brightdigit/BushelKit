@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public import Foundation
+import Foundation
 
 public protocol MarketListener {
   func initialize(for observer: any MarketObserver)

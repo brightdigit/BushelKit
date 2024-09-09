@@ -4,7 +4,7 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelHubMacOS
+  public import BushelHubMacOS
   import BushelLibraryMacOS
   import BushelMachineMacOS
 
@@ -15,7 +15,8 @@
   public import BushelLibrary
 
   public import BushelMachine
-  import BushelSystem
+
+  public import BushelSystem
 
   public struct MacOSVirtualizationSystem: System, MacOSVirtualizationHubProvider {
     public static var systemID: VMSystemID {

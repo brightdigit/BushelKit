@@ -12,5 +12,6 @@ struct BushelLibraryViews: Target {
     BushelUT()
     BushelViewsCore()
     BushelProgressUI()
+    DataThespian()
   }
 }

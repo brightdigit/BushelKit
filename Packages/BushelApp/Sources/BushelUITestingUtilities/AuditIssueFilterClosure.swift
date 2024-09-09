@@ -4,7 +4,7 @@
 //
 
 #if os(macOS)
-  import XCTest
+  public import XCTest
 
-  public typealias AuditIssueFilterClosure = (XCUIAccessibilityAuditIssue) -> Bool
+  public typealias AuditIssueFilterClosure = @Sendable @MainActor (XCUIAccessibilityAuditIssue) -> Bool
 #endif

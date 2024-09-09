@@ -39,7 +39,7 @@
   }
 
   extension Application {
-    public static var loggingCategory: BushelLogging.Category {
+    public nonisolated static var loggingCategory: BushelLogging.Category {
       .application
     }
 

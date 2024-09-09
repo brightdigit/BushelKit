@@ -8,6 +8,7 @@
   import BushelData
   import BushelLogging
   import BushelViewsCore
+  import DataThespian
   import SwiftData
   import SwiftUI
   import UniformTypeIdentifiers
@@ -18,25 +19,35 @@
     import Logger
   #endif
   internal struct RecentDocument: Identifiable, Sendable {
-    let id: UUID
+    let model: ModelID<BookmarkData>
     let url: URL
     let name: String
     let path: String
     let text: String
     let updatedAt: Date
+
+    var id: PersistentIdentifier.ID {
+      self.model.id
+    }
   }
 
   extension RecentDocument {
     init?(
-      bookmarkData: BookmarkData,
+      bookmarkDataID: ModelID<BookmarkData>,
       logger: @Sendable @escaping @autoclosure () -> Logger,
       using database: any Database,
       fileManager: @Sendable () -> FileManager = { .default }
     ) async {
-      let bookmarkID = bookmarkData.bookmarkID
-      let updatedAt = bookmarkData.updatedAt
+      let url: URL
+      let updatedAt: Date
       let logger = logger()
-      guard let url = await Self.fetchURL(forBookmark: bookmarkData, logger: logger, using: database) else {
+      do {
+        (url, updatedAt) = try await database.with(bookmarkDataID) {
+          try ($0.fetchURL(), $0.updatedAt)
+        }
+      } catch {
+        logger.error("Cannot access file: \(error.localizedDescription)")
+        assertionFailure(error: error)
         return nil
       }
 
@@ -51,7 +62,7 @@
       }
 
       self.init(
-        id: bookmarkID,
+        model: bookmarkDataID,
         url: url,
         name: url.deletingPathExtension().lastPathComponent,
         path: url.path,
@@ -61,35 +72,26 @@
     }
 
     static func fetchURL(
-      forBookmark bookmark: BookmarkData,
+      forBookmark bookmark: ModelID<BookmarkData>,
       logger: Logger,
       using database: any Database
     ) async -> URL? {
       let url: URL
       do {
-        url = try await bookmark.fetchURL(using: database)
-      } catch let error as NSError where error.code == 259 {
-        logger.notice("Removing invalid bookmark: \(bookmark.path)")
-        await database.delete(bookmark)
-        do {
-          try await database.save()
-        } catch {
-          logger.error("Unable to delete \(bookmark.path) error: \(error) ")
-          assertionFailure(error: error)
+        url = try await database.with(bookmark) {
+          try $0.fetchURL()
         }
+      } catch let error as NSError where error.code == 259 {
+        logger.notice("Removing invalid bookmark")
+        await database.delete(bookmark)
         return nil
       } catch let error as NSError where error.code == 4 && error.domain == NSCocoaErrorDomain {
-        logger.notice("Removing file doesn't exist bookmark: \(bookmark.path)")
+        logger.notice("Removing file doesn't exist bookmark")
         await database.delete(bookmark)
-        do {
-          try await database.save()
-        } catch {
-          logger.error("Unable to delete \(bookmark.path) error: \(error) ")
-          assertionFailure(error: error)
-        }
+
         return nil
       } catch {
-        logger.error("Bookmark \(bookmark.path) error: \(error) ")
+        logger.error("Bookmark error: \(error) ")
         assertionFailure(error: error)
         return nil
       }

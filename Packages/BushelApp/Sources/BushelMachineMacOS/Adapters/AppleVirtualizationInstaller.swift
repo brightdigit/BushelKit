@@ -1,5 +1,5 @@
 //
-// VirtualizationInstaller.swift
+// AppleVirtualizationInstaller.swift
 // Copyright (c) 2024 BrightDigit.
 //
 
@@ -10,14 +10,15 @@
   import Foundation
   import Virtualization
 
-  @MainActor
-  internal class VirtualizationInstaller: Loggable {
+  internal actor AppleVirtualizationInstaller: Loggable {
     internal nonisolated static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
+    @MainActor
     private var result: Result<VZMacOSInstaller, any Error>?
 
+    @MainActor
     private var installer: VZMacOSInstaller {
       get throws {
         assert(result != nil)
@@ -33,19 +34,23 @@
       }
     }
 
-    internal nonisolated init(installer: @Sendable @escaping () throws -> VZMacOSInstaller) {
-      Task { @MainActor in
+    internal init(installer: @Sendable @escaping () throws -> VZMacOSInstaller) async {
+      await MainActor.run {
         self.result = Result { try installer() }
       }
     }
 
+    @MainActor
     internal func build() async throws {
       let installer = try self.installer
       try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
-        installer.install(completionHandler: continuation.resume(with:))
+        installer.install { result in
+          continuation.resume(with: result)
+        }
       }
     }
 
+    @MainActor
     internal func observe(_ onUpdate: @Sendable @escaping (Double) -> Void) -> NSKeyValueObservation? {
       guard let installer = try? self.installer else {
         return nil

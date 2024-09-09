@@ -7,7 +7,8 @@
   import BushelCore
 
   public import BushelLibrary
-  import BushelLogging
+
+  public import BushelLogging
   import BushelViewsCore
   import Foundation
 

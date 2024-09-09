@@ -5,6 +5,7 @@
 
 public import BushelMessageCore
 
+#warning("Fix XPC Session")
 public protocol Session: Sendable {
   var isInitialized: Bool { get }
   var isReady: Bool { get }

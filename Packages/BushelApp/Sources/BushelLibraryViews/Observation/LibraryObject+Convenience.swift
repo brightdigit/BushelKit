@@ -8,6 +8,7 @@
   import BushelData
   import BushelLibrary
   import BushelProgressUI
+  import DataThespian
   import Foundation
   import SwiftData
 
@@ -15,52 +16,105 @@
     internal convenience init(components: Components) {
       self.init(
         library: components.library,
-        entry: components.entry,
+        model: components.model,
         database: components.database,
         librarySystemManager: components.system
       )
     }
 
     internal convenience init(
-      _ url: URL,
+      url: URL,
       withDatabase database: any Database,
       using librarySystemManager: any LibrarySystemManaging
     ) async throws {
-      let bookmarkData: BookmarkData
-      bookmarkData = try await BookmarkData.resolveURL(url, with: database)
-      let bookmarkDataID = bookmarkData.bookmarkID
-      let item: LibraryEntry?
+      let newURL: URL
+      let bookmarkID: UUID
       do {
-        item = try await database.fetch {
-          FetchDescriptor<LibraryEntry>(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
-        }.first
+        (newURL, bookmarkID) = try await BookmarkData.withDatabase(database, fromURL: url) { bookmarkData in
+          try (bookmarkData.fetchURL(), bookmarkData.bookmarkID)
+        }
       } catch {
-        throw LibraryError.fromDatabaseError(error)
+        throw try LibraryError.bookmarkError(error)
+      }
+      guard newURL.startAccessingSecurityScopedResource() else {
+        throw LibraryError.accessDeniedError(nil, at: newURL)
+      }
+      defer {
+        newURL.stopAccessingSecurityScopedResource()
+      }
+      let library: Library
+      do {
+        library = try Library(contentsOf: newURL)
+      } catch {
+        throw LibraryError.libraryCorruptedError(error, at: newURL)
+      }
+      let model: ModelID<LibraryEntry> = if let existingModel = try await database.first(#Predicate<LibraryEntry> { $0.bookmarkDataID == bookmarkID }) {
+        existingModel
+      } else {
+        await database.insert {
+          LibraryEntry(bookmarkDataID: bookmarkID)
+        }
       }
 
-      let components = try await Components(
-        item: item,
-        bookmarkData: bookmarkData,
-        url: url,
-        withDatabase: database,
-        using: librarySystemManager
-      )
+      try await LibraryEntry.syncronizeModel(model, with: library, using: database)
+      let components = Components(library: library, model: model, database: database, system: librarySystemManager)
       self.init(components: components)
 
       do {
-        try await bookmarkData.update(using: database)
+        try await database.first(
+          #Predicate<BookmarkData> {
+            $0.bookmarkID == bookmarkID
+          }
+        ) { bookmark in
+          guard let bookmark else {
+            assertionFailure("Missing Bookmark: \(url)")
+            Self.logger.error("Missing Bookmark: \(url)")
+            return
+          }
+
+          bookmark.update()
+        }
       } catch {
         assertionFailure(error: error)
       }
     }
 
-    internal func matchesURL(_ url: URL) -> Bool {
-      guard let bookmarkData = entry.bookmarkData else {
-        assertionFailure("Missing bookmark to compare")
-        return false
-      }
+    public var bookmarkID: UUID {
+      get async throws {
+        guard let database else {
+          throw LibraryError.missingInitializedProperty(.database)
+        }
 
-      return url.standardizedFileURL.path == bookmarkData.path
+        let bookmarkDataID = try await database.with(self.model) { libraryEntry in
+          libraryEntry.bookmarkDataID
+        }
+        return bookmarkDataID
+      }
+    }
+
+    public var url: URL {
+      get async throws {
+        let bookmarkID = try await self.bookmarkID
+
+        guard let database else {
+          throw LibraryError.missingInitializedProperty(.database)
+        }
+        let url = try await database.first(
+          #Predicate<BookmarkData> { $0.bookmarkID == bookmarkID }
+        ) {
+          try $0?.fetchURL()
+        }
+
+        guard let url else {
+          throw LibraryError.missingBookmark()
+        }
+
+        return url
+      }
+    }
+
+    internal func matchesURL(_ url: URL) async throws -> Bool {
+      try await url.standardizedFileURL.path == self.url.standardizedFileURL.path
     }
 
     internal func beginImport(

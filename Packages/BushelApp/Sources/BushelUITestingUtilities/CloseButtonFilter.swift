@@ -4,8 +4,9 @@
 //
 
 #if os(macOS)
-  import Foundation
-  import XCTest
+  public import Foundation
+
+  public import XCTest
 
   public struct CloseButtonFilter: AuditIssueFilter {
     let closeButtonSize: CGSize
@@ -14,6 +15,7 @@
       self.closeButtonSize = closeButtonSize
     }
 
+    @MainActor
     public func callAsFunction(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
       issue.element?.elementType == .group &&
         issue.element?.frame.size == closeButtonSize &&

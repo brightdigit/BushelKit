@@ -113,7 +113,7 @@
       .onChange(of: request?.url, self.beginLoading(_: newURL:))
       .onAppear(perform: self.beginLoadingURL)
       .onChange(of: self.object.canStart, self.object.onCanStartChange)
-      .onChange(of: self.marketplace.purchased) { _, newValue in
+      .onChange(of: self.marketplace.purchased, initial: true) { _, newValue in
         self.object.purchased = newValue
         guard newValue, self.sessionCloseButtonActionOption == .saveSnapshotAndForceTurnOff else {
           return

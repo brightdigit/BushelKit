@@ -6,9 +6,9 @@
 #if canImport(SwiftUI)
   import BushelViewsCore
 
-  public import Foundation
+  import Foundation
 
-  public import SwiftUI
+  import SwiftUI
 
   internal struct HubSidebarRow: View {
     internal struct Properties {

@@ -17,5 +17,6 @@ struct BushelService: Product, Target {
     BushelMarket()
     BushelWax()
     BushelMessage()
+    DataThespian()
   }
 }

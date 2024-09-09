@@ -8,7 +8,8 @@
 
   public import BushelFeedbackEnvironment
   import BushelLocalization
-  import BushelViewsCore
+
+  public import BushelViewsCore
 
   public import SwiftUI
 

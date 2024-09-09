@@ -7,6 +7,7 @@ struct BushelBookmarkService: Target {
   var dependencies: any Dependencies {
     BushelCore()
     BushelLogging()
-    BushelDataMonitor()
+    BushelDataCore()
+    DataThespian()
   }
 }

@@ -32,11 +32,13 @@ public import BushelMachine
 public import Foundation
 
 public struct MachineStub: Machine {
+  public var updatedConfiguration: BushelMachine.MachineConfiguration
+
   public var machineIdentifer: UInt64? {
     nil
   }
 
-  public let configuration: MachineConfiguration
+  public let initialConfiguration: MachineConfiguration
   public let state: MachineState
 
   public let canStart = false
@@ -46,7 +48,8 @@ public struct MachineStub: Machine {
   public let canRequestStop = false
 
   public init(configuration: MachineConfiguration, state: MachineState) {
-    self.configuration = configuration
+    self.initialConfiguration = configuration
+    self.updatedConfiguration = configuration
     self.state = state
   }
 
@@ -78,13 +81,11 @@ public struct MachineStub: Machine {
     // nothing for now
   }
 
-  public func beginObservation(_: @escaping @MainActor (BushelMachine.MachineChange) -> Void) -> UUID {
+  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID {
     UUID()
   }
 
-  public func removeObservation(withID _: UUID) -> Bool {
-    true
-  }
+  public func removeObservation(withID _: UUID) {}
 
   // swiftlint:disable:next unavailable_function
   public func beginSnapshot() -> BushelMachine.SnapshotPaths {

@@ -8,5 +8,6 @@ struct BushelMessageCore: Target {
     BushelCore()
     BushelLogging()
     BushelDataCore()
+    DataThespian()
   }
 }

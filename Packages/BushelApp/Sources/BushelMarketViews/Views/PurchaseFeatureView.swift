@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import BushelLocalization
 
-  public import SwiftUI
+  import SwiftUI
 
   internal struct PurchaseFeatureView: View {
     typealias Properties = PurchaseFeatureViewProperties

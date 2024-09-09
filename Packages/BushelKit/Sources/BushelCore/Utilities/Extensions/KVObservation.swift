@@ -30,19 +30,23 @@
 #if canImport(ObjectiveC)
   public import Foundation
 
-  public protocol KVObservation: AnyObject {}
+  @available(*, deprecated)
+  public protocol KVObservation: AnyObject, Sendable {}
 
   #warning("logging-note: what useful logging to do in this file?")
   extension NSObject {
+    @available(*, deprecated)
     public static func getAllPropertyKeys() -> [String] {
       getAllPropertyKeys(of: Self.self)
     }
 
+    @available(*, deprecated)
     private static func getAllPropertyKeys<ClassType: AnyObject>(of _: ClassType.Type) -> [String] {
       let classType: AnyClass = ClassType.self
       return self.getAllPropertyKeys(of: classType)
     }
 
+    @available(*, deprecated)
     private static func getAllPropertyKeys(of classType: AnyClass) -> [String] {
       var count: UInt32 = 0
       let properties = class_copyPropertyList(classType, &count)
@@ -60,6 +64,8 @@
       return propertyKeys
     }
 
+    @available(*, deprecated)
+    @MainActor
     public func addObserver(
       _ observer: NSObject,
       options: NSKeyValueObservingOptions,
@@ -69,6 +75,8 @@
       return self.addObserver(observer, forKeyPaths: propertyKeys, options: options)
     }
 
+    @available(*, deprecated)
+    @MainActor
     private func addObserver(
       _ observer: NSObject,
       forKeyPaths keyPaths: [String],

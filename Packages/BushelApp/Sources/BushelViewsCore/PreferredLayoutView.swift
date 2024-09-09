@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  public import Foundation
+  import Foundation
 
   public import SwiftUI
 

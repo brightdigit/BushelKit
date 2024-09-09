@@ -7,6 +7,7 @@
   import BushelCore
   import BushelDataCore
   import BushelLibrary
+  import DataThespian
   import Foundation
   import SwiftData
 
@@ -35,7 +36,7 @@
     ) async {
       let presentFileExporter: Bool
       do {
-        object = try await .init(newURL, withDatabase: database, using: manager)
+        object = try await .init(url: newURL, withDatabase: database, using: manager)
         presentFileExporter = false
       } catch let error as BookmarkError where error.details == .fileDoesNotExistAt(newURL) {
         Self.logger.error("Could not open \(newURL, privacy: .public): no longer exists")
@@ -68,11 +69,6 @@
         return
       }
 
-      guard object?.matchesURL(newValue) != true else {
-        Self.logger.debug("New value is the same url.")
-        return
-      }
-
       Self.logger.debug("Loading new url at \(newValue, privacy: .public)")
       guard let database else {
         assertionFailure("Missing model context")
@@ -85,6 +81,16 @@
         return
       }
       Task {
+        do {
+          guard try await object?.matchesURL(newValue) != true else {
+            Self.logger.debug("New value is the same url.")
+            assertionFailure("New value is the same url.")
+            return
+          }
+        } catch {
+          assertionFailure("Unable to verify bookmark url")
+          Self.logger.error("Unable to verify bookmark url")
+        }
         await setURL(
           to: newValue,
           database: database,

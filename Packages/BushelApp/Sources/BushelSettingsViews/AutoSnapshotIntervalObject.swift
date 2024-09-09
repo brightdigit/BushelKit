@@ -28,7 +28,7 @@
       }
     }
 
-    func bindTo(_ bindingValue: Binding<Int?>, using polynomial: LagrangePolynomial) {
+    @MainActor func bindTo(_ bindingValue: Binding<Int?>, using polynomial: LagrangePolynomial) {
       self.bindTo(
         bindingValue.map(
           to: { $0.map(Double.init) },

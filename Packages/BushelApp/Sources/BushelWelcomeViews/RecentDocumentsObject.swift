@@ -6,9 +6,9 @@
 #if canImport(Observation) && os(macOS)
   import BushelCore
   import BushelData
-  import BushelDataMonitor
   import BushelLogging
   import Combine
+  import DataThespian
   import Foundation
   import Observation
   import SwiftData
@@ -89,15 +89,16 @@
         return
       }
       let clearDate = self.clearDate ?? .distantPast
-      let bookmarks: [BookmarkData]?
+      let bookmarks: [ModelID<BookmarkData>]?
       do {
-        bookmarks = try await database.fetch {
+        bookmarks = try await database.fetch(BookmarkData.self) {
           FetchDescriptor(typeFilter: typeFilter, clearDate: clearDate)
         }
       } catch {
         Self.logger.error("Unable to fetch bookmarks")
         bookmarks = nil
       }
+
       let recentDocuments: [RecentDocument]?
 
       if let bookmarks {
@@ -105,7 +106,7 @@
 
         for bookmarkData in bookmarks {
           if let recentDocument = await RecentDocument(
-            bookmarkData: bookmarkData,
+            bookmarkDataID: bookmarkData,
             logger: Self.logger,
             using: database
           ) {
@@ -141,7 +142,6 @@
       let order = SortOrder.reverse
       let filter: Predicate<BookmarkData>
       let searchStrings = typeFilter.searchStrings
-      // Self.logger.debug("Querying for \(searchStrings)")
       if let libraryFilter = searchStrings.first {
         filter = #Predicate {
           $0.updatedAt > clearDate && !$0.path.localizedStandardContains(libraryFilter)

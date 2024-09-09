@@ -13,6 +13,7 @@
   import BushelLogging
   import BushelMachine
   import BushelSystem
+  import DataThespian
   import SwiftData
   import SwiftUI
 

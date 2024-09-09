@@ -9,7 +9,7 @@
 
   public import BushelMarket
 
-  public import Foundation
+  import Foundation
 
   public import SwiftUI
 

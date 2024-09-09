@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public import BushelCore
+import BushelCore
 import Foundation
 
 internal struct VersionEvaluator: UserEvaluatorComponent {

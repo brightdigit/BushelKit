@@ -57,3 +57,15 @@ extension Task where Success == Never, Failure == Never {
     }
   }
 }
+
+extension Task where Success == Void, Failure == Never {
+  public func callAsFunction() async {
+    await self.value
+  }
+}
+
+extension Task where Success == Void {
+  public func callAsFunction() async throws {
+    try await self.value
+  }
+}
