@@ -37,7 +37,6 @@ extension URL {
       termsOfUse: URL,
       support: URL,
       company: URL,
-      discourse: URL,
       contactMailTo: URL
     ) {
       self.scheme = scheme
@@ -45,7 +44,6 @@ extension URL {
       self.termsOfUse = termsOfUse
       self.support = support
       self.company = company
-      self.discourse = discourse
       self.contactMailTo = contactMailTo
     }
 
@@ -55,7 +53,6 @@ extension URL {
     public let termsOfUse: URL
     public let support: URL
     public let company: URL
-    public let discourse: URL
     public let contactMailTo: URL
 
     public let paths = Paths()
@@ -65,7 +62,6 @@ extension URL {
       case termsOfUse
       case support
       case company
-      case discourse
       case contactMailTo
     }
   }
@@ -140,10 +136,6 @@ extension URL.Bushel {
       return nil
     }
 
-    guard let discourse = dictionary[Key.discourse.rawValue].flatMap(URL.init(string:)) else {
-      print("missing key \(Key.discourse)")
-      return nil
-    }
 
     guard let contactMailTo = dictionary[Key.contactMailTo.rawValue].flatMap(URL.init(string:)) else {
       print("missing key \(Key.contactMailTo)")
@@ -156,7 +148,6 @@ extension URL.Bushel {
       termsOfUse: termsOfUse,
       support: support,
       company: company,
-      discourse: discourse,
       contactMailTo: contactMailTo
     )
   }

@@ -32,9 +32,7 @@
     let spacing: CGFloat
     let titleID: LocalizedStringID
     let detailsID: LocalizedStringID
-    let discourseTextID: LocalizedStringID
     let contactUsTextID: LocalizedStringID
-    let discourseURL: URL
     let contactUsEmailURL: URL
     var body: some View {
       VStack(alignment: .leading, spacing: 6.0) {
@@ -71,10 +69,6 @@
                 Text(.menuProvideFeedback)
               }
             }
-            Button(openURL, discourseURL) {
-              Image(systemName: "bubble.left.and.bubble.right.fill")
-              Text(discourseTextID)
-            }
             Button(openURL, contactUsEmailURL) {
               Image(systemName: "envelope.fill")
               Text(contactUsTextID)
@@ -89,18 +83,14 @@
       spacing: CGFloat = 6.0,
       titleID: LocalizedStringID = .aboutFeedback,
       detailsID: LocalizedStringID = .aboutFeedbackDetails,
-      discourseTextID: LocalizedStringID = .joinDiscourse,
       contactUsTextID: LocalizedStringID = .contactUs,
-      discourseURL: URL,
       contactUsEmailURL: URL
     ) {
       self.alignment = alignment
       self.spacing = spacing
       self.titleID = titleID
       self.detailsID = detailsID
-      self.discourseTextID = discourseTextID
       self.contactUsTextID = contactUsTextID
-      self.discourseURL = discourseURL
       self.contactUsEmailURL = contactUsEmailURL
     }
   }
