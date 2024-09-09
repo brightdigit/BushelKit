@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
+  public import BushelCore
   import BushelEnvironmentCore
   import Foundation
   import SwiftData

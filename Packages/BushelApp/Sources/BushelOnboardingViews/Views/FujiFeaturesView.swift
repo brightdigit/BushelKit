@@ -7,7 +7,8 @@
   import BushelCore
 
   public import BushelOnboardingCore
-  import BushelViewsCore
+
+  public import BushelViewsCore
 
   public import SwiftUI
 

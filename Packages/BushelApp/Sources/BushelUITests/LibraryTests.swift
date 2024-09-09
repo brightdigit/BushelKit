@@ -5,7 +5,8 @@
 
 #if os(macOS)
   import BushelUITestingUtilities
-  import XCTest
+
+  public import XCTest
 
   open class LibraryTests: XCTestCase {
     @MainActor public func testLibrary() throws {

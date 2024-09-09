@@ -6,7 +6,7 @@
 #if canImport(StoreKit)
   import BushelCore
 
-  public import BushelLogging
+  import BushelLogging
 
   public import BushelMarket
   import Foundation

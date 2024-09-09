@@ -7,13 +7,14 @@
   import BushelCore
   import BushelMachine
   import BushelMachineData
+  import DataThespian
   import SwiftUI
 
   @MainActor
   @Observable
   internal final class SnapshotObject: Sendable {
     let initialSnapshot: Snapshot
-    let entry: SnapshotEntry
+    let model: ModelID<SnapshotEntry>
     let index: Int
     let machineConfigurationURL: URL
     let label: MetadataLabel?
@@ -26,7 +27,7 @@
     }
 
     init(
-      entry: SnapshotEntry,
+      model: ModelID<SnapshotEntry>,
       index: Int,
       machineConfigurationURL: URL,
       initialSnapshot: Snapshot,
@@ -34,7 +35,7 @@
       name: String? = nil,
       notes: String? = nil
     ) {
-      self.entry = entry
+      self.model = model
       self.index = index
       self.machineConfigurationURL = machineConfigurationURL
       self.label = label
@@ -61,7 +62,7 @@
       fromSnapshots snapshots: [Snapshot],
       atIndex index: Int,
       machineConfigurationURL: URL,
-      entry: SnapshotEntry,
+      model: ModelID<SnapshotEntry>,
       vmSystemID: VMSystemID,
       using labelProvider: MetadataLabelProvider
     ) {
@@ -70,7 +71,7 @@
         labelProvider(vmSystemID, $0)
       }
       self.init(
-        entry: entry,
+        model: model,
         index: index,
         machineConfigurationURL: machineConfigurationURL,
         initialSnapshot: snapshot,

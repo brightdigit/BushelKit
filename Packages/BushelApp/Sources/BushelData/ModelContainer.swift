@@ -11,7 +11,7 @@
 
   public import SwiftData
 
-  extension ModelContainer: Loggable {
+  extension ModelContainer: @retroactive Loggable {
     public static var loggingCategory: BushelLogging.Category {
       .data
     }

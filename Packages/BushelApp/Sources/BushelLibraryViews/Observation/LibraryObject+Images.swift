@@ -8,6 +8,7 @@
   import BushelData
   import BushelLibrary
   import BushelProgressUI
+  import DataThespian
   import Foundation
   import SwiftData
   import SwiftUI
@@ -72,7 +73,22 @@
       try saveChangesTo(libraryURL)
 
       do {
-        try await entry.appendImage(file: imageFile, using: database)
+        let imageModel: ModelID = await database.insert {
+          LibraryImageEntry(file: imageFile)
+        }
+        let libraryModel = self.model
+        try await database.fetch {
+          FetchDescriptor(model: imageModel)
+        } _: {
+          FetchDescriptor(model: libraryModel)
+        } with: { imageEntries, libraryEntries in
+          guard let imageEntry = imageEntries.first, let libraryEntry = libraryEntries.first else {
+            assertionFailure("synconized ids not found for \(imageFile.id)")
+            Self.logger.error("synconized ids not found for \(imageFile.id)")
+            return
+          }
+          imageEntry.library = libraryEntry
+        }
       } catch {
         throw LibraryError.fromDatabaseError(error)
       }
@@ -94,7 +110,7 @@
         throw LibraryError.accessDeniedError(nil, at: images.url)
       }
 
-      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let accessibleBookmark = try await self.accessibleURL()
       let libraryURL = accessibleBookmark.url
       let system: any LibrarySystem
 
@@ -123,7 +139,7 @@
         throw LibraryError.missingInitializedProperty(.database)
       }
 
-      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let accessibleBookmark = try await self.accessibleURL()
       let libraryURL = accessibleBookmark.url
       let imagesURL = libraryURL.appendingPathComponent(URL.bushel.paths.restoreImagesDirectoryName)
 
@@ -151,7 +167,7 @@
         throw LibraryError.missingInitializedProperty(.librarySystemManager)
       }
 
-      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let accessibleBookmark = try await self.accessibleURL()
       let libraryURL = accessibleBookmark.url
       let imagesURL = libraryURL.appendingPathComponent(URL.bushel.paths.restoreImagesDirectoryName)
 
@@ -160,7 +176,8 @@
       )
 
       self.library = .init(items: files)
-      try await self.entry.synchronizeWith(library, using: database)
+
+      _ = try await LibraryEntry.syncronizeModel(self.model, with: library, using: database)
       try saveChangesTo(libraryURL)
     }
   }

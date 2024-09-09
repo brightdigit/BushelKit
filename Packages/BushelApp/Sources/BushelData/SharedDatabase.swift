@@ -6,6 +6,8 @@
 #if canImport(SwiftData)
   import Foundation
 
+  public import DataThespian
+
   public import SwiftData
 
   public struct SharedDatabase: Sendable {

@@ -1,5 +1,5 @@
 //
-// VirtualizationMachineBuilder.swift
+// AppleVirtualizationMachineBuilder.swift
 // Copyright (c) 2024 BrightDigit.
 //
 
@@ -10,7 +10,7 @@
   import Foundation
   import Virtualization
 
-  internal final class VirtualizationMachineBuilder: MachineBuilder, Loggable {
+  internal final class AppleVirtualizationMachineBuilder: MachineBuilder, Loggable {
     static var loggingCategory: BushelLogging.Category {
       .machine
     }
@@ -19,14 +19,13 @@
 
     private let observations = ObservationCollection()
 
-    private let installer: VirtualizationInstaller
+    private let installer: AppleVirtualizationInstaller
 
-    init(url: URL, installer: @Sendable @escaping () throws -> VZMacOSInstaller) {
+    init(url: URL, installer: @Sendable @escaping () throws -> VZMacOSInstaller) async {
       self.url = url
-      self.installer = .init(installer: installer)
+      self.installer = await .init(installer: installer)
     }
 
-    @MainActor
     func build() async throws {
       try await self.installer.build()
     }

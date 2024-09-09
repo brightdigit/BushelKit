@@ -7,9 +7,9 @@
   import BushelCore
   import BushelLocalization
 
-  public import RadiantKit
+  import RadiantKit
 
-  public import SwiftUI
+  import SwiftUI
 
   internal struct FeatureListPageView: View {
     @Environment(\.nextPage) var nextPage

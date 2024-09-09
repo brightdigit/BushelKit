@@ -5,8 +5,10 @@
 
 #if os(macOS)
   import BushelCore
-  import Foundation
-  import XCTest
+
+  public import Foundation
+
+  public import XCTest
 
   extension XCUIElement {
     private func openImportDialog() -> XCUIElement {

@@ -4,13 +4,8 @@
 //
 
 #if canImport(SwiftData)
-  public import BushelDataCore
-
-  public import BushelDataMonitor
-
-  public import BushelLogging
-
-  public import Foundation
+  import BushelLogging
+  import Foundation
   import SwiftData
 
   internal actor BookmarkEventMetadata: Loggable {

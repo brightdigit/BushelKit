@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftData)
-  public import Foundation
+  import Foundation
 
   extension BookmarkEventMetadata {
     internal enum EventType: Sendable {

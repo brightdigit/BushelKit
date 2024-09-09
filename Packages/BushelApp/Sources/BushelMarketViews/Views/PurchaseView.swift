@@ -6,11 +6,14 @@
 #if canImport(StoreKit) && canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
-  import BushelLogging
+
+  public import BushelLogging
 
   public import BushelMarket
-  import BushelMarketEnvironment
-  import BushelViewsCore
+
+  public import BushelMarketEnvironment
+
+  public import BushelViewsCore
   import Foundation
   import StoreKit
 

@@ -4,8 +4,9 @@
 //
 
 #if os(macOS)
-  import Foundation
-  import XCTest
+  public import Foundation
+
+  public import XCTest
 
   public struct Filter: AuditIssueFilter {
     let closure: AuditIssueFilterClosure

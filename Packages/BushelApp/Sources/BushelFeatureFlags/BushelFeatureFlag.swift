@@ -8,7 +8,7 @@
 
   public import FeatherQuill
 
-  public import SwiftUI
+  import SwiftUI
 
   public protocol BushelFeatureFlag: FeatureFlag {}
 

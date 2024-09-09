@@ -218,7 +218,7 @@
     func clearDatabaseAction() {
       Task {
         do {
-          try await self.database.deleteAll(of: [any PersistentModel.Type].all)
+          try await self.database.deleteAll(of: .all)
         } catch let error as SwiftDataError {
           Self.logger.error("Error trying to clear the database.")
           assertionFailure("Error trying to clear the database.")

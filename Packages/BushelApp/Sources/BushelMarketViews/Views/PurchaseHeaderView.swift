@@ -8,7 +8,7 @@
   import BushelLocalization
   import BushelViewsCore
 
-  public import SwiftUI
+  import SwiftUI
 
   internal struct PurchaseHeaderView: View {
     typealias Properties = PurchaseHeaderViewProperties

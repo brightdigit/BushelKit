@@ -12,6 +12,8 @@
   import Foundation
   import SwiftData
 
+  public import DataThespian
+
   public import SwiftUI
 
   private struct DefaultInstallerImageRepository: InstallerImageRepository {

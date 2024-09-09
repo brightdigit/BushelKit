@@ -10,19 +10,19 @@
   public import SwiftUI
 
   extension View where Self: Loggable {
-    public static var loggingCategory: BushelLogging.Category {
+    public nonisolated static var loggingCategory: BushelLogging.Category {
       .view
     }
   }
 
   extension Scene where Self: Loggable {
-    public static var loggingCategory: BushelLogging.Category {
+    public nonisolated static var loggingCategory: BushelLogging.Category {
       .view
     }
   }
 
   extension Observable where Self: Loggable {
-    public static var loggingCategory: BushelLogging.Category {
+    public nonisolated static var loggingCategory: BushelLogging.Category {
       .view
     }
   }

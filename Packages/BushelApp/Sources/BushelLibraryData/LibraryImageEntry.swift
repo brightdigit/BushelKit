@@ -4,20 +4,21 @@
 //
 
 #if canImport(SwiftData)
-  public import BushelCore
-
-  public import BushelDataCore
+  import BushelDataCore
 
   public import BushelLibrary
   import BushelLogging
+  import DataThespian
 
   public import Foundation
+
+  public import BushelCore
 
   public import SwiftData
 
   #warning("I think we need to log the operations running for this entry")
   @Model
-  public final class LibraryImageEntry: Sendable {
+  public final class LibraryImageEntry {
     public var library: LibraryEntry?
     public var name: String
     @Attribute(.unique)
@@ -74,11 +75,9 @@
   }
 
   extension LibraryImageEntry {
-    internal convenience init(
-      library: LibraryEntry,
-      file: LibraryImageFile,
-      using database: any Database
-    ) async throws {
+    public convenience init(
+      file: LibraryImageFile
+    ) {
       self.init(
         name: file.name,
         id: file.id,
@@ -90,17 +89,11 @@
         vmSystemID: file.metadata.vmSystemID,
         fileExtension: file.metadata.fileExtension
       )
-      await database.insert(self)
-      try await database.save()
-      self.library = library
-      try await database.save()
     }
 
     internal func syncronizeFile(
-      _ file: LibraryImageFile,
-      withLibrary library: LibraryEntry,
-      using database: any Database
-    ) async throws {
+      _ file: LibraryImageFile
+    ) {
       name = file.name
       imageID = file.id
       isImageSupported = file.metadata.isImageSupported
@@ -110,8 +103,6 @@
       lastModified = file.metadata.lastModified
       vmSystemID = file.metadata.vmSystemID
       fileExtension = file.metadata.fileExtension
-      self.library = library
-      try await database.save()
     }
   }
 

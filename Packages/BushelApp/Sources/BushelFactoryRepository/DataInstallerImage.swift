@@ -10,46 +10,79 @@
   import BushelLibrary
   import BushelLogging
   import BushelMachine
+  import DataThespian
   import Foundation
   import SwiftData
 
   internal final class DataInstallerImage: InstallerImage, Loggable, Sendable {
-    private let entry: LibraryImageEntry
     private let database: any Database
     internal let metadata: Metadata
 
+    private let fileExtension: String
+    private let bookmarkDataID: UUID?
     internal var libraryID: LibraryIdentifier? {
-      assert(self.entry.library != nil)
-      return (self.entry.library?.bookmarkDataID).map(LibraryIdentifier.bookmarkID)
+      assert(bookmarkDataID != nil)
+      return bookmarkDataID.map(LibraryIdentifier.bookmarkID)
     }
 
-    internal var imageID: UUID {
-      entry.imageID
-    }
+    internal let imageID: UUID
 
-    internal var vmSystemID: BushelCore.VMSystemID {
-      entry.vmSystemID
-    }
+    internal let vmSystemID: BushelCore.VMSystemID
 
     internal init(
       entry: LibraryImageEntry,
       database: any Database,
       _ labelProvider: @escaping MetadataLabelProvider
     ) {
-      self.entry = entry
+      self.fileExtension = entry.fileExtension
+      self.bookmarkDataID = entry.library?.bookmarkDataID
+      self.imageID = entry.imageID
+      self.vmSystemID = entry.vmSystemID
       self.database = database
       self.metadata = .init(entry: entry, labelProvider)
     }
 
     internal func getURL() async throws -> URL {
-      assert(self.entry.library != nil)
-      guard let bookmarkData = self.entry.library?.bookmarkData else {
+      assert(bookmarkDataID != nil)
+      guard let bookmarkDataID else {
         let error = InstallerImageError(imageID: imageID, type: .missingBookmark, libraryID: libraryID)
         Self.logger.error("Unable to retrieve URL: \(error.localizedDescription)")
         assertionFailure(error: error)
         throw error
       }
-      let libraryURL = try await bookmarkData.fetchURL(using: database)
+      let libraryURL = try await self.database.first(#Predicate<BookmarkData> { $0.bookmarkID == bookmarkDataID }) { bookmarkData in
+        let url: URL?
+        var isStale = false
+        if let bookmarkData {
+          let actualURL = try URL(resolvingSecurityScopeBookmarkData: bookmarkData.data, bookmarkDataIsStale: &isStale)
+          Self.logger.debug("Bookmark for \(actualURL, privacy: .public) stale: \(isStale)")
+          url = actualURL
+        } else {
+          url = nil
+        }
+        guard let url, let bookmarkData, isStale else {
+          return url
+        }
+
+        let accessingSecurityScopedResource = url.startAccessingSecurityScopedResource()
+
+        let bookmarkDataData = try url.bookmarkDataWithSecurityScope()
+        if accessingSecurityScopedResource {
+          url.stopAccessingSecurityScopedResource()
+        }
+        let path = url.standardizedFileURL.path
+
+        bookmarkData.data = bookmarkDataData
+        bookmarkData.path = path
+        return url
+      }
+
+      guard let libraryURL else {
+        let error = InstallerImageError(imageID: imageID, type: .missingBookmark, libraryID: libraryID)
+        Self.logger.error("Unable to retrieve URL: \(error.localizedDescription)")
+        assertionFailure(error: error)
+        throw error
+      }
       guard libraryURL.startAccessingSecurityScopedResource() else {
         let error = InstallerImageError(
           imageID: imageID,
@@ -63,49 +96,44 @@
       let imageURL = libraryURL
         .appending(path: URL.bushel.paths.restoreImagesDirectoryName)
         .appending(path: imageID.uuidString)
-        .appendingPathExtension(entry.fileExtension)
+        .appendingPathExtension(fileExtension)
       return imageURL
     }
   }
 
   extension DataInstallerImage {
-    internal convenience init?(
-      id: UUID,
-      database: any Database,
+    static func fromDatabase(
+      _ database: any Database,
+      withImageID id: UUID,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
-    ) async throws {
-      let entry: LibraryImageEntry? = try await database.fetch {
-        FetchDescriptor<LibraryImageEntry>(predicate: #Predicate { $0.imageID == id })
-      }.first
-      guard let entry else {
-        return nil
+    ) async throws -> DataInstallerImage? {
+      try await database.first(#Predicate<LibraryImageEntry> { $0.imageID == id }) { imageEntry -> DataInstallerImage? in
+        guard let imageEntry else {
+          return nil
+        }
+        guard imageEntry.library == nil else {
+          return nil
+        }
+        return .init(entry: imageEntry, database: database, labelProvider)
       }
-      guard entry.library != nil else {
-        return nil
-      }
-      self.init(entry: entry, database: database, labelProvider)
     }
 
-    internal convenience init?(
-      id: UUID,
+    static func fromDatabase(
+      _ database: any Database,
+      withImageID id: UUID,
       bookmarkDataID: UUID,
-      database: any Database,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
-    ) async throws {
-      let library: LibraryEntry? = try await database.fetch {
-        FetchDescriptor<LibraryEntry>(
-          predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID },
-          fetchLimit: 1
-        )
-      }.first
+    ) async throws -> DataInstallerImage? {
+      try await database.first(#Predicate<LibraryEntry> { $0.bookmarkDataID == bookmarkDataID }) { libraryEntry -> DataInstallerImage? in
+        guard let libraryEntry else {
+          return nil
+        }
 
-      guard let library else {
-        return nil
+        guard let imageEntry = libraryEntry.images?.first(where: { $0.imageID == id }) else {
+          return nil
+        }
+        return .init(entry: imageEntry, database: database, labelProvider)
       }
-      guard let images = library.images?.first(where: { $0.imageID == id }) else {
-        return nil
-      }
-      self.init(entry: images, database: database, labelProvider)
     }
   }
 #endif

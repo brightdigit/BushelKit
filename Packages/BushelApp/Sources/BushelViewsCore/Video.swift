@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI) && canImport(AppKit)
-  import AVKit
+  public import AVKit
 
   public import SwiftUI
 

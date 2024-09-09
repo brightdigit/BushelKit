@@ -5,20 +5,30 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelDataCore
   import BushelLibrary
   import BushelLibraryData
   import BushelProgressUI
+  import DataThespian
   import Foundation
   import SwiftData
   import SwiftUI
 
   extension LibraryObject {
+    func accessibleURL() async throws -> BookmarkURL {
+      guard let database else {
+        throw LibraryError.missingInitializedProperty(.database)
+      }
+      let bookmarkID = try await self.bookmarkID
+      return try await BookmarkURL(bookmarkID: bookmarkID, database: database, failureType: LibraryEntry.BookmarkedErrorType.self)
+    }
+
     internal func save() async throws {
       guard let database else {
         throw LibraryError.missingInitializedProperty(.database)
       }
 
-      let accessibleBookmark = try await entry.accessibleURL(from: database)
+      let accessibleBookmark = try await self.accessibleURL()
       let libraryURL = accessibleBookmark.url
 
       let jsonFileURL = libraryURL.appending(path: URL.bushel.paths.restoreLibraryJSONFileName)
@@ -43,31 +53,27 @@
         assertionFailure("Unable to find child image with id: \(id)")
         return nil
       }
-      let entryChild = self.entry.images?.first(where: { $0.imageID == id })
-      let entry: LibraryImageEntry?
-      if let entryChild {
-        entry = entryChild
-      } else {
-        do {
-          entry = try await database?.fetch {
-            FetchDescriptor<LibraryImageEntry>(
-              predicate: #Predicate { $0.imageID == id }
-            )
+
+      let imageModel: ModelID<LibraryImageEntry>?
+
+      do {
+        imageModel = try await database?.first(
+          #Predicate {
+            $0.imageID == id
           }
-          .first
-        } catch {
-          Self.logger.error("Error fetching entry \(id) from database: \(error)")
-          assertionFailure(error: error)
-          return nil
-        }
+        )
+      } catch {
+        Self.logger.error("Error fetching entry \(id) from database: \(error)")
+        assertionFailure(error: error)
+        return nil
       }
-      guard let entry else {
+      guard let imageModel, let database else {
         Self.logger.error("No entry with \(id) from database")
         assertionFailure("No entry with \(id) from database")
         return nil
       }
 
-      return LibraryImageObject(index: index, library: self, entry: entry)
+      return LibraryImageObject(database: database, index: index, imageID: id, library: self, model: imageModel)
     }
 
     internal func bindableImage(withID id: UUID?) async -> Bindable<LibraryImageObject>? {

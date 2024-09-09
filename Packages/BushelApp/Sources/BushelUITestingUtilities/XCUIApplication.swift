@@ -6,7 +6,8 @@
 #if os(macOS)
   import BushelCore
   import BushelMacOSCore
-  import XCTest
+
+  public import XCTest
 
   extension XCUIApplication {
     public static func launchBushel(withFlags flags: LaunchOptions) -> XCUIApplication {

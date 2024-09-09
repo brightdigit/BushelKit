@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public import BushelCore
+import BushelCore
 
 public actor UserEvaluator {
   internal static let evaluate = UserEvaluator([VersionEvaluator()])

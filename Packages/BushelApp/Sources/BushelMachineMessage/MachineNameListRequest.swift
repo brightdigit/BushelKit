@@ -13,11 +13,8 @@
     public typealias ResponseType = [String]
     public init() {}
     public func run(from service: any BushelMessageCore.ServiceInterface) async throws -> [String] {
-      try await service.database.fetch {
-        FetchDescriptor<MachineEntry>()
-      }
-      .map { entry in
-        entry.name
+      try await service.database.fetch(MachineEntry.self) {
+        $0.map(\.name)
       }
     }
   }

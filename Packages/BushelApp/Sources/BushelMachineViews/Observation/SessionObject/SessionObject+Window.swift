@@ -7,26 +7,26 @@
   import AppKit
   import BushelCore
 
-  public import Foundation
+  import Foundation
   import SwiftUI
 
-  extension CGSize {
-    @available(*, deprecated, message: "Should use BushelCore")
-    @inlinable
-    public func resizing(
-      toAspectRatio aspectRatio: CGFloat,
-      minimumWidth: CGFloat,
-      withAdditionalHeight additionalHeight: CGFloat
-    ) -> CGSize {
-      let remainingHeight = max(self.height - additionalHeight, 0)
-      let calculatedWidth = remainingHeight * aspectRatio
-      if calculatedWidth < minimumWidth {
-        return .init(width: minimumWidth, height: minimumWidth / aspectRatio + additionalHeight)
-      } else {
-        return .init(width: calculatedWidth, height: remainingHeight + additionalHeight)
-      }
-    }
-  }
+//  extension CGSize {
+//    @available(*, deprecated, message: "Should use BushelCore")
+//    @inlinable
+//    public func resizing(
+//      toAspectRatio aspectRatio: CGFloat,
+//      minimumWidth: CGFloat,
+//      withAdditionalHeight additionalHeight: CGFloat
+//    ) -> CGSize {
+//      let remainingHeight = max(self.height - additionalHeight, 0)
+//      let calculatedWidth = remainingHeight * aspectRatio
+//      if calculatedWidth < minimumWidth {
+//        return .init(width: minimumWidth, height: minimumWidth / aspectRatio + additionalHeight)
+//      } else {
+//        return .init(width: calculatedWidth, height: remainingHeight + additionalHeight)
+//      }
+//    }
+//  }
 
   extension SessionObject {
     var isMachineActive: Bool {
@@ -56,7 +56,7 @@
         return nil
       }
 
-      let aspectRatios = machineObject.machine.configuration.graphicsConfigurations
+      let aspectRatios = machineObject.machine.initialConfiguration.graphicsConfigurations
         .flatMap(\.displays)
         .map(\.aspectRatio)
       guard let aspectRatio = aspectRatios.first, aspectRatios.count == 1 else {

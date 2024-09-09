@@ -8,5 +8,6 @@ struct BushelDataCore: Target {
     BushelCore()
     BushelLogging()
     OperatingSystemVersion()
+    DataThespian()
   }
 }

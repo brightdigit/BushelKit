@@ -6,7 +6,8 @@
 #if canImport(Virtualization) && arch(arm64)
 
   public import BushelCore
-  import BushelLibrary
+
+  public import BushelLibrary
   import BushelMacOSCore
 
   public import Foundation

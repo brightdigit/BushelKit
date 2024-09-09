@@ -8,7 +8,6 @@ import Foundation
 struct BushelWelcomeViews: Target {
   var dependencies: any Dependencies {
     BushelData()
-    BushelDataMonitor()
     BushelLocalization()
     BushelOnboardingEnvironment()
     BushelMarketEnvironment()
@@ -17,5 +16,6 @@ struct BushelWelcomeViews: Target {
     BushelAccessibility()
     BushelFeedbackEnvironment()
     BushelWishListEnvironment()
+    DataThespian()
   }
 }

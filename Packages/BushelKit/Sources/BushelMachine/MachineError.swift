@@ -154,4 +154,8 @@ extension MachineError {
   public static func fromDatabaseError(_ error: any Error) -> MachineError {
     MachineError(details: .database, innerError: error)
   }
+
+  public static func notFound(bookmarkID: UUID) -> MachineError {
+    .init(details: .notFoundBookmarkID(bookmarkID))
+  }
 }

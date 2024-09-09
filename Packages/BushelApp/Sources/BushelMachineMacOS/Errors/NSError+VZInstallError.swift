@@ -6,8 +6,11 @@
 #if canImport(Virtualization)
   import Foundation
 
+  public import BushelMachine
+
   public import Virtualization
 
+  extension NSError: @retroactive InstallFailureError {}
   extension NSError: VZInstallError {
     public var isVZError: Bool {
       self.domain == VZErrorDomain

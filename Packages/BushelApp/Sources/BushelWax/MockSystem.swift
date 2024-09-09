@@ -26,7 +26,7 @@ public struct MockSystem: System {
               vmSystemID: .macOS
             ),
             url: .init(
-              "http://localhost:8080/6679D692-1B85-4788-B582-80E3337E53C5.ipsw"
+              "http://localhost:8080/UniversalMac_15.0_24A5289h_Restore.ipsw"
             )
           )
         ]

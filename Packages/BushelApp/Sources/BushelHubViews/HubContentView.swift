@@ -4,13 +4,13 @@
 //
 
 #if canImport(SwiftUI)
-  public import BushelCore
+  import BushelCore
 
-  public import BushelHub
+  import BushelHub
   import BushelLibraryEnvironment
   import BushelLocalization
 
-  public import SwiftUI
+  import SwiftUI
 
   internal struct HubContentView: View {
     private let hubID: String?

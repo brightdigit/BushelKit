@@ -39,7 +39,9 @@
 
     var machineObject: MachineObject? {
       didSet {
-        self.machineObject?.refreshSnapshots()
+        Task {
+          await self.machineObject?.refreshSnapshots()
+        }
       }
     }
 

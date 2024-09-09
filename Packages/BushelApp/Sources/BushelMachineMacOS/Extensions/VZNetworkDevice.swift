@@ -4,8 +4,8 @@
 //
 
 #if canImport(Virtualization)
-  import BushelMachine
+  public import BushelMachine
   import Virtualization
 
-  extension VZNetworkDevice: MachineNetworkDevice {}
+  extension VZNetworkDevice: @retroactive MachineNetworkDevice {}
 #endif

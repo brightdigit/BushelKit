@@ -8,10 +8,11 @@
   import BushelCore
   import BushelLibrary
   import BushelLocalization
+  import BushelLogging
   import SwiftUI
 
   @MainActor
-  internal struct ImageView: View, Sendable {
+  internal struct ImageView: View, Sendable, Loggable {
     @Environment(\.openWindow) private var openWindow
     @Bindable private var image: LibraryImageObject
     @State private var metadataLabel: MetadataLabel
@@ -49,14 +50,26 @@
         }
         .accessibilityElement(children: .contain)
         Button("Build") {
-          openWindow(
-            value: MachineBuildRequest(
-              restoreImage: .init(
-                imageID: image.entry.imageID,
-                libraryID: .bookmarkID(image.library.entry.bookmarkDataID)
+          Task {
+            let bookmarkID: UUID
+            do {
+              bookmarkID = try await image.library.bookmarkID
+            } catch {
+              Self.logger.error("Unable to find bookmarkID for \(image.name)")
+              assertionFailure(error: error)
+              return
+            }
+            await MainActor.run {
+              openWindow(
+                value: MachineBuildRequest(
+                  restoreImage: .init(
+                    imageID: image.imageID,
+                    libraryID: .bookmarkID(bookmarkID)
+                  )
+                )
               )
-            )
-          )
+            }
+          }
         }
         .accessibilityHint("Configure a new virtual machine")
         .disabled(!self.image.metadata.isImageSupported)

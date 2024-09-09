@@ -7,7 +7,8 @@
   public import BushelCore
   import BushelFactoryViews
   import BushelFeatureFlags
-  import BushelLogging
+
+  public import BushelLogging
   import BushelMachine
   import Foundation
   import SwiftData

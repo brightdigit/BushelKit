@@ -8,7 +8,7 @@ import Foundation
 extension LocalizedStringID {
   #if DEBUG && !os(Linux)
     internal struct Assert {
-      private static var loadedValues = false
+      private nonisolated(unsafe) static var loadedValues = false
 
       private static let stringsDictionary = { url in
         // swiftlint:disable:next force_cast force_unwrapping

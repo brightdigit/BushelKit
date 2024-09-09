@@ -17,7 +17,7 @@
   public import SwiftData
 
   @Model
-  public final class MachineEntry: Loggable, Sendable {
+  public final class MachineEntry: Loggable {
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 
@@ -51,7 +51,7 @@
     public var networkConfigurations: [NetworkConfiguration]
     public var graphicsConfigurations: [GraphicsConfiguration]
     @Attribute(.unique)
-    public internal(set) var machineIdentifer: UInt64?
+    public var machineIdentifer: UInt64?
 
     @Attribute(originalName: "vmSystemID")
     private var vmSystemIDRawValue: String
@@ -86,6 +86,33 @@
     @Relationship(deleteRule: .cascade, inverse: \SnapshotEntry.machine)
     public private(set) var snapshots: [SnapshotEntry]?
 
+    public init(
+      bookmarkDataID: UUID,
+      machine: any Machine,
+      updatedConfiguration: MachineConfiguration,
+      osInstalled: OperatingSystemVersionComponents?,
+      restoreImageID: UUID,
+      name: String,
+      createdAt: Date,
+      lastOpenedAt: Date? = nil
+    ) {
+      self.bookmarkDataID = bookmarkDataID
+      self.name = name
+      self.restoreImageID = restoreImageID
+      self.storage = updatedConfiguration.storage
+      self.cpuCount = updatedConfiguration.cpuCount
+      self.memory = updatedConfiguration.memory
+      self.networkConfigurations = updatedConfiguration.networkConfigurations
+      self.graphicsConfigurations = updatedConfiguration.graphicsConfigurations
+      self.vmSystemIDRawValue = updatedConfiguration.vmSystemID.rawValue
+      self.machineIdentifer = machine.machineIdentifer
+      self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
+      self.buildVersion = osInstalled?.buildVersion
+      self.machineIdentifer = machine.machineIdentifer
+      self.createdAt = createdAt
+      self.lastOpenedAt = lastOpenedAt
+    }
+
     internal init(
       bookmarkData: BookmarkData,
       machine: any Machine,
@@ -94,17 +121,18 @@
       name: String,
       createdAt: Date,
       lastOpenedAt: Date? = nil
-    ) {
+    ) async {
       bookmarkDataID = bookmarkData.bookmarkID
       _bookmarkData = bookmarkData
       self.name = name
       self.restoreImageID = restoreImageID
-      self.storage = machine.configuration.storage
-      self.cpuCount = machine.configuration.cpuCount
-      self.memory = machine.configuration.memory
-      self.networkConfigurations = machine.configuration.networkConfigurations
-      self.graphicsConfigurations = machine.configuration.graphicsConfigurations
-      self.vmSystemIDRawValue = machine.configuration.vmSystemID.rawValue
+      let updatedConfiguration = await machine.updatedConfiguration
+      self.storage = updatedConfiguration.storage
+      self.cpuCount = updatedConfiguration.cpuCount
+      self.memory = updatedConfiguration.memory
+      self.networkConfigurations = updatedConfiguration.networkConfigurations
+      self.graphicsConfigurations = updatedConfiguration.graphicsConfigurations
+      self.vmSystemIDRawValue = updatedConfiguration.vmSystemID.rawValue
       self.machineIdentifer = machine.machineIdentifer
       self.operatingSystemVersionString = osInstalled?.operatingSystemVersion.description
       self.buildVersion = osInstalled?.buildVersion

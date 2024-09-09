@@ -33,6 +33,7 @@
   public import Virtualization
 
   #warning("Temporary Fix")
+  #warning("Remove @unchecked Sendable")
   extension VZMacOSRestoreImage: @unchecked @retroactive Sendable {
     internal struct OperatingSystem: OperatingSystemInstalled {
       internal let operatingSystemVersion: OperatingSystemVersion

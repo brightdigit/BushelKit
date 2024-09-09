@@ -1,5 +1,5 @@
 //
-// MachineRepository.swift
+// AppleVirtualizationMachineRepository.swift
 // Copyright (c) 2024 BrightDigit.
 //
 
@@ -11,20 +11,20 @@
   import Foundation
   import Virtualization
 
-  public actor MachineRepository: Loggable {
+  public actor AppleVirtualizationMachineRepository: Loggable {
     public static var loggingCategory: BushelLogging.Category {
       .machine
     }
 
-    internal static let shared = MachineRepository()
-    var storage = [URL: VirtualizationMachine]()
+    internal static let shared = AppleVirtualizationMachineRepository()
+    var storage = [URL: AppleVirtualizationMachine]()
 
     private init() {}
 
     internal func machineAt(
       _ url: URL,
       withConfiguration configuration: MachineConfiguration
-    ) async throws -> VirtualizationMachine {
+    ) async throws -> AppleVirtualizationMachine {
       Self.logger.debug("finding machine at \(url)")
       if let machine = storage[url] {
         Self.logger.debug("found at \(url)")
@@ -32,12 +32,6 @@
       }
       Self.logger.debug("no machine found at \(url)")
       let dataDirectory = url.appendingPathComponent(URL.bushel.paths.machineDataDirectoryName)
-      let vzMachineConfiguration = try VZVirtualMachineConfiguration(
-        contentsOfDirectory: dataDirectory,
-        basedOn: configuration
-      )
-      try vzMachineConfiguration.validate()
-      let vzMachine = VZVirtualMachine(configuration: vzMachineConfiguration)
 
       let machineData = try VirtualizationData(
         atDataDirectory: dataDirectory,
@@ -46,9 +40,17 @@
       )
 
       Self.logger.debug("creating machine at \(url)")
-      let machine = await MainActor.run {
-        VirtualizationMachine(url: url, configuration: configuration, machine: vzMachine, data: machineData)
+
+      let machine = try await AppleVirtualizationMachine(url: url, machineIdentifer: machineData.machineIdentifier.ecID, configuration: configuration) {
+        let vzMachineConfiguration = try VZVirtualMachineConfiguration(
+          contentsOfDirectory: dataDirectory,
+          basedOn: configuration
+        )
+        try vzMachineConfiguration.validate()
+        return VZVirtualMachine(configuration: vzMachineConfiguration)
       }
+
+//      let machine = AppleVirtualizationMachine
       storage[url] = machine
       return machine
     }

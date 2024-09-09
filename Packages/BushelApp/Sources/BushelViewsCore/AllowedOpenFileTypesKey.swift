@@ -8,11 +8,11 @@
 
   public import BushelCore
 
-  public import Foundation
+  import Foundation
 
   public import SwiftUI
 
-  public import UniformTypeIdentifiers
+  import UniformTypeIdentifiers
 
   private struct AllowedOpenFileTypesKey: EnvironmentKey {
     typealias Value = [FileType]

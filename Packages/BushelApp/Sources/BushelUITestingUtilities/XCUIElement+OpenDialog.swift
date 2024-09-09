@@ -4,7 +4,7 @@
 //
 
 #if os(macOS)
-  import XCTest
+  public import XCTest
 
   extension XCUIElement {
     public func openFile(atPath path: String) {

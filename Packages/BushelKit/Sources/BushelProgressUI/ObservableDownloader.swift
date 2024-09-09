@@ -38,8 +38,13 @@
     func didComplete(withError error: Error?)
   }
 
-  private actor ObserverContainer {
-    private var observer: DownloadObserver?
+  private actor ObserverContainer: Sendable {
+    private nonisolated(unsafe) var observer: DownloadObserver?
+
+    nonisolated func setObserver(_ observer: DownloadObserver) {
+      assert(self.observer == nil)
+      self.observer = observer
+    }
 
     nonisolated func on(_ closure: @escaping @Sendable (DownloadObserver) -> Void) {
       Task {
@@ -60,9 +65,22 @@
   private final class DownloadDelegate: NSObject, URLSessionDownloadDelegate {
     let container = ObserverContainer()
 
+    func setObserver(_ observer: DownloadObserver) {
+      self.container.setObserver(observer)
+    }
+
     func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+      let newLocation = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension(location.pathExtension)
+      do {
+        try FileManager.default.copyItem(at: location, to: newLocation)
+      } catch {
+        container.on { observer in
+          observer.didComplete(withError: error)
+        }
+        return
+      }
       container.on { observer in
-        observer.finishedDownloadingTo(location)
+        observer.finishedDownloadingTo(newLocation)
       }
     }
 
@@ -85,6 +103,7 @@
   }
 
   @Observable
+  @MainActor
   public final class ObservableDownloader: DownloadObserver {
     internal struct DownloadRequest {
       internal let downloadSourceURL: URL
@@ -165,6 +184,7 @@
       ) -> Void
     ) {
       #warning("Requires Testing")
+      self.delegate.setObserver(self)
       assert(self.completion == nil)
       self.completion = completion
       requestSubject.send(
@@ -172,15 +192,33 @@
       )
     }
 
-    func finishedDownloadingTo(_ location: URL) {
+    nonisolated func finishedDownloadingTo(_ location: URL) {
+      Task { @MainActor in
+        self.finishedDownloadingToAsync(location)
+      }
+    }
+
+    nonisolated func progressUpdated(_ progress: DownloadUpdate) {
+      Task { @MainActor in
+        self.progressUpdatedAsync(progress)
+      }
+    }
+
+    nonisolated func didComplete(withError error: (any Error)?) {
+      Task { @MainActor in
+        self.didCompleteAsync(withError: error)
+      }
+    }
+
+    func finishedDownloadingToAsync(_ location: URL) {
       locationURLSubject.send(location)
     }
 
-    func progressUpdated(_ progress: DownloadUpdate) {
+    func progressUpdatedAsync(_ progress: DownloadUpdate) {
       self.downloadUpdate.send(progress)
     }
 
-    func didComplete(withError error: (any Error)?) {
+    func didCompleteAsync(withError error: (any Error)?) {
       guard let error else {
         // Handle success case.
         return
@@ -191,11 +229,11 @@
       }
     }
 
-    deinit {
-      self.cancellables.forEach { $0.cancel() }
-      self.cancellables.removeAll()
-      self.session = nil
-      self.task = nil
-    }
+//    deinit {
+//      self.cancellables.forEach { $0.cancel() }
+//      self.cancellables.removeAll()
+//      self.session = nil
+//      self.task = nil
+//    }
   }
 #endif

@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public import Foundation
+import Foundation
 
 extension Subscription {
   public enum Environment: Sendable {

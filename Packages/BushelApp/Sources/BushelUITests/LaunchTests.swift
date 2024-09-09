@@ -4,9 +4,10 @@
 //
 
 #if os(macOS)
-  import XCTest
+  public import XCTest
 
   open class LaunchTests: XCTestCase {
+    @MainActor
     func testLaunch() throws {
       let app = XCUIApplication()
       app.launch()

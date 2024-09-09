@@ -19,7 +19,7 @@ let package = Package(
     BushelSessionTests()
   },
   swiftSettings: {
-    StrictConcurrency(featureState: .upcoming)
+    StrictConcurrency()
     Group("Experimental") {
       AccessLevelOnImport()
       BitwiseCopyable()
@@ -33,18 +33,18 @@ let package = Package(
       VariadicGenerics()
     }
     Group("Upcoming") {
-      DeprecateApplicationMain()
-      DisableOutwardActorInference()
-      DynamicActorIsolation()
+      //      DeprecateApplicationMain()
+      //      DisableOutwardActorInference()
+      //      DynamicActorIsolation()
       FullTypedThrows()
-      GlobalConcurrency()
-      ImportObjcForwardDeclarations()
-      InferSendableFromCaptures()
+      //      GlobalConcurrency()
+      //      ImportObjcForwardDeclarations()
+      //      InferSendableFromCaptures()
       InternalImportsByDefault()
-      IsolatedDefaultValues()
+      // IsolatedDefaultValues()
     }
-    WarnLongFunctionBodies(milliseconds: 100)
-    WarnLongExpressionTypeChecking(milliseconds: 100)
+    WarnLongFunctionBodies(milliseconds: 50)
+    WarnLongExpressionTypeChecking(milliseconds: 50)
   }
 )
 .supportedPlatforms {

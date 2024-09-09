@@ -30,8 +30,8 @@
           observation = newMachine.observe(
             \.state,
             options: [.initial],
-            changeHandler: { machine, change in Task { @MainActor [machine] in
-              self.onVirtualMachine(machine, stateChange: change)
+            changeHandler: { _, _ in Task { @MainActor in
+              self.onVirtualMachine()
             }
             }
           )
@@ -50,12 +50,12 @@
       self.view = contentView
     }
 
-    func onVirtualMachine(
-      _ machine: VZVirtualMachine,
-      stateChange _: NSKeyValueObservedChange<VZVirtualMachine.State>
-    ) {
-      let shouldBeEnabled = machine.state == .running
-      Self.logger.debug("Updating view to be enabled \(shouldBeEnabled) based on \(machine.state.rawValue)")
+    func onVirtualMachine() {
+      guard let machineState = self.virtualMachine?.state else {
+        return
+      }
+      let shouldBeEnabled = machineState == .running
+      Self.logger.debug("Updating view to be enabled \(shouldBeEnabled) based on \(machineState.rawValue)")
       contentView.isEnabled = shouldBeEnabled
     }
   }

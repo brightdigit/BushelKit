@@ -9,7 +9,7 @@
 
   public import Virtualization
 
-  extension VZVirtualMachineConfiguration: Loggable {
+  extension VZVirtualMachineConfiguration: @retroactive Loggable {
     public static var loggingCategory: BushelLogging.Category {
       .machine
     }
