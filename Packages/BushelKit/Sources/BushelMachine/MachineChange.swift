@@ -36,30 +36,20 @@ public import Foundation
 #endif
 
 public struct MachineChange: Sendable {
-  public enum Property: String, Sendable {
-    case state
-    case canStart
-    case canStop
-    case canPause
-    case canResume
-    case canRequestStop
-    case consoleDevices
-    case directorySharingDevices
-    case graphicsDevices
-    case memoryBalloonDevices
-    case networkDevices
-    case socketDevices
+  public init(event: MachineChange.Event, properties: MachineProperties?) {
+    self.event = event
+    self.properties = properties
   }
 
   public enum Event: Sendable, CustomStringConvertible {
-    case property
+    case property(any PropertyChange)
     case guestDidStop
     case stopWithError(any Error)
     case networkDetatchedWithError(any Error)
 
     public var description: String {
       switch self {
-      case let .property:
+      case .property:
         "property"
       case .guestDidStop:
         "guestDidStop"
@@ -72,10 +62,5 @@ public struct MachineChange: Sendable {
   }
 
   public let event: Event
-  public let source: any Machine
-
-  public init(source: any Machine, event: MachineChange.Event) {
-    self.event = event
-    self.source = source
-  }
+  public let properties: MachineProperties?
 }

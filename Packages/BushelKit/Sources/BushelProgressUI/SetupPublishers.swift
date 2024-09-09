@@ -36,7 +36,7 @@
   public struct SetupPublishers {
     public init() {}
 
-    #warning("shendy-note: let's fix setupDownloadPublsihers to setupDownloadPublishers")
+    @MainActor
     private func setupDownloadPublsihers(_ downloader: ObservableDownloader) -> [AnyCancellable] {
       var cancellables = [AnyCancellable]()
 
@@ -60,6 +60,7 @@
       return cancellables
     }
 
+    @MainActor
     private func setupByteUpdatPublishers(_ downloader: ObservableDownloader) -> [AnyCancellable] {
       var cancellables = [AnyCancellable]()
       let downloadUpdate = downloader.downloadUpdate.share()
@@ -74,6 +75,7 @@
       return cancellables
     }
 
+    @MainActor
     internal func callAsFunction(downloader: ObservableDownloader) -> [AnyCancellable] {
       var cancellables = [AnyCancellable]()
 

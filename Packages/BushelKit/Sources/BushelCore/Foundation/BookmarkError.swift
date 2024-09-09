@@ -34,13 +34,23 @@ public struct BookmarkError: Error, Sendable {
     case database
     case accessDeniedAt(URL)
     case fileDoesNotExistAt(URL)
+    case notFound(Identifier)
   }
 
-  public let innerError: any Error
+  public enum Identifier: Equatable, Sendable {
+    case id(UUID)
+    case url(URL)
+  }
+
+  public let innerError: (any Error)?
   public let details: Details
 }
 
 extension BookmarkError {
+  public static func notFound(_ identifier: Identifier) -> BookmarkError {
+    BookmarkError(innerError: nil, details: .notFound(identifier))
+  }
+
   public static func databaseError(_ error: any Error) -> BookmarkError {
     BookmarkError(innerError: error, details: .database)
   }
