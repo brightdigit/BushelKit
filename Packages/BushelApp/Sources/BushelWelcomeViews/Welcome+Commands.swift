@@ -49,9 +49,6 @@
             openWindow(value: wishList)
           }
           Divider()
-          Button(openURL, URL.bushel.discourse) {
-            Text(.joinDiscourse)
-          }
           Button(openURL, URL.bushel.support) {
             Text(.menuHelpBushel)
           }

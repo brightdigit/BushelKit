@@ -27,7 +27,6 @@
         )
         Divider()
         AboutFeedbackView(
-          discourseURL: .bushel.discourse,
           contactUsEmailURL: .bushel.contactMailTo
         )
         Divider()
