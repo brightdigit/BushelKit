@@ -1,5 +1,5 @@
 //
-//  DefaultWrapped.swift
+//  RecentDocuments.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,6 +29,17 @@
 
 public import Foundation
 
-public protocol DefaultWrapped: AppStored {
-  static var `default`: Value { get }
+public import RadiantKit
+
+public enum RecentDocuments {
+  public enum TypeFilter: AppStored, DefaultWrapped {
+    public typealias Value = DocumentTypeFilter
+    public static let keyType: KeyType = .reflecting
+    public static let `default`: DocumentTypeFilter = .init()
+  }
+
+  public enum ClearDate: AppStored {
+    public typealias Value = Date?
+    public static let keyType: KeyType = .reflecting
+  }
 }

@@ -1,5 +1,5 @@
 //
-//  InitializableFileTypeSpecification.swift
+//  Tracking.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,9 +27,20 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
-public protocol InitializableFileTypeSpecification: FileTypeSpecification {
-  associatedtype WindowValueType: Codable & Hashable
-  static func createAt(_ url: URL) throws -> WindowValueType
+public import RadiantKit
+
+public enum Tracking {
+  public enum Error: DefaultWrapped {
+    public static let keyType: KeyType = .reflecting
+    public typealias Value = Bool
+    public static let `default`: Bool = true
+  }
+
+  public enum Analytics: DefaultWrapped {
+    public static let keyType: KeyType = .reflecting
+    public typealias Value = Bool
+    public static let `default`: Bool = true
+  }
 }

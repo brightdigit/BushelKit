@@ -28,7 +28,10 @@
 //
 
 public import BushelCore
+
 import Foundation
+
+public import RadiantDocs
 
 public enum MacOSVirtualization: Sendable {
   public static let allowedContentTypes: Set<FileType> = Set(FileType.ipswTypes)

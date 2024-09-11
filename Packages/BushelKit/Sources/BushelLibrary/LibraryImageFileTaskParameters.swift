@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelLogging
+import BushelLogging
 
 public import FelinePine
 

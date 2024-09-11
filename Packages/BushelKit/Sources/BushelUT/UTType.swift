@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
-
 #if canImport(UniformTypeIdentifiers)
   public import UniformTypeIdentifiers
+
+  public import RadiantDocs
 
   extension UTType {
     public init(fileType: FileType) {
@@ -62,16 +62,6 @@ public import BushelCore
 
     public static func allowedContentTypes(for fileTypes: FileType ...) -> [UTType] {
       fileTypes.flatMap(allowedContentTypes(for:))
-    }
-  }
-
-  extension FileType {
-    @Sendable
-    public init?(url: URL) {
-      guard let utType = UTType(filenameExtension: url.pathExtension) else {
-        return nil
-      }
-      self.init(stringLiteral: utType.identifier)
     }
   }
 #endif

@@ -28,8 +28,7 @@
 //
 
 // swiftlint:disable file_length
-
-public import BushelCore
+import BushelCore
 
 public import BushelLogging
 
@@ -60,7 +59,7 @@ public struct LibraryError: LocalizedError, Loggable {
   public enum Details: Sendable {
     private struct UnknownError: Error {
       private init() {}
-      // swiftlint:disable:next strict_fileprivate
+
       fileprivate static let shared = UnknownError()
     }
 

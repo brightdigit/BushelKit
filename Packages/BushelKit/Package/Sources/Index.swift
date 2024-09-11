@@ -43,7 +43,6 @@ let package = Package(
     BushelLogging()
     BushelMachine()
     BushelMacOSCore()
-    BushelProgressUI()
     BushelUT()
     BushelTestUtilities()
   },

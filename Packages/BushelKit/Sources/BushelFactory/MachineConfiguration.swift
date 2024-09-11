@@ -29,7 +29,7 @@
 
 public import BushelMachine
 
-public import Foundation
+import Foundation
 
 extension MachineConfiguration {
   public init(

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 extension Double {
   public func transform(using polynomial: LagrangePolynomial) -> Double {

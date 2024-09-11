@@ -1,5 +1,5 @@
 //
-//  Preference.swift
+//  RadiantDocs.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,16 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-public enum Preference {
-  public enum MachineShutdownAction: AppStored {
-    public typealias Value = MachineShutdownActionOption?
-    public static let keyType: KeyType = .reflecting
-  }
-
-  public enum SessionCloseButtonAction: AppStored {
-    public typealias Value = SessionCloseButtonActionOption?
-    public static let keyType: KeyType = .reflecting
+struct RadiantDocs: TargetDependency {
+  var package: PackageDependency {
+    RadiantKit()
   }
 }

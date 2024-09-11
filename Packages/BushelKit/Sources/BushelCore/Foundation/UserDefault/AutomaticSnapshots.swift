@@ -1,5 +1,5 @@
 //
-//  PreviewOperation.swift
+//  AutomaticSnapshots.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,27 +27,25 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
-@MainActor
-public struct PreviewOperation<ValueType: BinaryInteger & Sendable>: ProgressOperation {
-  public let currentValue: ValueType
+public import RadiantKit
 
-  public let totalValue: ValueType?
-
-  public let id: URL
-
-  public init(currentValue: ValueType, totalValue: ValueType?, id: URL) {
-    self.currentValue = currentValue
-    self.totalValue = totalValue
-    self.id = id
+public enum AutomaticSnapshots {
+  public enum Enabled: AppStored, DefaultWrapped {
+    public typealias Value = Bool
+    public static let keyType: KeyType = .reflecting
+    public static let `default`: Bool = true
   }
 
-  public func execute() async throws {}
+  public enum Value: AppStored {
+    public typealias Value = Int?
+    public static let keyType: KeyType = .reflecting
+  }
 
-  public func cancel() {}
+  public enum Polynomial: AppStored, DefaultWrapped {
+    public typealias Value = LagrangePolynomial
+    public static let keyType: KeyType = .reflecting
+    public static let `default`: LagrangePolynomial = .default
+  }
 }
-
-#if canImport(FoundationNetworking)
-  extension URL: @unchecked Sendable {}
-#endif

@@ -1,5 +1,5 @@
 //
-//  KeyType.swift
+//  RadiantProgress.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,9 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-public enum KeyType: Sendable {
-  case describing
-  case reflecting
+struct RadiantProgress: TargetDependency {
+  var package: PackageDependency {
+    RadiantKit()
+  }
 }

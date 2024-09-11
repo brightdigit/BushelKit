@@ -28,7 +28,7 @@
 //
 
 #if canImport(ObjectiveC)
-  public import Foundation
+  import Foundation
 
   @available(*, deprecated)
   @MainActor

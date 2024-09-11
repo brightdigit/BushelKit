@@ -31,6 +31,10 @@
 import XCTest
 
 internal final class TransformationTests: XCTestCase {
+  private static func intToString(_ value: Int) -> String {
+    "\(value)"
+  }
+
   func testTransformAsFunction() {
     let sut = Transformation<Int, String> {
       Self.intToString($0)
@@ -41,9 +45,5 @@ internal final class TransformationTests: XCTestCase {
     let actualValue = sut(value)
 
     XCTAssertEqual(actualValue, expectedValue)
-  }
-
-  private static func intToString(_ value: Int) -> String {
-    "\(value)"
   }
 }

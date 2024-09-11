@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 public typealias MetadataLabelProvider =
   @Sendable (VMSystemID, any OperatingSystemInstalled) -> MetadataLabel

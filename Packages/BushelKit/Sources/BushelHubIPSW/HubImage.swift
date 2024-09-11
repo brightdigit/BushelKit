@@ -30,7 +30,7 @@
 public import BushelHub
 import BushelMacOSCore
 
-public import Foundation
+import Foundation
 
 public import IPSWDownloads
 

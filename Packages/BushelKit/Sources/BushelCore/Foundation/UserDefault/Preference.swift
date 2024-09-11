@@ -1,5 +1,5 @@
 //
-//  CodablePackage.swift
+//  Preference.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,18 +27,16 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+public import RadiantKit
 
-public protocol CodablePackage: Sendable, Codable {
-  static var decoder: JSONDecoder { get }
-  static var encoder: JSONEncoder { get }
-  static var configurationFileWrapperKey: String { get }
-  static var readableContentTypes: [FileType] { get }
-}
+public enum Preference {
+  public enum MachineShutdownAction: AppStored {
+    public typealias Value = MachineShutdownActionOption?
+    public static let keyType: KeyType = .reflecting
+  }
 
-extension CodablePackage {
-  public init(contentsOf url: URL) throws {
-    let data = try Data(contentsOf: url.appendingPathComponent(Self.configurationFileWrapperKey))
-    self = try Self.decoder.decode(Self.self, from: data)
+  public enum SessionCloseButtonAction: AppStored {
+    public typealias Value = SessionCloseButtonActionOption?
+    public static let keyType: KeyType = .reflecting
   }
 }

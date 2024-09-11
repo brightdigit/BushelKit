@@ -27,9 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+import BushelCore
+
+import RadiantKit
 
 public import Foundation
+
+public import RadiantDocs
 
 extension Library: InitializablePackage {
   public static var decoder: JSONDecoder {

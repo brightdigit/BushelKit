@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   public enum Key: String {

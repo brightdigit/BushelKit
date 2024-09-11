@@ -29,7 +29,7 @@
 
 public import Foundation
 
-public import OperatingSystemVersion
+import OperatingSystemVersion
 
 public struct HardwareModel: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {

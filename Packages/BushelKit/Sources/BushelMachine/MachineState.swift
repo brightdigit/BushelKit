@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 public enum MachineState: Int, Sendable {
   /// Initial state before the virtual machine is started.

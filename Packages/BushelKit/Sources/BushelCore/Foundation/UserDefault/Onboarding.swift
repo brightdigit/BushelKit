@@ -1,5 +1,5 @@
 //
-//  FileTypeSpecification.swift
+//  Onboarding.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,6 +29,12 @@
 
 public import Foundation
 
-public protocol FileTypeSpecification: Sendable {
-  static var fileType: FileType { get }
+public import RadiantKit
+
+public enum Onboarding {
+  /// Onboarding Flag for v1.2.0
+  public enum Fuji: RadiantKit.AppStored {
+    public static let keyType: RadiantKit.KeyType = .reflecting
+    public typealias Value = Date?
+  }
 }

@@ -40,6 +40,7 @@ internal final class LibraryImageFileTests: XCTestCase {
     #else
       let expectedImageFile = LibraryImageFile.libraryImageSample
 
+      // swiftlint:disable line_length
       let jsonString = """
       {
         "id" : "\(expectedImageFile.id.uuidString)",
@@ -55,7 +56,7 @@ internal final class LibraryImageFileTests: XCTestCase {
         }
       }
       """
-
+      // swiftlint:enable line_length
       let sut = try decode(LibraryImageFile.self, from: jsonString, using: JSON.decoder)
 
       XCTAssertEqual(sut.id, expectedImageFile.id)

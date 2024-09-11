@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+import BushelCore
 
-public import Foundation
+import Foundation
 
 public enum BuilderProperty: String, Equatable, Sendable {
   case hardwareModel
