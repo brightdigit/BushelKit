@@ -7,7 +7,7 @@
   import BushelCore
   import BushelLibrary
   import BushelLocalization
-  import BushelViewsCore
+  import RadiantKit
 
   public import SwiftUI
 
@@ -15,7 +15,7 @@
     private let label: MetadataLabel
 
     public var body: some View {
-      PreferredLayoutView { value in
+      PreferredLayout.View { value in
         HStack {
           Image.resource(label.imageName)
             .resizable()

@@ -27,11 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 // swiftlint:disable all
 
 #if canImport(FoundationNetworking)
+  public import Foundation
 
   /// A comparison algorithm for a given type.
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)

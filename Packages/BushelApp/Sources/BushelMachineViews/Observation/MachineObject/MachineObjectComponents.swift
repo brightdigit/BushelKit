@@ -49,7 +49,9 @@
       let bookmarkDataID = try await configuration.database.with(existingModel) {
         $0.bookmarkDataID
       }
-      let newURL = try await configuration.database.first(#Predicate<BookmarkData> { $0.bookmarkID == bookmarkDataID }) {
+      let newURL = try await configuration.database.first(
+        #Predicate<BookmarkData> { $0.bookmarkID == bookmarkDataID }
+      ) {
         try $0?.fetchURL()
       }
       guard let newURL else {
@@ -81,7 +83,10 @@
         throw MachineError.fromDatabaseError(error)
       }
 
-      let label = await configuration.labelProvider(machine.updatedConfiguration.vmSystemID, machine.updatedConfiguration)
+      let label = await configuration.labelProvider(
+        machine.updatedConfiguration.vmSystemID,
+        machine.updatedConfiguration
+      )
 
       self.init(
         machine: machine,
@@ -95,7 +100,10 @@
     init(
       configuration: MachineObjectConfiguration
     ) async throws {
-      let bookmarkModel = try await BookmarkData.withDatabase(configuration.database, fromURL: configuration.url)
+      let bookmarkModel = try await BookmarkData.withDatabase(
+        configuration.database,
+        fromURL: configuration.url
+      )
       guard let bookmarkModel else {
         throw MachineError.bookmarkError(.notFound(.url(configuration.url)))
       }

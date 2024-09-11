@@ -11,7 +11,9 @@
   import Foundation
 
   extension MachineEntry {
-    static func basedOnComponents(_ components: MachineObjectComponents) async throws -> ModelID<MachineEntry> {
+    static func basedOnComponents(
+      _ components: MachineObjectComponents
+    ) async throws -> ModelID<MachineEntry> {
       let updatedConfiguration = await components.machine.updatedConfiguration
       let database = components.configuration.database
       if let model = components.existingModel {

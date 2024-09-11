@@ -7,6 +7,8 @@
 
   public import BushelCore
 
+  public import RadiantDocs
+
   public import BushelLibrary
   import BushelMacOSCore
 
@@ -22,7 +24,7 @@
       MacOSVirtualization.shortName
     }
 
-    public var allowedContentTypes: Set<BushelCore.FileType> {
+    public var allowedContentTypes: Set<FileType> {
       MacOSVirtualization.allowedContentTypes
     }
 

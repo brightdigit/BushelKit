@@ -7,78 +7,12 @@
   import BushelCore
   import BushelData
   import BushelLibrary
-  import BushelProgressUI
   import DataThespian
   import Foundation
+  import RadiantProgress
   import SwiftData
 
   extension LibraryObject {
-    internal convenience init(components: Components) {
-      self.init(
-        library: components.library,
-        model: components.model,
-        database: components.database,
-        librarySystemManager: components.system
-      )
-    }
-
-    internal convenience init(
-      url: URL,
-      withDatabase database: any Database,
-      using librarySystemManager: any LibrarySystemManaging
-    ) async throws {
-      let newURL: URL
-      let bookmarkID: UUID
-      do {
-        (newURL, bookmarkID) = try await BookmarkData.withDatabase(database, fromURL: url) { bookmarkData in
-          try (bookmarkData.fetchURL(), bookmarkData.bookmarkID)
-        }
-      } catch {
-        throw try LibraryError.bookmarkError(error)
-      }
-      guard newURL.startAccessingSecurityScopedResource() else {
-        throw LibraryError.accessDeniedError(nil, at: newURL)
-      }
-      defer {
-        newURL.stopAccessingSecurityScopedResource()
-      }
-      let library: Library
-      do {
-        library = try Library(contentsOf: newURL)
-      } catch {
-        throw LibraryError.libraryCorruptedError(error, at: newURL)
-      }
-      let model: ModelID<LibraryEntry> = if let existingModel = try await database.first(#Predicate<LibraryEntry> { $0.bookmarkDataID == bookmarkID }) {
-        existingModel
-      } else {
-        await database.insert {
-          LibraryEntry(bookmarkDataID: bookmarkID)
-        }
-      }
-
-      try await LibraryEntry.syncronizeModel(model, with: library, using: database)
-      let components = Components(library: library, model: model, database: database, system: librarySystemManager)
-      self.init(components: components)
-
-      do {
-        try await database.first(
-          #Predicate<BookmarkData> {
-            $0.bookmarkID == bookmarkID
-          }
-        ) { bookmark in
-          guard let bookmark else {
-            assertionFailure("Missing Bookmark: \(url)")
-            Self.logger.error("Missing Bookmark: \(url)")
-            return
-          }
-
-          bookmark.update()
-        }
-      } catch {
-        assertionFailure(error: error)
-      }
-    }
-
     public var bookmarkID: UUID {
       get async throws {
         guard let database else {
@@ -110,6 +44,82 @@
         }
 
         return url
+      }
+    }
+
+    internal convenience init(components: Components) {
+      self.init(
+        library: components.library,
+        model: components.model,
+        database: components.database,
+        librarySystemManager: components.system
+      )
+    }
+
+    // swiftlint:disable:next function_body_length
+    internal convenience init(
+      url: URL,
+      withDatabase database: any Database,
+      using librarySystemManager: any LibrarySystemManaging
+    ) async throws {
+      let newURL: URL
+      let bookmarkID: UUID
+      do {
+        (newURL, bookmarkID) = try await BookmarkData.withDatabase(database, fromURL: url) { bookmarkData in
+          try (bookmarkData.fetchURL(), bookmarkData.bookmarkID)
+        }
+      } catch {
+        throw try LibraryError.bookmarkError(error)
+      }
+      guard newURL.startAccessingSecurityScopedResource() else {
+        throw LibraryError.accessDeniedError(nil, at: newURL)
+      }
+      defer {
+        newURL.stopAccessingSecurityScopedResource()
+      }
+      let library: Library
+      do {
+        library = try Library(contentsOf: newURL)
+      } catch {
+        throw LibraryError.libraryCorruptedError(error, at: newURL)
+      }
+      let model: ModelID<LibraryEntry> =
+        if let existingModel =
+        try await database.first(
+          #Predicate<LibraryEntry> { $0.bookmarkDataID == bookmarkID }
+        ) {
+          existingModel
+        } else {
+          await database.insert {
+            LibraryEntry(bookmarkDataID: bookmarkID)
+          }
+        }
+
+      try await LibraryEntry.syncronizeModel(model, with: library, using: database)
+      let components = Components(
+        library: library,
+        model: model,
+        database: database,
+        system: librarySystemManager
+      )
+      self.init(components: components)
+
+      do {
+        try await database.first(
+          #Predicate<BookmarkData> {
+            $0.bookmarkID == bookmarkID
+          }
+        ) { bookmark in
+          guard let bookmark else {
+            assertionFailure("Missing Bookmark: \(url)")
+            Self.logger.error("Missing Bookmark: \(url)")
+            return
+          }
+
+          bookmark.update()
+        }
+      } catch {
+        assertionFailure(error: error)
       }
     }
 

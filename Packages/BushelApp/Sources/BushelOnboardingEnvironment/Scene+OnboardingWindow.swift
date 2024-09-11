@@ -9,6 +9,7 @@
 
   public import BushelOnboardingCore
   import Foundation
+  import RadiantKit
 
   public import SwiftUI
 

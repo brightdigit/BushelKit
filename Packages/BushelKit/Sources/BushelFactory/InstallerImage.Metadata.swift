@@ -29,11 +29,11 @@
 
 public import BushelCore
 
-public import BushelLibrary
+import BushelLibrary
 
 public import BushelMachine
 
-public import Foundation
+import Foundation
 
 extension InstallerImage.Metadata {
   public init(

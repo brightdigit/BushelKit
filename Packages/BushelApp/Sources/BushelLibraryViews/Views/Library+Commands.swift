@@ -12,6 +12,8 @@
   import BushelViewsCore
   import Foundation
 
+  import RadiantDocs
+
   public import SwiftUI
   import UniformTypeIdentifiers
 

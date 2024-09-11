@@ -5,8 +5,8 @@
 
 #if canImport(SwiftUI)
 
-  import BushelViewsCore
   import Foundation
+  import RadiantKit
 
   public import SwiftUI
 

@@ -17,6 +17,7 @@
   import BushelUT
   import BushelViewsCore
   import Foundation
+  import RadiantDocs
   import SwiftData
 
   public import SwiftUI

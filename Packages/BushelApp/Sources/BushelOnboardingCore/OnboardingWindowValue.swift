@@ -3,10 +3,12 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public import BushelCore
+import BushelCore
 import Foundation
 
-public struct OnboardingWindowValue: DefaultableViewValue {
+public import RadiantKit
+
+public struct OnboardingWindowValue: RadiantKit.DefaultableViewValue {
   public static let `default` = OnboardingWindowValue()
 
   private init() {}

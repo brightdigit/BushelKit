@@ -13,8 +13,10 @@
 
   public import BushelMarketEnvironment
 
-  public import BushelViewsCore
+  import BushelViewsCore
   import Foundation
+
+  public import RadiantKit
   import StoreKit
 
   public import SwiftUI

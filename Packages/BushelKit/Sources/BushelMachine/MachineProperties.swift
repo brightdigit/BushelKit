@@ -28,15 +28,6 @@
 //
 
 public struct MachineProperties: Sendable {
-  public init(state: MachineState, canStart: Bool, canStop: Bool, canPause: Bool, canResume: Bool, canRequestStop: Bool) {
-    self.state = state
-    self.canStart = canStart
-    self.canStop = canStop
-    self.canPause = canPause
-    self.canResume = canResume
-    self.canRequestStop = canRequestStop
-  }
-
   public let state: MachineState
 
   /// Return YES if the machine is in a state that can be started.
@@ -68,4 +59,20 @@ public struct MachineProperties: Sendable {
   /// - SeeAlso: ``requestStop()``
   /// - SeeAlso: ``state``
   public let canRequestStop: Bool
+
+  public init(
+    state: MachineState,
+    canStart: Bool,
+    canStop: Bool,
+    canPause: Bool,
+    canResume: Bool,
+    canRequestStop: Bool
+  ) {
+    self.state = state
+    self.canStart = canStart
+    self.canStop = canStop
+    self.canPause = canPause
+    self.canResume = canResume
+    self.canRequestStop = canRequestStop
+  }
 }

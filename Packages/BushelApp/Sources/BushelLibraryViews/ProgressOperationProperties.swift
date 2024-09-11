@@ -8,8 +8,9 @@
 
   public import BushelLibrary
 
-  public import BushelProgressUI
   import Foundation
+
+  public import RadiantProgress
 
   extension ProgressOperationProperties {
     @MainActor

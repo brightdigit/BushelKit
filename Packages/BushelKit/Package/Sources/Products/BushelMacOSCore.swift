@@ -30,5 +30,6 @@
 struct BushelMacOSCore: Product, Target {
   var dependencies: any Dependencies {
     BushelCore()
+    RadiantKit()
   }
 }

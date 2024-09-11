@@ -5,7 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelLocalization
-  import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
   internal struct AboutBrandView: View {

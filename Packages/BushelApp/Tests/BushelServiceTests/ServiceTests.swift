@@ -6,6 +6,4 @@
 @testable import BushelService
 import XCTest
 
-internal final class ServiceTests: XCTestCase {
-  func testService() async throws {}
-}
+internal final class ServiceTests: XCTestCase {}

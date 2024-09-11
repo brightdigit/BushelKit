@@ -8,7 +8,7 @@ struct BushelOnboardingViews: Target {
     BushelCore()
     BushelLogging()
     BushelLocalization()
-    BushelViewsCore()
+    RadiantPaging()
     RadiantKit()
     BushelOnboardingCore()
   }

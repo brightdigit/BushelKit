@@ -8,8 +8,8 @@
   import BushelData
   import BushelFeedbackEnvironment
   import BushelLocalization
-  import BushelViewsCore
   import BushelWishListEnvironment
+  import RadiantDocs
   import StoreKit
   import SwiftData
 

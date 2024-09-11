@@ -13,8 +13,8 @@
   import BushelMachineData
   import BushelViewsCore
   import DataThespian
-
   import Foundation
+  import RadiantDocs
   import SwiftData
 
   import SwiftUI
@@ -133,7 +133,12 @@
         atIndex: object.index
       )
 
-      try await SnapshotEntry.syncronizeSnapshotModel(object.model, with: object.updatedSnapshot, machineModel: self.model, using: database)
+      try await SnapshotEntry.syncronizeSnapshotModel(
+        object.model,
+        with: object.updatedSnapshot,
+        machineModel: self.model,
+        using: database
+      )
 
       try await writeConfigurationAt(object.machineConfigurationURL)
       await self.refreshSnapshots()
@@ -298,7 +303,12 @@
     func syncronizeSnapshots(at url: URL, options: SnapshotSyncronizeOptions) async throws {
       try await self.machine.syncronizeSnapshots(using: self.snapshotFactory, options: options)
       try await self.writeConfigurationAt(url)
-      self.model = try await MachineEntry.syncronizeModel(self.model, with: self.machine, osInstalled: nil, using: database)
+      self.model = try await MachineEntry.syncronizeModel(
+        self.model,
+        with: self.machine,
+        osInstalled: nil,
+        using: database
+      )
 
       await self.refreshSnapshots()
       self.machine = machine
@@ -342,7 +352,12 @@
             try await self.saveSnapshot(request, options: [], at: url)
           }
           try await self.machine.restoreSnapshot(snapshot, using: self.snapshotFactory)
-          try await MachineEntry.syncronizeModel(self.model, with: machine, osInstalled: nil, using: self.database)
+          try await MachineEntry.syncronizeModel(
+            self.model,
+            with: machine,
+            osInstalled: nil,
+            using: self.database
+          )
         } catch {
           Self.logger.error(
             // swiftlint:disable:next line_length

@@ -33,7 +33,8 @@
       let sources = try await database.fetch(BookmarkData.self) {
         try $0.map {
           try BookmarkEventMetadata(id: $0.persistentModelID, url: $0.fetchURL())
-        }.compactMap { $0 }
+        }
+        .compactMap { $0 }
       }
 
       await self.addEntries(sources)
@@ -45,7 +46,10 @@
       let persistentModelID = metadata.id
       Self.logger.debug("Updating Database for \(persistentModelID.id.hashValue)")
 
-      let shouldDelete: Bool = try await database.get(of: BookmarkData.self, for: persistentModelID) { bookmark -> Bool in
+      let shouldDelete: Bool = try await database.get(
+        of: BookmarkData.self,
+        for: persistentModelID
+      ) { bookmark -> Bool in
         assert(bookmark != nil)
         guard let bookmark else {
           Self.logger.error("Missing Bookmark at: \(url)")
@@ -128,7 +132,8 @@
     func addMonitors(withIDs ids: [PersistentIdentifier]) async throws {
       let newEntries = try await database.fetch(of: BookmarkData.self, for: ids) {
         try BookmarkEventMetadata(id: $0.persistentModelID, url: $0.fetchURL())
-      }.compactMap { $0 }
+      }
+      .compactMap { $0 }
       assert(newEntries.count == ids.count)
       await addEntries(newEntries)
     }

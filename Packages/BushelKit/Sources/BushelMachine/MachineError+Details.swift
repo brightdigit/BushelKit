@@ -29,7 +29,7 @@
 
 public import BushelCore
 
-public import BushelLogging
+import BushelLogging
 
 public import Foundation
 
@@ -41,7 +41,7 @@ extension MachineError {
   public enum Details: Sendable {
     private struct UnknownError: Error {
       private init() {}
-      // swiftlint:disable:next strict_fileprivate
+
       fileprivate static let shared = UnknownError()
     }
 

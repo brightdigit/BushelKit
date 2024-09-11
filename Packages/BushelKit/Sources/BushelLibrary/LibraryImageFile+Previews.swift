@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+import BushelCore
 
-public import Foundation
+import Foundation
 
 extension LibraryImageFile {
   public static let preview: [LibraryImageFile] = [

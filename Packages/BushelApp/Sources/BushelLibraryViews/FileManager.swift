@@ -6,7 +6,7 @@
 #if canImport(Observation) && (os(macOS) || os(iOS))
   public import BushelCore
 
-  public import BushelProgressUI
+  public import RadiantProgress
 
   public import Foundation
   import Observation

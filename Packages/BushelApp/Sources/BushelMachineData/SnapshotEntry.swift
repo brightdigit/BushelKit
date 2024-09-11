@@ -6,7 +6,7 @@
 #if canImport(SwiftData)
   public import BushelCore
 
-  public import BushelDataCore
+  import BushelDataCore
 
   public import DataThespian
 
@@ -96,6 +96,18 @@
       )
     }
 
+    public static func syncronizeSnapshotModel(
+      _ model: ModelID<SnapshotEntry>,
+      with snapshot: Snapshot,
+      machineModel: ModelID<MachineEntry>,
+      using database: any Database,
+      withOS osInstalled: OperatingSystemVersionComponents? = nil
+    ) async throws {
+      try await database.with(model) { snapshotEntry in
+        try snapshotEntry.syncronizeSnapshot(snapshot, model: machineModel, withOS: osInstalled)
+      }
+    }
+
     public func syncronizeSnapshot(
       _ snapshot: Snapshot,
       model _: ModelID<MachineEntry>,
@@ -135,15 +147,6 @@
         self.operatingSystemVersion = osInstalled.operatingSystemVersion
       }
       self.machine = machine
-    }
-
-    public static func syncronizeSnapshotModel(_ model: ModelID<SnapshotEntry>, with snapshot: Snapshot,
-                                               machineModel: ModelID<MachineEntry>,
-                                               using database: any Database,
-                                               withOS osInstalled: OperatingSystemVersionComponents? = nil) async throws {
-      try await database.with(model) { snapshotEntry in
-        try snapshotEntry.syncronizeSnapshot(snapshot, model: machineModel, withOS: osInstalled)
-      }
     }
   }
 

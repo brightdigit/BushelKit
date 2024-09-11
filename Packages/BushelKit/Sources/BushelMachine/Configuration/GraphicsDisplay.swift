@@ -40,7 +40,6 @@ public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConv
     "\(widthInPixels) x \(heightInPixels) (\(pixelsPerInch) ppi)"
   }
 
-  // swiftlint:disable:next function_default_parameter_at_end
   public init(id: UUID = .init(), widthInPixels: Int, heightInPixels: Int, pixelsPerInch: Int) {
     self.id = id
     self.widthInPixels = widthInPixels

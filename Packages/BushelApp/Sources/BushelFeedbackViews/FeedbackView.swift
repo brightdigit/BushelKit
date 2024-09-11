@@ -9,7 +9,7 @@
   public import BushelFeedbackEnvironment
   import BushelLocalization
 
-  public import BushelViewsCore
+  public import RadiantKit
 
   public import SwiftUI
 

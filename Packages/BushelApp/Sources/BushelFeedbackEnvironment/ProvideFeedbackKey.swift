@@ -4,10 +4,12 @@
 //
 
 #if canImport(SwiftUI)
-  public import BushelCore
+  import BushelCore
   import BushelEnvironmentCore
   import Foundation
   import SwiftData
+
+  public import RadiantKit
 
   public import SwiftUI
 

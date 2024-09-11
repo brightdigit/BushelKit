@@ -8,7 +8,7 @@
 
   public import DataThespian
 
-  public import BushelDataCore
+  import BushelDataCore
 
   public import BushelLibrary
 
@@ -21,24 +21,18 @@
   #warning("I think we need to log the operations running for this entry")
   @Model
   public final class LibraryEntry: Loggable {
-    public init(bookmarkDataID: UUID) {
-      self.bookmarkDataID = bookmarkDataID
-    }
-
-    public typealias BookmarkedErrorType = LibraryError
-
     @Attribute(.unique)
     public private(set) var bookmarkDataID: UUID
 
     @Relationship(deleteRule: .cascade, inverse: \LibraryImageEntry.library)
     public private(set) var images: [LibraryImageEntry]?
+
+    public init(bookmarkDataID: UUID) {
+      self.bookmarkDataID = bookmarkDataID
+    }
   }
 
   extension LibraryEntry {
-    public var imageCount: Int {
-      self.images?.count ?? 0
-    }
-
     public struct SyncronizationDifference: Sendable {
       public let model: ModelID<LibraryEntry>
 
@@ -47,7 +41,17 @@
       public let imagesToUpdate: [LibraryImageFile]
     }
 
-    private static func syncronize(_ diff: SyncronizationDifference, using database: any Database) async throws -> ModelID<LibraryEntry> {
+    public var imageCount: Int {
+      self.images?.count ?? 0
+    }
+
+    #warning("Refactor Syncronization Technique")
+    // swiftlint:disable:next function_body_length
+    private static func syncronize(
+      _ diff: SyncronizationDifference,
+      using database: any Database
+    ) async throws -> ModelID<LibraryEntry> {
+      // swiftlint:disable:next closure_body_length
       try await withThrowingTaskGroup(of: Void.self) { group in
         group.addTask {
           // update images
@@ -114,7 +118,11 @@
     }
 
     @discardableResult
-    public static func syncronizeModel(_ model: ModelID<LibraryEntry>, with library: Library, using database: any Database) async throws -> ModelID<LibraryEntry> {
+    public static func syncronizeModel(
+      _ model: ModelID<LibraryEntry>,
+      with library: Library,
+      using database: any Database
+    ) async throws -> ModelID<LibraryEntry> {
       let diff = try await database.with(model) { libraryEntry in
         libraryEntry.syncronizationReport(library)
       }
@@ -122,7 +130,10 @@
       return try await Self.syncronize(diff, using: database)
     }
 
-    public func syncronizeWith(_ library: Library, using database: any Database) async throws -> ModelID<LibraryEntry> {
+    public func syncronizeWith(
+      _ library: Library,
+      using database: any Database
+    ) async throws -> ModelID<LibraryEntry> {
       let model = ModelID(self)
       return try await Self.syncronizeModel(model, with: library, using: database)
     }

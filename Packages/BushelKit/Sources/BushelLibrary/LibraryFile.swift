@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
-
-public import Foundation
+public import RadiantDocs
 
 public typealias LibraryFile = DocumentFile<LibraryFileSpecifications>

@@ -7,7 +7,7 @@
   import BushelMachine
   import Virtualization
 
-  protocol PropertyChangeObservable {
+  internal protocol PropertyChangeObservable {
     associatedtype PropertyChangeType: PropertyChange
     associatedtype PropertyValue
 

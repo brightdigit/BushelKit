@@ -7,9 +7,9 @@
   import BushelCore
   import BushelData
   import BushelLibrary
-  import BushelProgressUI
   import DataThespian
   import Foundation
+  import RadiantProgress
   import SwiftData
   import SwiftUI
 
@@ -24,6 +24,7 @@
       }
     }
 
+    // swiftlint:disable:next function_body_length
     private func copyFile(
       _ imageFile: LibraryImageFile,
       at url: URL,

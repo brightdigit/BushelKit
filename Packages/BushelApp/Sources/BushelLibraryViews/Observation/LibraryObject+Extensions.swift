@@ -8,7 +8,6 @@
   import BushelDataCore
   import BushelLibrary
   import BushelLibraryData
-  import BushelProgressUI
   import DataThespian
   import Foundation
   import SwiftData
@@ -20,7 +19,11 @@
         throw LibraryError.missingInitializedProperty(.database)
       }
       let bookmarkID = try await self.bookmarkID
-      return try await BookmarkURL(bookmarkID: bookmarkID, database: database, failureType: LibraryEntry.BookmarkedErrorType.self)
+      return try await BookmarkURL(
+        bookmarkID: bookmarkID,
+        database: database,
+        failureType: LibraryError.self
+      )
     }
 
     internal func save() async throws {
@@ -73,7 +76,13 @@
         return nil
       }
 
-      return LibraryImageObject(database: database, index: index, imageID: id, library: self, model: imageModel)
+      return LibraryImageObject(
+        database: database,
+        index: index,
+        imageID: id,
+        library: self,
+        model: imageModel
+      )
     }
 
     internal func bindableImage(withID id: UUID?) async -> Bindable<LibraryImageObject>? {

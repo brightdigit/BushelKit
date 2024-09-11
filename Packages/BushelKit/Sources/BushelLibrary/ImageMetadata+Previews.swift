@@ -30,7 +30,7 @@
 public import BushelCore
 import BushelMacOSCore
 
-public import Foundation
+import Foundation
 
 extension ImageMetadata {
   public enum Previews {

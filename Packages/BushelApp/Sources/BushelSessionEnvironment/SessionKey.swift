@@ -16,7 +16,6 @@
   private struct DefaultSession: Session {
     private struct NotImplementatedError: Error {}
 
-    // swiftlint:disable strict_fileprivate
     fileprivate static let instance: any Session = DefaultSession()
 
     fileprivate var isInitialized: Bool { false }
@@ -28,7 +27,6 @@
     ) async throws -> MessageType.ResponseType where MessageType: BushelMessageCore.Message {
       throw NotImplementatedError()
     }
-    // swiftlint:enable strict_fileprivate
   }
 
   private struct SessionKey: EnvironmentKey {

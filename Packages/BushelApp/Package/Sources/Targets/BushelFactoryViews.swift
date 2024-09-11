@@ -11,5 +11,6 @@ struct BushelFactoryViews: Target {
     BushelViewsCore()
     BushelMachineEnvironment()
     RadiantKit()
+    RadiantDocs()
   }
 }

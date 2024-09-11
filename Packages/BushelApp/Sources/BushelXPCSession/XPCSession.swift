@@ -17,7 +17,9 @@
       self.cancel(reason: reason.rawValue)
     }
 
-    public func sendMessage<Reply>(_ message: some Encodable) async throws -> Reply where Reply: Decodable & Sendable {
+    public func sendMessage<Reply>(
+      _ message: some Encodable
+    ) async throws -> Reply where Reply: Decodable & Sendable {
       try await withCheckedThrowingContinuation { contuation in
         do {
           try self.send(message) { result in

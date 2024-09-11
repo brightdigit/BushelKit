@@ -6,7 +6,6 @@
 #if canImport(SwiftUI)
   import AVKit
   import BushelLocalization
-  import BushelViewsCore
 
   import RadiantKit
 
@@ -29,7 +28,7 @@
         Divider().padding(.horizontal, 120)
         Text(self.messageID).padding(.horizontal, 80)
         Divider().padding(.horizontal, 120)
-        #if os(macOS)
+        #if canImport(AppKit)
           Video(using: avPlayer).aspectRatio(1.0, contentMode: .fit).padding(8.0)
         #endif
         Button(action: {

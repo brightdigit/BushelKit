@@ -8,6 +8,7 @@
   import BushelLogging
   import BushelMachine
   import Foundation
+  import RadiantKit
   import SwiftData
   import SwiftUI
 

@@ -50,31 +50,10 @@
         assertionFailure(error: error)
         throw error
       }
-      let libraryURL = try await self.database.first(#Predicate<BookmarkData> { $0.bookmarkID == bookmarkDataID }) { bookmarkData in
-        let url: URL?
-        var isStale = false
-        if let bookmarkData {
-          let actualURL = try URL(resolvingSecurityScopeBookmarkData: bookmarkData.data, bookmarkDataIsStale: &isStale)
-          Self.logger.debug("Bookmark for \(actualURL, privacy: .public) stale: \(isStale)")
-          url = actualURL
-        } else {
-          url = nil
-        }
-        guard let url, let bookmarkData, isStale else {
-          return url
-        }
-
-        let accessingSecurityScopedResource = url.startAccessingSecurityScopedResource()
-
-        let bookmarkDataData = try url.bookmarkDataWithSecurityScope()
-        if accessingSecurityScopedResource {
-          url.stopAccessingSecurityScopedResource()
-        }
-        let path = url.standardizedFileURL.path
-
-        bookmarkData.data = bookmarkDataData
-        bookmarkData.path = path
-        return url
+      let libraryURL = try await self.database.first(
+        #Predicate<BookmarkData> { $0.bookmarkID == bookmarkDataID }
+      ) { bookmarkData in
+        try bookmarkData?.fetchURL()
       }
 
       guard let libraryURL else {
@@ -107,7 +86,9 @@
       withImageID id: UUID,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws -> DataInstallerImage? {
-      try await database.first(#Predicate<LibraryImageEntry> { $0.imageID == id }) { imageEntry -> DataInstallerImage? in
+      try await database.first(
+        #Predicate<LibraryImageEntry> { $0.imageID == id }
+      ) { imageEntry -> DataInstallerImage? in
         guard let imageEntry else {
           return nil
         }
@@ -124,7 +105,9 @@
       bookmarkDataID: UUID,
       _ labelProvider: @escaping BushelCore.MetadataLabelProvider
     ) async throws -> DataInstallerImage? {
-      try await database.first(#Predicate<LibraryEntry> { $0.bookmarkDataID == bookmarkDataID }) { libraryEntry -> DataInstallerImage? in
+      try await database.first(
+        #Predicate<LibraryEntry> { $0.bookmarkDataID == bookmarkDataID }
+      ) { libraryEntry -> DataInstallerImage? in
         guard let libraryEntry else {
           return nil
         }

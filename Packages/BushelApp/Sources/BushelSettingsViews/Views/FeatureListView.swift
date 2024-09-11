@@ -6,8 +6,8 @@
 #if canImport(SwiftUI)
   import BushelFeatureFlags
   import BushelLocalization
-  import BushelViewsCore
   import FeatherQuill
+  import RadiantKit
   import SwiftUI
 
   internal struct FeatureListView: View {

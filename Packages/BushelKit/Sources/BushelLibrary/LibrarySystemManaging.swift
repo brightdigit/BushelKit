@@ -29,6 +29,8 @@
 
 public import BushelCore
 
+public import RadiantDocs
+
 public import BushelLogging
 
 public import Foundation

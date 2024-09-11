@@ -8,6 +8,7 @@
   import Virtualization
 
   extension MachineProperty {
+    // swiftlint:disable:next cyclomatic_complexity
     init?(keypath: KeyPath<VZVirtualMachine, some Any>) {
       switch keypath {
       case \.state:

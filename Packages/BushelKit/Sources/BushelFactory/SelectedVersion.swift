@@ -31,7 +31,7 @@ public import BushelCore
 
 public import BushelMachine
 
-public import Foundation
+import Foundation
 
 public struct SelectedVersion: Hashable, Identifiable, Sendable {
   // swiftlint:disable:next force_unwrapping

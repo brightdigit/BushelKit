@@ -41,7 +41,13 @@
       }
     }
 
-    internal init(database: any Database, index: Int, imageID: UUID, library: LibraryObject, model: ModelID<LibraryImageEntry>) {
+    internal init(
+      database: any Database,
+      index: Int,
+      imageID: UUID,
+      library: LibraryObject,
+      model: ModelID<LibraryImageEntry>
+    ) {
       self.database = database
       self.index = index
       self.library = library

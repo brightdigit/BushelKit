@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 extension Result {
   public init(catching body: @Sendable () async throws -> Success) async where Failure == any Error {
