@@ -41,7 +41,11 @@
 
       Self.logger.debug("creating machine at \(url)")
 
-      let machine = try await AppleVirtualizationMachine(url: url, machineIdentifer: machineData.machineIdentifier.ecID, configuration: configuration) {
+      let machine = try await AppleVirtualizationMachine(
+        url: url,
+        machineIdentifer: machineData.machineIdentifier.ecID,
+        configuration: configuration
+      ) {
         let vzMachineConfiguration = try VZVirtualMachineConfiguration(
           contentsOfDirectory: dataDirectory,
           basedOn: configuration
@@ -49,8 +53,6 @@
         try vzMachineConfiguration.validate()
         return VZVirtualMachine(configuration: vzMachineConfiguration)
       }
-
-//      let machine = AppleVirtualizationMachine
       storage[url] = machine
       return machine
     }

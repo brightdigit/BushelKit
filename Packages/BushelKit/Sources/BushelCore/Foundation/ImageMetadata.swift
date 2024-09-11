@@ -29,7 +29,7 @@
 
 public import Foundation
 
-public import OperatingSystemVersion
+import OperatingSystemVersion
 
 /// Represents metadata associated with an image file.
 public struct ImageMetadata: Codable,

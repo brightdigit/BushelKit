@@ -27,20 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+import BushelCore
 
-public import Foundation
+import Foundation
 
 #if canImport(SwiftUI)
   import SwiftUI
 #endif
 
 public struct MachineChange: Sendable {
-  public init(event: MachineChange.Event, properties: MachineProperties?) {
-    self.event = event
-    self.properties = properties
-  }
-
   public enum Event: Sendable, CustomStringConvertible {
     case property(any PropertyChange)
     case guestDidStop
@@ -63,4 +58,9 @@ public struct MachineChange: Sendable {
 
   public let event: Event
   public let properties: MachineProperties?
+
+  public init(event: MachineChange.Event, properties: MachineProperties?) {
+    self.event = event
+    self.properties = properties
+  }
 }

@@ -4,10 +4,12 @@
 //
 
 #if canImport(SwiftUI)
-  public import BushelCore
+  import BushelCore
   import Foundation
 
   public import SwiftUI
+
+  public import RadiantKit
 
   extension EnvironmentKey where Value: DefaultableViewValue {
     public static var defaultValue: Value {

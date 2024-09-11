@@ -19,36 +19,9 @@
     private let system: any LibrarySystem
     private var onSave: @Sendable @MainActor () -> Void
 
-    internal var body: some View {
+    var body: some View {
       VStack {
-        HStack(alignment: .top) {
-          Image.resource(metadataLabel.imageName)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 80, height: 80)
-            .mask { Circle() }
-            .overlay { Circle().stroke() }
-            .padding(.horizontal)
-            .accessibilityHidden(true)
-          VStack(alignment: .leading) {
-            TextField("Name", text: self.$image.name, onCommit: self.beginSave)
-              .font(.largeTitle)
-              .accessibilityIdentifier(Library.nameField.identifier)
-
-            Text(metadataLabel.operatingSystemLongName)
-              .lineLimit(1)
-              .font(.title)
-              .accessibilityIdentifier(Library.operatingSystemName.identifier)
-            Text(
-              Int64(image.metadata.contentLength), format: .byteCount(style: .file)
-            )
-            .font(.title2)
-            .accessibilityIdentifier(Library.contentLength.identifier)
-            Text(image.metadata.lastModified, style: .date).font(.title2)
-              .accessibilityIdentifier(Library.lastModified.identifier)
-          }
-        }
-        .accessibilityElement(children: .contain)
+        ImageHeader(image: self.$image, metadataLabel: self.metadataLabel, beginSave: self.beginSave)
         Button("Build") {
           Task {
             let bookmarkID: UUID

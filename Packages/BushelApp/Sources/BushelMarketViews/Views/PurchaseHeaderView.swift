@@ -6,7 +6,7 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
-  import BushelViewsCore
+  import RadiantKit
 
   import SwiftUI
 

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 public enum RemoveImageFailure: CustomStringConvertible {
   case notFound

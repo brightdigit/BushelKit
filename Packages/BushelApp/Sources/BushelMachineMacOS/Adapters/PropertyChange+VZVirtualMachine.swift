@@ -8,7 +8,10 @@
   import Virtualization
 
   extension PropertyChange {
-    static func observer<Value>(for keyPath: KeyPath<VZVirtualMachine, Value>, _ convert: @escaping @Sendable (Value) -> Self.ValueType?) -> PropertyChangeObserving<Self, Value> {
+    static func observer<Value>(
+      for keyPath: KeyPath<VZVirtualMachine, Value>,
+      _ convert: @escaping @Sendable (Value) -> Self.ValueType?
+    ) -> PropertyChangeObserving<Self, Value> {
       PropertyChangeObserving(keyPath: keyPath, conversion: convert)
     }
 

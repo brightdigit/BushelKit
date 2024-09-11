@@ -9,7 +9,8 @@
   import BushelMachine
   import Virtualization
 
-  final class VZMachineObserver: NSObject, VZVirtualMachineDelegate, Sendable, Loggable {
+  internal final class VZMachineObserver:
+    NSObject, VZVirtualMachineDelegate, Sendable, Loggable {
     static var loggingCategory: BushelLogging.Category {
       .machine
     }
@@ -33,7 +34,10 @@
       self.addObservation(forMachine: machine, with: .canRequestStop())
     }
 
-    func addObservation(forMachine machine: VZVirtualMachine, with observable: PropertyChangeObserving<some PropertyChange, some Any>) {
+    func addObservation(
+      forMachine machine: VZVirtualMachine,
+      with observable: PropertyChangeObserving<some PropertyChange, some Any>
+    ) {
       let observation = self.observeMachine(machine, with: observable)
       Task {
         await self.propertyObservations.append(observation, withID: .init())

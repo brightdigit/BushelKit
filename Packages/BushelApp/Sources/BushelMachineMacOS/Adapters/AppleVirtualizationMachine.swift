@@ -26,10 +26,51 @@
   public import SwiftUI
 
   public actor AppleVirtualizationMachine: Machine, Loggable, Sessionable {
+    public static var loggingCategory: BushelLogging.Category {
+      .machine
+    }
+
     var lastChange: MachineChange?
+    let url: URL
+
+    // swiftlint:disable:next implicitly_unwrapped_optional
+    @MainActor private var vzMachine: VZVirtualMachine!
+    public let machineIdentifer: UInt64?
+    // swiftlint:disable:next implicitly_unwrapped_optional
+    private nonisolated(unsafe) var observer: VZMachineObserver!
+    let observers = MachineObservationCollection()
+    public let initialConfiguration: MachineConfiguration
+    public var updatedConfiguration: BushelMachine.MachineConfiguration
+
+    public init(
+      url: URL,
+      machineIdentifer: UInt64,
+      configuration: MachineConfiguration,
+      vzMachine: @MainActor @Sendable @escaping () throws -> VZVirtualMachine
+    ) async throws {
+      self.url = url
+      self.machineIdentifer = machineIdentifer
+      self.initialConfiguration = configuration
+      self.updatedConfiguration = configuration
+      self.observer = try await MainActor.run {
+        let vzMachine = try vzMachine()
+        let observer = VZMachineObserver(observe: vzMachine, notifyObservers: self.notifyObservers(_:))
+        self.vzMachine = vzMachine
+        return observer
+      }
+    }
+
     @MainActor
     public func view(_ settings: Binding<ScreenSettings>) -> some View {
       VirtualizationScreenView(virtualMachine: self.vzMachine, settings: settings)
+    }
+
+    public nonisolated func removeObservation(withID id: UUID) {
+      Task {
+        let didExist = await self.observers.removeObserver(withID: id)
+        assert(didExist)
+        Self.logger.error("Missing observer for \(id)")
+      }
     }
 
     public nonisolated func beginSnapshot() throws -> BushelMachine.SnapshotPaths {
@@ -39,7 +80,10 @@
       return .init(machinePathURL: url)
     }
 
-    public func finishedWithSnapshot(_ snapshot: BushelMachine.Snapshot, by difference: BushelMachine.SnapshotDifference) {
+    public func finishedWithSnapshot(
+      _ snapshot: BushelMachine.Snapshot,
+      by difference: BushelMachine.SnapshotDifference
+    ) {
       Self.logger.debug("Finished with Snapshot operation \(difference.rawValue).")
       url.stopAccessingSecurityScopedResource()
       switch difference {
@@ -73,7 +117,9 @@
       }
     }
 
-    public func finishedWithSyncronization(_ difference: BushelMachine.SnapshotSyncronizationDifference?) throws {
+    public func finishedWithSyncronization(
+      _ difference: BushelMachine.SnapshotSyncronizationDifference?
+    ) throws {
       if let difference {
         let indicies = self.updatedConfiguration.snapshots.enumerated().compactMap { index, snapshot in
           difference.snapshotIDs.contains(snapshot.id) ? nil : index
@@ -95,7 +141,9 @@
       url.stopAccessingSecurityScopedResource()
     }
 
-    public func updatedMetadata(forSnapshot snapshot: BushelMachine.Snapshot, atIndex index: Int) {
+    public func updatedMetadata(
+      forSnapshot snapshot: BushelMachine.Snapshot, atIndex index: Int
+    ) {
       self.updatedConfiguration = .init(original: self.updatedConfiguration) { snapshots in
         var newSnapshots = snapshots
         newSnapshots[index] = snapshot
@@ -104,7 +152,9 @@
       }
     }
 
-    public nonisolated func beginObservation(_ update: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID {
+    public nonisolated func beginObservation(
+      _ update: @escaping @Sendable (BushelMachine.MachineChange) -> Void
+    ) -> UUID {
       let id = UUID()
       Task {
         await self.observers.addObservation(update, withID: id)
@@ -114,46 +164,6 @@
       }
       return id
     }
-
-    public static var loggingCategory: BushelLogging.Category {
-      .machine
-    }
-
-    public init(
-      url: URL,
-      machineIdentifer: UInt64,
-      configuration: MachineConfiguration,
-      vzMachine: @MainActor @Sendable @escaping () throws -> VZVirtualMachine
-    ) async throws {
-      self.url = url
-      self.machineIdentifer = machineIdentifer
-      self.initialConfiguration = configuration
-      self.updatedConfiguration = configuration
-      self.observer = try await MainActor.run {
-        let vzMachine = try vzMachine()
-        let observer = VZMachineObserver(observe: vzMachine, notifyObservers: self.notifyObservers(_:))
-        self.vzMachine = vzMachine
-        return observer
-      }
-    }
-
-    public nonisolated func removeObservation(withID id: UUID) {
-      Task {
-        let didExist = await self.observers.removeObserver(withID: id)
-        assert(didExist)
-        Self.logger.error("Missing observer for \(id)")
-      }
-    }
-
-    let url: URL
-
-    @MainActor
-    private var vzMachine: VZVirtualMachine!
-    public let machineIdentifer: UInt64?
-    private nonisolated(unsafe) var observer: VZMachineObserver!
-    let observers = MachineObservationCollection()
-    public let initialConfiguration: MachineConfiguration
-    public var updatedConfiguration: BushelMachine.MachineConfiguration
 
     @Sendable
     public nonisolated func notifyObservers(_ update: MachineChange) {

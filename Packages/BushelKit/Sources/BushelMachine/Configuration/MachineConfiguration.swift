@@ -31,6 +31,10 @@ public import BushelCore
 
 public import Foundation
 
+public import RadiantDocs
+
+import RadiantKit
+
 /// Metadata attached to a machine
 public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
   public let restoreImageFile: InstallerImageIdentifier
@@ -128,13 +132,16 @@ extension MachineConfiguration: CodablePackage {
     URL.bushel.paths.machineJSONFileName
   }
 
-  public static var readableContentTypes: [BushelCore.FileType] {
+  public static var readableContentTypes: [FileType] {
     [.virtualMachine]
   }
 }
 
 extension MachineConfiguration {
-  public init(original: MachineConfiguration, _ withSnapshots: @escaping @Sendable ([Snapshot]) -> [Snapshot]) {
+  public init(
+    original: MachineConfiguration,
+    _ withSnapshots: @escaping @Sendable ([Snapshot]) -> [Snapshot]
+  ) {
     self.init(
       restoreImageFile: original.restoreImageFile,
       vmSystemID: original.vmSystemID,

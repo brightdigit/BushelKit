@@ -8,7 +8,10 @@
   import BushelMachine
   import Foundation
 
-  struct KeyValueObservedChange<ValueType: Sendable>: ObservedChange {
+  internal struct KeyValueObservedChange<ValueType: Sendable>: ObservedChange {
+    let oldValue: ValueType?
+
+    let newValue: ValueType?
     internal init(oldValue: ValueType?, newValue: ValueType?) {
       self.oldValue = oldValue
       self.newValue = newValue
@@ -18,10 +21,6 @@
       self.oldValue = oldValue.flatMap(closure)
       self.newValue = newValue.flatMap(closure)
     }
-
-    let oldValue: ValueType?
-
-    let newValue: ValueType?
 
     init(change: NSKeyValueObservedChange<ValueType>) {
       self.init(oldValue: change.oldValue, newValue: change.newValue)

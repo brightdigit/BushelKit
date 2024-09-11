@@ -31,7 +31,7 @@ public import BushelCore
 
 public import BushelMachine
 
-public import Foundation
+import Foundation
 
 public struct ReleaseMetadata: Identifiable, Equatable {
   public let metadata: any InstallerRelease

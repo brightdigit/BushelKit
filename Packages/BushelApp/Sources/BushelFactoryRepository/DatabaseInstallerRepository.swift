@@ -43,7 +43,12 @@
     ) async throws -> (any BushelMachine.InstallerImage)? {
       switch library {
       case let .bookmarkID(bookmarkDataID):
-        try await DataInstallerImage.fromDatabase(database, withImageID: id, bookmarkDataID: bookmarkDataID, labelProvider)
+        try await DataInstallerImage.fromDatabase(
+          database,
+          withImageID: id,
+          bookmarkDataID: bookmarkDataID,
+          labelProvider
+        )
 
       case .none:
         try await DataInstallerImage.fromDatabase(database, withImageID: id, labelProvider)
@@ -62,7 +67,11 @@
 
       let imageID = image.imageID
 
-      let imageModel: ModelID? = try await database.first(#Predicate<LibraryImageEntry> { $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID })
+      let imageModel: ModelID? = try await database.first(
+        #Predicate<LibraryImageEntry> {
+          $0.imageID == imageID && $0.library?.bookmarkDataID == bookmarkDataID
+        }
+      )
 
       guard let imageModel else {
         return .notFound

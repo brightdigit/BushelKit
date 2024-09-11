@@ -6,8 +6,8 @@
 #if canImport(SwiftUI)
 
   import BushelCore
-  import BushelViewsCore
   import Foundation
+  import RadiantKit
   import SwiftUI
 
   internal typealias AutoSnapshotIntervalObject =

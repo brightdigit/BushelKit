@@ -8,7 +8,7 @@
 
   public import BushelOnboardingCore
 
-  public import BushelViewsCore
+  public import RadiantKit
 
   public import SwiftUI
 

@@ -28,7 +28,7 @@
 //
 
 #if !os(Linux)
-  public import Foundation
+  import Foundation
 
   extension NSFileVersion {
     internal struct VersionDataSet {

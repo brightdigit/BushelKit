@@ -32,6 +32,7 @@ struct BushelLibrary: Product, Target {
     BushelLogging()
     BushelCore()
     BushelMacOSCore()
+    RadiantKit()
     // BushelAccessibility()
   }
 }

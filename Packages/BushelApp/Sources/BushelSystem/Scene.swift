@@ -19,6 +19,8 @@
   import Foundation
   import SwiftData
 
+  import RadiantDocs
+
   public import SwiftUI
 
   extension Scene {

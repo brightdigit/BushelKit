@@ -24,10 +24,13 @@
   import BushelOnboardingViews
   import BushelSystem
 
-  public import BushelViewsCore
   import BushelXPCSession
   import Combine
+
+  public import RadiantKit
   import SwiftData
+
+  import RadiantDocs
 
   public import SwiftUI
 

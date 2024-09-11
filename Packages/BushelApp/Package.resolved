@@ -1,5 +1,5 @@
 {
-  "originHash" : "58f8c620232d2f3ee1ceb79ad229307937055d0a3b440c1ac05886876aedef20",
+  "originHash" : "b09bc85f76bcfaa08c5b7b544191d240d35d3dbe7e88e034594160bb679669a9",
   "pins" : [
     {
       "identity" : "aviaryinsights",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "6dcd80af858d8f0da2142d8df0e8e689e260a44b",
         "version" : "1.0.0-beta.1"
+      }
+    },
+    {
+      "identity" : "datathespian",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/DataThespian.git",
+      "state" : {
+        "revision" : "4f20302e9b93d4479f2c70f2fd2a4dfd74fe5522",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -44,6 +53,15 @@
       "state" : {
         "revision" : "bd3c70eb38da109ec6be9958e80ee495125d3232",
         "version" : "1.0.0-beta.1"
+      }
+    },
+    {
+      "identity" : "radiantkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/RadiantKit.git",
+      "state" : {
+        "revision" : "1d8e4020b289913a60204d50ae18df0c232d402b",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {

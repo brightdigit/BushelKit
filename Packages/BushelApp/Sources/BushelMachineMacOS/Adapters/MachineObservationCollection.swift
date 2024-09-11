@@ -7,7 +7,7 @@ import BushelLogging
 import BushelMachine
 import Foundation
 
-actor MachineObservationCollection: Loggable {
+internal actor MachineObservationCollection: Loggable {
   static var loggingCategory: BushelLogging.Category {
     .machine
   }

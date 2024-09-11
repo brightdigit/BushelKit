@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 extension Task where Success == Never, Failure == Never {
   public static func sleepForSecondsBetween(

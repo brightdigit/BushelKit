@@ -53,13 +53,20 @@
       )
     }
 
-    public static func withDatabase(_ database: any Database, fromURL url: URL) async throws -> ModelID<BookmarkData>? {
+    public static func withDatabase(
+      _ database: any Database,
+      fromURL url: URL
+    ) async throws -> ModelID<BookmarkData>? {
       let path = url.standardizedFileURL.path
 
       return try await database.first(#Predicate<BookmarkData> { $0.path == path })
     }
 
-    public static func withDatabase<T: Sendable>(_ database: any Database, fromURL url: URL, _ body: @escaping @Sendable (BookmarkData) throws -> T) async throws -> T {
+    public static func withDatabase<T: Sendable>(
+      _ database: any Database,
+      fromURL url: URL,
+      _ body: @escaping @Sendable (BookmarkData) throws -> T
+    ) async throws -> T {
       let path = url.standardizedFileURL.path
 
       let bookmarkData: Data

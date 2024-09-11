@@ -23,8 +23,6 @@ packages:
     path: ./Packages/BushelApp
   BushelKit:
     path: ./Packages/BushelKit
-  RadiantKit:
-    path: ./Packages/RadiantKit
 targetTemplates:
   Application:
     type: application
@@ -74,7 +72,7 @@ targetTemplates:
           APIKey: E97E7359-8F7A-43DD-B8FC-D447B4A46DD8
         BrightDigitPrereleaseInfo:
           Label: beta
-          Base: 109
+          Base: 126
     sources:
       - path: "Support/macOS"
         name: macOS

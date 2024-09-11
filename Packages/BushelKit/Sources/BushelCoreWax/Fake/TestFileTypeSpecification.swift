@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
 import Foundation
+
+public import RadiantDocs
 
 public enum TestFileTypeSpecification: FileTypeSpecification {
   public static let fileType: FileType = .exportedAs(

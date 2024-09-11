@@ -32,7 +32,7 @@ public import Foundation
 extension Bundle {
   public struct MissingIdentifierError: Error {
     private init() {}
-    // swiftlint:disable:next strict_fileprivate
+
     fileprivate static let shared: any Error = MissingIdentifierError()
   }
 

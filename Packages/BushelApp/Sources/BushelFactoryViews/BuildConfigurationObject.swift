@@ -9,6 +9,7 @@
   import BushelLocalization
   import BushelLogging
   import BushelMachine
+  import RadiantDocs
   import SwiftData
   import SwiftUI
 

@@ -3,6 +3,8 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
+// swiftlint:disable file_length
+
 #if canImport(SwiftUI)
   import BushelCore
   import BushelDataCore
@@ -14,9 +16,11 @@
   import BushelViewsCore
   import Combine
   import DataThespian
+  import RadiantDocs
   import SwiftData
   import SwiftUI
 
+  #warning("Refactor into smaller pieces")
   @MainActor
   @Observable
   internal final class MachineObject: Loggable, Sendable {
@@ -135,8 +139,8 @@
       }
     }
 
-    @MainActor
-    func machineUpdated(_ update: MachineChange) {
+    // swiftlint:disable:next cyclomatic_complexity
+    @MainActor func machineUpdated(_ update: MachineChange) {
       if let properties = update.properties {
         self.machineUpdated(properties)
       }

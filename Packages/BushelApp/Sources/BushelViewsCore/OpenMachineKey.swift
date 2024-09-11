@@ -5,11 +5,11 @@
 
 #if canImport(SwiftUI) && os(macOS)
 
-  public import BushelCore
-
   import Foundation
 
   public import SwiftUI
+
+  public import RadiantDocs
 
   public typealias OpenMachineAction = OpenWindowWithAction
   private struct OpenMachineKey: EnvironmentKey {

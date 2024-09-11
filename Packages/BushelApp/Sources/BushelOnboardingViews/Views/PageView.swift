@@ -4,7 +4,9 @@
 //
 
 #if canImport(SwiftUI)
-  public import RadiantKit
+  import RadiantKit
+
+  public import RadiantPaging
 
   public import SwiftUI
 

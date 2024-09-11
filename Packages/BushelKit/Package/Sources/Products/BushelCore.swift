@@ -30,5 +30,6 @@
 struct BushelCore: Product, Target {
   var dependencies: any Dependencies {
     OperatingSystemVersion()
+    RadiantDocs()
   }
 }

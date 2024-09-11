@@ -6,7 +6,7 @@
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import BushelLocalization
-  import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
   internal struct GeneralSettingsView: View {
@@ -30,50 +30,8 @@
     @Environment(\.marketplace) var marketplace
 
     var body: some View {
-      // swiftlint:disable:next closure_body_length
       Form {
-        Section {
-          LabeledContent {
-            Toggle(
-              isOn: self.$machineShutdownActionOption.map(
-                to: { $0 == .closeWindow },
-                from: { $0 ? .closeWindow : nil }
-              )
-            ) {
-              Text(LocalizedStringID.settingsMachineShutdownAlwaysClose)
-            }
-          } label: {
-            Text(LocalizedStringID.settingsMachineShutdown)
-          }
-
-          LabeledContent {
-            Picker(
-              selection:
-              self.$sessionCloseButtonActionOption.map(
-                to: { $0.tag },
-                from: SessionCloseButtonActionOption.init
-              )
-            ) {
-              ForEach(
-                SessionCloseButtonActionOption.pickerValues,
-                id: \.tag
-              ) { value in
-                if !value.requiresSubscription || marketplace.purchased {
-                  Text(
-                    value.localizedID(default: LocalizedStringID.settingsSessionCloseLabel)
-                  )
-                  .tag(value.tag)
-                }
-              }
-            } label: {
-              Text(LocalizedStringID.settingsSessionCloseLabel)
-            }.labelsHidden()
-          } label: {
-            Text(LocalizedStringID.settingsSessionCloseLabel)
-          }
-        } header: {
-          Text(LocalizedStringID.settingsActiveSession)
-        }
+        machineCloseButtonSection()
         Section {
           GuidedLabeledContent(
             LocalizedStringID.settingsAutomaticSnapshotsDescription
@@ -86,41 +44,7 @@
           Text(LocalizedStringID.settingsAutomaticSnapshotsSection)
         }
 
-        Section {
-          HStack {
-            Spacer()
-            LabeledContent {
-              Picker(
-                selection: self.$recentDocumentsTypeFilterSelection,
-                content: {
-                  ForEach(DocumentTypeFilterOption.allCases) { value in
-                    Text(
-                      value.localizedID(default: LocalizedStringID.settingsFilterRecentDocumentsNone)
-                    )
-                    .tag(value.tag)
-                  }
-                },
-                label: {
-                  Text(.settingsFilterRecentDocumentsNone)
-                }
-              ).labelsHidden()
-            } label: {
-              Text(.settingsFilterRecentDocuments)
-            }
-          }
-          HStack {
-            Spacer()
-            LabeledContent {
-              Button(.settingsClearRecentDocuments) {
-                self.recentDocumentsClearDate = .init()
-              }
-            } label: {
-              Text(LocalizedStringID.settingsClearAllRecentDocuments)
-            }
-          }
-        } header: {
-          Text(LocalizedStringID.recentDocuments)
-        }
+        recentDocumentsSection()
       }
       .formStyle(.grouped)
       .onChange(of: self.recentDocumentsTypeFilterSelection) { _, newValue in
@@ -139,6 +63,89 @@
           return
         }
         self.recentDocumentsTypeFilterSelection = newSelection.rawValue
+      }
+    }
+
+    private func recentDocumentsSection() -> some View {
+      Section {
+        HStack {
+          Spacer()
+          LabeledContent {
+            Picker(
+              selection: self.$recentDocumentsTypeFilterSelection,
+              content: {
+                ForEach(DocumentTypeFilterOption.allCases) { value in
+                  Text(
+                    value.localizedID(default: LocalizedStringID.settingsFilterRecentDocumentsNone)
+                  )
+                  .tag(value.tag)
+                }
+              },
+              label: {
+                Text(.settingsFilterRecentDocumentsNone)
+              }
+            ).labelsHidden()
+          } label: {
+            Text(.settingsFilterRecentDocuments)
+          }
+        }
+        HStack {
+          Spacer()
+          LabeledContent {
+            Button(.settingsClearRecentDocuments) {
+              self.recentDocumentsClearDate = .init()
+            }
+          } label: {
+            Text(LocalizedStringID.settingsClearAllRecentDocuments)
+          }
+        }
+      } header: {
+        Text(LocalizedStringID.recentDocuments)
+      }
+    }
+
+    private func machineCloseButtonSection() -> some View {
+      Section {
+        LabeledContent {
+          Toggle(
+            isOn: self.$machineShutdownActionOption.map(
+              to: { $0 == .closeWindow },
+              from: { $0 ? .closeWindow : nil }
+            )
+          ) {
+            Text(LocalizedStringID.settingsMachineShutdownAlwaysClose)
+          }
+        } label: {
+          Text(LocalizedStringID.settingsMachineShutdown)
+        }
+
+        LabeledContent {
+          Picker(
+            selection:
+            self.$sessionCloseButtonActionOption.map(
+              to: { $0.tag },
+              from: SessionCloseButtonActionOption.init
+            )
+          ) {
+            ForEach(
+              SessionCloseButtonActionOption.pickerValues,
+              id: \.tag
+            ) { value in
+              if !value.requiresSubscription || marketplace.purchased {
+                Text(
+                  value.localizedID(default: LocalizedStringID.settingsSessionCloseLabel)
+                )
+                .tag(value.tag)
+              }
+            }
+          } label: {
+            Text(LocalizedStringID.settingsSessionCloseLabel)
+          }.labelsHidden()
+        } label: {
+          Text(LocalizedStringID.settingsSessionCloseLabel)
+        }
+      } header: {
+        Text(LocalizedStringID.settingsActiveSession)
       }
     }
   }

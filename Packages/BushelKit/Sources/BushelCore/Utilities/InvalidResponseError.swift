@@ -30,11 +30,13 @@
 public import Foundation
 
 #if canImport(FoundationNetworking)
+  // swiftlint:disable file_types_order
   public import FoundationNetworking
 
   extension URLResponse: @unchecked Sendable {}
 
   extension URL: @unchecked Sendable {}
+  // swiftlint:enable file_types_order
 #endif
 
 public struct InvalidResponseError: LocalizedError {

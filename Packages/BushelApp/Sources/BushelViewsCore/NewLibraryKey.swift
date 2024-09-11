@@ -5,7 +5,7 @@
 
 #if canImport(SwiftUI) && os(macOS)
 
-  public import BushelCore
+  public import RadiantDocs
 
   import Foundation
 

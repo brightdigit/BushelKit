@@ -3,13 +3,13 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-// swiftlint:disable file_length
 #if canImport(SwiftUI)
   import BushelCore
   import BushelData
   import BushelLocalization
   import BushelLogging
   import BushelViewsCore
+  import RadiantKit
   import SwiftData
   import SwiftUI
 
@@ -50,119 +50,13 @@
     @Environment(\.database) private var database
 
     var body: some View {
-      // swiftlint:disable closure_body_length
       Form {
-        Section {
-          GuidedLabeledContent(
-            LocalizedStringID.settingsResetUserSettingsDescription
-          ) {
-            Button(
-              role: .destructive
-            ) {
-              self.confimResetUserSettings = true
-            } label: {
-              HStack {
-                Image(systemName: "exclamationmark.triangle")
-                Text(.settingsResetUserSettingsLabel)
-              }
-            }
-          } label: {
-            HStack {
-              Image(systemName: "list.bullet.rectangle.fill")
-              Text(.settingsResetUserSettingsLabel)
-            }
-          }
-          GuidedLabeledContent(
-            LocalizedStringID.settingsClearDatabaseDescription
-          ) {
-            Button(
-              role: .destructive
-            ) {
-              self.confimClearDatbase = true
-            } label: {
-              HStack {
-                Image(systemName: "exclamationmark.triangle.fill")
-                Text(.settingsClearDatabaseLabel)
-              }
-            }
-          } label: {
-            HStack {
-              Image(systemName: "tablecells")
-              Text(.settingsClearDatabaseLabel)
-            }
-          }
-
-          GuidedLabeledContent(
-            LocalizedStringID.settingsResetAllDescription
-          ) {
-            Button(
-              role: .destructive
-            ) {
-              self.confirmClearAllSettings = true
-            } label: {
-              HStack {
-                Image(systemName: "exclamationmark.triangle.fill")
-                Text(.settingsResetAllLabel)
-              }
-            }
-          } label: {
-            HStack {
-              Image(systemName: "checkmark.gobackward")
-              Text(.settingsResetAllLabel)
-            }
-          }.foregroundStyle(Color.red)
-        } footer: {
-          Button("More Actions") {
-            self.isAdvancedButtonsVisible.toggle()
-          }.keyboardShortcut(KeyEquivalent("d"), modifiers: [.command, .option, .control])
-            .opacity(0.0)
-        }
-
-        Section {
-          LabeledContent {
-            Toggle(
-              isOn: self.$errorTrackingEnabled
-            ) {
-              Text(LocalizedStringID.enabled)
-            }
-          } label: {
-            Text(LocalizedStringID.settingsErrorTrackingEnabledText)
-          }
-          LabeledContent {
-            Toggle(
-              isOn: self.$analyticsTrackingEnabled
-            ) {
-              Text(LocalizedStringID.enabled)
-            }
-          } label: {
-            Text(LocalizedStringID.settingsAnalyticsTrackingEnabledText)
-          }
-        }
-
+        resetSection()
+        trackingSection()
         if self.isAdvancedButtonsVisible {
-          Section {
-            GuidedLabeledContent(
-              LocalizedStringID.settingsClearDatabaseDescription
-            ) {
-              Button(
-                role: .destructive
-              ) {
-                self.presentDebugDatabaseView = true
-              } label: {
-                HStack {
-                  Text(.settingsDatabaseShowButton)
-                }
-              }
-            } label: {
-              HStack {
-                Image(systemName: "tablecells")
-                Text(.settingsDatabaseShowTitle)
-              }
-            }
-          }
+          debugSection()
         }
       }
-      // swiftlint:enable closure_body_length
       .formStyle(.grouped)
       .confirmationDialog(
         Text(.settingsResetUserSettingsConfirmationTitle),
@@ -199,6 +93,90 @@
       .sheet(isPresented: self.$presentDebugDatabaseView, content: {
         DebugDatabaseView()
       })
+    }
+
+    private func resetSection() -> some View {
+      Section {
+        GuidedLabeledContent(
+          LocalizedStringID.settingsResetUserSettingsDescription,
+          destructiveButtonTextID: LocalizedStringID.settingsResetUserSettingsLabel,
+          destructiveButtonSystemName: "exclamationmark.triangle",
+          labelTextID: LocalizedStringID.settingsResetUserSettingsLabel,
+          labelImageSystemName: "list.bullet.rectangle.fill"
+        ) {
+          self.confimResetUserSettings = true
+        }
+        GuidedLabeledContent(
+          LocalizedStringID.settingsClearDatabaseDescription,
+          destructiveButtonTextID: LocalizedStringID.settingsClearDatabaseLabel,
+          destructiveButtonSystemName: "exclamationmark.triangle.fill",
+          labelTextID: LocalizedStringID.settingsClearDatabaseLabel,
+          labelImageSystemName: "tablecells"
+        ) {
+          self.confimClearDatbase = true
+        }
+        GuidedLabeledContent(
+          LocalizedStringID.settingsResetAllDescription,
+          destructiveButtonTextID: LocalizedStringID.settingsClearDatabaseLabel,
+          destructiveButtonSystemName: "exclamationmark.triangle.fill",
+          labelTextID: LocalizedStringID.settingsResetAllLabel,
+          labelImageSystemName: "checkmark.gobackward"
+        ) {
+          self.confirmClearAllSettings = true
+        }
+        .foregroundStyle(Color.red)
+      } footer: {
+        Button("More Actions") {
+          self.isAdvancedButtonsVisible.toggle()
+        }.keyboardShortcut(KeyEquivalent("d"), modifiers: [.command, .option, .control])
+          .opacity(0.0)
+      }
+    }
+
+    private func trackingSection() -> some View {
+      Section {
+        LabeledContent {
+          Toggle(
+            isOn: self.$errorTrackingEnabled
+          ) {
+            Text(LocalizedStringID.enabled)
+          }
+        } label: {
+          Text(LocalizedStringID.settingsErrorTrackingEnabledText)
+        }
+        LabeledContent {
+          Toggle(
+            isOn: self.$analyticsTrackingEnabled
+          ) {
+            Text(LocalizedStringID.enabled)
+          }
+        } label: {
+          Text(LocalizedStringID.settingsAnalyticsTrackingEnabledText)
+        }
+      }
+    }
+
+    private func debugSection() -> some View {
+      Section {
+        GuidedLabeledContent(
+          LocalizedStringID.settingsClearDatabaseDescription
+        ) {
+          Button(
+            role: .destructive
+          ) {
+            self.presentDebugDatabaseView = true
+          } label: {
+            HStack {
+              Text(.settingsDatabaseShowButton)
+            }
+          }
+        } label: {
+          HStack {
+            Image(systemName: "tablecells")
+            Text(.settingsDatabaseShowTitle)
+          }
+        }
+      }
     }
 
     func clearResetUserSettingAction() {

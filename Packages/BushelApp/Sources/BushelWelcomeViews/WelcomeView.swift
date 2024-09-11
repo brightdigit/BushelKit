@@ -11,7 +11,7 @@
   import BushelMessage
   import BushelOnboardingEnvironment
   import BushelSessionEnvironment
-  import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
   internal struct WelcomeView: SingleWindowView, Loggable {

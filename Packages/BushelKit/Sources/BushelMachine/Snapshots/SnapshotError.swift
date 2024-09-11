@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 internal enum SnapshotError: Error, LocalizedError, Sendable {
   case innerError(any Error)

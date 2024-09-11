@@ -28,11 +28,11 @@
 //
 
 #if os(macOS)
-  public import BushelCore
+  import BushelCore
 
-  public import BushelLogging
+  import BushelLogging
 
-  public import Foundation
+  import Foundation
 
   extension FileManager {
     internal func fileUpdates(

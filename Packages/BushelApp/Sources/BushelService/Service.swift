@@ -8,7 +8,7 @@
 
   public import DataThespian
 
-  public import BushelData
+  import BushelData
   import BushelMessage
 
   public import BushelMessageCore
@@ -52,14 +52,14 @@
 
     func performTask(with _: XPCReceivedMessage) -> (any (Encodable & Sendable))? {
       nil
-//      do {
-//        return try wait { [
-//          try await self.perform(command: message)
-//        }
-//      } catch {
-//        print("Failed to decode received message, error: \(error)")
-//        return nil
-//      }
+      //      do {
+      //        return try wait { [
+      //          try await self.perform(command: message)
+      //        }
+      //      } catch {
+      //        print("Failed to decode received message, error: \(error)")
+      //        return nil
+      //      }
     }
 
     func incomingSessionHandler(

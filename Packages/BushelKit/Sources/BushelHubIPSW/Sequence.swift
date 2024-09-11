@@ -29,7 +29,7 @@
 
 public import BushelCore
 
-public import BushelLogging
+import BushelLogging
 
 #if canImport(FoundationNetworking)
   public import Logging

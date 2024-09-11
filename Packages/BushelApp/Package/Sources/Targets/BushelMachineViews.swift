@@ -9,7 +9,7 @@ struct BushelMachineViews: Target {
     BushelLogging()
     BushelUT()
     BushelLocalization()
-    BushelViewsCore()
+    RadiantKit()
     BushelScreenCore()
     BushelFactoryViews()
     BushelMachineEnvironment()

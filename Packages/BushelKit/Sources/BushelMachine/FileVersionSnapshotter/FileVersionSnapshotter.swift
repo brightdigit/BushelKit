@@ -28,7 +28,7 @@
 //
 
 #if os(macOS)
-  public import BushelCore
+  import BushelCore
 
   public import BushelLogging
 
@@ -57,7 +57,10 @@
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
-      let exportedConfiguration = await MachineConfiguration(snapshot: snapshot, original: machine.updatedConfiguration)
+      let exportedConfiguration = await MachineConfiguration(
+        snapshot: snapshot,
+        original: machine.updatedConfiguration
+      )
       let data = try JSON.encoder.encode(exportedConfiguration)
       let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
       let newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)

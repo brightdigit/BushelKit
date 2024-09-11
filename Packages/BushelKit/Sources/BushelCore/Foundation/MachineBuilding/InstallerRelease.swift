@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 public protocol InstallerRelease: Sendable, Identifiable, Equatable {
   var versionName: String { get }

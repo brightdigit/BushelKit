@@ -29,7 +29,7 @@
 
 public import BushelCore
 
-public import BushelLibrary
+import BushelLibrary
 
 public import BushelLogging
 

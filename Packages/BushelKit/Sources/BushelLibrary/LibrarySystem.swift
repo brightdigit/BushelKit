@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import RadiantDocs
 
 public import Foundation
+
+public import BushelCore
 
 public protocol LibrarySystem: Sendable {
   var id: VMSystemID { get }

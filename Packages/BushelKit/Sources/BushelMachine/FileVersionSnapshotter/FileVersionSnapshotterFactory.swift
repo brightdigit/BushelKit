@@ -30,7 +30,7 @@
 #if os(macOS)
   public import BushelCore
 
-  public import Foundation
+  import Foundation
 
   public struct FileVersionSnapshotterFactory: SnapshotterFactory {
     public static var systemID: SnapshotterID {

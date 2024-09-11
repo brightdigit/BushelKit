@@ -32,7 +32,7 @@ public import Foundation
 public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
   public let id: UUID
   public let displays: [GraphicsDisplay]
-  // swiftlint:disable:next function_default_parameter_at_end
+
   public init(id: UUID = .init(), displays: [GraphicsDisplay]) {
     self.id = id
     self.displays = displays

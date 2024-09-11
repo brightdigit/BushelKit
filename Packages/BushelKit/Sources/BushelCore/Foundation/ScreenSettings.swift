@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
 public struct ScreenSettings: CustomDebugStringConvertible {
   public var capturesSystemKeys = false

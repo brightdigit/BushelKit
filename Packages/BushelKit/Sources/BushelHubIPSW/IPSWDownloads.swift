@@ -36,7 +36,7 @@ import OpenAPIURLSession
 
 @_exported public import struct IPSWDownloads.IPSWDownloads
 
-extension IPSWDownloads: Loggable, @retroactive Sendable {
+extension IPSWDownloads: Loggable {
   private static let title = "IPSW Downloads"
   private static let hubID = "ipsw-downloads"
   private static let virtualMacID = "VirtualMac2,1"

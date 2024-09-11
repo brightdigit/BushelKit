@@ -8,7 +8,7 @@
   import BushelCore
   import BushelData
   import BushelLogging
-  import BushelViewsCore
+  import RadiantKit
   import SwiftData
   import SwiftUI
 

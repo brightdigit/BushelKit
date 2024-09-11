@@ -27,65 +27,65 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public protocol PropertyChange: PropertyChangeFromValue, Sendable {
-  associatedtype ValueType: Sendable
-  var values: PropertyValues<ValueType> { get }
-  static var property: MachineProperty { get }
-  init(values: PropertyValues<ValueType>)
-}
-
 public struct StatePropertyChange: PropertyChange {
-  public let values: PropertyValues<MachineState>
+  public typealias ValueType = MachineState
   public nonisolated(unsafe) static let property: MachineProperty = .state
+  public let values: PropertyValues<MachineState>
   public init(values: PropertyValues<MachineState>) {
     self.values = values
   }
 }
 
 public struct CanStartPropertyChange: PropertyChange {
-  public let values: PropertyValues<Bool>
   public nonisolated(unsafe) static let property: MachineProperty = .canStart
+  public let values: PropertyValues<Bool>
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
 public struct CanStopPropertyChange: PropertyChange {
-  public let values: PropertyValues<Bool>
   public nonisolated(unsafe) static let property: MachineProperty = .canStop
+  public let values: PropertyValues<Bool>
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
 public struct CanPausePropertyChange: PropertyChange {
-  public let values: PropertyValues<Bool>
   public nonisolated(unsafe) static let property: MachineProperty = .canPause
+  public let values: PropertyValues<Bool>
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
 public struct CanResumePropertyChange: PropertyChange {
-  public let values: PropertyValues<Bool>
   public nonisolated(unsafe) static let property: MachineProperty = .canResume
+  public let values: PropertyValues<Bool>
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
 public struct CanRequestStopPropertyChange: PropertyChange {
-  public let values: PropertyValues<Bool>
   public nonisolated(unsafe) static let property: MachineProperty = .canRequestStop
+  public let values: PropertyValues<Bool>
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
+public protocol PropertyChange: PropertyChangeFromValue, Sendable {
+  associatedtype ValueType: Sendable = Bool
+  static var property: MachineProperty { get }
+  var values: PropertyValues<ValueType> { get }
+  init(values: PropertyValues<ValueType>)
+}
+
 extension PropertyChange {
   public func getValue<Value: Sendable>() -> Value? {
     let value = self.values.new as? Value
-    // assert(value != nil)
     return value
   }
 }

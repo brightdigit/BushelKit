@@ -36,10 +36,6 @@
   }
 
   extension BookmarkURL {
-    public static func withDatabase<T: Sendable>(_ database: any Database, bookmarkID: UUID, _ body: @Sendable @escaping (BookmarkData?) throws -> T) async throws -> T {
-      try await database.first(#Predicate<BookmarkData> { $0.bookmarkID == bookmarkID }, with: body)
-    }
-
     public init<BookmarkedErrorType: BookmarkedError>(
       bookmarkID: UUID,
       database: any Database,
@@ -69,6 +65,14 @@
           databaseError: BookmarkedErrorType.databaseError(_:)
         )
       }
+    }
+
+    public static func withDatabase<T: Sendable>(
+      _ database: any Database,
+      bookmarkID: UUID,
+      _ body: @Sendable @escaping (BookmarkData?) throws -> T
+    ) async throws -> T {
+      try await database.first(#Predicate<BookmarkData> { $0.bookmarkID == bookmarkID }, with: body)
     }
   }
 #endif

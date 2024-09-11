@@ -855,6 +855,7 @@ BushelFactory()
 BushelViewsCore()
 BushelMachineEnvironment()
 RadiantKit()
+RadiantDocs()
 }
 }
 struct BushelMachineEnvironment: Target {
@@ -888,7 +889,8 @@ BushelLibraryEnvironment()
 BushelLogging()
 BushelUT()
 BushelViewsCore()
-BushelProgressUI()
+RadiantDocs()
+RadiantProgress()
 DataThespian()
 }
 }
@@ -939,7 +941,7 @@ BushelMachineData()
 BushelLogging()
 BushelUT()
 BushelLocalization()
-BushelViewsCore()
+RadiantKit()
 BushelScreenCore()
 BushelFactoryViews()
 BushelMachineEnvironment()
@@ -968,6 +970,7 @@ BushelCore()
 BushelLogging()
 BushelEnvironmentCore()
 BushelOnboardingCore()
+RadiantKit()
 }
 }
 struct BushelFeedbackCore: Target {
@@ -1028,7 +1031,7 @@ var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
 BushelLocalization()
-BushelViewsCore()
+RadiantPaging()
 RadiantKit()
 BushelOnboardingCore()
 }
@@ -1049,6 +1052,7 @@ BushelLogging()
 BushelCore()
 BushelLibrary()
 BushelLocalization()
+RadiantKit()
 }
 }
 struct BushelFactoryRepository: Target {
@@ -1214,6 +1218,7 @@ BushelHub()
 BushelHubEnvironment()
 BushelLibraryEnvironment()
 BushelMachineEnvironment()
+RadiantDocs()
 }
 }
 struct BushelServiceTests: TestTarget {
@@ -1229,6 +1234,21 @@ BushelSession()
 struct AviaryInsights: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/AviaryInsights.git", from: "1.0.0-beta.1")
+}
+}
+struct RadiantPaging: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
+struct RadiantProgress: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
+struct RadiantDocs: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
 }
 }
 struct SentryCocoa: PackageDependency {
@@ -1267,11 +1287,6 @@ BushelKit()
 }
 }
 struct BushelHubMacOS: TargetDependency {
-var package: PackageDependency {
-BushelKit()
-}
-}
-struct BushelProgressUI: TargetDependency {
 var package: PackageDependency {
 BushelKit()
 }
@@ -1328,7 +1343,7 @@ var dependency: Package.Dependency {
 }
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(path: "../RadiantKit")
+.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.1")
 }
 }
 struct WishKit: PackageDependency, TargetDependency {
