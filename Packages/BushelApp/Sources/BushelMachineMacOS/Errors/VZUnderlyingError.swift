@@ -4,7 +4,7 @@
 //
 
 #if canImport(Virtualization)
-  import Virtualization
+  public import Virtualization
 
   public protocol VZUnderlyingError {
     var domain: VZError.UnderlyingError.Domain { get }

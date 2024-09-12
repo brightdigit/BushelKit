@@ -27,7 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
+
 import OperatingSystemVersion
 
 /// Represents metadata associated with an image file.

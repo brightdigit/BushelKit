@@ -33,15 +33,15 @@ import BushelMachine
     }
 
     func beginSnapshot() {
-      guard let machine = machineObject?.machine else {
+      guard let machineObject else {
         assertionFailure("Missing machine or url.")
         return
       }
 
       Task {
-        if machine.canPause {
+        if machineObject.canPause {
           do {
-            try await machine.pause()
+            try await machineObject.machine.pause()
           } catch let error as MachineError {
             self.error = error
           } catch {

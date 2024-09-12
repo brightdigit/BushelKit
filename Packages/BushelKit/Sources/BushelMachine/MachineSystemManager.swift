@@ -27,8 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
+public import BushelCore
+
+public import BushelLogging
+
 import Foundation
 
 /// Implementation of a ``MachineSystemManaging``

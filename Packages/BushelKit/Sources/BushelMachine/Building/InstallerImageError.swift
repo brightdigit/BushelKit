@@ -27,9 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
+
 import BushelLogging
-import Foundation
+
+public import Foundation
 
 public struct InstallerImageError: Error, Sendable {
   public enum ErrorType: Sendable {

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum Formatters {
   #if os(macOS)
@@ -40,24 +40,45 @@ public enum Formatters {
       return secondsFormatter
     }()
   #endif
+  #if canImport(FoundationNetworking)
+    public nonisolated(unsafe) static let lastModifiedDateFormatter: DateFormatter = {
+      let formatter = DateFormatter()
+      formatter.dateFormat = $0
+      return formatter
+    }("E, d MMM yyyy HH:mm:ss Z")
 
-  public static let lastModifiedDateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = $0
-    return formatter
-  }("E, d MMM yyyy HH:mm:ss Z")
+    public nonisolated(unsafe) static let snapshotDateFormatter = {
+      var formatter = DateFormatter()
+      formatter.dateStyle = .medium
+      formatter.timeStyle = .medium
+      return formatter
+    }()
 
-  public static let snapshotDateFormatter = {
-    var formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .medium
-    return formatter
-  }()
+    public nonisolated(unsafe) static let longDate: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateStyle = .long
+      dateFormatter.timeStyle = .none
+      return dateFormatter
+    }()
+  #else
+    public static let lastModifiedDateFormatter: DateFormatter = {
+      let formatter = DateFormatter()
+      formatter.dateFormat = $0
+      return formatter
+    }("E, d MMM yyyy HH:mm:ss Z")
 
-  public static let longDate: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .long
-    dateFormatter.timeStyle = .none
-    return dateFormatter
-  }()
+    public static let snapshotDateFormatter = {
+      var formatter = DateFormatter()
+      formatter.dateStyle = .medium
+      formatter.timeStyle = .medium
+      return formatter
+    }()
+
+    public static let longDate: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateStyle = .long
+      dateFormatter.timeStyle = .none
+      return dateFormatter
+    }()
+  #endif
 }

@@ -27,7 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
+public import BushelMachine
+
 import Foundation
 
 extension MachineConfiguration {

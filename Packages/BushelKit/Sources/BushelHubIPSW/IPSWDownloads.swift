@@ -27,14 +27,16 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelHub
-import BushelLogging
+public import BushelHub
+
+public import BushelLogging
+
 import Foundation
 import OpenAPIURLSession
 
-@_exported import struct IPSWDownloads.IPSWDownloads
+@_exported public import struct IPSWDownloads.IPSWDownloads
 
-extension IPSWDownloads: Loggable, Sendable {
+extension IPSWDownloads: Loggable {
   private static let title = "IPSW Downloads"
   private static let hubID = "ipsw-downloads"
   private static let virtualMacID = "VirtualMac2,1"

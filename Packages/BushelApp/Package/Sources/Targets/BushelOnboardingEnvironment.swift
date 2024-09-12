@@ -9,5 +9,6 @@ struct BushelOnboardingEnvironment: Target {
     BushelLogging()
     BushelEnvironmentCore()
     BushelOnboardingCore()
+    RadiantKit()
   }
 }

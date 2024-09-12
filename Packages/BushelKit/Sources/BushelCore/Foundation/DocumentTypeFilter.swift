@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import RadiantDocs
 
 public struct DocumentTypeFilter: OptionSet, Sendable {
   public typealias RawValue = Int

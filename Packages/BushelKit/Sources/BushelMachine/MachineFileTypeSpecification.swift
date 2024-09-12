@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+import RadiantKit
+
+public import RadiantDocs
 
 public enum MachineFileTypeSpecification: FileTypeSpecification {
   public static let fileType: FileType = .virtualMachine

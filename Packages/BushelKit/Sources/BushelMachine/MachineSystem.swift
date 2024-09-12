@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
 
 /// Manages a set of machines for a system
 public protocol MachineSystem: Sendable {
@@ -51,7 +52,7 @@ public protocol MachineSystem: Sendable {
   func createBuilder(
     for configuration: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
-  ) throws -> any MachineBuilder
+  ) async throws -> any MachineBuilder
 
   /// Creates a machine based on the url and configuration.
   /// - Parameters:

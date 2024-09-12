@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+  public import FoundationNetworking
 #endif
 
 public struct FileManagerHandler: FileHandler {
@@ -40,13 +40,9 @@ public struct FileManagerHandler: FileHandler {
     self.fileManager = fileManager
   }
 
-  public func attributesAt(_ url: URL) throws -> any AttributeSet {
-    #if canImport(FoundationNetworking)
-      let dictionary = try self.fileManager().attributesOfItem(atPath: url.path)
-    #else
-      let dictionary = try self.fileManager().attributesOfItem(atPath: url.path(percentEncoded: false))
-    #endif
-    return DictionaryAttributeSet(dictionary: dictionary)
+  public func sizeOf(_ url: URL) throws -> Int? {
+    let dictionary: [FileAttributeKey: Any] = try self.fileManager().attributesOfItem(atPath: url.path)
+    return dictionary[.size] as? Int
   }
 
   public func copy(at fromURL: URL, to toURL: URL) async throws {

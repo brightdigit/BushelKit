@@ -27,12 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelLogging
-import Foundation
+public import BushelCore
+
+public import BushelLogging
+
+public import Foundation
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+  public import FoundationNetworking
 #endif
 
 public struct MachineError: LocalizedError, Loggable, Sendable {
@@ -151,5 +153,9 @@ extension MachineError {
 
   public static func fromDatabaseError(_ error: any Error) -> MachineError {
     MachineError(details: .database, innerError: error)
+  }
+
+  public static func notFound(bookmarkID: UUID) -> MachineError {
+    .init(details: .notFoundBookmarkID(bookmarkID))
   }
 }

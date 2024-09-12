@@ -27,10 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelHub
+public import BushelHub
 import BushelMacOSCore
+
 import Foundation
-import IPSWDownloads
+
+public import IPSWDownloads
 
 extension HubImage {
   public init(firmware: Firmware) throws {

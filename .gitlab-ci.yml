@@ -24,7 +24,7 @@ cache:
       files:
         - Package.resolved
     paths:
-      - Packages/RadiantKit/.build
+      - Packages/BushelApp/.build
       - Packages/BushelKit/.build
       - ~/.swiftpm
   - key:
@@ -51,17 +51,17 @@ cache:
 
 .build_spm_macos: &build_spm_macos
   script:
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/$PACKAGE_NAME
     - xcodebuild -resolvePackageDependencies
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.5,name=iPhone 15" &>/dev/null || true
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=17.5,name=iPhone 15"
-    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator17.5 -destination "OS=17.5,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 15" &>/dev/null || true
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 15"
+    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator18.0 -destination "OS=18.0,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
     - popd
     - XCRESULT=$(find . -path "./Packages/$PACKAGE_NAME/Build/Logs/Test/Test-$SCHEME_NAME-*.xcresult")
     - echo ${XCRESULT}    
-    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+#    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
 
 
 .lint_template: &lint_template
@@ -85,7 +85,7 @@ cache:
     - git diff --exit-code
     - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
     - brew install mint
-    - LINT_MODE=$LINT_MODE ./Scripts/lint.sh    
+    - LINT_MODE=${LINT_MODE} ./Scripts/lint.sh    
     
 build spm macos bushelkit:
   <<: *build_template
@@ -100,14 +100,6 @@ build spm macos bushelapp:
   variables:
     PACKAGE_NAME: "BushelApp"
     SCHEME_NAME: "BushelApp-Package"
-
-build spm macos radiantkit:
-  <<: *build_template
-  <<: *build_spm_macos  
-  variables:
-    PACKAGE_NAME: "RadiantKit"
-    SCHEME_NAME: "RadiantKit"
-
       
 upload spm macos coverage:
   stage: build
@@ -115,7 +107,7 @@ upload spm macos coverage:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $APPSTORE_DEPLOY == null
-  needs: ["build spm macos bushelkit","build spm macos bushelapp","build spm macos radiantkit"]
+  needs: ["build spm macos bushelkit","build spm macos bushelapp"]
   image: ellerbrock/alpine-bash-curl-ssl
   artifacts:
     paths:
@@ -132,7 +124,7 @@ upload spm macos coverage:
   except:
     variables:
       - $APPSTORE_DEPLOY
-  image: swift:5.10-jammy
+  image: swiftlang/swift:nightly-6.0-jammy
   script:
     - cd Packages/$PACKAGE_NAME
     - swift build
@@ -151,11 +143,6 @@ build spm linux bushelapp:
   <<: *build_template_linux
   variables:
     PACKAGE_NAME: "BushelApp"
-
-build spm linux radiantkit:
-  <<: *build_template_linux
-  variables:
-    PACKAGE_NAME: "RadiantKit"
 
 lint:
   except:
@@ -205,7 +192,7 @@ testflight:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
@@ -231,6 +218,6 @@ production:
   script:
     - rbenv rehash
     - rbenv exec bundle install
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane production

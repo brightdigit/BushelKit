@@ -5,7 +5,9 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+
   import BushelHub
+
   import SwiftUI
 
   internal struct HubDetailView: View {

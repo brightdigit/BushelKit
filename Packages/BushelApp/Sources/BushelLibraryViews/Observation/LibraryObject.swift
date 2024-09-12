@@ -9,7 +9,7 @@
   import BushelLibrary
   import BushelLibraryData
   import BushelLogging
-  import BushelProgressUI
+  import DataThespian
   import SwiftData
   import SwiftUI
 
@@ -17,7 +17,8 @@
   @Observable
   internal final class LibraryObject: Loggable {
     internal var library: Library
-    internal private(set) var entry: LibraryEntry
+
+    internal private(set) var model: ModelID<LibraryEntry>
 
     @ObservationIgnored
     internal private(set) var database: (any Database)?
@@ -27,14 +28,15 @@
 
     internal init(
       library: Library,
-      entry: LibraryEntry,
+      model: ModelID<LibraryEntry>,
       database: (any Database)? = nil,
       librarySystemManager: (any LibrarySystemManaging)? = nil
     ) {
       self.database = database
       self.librarySystemManager = librarySystemManager
       self.library = library
-      self.entry = entry
+
+      self.model = model
     }
 
     internal func updateMetadata(_ metadata: ImageMetadata, at index: Int) {

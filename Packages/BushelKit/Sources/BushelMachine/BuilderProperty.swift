@@ -28,6 +28,7 @@
 //
 
 import BushelCore
+
 import Foundation
 
 public enum BuilderProperty: String, Equatable, Sendable {

@@ -1,5 +1,5 @@
 {
-  "originHash" : "5e917cd2e45d3aca5e0c1b372ec318d2e071b1ee1181289fa678fe20b3c64735",
+  "originHash" : "b09bc85f76bcfaa08c5b7b544191d240d35d3dbe7e88e034594160bb679669a9",
   "pins" : [
     {
       "identity" : "aviaryinsights",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "6dcd80af858d8f0da2142d8df0e8e689e260a44b",
         "version" : "1.0.0-beta.1"
+      }
+    },
+    {
+      "identity" : "datathespian",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/DataThespian.git",
+      "state" : {
+        "revision" : "4f20302e9b93d4479f2c70f2fd2a4dfd74fe5522",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -47,6 +56,15 @@
       }
     },
     {
+      "identity" : "radiantkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/RadiantKit.git",
+      "state" : {
+        "revision" : "1d8e4020b289913a60204d50ae18df0c232d402b",
+        "version" : "1.0.0-alpha.1"
+      }
+    },
+    {
       "identity" : "sentry-cocoa",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa",
@@ -60,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "fee6933f37fde9a5e12a1e4aeaa93fe60116ff2a",
-        "version" : "1.2.2"
+        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
+        "version" : "1.5.0"
       }
     },
     {

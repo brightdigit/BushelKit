@@ -4,14 +4,16 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
+  public import BushelCore
   import BushelFactoryViews
   import BushelFeatureFlags
-  import BushelLogging
+
+  public import BushelLogging
   import BushelMachine
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct MachineScene: Scene, Loggable {
     static let minimumWidth = 512.0

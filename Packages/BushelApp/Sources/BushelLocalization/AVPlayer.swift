@@ -8,7 +8,7 @@ public enum VideoResource {
 }
 
 #if canImport(AVKit)
-  import AVKit
+  public import AVKit
   import Foundation
 
   extension AVPlayer {

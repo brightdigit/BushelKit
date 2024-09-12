@@ -4,8 +4,10 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import FeatherQuill
+  public import BushelCore
+
+  public import FeatherQuill
+
   import SwiftUI
 
   public protocol BushelFeatureFlag: FeatureFlag {}

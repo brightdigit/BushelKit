@@ -8,55 +8,41 @@
   import BushelCore
   import BushelLibrary
   import BushelLocalization
+  import BushelLogging
   import SwiftUI
 
   @MainActor
-  internal struct ImageView: View, Sendable {
+  internal struct ImageView: View, Sendable, Loggable {
     @Environment(\.openWindow) private var openWindow
     @Bindable private var image: LibraryImageObject
     @State private var metadataLabel: MetadataLabel
     private let system: any LibrarySystem
     private var onSave: @Sendable @MainActor () -> Void
 
-    internal var body: some View {
+    var body: some View {
       VStack {
-        HStack(alignment: .top) {
-          Image.resource(metadataLabel.imageName)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 80, height: 80)
-            .mask { Circle() }
-            .overlay { Circle().stroke() }
-            .padding(.horizontal)
-            .accessibilityHidden(true)
-          VStack(alignment: .leading) {
-            TextField("Name", text: self.$image.name, onCommit: self.beginSave)
-              .font(.largeTitle)
-              .accessibilityIdentifier(Library.nameField.identifier)
-
-            Text(metadataLabel.operatingSystemLongName)
-              .lineLimit(1)
-              .font(.title)
-              .accessibilityIdentifier(Library.operatingSystemName.identifier)
-            Text(
-              Int64(image.metadata.contentLength), format: .byteCount(style: .file)
-            )
-            .font(.title2)
-            .accessibilityIdentifier(Library.contentLength.identifier)
-            Text(image.metadata.lastModified, style: .date).font(.title2)
-              .accessibilityIdentifier(Library.lastModified.identifier)
-          }
-        }
-        .accessibilityElement(children: .contain)
+        ImageHeader(image: self.$image, metadataLabel: self.metadataLabel, beginSave: self.beginSave)
         Button("Build") {
-          openWindow(
-            value: MachineBuildRequest(
-              restoreImage: .init(
-                imageID: image.entry.imageID,
-                libraryID: .bookmarkID(image.library.entry.bookmarkDataID)
+          Task {
+            let bookmarkID: UUID
+            do {
+              bookmarkID = try await image.library.bookmarkID
+            } catch {
+              Self.logger.error("Unable to find bookmarkID for \(image.name)")
+              assertionFailure(error: error)
+              return
+            }
+            await MainActor.run {
+              openWindow(
+                value: MachineBuildRequest(
+                  restoreImage: .init(
+                    imageID: image.imageID,
+                    libraryID: .bookmarkID(bookmarkID)
+                  )
+                )
               )
-            )
-          )
+            }
+          }
         }
         .accessibilityHint("Configure a new virtual machine")
         .disabled(!self.image.metadata.isImageSupported)

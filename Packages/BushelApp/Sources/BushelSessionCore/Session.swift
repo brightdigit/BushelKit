@@ -3,8 +3,9 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelMessageCore
+public import BushelMessageCore
 
+#warning("Fix XPC Session")
 public protocol Session: Sendable {
   var isInitialized: Bool { get }
   var isReady: Bool { get }

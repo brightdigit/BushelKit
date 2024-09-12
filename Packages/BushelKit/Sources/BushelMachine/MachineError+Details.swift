@@ -27,19 +27,21 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
+
 import BushelLogging
-import Foundation
+
+public import Foundation
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+  public import FoundationNetworking
 #endif
 
 extension MachineError {
   public enum Details: Sendable {
     private struct UnknownError: Error {
       private init() {}
-      // swiftlint:disable:next strict_fileprivate
+
       fileprivate static let shared = UnknownError()
     }
 
@@ -52,6 +54,7 @@ extension MachineError {
     case missingProperty(ObjectProperty)
     case snapshot
     case session
+    case notFoundBookmarkID(UUID)
 
     // swiftlint:disable:next cyclomatic_complexity
     internal func errorDescription(fromError error: (any Error)?) -> String {
@@ -95,6 +98,8 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to contnue with session: \(error.localizedDescription)"
+      case let .notFoundBookmarkID(id):
+        return "There's an issue finding machine with bookmark ID: \(id)"
       }
     }
 
@@ -135,6 +140,9 @@ extension MachineError {
         false
 
       case .session:
+        false
+
+      case .notFoundBookmarkID:
         false
       }
     }

@@ -5,9 +5,13 @@
 
 #if canImport(SwiftData) && canImport(XPC)
   import BushelCore
+
+  public import DataThespian
+
   import BushelData
   import BushelMessage
-  import BushelMessageCore
+
+  public import BushelMessageCore
   import Foundation
   import SwiftData
   @preconcurrency import XPC
@@ -46,15 +50,16 @@
       dispatchMain()
     }
 
-    func performTask(with message: XPCReceivedMessage) -> (any (Encodable & Sendable))? {
-      do {
-        return try wait {
-          try await self.perform(command: message)
-        }
-      } catch {
-        print("Failed to decode received message, error: \(error)")
-        return nil
-      }
+    func performTask(with _: XPCReceivedMessage) -> (any (Encodable & Sendable))? {
+      nil
+      //      do {
+      //        return try wait { [
+      //          try await self.perform(command: message)
+      //        }
+      //      } catch {
+      //        print("Failed to decode received message, error: \(error)")
+      //        return nil
+      //      }
     }
 
     func incomingSessionHandler(

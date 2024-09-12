@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public enum PackageSource: String, Codable, Equatable, Sendable {
   case packageSourceApple = "package_source_apple"

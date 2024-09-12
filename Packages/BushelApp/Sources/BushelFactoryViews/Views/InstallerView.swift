@@ -5,9 +5,12 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelLogging
-  import BushelMachine
-  import SwiftUI
+
+  public import BushelLogging
+
+  public import BushelMachine
+
+  public import SwiftUI
 
   @MainActor
   public struct InstallerView: View, Loggable, Sendable {

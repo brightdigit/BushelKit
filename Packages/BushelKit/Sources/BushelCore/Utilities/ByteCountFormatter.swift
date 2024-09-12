@@ -27,11 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 extension ByteCountFormatter {
-  public static let memory: ByteCountFormatter = .init(countStyle: .memory)
-  public static let file: ByteCountFormatter = .init(countStyle: .file)
+  public nonisolated(unsafe) static let memory: ByteCountFormatter = .init(countStyle: .memory)
+  public nonisolated(unsafe) static let file: ByteCountFormatter = .init(countStyle: .file)
 
   public convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
     self.init()

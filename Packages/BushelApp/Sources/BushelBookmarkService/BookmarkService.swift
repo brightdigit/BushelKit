@@ -4,8 +4,8 @@
 //
 
 #if canImport(SwiftData)
-  import BushelDataCore
-  import BushelDataMonitor
+  public import DataThespian
+
   import Foundation
 
   public struct BookmarkService: AgentRegister {

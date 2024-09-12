@@ -5,7 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
   internal struct AboutProductView<PurchaseScreenValue: Codable & Hashable>: View {

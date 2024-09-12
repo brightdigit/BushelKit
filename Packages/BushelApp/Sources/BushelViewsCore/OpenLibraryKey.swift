@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI) && os(macOS)
 
-  import BushelCore
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
+
+  public import RadiantDocs
 
   public typealias OpenLibraryAction = OpenWindowWithAction
 

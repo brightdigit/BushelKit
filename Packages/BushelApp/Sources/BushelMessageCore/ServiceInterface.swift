@@ -3,9 +3,9 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelDataCore
+public import DataThespian
 
-public protocol ServiceInterface: Sendable {
+public protocol ServiceInterface {
   #if canImport(SwiftData)
     var database: any Database {
       get

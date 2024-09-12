@@ -11,6 +11,8 @@ struct BushelLibraryViews: Target {
     BushelLogging()
     BushelUT()
     BushelViewsCore()
-    BushelProgressUI()
+    RadiantDocs()
+    RadiantProgress()
+    DataThespian()
   }
 }

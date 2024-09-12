@@ -10,5 +10,6 @@ import BushelApp
 
 @main
 struct BushelApp: Application {
+  
   @Environment(\.scenePhase) var scenePhase
 }

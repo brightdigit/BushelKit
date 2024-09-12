@@ -9,16 +9,16 @@
   import BushelDataCore
   import BushelMachine
   import BushelMachineData
+  import DataThespian
   import Foundation
   import SwiftData
 
   internal struct MachineObjectComponents: Sendable {
     typealias Machine = (any BushelMachine.Machine)
 
-    let bookmarkData: BookmarkData
     let machine: Machine
     let restoreImage: OperatingSystemVersionComponents?
-    let existingEntry: MachineEntry?
+    let existingModel: ModelID<MachineEntry>?
     let configuration: MachineObjectConfiguration
     let label: MetadataLabel
 
@@ -26,34 +26,36 @@
       machine: Machine,
       restoreImage: OperatingSystemVersionComponents?,
       configuration: MachineObjectConfiguration,
-      existingEntry: MachineEntry?,
-      bookmarkData: BookmarkData,
+      existingModel: ModelID<MachineEntry>?,
       label: MetadataLabel
     ) {
       if restoreImage == nil {
         MachineObject.logger.warning(
-          "Missing restore image with id: \(machine.configuration.restoreImageFile)"
+          "Missing restore image with id: \(machine.initialConfiguration.restoreImageFile)"
         )
       }
 
       self.machine = machine
       self.restoreImage = restoreImage
       self.configuration = configuration
-      self.existingEntry = existingEntry
-      self.bookmarkData = bookmarkData
+      self.existingModel = existingModel
       self.label = label
     }
 
     init(
       configuration: MachineObjectConfiguration,
-      bookmarkData: BookmarkData,
-      existingEntry: MachineEntry?
+      existingModel: ModelID<MachineEntry>
     ) async throws {
-      let newURL: URL
-      do {
-        newURL = try await bookmarkData.fetchURL(using: configuration.database)
-      } catch {
-        throw try MachineError.bookmarkError(error)
+      let bookmarkDataID = try await configuration.database.with(existingModel) {
+        $0.bookmarkDataID
+      }
+      let newURL = try await configuration.database.first(
+        #Predicate<BookmarkData> { $0.bookmarkID == bookmarkDataID }
+      ) {
+        try $0?.fetchURL()
+      }
+      guard let newURL else {
+        throw MachineError.bookmarkError(.notFound(.id(bookmarkDataID)))
       }
       guard newURL.startAccessingSecurityScopedResource() else {
         throw MachineError.accessDeniedError(nil, at: newURL)
@@ -73,22 +75,24 @@
 
       do {
         restoreImage = try await configuration.restoreImageDB.image(
-          withID: machine.configuration.restoreImageFile.imageID,
-          library: machine.configuration.restoreImageFile.libraryID,
+          withID: machine.updatedConfiguration.restoreImageFile.imageID,
+          library: machine.updatedConfiguration.restoreImageFile.libraryID,
           configuration.labelProvider
         )
       } catch {
         throw MachineError.fromDatabaseError(error)
       }
 
-      let label = configuration.labelProvider(machine.configuration.vmSystemID, machine.configuration)
+      let label = await configuration.labelProvider(
+        machine.updatedConfiguration.vmSystemID,
+        machine.updatedConfiguration
+      )
 
       self.init(
         machine: machine,
         restoreImage: restoreImage?.components,
         configuration: configuration,
-        existingEntry: existingEntry,
-        bookmarkData: bookmarkData,
+        existingModel: existingModel,
         label: label
       )
     }
@@ -96,35 +100,32 @@
     init(
       configuration: MachineObjectConfiguration
     ) async throws {
-      let bookmarkData: BookmarkData
-      bookmarkData = try await BookmarkData.resolveURL(configuration.url, with: configuration.database)
-
-      let bookmarkDataID = bookmarkData.bookmarkID
-      var machinePredicate = FetchDescriptor<MachineEntry>(
-        predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID }
+      let bookmarkModel = try await BookmarkData.withDatabase(
+        configuration.database,
+        fromURL: configuration.url
       )
+      guard let bookmarkModel else {
+        throw MachineError.bookmarkError(.notFound(.url(configuration.url)))
+      }
+      let bookmarkDataID = try await configuration.database.with(bookmarkModel) {
+        $0.update()
+        return $0.bookmarkID
+      }
 
-      machinePredicate.fetchLimit = 1
-
-      let item: MachineEntry?
+      let model: ModelID<MachineEntry>?
       do {
-        item = try await configuration.database.fetch {
-          FetchDescriptor(predicate: #Predicate { $0.bookmarkDataID == bookmarkDataID })
-        }.first
+        model = try await configuration.database.first(#Predicate { $0.bookmarkDataID == bookmarkDataID })
       } catch {
         throw MachineError.fromDatabaseError(error)
       }
+
+      guard let model else {
+        throw MachineError.notFound(bookmarkID: bookmarkDataID)
+      }
       try await self.init(
         configuration: configuration,
-        bookmarkData: bookmarkData,
-        existingEntry: item
+        existingModel: model
       )
-
-      do {
-        try await bookmarkData.update(using: configuration.database)
-      } catch {
-        assertionFailure(error: error)
-      }
     }
   }
 

@@ -6,9 +6,11 @@
 #if canImport(SwiftUI)
 
   import BushelCore
-  import BushelDataCore
   import BushelMachine
   import BushelSystem
+  import DataThespian
+  import RadiantDocs
+  import RadiantKit
   import SwiftData
   import SwiftUI
 
@@ -33,7 +35,7 @@
     @Sendable
     func installerImageRepository(_ database: any Database) -> any InstallerImageRepository
 
-    @Sendable
+    @MainActor
     func openFileURL(_ url: URL, openWindow: OpenWindowAction)
   }
 

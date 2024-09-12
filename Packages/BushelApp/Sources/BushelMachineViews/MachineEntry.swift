@@ -4,38 +4,48 @@
 //
 
 #if canImport(SwiftUI) && canImport(SwiftData)
+  import class BushelDataCore.BookmarkData
   import BushelMachine
   import BushelMachineData
+  import DataThespian
   import Foundation
 
   extension MachineEntry {
-    static func basedOnComponents(_ components: MachineObjectComponents) async throws -> MachineEntry {
-      if let item = components.existingEntry {
+    static func basedOnComponents(
+      _ components: MachineObjectComponents
+    ) async throws -> ModelID<MachineEntry> {
+      let updatedConfiguration = await components.machine.updatedConfiguration
+      let database = components.configuration.database
+      if let model = components.existingModel {
         do {
-          try await item.synchronizeWith(
-            components.machine,
+          return try await MachineEntry.syncronizeModel(
+            model,
+            with: components.machine,
             osInstalled: components.restoreImage,
-            using: components.configuration.database
+            using: database
           )
         } catch {
           throw MachineError.fromDatabaseError(error)
         }
-        return item
       } else {
-        do {
-          return try await MachineEntry(
-            bookmarkData: components.bookmarkData,
+        let url = components.configuration.url
+
+        let bookmarkDataID = try await BookmarkData.withDatabase(database, fromURL: url) { $0.bookmarkID
+        }
+
+        let machineModel: ModelID = await database.insert {
+          MachineEntry(
+            bookmarkDataID: bookmarkDataID,
             machine: components.machine,
+            updatedConfiguration: updatedConfiguration,
             osInstalled: components.restoreImage,
-            restoreImageID: components.machine.configuration.restoreImageFile.imageID,
+            restoreImageID: updatedConfiguration.restoreImageFile.imageID,
             name: components.configuration.url.deletingPathExtension().lastPathComponent,
             createdAt: Date(),
-            lastOpenedAt: Date(),
-            withDatabase: components.configuration.database
+            lastOpenedAt: Date()
           )
-        } catch {
-          throw MachineError.fromDatabaseError(error)
         }
+        return machineModel
       }
     }
   }

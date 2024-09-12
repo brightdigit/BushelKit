@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelLocalization
+
   import SwiftUI
 
   internal struct PurchaseFeatureView: View {

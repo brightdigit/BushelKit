@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public protocol AttributeSet: Sendable {
   func get<ValueType: BinaryInteger & Sendable>(_ key: FileAttributeKey) -> ValueType?

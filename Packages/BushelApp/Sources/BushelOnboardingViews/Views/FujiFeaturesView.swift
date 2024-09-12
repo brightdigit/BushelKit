@@ -5,9 +5,12 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelOnboardingCore
-  import BushelViewsCore
-  import SwiftUI
+
+  public import BushelOnboardingCore
+
+  public import RadiantKit
+
+  public import SwiftUI
 
   public struct FujiFeaturesView: SingleWindowView {
     public typealias Value = OnboardingWindowValue

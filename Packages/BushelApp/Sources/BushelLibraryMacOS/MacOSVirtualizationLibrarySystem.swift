@@ -5,10 +5,14 @@
 
 #if canImport(Virtualization) && arch(arm64)
 
-  import BushelCore
-  import BushelLibrary
+  public import BushelCore
+
+  public import RadiantDocs
+
+  public import BushelLibrary
   import BushelMacOSCore
-  import Foundation
+
+  public import Foundation
   import Virtualization
 
   public struct MacOSVirtualizationLibrarySystem: LibrarySystem {
@@ -20,7 +24,7 @@
       MacOSVirtualization.shortName
     }
 
-    public var allowedContentTypes: Set<BushelCore.FileType> {
+    public var allowedContentTypes: Set<FileType> {
       MacOSVirtualization.allowedContentTypes
     }
 
@@ -43,7 +47,7 @@
     }
 
     public func metadata(fromURL url: URL) async throws -> ImageMetadata {
-      let image = try await VZMacOSRestoreImage.loadFromURL(url)
+      let image = try await VZMacOSRestoreImage.unsafeLoadFromURL(url)
       return try await ImageMetadata(vzRestoreImage: image, url: url)
     }
 

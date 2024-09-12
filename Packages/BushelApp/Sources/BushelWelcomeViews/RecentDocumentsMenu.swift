@@ -6,7 +6,8 @@
 #if canImport(SwiftUI) && os(macOS)
   import BushelCore
   import Combine
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct RecentDocumentsMenu: View {
     @Environment(\.openWindow) private var openWindow

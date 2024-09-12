@@ -27,11 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
+
 import BushelLibrary
-import BushelLogging
-import BushelMachine
-import Foundation
+
+public import BushelLogging
+
+public import BushelMachine
+
+public import Foundation
 
 public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
   public var libraryID: LibraryIdentifier? {

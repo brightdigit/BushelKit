@@ -5,17 +5,22 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelHub
+
+  public import BushelHub
   import BushelHubEnvironment
-  import BushelLibrary
+
+  public import BushelLibrary
   import BushelLibraryEnvironment
-  import BushelMachine
+
+  public import BushelMachine
   import BushelMachineEnvironment
   import BushelUT
   import BushelViewsCore
   import Foundation
+  import RadiantDocs
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   @available(*, deprecated, message: "Use on Scene instead.")
   extension View {

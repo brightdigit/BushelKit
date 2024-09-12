@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
-extension Date: RawRepresentable {
+extension Date: @retroactive RawRepresentable {
   public typealias RawValue = Int
   private static let millisecondsInSeconds: TimeInterval = 1_000
 

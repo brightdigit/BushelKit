@@ -13,5 +13,6 @@ struct BushelSystem: Target {
     BushelHubEnvironment()
     BushelLibraryEnvironment()
     BushelMachineEnvironment()
+    RadiantDocs()
   }
 }

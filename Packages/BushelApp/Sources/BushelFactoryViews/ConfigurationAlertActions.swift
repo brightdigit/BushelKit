@@ -5,7 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct ConfigurationAlertActions: View {
     private let destinationURL: () -> URL?

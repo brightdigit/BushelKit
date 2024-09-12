@@ -29,7 +29,9 @@
 
 #if os(macOS)
   import BushelCore
+
   import BushelLogging
+
   import Foundation
 
   extension FileManager {

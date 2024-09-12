@@ -9,9 +9,10 @@
   import BushelLibraryEnvironment
   import BushelLocalization
   import BushelLogging
-  import BushelProgressUI
   import BushelViewsCore
   import Observation
+  import RadiantDocs
+  import RadiantProgress
   import SwiftUI
 
   @MainActor

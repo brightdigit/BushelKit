@@ -6,9 +6,12 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelEnvironmentCore
-  import BushelOnboardingCore
+
+  public import BushelOnboardingCore
   import Foundation
-  import SwiftUI
+  import RadiantKit
+
+  public import SwiftUI
 
   private struct OnboardingWindowValueKey: EnvironmentKey {
     typealias Value = OnboardingWindowValue

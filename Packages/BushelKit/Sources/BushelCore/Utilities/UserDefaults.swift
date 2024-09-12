@@ -27,7 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
+
+public import RadiantKit
 
 extension UserDefaults {
   public func bool(forKey key: String, defaultValue: Bool) -> Bool {

@@ -4,9 +4,11 @@
 //
 
 #if canImport(SwiftData)
-  import BushelLogging
+  public import BushelLogging
+
   import Foundation
-  import SwiftData
+
+  public import SwiftData
 
   extension PersistentModel where Self: Loggable {
     public static var loggingCategory: BushelLogging.Category {

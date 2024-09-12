@@ -27,13 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct NetworkConfiguration: Codable, Identifiable, Sendable {
   public let id: UUID
   public let attachment: NetworkingConfigurationAttachment
 
-  // swiftlint:disable:next function_default_parameter_at_end
   public init(id: UUID = .init(), attachment: NetworkingConfigurationAttachment) {
     self.id = id
     self.attachment = attachment

@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
 import BushelMacOSCore
+
 import Foundation
 
 extension ImageMetadata {

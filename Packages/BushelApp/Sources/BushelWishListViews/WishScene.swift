@@ -6,7 +6,8 @@
 #if canImport(SwiftUI)
   import BushelViewsCore
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct WishScene: Scene {
     public var body: some Scene {

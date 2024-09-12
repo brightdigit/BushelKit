@@ -8,11 +8,12 @@
   import BushelData
   import BushelFeedbackEnvironment
   import BushelLocalization
-  import BushelViewsCore
   import BushelWishListEnvironment
+  import RadiantDocs
   import StoreKit
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   public enum Welcome {
     public struct HelpCommands: View {

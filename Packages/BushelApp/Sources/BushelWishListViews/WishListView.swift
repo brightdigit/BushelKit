@@ -8,6 +8,8 @@
   import BushelMarketEnvironment
   import BushelViewsCore
   import BushelWishListEnvironment
+  import RadiantKit
+
   import SwiftUI
   @preconcurrency import WishKit
 

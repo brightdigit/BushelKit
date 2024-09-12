@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  public import SwiftUI
 
   extension Label where Title == Text, Icon == Image {
     public init(_ id: LocalizedStringID, systemImage: String) {

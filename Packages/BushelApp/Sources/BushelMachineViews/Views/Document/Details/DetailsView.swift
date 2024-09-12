@@ -17,7 +17,7 @@
             if let machineObject {
               SpecificationsView(
                 label: machineObject.label,
-                configuration: machineObject.machine.configuration
+                configuration: machineObject.machine.initialConfiguration
               )
             }
           }

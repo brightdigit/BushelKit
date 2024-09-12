@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashable, Sendable {
   public let libraryID: LibraryIdentifier?

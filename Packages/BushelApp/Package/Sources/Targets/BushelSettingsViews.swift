@@ -12,5 +12,6 @@ struct BushelSettingsViews: Target {
     BushelFeatureFlags()
     BushelFeedbackEnvironment()
     BushelWishListEnvironment()
+    DataThespian()
   }
 }

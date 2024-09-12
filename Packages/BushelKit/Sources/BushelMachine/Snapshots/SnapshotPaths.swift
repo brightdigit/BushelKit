@@ -28,7 +28,8 @@
 //
 
 import BushelCore
-import Foundation
+
+public import Foundation
 
 public struct SnapshotPaths {
   public let snapshottingSourceURL: URL

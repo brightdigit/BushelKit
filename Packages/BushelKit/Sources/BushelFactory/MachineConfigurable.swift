@@ -27,11 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachine
+public import BushelMachine
+
 import Foundation
 
 public protocol MachineConfigurable {
-  associatedtype Name: Hashable
+  associatedtype Name: Hashable & Sendable
   var machineSystem: (any MachineSystem)? { get async }
   var selectedBuildImage: SelectedVersion { get async }
   var specificationConfiguration: SpecificationConfiguration<Name>? { get async }

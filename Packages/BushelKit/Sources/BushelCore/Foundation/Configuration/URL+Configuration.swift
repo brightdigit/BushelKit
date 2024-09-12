@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 extension URL {
   public struct Bushel: Sendable {
@@ -94,7 +94,7 @@ extension URL.Bushel {
     }
   }
 
-  // swiftlint:disable:next force_unwrapping strict_fileprivate
+  // swiftlint:disable:next force_unwrapping
   fileprivate static let shared: URL.Bushel = .init()!
 
   private init?(bundle: Bundle = .main) {
@@ -135,7 +135,6 @@ extension URL.Bushel {
       print("missing key \(Key.company)")
       return nil
     }
-
 
     guard let contactMailTo = dictionary[Key.contactMailTo.rawValue].flatMap(URL.init(string:)) else {
       print("missing key \(Key.contactMailTo)")

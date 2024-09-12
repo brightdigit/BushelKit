@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI) && os(macOS)
 
-  import BushelCore
+  public import RadiantDocs
+
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
 
   public typealias NewLibraryAction = OpenWindowWithAction
   private struct NewLibraryKey: EnvironmentKey, Sendable {

@@ -28,7 +28,12 @@
 //
 
 import BushelCore
-import Foundation
+
+public import Foundation
+
+import RadiantKit
+
+public import RadiantDocs
 
 public enum LibraryFileSpecifications: InitializableFileTypeSpecification {
   public typealias WindowValueType = LibraryFile

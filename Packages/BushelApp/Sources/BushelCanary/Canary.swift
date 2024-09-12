@@ -5,6 +5,7 @@
 
 #if canImport(Sentry)
   import BushelCore
+
   import Foundation
   import Sentry
 

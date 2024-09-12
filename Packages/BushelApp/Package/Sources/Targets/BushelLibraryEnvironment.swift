@@ -11,5 +11,6 @@ struct BushelLibraryEnvironment: Target {
     BushelCore()
     BushelLibrary()
     BushelLocalization()
+    RadiantKit()
   }
 }

@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelViewsCore
+  import RadiantKit
   import SwiftUI
 
   internal struct ImageListItem: View {

@@ -5,8 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelLocalization
-  import BushelProgressUI
   import Foundation
+  import RadiantProgress
   import SwiftUI
 
   extension ProgressOperationView {

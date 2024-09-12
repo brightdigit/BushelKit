@@ -4,8 +4,11 @@
 //
 
 #if canImport(Virtualization)
-  import Virtualization
+  public import BushelMachine
 
+  public import Virtualization
+
+  extension VZError: @retroactive InstallFailureError {}
   extension VZError: VZInstallError {
     public var isVZError: Bool {
       true

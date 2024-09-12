@@ -8,7 +8,10 @@
   import BushelEnvironmentCore
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import RadiantKit
+
+  public import SwiftUI
 
   private struct WishListKey: EnvironmentKey {
     typealias Value = WishListValue

@@ -4,11 +4,15 @@
 //
 
 #if canImport(Observation) && (os(macOS) || os(iOS))
-  import BushelCore
-  import BushelFeatureFlags
-  import BushelLogging
-  import BushelMarket
-  import Foundation
+  public import BushelCore
+
+  public import BushelFeatureFlags
+
+  public import BushelLogging
+
+  public import BushelMarket
+
+  public import Foundation
   import Observation
 
   @MainActor
@@ -83,7 +87,7 @@
 
           self.subscriptions.merge(with: subscriptions)
           self.error = nil
-          Self.logger.debug("Successful update")
+          Self.logger.debug("Successful update: \(subscriptions.count)")
 
         case let .failure(.networkError(error)):
           Self.logger.debug("Subscription update network failure: \(error.localizedDescription)")

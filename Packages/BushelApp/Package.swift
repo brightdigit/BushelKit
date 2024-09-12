@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 import Foundation
 import PackageDescription
 extension _PackageDescription_Product {
@@ -241,7 +241,7 @@ accumulated + [next]
 }
 }
 extension LanguageTag {
-static let english: LanguageTag = "en"
+nonisolated(unsafe) static let english: LanguageTag = "en"
 }
 public protocol Target: _Depending, Dependency, _Named {
 var targetType: TargetType { get }
@@ -780,6 +780,7 @@ BushelFactory()
 BushelMarket()
 BushelWax()
 BushelMessage()
+DataThespian()
 }
 }
 struct BushelApp: Product, Target {
@@ -799,10 +800,10 @@ BushelXPCSession()
 BushelFactoryRepository()
 BushelFeatureFlags()
 BushelAnalytics()
-BushelDataMonitor()
 BushelBookmarkService()
 BushelCanary()
 BushelWishListViews()
+DataThespian()
 }
 }
 struct BushelUITests: Product, Target {
@@ -854,6 +855,7 @@ BushelFactory()
 BushelViewsCore()
 BushelMachineEnvironment()
 RadiantKit()
+RadiantDocs()
 }
 }
 struct BushelMachineEnvironment: Target {
@@ -876,6 +878,7 @@ var dependencies: any Dependencies {
 BushelDataCore()
 BushelMachine()
 BushelLogging()
+DataThespian()
 }
 }
 struct BushelLibraryViews: Target {
@@ -886,13 +889,9 @@ BushelLibraryEnvironment()
 BushelLogging()
 BushelUT()
 BushelViewsCore()
-BushelProgressUI()
-}
-}
-struct BushelDataMonitor: Target {
-var dependencies: any Dependencies {
-BushelCore()
-BushelLogging()
+RadiantDocs()
+RadiantProgress()
+DataThespian()
 }
 }
 struct BushelScreenCore: Target {}
@@ -900,7 +899,8 @@ struct BushelBookmarkService: Target {
 var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
-BushelDataMonitor()
+BushelDataCore()
+DataThespian()
 }
 }
 struct BushelLibraryData: Target {
@@ -941,13 +941,13 @@ BushelMachineData()
 BushelLogging()
 BushelUT()
 BushelLocalization()
-BushelViewsCore()
+RadiantKit()
 BushelScreenCore()
 BushelFactoryViews()
 BushelMachineEnvironment()
 BushelMarketEnvironment()
 BushelFeatureFlags()
-BushelDataMonitor()
+DataThespian()
 }
 }
 struct BushelData: Target {
@@ -970,6 +970,7 @@ BushelCore()
 BushelLogging()
 BushelEnvironmentCore()
 BushelOnboardingCore()
+RadiantKit()
 }
 }
 struct BushelFeedbackCore: Target {
@@ -983,7 +984,6 @@ Sentry()
 struct BushelWelcomeViews: Target {
 var dependencies: any Dependencies {
 BushelData()
-BushelDataMonitor()
 BushelLocalization()
 BushelOnboardingEnvironment()
 BushelMarketEnvironment()
@@ -992,6 +992,7 @@ BushelSessionEnvironment()
 BushelAccessibility()
 BushelFeedbackEnvironment()
 BushelWishListEnvironment()
+DataThespian()
 }
 }
 struct BushelMachineMacOS: Target {
@@ -1030,7 +1031,7 @@ var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
 BushelLocalization()
-BushelViewsCore()
+RadiantPaging()
 RadiantKit()
 BushelOnboardingCore()
 }
@@ -1051,6 +1052,7 @@ BushelLogging()
 BushelCore()
 BushelLibrary()
 BushelLocalization()
+RadiantKit()
 }
 }
 struct BushelFactoryRepository: Target {
@@ -1115,6 +1117,7 @@ var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
 BushelDataCore()
+DataThespian()
 }
 }
 struct BushelFeatureFlags: Target {
@@ -1129,6 +1132,7 @@ var dependencies: any Dependencies {
 BushelCore()
 BushelLogging()
 OperatingSystemVersion()
+DataThespian()
 }
 }
 struct BushelFeedbackEnvironment: Target {
@@ -1147,6 +1151,7 @@ BushelOnboardingEnvironment()
 BushelFeatureFlags()
 BushelFeedbackEnvironment()
 BushelWishListEnvironment()
+DataThespian()
 }
 }
 struct BushelXPCSession: Target {
@@ -1213,6 +1218,7 @@ BushelHub()
 BushelHubEnvironment()
 BushelLibraryEnvironment()
 BushelMachineEnvironment()
+RadiantDocs()
 }
 }
 struct BushelServiceTests: TestTarget {
@@ -1228,6 +1234,21 @@ BushelSession()
 struct AviaryInsights: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/AviaryInsights.git", from: "1.0.0-beta.1")
+}
+}
+struct RadiantPaging: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
+struct RadiantProgress: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
+struct RadiantDocs: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
 }
 }
 struct SentryCocoa: PackageDependency {
@@ -1266,11 +1287,6 @@ BushelKit()
 }
 }
 struct BushelHubMacOS: TargetDependency {
-var package: PackageDependency {
-BushelKit()
-}
-}
-struct BushelProgressUI: TargetDependency {
 var package: PackageDependency {
 BushelKit()
 }
@@ -1327,7 +1343,7 @@ var dependency: Package.Dependency {
 }
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(path: "../RadiantKit")
+.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.1")
 }
 }
 struct WishKit: PackageDependency, TargetDependency {
@@ -1335,17 +1351,23 @@ var dependency: Package.Dependency {
 .package(url: "https://github.com/wishkit/wishkit-ios.git", from: "4.1.0")
 }
 var condition: TargetDependencyCondition? {
-.onlyApple
+.onlyApple()
 }
 }
 extension TargetDependencyCondition {
-static let onlyApple: TargetDependencyCondition? = .when(platforms: [
+nonisolated static func onlyApple() -> TargetDependencyCondition? { .when(platforms: [
 .iOS,
 .macOS,
 .tvOS,
 .watchOS,
 .macCatalyst
 ])
+}
+}
+struct DataThespian: PackageDependency, TargetDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/brightdigit/DataThespian.git", from: "1.0.0-alpha.1")
+}
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
@@ -1395,18 +1417,11 @@ TransferringArgsAndResults()
 VariadicGenerics()
 }
 Group("Upcoming") {
-DeprecateApplicationMain()
-DisableOutwardActorInference()
-DynamicActorIsolation()
 FullTypedThrows()
-GlobalConcurrency()
-ImportObjcForwardDeclarations()
-InferSendableFromCaptures()
 InternalImportsByDefault()
-IsolatedDefaultValues()
 }
-WarnLongFunctionBodies(milliseconds: 100)
-WarnLongExpressionTypeChecking(milliseconds: 100)
+WarnLongFunctionBodies(milliseconds: 50)
+WarnLongExpressionTypeChecking(milliseconds: 50)
 }
 )
 .supportedPlatforms {

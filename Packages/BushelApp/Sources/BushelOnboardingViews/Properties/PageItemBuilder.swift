@@ -7,6 +7,7 @@
   import SwiftUI
 
   @resultBuilder
+  @MainActor
   internal enum PageItemBuilder {
     static func viewForPage(_ page: PageType) -> any View {
       switch page {
@@ -27,7 +28,9 @@
     }
 
     static func buildArray(_ components: [PageType]) -> [any View] {
-      components.map(viewForPage)
+      components.map { pageType in
+        viewForPage(pageType)
+      }
     }
 
     static func buildPartialBlock(first: PageItem) -> [any View] {

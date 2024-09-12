@@ -6,9 +6,14 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelEnvironmentCore
-  import BushelMarket
+
+  public import BushelMarket
+
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
+
+  public import RadiantKit
 
   private struct PurchaseWindowValueKey: EnvironmentKey {
     typealias Value = PurchaseWindowValue

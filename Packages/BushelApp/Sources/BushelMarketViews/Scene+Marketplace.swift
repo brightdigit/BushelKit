@@ -5,10 +5,12 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-  import BushelMarket
+
+  public import BushelMarket
   import BushelMarketEnvironment
   import BushelMarketStore
-  import SwiftUI
+
+  public import SwiftUI
 
   extension Scene {
     @MainActor

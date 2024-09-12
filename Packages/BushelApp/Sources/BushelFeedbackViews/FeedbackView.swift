@@ -5,10 +5,13 @@
 
 #if canImport(SwiftUI)
   import BushelFeedbackCore
-  import BushelFeedbackEnvironment
+
+  public import BushelFeedbackEnvironment
   import BushelLocalization
-  import BushelViewsCore
-  import SwiftUI
+
+  public import RadiantKit
+
+  public import SwiftUI
 
   public struct FeedbackView: View, SingleWindowView {
     public typealias Value = ProvideFeedbackWindowValue

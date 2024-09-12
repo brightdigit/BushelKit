@@ -3,11 +3,13 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelMessageCore
-import BushelSessionCore
+public import BushelMessageCore
+
+public import BushelSessionCore
 import Foundation
 
-public final class InitializedSession: Session {
+#warning("Remove @unchecked Sendable")
+public final class InitializedSession: Session, @unchecked Sendable {
   internal struct NotInitializedError: Error {}
 
   private let initializer: @Sendable () throws -> any SessionService

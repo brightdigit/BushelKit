@@ -6,12 +6,12 @@
 #if canImport(SwiftUI)
   import BushelCore
   import BushelDataCore
-  import BushelDataMonitor
   import BushelLogging
   import BushelMachine
   import BushelMarket
   import BushelMarketEnvironment
   import Combine
+  import DataThespian
   import SwiftData
   import SwiftUI
 
@@ -69,7 +69,7 @@
     }
 
     var title: String {
-      self.machineObject?.entry.name ??
+      self.machineObject?.name ??
         self.url?
         .deletingPathExtension()
         .lastPathComponent ??

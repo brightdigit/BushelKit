@@ -28,9 +28,10 @@
 //
 
 import BushelCore
-import Foundation
 
-public struct SnapshotSyncronizationDifference {
+public import Foundation
+
+public struct SnapshotSyncronizationDifference: Sendable {
   public let addedSnapshots: [Snapshot]
   public let snapshotIDs: [UUID]
 }

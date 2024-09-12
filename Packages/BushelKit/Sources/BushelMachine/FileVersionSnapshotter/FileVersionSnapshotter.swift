@@ -29,8 +29,10 @@
 
 #if os(macOS)
   import BushelCore
-  import BushelLogging
-  import Foundation
+
+  public import BushelLogging
+
+  public import Foundation
 
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
     public static var loggingCategory: BushelLogging.Category {
@@ -51,11 +53,14 @@
       self.init(fileManager: fileManager)
     }
 
-    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) throws {
+    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
-      let exportedConfiguration = MachineConfiguration(snapshot: snapshot, original: machine.configuration)
+      let exportedConfiguration = await MachineConfiguration(
+        snapshot: snapshot,
+        original: machine.updatedConfiguration
+      )
       let data = try JSON.encoder.encode(exportedConfiguration)
       let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
       let newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
@@ -68,10 +73,10 @@
         deleteExistingFile: false
       )
       try data.write(to: configurationFileURL)
-      machine.finishedWithSnapshot(snapshot, by: .export)
+      await machine.finishedWithSnapshot(snapshot, by: .export)
     }
 
-    public func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) throws {
+    public func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws {
       let paths = try machine.beginSnapshot()
       let oldSnapshots = try self.fileManager.dataDictionary(directoryAt: paths.snapshotCollectionURL)
 
@@ -106,14 +111,14 @@
       } catch {
         throw SnapshotError.inner(error: error)
       }
-      machine.finishedWithSnapshot(snapshot, by: .restored)
+      await machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 
-    public func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) throws {
+    public func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) async throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
       try fileVersion.remove(with: self.fileManager)
-      machine.finishedWithSnapshot(snapshot, by: .remove)
+      await machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
     public func saveSnapshot(
@@ -167,7 +172,7 @@
         withRequest: request
       )
 
-      machine.finishedWithSnapshot(snapshot, by: .append)
+      await machine.finishedWithSnapshot(snapshot, by: .append)
       Self.logger.debug("Completed new snapshot with id \(snapshot.id)")
       return snapshot
     }

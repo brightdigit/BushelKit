@@ -29,11 +29,17 @@
     var body: some View {
       GeometryReader { geometry in
         HSplitView {
-          SnapshotTableView(
-            selectedSnapshot: self.$object.selectedSnapshot,
-            snapshots: object.machine.configuration.snapshots,
-            agent: self.object
-          )
+          Group {
+            if let snapshots = object.latestSnapshots {
+              SnapshotTableView(
+                selectedSnapshot: self.$object.selectedSnapshot,
+                snapshots: snapshots,
+                agent: self.object
+              )
+            } else {
+              ProgressView()
+            }
+          }
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           SnapshotDetailsView {
             await self.object.bindableSnapshot(
@@ -96,11 +102,9 @@
 
     internal init(
       url: URL?,
-      object: MachineObject,
-      snapshotsQuery _: Query<Array<SnapshotEntry>.Element, [SnapshotEntry]>? = nil
+      object: MachineObject
     ) {
       self.url = url
-      let bookmarkDataID = object.entry.bookmarkDataID
       self.object = object
     }
   }

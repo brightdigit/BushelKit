@@ -5,7 +5,8 @@
 
 #if canImport(Virtualization) && arch(arm64)
   import Foundation
-  @preconcurrency import Virtualization
+
+  public import Virtualization
 
   public struct VirtualizationRestoreImage: Sendable {
     public let image: VZMacOSRestoreImage
@@ -17,7 +18,9 @@
       let image = try await withCheckedThrowingContinuation { continuation in
         VZMacOSRestoreImage.load(
           from: url,
-          completionHandler: continuation.resume(with:)
+          completionHandler: {
+            continuation.resume(with: $0)
+          }
         )
       }
       self.init(image: image, url: url)

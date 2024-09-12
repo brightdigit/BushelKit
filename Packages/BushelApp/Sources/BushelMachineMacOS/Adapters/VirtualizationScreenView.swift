@@ -13,7 +13,7 @@
   internal struct VirtualizationScreenView: NSViewControllerRepresentable, Loggable {
     typealias NSViewControllerType = VirtualizationScreenViewController
 
-    static var loggingCategory: BushelLogging.Category {
+    nonisolated(unsafe) static var loggingCategory: BushelLogging.Category {
       .view
     }
 

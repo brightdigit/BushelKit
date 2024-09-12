@@ -28,8 +28,10 @@
 //
 
 import BushelCore
-import BushelLogging
-import Foundation
+
+public import BushelLogging
+
+public import Foundation
 
 #if canImport(SwiftUI)
   import SwiftUI
@@ -37,40 +39,47 @@ import Foundation
 
 public protocol Machine: Loggable, Sendable {
   var machineIdentifer: UInt64? { get }
-  var configuration: MachineConfiguration { get }
+  var initialConfiguration: MachineConfiguration { get }
+  var updatedConfiguration: MachineConfiguration { get async }
 
-  /// Execution state of the virtual machine.
-  var state: MachineState { get }
-
-  /// Return YES if the machine is in a state that can be started.
-  ///
-  /// - SeeAlso: ``start()``
-  /// - SeeAlso: ``state``
-  var canStart: Bool { get }
-
-  /// Return YES if the machine is in a state that can be stopped.
-  ///
-  /// - SeeAlso: ``stop()``
-  /// - SeeAlso: ``state``
-  var canStop: Bool { get }
-
-  /// Return YES if the machine is in a state that can be paused.
-  ///
-  /// - SeeAlso: ``pause()``
-  /// - SeeAlso: ``state``
-  var canPause: Bool { get }
-
-  /// Return YES if the machine is in a state that can be resumed.
-  ///
-  /// - SeeAlso: ``resume()``
-  /// - SeeAlso: ``state``
-  var canResume: Bool { get }
-
-  /// Returns whether the machine is in a state where the guest can be asked to stop.
-  ///
-  /// - SeeAlso: ``requestStop()``
-  /// - SeeAlso: ``state``
-  var canRequestStop: Bool { get }
+//  /// Execution state of the virtual machine.
+//  @available(*, deprecated, message: "Observe values instead.")
+//  var state: MachineState { get }
+//
+//  /// Return YES if the machine is in a state that can be started.
+//  ///
+//  /// - SeeAlso: ``start()``
+//  /// - SeeAlso: ``state``
+//  @available(*, deprecated, message: "Observe values instead.")
+//  var canStart: Bool { get }
+//
+//  /// Return YES if the machine is in a state that can be stopped.
+//  ///
+//  /// - SeeAlso: ``stop()``
+//  /// - SeeAlso: ``state``
+//  @available(*, deprecated, message: "Observe values instead.")
+//  var canStop: Bool { get }
+//
+//  /// Return YES if the machine is in a state that can be paused.
+//  ///
+//  /// - SeeAlso: ``pause()``
+//  /// - SeeAlso: ``state``
+//  @available(*, deprecated, message: "Observe values instead.")
+//  var canPause: Bool { get }
+//
+//  /// Return YES if the machine is in a state that can be resumed.
+//  ///
+//  /// - SeeAlso: ``resume()``
+//  /// - SeeAlso: ``state``
+//  @available(*, deprecated, message: "Observe values instead.")
+//  var canResume: Bool { get }
+//
+//  /// Returns whether the machine is in a state where the guest can be asked to stop.
+//  ///
+//  /// - SeeAlso: ``requestStop()``
+//  /// - SeeAlso: ``state``
+//  @available(*, deprecated, message: "Observe values instead.")
+//  var canRequestStop: Bool { get }
 
   func start() async throws
   func pause() async throws
@@ -85,16 +94,15 @@ public protocol Machine: Loggable, Sendable {
 
   func beginSnapshot() throws -> SnapshotPaths
 
-  func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference)
+  func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference) async
 
-  func finishedWithSyncronization(_ difference: SnapshotSyncronizationDifference?) throws
+  func finishedWithSyncronization(_ difference: SnapshotSyncronizationDifference?) async throws
 
-  func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int)
+  func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int) async
 
-  func beginObservation(_ update: @escaping @Sendable @MainActor (MachineChange) -> Void) -> UUID
+  func beginObservation(_ update: @escaping @Sendable (MachineChange) -> Void) -> UUID
 
-  @discardableResult
-  func removeObservation(withID id: UUID) -> Bool
+  func removeObservation(withID id: UUID)
 }
 
 extension Machine {
@@ -102,12 +110,10 @@ extension Machine {
     .machine
   }
 
-  @discardableResult
-  public func removeObservation(withID id: UUID?) -> Bool {
+  public func removeObservation(withID id: UUID?) {
     if let id {
-      return self.removeObservation(withID: id)
+      self.removeObservation(withID: id)
     }
-    return false
   }
 
   public func syncronizeSnapshots(
@@ -115,15 +121,16 @@ extension Machine {
     any SnapshotProvider,
     options: SnapshotSyncronizeOptions
   ) async throws {
+    let configuration = await self.updatedConfiguration
     guard let snapshotter = provider.snapshotter(
-      withID: self.configuration.snapshotSystemID,
+      withID: configuration.snapshotSystemID,
       for: type(of: self)
     ) else {
-      Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
-      preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
+      Self.logger.critical("Unknown system: \(configuration.snapshotSystemID)")
+      preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
     let snapshots = try await snapshotter.syncronizeSnapshots(for: self, options: options)
-    try self.finishedWithSyncronization(snapshots)
+    try await self.finishedWithSyncronization(snapshots)
   }
 
   @discardableResult
@@ -132,12 +139,13 @@ extension Machine {
     options: SnapshotOptions,
     using provider: any SnapshotProvider
   ) async throws -> Snapshot {
+    let configuration = await self.updatedConfiguration
     guard let snapshotter = provider.snapshotter(
-      withID: self.configuration.snapshotSystemID,
+      withID: configuration.snapshotSystemID,
       for: type(of: self)
     ) else {
-      Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
-      preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
+      Self.logger.critical("Unknown system: \(configuration.snapshotSystemID)")
+      preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
 
     return try await snapshotter.createNewSnapshot(of: self, request: request, options: options)
@@ -146,28 +154,30 @@ extension Machine {
   public func deleteSnapshot(
     _ snapshot: Snapshot,
     using provider: any SnapshotProvider
-  ) throws {
+  ) async throws {
+    let configuration = await self.updatedConfiguration
     guard let snapshotter = provider.snapshotter(
-      withID: self.configuration.snapshotSystemID,
+      withID: configuration.snapshotSystemID,
       for: type(of: self)
     ) else {
-      Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
-      preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
+      Self.logger.critical("Unknown system: \(configuration.snapshotSystemID)")
+      preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
 
-    return try snapshotter.deleteSnapshot(snapshot, from: self)
+    return try await snapshotter.deleteSnapshot(snapshot, from: self)
   }
 
   public func restoreSnapshot(
     _ snapshot: Snapshot,
     using provider: any SnapshotProvider
   ) async throws {
+    let configuration = await self.updatedConfiguration
     guard let snapshotter = provider.snapshotter(
-      withID: self.configuration.snapshotSystemID,
+      withID: configuration.snapshotSystemID,
       for: type(of: self)
     ) else {
-      Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
-      preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
+      Self.logger.critical("Unknown system: \(configuration.snapshotSystemID)")
+      preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
 
     return try await snapshotter.restoreSnapshot(snapshot, to: self)
@@ -178,12 +188,13 @@ extension Machine {
     to url: URL,
     using provider: any SnapshotProvider
   ) async throws {
+    let configuration = await self.updatedConfiguration
     guard let snapshotter = provider.snapshotter(
-      withID: self.configuration.snapshotSystemID,
+      withID: configuration.snapshotSystemID,
       for: type(of: self)
     ) else {
-      Self.logger.critical("Unknown system: \(self.configuration.snapshotSystemID)")
-      preconditionFailure("Unknown system: \(self.configuration.snapshotSystemID)")
+      Self.logger.critical("Unknown system: \(configuration.snapshotSystemID)")
+      preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
 
     return try await snapshotter.exportSnapshot(snapshot, from: self, to: url)

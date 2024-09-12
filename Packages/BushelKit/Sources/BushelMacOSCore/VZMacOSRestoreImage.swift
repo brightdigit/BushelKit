@@ -28,10 +28,13 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelCore
-  import Virtualization
+  public import BushelCore
 
-  extension VZMacOSRestoreImage {
+  public import Virtualization
+
+  #warning("Temporary Fix")
+  #warning("Remove @unchecked Sendable")
+  extension VZMacOSRestoreImage: @unchecked @retroactive Sendable {
     internal struct OperatingSystem: OperatingSystemInstalled {
       internal let operatingSystemVersion: OperatingSystemVersion
       internal let buildVersion: String?
@@ -52,7 +55,8 @@
       OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
     }
 
-    public static func fetchLatestSupported() async throws -> VZMacOSRestoreImage {
+    @available(*, deprecated, message: "Temporary method until Swift 6 migration.")
+    public static func unsafeFetchLatestSupported() async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
         self.fetchLatestSupported { result in
           continuation.resume(with: result)
@@ -60,9 +64,12 @@
       }
     }
 
-    public static func loadFromURL(_ url: URL) async throws -> VZMacOSRestoreImage {
+    @available(*, deprecated, message: "Temporary method until Swift 6 migration.")
+    public static func unsafeLoadFromURL(_ url: URL) async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
-        self.load(from: url, completionHandler: continuation.resume(with:))
+        self.load(from: url) { result in
+          continuation.resume(with: result)
+        }
       }
     }
 

@@ -6,8 +6,10 @@
 #if canImport(Observation) && (os(macOS) || os(iOS))
 
   import BushelCore
+
   import BushelHub
   import BushelLogging
+
   import Foundation
 
   @MainActor

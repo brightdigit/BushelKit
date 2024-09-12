@@ -27,11 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
 import Foundation
 
+public import RadiantDocs
+
 public enum TestFileTypeSpecification: FileTypeSpecification {
-  public static var fileType: FileType = .exportedAs(
+  public static let fileType: FileType = .exportedAs(
     "com.brightdigit.test",
     "test"
   )

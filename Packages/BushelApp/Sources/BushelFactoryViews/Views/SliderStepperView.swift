@@ -10,7 +10,7 @@
   import SwiftUI
 
   extension SliderStepperView where TitleType == LocalizedStringID, Label == Text {
-    public init(
+    internal init(
       titleID: LocalizedStringID,
       value: Binding<Float>,
       bounds: ClosedRange<Float>,

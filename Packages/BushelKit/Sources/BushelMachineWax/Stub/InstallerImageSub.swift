@@ -27,10 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
 import BushelCoreWax
-import BushelMachine
-import Foundation
+
+public import BushelMachine
+
+public import Foundation
 
 public struct InstallerImageSub: InstallerImage {
   public var libraryID: LibraryIdentifier? = .sampleLibraryID

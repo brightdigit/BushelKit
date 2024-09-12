@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 /// A protocol defining a contract for retrieving data from a specific location.
 /// - Note: This protocol is likely used to abstract data retrieval from different sources,

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelLibrary
+public import BushelLibrary
 import Foundation
 
 extension LibraryImageFile {

@@ -4,8 +4,10 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelViewsCore
+  import RadiantKit
+
   import Foundation
+
   import SwiftUI
 
   internal struct HubSidebarRow: View {
@@ -18,7 +20,7 @@
     private let properties: Properties
 
     internal var body: some View {
-      PreferredLayoutView { value in
+      PreferredLayout.View { value in
         HStack {
           self
             .properties

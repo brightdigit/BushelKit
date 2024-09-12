@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 import Foundation
 import PackageDescription
 extension _PackageDescription_Product {
@@ -241,7 +241,7 @@ accumulated + [next]
 }
 }
 extension LanguageTag {
-static let english: LanguageTag = "en"
+nonisolated(unsafe) static let english: LanguageTag = "en"
 }
 public protocol Target: _Depending, Dependency, _Named {
 var targetType: TargetType { get }
@@ -758,6 +758,7 @@ SupportedPlatform.macCatalyst(.v17)
 struct BushelMacOSCore: Product, Target {
 var dependencies: any Dependencies {
 BushelCore()
+RadiantKit()
 }
 }
 struct BushelTestUtilities: Product, Target {}
@@ -773,11 +774,6 @@ struct BushelHubMacOS: Product, Target {
 var dependencies: any Dependencies {
 BushelHub()
 BushelMacOSCore()
-}
-}
-struct BushelProgressUI: Product, Target {
-var dependencies: any Dependencies {
-BushelCore()
 }
 }
 struct BushelFactory: Product, Target {
@@ -820,11 +816,13 @@ var dependencies: any Dependencies {
 BushelLogging()
 BushelCore()
 BushelMacOSCore()
+RadiantKit()
 }
 }
 struct BushelCore: Product, Target {
 var dependencies: any Dependencies {
 OperatingSystemVersion()
+RadiantDocs()
 }
 }
 struct BushelHub: Product, Target {
@@ -892,6 +890,21 @@ BushelCoreWax()
 BushelTestUtilities()
 }
 }
+struct RadiantPaging: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
+struct RadiantProgress: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
+struct RadiantDocs: TargetDependency {
+var package: PackageDependency {
+RadiantKit()
+}
+}
 struct FelinePine: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/FelinePine.git", from: "1.0.0-beta.2")
@@ -904,7 +917,7 @@ var dependency: Package.Dependency {
 }
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(path: "../RadiantKit")
+.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.1")
 }
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {
@@ -914,7 +927,7 @@ var dependency: Package.Dependency {
 }
 struct ArgumentParser: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0")
+.package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0")
 }
 }
 let package = Package(
@@ -931,7 +944,6 @@ BushelLibrary()
 BushelLogging()
 BushelMachine()
 BushelMacOSCore()
-BushelProgressUI()
 BushelUT()
 BushelTestUtilities()
 },
@@ -956,15 +968,8 @@ TransferringArgsAndResults()
 VariadicGenerics()
 }
 Group("Upcoming") {
-DeprecateApplicationMain()
-DisableOutwardActorInference()
-DynamicActorIsolation()
 FullTypedThrows()
-GlobalConcurrency()
-ImportObjcForwardDeclarations()
-InferSendableFromCaptures()
 InternalImportsByDefault()
-IsolatedDefaultValues()
 }
 WarnLongFunctionBodies(milliseconds: 50)
 WarnLongExpressionTypeChecking(milliseconds: 50)

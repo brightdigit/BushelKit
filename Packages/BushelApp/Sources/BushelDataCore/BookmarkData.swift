@@ -5,17 +5,22 @@
 
 #if canImport(SwiftData)
   import BushelCore
-  import BushelLogging
-  import Foundation
-  import SwiftData
+
+  public import DataThespian
+
+  public import BushelLogging
+
+  public import Foundation
+
+  public import SwiftData
 
   @Model
   public final class BookmarkData:
-    Loggable, FetchIdentifiable, Sendable {
-    public private(set) var path: String
+    Loggable {
+    public var path: String
 
     @Attribute(.unique)
-    private var data: Data
+    public var data: Data
 
     @Attribute(.unique)
     public var bookmarkID: UUID
@@ -48,10 +53,22 @@
       )
     }
 
-    private static func creteNewBookmarkFromURL(
-      _ url: URL,
-      _ database: any Database
-    ) async throws -> BookmarkData {
+    public static func withDatabase(
+      _ database: any Database,
+      fromURL url: URL
+    ) async throws -> ModelID<BookmarkData>? {
+      let path = url.standardizedFileURL.path
+
+      return try await database.first(#Predicate<BookmarkData> { $0.path == path })
+    }
+
+    public static func withDatabase<T: Sendable>(
+      _ database: any Database,
+      fromURL url: URL,
+      _ body: @escaping @Sendable (BookmarkData) throws -> T
+    ) async throws -> T {
+      let path = url.standardizedFileURL.path
+
       let bookmarkData: Data
       do {
         bookmarkData = try url.bookmarkDataWithSecurityScope()
@@ -59,39 +76,10 @@
         throw BookmarkError.accessDeniedError(error, at: url)
       }
 
-      let bookmark = BookmarkData(url: url, bookmarkData: bookmarkData)
-      Self.logger.debug(
-        "Creating Bookmark for \(url, privacy: .public) with ID: \(bookmark.bookmarkID, privacy: .public)"
-      )
-      await database.insert(bookmark)
-      do {
-        try await database.save()
-      } catch {
-        throw BookmarkError.databaseError(error)
-      }
-      return bookmark
-    }
-
-    public static func resolveURL(_ url: URL, with database: any Database) async throws -> BookmarkData {
-      let path = url.standardizedFileURL.path
-      let item: BookmarkData?
-      do {
-        item = try await database.fetch { FetchDescriptor(predicate: #Predicate { $0.path == path }) }.first
-        // }(where: #Predicate { $0.path == path })
-      } catch {
-        throw BookmarkError.databaseError(error)
-      }
-      if let item {
-        Self.logger.debug("Refresh Bookmark for \(url, privacy: .public) with ID: \(item.bookmarkID)")
-        do {
-          try await item.refreshBookmark(using: database)
-        } catch {
-          throw BookmarkError.accessDeniedError(error, at: url)
-        }
-
-        return item
-      } else {
-        return try await creteNewBookmarkFromURL(url, database)
+      return try await database.first(fetchWith: #Predicate<BookmarkData> { $0.path == path }) {
+        .init(url: url, bookmarkData: bookmarkData)
+      } with: {
+        try body($0)
       }
     }
 
@@ -104,17 +92,15 @@
       return selectDescriptor
     }
 
-    public func update(using database: any Database, at updateAt: Date = Date()) async throws {
+    public func update(at updateAt: Date = Date()) {
       self.updatedAt = updateAt
       Self.logger.debug("Nothing updated bookmark \(self.path)")
-      try await database.save()
     }
 
     private func updateURL(
       _ url: URL,
-      withNewBookmarkData: Bool,
-      using database: any Database
-    ) async throws {
+      withNewBookmarkData: Bool
+    ) throws {
       if withNewBookmarkData {
         let accessingSecurityScopedResource = url.startAccessingSecurityScopedResource()
 
@@ -125,43 +111,16 @@
         let path = url.standardizedFileURL.path
         data = bookmarkData
         self.path = path
-        try await database.save()
       }
     }
 
-    private func refreshBookmark(using database: any Database) async throws {
-      _ = try await fetchURL(using: database)
-    }
-
-    public func fetchURL(using database: any Database) async throws -> URL {
+    public func fetchURL() throws -> URL {
       var isStale = false
       let url = try URL(resolvingSecurityScopeBookmarkData: data, bookmarkDataIsStale: &isStale)
       Self.logger.debug("Bookmark for \(url, privacy: .public) stale: \(isStale)")
-      try await updateURL(url, withNewBookmarkData: isStale, using: database)
+      try updateURL(url, withNewBookmarkData: isStale)
       return url
     }
   }
 
-  extension BookmarkData {
-    public static func fetchURLs<Key: Hashable & Sendable>(
-      from bookmarks: [BookmarkData],
-      using database: any Database,
-      keyBy key: @Sendable @escaping (BookmarkData) async throws -> Key
-    ) async throws -> [Key: URL] {
-      try await withThrowingTaskGroup(of: (Key, URL).self, returning: [Key: URL].self) { group in
-        for bookmark in bookmarks {
-          group.addTask {
-            async let key = key(bookmark)
-            async let url = bookmark.fetchURL(using: database)
-            return try await (key, url)
-          }
-        }
-
-        return try await group.reduce(into: [Key: URL]()) { partialResult, tuple in
-          assert(partialResult[tuple.0] == nil)
-          partialResult[tuple.0] = tuple.1
-        }
-      }
-    }
-  }
 #endif

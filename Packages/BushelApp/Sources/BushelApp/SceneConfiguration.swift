@@ -13,6 +13,9 @@
   import BushelLogging
   import BushelMachine
   import BushelSystem
+  import DataThespian
+  import RadiantDocs
+  import RadiantKit
   import SwiftData
   import SwiftUI
 
@@ -57,6 +60,7 @@
       DatabaseInstallerRepository(database: database)
     }
 
+    @MainActor
     internal func openFileURL(_ url: URL, openWindow: OpenWindowAction) {
       if let file = MachineFile.documentFile(from: url) {
         openWindow(value: file)

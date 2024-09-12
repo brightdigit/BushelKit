@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 extension Date {
   public static func randomPast(asFarBackAs timeInterval: TimeInterval) -> Date {

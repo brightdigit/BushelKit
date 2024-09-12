@@ -5,7 +5,8 @@
 
 #if canImport(SwiftData)
   import Foundation
-  import SwiftData
+
+  public import SwiftData
 
   private let _models: [any PersistentModel.Type] = [
     LibraryImageEntry.self,

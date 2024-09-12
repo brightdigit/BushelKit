@@ -27,15 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import RadiantDocs
 
-#if canImport(FoundationNetworking)
-  import FoundationNetworking
-#endif
-
-public protocol InitializablePackage: CodablePackage {
-  init()
-}
+public import Foundation
 
 extension InitializablePackage {
   #warning("logging-note: let's log what is going on here")

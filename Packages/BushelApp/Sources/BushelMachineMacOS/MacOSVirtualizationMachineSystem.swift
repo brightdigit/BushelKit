@@ -5,18 +5,20 @@
 
 #if canImport(Virtualization) && arch(arm64)
 
-  import BushelCore
+  public import BushelCore
   import BushelLogging
-  import BushelMachine
+
+  public import BushelMachine
   import BushelMacOSCore
-  import Foundation
+
+  public import Foundation
   import SwiftUI
   import Virtualization
 
   public struct MacOSVirtualizationMachineSystem: MachineSystem {
     public typealias RestoreImageType = VirtualizationRestoreImage
 
-    public var repository: MachineRepository {
+    public var repository: AppleVirtualizationMachineRepository {
       .shared
     }
 
@@ -66,12 +68,12 @@
     }
 
     #warning("logging-note: why not mention that a configuration has been validated")
-    @MainActor
+
     public func createBuilder(
       for configuration: BushelMachine.MachineBuildConfiguration<VirtualizationRestoreImage>,
       at url: URL
-    ) throws -> any MachineBuilder {
-      VirtualizationMachineBuilder(url: url, installer: {
+    ) async throws -> any MachineBuilder {
+      await AppleVirtualizationMachineBuilder(url: url, installer: {
         let machineConfiguration = try self.validatedMachineConfiguration(for: configuration, at: url)
         let virtualMachine = VZVirtualMachine(configuration: machineConfiguration)
         return VZMacOSInstaller(

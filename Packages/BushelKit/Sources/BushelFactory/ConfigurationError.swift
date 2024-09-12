@@ -27,11 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelMachine
-import Foundation
+public import BushelCore
+
+public import BushelMachine
+
+public import Foundation
+
 #if canImport(SwiftData)
-  import SwiftData
+  public import SwiftData
 #else
   public struct SwiftDataError: LocalizedError {}
 #endif

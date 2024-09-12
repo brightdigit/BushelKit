@@ -28,8 +28,9 @@
 //
 
 #if canImport(Virtualization)
-  import BushelCore
+  public import BushelCore
   import Foundation
+
   import Virtualization
 
   extension MacOSVirtualization {

@@ -33,7 +33,7 @@ import BushelMachine
 import BushelMachineWax
 import Foundation
 
-internal final class MachineSystemSpy: MachineSystem, Sendable {
+internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
   typealias RestoreImageType = RestoreImageStub
 
   internal var id: VMSystemID { "spyOS" }

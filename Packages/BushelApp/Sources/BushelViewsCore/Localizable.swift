@@ -3,8 +3,10 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import BushelCore
-import BushelLocalization
+public import BushelCore
+
+public import BushelLocalization
+
 import Foundation
 
 extension Localizable {

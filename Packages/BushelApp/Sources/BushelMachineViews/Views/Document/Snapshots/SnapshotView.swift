@@ -18,23 +18,8 @@
     let timer = Timer.publish(every: 1.0, on: RunLoop.current, in: RunLoop.Mode.common).autoconnect()
 
     var body: some View {
-      // swiftlint:disable:next closure_body_length
       Form {
-        Section {
-          TextField("Name", text: self.$snapshot.name).labelsHidden().disabled(!marketplace.purchased)
-        } header: {
-          HStack {
-            Text(.snapshotDetailsPropertyName)
-            if !marketplace.purchased {
-              Spacer()
-              Button(action: {
-                openWindow(value: purchaseWindow)
-              }, label: {
-                Text(.upgradePurchase).textCase(.uppercase).foregroundStyle(Color.blue)
-              }).buttonStyle(.plain)
-            }
-          }.font(.subheadline)
-        }
+        nameSection()
 
         Section {
           HStack {
@@ -67,30 +52,7 @@
           Text(.snapshotDetailsPropertyCreated).font(.subheadline).padding(.top, 2.0)
         }
 
-        Section {
-          TextEditor(text: self.$snapshot.notes).onSubmit {
-            self.saveAction(self.snapshot)
-          }
-          .disabled(!marketplace.purchased)
-          .foregroundStyle(
-            self.marketplace.purchased ?
-              Color.primary :
-              Color.primary.opacity(0.5)
-          )
-        } header: {
-          HStack {
-            Text(.snapshotDetailsPropertyNotes).font(.subheadline).padding(.top, 2.0)
-
-            if !marketplace.purchased {
-              Spacer()
-              Button(action: {
-                openWindow(value: purchaseWindow)
-              }, label: {
-                Text(.upgradePurchase).foregroundStyle(Color.blue)
-              }).buttonStyle(.plain)
-            }
-          }
-        }
+        notesSection()
       }
       .onReceive(self.timer) { _ in
         if self.snapshot.hasChanges {
@@ -105,6 +67,51 @@
     ) {
       self._snapshot = snapshot
       self.saveAction = saveAction
+    }
+
+    private func notesSection() -> some View {
+      Section {
+        TextEditor(text: self.$snapshot.notes).onSubmit {
+          self.saveAction(self.snapshot)
+        }
+        .disabled(!marketplace.purchased)
+        .foregroundStyle(
+          self.marketplace.purchased ?
+            Color.primary :
+            Color.primary.opacity(0.5)
+        )
+      } header: {
+        HStack {
+          Text(.snapshotDetailsPropertyNotes).font(.subheadline).padding(.top, 2.0)
+
+          if !marketplace.purchased {
+            Spacer()
+            Button(action: {
+              openWindow(value: purchaseWindow)
+            }, label: {
+              Text(.upgradePurchase).foregroundStyle(Color.blue)
+            }).buttonStyle(.plain)
+          }
+        }
+      }
+    }
+
+    private func nameSection() -> some View {
+      Section {
+        TextField("Name", text: self.$snapshot.name).labelsHidden().disabled(!marketplace.purchased)
+      } header: {
+        HStack {
+          Text(.snapshotDetailsPropertyName)
+          if !marketplace.purchased {
+            Spacer()
+            Button(action: {
+              openWindow(value: purchaseWindow)
+            }, label: {
+              Text(.upgradePurchase).textCase(.uppercase).foregroundStyle(Color.blue)
+            }).buttonStyle(.plain)
+          }
+        }.font(.subheadline)
+      }
     }
   }
 

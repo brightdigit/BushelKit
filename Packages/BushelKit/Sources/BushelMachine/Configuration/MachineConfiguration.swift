@@ -27,8 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import Foundation
+public import BushelCore
+
+public import Foundation
+
+public import RadiantDocs
+
+import RadiantKit
 
 /// Metadata attached to a machine
 public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
@@ -37,22 +42,22 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   /// System ID
   public let vmSystemID: VMSystemID
   public let snapshotSystemID: SnapshotterID
-  public var operatingSystemVersion: OperatingSystemVersion
-  public var buildVersion: String?
+  public let operatingSystemVersion: OperatingSystemVersion
+  public let buildVersion: String?
 
   /// Storage specifications
-  public var storage: [MachineStorageSpecification]
+  public let storage: [MachineStorageSpecification]
 
   /// CPU Count
-  public var cpuCount: Int = 1
+  public let cpuCount: Int
   /// Amount of Memory
-  public var memory: Int = (128 * 1_024 * 1_024 * 1_024)
+  public let memory: Int
   /// Netwoking Configuration
-  public var networkConfigurations: [NetworkConfiguration]
+  public let networkConfigurations: [NetworkConfiguration]
   /// Graphics Configuration
-  public var graphicsConfigurations: [GraphicsConfiguration]
+  public let graphicsConfigurations: [GraphicsConfiguration]
   /// Snapshot of the machine
-  public var snapshots: [Snapshot]
+  public let snapshots: [Snapshot]
 
   public init(
     restoreImageFile: InstallerImageIdentifier,
@@ -127,7 +132,28 @@ extension MachineConfiguration: CodablePackage {
     URL.bushel.paths.machineJSONFileName
   }
 
-  public static var readableContentTypes: [BushelCore.FileType] {
+  public static var readableContentTypes: [FileType] {
     [.virtualMachine]
+  }
+}
+
+extension MachineConfiguration {
+  public init(
+    original: MachineConfiguration,
+    _ withSnapshots: @escaping @Sendable ([Snapshot]) -> [Snapshot]
+  ) {
+    self.init(
+      restoreImageFile: original.restoreImageFile,
+      vmSystemID: original.vmSystemID,
+      snapshotSystemID: original.snapshotSystemID,
+      operatingSystemVersion: original.operatingSystemVersion,
+      buildVersion: original.buildVersion,
+      storage: original.storage,
+      cpuCount: Int(original.cpuCount),
+      memory: Int(original.memory),
+      networkConfigurations: original.networkConfigurations,
+      graphicsConfigurations: original.graphicsConfigurations,
+      snapshots: withSnapshots(original.snapshots)
+    )
   }
 }

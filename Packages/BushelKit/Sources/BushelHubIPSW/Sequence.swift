@@ -27,8 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelCore
+
 import BushelLogging
+
+#if canImport(FoundationNetworking)
+  public import Logging
+#endif
 
 extension Sequence {
   public func tryCompactMap<T>(logger: Logger? = nil, _ transform: (Self.Element) throws -> T) -> [T] {

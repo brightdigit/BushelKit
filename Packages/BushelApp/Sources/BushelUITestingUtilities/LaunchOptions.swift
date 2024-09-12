@@ -3,7 +3,7 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-public struct LaunchOptions: OptionSet {
+public struct LaunchOptions: OptionSet, Sendable {
   public typealias RawValue = Int
 
   public static let resetApplication: Self = .init(rawValue: 1)

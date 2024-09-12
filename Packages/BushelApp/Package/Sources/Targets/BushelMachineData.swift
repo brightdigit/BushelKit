@@ -8,5 +8,6 @@ struct BushelMachineData: Target {
     BushelDataCore()
     BushelMachine()
     BushelLogging()
+    DataThespian()
   }
 }

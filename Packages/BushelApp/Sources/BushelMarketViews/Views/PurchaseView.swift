@@ -6,13 +6,20 @@
 #if canImport(StoreKit) && canImport(SwiftUI)
   import BushelCore
   import BushelLocalization
-  import BushelLogging
-  import BushelMarket
-  import BushelMarketEnvironment
+
+  public import BushelLogging
+
+  public import BushelMarket
+
+  public import BushelMarketEnvironment
+
   import BushelViewsCore
   import Foundation
+
+  public import RadiantKit
   import StoreKit
-  import SwiftUI
+
+  public import SwiftUI
 
   @MainActor
   public struct PurchaseView: SingleWindowView, Loggable {

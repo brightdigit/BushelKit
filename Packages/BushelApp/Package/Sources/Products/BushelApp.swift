@@ -20,9 +20,9 @@ struct BushelApp: Product, Target {
     BushelFactoryRepository()
     BushelFeatureFlags()
     BushelAnalytics()
-    BushelDataMonitor()
     BushelBookmarkService()
     BushelCanary()
     BushelWishListViews()
+    DataThespian()
   }
 }

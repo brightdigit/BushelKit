@@ -4,9 +4,10 @@
 //
 
 #if os(macOS)
-  import XCTest
+  public import XCTest
 
   public protocol AuditIssueFilter {
+    @MainActor
     func callAsFunction(_ issue: XCUIAccessibilityAuditIssue) -> Bool
   }
 #endif

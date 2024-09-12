@@ -5,10 +5,13 @@
 
 #if canImport(StoreKit)
   import BushelCore
+
   import BushelLogging
-  import BushelMarket
+
+  public import BushelMarket
   import Foundation
-  import StoreKit
+
+  public import StoreKit
 
   extension Subscription.Period.Unit {
     public init(_ unit: Product.SubscriptionPeriod.Unit) {

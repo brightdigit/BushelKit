@@ -12,8 +12,11 @@
   import BushelMachine
   import BushelMachineData
   import BushelViewsCore
+  import DataThespian
   import Foundation
+  import RadiantDocs
   import SwiftData
+
   import SwiftUI
 
   extension MachineObject {
@@ -125,37 +128,31 @@
       defer {
         self.updatingSnapshotMetadata = false
       }
-      self.machine.updatedMetadata(
+      await self.machine.updatedMetadata(
         forSnapshot: object.updatedSnapshot,
         atIndex: object.index
       )
-      try await object.entry.syncronizeSnapshot(
-        object.updatedSnapshot,
-        machine: self.entry,
-        database: database
+
+      try await SnapshotEntry.syncronizeSnapshotModel(
+        object.model,
+        with: object.updatedSnapshot,
+        machineModel: self.model,
+        using: database
       )
 
-      try writeConfigurationAt(object.machineConfigurationURL)
-      self.refreshSnapshots()
+      try await writeConfigurationAt(object.machineConfigurationURL)
+      await self.refreshSnapshots()
       self.machine = machine
 
       Self.logger.debug("Saving snapshot completed")
     }
 
-    private func snapshotEntryBasedOn(
+    private func snapshotModelBasedOn(
       selection: MachineObject.SnapshotSelection,
       id: Snapshot.ID
-    ) async -> SnapshotEntry? {
-      if let entryChild = self.entry.snapshots?.first(
-        where: { $0.snapshotID == selection.id }
-      ) {
-        return entryChild
-      }
-
+    ) async -> ModelID<SnapshotEntry>? {
       do {
-        return try await database.fetch {
-          FetchDescriptor(predicate: #Predicate { $0.snapshotID == id })
-        }.first
+        return try await database.first(#Predicate { $0.snapshotID == id })
       } catch {
         Self.logger.error("Error fetching entry \(selection.id) from database: \(error)")
         assertionFailure(error: error)
@@ -167,28 +164,29 @@
       usingLabelFrom labelProvider: MetadataLabelProvider,
       fromConfigurationURL configurationURL: URL?
     ) async -> Bindable<SnapshotObject>? {
-      guard let selection = SnapshotSelection(
+      guard let selection = await SnapshotSelection(
         selectedSnapshot: selectedSnapshot,
         configurationURL: configurationURL,
-        snapshots: machine.configuration.snapshots
+        snapshots: machine.updatedConfiguration.snapshots
       ) else {
         return nil
       }
       let id = selection.id
-      let entry = await snapshotEntryBasedOn(selection: selection, id: id)
-      guard let entry else {
-        Self.logger.error("No entry with \(selection.id) from database")
-        assertionFailure("No entry with \(selection.id) from database")
+      let model = await snapshotModelBasedOn(selection: selection, id: id)
+
+      guard let model else {
+        Self.logger.error("No model with \(selection.id) from database")
+        assertionFailure("No model with \(selection.id) from database")
         return nil
       }
 
-      return .init(
+      return await .init(
         SnapshotObject(
-          fromSnapshots: self.machine.configuration.snapshots,
+          fromSnapshots: self.machine.updatedConfiguration.snapshots,
           atIndex: selection.index,
           machineConfigurationURL: selection.configurationURL,
-          entry: entry,
-          vmSystemID: machine.configuration.vmSystemID,
+          model: model,
+          vmSystemID: machine.updatedConfiguration.vmSystemID,
           using: labelProvider
         )
       )
@@ -213,14 +211,26 @@
         options: options,
         using: self.snapshotFactory
       )
-      _ = try await SnapshotEntry(
-        snapshot,
-        machine: self.entry,
-        database: database
-      )
+      let model: ModelID = await database.insert {
+        SnapshotEntry(snapshot)
+      }
 
-      try writeConfigurationAt(url)
-      self.refreshSnapshots()
+      let machineModel = self.model
+      try await database.fetch {
+        FetchDescriptor(model: model)
+      } _: {
+        FetchDescriptor(model: machineModel)
+      } with: { snapshotEntries, machineEntries in
+        guard let snapshotEntry = snapshotEntries.first, let machineEntry = machineEntries.first else {
+          assertionFailure("synconized ids not found for \(snapshot.id)")
+          Self.logger.error("synconized ids not found for \(snapshot.id)")
+          return
+        }
+        snapshotEntry.machine = machineEntry
+      }
+
+      try await writeConfigurationAt(url)
+      await self.refreshSnapshots()
       self.machine = machine
     }
 
@@ -240,9 +250,9 @@
 
     nonisolated func queueExportingSnapshot(_ snapshot: Snapshot) {
       Task { @MainActor in
-        self.exportingSnapshot = (
+        self.exportingSnapshot = await (
           snapshot,
-          CodablePackageDocument(configuration: self.machine.configuration)
+          CodablePackageDocument(configuration: self.machine.updatedConfiguration)
         )
         self.presentExportingSnapshot = true
       }
@@ -265,12 +275,12 @@
         if self.selectedSnapshot == deletingSnapshotRequest.snapshot.id {
           self.selectedSnapshot = nil
         }
-        try machine.deleteSnapshot(deletingSnapshotRequest.snapshot, using: self.snapshotFactory)
+        try await machine.deleteSnapshot(deletingSnapshotRequest.snapshot, using: self.snapshotFactory)
         let snapshotID = deletingSnapshotRequest.snapshot.id
         try await database.delete(model: SnapshotEntry.self, where: #Predicate {
           $0.snapshotID == snapshotID
         })
-        try writeConfigurationAt(deletingSnapshotRequest.url)
+        try await writeConfigurationAt(deletingSnapshotRequest.url)
         Self.logger.debug("Completed deleting snapshot \(snapshotID)")
       } catch {
         let newError: any Error = MachineError.fromSnapshotError(error)
@@ -278,7 +288,7 @@
           Self.logger.critical("Unknown error: \(error)")
         }
       }
-      self.refreshSnapshots()
+      await self.refreshSnapshots()
       self.machine = machine
       self.confirmingRemovingSnapshot = nil
     }
@@ -292,10 +302,15 @@
 
     func syncronizeSnapshots(at url: URL, options: SnapshotSyncronizeOptions) async throws {
       try await self.machine.syncronizeSnapshots(using: self.snapshotFactory, options: options)
-      try self.writeConfigurationAt(url)
-      try await self.entry.synchronizeWith(self.machine, osInstalled: nil, using: database)
+      try await self.writeConfigurationAt(url)
+      self.model = try await MachineEntry.syncronizeModel(
+        self.model,
+        with: self.machine,
+        osInstalled: nil,
+        using: database
+      )
 
-      self.refreshSnapshots()
+      await self.refreshSnapshots()
       self.machine = machine
 
       Self.logger.notice("Syncronization Complete.")
@@ -337,7 +352,12 @@
             try await self.saveSnapshot(request, options: [], at: url)
           }
           try await self.machine.restoreSnapshot(snapshot, using: self.snapshotFactory)
-          try await self.entry.synchronizeWith(machine, osInstalled: nil, using: self.database)
+          try await MachineEntry.syncronizeModel(
+            self.model,
+            with: machine,
+            osInstalled: nil,
+            using: self.database
+          )
         } catch {
           Self.logger.error(
             // swiftlint:disable:next line_length
@@ -381,17 +401,23 @@
     func exportSnapshot(_ snapshot: Snapshot, to url: URL) async {
       do {
         try await self.machine.exportSnapshot(snapshot, to: url, using: self.snapshotFactory)
-
-        _ = try await MachineEntry(
-          url: url,
-          machine: machine,
-          osInstalled: nil,
-          restoreImageID: machine.configuration.restoreImageFile.imageID,
-          name: url.deletingPathExtension().lastPathComponent,
-          createdAt: .init(),
-          lastOpenedAt: .init(),
-          withDatabase: database
-        )
+        let bookmarkDataID = try await BookmarkData.withDatabase(database, fromURL: url) {
+          $0.bookmarkID
+        }
+        let updatedConfiguration = await machine.updatedConfiguration
+        let machine = self.machine
+        _ = await database.insert {
+          MachineEntry(
+            bookmarkDataID: bookmarkDataID,
+            machine: machine,
+            updatedConfiguration: updatedConfiguration,
+            osInstalled: nil,
+            restoreImageID: updatedConfiguration.restoreImageFile.imageID,
+            name: url.deletingPathExtension().lastPathComponent,
+            createdAt: .init(),
+            lastOpenedAt: .init()
+          )
+        }
       } catch {
         let machineError = MachineError.fromExportSnapshotError(error)
         assertionFailure(error: machineError)
@@ -406,9 +432,11 @@
       }
     }
 
-    func refreshSnapshots() {
+    func refreshSnapshots() async {
       Self.logger.debug("Refreshing Snapshots")
-      self.snapshotIDs = self.machine.configuration.snapshots.map(\.id)
+      let snapshots = await self.machine.updatedConfiguration.snapshots
+      self.snapshotIDs = snapshots.map(\.id)
+      self.latestSnapshots = snapshots
     }
   }
 #endif

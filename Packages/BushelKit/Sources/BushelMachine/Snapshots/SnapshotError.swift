@@ -32,7 +32,7 @@ import Foundation
 internal enum SnapshotError: Error, LocalizedError, Sendable {
   case innerError(any Error)
   case missingSnapshotVersionID(UUID)
-  case missingSnapshotVersionAt(URL, forPersistentIdentifier: any Sendable)
+  case missingSnapshotVersionAt(URL)
   case missingSnapshotFile(UUID)
   case unarchiveError(Data)
 
@@ -60,8 +60,8 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
 
     case let .missingSnapshotVersionID(id):
       return "Missing Snapshot Based on Info from ID: \(id)"
-    case let .missingSnapshotVersionAt(url, forPersistentIdentifier: persistentIdentifier):
-      return "Missing Snapshot at \(url) for \(persistentIdentifier)"
+    case let .missingSnapshotVersionAt(url):
+      return "Missing Snapshot at \(url)"
     case let .missingSnapshotFile(id):
       return "Missing Snapshot File with ID: \(id)"
     case let .unarchiveError(data):

@@ -3,7 +3,11 @@
 // Copyright (c) 2024 BrightDigit.
 //
 
-import Foundation
+#if canImport(FoundationNetworking)
+  @preconcurrency import Foundation
+#else
+  import Foundation
+#endif
 
 extension String {
   // swiftlint:disable:next force_try

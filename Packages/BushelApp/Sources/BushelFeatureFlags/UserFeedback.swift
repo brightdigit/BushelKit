@@ -4,9 +4,11 @@
 //
 
 #if canImport(SwiftUI)
-  import BushelCore
-  import FeatherQuill
-  import SwiftUI
+  public import BushelCore
+
+  public import FeatherQuill
+
+  public import SwiftUI
 
   public struct UserFeedback: BushelFeatureFlag {
     public typealias UserTypeValue = UserAudience

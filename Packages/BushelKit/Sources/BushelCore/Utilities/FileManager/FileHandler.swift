@@ -27,13 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+  public import FoundationNetworking
 #endif
 
 public protocol FileHandler: Sendable {
-  func attributesAt(_ url: URL) throws -> any AttributeSet
+  func sizeOf(_ url: URL) throws -> Int?
   func copy(at fromURL: URL, to toURL: URL) async throws
 }

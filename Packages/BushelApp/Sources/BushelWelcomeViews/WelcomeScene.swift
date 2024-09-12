@@ -9,7 +9,8 @@
   import BushelViewsCore
   import Foundation
   import SwiftData
-  import SwiftUI
+
+  public import SwiftUI
 
   public struct WelcomeScene: Scene {
     public var body: some Scene {

@@ -5,9 +5,11 @@
 
 #if canImport(SwiftUI)
 
-  import BushelCore
+  public import BushelCore
+
   import Foundation
-  import SwiftUI
+
+  public import SwiftUI
 
   private struct MetadataLabelProviderKey: EnvironmentKey {
     typealias Value = MetadataLabelProviderAction

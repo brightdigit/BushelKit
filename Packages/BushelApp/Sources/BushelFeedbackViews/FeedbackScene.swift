@@ -5,9 +5,10 @@
 
 #if canImport(SwiftUI)
 
-  import BushelViewsCore
   import Foundation
-  import SwiftUI
+  import RadiantKit
+
+  public import SwiftUI
 
   public struct FeedbackScene: Scene {
     public var body: some Scene {

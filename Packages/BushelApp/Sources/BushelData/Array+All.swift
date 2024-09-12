@@ -4,7 +4,7 @@
 //
 
 #if canImport(SwiftData)
-  import SwiftData
+  public import SwiftData
 
   extension Array where Element == any PersistentModel.Type {
     public static var all: [any PersistentModel.Type] {

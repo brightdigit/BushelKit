@@ -6,7 +6,9 @@
 import BushelCore
 import Foundation
 
-public struct OnboardingWindowValue: DefaultableViewValue {
+public import RadiantKit
+
+public struct OnboardingWindowValue: RadiantKit.DefaultableViewValue {
   public static let `default` = OnboardingWindowValue()
 
   private init() {}

@@ -5,7 +5,10 @@
 
 #if canImport(SwiftUI)
   import RadiantKit
-  import SwiftUI
+
+  public import RadiantPaging
+
+  public import SwiftUI
 
   extension PageView {
     public init(
