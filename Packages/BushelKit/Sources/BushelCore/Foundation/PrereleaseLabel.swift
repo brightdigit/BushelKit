@@ -31,7 +31,7 @@ import Foundation
 
 public struct PrereleaseLabel: Sendable {
   public let label: String
-  public let baseNumber: Int
+  private let baseNumber: Int
 
   public init(label: String, baseNumber: Int) {
     self.label = label
@@ -53,5 +53,9 @@ extension PrereleaseLabel {
       return nil
     }
     self.init(label: label, baseNumber: base)
+  }
+
+  public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int) -> Int {
+    (buildNumber - baseNumber + additionalOffset) / factor
   }
 }
