@@ -82,7 +82,7 @@ extension Version {
       return self.marketingSemVer.description
     }
 
-    return "\(self.marketingSemVer) \(prereleaseLabel.label) \(buildNumber - prereleaseLabel.baseNumber)"
+    return "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 
   /// Creates a new `Version` instance by parsing a marketing version string, build number string,
