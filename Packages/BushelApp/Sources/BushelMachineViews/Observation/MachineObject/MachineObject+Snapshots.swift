@@ -302,7 +302,9 @@
 
     func syncronizeSnapshots(at url: URL, options: SnapshotSyncronizeOptions) async throws {
       try await self.machine.syncronizeSnapshots(using: self.snapshotFactory, options: options)
+      let accessed = url.startAccessingSecurityScopedResource()
       try await self.writeConfigurationAt(url)
+
       self.model = try await MachineEntry.syncronizeModel(
         self.model,
         with: self.machine,

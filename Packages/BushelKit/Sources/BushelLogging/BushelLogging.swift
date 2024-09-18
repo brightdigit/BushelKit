@@ -31,6 +31,7 @@ public import protocol FelinePine.LoggingSystem
 
 public enum BushelLogging: LoggingSystem, Sendable {
   public enum Category: String, CaseIterable, Sendable {
+    case audioVisual
     case library
     case data
     case view

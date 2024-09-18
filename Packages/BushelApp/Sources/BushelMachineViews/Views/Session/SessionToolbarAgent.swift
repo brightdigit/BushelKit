@@ -8,6 +8,7 @@ import Foundation
 
 @MainActor
 internal protocol SessionToolbarAgent {
+  var toolbarHeight: CGFloat { get }
   var canStart: Bool { get }
 
   var canStop: Bool { get }

@@ -894,6 +894,12 @@ RadiantProgress()
 DataThespian()
 }
 }
+struct BushelScreenCapture: Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelLogging()
+}
+}
 struct BushelScreenCore: Target {}
 struct BushelBookmarkService: Target {
 var dependencies: any Dependencies {
@@ -947,6 +953,7 @@ BushelFactoryViews()
 BushelMachineEnvironment()
 BushelMarketEnvironment()
 BushelFeatureFlags()
+BushelScreenCapture()
 DataThespian()
 }
 }

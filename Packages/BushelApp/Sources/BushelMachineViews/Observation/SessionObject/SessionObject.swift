@@ -34,6 +34,8 @@
     var sessionAutomaticSnapshotsEnabled = true
     var isRestarting = false
     var sessionCloseButtonActionOption: SessionCloseButtonActionOption?
+    var windowNumber: Int?
+    var newSize: CGSize?
 
     var waitingForShutdown = false
 

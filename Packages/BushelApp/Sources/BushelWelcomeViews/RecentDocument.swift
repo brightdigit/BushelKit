@@ -45,6 +45,9 @@
         (url, updatedAt) = try await database.with(bookmarkDataID) {
           try ($0.fetchURL(), $0.updatedAt)
         }
+      } catch let cocoaError as CocoaError where cocoaError.code == .fileReadCorruptFile {
+        logger.error("File No Longer Exists: \(cocoaError.localizedDescription)")
+        return nil
       } catch {
         logger.error("Cannot access file: \(error.localizedDescription)")
         assertionFailure(error: error)

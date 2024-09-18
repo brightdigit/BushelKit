@@ -51,13 +51,13 @@ cache:
 
 .build_spm_macos: &build_spm_macos
   script:
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
     - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint bootstrap
     - pushd Packages/$PACKAGE_NAME
     - xcodebuild -resolvePackageDependencies
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 15" &>/dev/null || true
-    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 15"
-    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator18.0 -destination "OS=18.0,name=iPhone 15" -enableCodeCoverage YES -derivedDataPath Build
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 16" &>/dev/null || true
+    - xcodebuild build -quiet -scheme $SCHEME_NAME -derivedDataPath Build -destination "OS=18.0,name=iPhone 16"
+    - xcodebuild test -scheme $SCHEME_NAME -sdk iphonesimulator18.0 -destination "OS=18.0,name=iPhone 16" -enableCodeCoverage YES -derivedDataPath Build
     - popd
     - XCRESULT=$(find . -path "./Packages/$PACKAGE_NAME/Build/Logs/Test/Test-$SCHEME_NAME-*.xcresult")
     - echo ${XCRESULT}    
@@ -192,7 +192,7 @@ testflight:
     - if [ "$CI_COMMIT_REF_NAME" = "main" ]; then LANE_NAME="beta"; else LANE_NAME="archive"; fi
     - rbenv rehash
     - rbenv exec bundle install
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
     - LINT_MODE=NONE xcodegen
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane $LANE_NAME
@@ -218,6 +218,6 @@ production:
   script:
     - rbenv rehash
     - rbenv exec bundle install
-    - sudo /usr/bin/xcode-select --switch /Applications/Xcode_16.0.app
+    - sudo /usr/bin/xcode-select --switch /Applications/Xcode.app
     - git remote set-url --push origin git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
     - rbenv exec bundle exec fastlane production

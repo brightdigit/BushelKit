@@ -8,8 +8,13 @@
   import BushelLocalization
   import BushelMachine
   import BushelMarketEnvironment
+  import BushelScreenCapture
   import BushelViewsCore
   import SwiftUI
+
+  #if canImport(ScreenCaptureKit)
+    import ScreenCaptureKit
+  #endif
 
   @MainActor
   internal struct SessionToolbarView: View {
@@ -28,6 +33,8 @@
     @Environment(\.marketplace) var marketplace
 
     let agent: any SessionToolbarAgent
+    let windowNumber: Int?
+    @State var captureSession: (any CaptureSession)?
     let onGeometryProxy: (GeometryProxy) -> Void
 
     var startPauseResume: some View {
@@ -87,6 +94,35 @@
         isOn: self.$screenSettings.capturesSystemKeys
       )
       .help(Text(.sessionCaptureSystemKeysToggle))
+      #if canImport(ScreenCaptureKit)
+        if #available(macOS 14.4, *) {
+          if let captureSession {
+            Button {
+              captureSession.stop()
+              self.captureSession = nil
+            } label: {
+              Image(systemName: "stop.fill")
+            }
+          } else {
+            Button {
+              assert(windowNumber != nil)
+
+              guard let windowNumber else {
+                return
+              }
+
+              self.captureSession = SCShareableContent.beginCapture(windowNumber) { error in
+                dump(error)
+                assertionFailure(error: error)
+              }
+            } label: {
+              Image(systemName: "video.fill")
+            }
+            .opacity(self.windowNumber != nil ? 1.0 : 0.5)
+            .disabled(self.windowNumber == nil)
+          }
+        }
+      #endif
       Button {
         if self.agent.allowedToSaveSnapshot {
           self.agent.snapshot(.init(), options: [])

@@ -68,6 +68,7 @@
             isForceRestartRequested: self.$object.isForceRestartRequested,
             purchasePrompt: self.$object.purchasePrompt,
             agent: self.object,
+            windowNumber: self.object.windowNumber,
             onGeometryProxy: self.object.toolbarProxy
           )
         }
