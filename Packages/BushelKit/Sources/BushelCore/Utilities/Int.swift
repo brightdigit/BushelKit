@@ -29,4 +29,9 @@
 
 extension Int {
   public static let bytesPerGB = 1_073_741_824
+
+  @inlinable public func roundToMultiple(of factor: Int) -> Int {
+    let multiplyBy = (self + (factor / 2)) / factor
+    return multiplyBy * factor
+  }
 }

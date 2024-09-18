@@ -19,7 +19,21 @@
       self.object = object
     }
 
-    func windowDidBecomeMain(_: Notification) {
+    func windowDidBecomeKey(_ notification: Notification) {
+      guard object.windowNumber == nil else {
+        return
+      }
+
+      guard let window = notification.object as? NSWindow else {
+        assertionFailure("Unable to get window.")
+        return
+      }
+
+      Self.logger.debug("Saving Window Number: \(window.windowNumber)")
+      object.windowNumber = window.windowNumber
+    }
+
+    func windowDidBecomeMain(_ notification: Notification) {
       guard object.canStart, !object.hasIntialStarted else {
         return
       }
@@ -28,6 +42,18 @@
       object.begin { machine in
         try await machine.start()
       }
+
+      guard object.windowNumber == nil else {
+        return
+      }
+
+      guard let window = notification.object as? NSWindow else {
+        assertionFailure("Unable to get window.")
+        return
+      }
+
+      Self.logger.debug("Saving Window Number: \(window.windowNumber)")
+      object.windowNumber = window.windowNumber
     }
 
     func windowWillResize(_: NSWindow, to frameSize: NSSize) -> NSSize {
@@ -41,6 +67,7 @@
         minimumWidth: MachineScene.minimumWidth,
         withAdditionalHeight: self.object.toolbarHeight
       )
+      object.newSize = newSize
       Self.logger.debug("windowWillResize newSize \(newSize.debugDescription)")
       return newSize
     }
