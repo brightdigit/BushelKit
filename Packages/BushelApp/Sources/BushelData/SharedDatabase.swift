@@ -6,25 +6,29 @@
 #if canImport(SwiftData)
   import Foundation
 
-  public import DataThespian
-
   public import SwiftData
 
-  public struct SharedDatabase: Sendable {
+  public import BushelLogging
+
+  public import DataThespian
+
+  public struct SharedDatabase: Sendable, Loggable {
+    public static var loggingCategory: BushelLogging.Category {
+      .data
+    }
+
     public static let shared: SharedDatabase = .init()
 
-    public let schemas: [any PersistentModel.Type]
     public let modelContainer: ModelContainer
     public let database: any Database
 
     private init(
-      schemas: [any PersistentModel.Type] = .all,
-      modelContainer: ModelContainer? = nil,
       database: (any Database)? = nil
     ) {
-      self.schemas = schemas
-      let modelContainer = modelContainer ?? .forTypes(schemas)
-      self.modelContainer = modelContainer
+      self.modelContainer = ModelContainer(
+        versionedSchema: NorthernSpySchema.self,
+        migrationPlan: MigrationPlan.self
+      )
       self.database = database ?? BackgroundDatabase(modelContainer: modelContainer)
     }
   }

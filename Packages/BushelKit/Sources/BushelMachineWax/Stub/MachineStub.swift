@@ -98,7 +98,9 @@ public struct MachineStub: Machine {
   }
 
   // swiftlint:disable:next unavailable_function
-  public func finishedWithSynchronization(_: BushelMachine.SnapshotSynchronizationDifference?) throws {
+  public func finishedWithSynchronization(
+    _: BushelMachine.SnapshotSynchronizationDifference?
+  ) async throws {
     fatalError("Not implemented")
   }
 

@@ -32,7 +32,10 @@
     }
 
     internal convenience init(service: String, messageTypes: [any Message.Type] = .all) throws {
-      let modelContainer: ModelContainer = .forTypes(.all)
+      let modelContainer = ModelContainer(
+        versionedSchema: NorthernSpySchema.self,
+        migrationPlan: MigrationPlan.self
+      )
       let database = BackgroundDatabase(modelContainer: modelContainer)
 
       self.init(database: database, messageTypes: messageTypes)
