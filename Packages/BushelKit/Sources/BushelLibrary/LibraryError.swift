@@ -81,18 +81,15 @@ public struct LibraryError: LocalizedError, Loggable {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue getting the bookmark: \(error)"
-
       case .systemResolution:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to resolve new image: \(error)"
-
       case let .accessDeniedLibraryAt(at: path):
         let components: [String?] = [
           "There's an issue getting access to library at \(path)", error?.localizedDescription
         ]
         return components.compactMap { $0 }.joined(separator: ": ")
-
       case let .imageCorruptedAt(at: importingURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared

@@ -24,7 +24,6 @@ public enum Library {
       "library:" + title + ":selected"
     case let .libraryImageItem(title, id):
       "library:" + title + ":images:" + id
-
     case let .libraryToolbarAction(title, action):
       "library:" + title + ":toolbar:plus:\(action)"
     case let .libraryToolbar(title):

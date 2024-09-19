@@ -53,7 +53,7 @@
       Self.logger.debug("Load completed for url at \(newURL.path(), privacy: .public)")
       self.presentFileExporter = presentFileExporter
       Task(priority: .background) {
-        await self.syncronize()
+        await self.synchronize()
       }
     }
 
@@ -99,20 +99,20 @@
       }
     }
 
-    public func beginSyncronize() {
+    public func beginSynchronize() {
       Task {
-        await self.syncronize()
+        await self.synchronize()
       }
     }
 
-    private func syncronize() async {
+    private func synchronize() async {
       guard let object = self.object else {
         Self.logger.error("No object yet.")
         return
       }
 
       do {
-        try await object.syncronize()
+        try await object.synchronize()
       } catch {
         Self.logger.error("Unable to synconize: \(error.localizedDescription)")
       }

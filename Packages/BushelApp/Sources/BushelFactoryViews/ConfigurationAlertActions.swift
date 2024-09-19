@@ -5,7 +5,8 @@
 
 #if canImport(SwiftUI)
   import BushelCore
-
+  import BushelLocalization
+  import BushelViewsCore
   public import SwiftUI
 
   public struct ConfigurationAlertActions: View {
@@ -13,7 +14,7 @@
     private let onCompleted: () -> Void
     public var body: some View {
       if let destinationURL = self.destinationURL() {
-        Button("Yes, Delete the Machine.", role: .destructive) {
+        Button(role: .destructive, LocalizedStringID.machineInstallErrorDeleteYes) {
           do {
             try FileManager.default.removeItem(at: destinationURL)
           } catch {
@@ -23,7 +24,7 @@
         }
       }
 
-      Button("No keep the failed machine file.") {
+      Button(.machineInstallErrorDeleteNo) {
         self.onCompleted()
       }
     }

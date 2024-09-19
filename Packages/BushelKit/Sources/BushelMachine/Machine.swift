@@ -96,7 +96,7 @@ public protocol Machine: Loggable, Sendable {
 
   func finishedWithSnapshot(_ snapshot: Snapshot, by difference: SnapshotDifference) async
 
-  func finishedWithSyncronization(_ difference: SnapshotSyncronizationDifference?) async throws
+  func finishedWithSynchronization(_ difference: SnapshotSynchronizationDifference?) async throws
 
   func updatedMetadata(forSnapshot snapshot: Snapshot, atIndex index: Int) async
 
@@ -116,10 +116,10 @@ extension Machine {
     }
   }
 
-  public func syncronizeSnapshots(
+  public func synchronizeSnapshots(
     using provider:
     any SnapshotProvider,
-    options: SnapshotSyncronizeOptions
+    options: SnapshotSynchronizeOptions
   ) async throws {
     let configuration = await self.updatedConfiguration
     guard let snapshotter = provider.snapshotter(
@@ -129,8 +129,8 @@ extension Machine {
       Self.logger.critical("Unknown system: \(configuration.snapshotSystemID)")
       preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
-    let snapshots = try await snapshotter.syncronizeSnapshots(for: self, options: options)
-    try await self.finishedWithSyncronization(snapshots)
+    let snapshots = try await snapshotter.synchronizeSnapshots(for: self, options: options)
+    try await self.finishedWithSynchronization(snapshots)
   }
 
   @discardableResult

@@ -33,7 +33,7 @@
   }
 
   extension LibraryEntry {
-    public struct SyncronizationDifference: Sendable {
+    public struct SynchronizationDifference: Sendable {
       public let model: ModelID<LibraryEntry>
 
       public let imagesToInsert: [LibraryImageFile]
@@ -45,10 +45,10 @@
       self.images?.count ?? 0
     }
 
-    #warning("Refactor Syncronization Technique")
+    #warning("Refactor Synchronization Technique")
     // swiftlint:disable:next function_body_length
-    private static func syncronize(
-      _ diff: SyncronizationDifference,
+    private static func synchronize(
+      _ diff: SynchronizationDifference,
       using database: any Database
     ) async throws -> ModelID<LibraryEntry> {
       // swiftlint:disable:next closure_body_length
@@ -68,7 +68,7 @@
                     Self.logger.error("synconized ids not found for \(image.id)")
                     return
                   }
-                  imageEntry.syncronizeFile(image)
+                  imageEntry.synchronizeFile(image)
                   imageEntry.library = libraryEntry
                 }
               }
@@ -118,27 +118,27 @@
     }
 
     @discardableResult
-    public static func syncronizeModel(
+    public static func synchronizeModel(
       _ model: ModelID<LibraryEntry>,
       with library: Library,
       using database: any Database
     ) async throws -> ModelID<LibraryEntry> {
       let diff = try await database.with(model) { libraryEntry in
-        libraryEntry.syncronizationReport(library)
+        libraryEntry.synchronizationReport(library)
       }
 
-      return try await Self.syncronize(diff, using: database)
+      return try await Self.synchronize(diff, using: database)
     }
 
-    public func syncronizeWith(
+    public func synchronizeWith(
       _ library: Library,
       using database: any Database
     ) async throws -> ModelID<LibraryEntry> {
       let model = ModelID(self)
-      return try await Self.syncronizeModel(model, with: library, using: database)
+      return try await Self.synchronizeModel(model, with: library, using: database)
     }
 
-    public func syncronizationReport(_ library: Library) -> SyncronizationDifference {
+    public func synchronizationReport(_ library: Library) -> SynchronizationDifference {
       let entryMap: [UUID: LibraryImageEntry] = .init(uniqueKeysWithValues: images?.map {
         ($0.imageID, $0)
       } ?? [])

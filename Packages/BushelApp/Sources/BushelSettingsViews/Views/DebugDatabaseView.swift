@@ -64,7 +64,7 @@
             Text(.databaseSnapshots)
           }
         }
-        Button("Done") {
+        Button(.done) {
           dismiss()
         }
       }

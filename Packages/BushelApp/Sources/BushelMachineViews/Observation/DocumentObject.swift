@@ -133,7 +133,7 @@
         )
         self.machineObject = machineObject
         self.url = url
-        try await machineObject.syncronizeSnapshots(at: url, options: .init())
+        try await machineObject.synchronizeSnapshots(at: url, options: .init())
       } catch {
         Self.logger.error("Could not open \(url, privacy: .public): \(error, privacy: .public)")
         self.error = assertionFailure(error: error) { error in
@@ -142,7 +142,7 @@
       }
     }
 
-    func beginSyncronizing() {
+    func beginSynchronizing() {
       guard let url = self.url else {
         let error = MachineError.missingProperty(.url)
         Self.logger.error("Missing url: \(error)")
@@ -159,9 +159,9 @@
       }
       Task {
         do {
-          try await machine.syncronizeSnapshots(at: url, options: .init())
+          try await machine.synchronizeSnapshots(at: url, options: .init())
         } catch {
-          Self.logger.error("Unable to complete syncronize: \(error.localizedDescription)")
+          Self.logger.error("Unable to complete synchronize: \(error.localizedDescription)")
         }
       }
     }

@@ -1,5 +1,5 @@
 //
-//  SnapshotSyncronizeOptions.swift
+//  SnapshotSynchronizeOptions.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -31,7 +31,7 @@ import BushelCore
 
 import Foundation
 
-public struct SnapshotSyncronizeOptions: OptionSet, Sendable {
+public struct SnapshotSynchronizeOptions: OptionSet, Sendable {
   public typealias RawValue = Int
 
   public let rawValue: Int

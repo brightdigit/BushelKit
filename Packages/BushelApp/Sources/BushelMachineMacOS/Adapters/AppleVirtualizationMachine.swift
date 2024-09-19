@@ -117,8 +117,8 @@
       }
     }
 
-    public func finishedWithSyncronization(
-      _ difference: BushelMachine.SnapshotSyncronizationDifference?
+    public func finishedWithSynchronization(
+      _ difference: BushelMachine.SnapshotSynchronizationDifference?
     ) throws {
       if let difference {
         let indicies = self.updatedConfiguration.snapshots.enumerated().compactMap { index, snapshot in

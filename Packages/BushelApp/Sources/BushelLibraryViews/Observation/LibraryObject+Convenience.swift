@@ -95,7 +95,7 @@
           }
         }
 
-      try await LibraryEntry.syncronizeModel(model, with: library, using: database)
+      try await LibraryEntry.synchronizeModel(model, with: library, using: database)
       let components = Components(
         library: library,
         model: model,

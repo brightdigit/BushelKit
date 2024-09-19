@@ -91,7 +91,7 @@
       )
     }
 
-    internal func syncronizeFile(
+    internal func synchronizeFile(
       _ file: LibraryImageFile
     ) {
       name = file.name

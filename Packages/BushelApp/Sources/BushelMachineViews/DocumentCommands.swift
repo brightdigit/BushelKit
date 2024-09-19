@@ -5,6 +5,7 @@
 
 #if canImport(SwiftUI)
   import BushelCore
+  import BushelLocalization
   import BushelLogging
   import BushelMachine
   import Foundation
@@ -18,8 +19,13 @@
     var body: some Commands {
       if let object, false {
         CommandMenu("Machine") {
-          Button("Syncronize \(object.title)") {
-            object.beginSyncronizing()
+          Button {
+            object.beginSynchronizing()
+          } label: {
+            Text(
+              localizedUsingID: LocalizedStringID.machineDocumentCommandSynchronize,
+              arguments: object.title
+            )
           }
         }
       }

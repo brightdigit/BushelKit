@@ -82,7 +82,7 @@
         error: self.object.error
       ) { error in
         if error.isCritical {
-          Button("OK") {
+          Button(.ok) {
             Task { @MainActor in
               self.dismiss()
             }

@@ -61,7 +61,7 @@ cache:
     - popd
     - XCRESULT=$(find . -path "./Packages/$PACKAGE_NAME/Build/Logs/Test/Test-$SCHEME_NAME-*.xcresult")
     - echo ${XCRESULT}    
-#    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
+    - MINT_PATH="$PWD/.mint" /opt/homebrew/bin/mint run $MINT_ARGS xcresultparser -o cobertura ${XCRESULT} > cobertura.xml
 
 
 .lint_template: &lint_template

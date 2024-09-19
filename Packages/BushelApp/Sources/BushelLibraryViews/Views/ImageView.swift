@@ -22,7 +22,7 @@
     var body: some View {
       VStack {
         ImageHeader(image: self.$image, metadataLabel: self.metadataLabel, beginSave: self.beginSave)
-        Button("Build") {
+        Button(.buildMachine) {
           Task {
             let bookmarkID: UUID
             do {

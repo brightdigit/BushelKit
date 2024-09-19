@@ -126,10 +126,13 @@
         }
         .foregroundStyle(Color.red)
       } footer: {
-        Button("More Actions") {
+        Button {
           self.isAdvancedButtonsVisible.toggle()
-        }.keyboardShortcut(KeyEquivalent("d"), modifiers: [.command, .option, .control])
-          .opacity(0.0)
+        } label: {
+          Image(systemName: "ellipsis")
+        }
+        .keyboardShortcut(KeyEquivalent("d"), modifiers: [.command, .option, .control])
+        .opacity(0.0)
       }
     }
 

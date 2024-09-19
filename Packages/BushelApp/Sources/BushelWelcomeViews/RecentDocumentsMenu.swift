@@ -32,7 +32,7 @@
         if !isEmpty {
           Divider()
         }
-        Button("Clear Menu") {
+        Button(.menuClear) {
           clearTrigger.send()
         }.disabled(self.isEmpty)
       } label: {

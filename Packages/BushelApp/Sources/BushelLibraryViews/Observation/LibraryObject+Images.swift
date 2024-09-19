@@ -159,7 +159,7 @@
       try await accessibleBookmark.stopAccessing(updateTo: database)
     }
 
-    internal func syncronize() async throws {
+    internal func synchronize() async throws {
       guard let database else {
         throw LibraryError.missingInitializedProperty(.database)
       }
@@ -178,7 +178,7 @@
 
       self.library = .init(items: files)
 
-      _ = try await LibraryEntry.syncronizeModel(self.model, with: library, using: database)
+      _ = try await LibraryEntry.synchronizeModel(self.model, with: library, using: database)
       try saveChangesTo(libraryURL)
     }
   }

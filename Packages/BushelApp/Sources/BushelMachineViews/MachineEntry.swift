@@ -18,7 +18,7 @@
       let database = components.configuration.database
       if let model = components.existingModel {
         do {
-          return try await MachineEntry.syncronizeModel(
+          return try await MachineEntry.synchronizeModel(
             model,
             with: components.machine,
             osInstalled: components.restoreImage,
