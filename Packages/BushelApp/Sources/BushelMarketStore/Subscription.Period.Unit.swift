@@ -27,6 +27,7 @@
 
       case .year:
         self = .year
+
       @unknown default:
         assertionFailure("Unknown unit: \(unit)")
         self = .unknown(value: unit)

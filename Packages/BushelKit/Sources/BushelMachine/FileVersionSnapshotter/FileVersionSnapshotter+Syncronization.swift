@@ -70,10 +70,10 @@
       }
     }
 
-    public func syncronizeSnapshots(
+    public func synchronizeSnapshots(
       for machine: MachineType,
-      options _: SnapshotSyncronizeOptions
-    ) async throws -> SnapshotSyncronizationDifference? {
+      options _: SnapshotSynchronizeOptions
+    ) async throws -> SnapshotSynchronizationDifference? {
       let paths = try machine.beginSnapshot()
 
       guard let snapshotsAdded = try self.updateSnapshots(atPaths: paths) else {

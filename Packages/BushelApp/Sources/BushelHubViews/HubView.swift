@@ -36,10 +36,10 @@
       .frame(width: 800, height: 400)
       .toolbar(content: {
         ToolbarItemGroup {
-          Button("Cancel") {
+          Button(.cancel) {
             dismiss()
           }
-          Button("Add Image") {
+          Button(.downloadImage) {
             self.selectedHubImage = self.object.selectedImage
             dismiss()
           }.disabled(self.object.selectedImage == nil)

@@ -40,11 +40,14 @@
         Text(detailsID).lineLimit(3, reservesSpace: true)
         HStack {
           Group {
-            Button("More Actions") {
+            Button {
               self.isAdvancedButtonsVisible.toggle()
-            }.keyboardShortcut(KeyEquivalent("b"), modifiers: [.command, .option, .control])
-              .opacity(0.0)
-            Button("See Subscription Page") {
+            } label: {
+              Image(systemName: "ellipsis")
+            }
+            .keyboardShortcut(KeyEquivalent("b"), modifiers: [.command, .option, .control])
+            .opacity(0.0)
+            Button(.upgradePurchase) {
               self.openWindow(value: self.purchaseWindow)
             }.isHidden(self.isAdvancedButtonsVisible)
             Button(.menuOnboarding) {

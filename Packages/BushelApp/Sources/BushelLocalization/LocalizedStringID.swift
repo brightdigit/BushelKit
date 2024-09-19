@@ -17,6 +17,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case version
   case name
   case ok
+  case done
   case contactUs
   case joinDiscourse
   case startMachine
@@ -73,6 +74,8 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case machineImagesEmptyNewLibrary
   case machineImagesEmptyAddLibrary
   case machineInstallErrorDelete
+  case machineInstallErrorDeleteYes
+  case machineInstallErrorDeleteNo
   case machineDetailsSystemTab
   case machineDetailsOS
   case machineDetailsChip
@@ -123,6 +126,7 @@ public enum LocalizedStringID: String, CaseIterable, LocalizedID, Sendable {
   case machineConfirmDeleteCancel
   case machineConfirmRestoreCancel
   case machineConfirmRestoreNew
+  case machineDocumentCommandSynchronize
   case onboardingWelcomeTitle
   case onboardingWelcomeSubtitle
   case onboardingWelcomeMessage

@@ -62,9 +62,7 @@ internal final class InstallerImageIdentifierTests: XCTestCase {
 
   func testDecodeFromJsonString() throws {
     let restoreImageIdentifier = String.restoreImageIdentiferSample
-    // swiftlint:disable:next force_unwrapping
-    let sut = "\"\(restoreImageIdentifier)\"".data(using: .utf8)!
-
+    let sut = Data("\"\(restoreImageIdentifier)\"".utf8)
     XCTAssertNoThrow(try JSONDecoder().decode(InstallerImageIdentifier.self, from: sut))
   }
 }

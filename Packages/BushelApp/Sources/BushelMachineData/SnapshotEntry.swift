@@ -96,7 +96,7 @@
       )
     }
 
-    public static func syncronizeSnapshotModel(
+    public static func synchronizeSnapshotModel(
       _ model: ModelID<SnapshotEntry>,
       with snapshot: Snapshot,
       machineModel: ModelID<MachineEntry>,
@@ -104,11 +104,11 @@
       withOS osInstalled: OperatingSystemVersionComponents? = nil
     ) async throws {
       try await database.with(model) { snapshotEntry in
-        try snapshotEntry.syncronizeSnapshot(snapshot, model: machineModel, withOS: osInstalled)
+        try snapshotEntry.synchronizeSnapshot(snapshot, model: machineModel, withOS: osInstalled)
       }
     }
 
-    public func syncronizeSnapshot(
+    public func synchronizeSnapshot(
       _ snapshot: Snapshot,
       model _: ModelID<MachineEntry>,
       withOS osInstalled: OperatingSystemVersionComponents? = nil
@@ -122,7 +122,7 @@
       self.machine = machine
     }
 
-    public func syncronizeSnapshot(
+    public func synchronizeSnapshot(
       _ snapshot: Snapshot,
       withOS osInstalled: OperatingSystemVersionComponents? = nil
     ) throws {
@@ -134,7 +134,7 @@
       }
     }
 
-    public func syncronizeSnapshot(
+    public func synchronizeSnapshot(
       _ snapshot: Snapshot,
       model _: ModelID<MachineEntry>,
       database _: any Database,

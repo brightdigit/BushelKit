@@ -894,6 +894,18 @@
         }
       }
     },
+    "done" : {
+      "comment" : "Done Button",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
     "download" : {
       "comment" : "Download button",
       "extractionState" : "manual",
@@ -3200,6 +3212,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "失敗したマシンを削除しますか？"
+          }
+        }
+      }
+    },
+    "machine_install_error_delete_no" : {
+      "comment" : "Answer No to delete machine failed installation",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No keep the failed machine file."
+          }
+        }
+      }
+    },
+    "machine_install_error_delete_yes" : {
+      "comment" : "Answer Yes to delete machine failed installation",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, Delete the Machine."
           }
         }
       }

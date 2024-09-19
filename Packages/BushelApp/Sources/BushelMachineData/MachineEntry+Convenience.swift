@@ -17,7 +17,7 @@
   import SwiftData
 
   extension MachineEntry {
-    public struct SyncronizationDifference: Sendable {
+    public struct SynchronizationDifference: Sendable {
       public let model: ModelID<MachineEntry>
       public let machineIdentifier: UInt64?
       public let osVersion: OperatingSystemVersionComponents?
@@ -27,10 +27,10 @@
       public let snapshotsToUpdate: [Snapshot]
     }
 
-    #warning("Refactor Syncronization Technique")
+    #warning("Refactor Synchronization Technique")
     // swiftlint:disable:next function_body_length
-    internal static func syncronize(
-      _ diff: SyncronizationDifference,
+    internal static func synchronize(
+      _ diff: SynchronizationDifference,
       using database: any Database
     ) async throws -> ModelID<MachineEntry> {
       // swiftlint:disable:next closure_body_length
@@ -65,7 +65,7 @@
                     return
                   }
 
-                  try snapshotEntry.syncronizeSnapshot(
+                  try snapshotEntry.synchronizeSnapshot(
                     snapshot,
                     withOS: diff.osVersion
                   )
@@ -128,7 +128,7 @@
       }
     }
 
-    public static func syncronizeModel(
+    public static func synchronizeModel(
       _ model: ModelID<MachineEntry>,
       with machine: any Machine,
       osInstalled: OperatingSystemVersionComponents?,
@@ -136,21 +136,21 @@
     ) async throws -> ModelID<MachineEntry> {
       let updatedConfiguration = await machine.updatedConfiguration
       let diff = try await database.with(model) { machineEntry in
-        machineEntry.syncronizationReport(
+        machineEntry.synchronizationReport(
           machine,
           osInstalled: osInstalled,
           withConfiguration: updatedConfiguration
         )
       }
 
-      return try await Self.syncronize(diff, using: database)
+      return try await Self.synchronize(diff, using: database)
     }
 
-    public func syncronizationReport(
+    public func synchronizationReport(
       _ machine: any Machine,
       osInstalled: OperatingSystemVersionComponents?,
       withConfiguration configuration: MachineConfiguration
-    ) -> SyncronizationDifference {
+    ) -> SynchronizationDifference {
       let entryMap: [UUID: SnapshotEntry] = .init(uniqueKeysWithValues: snapshots?.map {
         ($0.snapshotID, $0)
       } ?? [])
@@ -191,7 +191,12 @@
       using database: any Database
     ) async throws -> ModelID<MachineEntry> {
       let model = ModelID(self)
-      return try await Self.syncronizeModel(model, with: machine, osInstalled: osInstalled, using: database)
+      return try await Self.synchronizeModel(
+        model,
+        with: machine,
+        osInstalled: osInstalled,
+        using: database
+      )
     }
   }
 

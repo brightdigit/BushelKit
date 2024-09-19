@@ -16,7 +16,7 @@
 
     var addMenu: some View {
       Menu {
-        Button("Import File...") { @MainActor in
+        Button(.importImage) { @MainActor in
           self.object.presentFileImporter = true
         }
         .accessibilityIdentifier(
@@ -25,7 +25,7 @@
           ).identifier
         )
         .accessibilityLabel("Import File")
-        Button("Download From Hub...") {
+        Button(.downloadImage) {
           self.object.presentHubModal = true
         }
         .accessibilityIdentifier(
@@ -71,9 +71,9 @@
       .disabled(self.object.selectedItem == nil)
     }
 
-    var syncronizeButton: some View {
+    var synchronizeButton: some View {
       Button {
-        self.object.beginSyncronize()
+        self.object.beginSynchronize()
       } label: {
         VStack {
           Spacer()
@@ -87,7 +87,7 @@
       HStack {
         addMenu
         removeButton
-        syncronizeButton
+        synchronizeButton
         Spacer()
       }
       .buttonStyle(.plain)

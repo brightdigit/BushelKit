@@ -133,7 +133,7 @@
         atIndex: object.index
       )
 
-      try await SnapshotEntry.syncronizeSnapshotModel(
+      try await SnapshotEntry.synchronizeSnapshotModel(
         object.model,
         with: object.updatedSnapshot,
         machineModel: self.model,
@@ -300,12 +300,12 @@
       }
     }
 
-    func syncronizeSnapshots(at url: URL, options: SnapshotSyncronizeOptions) async throws {
-      try await self.machine.syncronizeSnapshots(using: self.snapshotFactory, options: options)
+    func synchronizeSnapshots(at url: URL, options: SnapshotSynchronizeOptions) async throws {
+      try await self.machine.synchronizeSnapshots(using: self.snapshotFactory, options: options)
       let accessed = url.startAccessingSecurityScopedResource()
       try await self.writeConfigurationAt(url)
 
-      self.model = try await MachineEntry.syncronizeModel(
+      self.model = try await MachineEntry.synchronizeModel(
         self.model,
         with: self.machine,
         osInstalled: nil,
@@ -315,7 +315,7 @@
       await self.refreshSnapshots()
       self.machine = machine
 
-      Self.logger.notice("Syncronization Complete.")
+      Self.logger.notice("Synchronization Complete.")
     }
 
     func beginSavingSnapshot(_ request: SnapshotRequest, options: SnapshotOptions, at url: URL) {
@@ -354,7 +354,7 @@
             try await self.saveSnapshot(request, options: [], at: url)
           }
           try await self.machine.restoreSnapshot(snapshot, using: self.snapshotFactory)
-          try await MachineEntry.syncronizeModel(
+          try await MachineEntry.synchronizeModel(
             self.model,
             with: machine,
             osInstalled: nil,

@@ -37,8 +37,7 @@ internal final class VMSystemIDTests: XCTestCase {
 
   func testDecode() throws {
     let uuidString = UUID().uuidString
-    // swiftlint:disable:next force_unwrapping
-    let json = "\"\(uuidString)\"".data(using: .utf8)!
+    let json = Data("\"\(uuidString)\"")
 
     XCTAssertNoThrow(try JSONDecoder().decode(VMSystemID.self, from: json))
   }

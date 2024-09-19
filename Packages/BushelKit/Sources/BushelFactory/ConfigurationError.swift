@@ -84,10 +84,8 @@ public enum ConfigurationError: LocalizedError {
       "Database Error: \(error)"
     case let .machineBuilderError(error):
       error.errorDescription
-
     case let .fileDialogError(error):
       error.localizedDescription
-
     case let .unknownError(error):
       "Unknown error: \(error)"
     }
