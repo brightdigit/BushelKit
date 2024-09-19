@@ -2964,6 +2964,18 @@
         }
       }
     },
+    "machine_document_command_synchronize" : {
+      "comment" : "Machine Document Synchronize Menu Command",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synchronize %@"
+          }
+        }
+      }
+    },
     "machine_images_choose" : {
       "comment" : "Machine Configuration Choose Button",
       "extractionState" : "manual",
