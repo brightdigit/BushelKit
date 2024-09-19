@@ -31,9 +31,6 @@
 
     internal let xpcService: String
 
-    internal let schemas: [any PersistentModel.Type] =
-      .all
-
     internal var allowedOpenFileTypes: [FileType] {
       [.virtualMachine, .restoreImageLibrary]
     }

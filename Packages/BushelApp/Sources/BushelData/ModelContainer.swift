@@ -16,17 +16,26 @@
       .data
     }
 
-    public static func forTypes(_ forTypes: [any PersistentModel.Type]) -> ModelContainer {
+    public convenience init(
+      versionedSchema: VersionedSchema.Type,
+      migrationPlan: (any SchemaMigrationPlan.Type)? = nil,
+      configurations _: ModelConfiguration...
+    ) {
       do {
-        return try ModelContainer(for: Schema(forTypes))
+        try self.init(for: Schema(versionedSchema: versionedSchema), migrationPlan: migrationPlan)
       } catch {
         if EnvironmentConfiguration.shared.disallowDatabaseRebuild {
           assertionFailure(error: error)
         }
-        logger.error("Unable to read database. Rebuilding the database.")
-        // swiftlint:disable:next force_try
-        try! ModelContainer().deleteAllData()
-        return self.forTypes(forTypes)
+        Self.logger.error("Unable to read database. Rebuilding the database.")
+        // swiftlint:disable force_try
+        if #available(macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2, macCatalyst 15, *) {
+          try! ModelContainer().erase()
+        } else {
+          try! ModelContainer().deleteAllData()
+        }
+        try! self.init(for: Schema(versionedSchema: versionedSchema), migrationPlan: migrationPlan)
+        // swiftlint:enable force_try
       }
     }
   }
