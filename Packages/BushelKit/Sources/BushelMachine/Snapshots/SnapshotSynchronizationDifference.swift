@@ -1,5 +1,5 @@
 //
-//  SnapshotSyncronizationDifference.swift
+//  SnapshotSynchronizationDifference.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -31,7 +31,7 @@ import BushelCore
 
 public import Foundation
 
-public struct SnapshotSyncronizationDifference: Sendable {
+public struct SnapshotSynchronizationDifference: Sendable {
   public let addedSnapshots: [Snapshot]
   public let snapshotIDs: [UUID]
 }

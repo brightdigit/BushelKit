@@ -42,17 +42,17 @@ public protocol Snapshotter<MachineType> {
   func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) async throws
   func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws
   func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws
-  func syncronizeSnapshots(
+  func synchronizeSnapshots(
     for machine: MachineType,
-    options: SnapshotSyncronizeOptions
-  ) async throws -> SnapshotSyncronizationDifference?
+    options: SnapshotSynchronizeOptions
+  ) async throws -> SnapshotSynchronizationDifference?
 }
 
 extension Snapshotter {
-  public func syncronizeSnapshots(
+  public func synchronizeSnapshots(
     for _: MachineType,
-    options _: SnapshotSyncronizeOptions
-  ) async throws -> SnapshotSyncronizationDifference? {
+    options _: SnapshotSynchronizeOptions
+  ) async throws -> SnapshotSynchronizationDifference? {
     nil
   }
 }

@@ -79,6 +79,7 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue reading the library at \(libraryURL): \(error)"
+
       case .database:
         assert(error != nil)
         let error = error ?? UnknownError.shared
@@ -89,6 +90,7 @@ extension MachineError {
 
       case let .missingProperty(property):
         return "Missing object property: \(property)"
+
       case .snapshot:
         assert(error != nil)
         let error = error ?? UnknownError.shared
@@ -98,6 +100,7 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to contnue with session: \(error.localizedDescription)"
+
       case let .notFoundBookmarkID(id):
         return "There's an issue finding machine with bookmark ID: \(id)"
       }

@@ -57,7 +57,6 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
     case let .innerError(error):
       assertionFailure(error.localizedDescription)
       return error.localizedDescription
-
     case let .missingSnapshotVersionID(id):
       return "Missing Snapshot Based on Info from ID: \(id)"
     case let .missingSnapshotVersionAt(url):
