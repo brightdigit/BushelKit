@@ -1,3 +1,2 @@
-struct BushelKit {
-  var text = "Hello, World!"
-}
+// The Swift Programming Language
+// https://docs.swift.org/swift-book
