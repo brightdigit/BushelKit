@@ -1,0 +1,128 @@
+//
+//  DataType.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
+//
+
+public import Foundation
+
+public protocol SystemProfileType: Decodable { static var dataType: DataType { get } }
+
+// swift-format-ignore: AlwaysUseLowerCamelCase
+public enum DataType: String {
+  case SPParallelATADataType
+  case SPUniversalAccessDataType
+  case SPSecureElementDataType
+  case SPApplicationsDataType
+  case SPAudioDataType
+  case SPBluetoothDataType
+  case SPCameraDataType
+  case SPCardReaderDataType
+  case SPiBridgeDataType
+  case SPDeveloperToolsDataType
+  case SPDiagnosticsDataType
+  case SPDisabledSoftwareDataType
+  case SPDiscBurningDataType
+  case SPEthernetDataType
+  case SPExtensionsDataType
+  case SPFibreChannelDataType
+  case SPFireWireDataType
+  case SPFirewallDataType
+  case SPFontsDataType
+  case SPFrameworksDataType
+  case SPDisplaysDataType
+  case SPHardwareDataType
+  case SPInstallHistoryDataType
+  case SPInternationalDataType
+  case SPLegacySoftwareDataType
+  case SPNetworkLocationDataType
+  case SPLogsDataType
+  case SPManagedClientDataType
+  case SPMemoryDataType
+  case SPNVMeDataType
+  case SPNetworkDataType
+  case SPPCIDataType
+  case SPParallelSCSIDataType
+  case SPPowerDataType
+  case SPPrefPaneDataType
+  case SPPrintersSoftwareDataType
+  case SPPrintersDataType
+  case SPConfigurationProfileDataType
+  case SPRawCameraDataType
+  case SPSASDataType
+  case SPSerialATADataType
+  case SPSPIDataType
+  case SPSmartCardsDataType
+  case SPSoftwareDataType
+  case SPStartupItemDataType
+  case SPStorageDataType
+  case SPSyncServicesDataType
+  case SPThunderboltDataType
+  case SPUSBDataType
+  case SPNetworkVolumeDataType
+  case SPWWANDataType
+  case SPAirPortDataType
+}
+
+// let hardware: SPHardwareDataType? = try SystemProfiler.data().first
+// dump(hardware!)
+//
+// let network: SPNetworkDataType? = try SystemProfiler.data().first
+// dump(network!)
+//                            guard let res = process(
+// path: "/usr/sbin/system_profiler", arguments: ["SPMemoryDataType", "-json"]) else {
+//                            return nil
+//                        }")
+
+#if os(macOS)
+  extension SystemProfiler {
+    public enum Error: Swift.Error {
+      case missingRoot
+      case missingData
+    }
+
+    public static func data<T: SystemProfileType>() throws -> [T] {
+      let process = Process()
+      process.executableURL = .init(filePath: "/usr/sbin/system_profiler")
+      process.arguments = [T.dataType.rawValue, "-json"]
+      let pipe = Pipe()
+      process.standardOutput = pipe
+      try process.run()
+      guard let data = try pipe.fileHandleForReading.readToEnd() else { throw Error.missingData }
+      guard let dict = try JSONDecoder().decode([String: [T]].self, from: data)[T.dataType.rawValue]
+      else { throw Error.missingRoot }
+      return dict
+    }
+  }
+#endif
+
+extension SPHardwareDataType: SystemProfileType {
+  public static var dataType: DataType { .SPHardwareDataType }
+}
+
+extension SPNetworkDataType: SystemProfileType {
+  public static var dataType: DataType { .SPNetworkDataType }
+}
