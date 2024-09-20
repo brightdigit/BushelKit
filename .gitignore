@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/swift,swiftpm,swiftpackagemanager,xcode,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=swift,swiftpm,swiftpackagemanager,xcode,macos
+# Created by https://www.toptal.com/developers/gitignore/api/xcode,macos,swift
+# Edit at https://www.toptal.com/developers/gitignore?templates=xcode,macos,swift
 
 ### macOS ###
 # General
@@ -29,10 +29,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-### macOS Patch ###
-# iCloud generated files
-*.icloud
 
 ### Swift ###
 # Xcode
@@ -97,10 +93,6 @@ playground.xcworkspace
 
 Carthage/Build/
 
-# Accio dependency management
-Dependencies/
-.accio/
-
 # fastlane
 # It is recommended to not store the screenshots in the git repo.
 # Instead, use fastlane to re-generate the screenshots whenever they are needed.
@@ -111,6 +103,7 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+fastlane/reviews.csv
 
 # Code Injection
 # After new code Injection tools there's a generated folder /iOSInjectionProject
@@ -118,29 +111,34 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-### SwiftPackageManager ###
-# Packages
-xcuserdata
-*.xcodeproj
-
-
-### SwiftPM ###
-
-
 ### Xcode ###
+# Xcode
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-## Xcode 8 and earlier
+
+
+
+## Gcc Patch
+/*.gcno
 
 ### Xcode Patch ###
 *.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcodeproj/project.xcworkspace/
-!*.xcworkspace/contents.xcworkspacedata
-/*.gcno
+#!*.xcodeproj/project.pbxproj
+#!*.xcodeproj/xcshareddata/
+#!*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
-.mint
-# End of https://www.toptal.com/developers/gitignore/api/swift,swiftpm,swiftpackagemanager,xcode,macos
 
-test_output.log
-.docc-build
+# End of https://www.toptal.com/developers/gitignore/api/xcode,macos,swift
+
+Support/*/Info.plist
+Support/*/macOS.entitlements
+
+vendor/ruby
+public
+.mint
+*.lcov
+Docker/*/www
+!Docker/*/www/.gitkeep
+.package.source
+.vscode
+.package.source
