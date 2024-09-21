@@ -28,6 +28,7 @@
 //
 
 #if canImport(FoundationNetworking)
+  // swiftlint:disable all
   public import Foundation
 
   /// A comparison algorithm for a given type.
@@ -262,5 +263,5 @@
       sort { comparators.compare($0, $1) == .orderedAscending }
     }
   }
-
-#endif  // swiftlint:enable all
+// swiftlint:enable all
+#endif

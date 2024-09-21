@@ -79,6 +79,8 @@ public struct UInt128 {
 
 // MARK: - FixedWidthInteger Conformance
 
+// swiftlint:disable all
+
 extension UInt128: FixedWidthInteger {
   // MARK: Instance Properties
 
