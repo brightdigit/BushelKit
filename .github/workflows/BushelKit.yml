@@ -104,7 +104,7 @@ jobs:
       - name: Lint
         run: ./scripts/lint.sh     
       - name: Run iOS target tests
-        run: xcodebuild test -scheme BushelKit -sdk iphonesimulator18.0 -destination "OS=18.0,name=iPhone 16" -enableCodeCoverage YES build test
+        run: xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator18.0 -destination "OS=18.0,name=iPhone 16" -enableCodeCoverage YES build test
       - uses: sersoft-gmbh/swift-coverage-action@v4
         id: coverage-files-iOS
         with:          
