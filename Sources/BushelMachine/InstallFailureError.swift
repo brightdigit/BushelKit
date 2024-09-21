@@ -1,6 +1,6 @@
 //
 //  InstallFailureError.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,9 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
-public protocol InstallFailureError: Error {
-  func installationFailure() -> InstallFailure?
-}
+public protocol InstallFailureError: Error { func installationFailure() -> InstallFailure? }

@@ -1,6 +1,6 @@
 //
 //  SpnetworklocationService.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -51,7 +51,15 @@ public struct SpnetworklocationService: Codable, Equatable, Sendable {
   public let type: String
 
   // swiftlint:disable:next line_length
-  public init(name: String, bsdDeviceName: String, hardwareAddress: String, iPv4: IPV, iPv6: IPV, proxies: Proxies, type: String) {
+  public init(
+    name: String,
+    bsdDeviceName: String,
+    hardwareAddress: String,
+    iPv4: IPV,
+    iPv6: IPV,
+    proxies: Proxies,
+    type: String
+  ) {
     self.name = name
     self.bsdDeviceName = bsdDeviceName
     self.hardwareAddress = hardwareAddress

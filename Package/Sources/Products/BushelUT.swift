@@ -28,7 +28,7 @@
 //
 
 struct BushelUT: Product, Target {
-  var dependencies: any Dependencies {
-    BushelCore()
-  }
+    var dependencies: any Dependencies {
+        BushelCore()
+    }
 }

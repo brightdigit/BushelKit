@@ -30,39 +30,39 @@
 @testable import BushelCore
 import XCTest
 
-internal final class VMSystemIDTests: XCTestCase {
-  func testExpressibleByStringInterpolation() {
-    let sut: VMSystemID = "86F07806-1F75-4E77-AA1C-BC33DD96A9DC"
+final class VMSystemIDTests: XCTestCase {
+    func testExpressibleByStringInterpolation() {
+        let sut: VMSystemID = "86F07806-1F75-4E77-AA1C-BC33DD96A9DC"
 
-    XCTAssertEqual(sut.rawValue, "86F07806-1F75-4E77-AA1C-BC33DD96A9DC")
-  }
+        XCTAssertEqual(sut.rawValue, "86F07806-1F75-4E77-AA1C-BC33DD96A9DC")
+    }
 
-  func testInit() {
-    let expectedID = UUID().uuidString
+    func testInit() {
+        let expectedID = UUID().uuidString
 
-    let sut = VMSystemID(stringLiteral: expectedID)
+        let sut = VMSystemID(stringLiteral: expectedID)
 
-    let actualID = sut.rawValue
+        let actualID = sut.rawValue
 
-    XCTAssertEqual(actualID, expectedID)
-  }
+        XCTAssertEqual(actualID, expectedID)
+    }
 
-  func testEncode() throws {
-    let uuidString = UUID().uuidString
-    let sut = VMSystemID(stringLiteral: uuidString)
+    func testEncode() throws {
+        let uuidString = UUID().uuidString
+        let sut = VMSystemID(stringLiteral: uuidString)
 
-    let encodedData = try JSONEncoder().encode(sut)
+        let encodedData = try JSONEncoder().encode(sut)
 
-    let expectedEncodedUUID = "\"\(uuidString)\""
-    let actualEncodedUUID = String(data: encodedData, encoding: .utf8)
+        let expectedEncodedUUID = "\"\(uuidString)\""
+        let actualEncodedUUID = String(data: encodedData, encoding: .utf8)
 
-    XCTAssertEqual(actualEncodedUUID, expectedEncodedUUID)
-  }
+        XCTAssertEqual(actualEncodedUUID, expectedEncodedUUID)
+    }
 
-  func testDecode() throws {
-    let uuidString = UUID().uuidString
-    let json = Data("\"\(uuidString)\"".utf8)
+    func testDecode() throws {
+        let uuidString = UUID().uuidString
+        let json = Data("\"\(uuidString)\"".utf8)
 
-    XCTAssertNoThrow(try JSONDecoder().decode(VMSystemID.self, from: json))
-  }
+        XCTAssertNoThrow(try JSONDecoder().decode(VMSystemID.self, from: json))
+    }
 }

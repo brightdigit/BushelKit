@@ -1,6 +1,6 @@
 //
 //  MACOS.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,13 +32,9 @@ public import Foundation
 // MARK: - MACOS
 
 public struct MACOS: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case the123 = "12.3"
-  }
+  public enum CodingKeys: String, CodingKey { case the123 = "12.3" }
 
   public let the123: String
 
-  public init(the123: String) {
-    self.the123 = the123
-  }
+  public init(the123: String) { self.the123 = the123 }
 }

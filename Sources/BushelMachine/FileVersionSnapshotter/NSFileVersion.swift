@@ -1,6 +1,6 @@
 //
 //  NSFileVersion.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,27 +31,26 @@
   import Foundation
 
   extension NSFileVersion {
-    internal struct VersionDataSet {
-      internal let fileVersion: NSFileVersion
-      internal let url: URL
+    struct VersionDataSet {
+      let fileVersion: NSFileVersion
+      let url: URL
 
-      internal func remove(with fileManager: FileManager) throws {
+      func remove(with fileManager: FileManager) throws {
         try fileVersion.remove()
         try fileManager.removeItem(at: url)
       }
     }
 
-    internal var persistentIdentifierData: Data {
+    var persistentIdentifierData: Data {
       get throws {
         try NSKeyedArchiver.archivedData(
-          withRootObject: self.persistentIdentifier,
+          withRootObject: persistentIdentifier,
           requiringSecureCoding: false
         )
       }
     }
 
-    @available(iOS, unavailable)
-    internal static func addOfItem(
+    @available(iOS, unavailable) @available(watchOS, unavailable) static func addOfItem(
       at url: URL,
       withContentsOf contentsURL: URL,
       options: SnapshotOptions
@@ -62,41 +61,31 @@
         options: .init(options: options)
       )
 
-      if options.contains(.discardable) {
-        version.isDiscardable = true
-      }
+      if options.contains(.discardable) { version.isDiscardable = true }
 
       return version
     }
 
-    internal static func version(
-      itemAt url: URL,
-      forPersistentIdentifierData identifierData: Data
-    ) throws -> NSFileVersion {
+    static func version(itemAt url: URL, forPersistentIdentifierData identifierData: Data) throws
+      -> NSFileVersion
+    {
       let unarchiver: NSKeyedUnarchiver
-      do {
-        unarchiver = try NSKeyedUnarchiver(forReadingFrom: identifierData)
-      } catch {
-        throw SnapshotError.innerError(error)
-      }
+      do { unarchiver = try NSKeyedUnarchiver(forReadingFrom: identifierData) }
+      catch { throw SnapshotError.innerError(error) }
       unarchiver.requiresSecureCoding = false
-      guard let persistentIdentifier =
-        unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) else {
-        throw SnapshotError.unarchiveError(identifierData)
-      }
-      guard let version = self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier) else {
+      guard let persistentIdentifier = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey)
+      else { throw SnapshotError.unarchiveError(identifierData) }
+      guard let version = version(itemAt: url, forPersistentIdentifier: persistentIdentifier) else {
         throw SnapshotError.missingSnapshotVersionAt(url)
       }
       return version
     }
 
-    internal static func version(
-      withID snapshotID: UUID,
-      basedOn paths: SnapshotPaths
-    ) throws -> VersionDataSet {
+    static func version(withID snapshotID: UUID, basedOn paths: SnapshotPaths) throws
+      -> VersionDataSet
+    {
       let identifierDataFileURL = paths.snapshotCollectionURL
-        .appendingPathComponent(snapshotID.uuidString)
-        .appendingPathExtension("bshsnapshot")
+        .appendingPathComponent(snapshotID.uuidString).appendingPathExtension("bshsnapshot")
       let identifierData = try Data(contentsOf: identifierDataFileURL)
 
       let version = try Self.version(
@@ -107,14 +96,12 @@
       return .init(fileVersion: version, url: identifierDataFileURL)
     }
 
-    internal func writePersistentIdentifier(to snapshotFileURL: URL) throws {
+    func writePersistentIdentifier(to snapshotFileURL: URL) throws {
       try persistentIdentifierData.write(to: snapshotFileURL)
     }
   }
 
   extension NSFileVersion.AddingOptions {
-    internal init(options: SnapshotOptions) {
-      self = options.contains(.byMoving) ? [.byMoving] : []
-    }
+    init(options: SnapshotOptions) { self = options.contains(.byMoving) ? [.byMoving] : [] }
   }
 #endif

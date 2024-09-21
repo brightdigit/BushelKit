@@ -30,65 +30,65 @@
 @testable import BushelCore
 import XCTest
 
-internal final class InstallerImageIdentifierTests: XCTestCase {
-  func testFailedInitializeFromEmptyString() {
-    let sut = InstallerImageIdentifier(string: "")
+final class InstallerImageIdentifierTests: XCTestCase {
+    func testFailedInitializeFromEmptyString() {
+        let sut = InstallerImageIdentifier(string: "")
 
-    XCTAssertNil(sut)
-  }
-
-  func testFailedInitializeFromInvalidStrings() {
-    var sut = InstallerImageIdentifier(string: "2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")
-
-    XCTAssertNil(sut)
-
-    sut = InstallerImageIdentifier(string: ":2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")
-
-    XCTAssertNil(sut)
-  }
-
-  func testSuccessfulInitFromValidStringIdentifier() {
-    let expectedIdentifier = String.restoreImageIdentiferSample
-
-    guard let sut = InstallerImageIdentifier(string: expectedIdentifier) else {
-      return XCTFail("Expected initlization from string identifier: \(expectedIdentifier)")
+        XCTAssertNil(sut)
     }
 
-    let actualIdentifier = sut.description
+    func testFailedInitializeFromInvalidStrings() {
+        var sut = InstallerImageIdentifier(string: "2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")
 
-    XCTAssertEqual(actualIdentifier, expectedIdentifier)
-  }
+        XCTAssertNil(sut)
 
-  func testInitializeFromLibraryIDAndImageID() {
-    let expectedLibraryID = LibraryIdentifier.sampleLibraryID
-    let expectedImageID = UUID.imageIDSample
+        sut = InstallerImageIdentifier(string: ":2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")
 
-    let sut = InstallerImageIdentifier(imageID: expectedImageID, libraryID: expectedLibraryID)
-
-    XCTAssertEqual(sut.libraryID, expectedLibraryID)
-    XCTAssertEqual(sut.imageID, expectedImageID)
-  }
-
-  func testEncodeIntoJsonString() throws {
-    let restoreImageIdentifier = String.restoreImageIdentiferSample
-
-    guard let sut = InstallerImageIdentifier(string: restoreImageIdentifier) else {
-      return XCTFail("Expected initlization from string identifier: \(restoreImageIdentifier)")
+        XCTAssertNil(sut)
     }
 
-    let encodedData = try JSONEncoder().encode(sut)
+    func testSuccessfulInitFromValidStringIdentifier() {
+        let expectedIdentifier = String.restoreImageIdentiferSample
 
-    let expectedEncodedIdentifier = "\"\(restoreImageIdentifier)\""
-    let actualEncodedIdentifier = String(data: encodedData, encoding: .utf8)
+        guard let sut = InstallerImageIdentifier(string: expectedIdentifier) else {
+            return XCTFail("Expected initlization from string identifier: \(expectedIdentifier)")
+        }
 
-    XCTAssertEqual(expectedEncodedIdentifier, actualEncodedIdentifier)
-  }
+        let actualIdentifier = sut.description
 
-  func testDecodeFromJsonString() throws {
-    let restoreImageIdentifier = String.restoreImageIdentiferSample
+        XCTAssertEqual(actualIdentifier, expectedIdentifier)
+    }
 
-    let sut = Data("\"\(restoreImageIdentifier)\"".utf8)
+    func testInitializeFromLibraryIDAndImageID() {
+        let expectedLibraryID = LibraryIdentifier.sampleLibraryID
+        let expectedImageID = UUID.imageIDSample
 
-    XCTAssertNoThrow(try JSONDecoder().decode(InstallerImageIdentifier.self, from: sut))
-  }
+        let sut = InstallerImageIdentifier(imageID: expectedImageID, libraryID: expectedLibraryID)
+
+        XCTAssertEqual(sut.libraryID, expectedLibraryID)
+        XCTAssertEqual(sut.imageID, expectedImageID)
+    }
+
+    func testEncodeIntoJsonString() throws {
+        let restoreImageIdentifier = String.restoreImageIdentiferSample
+
+        guard let sut = InstallerImageIdentifier(string: restoreImageIdentifier) else {
+            return XCTFail("Expected initlization from string identifier: \(restoreImageIdentifier)")
+        }
+
+        let encodedData = try JSONEncoder().encode(sut)
+
+        let expectedEncodedIdentifier = "\"\(restoreImageIdentifier)\""
+        let actualEncodedIdentifier = String(data: encodedData, encoding: .utf8)
+
+        XCTAssertEqual(expectedEncodedIdentifier, actualEncodedIdentifier)
+    }
+
+    func testDecodeFromJsonString() throws {
+        let restoreImageIdentifier = String.restoreImageIdentiferSample
+
+        let sut = Data("\"\(restoreImageIdentifier)\"".utf8)
+
+        XCTAssertNoThrow(try JSONDecoder().decode(InstallerImageIdentifier.self, from: sut))
+    }
 }

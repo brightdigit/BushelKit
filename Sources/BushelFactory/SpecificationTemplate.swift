@@ -1,6 +1,6 @@
 //
 //  SpecificationTemplate.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,19 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// import BushelLocalization
-
 public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Sendable, Equatable {
   public let nameID: Name
   public let idealStorage: Int
   public let systemImageName: String
 
-  internal let memoryWithin: @Sendable (any CalculationParameters) -> Int
-  internal let cpuWithin: @Sendable (any CalculationParameters) -> Int
+  let memoryWithin: @Sendable (any CalculationParameters) -> Int
+  let cpuWithin: @Sendable (any CalculationParameters) -> Int
 
-  public var id: Name {
-    nameID
-  }
+  public var id: Name { nameID }
 
   public init(
     nameID: Name,
@@ -55,11 +51,9 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
     self.idealStorage = idealStorage
   }
 
-  public static func == (lhs: Self, rhs: Self) -> Bool {
-    lhs.id == rhs.id
-  }
+  public static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
 
-  internal func memoryIndex(
+  func memoryIndex(
     within indexRange: ClosedRange<Float>,
     valuesWith valueRange: ClosedRange<Float>,
     indexForValue: @escaping @Sendable (Int) -> Int
@@ -72,7 +66,7 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
     return memoryIndex(for: parameters)
   }
 
-  internal func cpuIndex(
+  func cpuIndex(
     within indexRange: ClosedRange<Float>,
     valuesWith valueRange: ClosedRange<Float>,
     indexForValue: @escaping @Sendable (Int) -> Int
@@ -86,10 +80,10 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
   }
 
   private func memoryIndex(for parameters: any CalculationParameters) -> Float {
-    Float(self.memoryWithin(parameters))
+    Float(memoryWithin(parameters))
   }
 
   private func cpuIndex(for parameters: any CalculationParameters) -> Float {
-    Float(self.cpuWithin(parameters))
+    Float(cpuWithin(parameters))
   }
 }

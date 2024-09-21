@@ -1,6 +1,6 @@
 //
 //  EnvironmentProperty.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,26 +29,19 @@
 
 import Foundation
 
-@propertyWrapper
-public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
-  public var wrappedValue: Value {
-    accessor.value
-  }
+@propertyWrapper public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
+  public var wrappedValue: Value { accessor.value }
 
   private let accessor: ValueAccessor
 
-  private init(accessor: EnvironmentProperty<Value>.ValueAccessor) {
-    self.accessor = accessor
-  }
+  private init(accessor: EnvironmentProperty<Value>.ValueAccessor) { self.accessor = accessor }
 
-  internal init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
+  init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
     self.init(accessor: .dictionary(source, key: key))
   }
 
-  internal init<KeyType: RawRepresentable>(
+  init<KeyType: RawRepresentable>(
     _ key: KeyType,
     source: [String: String] = ProcessInfo.processInfo.environment
-  ) where KeyType.RawValue == String {
-    self.init(key.rawValue, source: source)
-  }
+  ) where KeyType.RawValue == String { self.init(key.rawValue, source: source) }
 }

@@ -1,6 +1,6 @@
 //
 //  LibrarySystemBuilder.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,9 +29,8 @@
 
 import Foundation
 
-@resultBuilder
-public enum LibrarySystemBuilder {
-  public static func buildBlock(_ components: any LibrarySystem ...) -> [any LibrarySystem] {
+@resultBuilder public enum LibrarySystemBuilder {
+  public static func buildBlock(_ components: any LibrarySystem...) -> [any LibrarySystem] {
     components
   }
 }

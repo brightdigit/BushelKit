@@ -1,6 +1,6 @@
 //
 //  DirectoryExists.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -37,7 +37,8 @@ extension DirectoryExists {
   public init(fileExists: Bool, isDirectory: Bool) {
     if fileExists {
       self = isDirectory ? .directoryExists : .fileExists
-    } else {
+    }
+    else {
       self = .notExists
     }
   }

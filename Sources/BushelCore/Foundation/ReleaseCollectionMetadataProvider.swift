@@ -1,6 +1,6 @@
 //
 //  ReleaseCollectionMetadataProvider.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,5 +29,5 @@
 
 import Foundation
 
-public typealias ReleaseCollectionMetadataProvider =
-  @Sendable (VMSystemID) -> any ReleaseCollectionMetadata
+public typealias ReleaseCollectionMetadataProvider = @Sendable (VMSystemID) ->
+  any ReleaseCollectionMetadata

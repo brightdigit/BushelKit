@@ -1,6 +1,6 @@
 //
 //  OperatingSystemInstalled.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -36,6 +36,6 @@ public protocol OperatingSystemInstalled {
 
 extension OperatingSystemInstalled {
   public var components: OperatingSystemVersionComponents {
-    .init(buildVersion: self.buildVersion, operatingSystemVersion: self.operatingSystemVersion)
+    .init(buildVersion: buildVersion, operatingSystemVersion: operatingSystemVersion)
   }
 }

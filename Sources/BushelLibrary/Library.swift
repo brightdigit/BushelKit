@@ -1,6 +1,6 @@
 //
 //  Library.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,12 +28,9 @@
 //
 
 import BushelCore
-
 import Foundation
 
 public struct Library: Codable, Equatable, Sendable {
   public var items: [LibraryImageFile]
-  public init(items: [LibraryImageFile] = .init()) {
-    self.items = items
-  }
+  public init(items: [LibraryImageFile] = .init()) { self.items = items }
 }

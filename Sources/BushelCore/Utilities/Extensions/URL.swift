@@ -1,6 +1,6 @@
 //
 //  URL.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -54,7 +54,7 @@ extension URL {
       #if os(macOS)
         return try bookmarkData(options: .withSecurityScope)
       #else
-        return try self.bookmarkData()
+        return try bookmarkData()
       #endif
     }
   #endif

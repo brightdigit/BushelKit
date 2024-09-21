@@ -1,6 +1,6 @@
 //
 //  TestDecodingError.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,5 +32,5 @@ import Foundation
 public enum TestDecodingError: String, MockError {
   case dataEncoding
 
-  public var value: String { self.rawValue }
+  public var value: String { rawValue }
 }

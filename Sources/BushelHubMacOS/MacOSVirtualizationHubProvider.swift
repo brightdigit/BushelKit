@@ -1,6 +1,6 @@
 //
 //  MacOSVirtualizationHubProvider.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -42,14 +42,16 @@
       Hub(title: "Apple", id: "apple", count: 1, Self.hubImages)
     ]
 
-    @Sendable
-    fileprivate static func hubImages() async throws -> [HubImage] {
+    @Sendable fileprivate static func hubImages() async throws -> [HubImage] {
       let restoreImage = try await VZMacOSRestoreImage.unsafeFetchLatestSupported()
-      let imageMetadata = try await ImageMetadata(vzRestoreImage: restoreImage, url: restoreImage.url)
+      let imageMetadata = try await ImageMetadata(
+        vzRestoreImage: restoreImage,
+        url: restoreImage.url
+      )
 
       return [
         .init(
-          title: self.operatingSystemShortName(for: imageMetadata),
+          title: operatingSystemShortName(for: imageMetadata),
           metadata: imageMetadata,
           url: restoreImage.url
         )
@@ -58,8 +60,6 @@
   }
 
   extension MacOSVirtualizationHubProvider {
-    public var macOSHubs: [Hub] {
-      MacOSVirtualization.hubs
-    }
+    public var macOSHubs: [Hub] { MacOSVirtualization.hubs }
   }
 #endif

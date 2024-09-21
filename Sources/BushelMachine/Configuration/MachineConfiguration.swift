@@ -1,6 +1,6 @@
 //
 //  MachineConfiguration.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,11 +28,8 @@
 //
 
 public import BushelCore
-
 public import Foundation
-
 public import RadiantDocs
-
 import RadiantKit
 
 /// Metadata attached to a machine
@@ -73,7 +70,10 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     snapshots: [Snapshot] = []
   ) {
     // swiftlint:disable:next line_length
-    assert(memory.isMultiple(of: 1_024 * 1_024), "Memory is not correct multiple of 1MiB. Should be \(memory.roundToMultiple(of: 1_024 * 1_024))")
+    assert(
+      memory.isMultiple(of: 1_024 * 1_024),
+      "Memory is not correct multiple of 1MiB. Should be \(memory.roundToMultiple(of: 1_024 * 1_024))"
+    )
     self.restoreImageFile = restoreImageFile
     self.vmSystemID = vmSystemID
     self.snapshotSystemID = snapshotSystemID
@@ -121,21 +121,13 @@ extension MachineConfiguration {
 }
 
 extension MachineConfiguration: CodablePackage {
-  public static var decoder: JSONDecoder {
-    JSON.decoder
-  }
+  public static var decoder: JSONDecoder { JSON.decoder }
 
-  public static var encoder: JSONEncoder {
-    JSON.encoder
-  }
+  public static var encoder: JSONEncoder { JSON.encoder }
 
-  public static var configurationFileWrapperKey: String {
-    URL.bushel.paths.machineJSONFileName
-  }
+  public static var configurationFileWrapperKey: String { URL.bushel.paths.machineJSONFileName }
 
-  public static var readableContentTypes: [FileType] {
-    [.virtualMachine]
-  }
+  public static var readableContentTypes: [FileType] { [.virtualMachine] }
 }
 
 extension MachineConfiguration {

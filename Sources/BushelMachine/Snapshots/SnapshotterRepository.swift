@@ -1,6 +1,6 @@
 //
 //  SnapshotterRepository.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -33,16 +33,12 @@ public struct SnapshotterRepository: SnapshotProvider {
   private let dictionary: [SnapshotterID: any SnapshotterFactory]
 
   public init(factories: [any SnapshotterFactory] = []) {
-    let uniqueKeysWithValues = factories.map {
-      (type(of: $0).systemID, $0)
-    }
+    let uniqueKeysWithValues = factories.map { (type(of: $0).systemID, $0) }
 
     self.init(dictionary: .init(uniqueKeysWithValues: uniqueKeysWithValues))
   }
 
-  internal init(dictionary: [SnapshotterID: any SnapshotterFactory]) {
-    self.dictionary = dictionary
-  }
+  init(dictionary: [SnapshotterID: any SnapshotterFactory]) { self.dictionary = dictionary }
 
   public func snapshotter<MachineType: Machine>(
     withID id: SnapshotterID,

@@ -30,8 +30,8 @@
 import Foundation
 
 struct BushelGuestProfile: Product, Target {
-  var dependencies: any Dependencies {
-    BushelCore()
-    BushelLogging()
-  }
+    var dependencies: any Dependencies {
+        BushelCore()
+        BushelLogging()
+    }
 }

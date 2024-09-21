@@ -28,15 +28,15 @@
 //
 
 struct BushelCommand: Target, Product {
-  var name: String {
-    "bushel"
-  }
+    var name: String {
+        "bushel"
+    }
 
-  var dependencies: any Dependencies {
-    BushelArgs()
-  }
+    var dependencies: any Dependencies {
+        BushelArgs()
+    }
 
-  var productType: ProductType {
-    .executable
-  }
+    var productType: ProductType {
+        .executable
+    }
 }

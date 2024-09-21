@@ -28,7 +28,7 @@
 //
 
 struct RadiantProgress: TargetDependency {
-  var package: PackageDependency {
-    RadiantKit()
-  }
+    var package: PackageDependency {
+        RadiantKit()
+    }
 }

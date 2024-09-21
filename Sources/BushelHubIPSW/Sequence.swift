@@ -1,6 +1,6 @@
 //
 //  Sequence.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 import BushelLogging
 
 #if canImport(FoundationNetworking)
@@ -36,11 +35,12 @@ import BushelLogging
 #endif
 
 extension Sequence {
-  public func tryCompactMap<T>(logger: Logger? = nil, _ transform: (Self.Element) throws -> T) -> [T] {
-    self.compactMap { element in
-      do {
-        return try transform(element)
-      } catch {
+  public func tryCompactMap<T>(logger: Logger? = nil, _ transform: (Self.Element) throws -> T)
+    -> [T]
+  {
+    compactMap { element in
+      do { return try transform(element) }
+      catch {
         assertionFailure(error: error)
         logger?.error("Unable to transform element: \(error.localizedDescription)")
       }

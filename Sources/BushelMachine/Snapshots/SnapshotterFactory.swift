@@ -1,6 +1,6 @@
 //
 //  SnapshotterFactory.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
 
 public protocol SnapshotterFactory: Loggable, Sendable {
@@ -38,20 +37,20 @@ public protocol SnapshotterFactory: Loggable, Sendable {
     request: SnapshotRequest,
     options: SnapshotOptions
   ) async throws -> Snapshot
-  func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (any Snapshotter<MachineType>)?
+  func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (
+    any Snapshotter<MachineType>
+  )?
 }
 
 extension SnapshotterFactory {
-  public static var loggingCategory: BushelLogging.Category {
-    .machine
-  }
+  public static var loggingCategory: BushelLogging.Category { .machine }
 
-  internal func createNewSnapshot(
+  func createNewSnapshot(
     of machine: some Machine,
     request: SnapshotRequest,
     options: SnapshotOptions
   ) async throws -> Snapshot {
-    guard let snapshotter = self.snapshotter(supports: type(of: machine).self) else {
+    guard let snapshotter = snapshotter(supports: type(of: machine).self) else {
       Self.logger.critical("Unknown system: \(type(of: machine).self)")
       preconditionFailure("Unknown system: \(type(of: machine).self)")
     }

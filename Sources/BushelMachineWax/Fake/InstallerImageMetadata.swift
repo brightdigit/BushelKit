@@ -1,6 +1,6 @@
 //
 //  InstallerImageMetadata.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import BushelMachine
-
 public import Foundation
 
 extension InstallerImageMetadata {

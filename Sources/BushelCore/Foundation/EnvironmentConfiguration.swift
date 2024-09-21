@@ -1,6 +1,6 @@
 //
 //  EnvironmentConfiguration.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -39,26 +39,25 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
 
   public static let shared: EnvironmentConfiguration = .init()
 
-  @EnvironmentProperty(Key.disableAssertionFailureForError)
-  public var disableAssertionFailureForError: Bool
+  @EnvironmentProperty(Key.disableAssertionFailureForError) public
+    var disableAssertionFailureForError: Bool
 
-  @EnvironmentProperty(Key.disallowDatabaseRebuild)
-  public var disallowDatabaseRebuild: Bool
+  @EnvironmentProperty(Key.disallowDatabaseRebuild) public var disallowDatabaseRebuild: Bool
 
-  @EnvironmentProperty(Key.onboardingOveride)
-  public var onboardingOveride: OnboardingOverrideOption
+  @EnvironmentProperty(Key.onboardingOveride) public var onboardingOveride: OnboardingOverrideOption
 
-  @EnvironmentProperty(Key.resetApplication)
-  public var resetApplication: Bool
+  @EnvironmentProperty(Key.resetApplication) public var resetApplication: Bool
 
   public var customMirror: Mirror {
-    Mirror(self, children: [
-      "disableAssertionFailureForError": disableAssertionFailureForError,
-      "disallowDatabaseRebuild": disallowDatabaseRebuild,
-      "onboardingOveride": onboardingOveride,
-      "resetApplication": resetApplication
-    ])
+    Mirror(
+      self,
+      children: [
+        "disableAssertionFailureForError": disableAssertionFailureForError,
+        "disallowDatabaseRebuild": disallowDatabaseRebuild, "onboardingOveride": onboardingOveride,
+        "resetApplication": resetApplication,
+      ]
+    )
   }
 
-  internal init() {}
+  init() {}
 }

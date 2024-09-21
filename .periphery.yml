@@ -1,4 +1,1 @@
-targets:
-- BushelLibrary
-- BushelLibraryViews
-- BushelLogging
+retain_public: true

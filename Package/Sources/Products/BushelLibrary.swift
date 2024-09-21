@@ -28,11 +28,11 @@
 //
 
 struct BushelLibrary: Product, Target {
-  var dependencies: any Dependencies {
-    BushelLogging()
-    BushelCore()
-    BushelMacOSCore()
-    RadiantKit()
-    // BushelAccessibility()
-  }
+    var dependencies: any Dependencies {
+        BushelLogging()
+        BushelCore()
+        BushelMacOSCore()
+        RadiantKit()
+        // BushelAccessibility()
+    }
 }

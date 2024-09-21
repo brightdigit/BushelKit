@@ -1,6 +1,6 @@
 //
 //  TestFileTypeSpecification.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,12 +28,8 @@
 //
 
 import Foundation
-
 public import RadiantDocs
 
 public enum TestFileTypeSpecification: FileTypeSpecification {
-  public static let fileType: FileType = .exportedAs(
-    "com.brightdigit.test",
-    "test"
-  )
+  public static let fileType: FileType = .exportedAs("com.brightdigit.test", "test")
 }

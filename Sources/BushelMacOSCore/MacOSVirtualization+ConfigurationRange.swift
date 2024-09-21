@@ -1,6 +1,6 @@
 //
 //  MacOSVirtualization+ConfigurationRange.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -42,11 +42,13 @@
     )
 
     public static let configurationRange = ConfigurationRange(
-      cpuCount:
-      Float(VZVirtualMachineConfiguration.minimumAllowedCPUCount) ... Float(Self.maximumAllowedCPUCount),
-      memory:
-      // swiftlint:disable:next line_length
-      Float(VZVirtualMachineConfiguration.minimumAllowedMemorySize) ... Float(VZVirtualMachineConfiguration.maximumAllowedMemorySize)
+      cpuCount: Float(
+        VZVirtualMachineConfiguration.minimumAllowedCPUCount
+      )...Float(Self.maximumAllowedCPUCount),
+      memory:  // swiftlint:disable:next line_length
+        Float(
+          VZVirtualMachineConfiguration.minimumAllowedMemorySize
+        )...Float(VZVirtualMachineConfiguration.maximumAllowedMemorySize)
     )
   }
 #endif

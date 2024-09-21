@@ -1,6 +1,6 @@
 //
 //  SPiBridgeDataType.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -61,7 +61,20 @@ public struct SPiBridgeDataType: Codable, Equatable, Sendable {
   public let ibridgeSecureBoot: String
 
   // swiftlint:disable:next line_length
-  public init(ibridgeBootUUID: String, ibridgeBuild: String, ibridgeExtraBootPolicies: String, ibridgeModelIdentifierTop: String, ibridgeSbBootArgs: String, ibridgeSbCtrr: String, ibridgeSbDeviceMdm: String, ibridgeSbManualMdm: String, ibridgeSbOtherKext: String, ibridgeSbSIP: String, ibridgeSbSsv: String, ibridgeSecureBoot: String) {
+  public init(
+    ibridgeBootUUID: String,
+    ibridgeBuild: String,
+    ibridgeExtraBootPolicies: String,
+    ibridgeModelIdentifierTop: String,
+    ibridgeSbBootArgs: String,
+    ibridgeSbCtrr: String,
+    ibridgeSbDeviceMdm: String,
+    ibridgeSbManualMdm: String,
+    ibridgeSbOtherKext: String,
+    ibridgeSbSIP: String,
+    ibridgeSbSsv: String,
+    ibridgeSecureBoot: String
+  ) {
     self.ibridgeBootUUID = ibridgeBootUUID
     self.ibridgeBuild = ibridgeBuild
     self.ibridgeExtraBootPolicies = ibridgeExtraBootPolicies

@@ -1,6 +1,6 @@
 //
 //  Snapshotter.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 public import Foundation
 
 public protocol Snapshotter<MachineType> {
@@ -42,17 +41,12 @@ public protocol Snapshotter<MachineType> {
   func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) async throws
   func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws
   func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws
-  func synchronizeSnapshots(
-    for machine: MachineType,
-    options: SnapshotSynchronizeOptions
-  ) async throws -> SnapshotSynchronizationDifference?
+  func synchronizeSnapshots(for machine: MachineType, options: SnapshotSynchronizeOptions)
+    async throws -> SnapshotSynchronizationDifference?
 }
 
 extension Snapshotter {
-  public func synchronizeSnapshots(
-    for _: MachineType,
-    options _: SnapshotSynchronizeOptions
-  ) async throws -> SnapshotSynchronizationDifference? {
-    nil
-  }
+  public func synchronizeSnapshots(for _: MachineType, options _: SnapshotSynchronizeOptions)
+    async throws -> SnapshotSynchronizationDifference?
+  { nil }
 }

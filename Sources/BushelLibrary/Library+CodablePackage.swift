@@ -1,6 +1,6 @@
 //
 //  Library+CodablePackage.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,31 +28,20 @@
 //
 
 import BushelCore
-
+public import Foundation
+public import RadiantDocs
 import RadiantKit
 
-public import Foundation
-
-public import RadiantDocs
-
 extension Library: InitializablePackage {
-  public static var decoder: JSONDecoder {
-    JSON.decoder
-  }
+  public static var decoder: JSONDecoder { JSON.decoder }
 
-  public static var encoder: JSONEncoder {
-    JSON.encoder
-  }
+  public static var encoder: JSONEncoder { JSON.encoder }
 
   public static var configurationFileWrapperKey: String {
     URL.bushel.paths.restoreLibraryJSONFileName
   }
 
-  public static var readableContentTypes: [FileType] {
-    [.restoreImageLibrary]
-  }
+  public static var readableContentTypes: [FileType] { [.restoreImageLibrary] }
 
-  public init() {
-    self.init(items: [])
-  }
+  public init() { self.init(items: []) }
 }

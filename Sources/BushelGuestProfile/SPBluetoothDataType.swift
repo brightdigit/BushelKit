@@ -1,6 +1,6 @@
 //
 //  SPBluetoothDataType.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,9 +32,7 @@ public import Foundation
 // MARK: - SPBluetoothDataType
 
 public struct SPBluetoothDataType: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case controllerProperties = "controller_properties"
-  }
+  public enum CodingKeys: String, CodingKey { case controllerProperties = "controller_properties" }
 
   public let controllerProperties: ControllerProperties
 

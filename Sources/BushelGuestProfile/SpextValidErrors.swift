@@ -1,6 +1,6 @@
 //
 //  SpextValidErrors.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,9 +32,7 @@ public import Foundation
 // MARK: - SpextValidErrors
 
 public struct SpextValidErrors: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case validationFailures = "Validation Failures"
-  }
+  public enum CodingKeys: String, CodingKey { case validationFailures = "Validation Failures" }
 
   public let validationFailures: ValidationFailures
 

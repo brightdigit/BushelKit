@@ -28,7 +28,7 @@
 //
 
 struct RadiantKit: PackageDependency, TargetDependency {
-  var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.1")
-  }
+    var dependency: Package.Dependency {
+        .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.1")
+    }
 }

@@ -1,6 +1,6 @@
 //
 //  HubImage.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,14 +28,13 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 public struct HubImage: Identifiable, InstallImage, Sendable {
   public let title: String
   public let metadata: ImageMetadata
   public let url: URL
-  public var id: URL { self.url }
+  public var id: URL { url }
 
   public init(title: String, metadata: ImageMetadata, url: URL) {
     self.title = title

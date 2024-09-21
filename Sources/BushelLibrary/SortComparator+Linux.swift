@@ -1,6 +1,6 @@
 //
 //  SortComparator+Linux.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,9 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// swiftlint:disable all
-
 #if canImport(FoundationNetworking)
+  // swiftlint:disable all
   public import Foundation
 
   /// A comparison algorithm for a given type.
@@ -58,8 +57,7 @@
   }
 
   /// The orderings that sorts can be performed with.
-  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  @frozen
+  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) @frozen
   public enum SortOrder: Hashable, Codable, Sendable {
     /// The ordering where if compare(a, b) == .orderedAscending,
     /// a is placed before b.
@@ -73,22 +71,21 @@
       let isForward = try container.decode(Bool.self)
       if isForward {
         self = .forward
-      } else {
+      }
+      else {
         self = .reverse
       }
     }
 
     public func encode(to encoder: any Encoder) throws {
       var container = encoder.singleValueContainer()
-      switch self {
-      case .forward: try container.encode(true)
-      case .reverse: try container.encode(false)
+      switch self { case .forward: try container.encode(true) case .reverse:
+        try container.encode(false)
       }
     }
   }
 
-  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  package extension ComparisonResult {
+  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) extension ComparisonResult {
     package func withOrder(_ order: SortOrder) -> ComparisonResult {
       if order == .reverse {
         if self == .orderedAscending { return .orderedDescending }
@@ -100,7 +97,7 @@
 
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   package struct AnySortComparator: SortComparator {
-    var _base: Any // internal for testing
+    var _base: Any  // internal for testing
 
     private var hashableBase: AnyHashable
 
@@ -116,42 +113,30 @@
     private let getOrder: (Any) -> SortOrder
 
     package init<Comparator: SortComparator>(_ comparator: Comparator) {
-      self.hashableBase = AnyHashable(comparator)
-      self._base = comparator
-      self._compare = { (base: Any, lhs: Any, rhs: Any) -> ComparisonResult in
+      hashableBase = AnyHashable(comparator)
+      _base = comparator
+      _compare = { (base: Any, lhs: Any, rhs: Any) -> ComparisonResult in
         (base as! Comparator).compare(lhs as! Comparator.Compared, rhs as! Comparator.Compared)
       }
-      self.setOrder = { (base: inout Any, newOrder: SortOrder) -> AnyHashable in
+      setOrder = { (base: inout Any, newOrder: SortOrder) -> AnyHashable in
         var typedBase = base as! Comparator
         typedBase.order = newOrder
         base = typedBase
         return AnyHashable(typedBase)
       }
-      self.getOrder = { (base: Any) -> SortOrder in
-        (base as! Comparator).order
-      }
+      getOrder = { (base: Any) -> SortOrder in (base as! Comparator).order }
     }
 
     package var order: SortOrder {
-      get {
-        getOrder(_base)
-      }
-      set {
-        hashableBase = setOrder(&_base, newValue)
-      }
+      get { getOrder(_base) }
+      set { hashableBase = setOrder(&_base, newValue) }
     }
 
-    package func compare(_ lhs: Any, _ rhs: Any) -> ComparisonResult {
-      _compare(_base, lhs, rhs)
-    }
+    package func compare(_ lhs: Any, _ rhs: Any) -> ComparisonResult { _compare(_base, lhs, rhs) }
 
-    package func hash(into hasher: inout Hasher) {
-      hasher.combine(hashableBase)
-    }
+    package func hash(into hasher: inout Hasher) { hasher.combine(hashableBase) }
 
-    package static func == (lhs: Self, rhs: Self) -> Bool {
-      lhs.hashableBase == rhs.hashableBase
-    }
+    package static func == (lhs: Self, rhs: Self) -> Bool { lhs.hashableBase == rhs.hashableBase }
   }
 
   /// Compares `Comparable` types using their comparable implementation.
@@ -160,9 +145,7 @@
     public var order: SortOrder
 
     // No need for availability on this initializer in the package.
-    public init(order: SortOrder = .forward) {
-      self.order = order
-    }
+    public init(order: SortOrder = .forward) { self.order = order }
 
     private func unorderedCompare(_ lhs: Compared, _ rhs: Compared) -> ComparisonResult {
       if lhs < rhs { return .orderedAscending }
@@ -182,9 +165,7 @@
   package struct OptionalComparator<Base: SortComparator>: SortComparator {
     private var base: Base
 
-    package init(_ base: Base) {
-      self.base = base
-    }
+    package init(_ base: Base) { self.base = base }
 
     package var order: SortOrder {
       get { base.order }
@@ -201,34 +182,27 @@
     }
   }
 
-  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  extension Never: SortComparator {
+  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) extension Never: SortComparator {
     public typealias Compared = Never
 
     public func compare(_: Never, _: Never) -> ComparisonResult {}
 
     public var order: SortOrder {
-      get {
-        switch self {}
-      }
-      set {
-        switch self {}
-      }
+      get { switch self {} }
+      set { switch self {} }
     }
   }
 
-  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  extension Sequence {
+  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) extension Sequence {
     /// Returns the elements of the sequence, sorted using the given comparator
     /// to compare elements.
     ///
     /// - Parameters:
     ///   - comparator: the comparator to use in ordering elements
     /// - Returns: an array of the elements sorted using `comparator`.
-    public func sorted<Comparator: SortComparator>(using comparator: Comparator) -> [Element] where Comparator.Compared == Element {
-      self.sorted {
-        comparator.compare($0, $1) == .orderedAscending
-      }
+    public func sorted<Comparator: SortComparator>(using comparator: Comparator) -> [Element]
+    where Comparator.Compared == Element {
+      sorted { comparator.compare($0, $1) == .orderedAscending }
     }
 
     /// Returns the elements of the sequence, sorted using the given array of
@@ -240,16 +214,12 @@
     ///   sorting the sequence's elements. Any subsequent comparators are used
     ///   to further refine the order of elements with equal values.
     /// - Returns: an array of the elements sorted using `comparators`.
-    public func sorted<Comparator: SortComparator>(using comparators: some Sequence<Comparator>) -> [Element] where
-      Element == Comparator.Compared {
-      self.sorted {
-        comparators.compare($0, $1) == .orderedAscending
-      }
-    }
+    public func sorted<Comparator: SortComparator>(using comparators: some Sequence<Comparator>)
+      -> [Element] where Element == Comparator.Compared
+    { sorted { comparators.compare($0, $1) == .orderedAscending } }
   }
 
-  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  extension Sequence {
+  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) extension Sequence {
     /// If `lhs` is ordered before `rhs` in the ordering described by the given
     /// sequence of `SortComparator`s
     ///
@@ -257,7 +227,10 @@
     /// comparator to be used in sorting the sequence's elements. Any subsequent
     /// comparators are used to further refine the order of elements with equal
     /// values.
-    public func compare<Comparator: SortComparator>(_ lhs: Comparator.Compared, _ rhs: Comparator.Compared) -> ComparisonResult where Element == Comparator {
+    public func compare<Comparator: SortComparator>(
+      _ lhs: Comparator.Compared,
+      _ rhs: Comparator.Compared
+    ) -> ComparisonResult where Element == Comparator {
       for comparator in self {
         let result = comparator.compare(lhs, rhs)
         if result != .orderedSame { return result }
@@ -266,15 +239,14 @@
     }
   }
 
-  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-  extension MutableCollection where Self: RandomAccessCollection {
+  @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) extension MutableCollection
+  where Self: RandomAccessCollection {
     /// Sorts the collection using the given comparator to compare elements.
     /// - Parameters:
     ///     - comparator: the sort comparator used to compare elements.
-    public mutating func sort<Comparator: SortComparator>(using comparator: Comparator) where Comparator.Compared == Element {
-      self.sort {
-        comparator.compare($0, $1) == .orderedAscending
-      }
+    public mutating func sort<Comparator: SortComparator>(using comparator: Comparator)
+    where Comparator.Compared == Element {
+      sort { comparator.compare($0, $1) == .orderedAscending }
     }
 
     /// Sorts the collection using the given array of `SortComparator`s to
@@ -285,12 +257,11 @@
     ///   first comparator specifies the primary comparator to be used in
     ///   sorting the sequence's elements. Any subsequent comparators are used
     ///   to further refine the order of elements with equal values.
-    public mutating func sort<Comparator: SortComparator>(using comparators: some Sequence<Comparator>) where Element == Comparator.Compared {
-      self.sort {
-        comparators.compare($0, $1) == .orderedAscending
-      }
+    public mutating func sort<Comparator: SortComparator>(
+      using comparators: some Sequence<Comparator>
+    ) where Element == Comparator.Compared {
+      sort { comparators.compare($0, $1) == .orderedAscending }
     }
   }
-
-#endif
 // swiftlint:enable all
+#endif

@@ -1,6 +1,6 @@
 //
 //  FileManager.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -35,8 +35,7 @@ public import Foundation
   extension FileManager {
     public func createTemporaryFile(for source: UTType) -> URL {
       let tempFile: URL
-      tempFile = temporaryDirectory
-        .appending(path: UUID().uuidString)
+      tempFile = temporaryDirectory.appending(path: UUID().uuidString)
         .appendingPathExtension(for: source)
       return tempFile
     }

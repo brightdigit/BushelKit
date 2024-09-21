@@ -1,6 +1,6 @@
 //
 //  URLInstallerImage.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,19 +28,13 @@
 //
 
 public import BushelCore
-
 import BushelLibrary
-
 public import BushelLogging
-
 public import BushelMachine
-
 public import Foundation
 
 public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
-  public var libraryID: LibraryIdentifier? {
-    .url(url)
-  }
+  public var libraryID: LibraryIdentifier? { .url(url) }
 
   public let imageID: UUID
 
@@ -64,12 +58,14 @@ public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
       throw error
     }
 
-    let metadata: Metadata = .init(labelName: image.name, imageMetadata: image.metadata, labelProvider)
+    let metadata: Metadata = .init(
+      labelName: image.name,
+      imageMetadata: image.metadata,
+      labelProvider
+    )
 
     self.init(imageID: imageID, url: url, metadata: metadata)
   }
 
-  public func getURL() throws -> URL {
-    url
-  }
+  public func getURL() throws -> URL { url }
 }

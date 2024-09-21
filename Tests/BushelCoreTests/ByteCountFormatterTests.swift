@@ -30,10 +30,10 @@
 @testable import BushelCore
 import XCTest
 
-internal final class ByteCountFormatterTests: XCTestCase {
-  internal func testCountStyleInit() {
-    let sut = ByteCountFormatter(countStyle: .binary)
+final class ByteCountFormatterTests: XCTestCase {
+    func testCountStyleInit() {
+        let sut = ByteCountFormatter(countStyle: .binary)
 
-    XCTAssertEqual(sut.countStyle, .binary)
-  }
+        XCTAssertEqual(sut.countStyle, .binary)
+    }
 }

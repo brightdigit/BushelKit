@@ -1,6 +1,6 @@
 //
 //  DocumentTypeFilterOption.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -35,24 +35,17 @@ public enum DocumentTypeFilterOption: Int, CaseIterable, Identifiable, Localizab
 
   public static let localizedStringIDMapping: [Self: String] = [
     .machinesOnly: "settingsFilterRecentDocumentsMachinesOnly",
-    .machinesAndLibraries: "settingsFilterRecentDocumentsNone"
+    .machinesAndLibraries: "settingsFilterRecentDocumentsNone",
   ]
 
-  public var tag: Int {
-    self.rawValue
-  }
+  public var tag: Int { rawValue }
 
-  public var id: Int {
-    self.rawValue
-  }
+  public var id: Int { rawValue }
 
   public var typeFilter: DocumentTypeFilter {
-    switch self {
-    case .machinesAndLibraries:
-      []
+    switch self { case .machinesAndLibraries: []
 
-    case .machinesOnly:
-      .libraries
+      case .machinesOnly: .libraries
     }
   }
 

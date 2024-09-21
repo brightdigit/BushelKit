@@ -30,27 +30,27 @@
 @testable import BushelCore
 import XCTest
 
-internal final class BookmarkErrorTests: XCTestCase {
-  func testDatabaseError() {
-    let expectedError = BushelCoreTestError.database
+final class BookmarkErrorTests: XCTestCase {
+    func testDatabaseError() {
+        let expectedError = BushelCoreTestError.database
 
-    let sut = BookmarkError.databaseError(expectedError)
+        let sut = BookmarkError.databaseError(expectedError)
 
-    let actualError = sut.innerError as? BushelCoreTestError
+        let actualError = sut.innerError as? BushelCoreTestError
 
-    XCTAssertEqual(actualError, expectedError)
-    XCTAssertEqual(sut.details, .database)
-  }
+        XCTAssertEqual(actualError, expectedError)
+        XCTAssertEqual(sut.details, .database)
+    }
 
-  func testAccessDeniedError() {
-    let expectedError = BushelCoreTestError.accessDenied
-    let expectedURL = URL.bushelappURL
+    func testAccessDeniedError() {
+        let expectedError = BushelCoreTestError.accessDenied
+        let expectedURL = URL.bushelappURL
 
-    let sut = BookmarkError.accessDeniedError(expectedError, at: expectedURL)
+        let sut = BookmarkError.accessDeniedError(expectedError, at: expectedURL)
 
-    let actualError = sut.innerError as? BushelCoreTestError
+        let actualError = sut.innerError as? BushelCoreTestError
 
-    XCTAssertEqual(actualError, expectedError)
-    XCTAssertEqual(sut.details, .accessDeniedAt(expectedURL))
-  }
+        XCTAssertEqual(actualError, expectedError)
+        XCTAssertEqual(sut.details, .accessDeniedAt(expectedURL))
+    }
 }

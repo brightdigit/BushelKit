@@ -1,6 +1,6 @@
 //
 //  InstallerImageSub.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,9 +29,7 @@
 
 public import BushelCore
 import BushelCoreWax
-
 public import BushelMachine
-
 public import Foundation
 
 public struct InstallerImageSub: InstallerImage {
@@ -43,18 +41,12 @@ public struct InstallerImageSub: InstallerImage {
     longName: "",
     defaultName: "",
     labelName: "",
-    operatingSystem: .init(
-      majorVersion: 1,
-      minorVersion: 1,
-      patchVersion: 1
-    ),
+    operatingSystem: .init(majorVersion: 1, minorVersion: 1, patchVersion: 1),
     buildVersion: "",
     imageResourceName: "",
     systemName: "",
     systemID: .sampleVMSystemID
   )
 
-  public func getURL() throws -> URL {
-    .bushelappURL
-  }
+  public func getURL() throws -> URL { .bushelappURL }
 }

@@ -1,6 +1,6 @@
 //
 //  VMSystemID.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,6 +30,4 @@
 public import BushelCore
 import Foundation
 
-extension VMSystemID {
-  public static let sampleVMSystemID: Self = .init(stringLiteral: "sample")
-}
+extension VMSystemID { public static let sampleVMSystemID: Self = .init(stringLiteral: "sample") }

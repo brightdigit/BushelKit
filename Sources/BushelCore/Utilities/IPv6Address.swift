@@ -1,6 +1,6 @@
 //
 //  IPv6Address.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,26 +27,26 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// swiftlint:disable all
 import Foundation
 
 public typealias IPv6Address = UInt128
 
-@available(*, unavailable, message: "Not Ready for Use.")
-extension IPv6Address {
+@available(*, unavailable, message: "Not Ready for Use.") extension IPv6Address {
   func toIPv6AddressFormat() -> String {
     // Convert high and low parts to string representation
     // This is a simplified example
     // You would need proper formatting here
-    String(format: "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x",
-           (value.upperBits >> 48) & 0xFFFF,
-           (value.upperBits >> 32) & 0xFFFF,
-           (value.upperBits >> 16) & 0xFFFF,
-           value.upperBits & 0xFFFF,
-           (value.lowerBits >> 48) & 0xFFFF,
-           (value.lowerBits >> 32) & 0xFFFF,
-           (value.lowerBits >> 16) & 0xFFFF,
-           value.lowerBits & 0xFFFF)
+    String(
+      format: "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x",
+      (value.upperBits >> 48) & 0xFFFF,
+      (value.upperBits >> 32) & 0xFFFF,
+      (value.upperBits >> 16) & 0xFFFF,
+      value.upperBits & 0xFFFF,
+      (value.lowerBits >> 48) & 0xFFFF,
+      (value.lowerBits >> 32) & 0xFFFF,
+      (value.lowerBits >> 16) & 0xFFFF,
+      value.lowerBits & 0xFFFF
+    )
   }
 
   init(fromIPv6Address string: String) {
@@ -61,7 +61,8 @@ extension IPv6Address {
       if index < 4 {
         high <<= 16
         high |= UInt64(part, radix: 16)!
-      } else {
+      }
+      else {
         low <<= 16
         low |= UInt64(part, radix: 16)!
       }

@@ -31,21 +31,21 @@
 import Foundation
 import XCTest
 
-internal final class LibraryIdentifierTests: XCTestCase {
-  func testBookmarkIDFromString() {
-    let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
+final class LibraryIdentifierTests: XCTestCase {
+    func testBookmarkIDFromString() {
+        let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
 
-    let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
+        let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
 
-    XCTAssertEqual(sut.description, expectedID.description)
-  }
+        XCTAssertEqual(sut.description, expectedID.description)
+    }
 
-  func testURLFromString() {
-    let fileURL = URL.homeDirectory.appendingPathComponent("file.txt")
-    let url = LibraryIdentifier.url(fileURL)
+    func testURLFromString() {
+        let fileURL = URL.homeDirectory.appendingPathComponent("file.txt")
+        let url = LibraryIdentifier.url(fileURL)
 
-    let sut = LibraryIdentifier(string: fileURL.path)
+        let sut = LibraryIdentifier(string: fileURL.path)
 
-    XCTAssertEqual(sut.description, url.description)
-  }
+        XCTAssertEqual(sut.description, url.description)
+    }
 }

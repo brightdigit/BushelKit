@@ -1,6 +1,6 @@
 //
 //  MachineError+Details.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 import BushelLogging
-
 public import Foundation
 
 #if canImport(FoundationNetworking)
@@ -57,96 +55,79 @@ extension MachineError {
     case notFoundBookmarkID(UUID)
 
     // swiftlint:disable:next cyclomatic_complexity
-    internal func errorDescription(fromError error: (any Error)?) -> String {
-      switch self {
-      case .bookmarkError:
+    func errorDescription(fromError error: (any Error)?) -> String {
+      switch self { case .bookmarkError:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue getting the bookmark: \(error)"
 
-      case .systemResolution:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "Unable to resolve new image: \(error)"
+        case .systemResolution:
+          assert(error != nil)
+          let error = error ?? UnknownError.shared
+          return "Unable to resolve new image: \(error)"
 
-      case let .accessDeniedLibraryAt(path):
-        let components: [String?] = [
-          "There's an issue getting access to library at \(path)", error?.localizedDescription
-        ]
-        return components.compactMap { $0 }.joined(separator: ": ")
+        case let .accessDeniedLibraryAt(path):
+          let components: [String?] = [
+            "There's an issue getting access to library at \(path)", error?.localizedDescription,
+          ]
+          return components.compactMap { $0 }.joined(separator: ": ")
 
-      case let .corruptedAt(libraryURL):
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "There's an issue reading the library at \(libraryURL): \(error)"
+        case let .corruptedAt(libraryURL):
+          assert(error != nil)
+          let error = error ?? UnknownError.shared
+          return "There's an issue reading the library at \(libraryURL): \(error)"
 
-      case .database:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "There was an issue syncing with the database: \(error)"
+        case .database:
+          assert(error != nil)
+          let error = error ?? UnknownError.shared
+          return "There was an issue syncing with the database: \(error)"
 
-      case let .missingRestoreImageWithID(id):
-        return "There's an issue finding referenced restore image: \(id)"
+        case let .missingRestoreImageWithID(id):
+          return "There's an issue finding referenced restore image: \(id)"
 
-      case let .missingProperty(property):
-        return "Missing object property: \(property)"
+        case let .missingProperty(property): return "Missing object property: \(property)"
 
-      case .snapshot:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return SnapshotError.description(from: error)
+        case .snapshot:
+          assert(error != nil)
+          let error = error ?? UnknownError.shared
+          return SnapshotError.description(from: error)
 
-      case .session:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "Unable to contnue with session: \(error.localizedDescription)"
+        case .session:
+          assert(error != nil)
+          let error = error ?? UnknownError.shared
+          return "Unable to contnue with session: \(error.localizedDescription)"
 
-      case let .notFoundBookmarkID(id):
-        return "There's an issue finding machine with bookmark ID: \(id)"
+        case let .notFoundBookmarkID(id):
+          return "There's an issue finding machine with bookmark ID: \(id)"
       }
     }
 
-    internal func recoverySuggestion(fromError _: (any Error)?) -> String? {
-      switch self {
-      case .accessDeniedLibraryAt:
-        "Close and open the library again."
-      default:
-        nil
+    func recoverySuggestion(fromError _: (any Error)?) -> String? {
+      switch self { case .accessDeniedLibraryAt: "Close and open the library again." default: nil
       }
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    internal func isRecoverable(fromError _: (any Error)?) -> Bool {
-      switch self {
-      case .bookmarkError:
-        false
+    func isRecoverable(fromError _: (any Error)?) -> Bool {
+      switch self { case .bookmarkError: false
 
-      case .accessDeniedLibraryAt:
-        false
+        case .accessDeniedLibraryAt: false
 
-      case .corruptedAt:
-        false
+        case .corruptedAt: false
 
-      case .database:
-        false
+        case .database: false
 
-      case .systemResolution:
-        false
+        case .systemResolution: false
 
-      case .missingRestoreImageWithID:
-        true
+        case .missingRestoreImageWithID: true
 
-      case .missingProperty:
-        false
+        case .missingProperty: false
 
-      case .snapshot:
-        false
+        case .snapshot: false
 
-      case .session:
-        false
+        case .session: false
 
-      case .notFoundBookmarkID:
-        false
+        case .notFoundBookmarkID: false
       }
     }
   }

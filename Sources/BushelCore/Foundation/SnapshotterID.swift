@@ -1,6 +1,6 @@
 //
 //  SnapshotterID.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,29 +29,20 @@
 
 import Foundation
 
-public struct SnapshotterID: ExpressibleByStringInterpolation,
-  Codable,
-  Hashable,
-  RawRepresentable,
-  CustomStringConvertible,
-  Sendable {
+public struct SnapshotterID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable,
+  CustomStringConvertible, Sendable
+{
   public typealias StringLiteralType = String
 
   public static let fileVersion: SnapshotterID = "fileVersion"
 
   public let rawValue: String
 
-  public var description: String {
-    rawValue
-  }
+  public var description: String { rawValue }
 
-  public init(rawValue value: String) {
-    rawValue = value
-  }
+  public init(rawValue value: String) { rawValue = value }
 
-  public init(stringLiteral value: String) {
-    rawValue = value
-  }
+  public init(stringLiteral value: String) { rawValue = value }
 
   public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()

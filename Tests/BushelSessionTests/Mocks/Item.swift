@@ -29,10 +29,10 @@
 
 import Foundation
 
-internal struct Item: Codable {
-  var id: UUID
+struct Item: Codable {
+    var id: UUID
 
-  init(id: UUID = .init()) {
-    self.id = id
-  }
+    init(id: UUID = .init()) {
+        self.id = id
+    }
 }

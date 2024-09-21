@@ -1,6 +1,6 @@
 //
 //  SnapshotSynchronizationDifference.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 public import Foundation
 
 public struct SnapshotSynchronizationDifference: Sendable {

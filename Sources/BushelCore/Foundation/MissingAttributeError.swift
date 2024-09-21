@@ -1,6 +1,6 @@
 //
 //  MissingAttributeError.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -40,11 +40,10 @@ public struct MissingAttributeError: LocalizedError {
   public let headers: [String: String]?
 
   public init(_ headerName: HeaderName, from url: URL, headers: [AnyHashable: Any]? = nil) {
-    self.attributeKey = .init(headerName: headerName)
+    attributeKey = .init(headerName: headerName)
     self.url = url
-    self.headers = (headers?.map { pair in
-      ("\(pair.key)", "\(pair.value)")
-    }).map(Dictionary.init(uniqueKeysWithValues:))
+    self.headers = (headers?.map { pair in ("\(pair.key)", "\(pair.value)") })
+      .map(Dictionary.init(uniqueKeysWithValues:))
   }
 
   public init(_ attributeKey: FileAttributeKey, from url: URL, headers: [String: String]? = nil) {
@@ -56,12 +55,9 @@ public struct MissingAttributeError: LocalizedError {
 
 extension FileAttributeKey {
   fileprivate init(headerName: MissingAttributeError.HeaderName) {
-    switch headerName {
-    case .contentLength:
-      self = .size
+    switch headerName { case .contentLength: self = .size
 
-    case .lastModified:
-      self = .modificationDate
+      case .lastModified: self = .modificationDate
     }
   }
 }

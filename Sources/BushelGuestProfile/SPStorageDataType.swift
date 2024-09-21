@@ -1,6 +1,6 @@
 //
 //  SPStorageDataType.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -57,7 +57,18 @@ public struct SPStorageDataType: Codable, Equatable, Sendable {
   public let writable: PrivateFramework
 
   // swiftlint:disable:next line_length
-  public init(name: String, bsdName: String, fileSystem: String, freeSpaceInBytes: Int, ignoreOwnership: PrivateFramework, mountPoint: String, physicalDrive: PhysicalDrive, sizeInBytes: Int, volumeUUID: String, writable: PrivateFramework) {
+  public init(
+    name: String,
+    bsdName: String,
+    fileSystem: String,
+    freeSpaceInBytes: Int,
+    ignoreOwnership: PrivateFramework,
+    mountPoint: String,
+    physicalDrive: PhysicalDrive,
+    sizeInBytes: Int,
+    volumeUUID: String,
+    writable: PrivateFramework
+  ) {
     self.name = name
     self.bsdName = bsdName
     self.fileSystem = fileSystem

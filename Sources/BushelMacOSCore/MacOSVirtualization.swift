@@ -1,6 +1,6 @@
 //
 //  MacOSVirtualization.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 import Foundation
-
 public import RadiantDocs
 
 public enum MacOSVirtualization: Sendable {
@@ -38,15 +36,11 @@ public enum MacOSVirtualization: Sendable {
 
   public static let shortName = "macOS"
 
-  public static var ipswFileExtension: String {
-    FileType.ipswFileExtension
-  }
+  public static var ipswFileExtension: String { FileType.ipswFileExtension }
 
   public static func operatingSystemLongName(for metadata: any OperatingSystemInstalled) -> String {
     let shortName = operatingSystemShortName(for: metadata)
-    guard let buildVersion = metadata.buildVersion else {
-      return shortName
-    }
+    guard let buildVersion = metadata.buildVersion else { return shortName }
     return shortName.appending(" (\(buildVersion))")
   }
 
@@ -55,7 +49,7 @@ public enum MacOSVirtualization: Sendable {
     _ defaultCodeName: String? = nil
   ) -> String {
     let defaultCodeName = defaultCodeName ?? majorVersion.description
-    let codeName = self.codeNameFor(majorVersion: majorVersion, withDefault: defaultCodeName)
+    let codeName = codeNameFor(majorVersion: majorVersion, withDefault: defaultCodeName)
     return "OSVersions/\(codeName)"
   }
 
@@ -77,14 +71,15 @@ public enum MacOSVirtualization: Sendable {
   }
 
   public static func codeNameWithDefaultFor(majorVersion: Int) -> String {
-    self.codeNameFor(majorVersion: majorVersion, withDefault: majorVersion.description)
+    codeNameFor(majorVersion: majorVersion, withDefault: majorVersion.description)
   }
 
   public static func codeNameFor(majorVersion: Int, withDefault defaultName: String) -> String {
     OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion) ?? defaultName
   }
 
-  public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String {
+  public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String
+  {
     // swiftlint:disable:next line_length
     "macOS \(codeNameWithDefaultFor(majorVersion: metadata.operatingSystemVersion.majorVersion)) \(metadata.operatingSystemVersion)"
   }
@@ -95,10 +90,10 @@ public enum MacOSVirtualization: Sendable {
 
   public static func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
     .init(
-      operatingSystemLongName: self.operatingSystemLongName(for: metadata),
-      defaultName: self.defaultName(fromMetadata: metadata),
-      imageName: self.imageName(for: metadata),
-      systemName: self.shortName,
+      operatingSystemLongName: operatingSystemLongName(for: metadata),
+      defaultName: defaultName(fromMetadata: metadata),
+      imageName: imageName(for: metadata),
+      systemName: shortName,
       versionName: MacOSVirtualization.codeNameWithDefaultFor(
         majorVersion: metadata.operatingSystemVersion.majorVersion
       )

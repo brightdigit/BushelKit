@@ -1,6 +1,6 @@
 //
 //  InstallFailure.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 public struct InstallFailure: Equatable, Sendable {
@@ -60,7 +59,7 @@ public struct InstallFailure: Equatable, Sendable {
     self.isSystem = isSystem
   }
 
-  internal static func fromError(_ error: any Error) -> InstallFailure {
+  static func fromError(_ error: any Error) -> InstallFailure {
     guard let error = error as? any InstallFailureError else {
       assertionFailure(error: error)
       return .unknown

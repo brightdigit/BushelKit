@@ -1,6 +1,6 @@
 //
 //  Randomizable.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,8 +29,6 @@
 
 import Foundation
 
-public protocol Randomizable: Comparable {
-  static func random(in range: ClosedRange<Self>) -> Self
-}
+public protocol Randomizable: Comparable { static func random(in range: ClosedRange<Self>) -> Self }
 
 extension Int: Randomizable {}

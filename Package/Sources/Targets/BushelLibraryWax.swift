@@ -28,8 +28,8 @@
 //
 
 struct BushelLibraryWax: Target {
-  var dependencies: any Dependencies {
-    BushelLibrary()
-    BushelMacOSCore()
-  }
+    var dependencies: any Dependencies {
+        BushelLibrary()
+        BushelMacOSCore()
+    }
 }

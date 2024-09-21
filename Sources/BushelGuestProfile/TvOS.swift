@@ -1,6 +1,6 @@
 //
 //  TvOS.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,13 +32,9 @@ public import Foundation
 // MARK: - TvOS
 
 public struct TvOS: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case the154 = "15.4"
-  }
+  public enum CodingKeys: String, CodingKey { case the154 = "15.4" }
 
   public let the154: String
 
-  public init(the154: String) {
-    self.the154 = the154
-  }
+  public init(the154: String) { self.the154 = the154 }
 }

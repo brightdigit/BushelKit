@@ -1,6 +1,6 @@
 //
 //  VMSystemError.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,6 +30,4 @@
 public import Foundation
 
 #warning("Not sure about this")
-public enum VMSystemError: Error {
-  case unknownSystemBasedOn(URL)
-}
+public enum VMSystemError: Error { case unknownSystemBasedOn(URL) }

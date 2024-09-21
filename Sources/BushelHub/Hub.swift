@@ -1,6 +1,6 @@
 //
 //  Hub.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 public struct Hub: Hashable, Identifiable, Sendable {
@@ -46,14 +45,10 @@ public struct Hub: Hashable, Identifiable, Sendable {
     self.title = title
     self.id = id
     self.count = count
-    self.getImages = images
+    getImages = images
   }
 
-  public static func == (lhs: Hub, rhs: Hub) -> Bool {
-    lhs.id == rhs.id
-  }
+  public static func == (lhs: Hub, rhs: Hub) -> Bool { lhs.id == rhs.id }
 
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
-  }
+  public func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }

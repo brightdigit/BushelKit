@@ -28,8 +28,8 @@
 //
 
 struct BushelArgs: Target {
-  var dependencies: any Dependencies {
-    ArgumentParser()
-    BushelCore()
-  }
+    var dependencies: any Dependencies {
+        ArgumentParser()
+        BushelCore()
+    }
 }

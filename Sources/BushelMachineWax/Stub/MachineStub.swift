@@ -1,6 +1,6 @@
 //
 //  MachineStub.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,15 +28,12 @@
 //
 
 public import BushelMachine
-
 public import Foundation
 
 public struct MachineStub: Machine {
   public var updatedConfiguration: BushelMachine.MachineConfiguration
 
-  public var machineIdentifer: UInt64? {
-    nil
-  }
+  public var machineIdentifer: UInt64? { nil }
 
   public let initialConfiguration: MachineConfiguration
   public let state: MachineState
@@ -48,8 +45,8 @@ public struct MachineStub: Machine {
   public let canRequestStop = false
 
   public init(configuration: MachineConfiguration, state: MachineState) {
-    self.initialConfiguration = configuration
-    self.updatedConfiguration = configuration
+    initialConfiguration = configuration
+    updatedConfiguration = configuration
     self.state = state
   }
 
@@ -81,28 +78,24 @@ public struct MachineStub: Machine {
     // nothing for now
   }
 
-  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID {
-    UUID()
-  }
+  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID
+  { UUID() }
 
   public func removeObservation(withID _: UUID) {}
 
   // swiftlint:disable:next unavailable_function
-  public func beginSnapshot() -> BushelMachine.SnapshotPaths {
-    fatalError("Not implemented")
-  }
+  public func beginSnapshot() -> BushelMachine.SnapshotPaths { fatalError("Not implemented") }
 
   // swiftlint:disable:next unavailable_function
-  public func finishedWithSnapshot(_: BushelMachine.Snapshot, by _: BushelMachine.SnapshotDifference) {
-    fatalError("Not implemented")
-  }
+  public func finishedWithSnapshot(
+    _: BushelMachine.Snapshot,
+    by _: BushelMachine.SnapshotDifference
+  ) { fatalError("Not implemented") }
 
   // swiftlint:disable:next unavailable_function
-  public func finishedWithSynchronization(
-    _: BushelMachine.SnapshotSynchronizationDifference?
-  ) async throws {
-    fatalError("Not implemented")
-  }
+  public func finishedWithSynchronization(_: BushelMachine.SnapshotSynchronizationDifference?)
+    async throws
+  { fatalError("Not implemented") }
 
   // swiftlint:disable:next unavailable_function
   public func updatedMetadata(forSnapshot _: BushelMachine.Snapshot, atIndex _: Int) {

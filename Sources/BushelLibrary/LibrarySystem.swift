@@ -1,6 +1,6 @@
 //
 //  LibrarySystem.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import RadiantDocs
-
-public import Foundation
-
 public import BushelCore
+public import Foundation
+public import RadiantDocs
 
 public protocol LibrarySystem: Sendable {
   var id: VMSystemID { get }
@@ -43,12 +41,11 @@ public protocol LibrarySystem: Sendable {
 }
 
 extension LibrarySystem {
-  public func restoreImageLibraryItemFile(
-    fromURL url: URL,
-    id: UUID = UUID()
-  ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url)
-    let name = self.label(fromMetadata: metadata).defaultName
+  public func restoreImageLibraryItemFile(fromURL url: URL, id: UUID = UUID()) async throws
+    -> LibraryImageFile
+  {
+    let metadata = try await metadata(fromURL: url)
+    let name = label(fromMetadata: metadata).defaultName
     return LibraryImageFile(id: id, metadata: metadata, name: name)
   }
 }

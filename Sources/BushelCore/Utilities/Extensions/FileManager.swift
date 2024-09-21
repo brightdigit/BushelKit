@@ -1,6 +1,6 @@
 //
 //  FileManager.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -50,29 +50,20 @@ extension FileManager {
   public func createFile(atPath path: String, withSize size: FileSize) throws {
     createFile(atPath: path, contents: nil)
     let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
-    guard diskFd > 0 else {
-      throw CreationError(code: Int(errno), source: .open)
-    }
+    guard diskFd > 0 else { throw CreationError(code: Int(errno), source: .open) }
 
     // 64GB disk space.
     var result = ftruncate(diskFd, size)
 
-    guard result == 0 else {
-      throw CreationError(code: Int(result), source: .ftruncate)
-    }
+    guard result == 0 else { throw CreationError(code: Int(result), source: .ftruncate) }
 
     result = close(diskFd)
-    guard result == 0 else {
-      throw CreationError(code: Int(result), source: .close)
-    }
+    guard result == 0 else { throw CreationError(code: Int(result), source: .close) }
   }
 
   public func directoryExists(at url: URL) -> DirectoryExists {
     var isDirectory: ObjCBool = false
-    let fileExists = FileManager.default.fileExists(
-      atPath: url.path,
-      isDirectory: &isDirectory
-    )
+    let fileExists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
 
     return .init(fileExists: fileExists, isDirectory: isDirectory.boolValue)
   }
@@ -83,50 +74,42 @@ extension FileManager {
     in domainMask: FileManager.SearchPathDomainMask = .allDomainsMask
   ) throws -> URLRelationship {
     var relationship: URLRelationship = .other
-    try self.getRelationship(&relationship, of: directory, in: domainMask, toItemAt: url)
+    try getRelationship(&relationship, of: directory, in: domainMask, toItemAt: url)
     return relationship
   }
 
-  @discardableResult
-  public func createEmptyDirectory(
+  @discardableResult public func createEmptyDirectory(
     at url: URL,
     withIntermediateDirectories createIntermediates: Bool,
     deleteExistingFile: Bool,
     attributes: [FileAttributeKey: Any]? = nil
   ) throws -> DirectoryExists {
-    let directoryExistsStatus = self.directoryExists(at: url)
+    let directoryExistsStatus = directoryExists(at: url)
 
     #warning("logging-note: we could log each case for better debugging")
-    switch directoryExistsStatus {
-    case .directoryExists:
-      break
+    switch directoryExistsStatus { case .directoryExists: break
 
-    case .fileExists:
-      if deleteExistingFile {
-        try FileManager.default.removeItem(at: url)
-      }
-      fallthrough
+      case .fileExists:
+        if deleteExistingFile { try FileManager.default.removeItem(at: url) }
+        fallthrough
 
-    case .notExists:
-      try FileManager.default.createDirectory(
-        at: url,
-        withIntermediateDirectories: createIntermediates,
-        attributes: attributes
-      )
+      case .notExists:
+        try FileManager.default.createDirectory(
+          at: url,
+          withIntermediateDirectories: createIntermediates,
+          attributes: attributes
+        )
     }
 
     return directoryExistsStatus
   }
 
-  public func write(
-    _ dataDictionary: [String: Data],
-    to directoryURL: URL
-  ) throws {
+  public func write(_ dataDictionary: [String: Data], to directoryURL: URL) throws {
     for (relativePath, data) in dataDictionary {
       let fullURL = directoryURL.appendingPathComponent(relativePath)
       let parentURL = fullURL.deletingLastPathComponent()
-      if self.directoryExists(at: parentURL) == .notExists {
-        try self.createEmptyDirectory(
+      if directoryExists(at: parentURL) == .notExists {
+        try createEmptyDirectory(
           at: parentURL,
           withIntermediateDirectories: true,
           deleteExistingFile: true
@@ -136,22 +119,16 @@ extension FileManager {
     }
   }
 
-  public func dataDictionary(
-    directoryAt directoryURL: URL
-  ) throws -> [String: Data] {
+  public func dataDictionary(directoryAt directoryURL: URL) throws -> [String: Data] {
     let keys: Set<URLResourceKey> = Set([.isDirectoryKey, .isRegularFileKey])
-    guard let enumerator = self.enumerator(
-      at: directoryURL,
-      includingPropertiesForKeys: Array(keys)
-    ) else {
-      throw .fileNotFound(at: directoryURL)
-    }
+    guard let enumerator = enumerator(at: directoryURL, includingPropertiesForKeys: Array(keys))
+    else { throw .fileNotFound(at: directoryURL) }
 
-    #warning("logging-note: descriptive error/logging here might help some other developer in debugging")
+    #warning(
+      "logging-note: descriptive error/logging here might help some other developer in debugging"
+    )
     return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
-      guard let url = item as? URL else {
-        return
-      }
+      guard let url = item as? URL else { return }
       guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else {
         return
       }
@@ -161,27 +138,20 @@ extension FileManager {
   }
 
   public func clearSavedApplicationState() throws {
-    let savedApplicationStates = self.urls(for: .libraryDirectory, in: .userDomainMask)
-      .map {
-        $0.appendingPathComponent("Saved Application State")
-      }
-      .filter {
-        self.directoryExists(at: $0) == .directoryExists
-      }
+    let savedApplicationStates = urls(for: .libraryDirectory, in: .userDomainMask)
+      .map { $0.appendingPathComponent("Saved Application State") }
+      .filter { self.directoryExists(at: $0) == .directoryExists }
 
-    try savedApplicationStates.forEach(self.removeItem(at:))
+    try savedApplicationStates.forEach(removeItem(at:))
   }
 }
 
 extension Error where Self == NSError {
-  internal static func fileNotFound(at url: URL) -> NSError {
+  static func fileNotFound(at url: URL) -> NSError {
     NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileNoSuchFileError,
-      userInfo: [
-        NSFilePathErrorKey: url.path,
-        NSUnderlyingErrorKey: POSIXError(.ENOENT)
-      ]
+      userInfo: [NSFilePathErrorKey: url.path, NSUnderlyingErrorKey: POSIXError(.ENOENT)]
     )
   }
 }

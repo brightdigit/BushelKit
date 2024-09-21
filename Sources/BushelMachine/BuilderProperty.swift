@@ -1,6 +1,6 @@
 //
 //  BuilderProperty.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 public enum BuilderProperty: String, Equatable, Sendable {

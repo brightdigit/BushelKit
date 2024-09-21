@@ -1,6 +1,6 @@
 //
 //  CGSize.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,17 +30,17 @@
 public import Foundation
 
 extension CGSize {
-  @inlinable
-  public func resizing(
+  @inlinable public func resizing(
     toAspectRatio aspectRatio: CGFloat,
     minimumWidth: CGFloat,
     withAdditionalHeight additionalHeight: CGFloat
   ) -> CGSize {
-    let remainingHeight = max(self.height - additionalHeight, 0)
+    let remainingHeight = max(height - additionalHeight, 0)
     let calculatedWidth = remainingHeight * aspectRatio
     if calculatedWidth < minimumWidth {
       return .init(width: minimumWidth, height: minimumWidth / aspectRatio + additionalHeight)
-    } else {
+    }
+    else {
       return .init(width: calculatedWidth, height: remainingHeight + additionalHeight)
     }
   }

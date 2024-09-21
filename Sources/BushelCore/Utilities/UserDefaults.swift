@@ -1,6 +1,6 @@
 //
 //  UserDefaults.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,14 +28,11 @@
 //
 
 public import Foundation
-
 public import RadiantKit
 
 extension UserDefaults {
   public func bool(forKey key: String, defaultValue: Bool) -> Bool {
-    guard self.object(forKey: key) == nil else {
-      return self.bool(forKey: key)
-    }
+    guard object(forKey: key) == nil else { return bool(forKey: key) }
 
     return defaultValue
   }
@@ -44,13 +41,13 @@ extension UserDefaults {
     for _: AppStoredType.Type,
     defaultValue: AppStoredType.Value
   ) -> AppStoredType.Value where AppStoredType.Value == Bool {
-    self.bool(forKey: AppStoredType.key, defaultValue: defaultValue)
+    bool(forKey: AppStoredType.key, defaultValue: defaultValue)
   }
 
   public func value<AppStoredType: DefaultWrapped>(
     for _: AppStoredType.Type,
     defaultValue: AppStoredType.Value = AppStoredType.default
   ) -> AppStoredType.Value where AppStoredType.Value == Bool {
-    self.bool(forKey: AppStoredType.key, defaultValue: defaultValue)
+    bool(forKey: AppStoredType.key, defaultValue: defaultValue)
   }
 }

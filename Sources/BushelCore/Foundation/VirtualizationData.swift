@@ -1,6 +1,6 @@
 //
 //  VirtualizationData.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -88,12 +88,12 @@ extension VirtualizationData {
   ///   - plistDecoder: A `PropertyListDecoder` instance
   ///   used to decode property list data retrieved from the `VirtualizationDataSet`.
   /// - Throws: An error if data retrieval or decoding fails.
-  internal init(
-    at set: any VirtualizationDataSet,
-    using plistDecoder: PropertyListDecoder
-  ) throws {
+  internal init(at set: any VirtualizationDataSet, using plistDecoder: PropertyListDecoder) throws {
     let machineIdentifierData = try set.data(from: \(any Paths).machineIdentifierFileName)
-    let machineIdentifier = try plistDecoder.decode(MachineIdentifier.self, from: machineIdentifierData)
+    let machineIdentifier = try plistDecoder.decode(
+      MachineIdentifier.self,
+      from: machineIdentifierData
+    )
 
     let hardwareModelData = try set.data(from: \(any Paths).hardwareModelFileName)
 
@@ -113,10 +113,5 @@ extension VirtualizationData {
     atDataDirectory dataDirectory: URL,
     withPaths paths: any Paths,
     using plistDecoder: PropertyListDecoder
-  ) throws {
-    try self.init(
-      at: Directory(url: dataDirectory, paths: paths),
-      using: plistDecoder
-    )
-  }
+  ) throws { try self.init(at: Directory(url: dataDirectory, paths: paths), using: plistDecoder) }
 }

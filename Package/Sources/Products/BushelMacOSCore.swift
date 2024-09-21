@@ -28,8 +28,8 @@
 //
 
 struct BushelMacOSCore: Product, Target {
-  var dependencies: any Dependencies {
-    BushelCore()
-    RadiantKit()
-  }
+    var dependencies: any Dependencies {
+        BushelCore()
+        RadiantKit()
+    }
 }

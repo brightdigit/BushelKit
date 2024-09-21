@@ -1,6 +1,6 @@
 //
 //  LagrangePolynomial.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -45,9 +45,7 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
 
   private let isInverse: Bool
 
-  private var maxX: Double {
-    max(point0.x, point1.x, point2.x)
-  }
+  private var maxX: Double { max(point0.x, point1.x, point2.x) }
 
   public var rawValue: String {
     let encoded = try? JSON.encoder.encode(self)
@@ -55,7 +53,7 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
     return string ?? "{}"
   }
 
-  internal init(point0: CGPoint, point1: CGPoint, point2: CGPoint, isInverse: Bool) {
+  init(point0: CGPoint, point1: CGPoint, point2: CGPoint, isInverse: Bool) {
     self.point0 = point0
     self.point1 = point1
     self.point2 = point2
@@ -66,9 +64,7 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
     let data = rawValue.data(using: .utf8)
     let decoded = data.flatMap { try? JSON.decoder.decode(Self.self, from: $0) }
 
-    guard let decoded else {
-      return nil
-    }
+    guard let decoded else { return nil }
 
     self = decoded
   }
@@ -77,8 +73,12 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
     let newValue = isInverse ? (maxX - value) : value
 
     // swiftlint:disable identifier_name
-    let x0 = point0.x, x1 = point1.x, x2 = point2.x
-    let y0 = point0.y, y1 = point1.y, y2 = point2.y
+    let x0 = point0.x
+    let x1 = point1.x
+    let x2 = point2.x
+    let y0 = point0.y
+    let y1 = point1.y
+    let y2 = point2.y
     // swiftlint:enable identifier_name
 
     let term0 = y0 * ((newValue - x1) * (newValue - x2)) / ((x0 - x1) * (x0 - x2))

@@ -1,6 +1,6 @@
 //
 //  MachineSystemManaging.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
-
 public import Foundation
 
 /// A collection of machine systems for managing virtual machines
@@ -42,9 +40,7 @@ public protocol MachineSystemManaging: Sendable {
 }
 
 extension MachineSystemManaging where Self: Loggable {
-  public static var loggingCategory: BushelLogging.Category {
-    .library
-  }
+  public static var loggingCategory: BushelLogging.Category { .library }
 }
 
 extension MachineSystemManaging {
@@ -54,7 +50,7 @@ extension MachineSystemManaging {
   public func machine(contentOf url: URL) async throws -> any Machine {
     let configuration: MachineConfiguration
     configuration = try MachineConfiguration(contentsOf: url)
-    let system = self.resolve(configuration.vmSystemID)
+    let system = resolve(configuration.vmSystemID)
     return try await system.machine(at: url, withConfiguration: configuration)
   }
 }

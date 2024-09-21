@@ -1,6 +1,6 @@
 //
 //  MachineSetupConfiguration.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 /// Writable configuration used for setting up and configuring a new machine.
@@ -50,11 +49,7 @@ public struct MachineSetupConfiguration: Sendable {
 
   public var snapshotSystemID: SnapshotterID = .fileVersion
 
-  public init(
-    system: any MachineSystem
-  ) {
-    self.init(storage: [.default(forSystem: system)])
-  }
+  public init(system: any MachineSystem) { self.init(storage: [.default(forSystem: system)]) }
 
   public init(
     libraryID: LibraryIdentifier? = nil,
@@ -74,8 +69,7 @@ public struct MachineSetupConfiguration: Sendable {
     self.graphicsConfigurations = graphicsConfigurations
   }
 
-  @available(*, deprecated)
-  public init(
+  @available(*, deprecated) public init(
     libraryID: LibraryIdentifier? = nil,
     restoreImageID: UUID? = nil,
     storage: [MachineStorageSpecification]? = nil,
@@ -96,25 +90,18 @@ public struct MachineSetupConfiguration: Sendable {
 
 extension MachineSetupConfiguration {
   public var primaryStorage: MachineStorageSpecification {
-    get {
-      storage.first ?? .defaultPrimary
-    }
-    set {
-      storage[0] = newValue
-    }
+    get { storage.first ?? .defaultPrimary }
+    set { storage[0] = newValue }
   }
 
   public var primaryStorageSizeFloat: Float {
-    get {
-      Float(self.primaryStorage.size)
-    }
-    set {
-      self.primaryStorage.size = .init(newValue)
-    }
+    get { Float(primaryStorage.size) }
+    set { primaryStorage.size = .init(newValue) }
   }
 
-  @available(*, deprecated, message: "Pass the MachineSystem as well.")
-  public init(request: MachineBuildRequest?) {
+  @available(*, deprecated, message: "Pass the MachineSystem as well.") public init(
+    request: MachineBuildRequest?
+  ) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,
       restoreImageID: request?.restoreImage?.imageID
@@ -130,7 +117,7 @@ extension MachineSetupConfiguration {
   }
 
   public mutating func updating(forRequest request: MachineBuildRequest?) {
-    self.restoreImageID = request?.restoreImage?.imageID
-    self.libraryID = request?.restoreImage?.libraryID
+    restoreImageID = request?.restoreImage?.imageID
+    libraryID = request?.restoreImage?.libraryID
   }
 }

@@ -1,6 +1,6 @@
 //
 //  MachineBuildConfiguration.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 ///  Used by the `MachineSystem` to build a new virtual machine.

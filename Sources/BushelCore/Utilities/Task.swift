@@ -1,6 +1,6 @@
 //
 //  Task.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -42,16 +42,14 @@ extension Task where Success == Never, Failure == Never {
     let maximumSeconds = max(value, otherValue)
 
     let range = maximumSeconds - minimumSeconds
-    toleranceSeconds = Int.random(in: 1 ... (range / 2))
+    toleranceSeconds = Int.random(in: 1...(range / 2))
 
-    durationSeconds = .random(in: minimumSeconds ... (maximumSeconds - toleranceSeconds))
+    durationSeconds = .random(in: minimumSeconds...(maximumSeconds - toleranceSeconds))
 
     do {
-      try await Self.sleep(
-        for: .seconds(durationSeconds),
-        tolerance: .seconds(toleranceSeconds)
-      )
-    } catch {
+      try await Self.sleep(for: .seconds(durationSeconds), tolerance: .seconds(toleranceSeconds))
+    }
+    catch {
       assertionFailure(error: error)
       onError(error)
     }
@@ -59,13 +57,9 @@ extension Task where Success == Never, Failure == Never {
 }
 
 extension Task where Success == Void, Failure == Never {
-  public func callAsFunction() async {
-    await self.value
-  }
+  public func callAsFunction() async { await value }
 }
 
 extension Task where Success == Void {
-  public func callAsFunction() async throws {
-    try await self.value
-  }
+  public func callAsFunction() async throws { try await value }
 }

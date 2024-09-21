@@ -30,20 +30,20 @@
 @testable import BushelCore
 import XCTest
 
-internal final class TransformationTests: XCTestCase {
-  private static func intToString(_ value: Int) -> String {
-    "\(value)"
-  }
-
-  func testTransformAsFunction() {
-    let sut = Transformation<Int, String> {
-      Self.intToString($0)
+final class TransformationTests: XCTestCase {
+    private static func intToString(_ value: Int) -> String {
+        "\(value)"
     }
 
-    let value = 3
-    let expectedValue = Self.intToString(value)
-    let actualValue = sut(value)
+    func testTransformAsFunction() {
+        let sut = Transformation<Int, String> {
+            Self.intToString($0)
+        }
 
-    XCTAssertEqual(actualValue, expectedValue)
-  }
+        let value = 3
+        let expectedValue = Self.intToString(value)
+        let actualValue = sut(value)
+
+        XCTAssertEqual(actualValue, expectedValue)
+    }
 }

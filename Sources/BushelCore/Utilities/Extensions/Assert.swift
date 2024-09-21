@@ -1,6 +1,6 @@
 //
 //  Assert.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,21 +29,18 @@
 
 public import Foundation
 
-@inlinable
-public func assert(isMainThread: Bool) {
-  assert(isMainThread == Thread.isMainThread)
-}
+@inlinable public func assert(isMainThread: Bool) { assert(isMainThread == Thread.isMainThread) }
 
-@inlinable
-public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line) {
-  guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else {
-    return
-  }
+@inlinable public func assertionFailure(
+  error: any Error,
+  file: StaticString = #file,
+  line: UInt = #line
+) {
+  guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else { return }
   assertionFailure(error.localizedDescription, file: file, line: line)
 }
 
-@inlinable
-public func assertionFailure<NewFailure: LocalizedError>(
+@inlinable public func assertionFailure<NewFailure: LocalizedError>(
   error: any Error,
   _ unknownError: @escaping (any Error) -> Void,
   file: StaticString = #file,
@@ -58,24 +55,19 @@ public func assertionFailure<NewFailure: LocalizedError>(
   return newError
 }
 
-@inlinable
-public func assertionFailure<Success, NewFailure: LocalizedError>(
+@inlinable public func assertionFailure<Success, NewFailure: LocalizedError>(
   result: Result<Success, some Any>,
   file: StaticString = #file,
   line: UInt = #line
 ) throws -> Result<Success, NewFailure> {
-  switch result {
-  case let .success(value):
-    return .success(value)
+  switch result { case let .success(value): return .success(value)
 
-  case let .failure(error):
-    switch error as? NewFailure {
-    case .none:
-      assertionFailure(error.localizedDescription, file: file, line: line)
-      throw error
+    case let .failure(error):
+      switch error as? NewFailure { case .none:
+        assertionFailure(error.localizedDescription, file: file, line: line)
+        throw error
 
-    case let .some(newError):
-      return .failure(newError)
-    }
+        case let .some(newError): return .failure(newError)
+      }
   }
 }

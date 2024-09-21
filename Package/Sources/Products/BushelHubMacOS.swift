@@ -28,8 +28,8 @@
 //
 
 struct BushelHubMacOS: Product, Target {
-  var dependencies: any Dependencies {
-    BushelHub()
-    BushelMacOSCore()
-  }
+    var dependencies: any Dependencies {
+        BushelHub()
+        BushelMacOSCore()
+    }
 }

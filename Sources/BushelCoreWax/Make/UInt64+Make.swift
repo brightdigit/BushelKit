@@ -1,6 +1,6 @@
 //
 //  UInt64+Make.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,7 +30,5 @@
 import Foundation
 
 extension UInt64 {
-  public static func makeGigaByte(_ num: Int) -> Self {
-    .init(num * 1_024 * 1_024 * 1_024)
-  }
+  public static func makeGigaByte(_ num: Int) -> Self { .init(num * 1_024 * 1_024 * 1_024) }
 }

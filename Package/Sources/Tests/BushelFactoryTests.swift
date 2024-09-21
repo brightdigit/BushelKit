@@ -28,11 +28,11 @@
 //
 
 struct BushelFactoryTests: TestTarget {
-  var dependencies: any Dependencies {
-    // BushelLocalization()
-    BushelFactory()
-    BushelTestUtilities()
-    BushelCoreWax()
-    BushelMachineWax()
-  }
+    var dependencies: any Dependencies {
+        // BushelLocalization()
+        BushelFactory()
+        BushelTestUtilities()
+        BushelCoreWax()
+        BushelMachineWax()
+    }
 }

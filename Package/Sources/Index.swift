@@ -30,58 +30,58 @@
 import PackageDescription
 
 let package = Package(
-  entries: {
-    BushelCommand()
-    BushelCore()
-    BushelCoreWax()
-    BushelFactory()
-    BushelGuestProfile()
-    BushelHub()
-    BushelHubIPSW()
-    BushelHubMacOS()
-    BushelLibrary()
-    BushelLogging()
-    BushelMachine()
-    BushelMacOSCore()
-    BushelUT()
-    BushelTestUtilities()
-  },
-  testTargets: {
-    BushelCoreTests()
-    BushelLibraryTests()
-    BushelMachineTests()
-    BushelFactoryTests()
-  },
-  swiftSettings: {
-    StrictConcurrency()
-    Group("Experimental") {
-      AccessLevelOnImport()
-      BitwiseCopyable()
-      GlobalActorIsolatedTypesUsability()
-      IsolatedAny()
-      MoveOnlyPartialConsumption()
-      NestedProtocols()
-      NoncopyableGenerics()
-      RegionBasedIsolation()
-      TransferringArgsAndResults()
-      VariadicGenerics()
-    }
-    Group("Upcoming") {
+    entries: {
+        BushelCommand()
+        BushelCore()
+        BushelCoreWax()
+        BushelFactory()
+        BushelGuestProfile()
+        BushelHub()
+        BushelHubIPSW()
+        BushelHubMacOS()
+        BushelLibrary()
+        BushelLogging()
+        BushelMachine()
+        BushelMacOSCore()
+        BushelUT()
+        BushelTestUtilities()
+    },
+    testTargets: {
+        BushelCoreTests()
+        BushelLibraryTests()
+        BushelMachineTests()
+        BushelFactoryTests()
+    },
+    swiftSettings: {
+        StrictConcurrency()
+        Group("Experimental") {
+            AccessLevelOnImport()
+            BitwiseCopyable()
+            GlobalActorIsolatedTypesUsability()
+            IsolatedAny()
+            MoveOnlyPartialConsumption()
+            NestedProtocols()
+            NoncopyableGenerics()
+            RegionBasedIsolation()
+            TransferringArgsAndResults()
+            VariadicGenerics()
+        }
+        Group("Upcoming") {
 //      DeprecateApplicationMain()
 //      DisableOutwardActorInference()
 //      DynamicActorIsolation()
-      FullTypedThrows()
+            FullTypedThrows()
 //      GlobalConcurrency()
 //      ImportObjcForwardDeclarations()
 //      InferSendableFromCaptures()
-      InternalImportsByDefault()
-      // IsolatedDefaultValues()
+            InternalImportsByDefault()
+            // IsolatedDefaultValues()
+        }
+        WarnLongFunctionBodies(milliseconds: 50)
+        WarnLongExpressionTypeChecking(milliseconds: 50)
     }
-    WarnLongFunctionBodies(milliseconds: 50)
-    WarnLongExpressionTypeChecking(milliseconds: 50)
-  }
 )
 .supportedPlatforms {
-  WWDC2023()
+    WWDC2023()
 }
 .defaultLocalization(.english)

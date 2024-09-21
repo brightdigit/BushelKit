@@ -1,6 +1,6 @@
 //
 //  EnvironmentValue.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -36,27 +36,15 @@ public protocol EnvironmentValue: Sendable {
 }
 
 extension EnvironmentValue where Self: LosslessStringConvertible {
-  public var environmentStringValue: String {
-    self.description
-  }
+  public var environmentStringValue: String { description }
 
-  public init?(environmentStringValue: String) {
-    self.init(environmentStringValue)
-  }
+  public init?(environmentStringValue: String) { self.init(environmentStringValue) }
 }
 
 extension EnvironmentValue where Self: RawRepresentable, RawValue == String {
-  public var environmentStringValue: String {
-    self.rawValue
-  }
+  public var environmentStringValue: String { rawValue }
 
-  public init?(environmentStringValue: String) {
-    self.init(rawValue: environmentStringValue)
-  }
+  public init?(environmentStringValue: String) { self.init(rawValue: environmentStringValue) }
 }
 
-extension Bool: EnvironmentValue {
-  public static var `default`: Bool {
-    false
-  }
-}
+extension Bool: EnvironmentValue { public static var `default`: Bool { false } }

@@ -1,6 +1,6 @@
 //
 //  List.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,6 +30,4 @@
 import ArgumentParser
 import Foundation
 
-extension Image {
-  internal struct List: ParsableCommand {}
-}
+extension Image { struct List: ParsableCommand {} }

@@ -1,6 +1,6 @@
 //
 //  VersionFormatted.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -41,9 +41,6 @@ public struct VersionFormatted: Sendable {
 
 extension VersionFormatted {
   public init(version: Version) {
-    self.init(
-      marketingVersion: version.description,
-      buildNumberHex: version.buildNumberHex()
-    )
+    self.init(marketingVersion: version.description, buildNumberHex: version.buildNumberHex())
   }
 }

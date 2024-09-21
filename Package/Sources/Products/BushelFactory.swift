@@ -30,12 +30,12 @@
 import Foundation
 
 struct BushelFactory: Product, Target {
-  var dependencies: any Dependencies {
-    // BushelLocalization()
-    BushelCore()
-    BushelMachine()
-    BushelLibrary()
-    BushelLogging()
-    // BushelData()
-  }
+    var dependencies: any Dependencies {
+        // BushelLocalization()
+        BushelCore()
+        BushelMachine()
+        BushelLibrary()
+        BushelLogging()
+        // BushelData()
+    }
 }

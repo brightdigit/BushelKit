@@ -1,6 +1,6 @@
 //
 //  SpextHasAllDependenciesErrors.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.

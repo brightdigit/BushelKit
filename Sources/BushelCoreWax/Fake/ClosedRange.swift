@@ -1,6 +1,6 @@
 //
 //  ClosedRange.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -36,11 +36,6 @@ extension ClosedRange where Bound: Randomizable & AdditiveArithmetic {
   ) -> Self {
     let lowerBound = Bound.random(in: startingRange)
     let upperBound = lowerBound + Bound.random(in: sizeRange)
-    return .init(
-      uncheckedBounds: (
-        lower: lowerBound,
-        upper: upperBound
-      )
-    )
+    return .init(uncheckedBounds: (lower: lowerBound, upper: upperBound))
   }
 }

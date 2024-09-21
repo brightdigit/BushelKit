@@ -1,6 +1,6 @@
 //
 //  BushelCommand.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -33,7 +33,5 @@ import Foundation
 public protocol BushelCommand: ParsableCommand {}
 
 extension BushelCommand {
-  public static var configuration: CommandConfiguration {
-    Bushel.configuration
-  }
+  public static var configuration: CommandConfiguration { Bushel.configuration }
 }

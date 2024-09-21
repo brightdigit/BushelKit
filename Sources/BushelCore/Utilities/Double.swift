@@ -1,6 +1,6 @@
 //
 //  Double.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -35,9 +35,7 @@ extension Double {
   }
 
   public func roundToNearest(value: Double, unlessThan: Bool = true) -> Double {
-    if self < value, unlessThan {
-      return self
-    }
+    if self < value, unlessThan { return self }
 
     let quarterMinutes = (self / value).rounded()
     return quarterMinutes * value

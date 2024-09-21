@@ -1,6 +1,6 @@
 //
 //  ImageMetadata+Previews.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,7 +29,6 @@
 
 public import BushelCore
 import BushelMacOSCore
-
 import Foundation
 
 extension ImageMetadata {
@@ -37,9 +36,7 @@ extension ImageMetadata {
     public static let previewModel: ImageMetadata = .init(
       isImageSupported: true,
       buildVersion: "12312SA",
-      operatingSystemVersion: .init(
-        majorVersion: 12, minorVersion: 0, patchVersion: 0
-      ),
+      operatingSystemVersion: .init(majorVersion: 12, minorVersion: 0, patchVersion: 0),
       contentLength: 16_000_000_000,
       lastModified: .init(),
       fileExtension: MacOSVirtualization.ipswFileExtension,
@@ -50,7 +47,9 @@ extension ImageMetadata {
       isImageSupported: true,
       buildVersion: "22A5295h",
       operatingSystemVersion: OperatingSystemVersion(
-        majorVersion: 13, minorVersion: 0, patchVersion: 0
+        majorVersion: 13,
+        minorVersion: 0,
+        patchVersion: 0
       ),
       contentLength: 679_094_144,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_094_144.0),
@@ -61,7 +60,11 @@ extension ImageMetadata {
     public static let monterey = ImageMetadata(
       isImageSupported: true,
       buildVersion: "21F79",
-      operatingSystemVersion: OperatingSystemVersion(majorVersion: 12, minorVersion: 4, patchVersion: 0),
+      operatingSystemVersion: OperatingSystemVersion(
+        majorVersion: 12,
+        minorVersion: 4,
+        patchVersion: 0
+      ),
       contentLength: 679_276_356_959_953,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959953),
       fileExtension: MacOSVirtualization.ipswFileExtension,

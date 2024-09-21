@@ -1,6 +1,6 @@
 //
 //  LibraryFileSpecifications.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,12 +28,9 @@
 //
 
 import BushelCore
-
 public import Foundation
-
-import RadiantKit
-
 public import RadiantDocs
+import RadiantKit
 
 public enum LibraryFileSpecifications: InitializableFileTypeSpecification {
   public typealias WindowValueType = LibraryFile

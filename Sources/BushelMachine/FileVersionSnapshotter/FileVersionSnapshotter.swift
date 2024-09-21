@@ -1,6 +1,6 @@
 //
 //  FileVersionSnapshotter.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -35,25 +35,23 @@
   public import Foundation
 
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
-    public static var loggingCategory: BushelLogging.Category {
-      .machine
-    }
+    public static var loggingCategory: BushelLogging.Category { .machine }
 
-    internal let fileManager: FileManager
+    let fileManager: FileManager
 
-    internal init(fileManager: FileManager = .default) {
-      self.fileManager = fileManager
-    }
+    init(fileManager: FileManager = .default) { self.fileManager = fileManager }
 
-    internal init(for _: MachineType.Type, fileManager: FileManager = .default) {
+    init(for _: MachineType.Type, fileManager: FileManager = .default) {
       self.init(fileManager: fileManager)
     }
 
-    internal init(for _: MachineType, fileManager: FileManager = .default) {
+    init(for _: MachineType, fileManager: FileManager = .default) {
       self.init(fileManager: fileManager)
     }
 
-    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws {
+    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL)
+      async throws
+    {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
@@ -64,10 +62,10 @@
       let data = try JSON.encoder.encode(exportedConfiguration)
       let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
       let newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
-      if self.fileManager.directoryExists(at: newSnapshotsDirURL) == .directoryExists {
-        try self.fileManager.removeItem(at: newSnapshotsDirURL)
+      if fileManager.directoryExists(at: newSnapshotsDirURL) == .directoryExists {
+        try fileManager.removeItem(at: newSnapshotsDirURL)
       }
-      try self.fileManager.createEmptyDirectory(
+      try fileManager.createEmptyDirectory(
         at: newSnapshotsDirURL,
         withIntermediateDirectories: false,
         deleteExistingFile: false
@@ -78,7 +76,7 @@
 
     public func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws {
       let paths = try machine.beginSnapshot()
-      let oldSnapshots = try self.fileManager.dataDictionary(directoryAt: paths.snapshotCollectionURL)
+      let oldSnapshots = try fileManager.dataDictionary(directoryAt: paths.snapshotCollectionURL)
 
       let snapshotFileNameKey = [snapshot.id.uuidString, "bshsnapshot"].joined(separator: ".")
 
@@ -86,38 +84,33 @@
         throw SnapshotError.missingSnapshotFile(snapshot.id)
       }
 
-      Self.logger.debug("Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)")
+      Self.logger.debug(
+        "Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)"
+      )
       let fileVersion = try Result {
         try NSFileVersion.version(
           itemAt: paths.snapshottingSourceURL,
           forPersistentIdentifierData: identifierData
         )
       }
-      .mapError(
-        SnapshotError.inner(error:)
-      )
-      .unwrap(
-        or:
-        SnapshotError.missingSnapshotVersionID(snapshot.id)
-      )
-      .get()
+      .mapError(SnapshotError.inner(error:))
+      .unwrap(or: SnapshotError.missingSnapshotVersionID(snapshot.id)).get()
 
       do {
         Self.logger.debug(
           "Replacing with snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)"
         )
         try fileVersion.replaceItem(at: paths.snapshottingSourceURL)
-        try self.fileManager.write(oldSnapshots, to: paths.snapshotCollectionURL)
-      } catch {
-        throw SnapshotError.inner(error: error)
+        try fileManager.write(oldSnapshots, to: paths.snapshotCollectionURL)
       }
+      catch { throw SnapshotError.inner(error: error) }
       await machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 
     public func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) async throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try NSFileVersion.version(withID: snapshot.id, basedOn: paths)
-      try fileVersion.remove(with: self.fileManager)
+      try fileVersion.remove(with: fileManager)
       await machine.finishedWithSnapshot(snapshot, by: .remove)
     }
 
@@ -127,16 +120,14 @@
       withRequest request: SnapshotRequest = .init(),
       withID id: UUID = .init()
     ) throws -> Snapshot {
-      try self.fileManager.createEmptyDirectory(
+      try fileManager.createEmptyDirectory(
         at: snapshotCollectionURL,
         withIntermediateDirectories: false,
         deleteExistingFile: true
       )
 
-      let snapshotFileURL =
-        snapshotCollectionURL
-          .appendingPathComponent(id.uuidString)
-          .appendingPathExtension("bshsnapshot")
+      let snapshotFileURL = snapshotCollectionURL.appendingPathComponent(id.uuidString)
+        .appendingPathExtension("bshsnapshot")
 
       Self.logger.debug("Creating snapshot with id \(id)")
 
@@ -152,8 +143,7 @@
       )
     }
 
-    @discardableResult
-    public func createNewSnapshot(
+    @discardableResult public func createNewSnapshot(
       of machine: MachineType,
       request: SnapshotRequest,
       options: SnapshotOptions
@@ -166,7 +156,7 @@
         options: options
       )
 
-      let snapshot = try self.saveSnapshot(
+      let snapshot = try saveSnapshot(
         forVersion: version,
         to: paths.snapshotCollectionURL,
         withRequest: request

@@ -1,6 +1,6 @@
 //
 //  AsyncReducer.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,30 +29,23 @@
 
 import Foundation
 
-public actor AsyncReducer<
-  AsyncSequenceType: AsyncSequence & Sendable
-> where AsyncSequenceType.Element: Sendable {
+public actor AsyncReducer<AsyncSequenceType: AsyncSequence & Sendable>
+where AsyncSequenceType.Element: Sendable {
   private let sequence: AsyncSequenceType
   private var currentElements: [AsyncSequenceType.Element]?
 
   public var elements: [AsyncSequenceType.Element] {
     get async throws {
-      if let currentElements {
-        return currentElements
-      }
-      return try await self.reduce()
+      if let currentElements { return currentElements }
+      return try await reduce()
     }
   }
 
-  public init(sequence: AsyncSequenceType) {
-    self.sequence = sequence
-  }
+  public init(sequence: AsyncSequenceType) { self.sequence = sequence }
 
   private func reduce() async throws -> [AsyncSequenceType.Element] {
     var elements = [AsyncSequenceType.Element]()
-    for try await element in sequence {
-      elements.append(element)
-    }
+    for try await element in sequence { elements.append(element) }
     currentElements = elements
     return elements
   }

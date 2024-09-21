@@ -28,7 +28,7 @@
 //
 
 struct RadiantDocs: TargetDependency {
-  var package: PackageDependency {
-    RadiantKit()
-  }
+    var package: PackageDependency {
+        RadiantKit()
+    }
 }

@@ -1,6 +1,6 @@
 //
 //  HubImage.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,9 +29,7 @@
 
 public import BushelHub
 import BushelMacOSCore
-
 import Foundation
-
 public import IPSWDownloads
 
 extension HubImage {

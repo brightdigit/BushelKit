@@ -1,6 +1,6 @@
 //
 //  NetworkingConfigurationAttachment.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,6 +27,4 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public enum NetworkingConfigurationAttachment: Codable, Sendable {
-  case nat
-}
+public enum NetworkingConfigurationAttachment: Codable, Sendable { case nat }

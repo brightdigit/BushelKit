@@ -1,6 +1,6 @@
 //
 //  SnapshotPaths.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 public import Foundation
 
 public struct SnapshotPaths {
@@ -38,7 +37,9 @@ public struct SnapshotPaths {
   public init(machinePathURL: URL) {
     self.init(
       snapshottingSourceURL: machinePathURL,
-      snapshotCollectionURL: machinePathURL.appendingPathComponent(URL.bushel.paths.snapshotsDirectoryName)
+      snapshotCollectionURL: machinePathURL.appendingPathComponent(
+        URL.bushel.paths.snapshotsDirectoryName
+      )
     )
   }
 

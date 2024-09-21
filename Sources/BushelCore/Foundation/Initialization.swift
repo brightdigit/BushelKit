@@ -1,6 +1,6 @@
 //
 //  Initialization.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,24 +29,19 @@
 
 import Foundation
 
-@MainActor
-public final class Initialization {
+@MainActor public final class Initialization {
   public static let begin = Initialization()
   private var isCompleted = false
 
   private init() {}
 
   public nonisolated func callAsFunction(_ closure: @MainActor @Sendable @escaping () -> Void) {
-    Task {
-      await self.execute(closure)
-    }
+    Task { await self.execute(closure) }
   }
 
   func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {
-    guard !isCompleted else {
-      return
-    }
-    self.isCompleted = true
+    guard !isCompleted else { return }
+    isCompleted = true
     closure()
   }
 }

@@ -1,6 +1,6 @@
 //
 //  Bushel.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,12 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import ArgumentParser
 public import BushelArgs
 import Foundation
 
-public import ArgumentParser
-
-@main
-public struct Bushel: BushelCommand {
-  public init() {}
-}
+@main public struct Bushel: BushelCommand { public init() {} }

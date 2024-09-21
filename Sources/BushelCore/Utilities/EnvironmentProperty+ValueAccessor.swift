@@ -1,6 +1,6 @@
 //
 //  EnvironmentProperty+ValueAccessor.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,27 +30,21 @@
 import Foundation
 
 extension EnvironmentProperty {
-  internal enum ValueAccessor: Sendable {
+  enum ValueAccessor: Sendable {
     case dictionary([String: String], key: String)
     case value(Value)
 
-    internal var value: Value {
-      switch self {
-      case let .value(value):
-        value
+    var value: Value {
+      switch self { case let .value(value): value
 
-      case let .dictionary(dictionary, key: key):
-        dictionary[key].flatMap(Value.init) ?? Value.default
+        case let .dictionary(dictionary, key: key):
+          dictionary[key].flatMap(Value.init) ?? Value.default
       }
     }
 
-    internal var dictionary: [String: String]? {
-      guard case let .dictionary(source, key: key) = self else {
-        return nil
-      }
-      guard let value = source[key] else {
-        return nil
-      }
+    var dictionary: [String: String]? {
+      guard case let .dictionary(source, key: key) = self else { return nil }
+      guard let value = source[key] else { return nil }
 
       return [key: value]
     }

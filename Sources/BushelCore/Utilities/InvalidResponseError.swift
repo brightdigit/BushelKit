@@ -1,6 +1,6 @@
 //
 //  InvalidResponseError.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -36,7 +36,7 @@ public import Foundation
   extension URLResponse: @unchecked Sendable {}
 
   extension URL: @unchecked Sendable {}
-  // swiftlint:enable file_types_order
+// swiftlint:enable file_types_order
 #endif
 
 public struct InvalidResponseError: LocalizedError {

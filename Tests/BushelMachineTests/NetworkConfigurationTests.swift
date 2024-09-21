@@ -30,10 +30,10 @@
 @testable import BushelMachine
 import XCTest
 
-internal final class NetworkConfigurationTests: XCTestCase {
-  internal func testDefaultInstanceOfTypeNat() {
-    let sut = NetworkConfiguration.default()
+final class NetworkConfigurationTests: XCTestCase {
+    func testDefaultInstanceOfTypeNat() {
+        let sut = NetworkConfiguration.default()
 
-    XCTAssertEqual(sut.attachment, .nat)
-  }
+        XCTAssertEqual(sut.attachment, .nat)
+    }
 }

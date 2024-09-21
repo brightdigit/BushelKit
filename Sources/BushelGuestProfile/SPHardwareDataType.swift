@@ -1,6 +1,6 @@
 //
 //  SPHardwareDataType.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -61,7 +61,20 @@ public struct SPHardwareDataType: Codable, Equatable, Sendable {
   public let serialNumber: String
 
   // swiftlint:disable:next line_length
-  public init(name: String, activationLockStatus: String, bootROMVersion: String, chipType: String, machineModel: String, machineName: String, numberProcessors: String, osLoaderVersion: String, physicalMemory: String, platformUUID: String, provisioningUDID: String, serialNumber: String) {
+  public init(
+    name: String,
+    activationLockStatus: String,
+    bootROMVersion: String,
+    chipType: String,
+    machineModel: String,
+    machineName: String,
+    numberProcessors: String,
+    osLoaderVersion: String,
+    physicalMemory: String,
+    platformUUID: String,
+    provisioningUDID: String,
+    serialNumber: String
+  ) {
     self.name = name
     self.activationLockStatus = activationLockStatus
     self.bootROMVersion = bootROMVersion

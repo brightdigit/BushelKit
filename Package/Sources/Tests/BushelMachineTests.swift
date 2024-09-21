@@ -28,9 +28,9 @@
 //
 
 struct BushelMachineTests: TestTarget {
-  var dependencies: any Dependencies {
-    BushelMachine()
-    BushelMachineWax()
-    BushelTestUtilities()
-  }
+    var dependencies: any Dependencies {
+        BushelMachine()
+        BushelMachineWax()
+        BushelTestUtilities()
+    }
 }

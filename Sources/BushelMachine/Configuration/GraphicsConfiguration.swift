@@ -1,6 +1,6 @@
 //
 //  GraphicsConfiguration.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -40,7 +40,5 @@ public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
 }
 
 extension GraphicsConfiguration {
-  public static func `default`() -> GraphicsConfiguration {
-    .init(displays: [.default()])
-  }
+  public static func `default`() -> GraphicsConfiguration { .init(displays: [.default()]) }
 }

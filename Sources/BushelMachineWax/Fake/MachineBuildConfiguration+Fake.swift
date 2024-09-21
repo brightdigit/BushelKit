@@ -1,6 +1,6 @@
 //
 //  MachineBuildConfiguration+Fake.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import BushelCoreWax
-
 public import BushelMachine
 import Foundation
 

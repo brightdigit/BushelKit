@@ -28,7 +28,7 @@
 //
 
 struct BushelLogging: Product, Target {
-  var dependencies: any Dependencies {
-    FelinePine()
-  }
+    var dependencies: any Dependencies {
+        FelinePine()
+    }
 }

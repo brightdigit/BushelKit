@@ -1,6 +1,6 @@
 //
 //  ObservationCollection.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -37,21 +37,13 @@
 
     public func append(_ observation: NSKeyValueObservation, withID id: UUID) {
       assert(observations[id] == nil)
-      self.observations[id] = observation
+      observations[id] = observation
     }
 
-    public func remove(withID id: UUID) -> Bool {
-      self.observations.removeValue(forKey: id) != nil
-    }
+    public func remove(withID id: UUID) -> Bool { observations.removeValue(forKey: id) != nil }
 
-    private func removeAll() {
-      self.observations.removeAll()
-    }
+    private func removeAll() { observations.removeAll() }
 
-    public nonisolated func clear() {
-      Task {
-        await self.removeAll()
-      }
-    }
+    public nonisolated func clear() { Task { await self.removeAll() } }
   }
 #endif

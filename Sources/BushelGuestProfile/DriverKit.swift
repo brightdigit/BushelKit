@@ -1,6 +1,6 @@
 //
 //  DriverKit.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,13 +32,9 @@ public import Foundation
 // MARK: - DriverKit
 
 public struct DriverKit: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case the214 = "21.4"
-  }
+  public enum CodingKeys: String, CodingKey { case the214 = "21.4" }
 
   public let the214: String
 
-  public init(the214: String) {
-    self.the214 = the214
-  }
+  public init(the214: String) { self.the214 = the214 }
 }

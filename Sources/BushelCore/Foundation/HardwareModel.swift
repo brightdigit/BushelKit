@@ -1,6 +1,6 @@
 //
 //  HardwareModel.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import Foundation
-
 import OperatingSystemVersion
 
 public struct HardwareModel: Codable, Equatable, Sendable {

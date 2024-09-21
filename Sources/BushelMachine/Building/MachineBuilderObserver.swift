@@ -1,6 +1,6 @@
 //
 //  MachineBuilderObserver.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,6 +29,4 @@
 
 public import Foundation
 
-public protocol MachineBuilderObserver: Sendable {
-  func getID() async -> UUID?
-}
+public protocol MachineBuilderObserver: Sendable { func getID() async -> UUID? }

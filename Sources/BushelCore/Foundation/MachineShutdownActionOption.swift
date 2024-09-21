@@ -1,6 +1,6 @@
 //
 //  MachineShutdownActionOption.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -27,6 +27,4 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public enum MachineShutdownActionOption: Int, Sendable {
-  case closeWindow = 1
-}
+public enum MachineShutdownActionOption: Int, Sendable { case closeWindow = 1 }

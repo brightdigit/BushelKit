@@ -1,6 +1,6 @@
 //
 //  LibraryImageFileComparator.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,9 +31,7 @@ public import Foundation
 
 public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
   public typealias Compared = LibraryImageFile
-  public enum Field: Equatable, Sendable {
-    case operatingSystemBuild
-  }
+  public enum Field: Equatable, Sendable { case operatingSystemBuild }
 
   public static let `default` = LibraryImageFileComparator()
 
@@ -57,19 +55,19 @@ public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
       let lhsBuild = lhs.metadata.buildVersion ?? ""
       let rhsBuild = rhs.metadata.buildVersion ?? ""
       return lhsBuild.caseInsensitiveCompare(rhsBuild)
-    } else if lhs.metadata.operatingSystemVersion < rhs.metadata.operatingSystemVersion {
+    }
+    else if lhs.metadata.operatingSystemVersion < rhs.metadata.operatingSystemVersion {
       return order == .forward ? .orderedAscending : .orderedDescending
-    } else {
+    }
+    else {
       return order == .forward ? .orderedDescending : .orderedAscending
     }
   }
 
-  public func compare(
-    _ lhs: BushelLibrary.LibraryImageFile,
-    _ rhs: BushelLibrary.LibraryImageFile
-  ) -> ComparisonResult {
-    switch self.field {
-    case .operatingSystemBuild:
+  public func compare(_ lhs: BushelLibrary.LibraryImageFile, _ rhs: BushelLibrary.LibraryImageFile)
+    -> ComparisonResult
+  {
+    switch field { case .operatingSystemBuild:
       Self.compareByOperatingSystemBuild(lhs, rhs, order: order)
     }
   }

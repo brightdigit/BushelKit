@@ -1,6 +1,6 @@
 //
 //  MachineError.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
-
 public import Foundation
 
 #if canImport(FoundationNetworking)
@@ -44,35 +42,23 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     case snapshot
   }
 
-  public static var loggingCategory: BushelLogging.Category {
-    .library
-  }
+  public static var loggingCategory: BushelLogging.Category { .library }
 
   public let innerError: (any Error)?
   public let details: Details
 
-  public var errorDescription: String? {
-    details.errorDescription(fromError: innerError)
-  }
+  public var errorDescription: String? { details.errorDescription(fromError: innerError) }
 
-  public var recoverySuggestion: String? {
-    details.recoverySuggestion(fromError: innerError)
-  }
+  public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
 
-  public var isRecoverable: Bool {
-    details.isRecoverable(fromError: innerError)
-  }
+  public var isRecoverable: Bool { details.isRecoverable(fromError: innerError) }
 
   public var isCritical: Bool {
-    switch self.details {
-    case .corruptedAt:
-      true
+    switch details { case .corruptedAt: true
 
-    case .session:
-      true
+      case .session: true
 
-    default:
-      false
+      default: false
     }
   }
 
@@ -81,15 +67,15 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     as _: TypedError.Type,
     details: MachineError.Details
   ) throws {
-    guard let innerError = innerError as? TypedError else {
-      throw innerError
-    }
+    guard let innerError = innerError as? TypedError else { throw innerError }
     self.init(details: details, innerError: innerError)
   }
 
   private init(details: MachineError.Details, innerError: (any Error)? = nil) {
     if let innerError = innerError as? MachineError {
-      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
+      assertionFailure(
+        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)"
+      )
       Self.logger.critical(
         // swiftlint:disable:next line_length
         "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"
@@ -104,7 +90,8 @@ extension MachineError {
   public static func fromSessionAction(error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
-    } else {
+    }
+    else {
       .init(details: .session, innerError: error)
     }
   }
@@ -112,11 +99,14 @@ extension MachineError {
   public static func fromExportSnapshotError(_ error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
-    } else if error is SnapshotError {
+    }
+    else if error is SnapshotError {
       MachineError(details: .snapshot, innerError: error)
-    } else if let error = error as? BookmarkError {
+    }
+    else if let error = error as? BookmarkError {
       .bookmarkError(error)
-    } else {
+    }
+    else {
       .fromDatabaseError(error)
     }
   }
@@ -124,9 +114,11 @@ extension MachineError {
   public static func fromSnapshotError(_ error: any Error) -> any Error {
     if error is MachineError {
       error
-    } else if error is SnapshotError {
+    }
+    else if error is SnapshotError {
       MachineError(details: .snapshot, innerError: error)
-    } else {
+    }
+    else {
       error
     }
   }

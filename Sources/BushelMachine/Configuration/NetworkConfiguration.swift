@@ -1,6 +1,6 @@
 //
 //  NetworkConfiguration.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -40,6 +40,5 @@ public struct NetworkConfiguration: Codable, Identifiable, Sendable {
 }
 
 extension NetworkConfiguration {
-  public static func `default`() -> NetworkConfiguration { .init(attachment: .nat)
-  }
+  public static func `default`() -> NetworkConfiguration { .init(attachment: .nat) }
 }

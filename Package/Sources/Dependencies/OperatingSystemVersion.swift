@@ -30,7 +30,7 @@
 import Foundation
 
 struct OperatingSystemVersion: PackageDependency, TargetDependency {
-  var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/OperatingSystemVersion.git", from: "1.0.0-beta.1")
-  }
+    var dependency: Package.Dependency {
+        .package(url: "https://github.com/brightdigit/OperatingSystemVersion.git", from: "1.0.0-beta.1")
+    }
 }

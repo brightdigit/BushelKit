@@ -1,6 +1,6 @@
 //
 //  MetadataLabel.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -36,8 +36,7 @@ public struct MetadataLabel: Equatable, Sendable {
   public let systemName: String
   public let versionName: String
 
-  @Sendable
-  public init(
+  @Sendable public init(
     operatingSystemLongName: String,
     defaultName: String,
     imageName: String,

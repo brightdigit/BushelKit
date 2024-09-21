@@ -28,10 +28,10 @@
 //
 
 struct BushelHubIPSW: Product, Target {
-  var dependencies: any Dependencies {
-    BushelHub()
-    IPSWDownloads()
-    BushelLogging()
-    BushelMacOSCore()
-  }
+    var dependencies: any Dependencies {
+        BushelHub()
+        IPSWDownloads()
+        BushelLogging()
+        BushelMacOSCore()
+    }
 }

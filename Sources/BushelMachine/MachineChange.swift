@@ -1,6 +1,6 @@
 //
 //  MachineChange.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 #if canImport(SwiftUI)
@@ -43,15 +42,9 @@ public struct MachineChange: Sendable {
     case networkDetatchedWithError(any Error)
 
     public var description: String {
-      switch self {
-      case .property:
-        "property"
-      case .guestDidStop:
-        "guestDidStop"
-      case .stopWithError:
-        "stopWithError"
-      case .networkDetatchedWithError:
-        "networkDetatchedWithError"
+      switch self { case .property: "property" case .guestDidStop: "guestDidStop"
+        case .stopWithError: "stopWithError"
+        case .networkDetatchedWithError: "networkDetatchedWithError"
       }
     }
   }

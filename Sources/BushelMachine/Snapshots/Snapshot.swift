@@ -1,6 +1,6 @@
 //
 //  Snapshot.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 public struct Snapshot: Codable, Identifiable, Sendable {
@@ -63,24 +62,22 @@ public struct Snapshot: Codable, Identifiable, Sendable {
 
 extension Snapshot {
   internal struct OperatingSystem: OperatingSystemInstalled {
-    internal let operatingSystemVersion: OperatingSystemVersion
-    internal let buildVersion: String?
+    let operatingSystemVersion: OperatingSystemVersion
+    let buildVersion: String?
 
-    internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
+    init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
       self.operatingSystemVersion = operatingSystemVersion
       self.buildVersion = buildVersion
     }
 
-    internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
-      guard let operatingSystemVersion else {
-        return nil
-      }
+    init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
+      guard let operatingSystemVersion else { return nil }
       self.init(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
     }
   }
 
   public var operatingSystemInstalled: (any OperatingSystemInstalled)? {
-    OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
+    OperatingSystem(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
   }
 
   public func updatingWith(name newName: String, notes newNotes: String) -> Snapshot {

@@ -30,18 +30,18 @@
 @testable import BushelCore
 import XCTest
 
-internal final class MachineBuildRequestTests: XCTestCase {
-  func testNillMachineRestoreImageIdentifier() {
-    let sut = MachineBuildRequest(restoreImage: nil)
+final class MachineBuildRequestTests: XCTestCase {
+    func testNillMachineRestoreImageIdentifier() {
+        let sut = MachineBuildRequest(restoreImage: nil)
 
-    XCTAssertNil(sut.restoreImage)
-  }
+        XCTAssertNil(sut.restoreImage)
+    }
 
-  func testNotNillMachineRestoreImageIdentifier() {
-    let restoreImage = InstallerImageIdentifier.sampleInstallerIdentifier
-    let sut = MachineBuildRequest(restoreImage: restoreImage)
+    func testNotNillMachineRestoreImageIdentifier() {
+        let restoreImage = InstallerImageIdentifier.sampleInstallerIdentifier
+        let sut = MachineBuildRequest(restoreImage: restoreImage)
 
-    XCTAssertNotNil(sut.restoreImage)
-    XCTAssertEqual(sut.restoreImage, restoreImage)
-  }
+        XCTAssertNotNil(sut.restoreImage)
+        XCTAssertEqual(sut.restoreImage, restoreImage)
+    }
 }

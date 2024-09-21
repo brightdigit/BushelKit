@@ -1,6 +1,6 @@
 //
 //  ReleaseMetadata.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -28,24 +28,18 @@
 //
 
 public import BushelCore
-
 public import BushelMachine
-
 import Foundation
 
 public struct ReleaseMetadata: Identifiable, Equatable {
   public let metadata: any InstallerRelease
   public let images: [any InstallerImage]
 
-  public var id: Int {
-    metadata.majorVersion
-  }
+  public var id: Int { metadata.majorVersion }
 
-  public var isCustom: Bool {
-    self.metadata.isCustom
-  }
+  public var isCustom: Bool { metadata.isCustom }
 
-  internal init(metadata: any InstallerRelease, images: [any InstallerImage]) {
+  init(metadata: any InstallerRelease, images: [any InstallerImage]) {
     self.metadata = metadata
     self.images = images
   }

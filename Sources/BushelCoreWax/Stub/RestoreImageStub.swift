@@ -1,6 +1,6 @@
 //
 //  RestoreImageStub.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,6 +29,4 @@
 
 import Foundation
 
-public struct RestoreImageStub: Sendable {
-  public init() {}
-}
+public struct RestoreImageStub: Sendable { public init() {} }

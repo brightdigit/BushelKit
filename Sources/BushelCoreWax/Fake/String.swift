@@ -1,6 +1,6 @@
 //
 //  String.swift
-//  BushelKit
+//  Sublimation
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -33,16 +33,20 @@ import Foundation
 
 extension String {
   // swiftlint:disable:next line_length
-  public static let restoreImageIdentiferSample: Self = "C90C2C17-7CA1-466C-93C0-D73591D65C94:2480CC13-8CFE-4CB6-9FBF-FFD2157B8995"
+  public static let restoreImageIdentiferSample: Self =
+    "C90C2C17-7CA1-466C-93C0-D73591D65C94:2480CC13-8CFE-4CB6-9FBF-FFD2157B8995"
   public static let imageIDSample: Self = "2480CC13-8CFE-4CB6-9FBF-FFD2157B8995"
   public static let libraryBookmarkIDSample: Self = UUID.bookmarkIDSample.uuidString
 
   public static let lowerCaseAlphaNumberic = "abcdefghijklmnopqrstuvwxyz0123456789"
 
   public static func randomLowerCaseAlphaNumberic(ofLength length: Int = 32) -> String {
-    String((1 ... length).map { _ in
-      // swiftlint:disable:next force_unwrapping
-      lowerCaseAlphaNumberic.randomElement()!
-    })
+    String(
+      (1...length)
+        .map { _ in
+          // swiftlint:disable:next force_unwrapping
+          lowerCaseAlphaNumberic.randomElement()!
+        }
+    )
   }
 }
