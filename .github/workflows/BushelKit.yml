@@ -43,17 +43,18 @@ jobs:
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}    
   build-macos:
     name: Build on macOS
-    runs-on: ${{ matrix.os }}
+#    runs-on: ${{ matrix.os }}
+    runs-on: [self-hosted, macOS]
     if: "!contains(github.event.head_commit.message, 'ci skip')"
-    strategy:
-      matrix:
-        include:
-          - xcode: "/Applications/Xcode_16.1.app"
-            os: macos-14
-            iOSVersion: "18.1"
-            watchOSVersion: "11.0"
-            watchName: "Apple Watch Series 9 (41mm)"
-            iPhoneName: "iPhone 15"
+    # strategy:
+    #   matrix:
+    #     include:
+    #       - xcode: "/Applications/Xcode_16.1.app"
+    #         os: macos-14
+    #         iOSVersion: "18.1"
+    #         watchOSVersion: "11.0"
+    #         watchName: "Apple Watch Series 9 (41mm)"
+    #         iPhoneName: "iPhone 15"
     steps:
       - uses: actions/checkout@v4
       - name: Cache swift package modules
