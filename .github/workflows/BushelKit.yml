@@ -81,10 +81,10 @@ jobs:
             ${{ runner.os }}-
       - name: Set Xcode Version
         run: sudo /usr/bin/xcode-select --switch /Applications/Xcode.app       
-      - name: Install mint
-        run: |
-          brew update
-          brew install mint
+      # - name: Install mint
+      #   run: |
+      #     brew update
+      #     brew install mint
       - name: Build
         run: swift build
       - name: Run Swift Package tests
