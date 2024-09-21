@@ -50,7 +50,7 @@
       }
     }
 
-    @available(iOS, unavailable) static func addOfItem(
+    @available(iOS, unavailable) @available(watchOS, unavailable) static func addOfItem(
       at url: URL,
       withContentsOf contentsURL: URL,
       options: SnapshotOptions
