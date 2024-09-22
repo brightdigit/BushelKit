@@ -586,7 +586,7 @@ extension UInt128: ExpressibleByIntegerLiteral {
 }
 
 // MARK: - CustomStringConvertible Conformance
-
+// swift-format-ignore
 extension UInt128: CustomStringConvertible {
   // MARK: Instance Properties
 

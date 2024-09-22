@@ -145,11 +145,13 @@ final class ReleaseCollectionTests: XCTestCase {
     )
 
     XCTAssertEqual(
-      actualReleaseCollection.containsCustomVersions, parameters.customReleaseCount > 0)
+      actualReleaseCollection.containsCustomVersions, parameters.customReleaseCount > 0
+    )
     XCTAssertEqual(actualReleaseCollection.customVersionsAllowed, expectedCustomVersionsAllowed)
 
     XCTAssertEqual(
-      actualReleaseCollection.customVersionsAllowed, releaseCollection.customVersionsAllowed)
+      actualReleaseCollection.customVersionsAllowed, releaseCollection.customVersionsAllowed
+    )
     XCTAssertEqual(actualReleaseCollection.prefix, releaseCollection.prefix)
     XCTAssertEqual(actualReleaseCollection.firstMajorVersion, parameters.expectedFirstMajorVersion)
     XCTAssertEqual(actualCustomVersions, expectedCustomVersions)

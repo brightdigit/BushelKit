@@ -171,5 +171,3 @@ extension URL {
     fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
   }
 }
-
-// swiftlint:disable line_length

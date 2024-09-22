@@ -31,6 +31,7 @@
   // swiftlint:disable all
   public import Foundation
 
+  // swift-format-ignore
   /// A comparison algorithm for a given type.
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   public protocol SortComparator<Compared>: Hashable {
