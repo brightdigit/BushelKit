@@ -27,25 +27,26 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
 
+@testable import BushelCore
+
 final class FormattersTests: XCTestCase {
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
-        return formatter
-    }()
+  private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+    return formatter
+  }()
 
-    func testLastModifiedDateFormate() {
-        let sut = Formatters.lastModifiedDateFormatter
+  func testLastModifiedDateFormate() {
+    let sut = Formatters.lastModifiedDateFormatter
 
-        let now = Date.now
+    let now = Date.now
 
-        let expectedFormattedNow = dateFormatter.string(from: now)
+    let expectedFormattedNow = dateFormatter.string(from: now)
 
-        let actualFormattedNow = sut.string(from: now)
+    let actualFormattedNow = sut.string(from: now)
 
-        XCTAssertEqual(actualFormattedNow, expectedFormattedNow)
-    }
+    XCTAssertEqual(actualFormattedNow, expectedFormattedNow)
+  }
 }

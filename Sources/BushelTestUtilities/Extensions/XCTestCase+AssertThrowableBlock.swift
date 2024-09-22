@@ -1,6 +1,6 @@
 //
 //  XCTestCase+AssertThrowableBlock.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -34,8 +34,7 @@ extension XCTestCase {
     expectedError: T,
     _ throwableBlock: () async throws -> Any
   ) async {
-    do { _ = try await throwableBlock() }
-    catch {
+    do { _ = try await throwableBlock() } catch {
       guard let actualError = error as? T, actualError == expectedError else {
         XCTFail("Expected error of type \(expectedError)")
         return

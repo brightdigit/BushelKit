@@ -1,6 +1,6 @@
 //
 //  URL.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,7 +31,7 @@ public import Foundation
 
 extension URL {
   // swiftlint:disable:next force_unwrapping
-  public static let bushelappURL: URL = .init(string: "https://getbushel.app")!
+  public static let bushelWebSite = URL(string: "https://getbushel.app")!
   // swiftlint:disable:next force_unwrapping
   public static let homeDirectory = URL(string: NSHomeDirectory())!
   // swiftlint:disable:next force_unwrapping

@@ -1,6 +1,6 @@
 //
 //  IPv6Address.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -61,8 +61,7 @@ public typealias IPv6Address = UInt128
       if index < 4 {
         high <<= 16
         high |= UInt64(part, radix: 16)!
-      }
-      else {
+      } else {
         low <<= 16
         low |= UInt64(part, radix: 16)!
       }

@@ -30,12 +30,12 @@
 import BushelFactory
 
 struct MockCalculationParameters: CalculationParameters {
-    let expectedIndex: Int
-    let indexRange: ClosedRange<Int>
+  let expectedIndex: Int
+  let indexRange: ClosedRange<Int>
 
-    let valueRange: ClosedRange<Int>
+  let valueRange: ClosedRange<Int>
 
-    func indexFor(value _: Int) -> Int {
-        expectedIndex
-    }
+  func indexFor(value _: Int) -> Int {
+    expectedIndex
+  }
 }

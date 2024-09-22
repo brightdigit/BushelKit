@@ -27,23 +27,24 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
 
+@testable import BushelCore
+
 final class TransformationTests: XCTestCase {
-    private static func intToString(_ value: Int) -> String {
-        "\(value)"
+  private static func intToString(_ value: Int) -> String {
+    "\(value)"
+  }
+
+  func testTransformAsFunction() {
+    let sut = Transformation<Int, String> {
+      Self.intToString($0)
     }
 
-    func testTransformAsFunction() {
-        let sut = Transformation<Int, String> {
-            Self.intToString($0)
-        }
+    let value = 3
+    let expectedValue = Self.intToString(value)
+    let actualValue = sut(value)
 
-        let value = 3
-        let expectedValue = Self.intToString(value)
-        let actualValue = sut(value)
-
-        XCTAssertEqual(actualValue, expectedValue)
-    }
+    XCTAssertEqual(actualValue, expectedValue)
+  }
 }

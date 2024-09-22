@@ -27,45 +27,46 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import BushelCoreWax
 import XCTest
 
+@testable import BushelCore
+
 final class FileManagerTests: XCTestCase {
-    // Skipped, because cannot be tested.
-    //  func testSuccessfulCreateFile() throws {
-//    let sut = FileManager.default
-//
-//    let dirURL = URL.temporaryDirectory
-//    let fileURL = dirURL.appendingPathComponent("file.txt")
-//
-//    try sut.createFile(atPath: fileURL.absoluteString, withSize: 1000)
-    //  }
+  // Skipped, because cannot be tested.
+  //  func testSuccessfulCreateFile() throws {
+  //    let sut = FileManager.default
+  //
+  //    let dirURL = URL.temporaryDirectory
+  //    let fileURL = dirURL.appendingPathComponent("file.txt")
+  //
+  //    try sut.createFile(atPath: fileURL.absoluteString, withSize: 1000)
+  //  }
 
-    func testDirectoryExists() {
-        let sut = FileManager.default
+  func testDirectoryExists() {
+    let sut = FileManager.default
 
-        let dirURL = URL.temporaryDir
+    let dirURL = URL.temporaryDir
 
-        XCTAssertEqual(sut.directoryExists(at: dirURL), .directoryExists)
-    }
+    XCTAssertEqual(sut.directoryExists(at: dirURL), .directoryExists)
+  }
 
-    func testNotExists() {
-        let sut = FileManager.default
+  func testNotExists() {
+    let sut = FileManager.default
 
-        let fileURL = URL.temporaryDir.appendingPathComponent("file.txt")
+    let fileURL = URL.temporaryDir.appendingPathComponent("file.txt")
 
-        XCTAssertEqual(sut.directoryExists(at: fileURL), .notExists)
-    }
+    XCTAssertEqual(sut.directoryExists(at: fileURL), .notExists)
+  }
 
-    //  // Skipped, because cannot be tested.
-    //  func testFileExists() {
-//    let sut = FileManager.default
-//
-//    let fileURL = URL.temporaryDirectory.appendingPathComponent("file.txt")
-//
-//    sut.createFile(atPath: fileURL.absoluteString, contents: nil, attributes: nil)
-//
-//    XCTAssertEqual(sut.directoryExists(at: fileURL), .fileExists)
-    //  }
+  //  // Skipped, because cannot be tested.
+  //  func testFileExists() {
+  //    let sut = FileManager.default
+  //
+  //    let fileURL = URL.temporaryDirectory.appendingPathComponent("file.txt")
+  //
+  //    sut.createFile(atPath: fileURL.absoluteString, contents: nil, attributes: nil)
+  //
+  //    XCTAssertEqual(sut.directoryExists(at: fileURL), .fileExists)
+  //  }
 }

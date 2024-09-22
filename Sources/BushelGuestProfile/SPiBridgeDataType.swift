@@ -1,6 +1,6 @@
 //
 //  SPiBridgeDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -60,7 +60,6 @@ public struct SPiBridgeDataType: Codable, Equatable, Sendable {
   public let ibridgeSbSsv: String
   public let ibridgeSecureBoot: String
 
-  // swiftlint:disable:next line_length
   public init(
     ibridgeBootUUID: String,
     ibridgeBuild: String,

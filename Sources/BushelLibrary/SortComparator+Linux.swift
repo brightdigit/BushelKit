@@ -1,6 +1,6 @@
 //
 //  SortComparator+Linux.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -71,15 +71,16 @@
       let isForward = try container.decode(Bool.self)
       if isForward {
         self = .forward
-      }
-      else {
+      } else {
         self = .reverse
       }
     }
 
     public func encode(to encoder: any Encoder) throws {
       var container = encoder.singleValueContainer()
-      switch self { case .forward: try container.encode(true) case .reverse:
+      switch self {
+      case .forward: try container.encode(true)
+      case .reverse:
         try container.encode(false)
       }
     }

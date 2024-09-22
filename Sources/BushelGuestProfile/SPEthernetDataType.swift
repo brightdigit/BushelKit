@@ -1,6 +1,6 @@
 //
 //  SPEthernetDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -60,7 +60,6 @@ public struct SPEthernetDataType: Codable, Equatable, Sendable {
   public let spethernetSubsystemVendorID: String
   public let spethernetVendorID: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     spethernetAvbSupport: String,

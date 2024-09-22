@@ -1,6 +1,6 @@
 //
 //  SPDeveloperToolsDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -46,7 +46,6 @@ public struct SPDeveloperToolsDataType: Codable, Equatable, Sendable {
   public let spdevtoolsSdks: SpdevtoolsSdks
   public let spdevtoolsVersion: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     spdevtoolsApps: SpdevtoolsApps,

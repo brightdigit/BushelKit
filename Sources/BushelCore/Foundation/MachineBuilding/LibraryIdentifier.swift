@@ -1,6 +1,6 @@
 //
 //  LibraryIdentifier.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -34,17 +34,17 @@ public enum LibraryIdentifier: CustomStringConvertible, Hashable, Sendable {
   case bookmarkID(UUID)
 
   public var description: String {
-    switch self { case let .bookmarkID(id): id.uuidString
+    switch self {
+    case let .bookmarkID(id): id.uuidString
 
-      case let .url(url): url.path
+    case let .url(url): url.path
     }
   }
 
   public init(string: String) {
     if let id = UUID(uuidString: string) {
       self = .bookmarkID(id)
-    }
-    else {
+    } else {
       self = .url(.init(fileURLWithPath: string))
     }
   }

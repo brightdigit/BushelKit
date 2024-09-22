@@ -1,16 +1,16 @@
 {
   "fileScopedDeclarationPrivacy" : {
-    "accessLevel" : "fileprivate"
+    "accessLevel" : "private"
   },
+  "indentConditionalCompilationBlocks" : true,
+  "indentSwitchCaseLabels" : false,
   "indentation" : {
     "spaces" : 2
   },
-  "indentConditionalCompilationBlocks" : true,
-  "indentSwitchCaseLabels" : true,
-  "lineBreakAroundMultilineExpressionChainComponents" : true,
-  "lineBreakBeforeControlFlowKeywords" : true,
-  "lineBreakBeforeEachArgument" : true,
-  "lineBreakBeforeEachGenericRequirement" : true,
+  "lineBreakAroundMultilineExpressionChainComponents" : false,
+  "lineBreakBeforeControlFlowKeywords" : false,
+  "lineBreakBeforeEachArgument" : false,
+  "lineBreakBeforeEachGenericRequirement" : false,
   "lineLength" : 100,
   "maximumBlankLines" : 1,
   "multiElementCollectionTrailingCommas" : true,
@@ -20,13 +20,13 @@
     ]
   },
   "prioritizeKeepingFunctionOutputTogether" : false,
-  "respectsExistingLineBreaks" : false,
+  "respectsExistingLineBreaks" : true,
   "rules" : {
     "AllPublicDeclarationsHaveDocumentation" : true,
     "AlwaysUseLiteralForEmptyCollectionInit" : false,
     "AlwaysUseLowerCamelCase" : true,
     "AmbiguousTrailingClosureOverload" : true,
-    "BeginDocumentationCommentWithOneLineSummary" : false,
+    "BeginDocumentationCommentWithOneLineSummary" : true,
     "DoNotUseSemicolons" : true,
     "DontRepeatTypeInStaticProperties" : true,
     "FileScopedDeclarationPrivacy" : true,
@@ -42,7 +42,7 @@
     "NoCasesWithOnlyFallthrough" : true,
     "NoEmptyTrailingClosureParentheses" : true,
     "NoLabelsInCasePatterns" : true,
-    "NoLeadingUnderscores" : false,
+    "NoLeadingUnderscores" : true,
     "NoParensAroundConditions" : true,
     "NoPlaygroundLiterals" : true,
     "NoVoidReturnOnFunctionSignature" : true,
@@ -56,7 +56,7 @@
     "TypeNamesShouldBeCapitalized" : true,
     "UseEarlyExits" : false,
     "UseExplicitNilCheckInConditions" : true,
-    "UseLetInEveryBoundCaseVariable" : true,
+    "UseLetInEveryBoundCaseVariable" : false,
     "UseShorthandTypeNames" : true,
     "UseSingleLinePropertyGetter" : true,
     "UseSynthesizedInitializer" : true,

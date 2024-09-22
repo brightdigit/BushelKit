@@ -32,28 +32,28 @@ import BushelSessionCore
 import Foundation
 
 class MockService: SessionService {
-    enum Error: Swift.Error {
-        case wrongMessage
-        case wrongResponse
-    }
+  enum Error: Swift.Error {
+    case wrongMessage
+    case wrongResponse
+  }
 
-    var messagesSent = [any Message]()
-    var reason: ServiceCancelReason?
+  var messagesSent = [any Message]()
+  var reason: ServiceCancelReason?
 
-    func sendMessage<MessageType>(
-        _ message: MessageType
-    ) async throws -> MessageType.ResponseType where MessageType: Message {
-        messagesSent.append(message)
-        guard let message = message as? MockMessage else {
-            throw Error.wrongMessage
-        }
-        guard let response = message.response as? MessageType.ResponseType else {
-            throw Error.wrongResponse
-        }
-        return response
+  func sendMessage<MessageType>(
+    _ message: MessageType
+  ) async throws -> MessageType.ResponseType where MessageType: Message {
+    messagesSent.append(message)
+    guard let message = message as? MockMessage else {
+      throw Error.wrongMessage
     }
+    guard let response = message.response as? MessageType.ResponseType else {
+      throw Error.wrongResponse
+    }
+    return response
+  }
 
-    func cancel(reason: ServiceCancelReason) {
-        self.reason = reason
-    }
+  func cancel(reason: ServiceCancelReason) {
+    self.reason = reason
+  }
 }

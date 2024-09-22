@@ -1,6 +1,6 @@
 //
 //  NSFileVersion.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -70,8 +70,9 @@
       -> NSFileVersion
     {
       let unarchiver: NSKeyedUnarchiver
-      do { unarchiver = try NSKeyedUnarchiver(forReadingFrom: identifierData) }
-      catch { throw SnapshotError.innerError(error) }
+      do { unarchiver = try NSKeyedUnarchiver(forReadingFrom: identifierData) } catch {
+        throw SnapshotError.innerError(error)
+      }
       unarchiver.requiresSecureCoding = false
       guard let persistentIdentifier = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey)
       else { throw SnapshotError.unarchiveError(identifierData) }

@@ -1,6 +1,6 @@
 //
 //  FileVersionSnapshotter.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -102,8 +102,7 @@
         )
         try fileVersion.replaceItem(at: paths.snapshottingSourceURL)
         try fileManager.write(oldSnapshots, to: paths.snapshotCollectionURL)
-      }
-      catch { throw SnapshotError.inner(error: error) }
+      } catch { throw SnapshotError.inner(error: error) }
       await machine.finishedWithSnapshot(snapshot, by: .restored)
     }
 

@@ -1,6 +1,6 @@
 //
 //  SpairportSoftwareInformation.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -50,7 +50,6 @@ public struct SpairportSoftwareInformation: Codable, Equatable, Sendable {
   public let spairportProfilerVersion: String
   public let spairportUtilityVersion: String
 
-  // swiftlint:disable:next line_length
   public init(
     spairportCorewlanVersion: String,
     spairportCorewlankitVersion: String,

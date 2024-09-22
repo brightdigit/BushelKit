@@ -1,6 +1,6 @@
 //
 //  MachineConfiguration+Fake.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -33,7 +33,7 @@ import Foundation
 extension MachineConfiguration {
   public static let sampleMachineConfiguration: Self = .init(
     restoreImageFile: .sampleInstallerIdentifier,
-    vmSystemID: .sampleVMSystemID,
+    vmSystemID: .sample,
     snapshotSystemID: .sampleSnapshotSystemID,
     operatingSystemVersion: .init(majorVersion: 1, minorVersion: 0, patchVersion: 0),
     storage: [.init(label: "", size: MachineStorageSpecification.defaultSize)]

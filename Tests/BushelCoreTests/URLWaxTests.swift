@@ -27,19 +27,20 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
 
+@testable import BushelCore
+
 final class URLWaxTests: XCTestCase {
-    func testRandomHTTP() {
-        let sut = URL.randomHTTP()
+  func testRandomHTTP() {
+    let sut = URL.randomHTTP()
 
-        XCTAssertTrue(URL.urlsString.contains(sut.absoluteString))
-    }
+    XCTAssertTrue(URL.urlsString.contains(sut.absoluteString))
+  }
 
-    func testRandomFile() {
-        let sut = URL.randomFile()
+  func testRandomFile() {
+    let sut = URL.randomFile()
 
-        XCTAssertTrue(sut.isFileURL)
-    }
+    XCTAssertTrue(sut.isFileURL)
+  }
 }

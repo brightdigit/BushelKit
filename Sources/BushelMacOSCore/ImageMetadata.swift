@@ -1,6 +1,6 @@
 //
 //  ImageMetadata.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -81,8 +81,7 @@
           lastModified: lastModified,
           vzRestoreImage: vzRestoreImage
         )
-      }
-      else {
+      } else {
         let headers = try await vzRestoreImage.headers()
         try self.init(vzRestoreImage: vzRestoreImage, headers: headers, from: url)
       }

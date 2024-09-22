@@ -1,6 +1,6 @@
 //
 //  SpecificationConfiguration.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -142,11 +142,9 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
 
     if calculatedMemoryValue == value {
       return mid
-    }
-    else if calculatedMemoryValue < value {
+    } else if calculatedMemoryValue < value {
       return binarySearch(for: value, using: using, low: mid + 1, high: high)
-    }
-    else {
+    } else {
       return binarySearch(for: value, using: using, low: low, high: mid - 1)
     }
   }

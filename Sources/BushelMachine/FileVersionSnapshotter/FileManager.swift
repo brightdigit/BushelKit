@@ -1,6 +1,6 @@
 //
 //  FileManager.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -45,8 +45,7 @@
         directoryExists(at: snapshotCollectionURL) == .directoryExists
       if snapshotCollectionDirectoryExists {
         snapshotFileDataDictionary = try dataDictionary(directoryAt: snapshotCollectionURL)
-      }
-      else {
+      } else {
         snapshotFileDataDictionary = [:]
       }
       let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value })
@@ -57,8 +56,7 @@
 
       for version in versions {
         let persistentIdentifierData: Data
-        do { persistentIdentifierData = try version.persistentIdentifierData }
-        catch {
+        do { persistentIdentifierData = try version.persistentIdentifierData } catch {
           logger.error("Unable to fetch persistentIdentifierData: \(error.localizedDescription)")
           continue
         }
@@ -66,8 +64,7 @@
         let files = dataLookup[persistentIdentifierData]
         if let fileToKeep = files?.first {
           filesToKeep.append(fileToKeep)
-        }
-        else {
+        } else {
           versionsToAdd.append(version)
         }
       }

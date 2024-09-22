@@ -1,6 +1,6 @@
 //
 //  MachineError.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -51,14 +51,13 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
 
   public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
 
-  
-
   public var isCritical: Bool {
-    switch details { case .corruptedAt: true
+    switch details {
+    case .corruptedAt: true
 
-      case .session: true
+    case .session: true
 
-      default: false
+    default: false
     }
   }
 
@@ -90,8 +89,7 @@ extension MachineError {
   public static func fromSessionAction(error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
-    }
-    else {
+    } else {
       .init(details: .session, innerError: error)
     }
   }
@@ -99,14 +97,11 @@ extension MachineError {
   public static func fromExportSnapshotError(_ error: any Error) -> MachineError {
     if let error = error as? MachineError {
       error
-    }
-    else if error is SnapshotError {
+    } else if error is SnapshotError {
       MachineError(details: .snapshot, innerError: error)
-    }
-    else if let error = error as? BookmarkError {
+    } else if let error = error as? BookmarkError {
       .bookmarkError(error)
-    }
-    else {
+    } else {
       .fromDatabaseError(error)
     }
   }
@@ -114,11 +109,9 @@ extension MachineError {
   public static func fromSnapshotError(_ error: any Error) -> any Error {
     if error is MachineError {
       error
-    }
-    else if error is SnapshotError {
+    } else if error is SnapshotError {
       MachineError(details: .snapshot, innerError: error)
-    }
-    else {
+    } else {
       error
     }
   }

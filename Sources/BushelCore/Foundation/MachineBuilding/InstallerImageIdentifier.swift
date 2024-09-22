@@ -1,6 +1,6 @@
 //
 //  InstallerImageIdentifier.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -51,8 +51,7 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
 
     #warning("what does a nullable libraryID mean, maybe this case needs to be logged")
     let libraryID: LibraryIdentifier? =
-      if components.count == 2 { LibraryIdentifier(string: components[0]) }
-      else { nil }
+      if components.count == 2 { LibraryIdentifier(string: components[0]) } else { nil }
     self.init(imageID: imageID, libraryID: libraryID)
   }
 

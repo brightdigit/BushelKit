@@ -1,6 +1,6 @@
 //
 //  RemoveImageFailure.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -34,7 +34,9 @@ public enum RemoveImageFailure: CustomStringConvertible {
   case notSupported
 
   public var description: String {
-    switch self { case .notFound: "Image Not Found" case .notSupported: "Removal Not Support by DB"
+    switch self {
+    case .notFound: "Image Not Found"
+    case .notSupported: "Removal Not Support by DB"
     }
   }
 }

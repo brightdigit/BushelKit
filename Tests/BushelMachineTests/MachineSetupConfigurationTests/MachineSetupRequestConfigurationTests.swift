@@ -29,23 +29,24 @@
 
 import BushelCore
 import BushelCoreWax
-@testable import BushelMachine
 import BushelMachineWax
 import XCTest
 
+@testable import BushelMachine
+
 final class MachineSetupRequestConfigurationTests: XCTestCase {
-    func testNilMachineBuildRequest() {
-        let sut = MachineSetupConfiguration(request: nil)
+  func testNilMachineBuildRequest() {
+    let sut = MachineSetupConfiguration(request: nil)
 
-        XCTAssertNil(sut.libraryID)
-        XCTAssertNil(sut.restoreImageID)
-    }
+    XCTAssertNil(sut.libraryID)
+    XCTAssertNil(sut.restoreImageID)
+  }
 
-    func testActualMachineBuildRequest() {
-        let request = MachineBuildRequest(restoreImage: .sampleInstallerIdentifier)
-        let sut = MachineSetupConfiguration(request: request)
+  func testActualMachineBuildRequest() {
+    let request = MachineBuildRequest(restoreImage: .sampleInstallerIdentifier)
+    let sut = MachineSetupConfiguration(request: request)
 
-        XCTAssertEqual(sut.libraryID, request.restoreImage?.libraryID)
-        XCTAssertEqual(sut.restoreImageID, request.restoreImage?.imageID)
-    }
+    XCTAssertEqual(sut.libraryID, request.restoreImage?.libraryID)
+    XCTAssertEqual(sut.restoreImageID, request.restoreImage?.imageID)
+  }
 }

@@ -1,6 +1,6 @@
 //
 //  Version.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -97,8 +97,7 @@ extension Version {
     prereleaseLabel: PrereleaseLabel? = nil
   ) {
     let marketingSemVer: Semver
-    do { marketingSemVer = try Semver(string: marketingVersionText) }
-    catch {
+    do { marketingSemVer = try Semver(string: marketingVersionText) } catch {
       assertionFailure(error: error)
       return nil
     }
@@ -164,8 +163,7 @@ extension Version {
     let prereleaseLabel: PrereleaseLabel? =
       if let prereleaseDictionary = objectForInfoDictionaryKey(.prelease) as? [String: Any] {
         .init(dictionary: prereleaseDictionary)
-      }
-      else { nil }
+      } else { nil }
 
     self.init(
       marketingVersionText: marketingVersionText,

@@ -30,9 +30,9 @@
 import Foundation
 
 struct MockError: Error {
-    let id: UUID
+  let id: UUID
 
-    init(id: UUID = .init()) {
-        self.id = id
-    }
+  init(id: UUID = .init()) {
+    self.id = id
+  }
 }

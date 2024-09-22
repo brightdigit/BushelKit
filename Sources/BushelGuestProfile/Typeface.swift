@@ -1,6 +1,6 @@
 //
 //  Typeface.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -70,7 +70,6 @@ public struct Typeface: Codable, Equatable, Sendable {
   public let version: String
   public let description: String?
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     copyProtected: PrivateFramework,

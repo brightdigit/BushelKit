@@ -30,8 +30,8 @@
 import Foundation
 
 struct MockResponse: Codable, Equatable {
-    let id: UUID
-    init(id: UUID = .init()) {
-        self.id = id
-    }
+  let id: UUID
+  init(id: UUID = .init()) {
+    self.id = id
+  }
 }

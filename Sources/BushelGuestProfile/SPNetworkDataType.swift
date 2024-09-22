@@ -1,6 +1,6 @@
 //
 //  SPNetworkDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -60,7 +60,6 @@ public struct SPNetworkDataType: Codable, Equatable, Sendable {
   public let spnetworkServiceOrder: Int
   public let type: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     dhcp: DHCP?,

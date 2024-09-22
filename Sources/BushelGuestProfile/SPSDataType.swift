@@ -1,6 +1,6 @@
 //
 //  SPSDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -52,7 +52,6 @@ public struct SPSDataType: Codable, Equatable, Sendable {
   public let info: String?
   public let privateFramework: PrivateFramework?
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     archKind: ArchKind?,

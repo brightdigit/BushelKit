@@ -1,6 +1,6 @@
 //
 //  CGSize.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -39,8 +39,7 @@ extension CGSize {
     let calculatedWidth = remainingHeight * aspectRatio
     if calculatedWidth < minimumWidth {
       return .init(width: minimumWidth, height: minimumWidth / aspectRatio + additionalHeight)
-    }
-    else {
+    } else {
       return .init(width: calculatedWidth, height: remainingHeight + additionalHeight)
     }
   }

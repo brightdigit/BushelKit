@@ -31,16 +31,16 @@ import BushelMessageCore
 import Foundation
 
 struct MockMessage: Message, Equatable {
-    typealias ResponseType = MockResponse
+  typealias ResponseType = MockResponse
 
-    let id: UUID
-    let response: MockResponse
-    init(id: UUID = .init(), response: MockResponse = .init()) {
-        self.id = id
-        self.response = response
-    }
+  let id: UUID
+  let response: MockResponse
+  init(id: UUID = .init(), response: MockResponse = .init()) {
+    self.id = id
+    self.response = response
+  }
 
-    func run(from _: any ServiceInterface) async throws -> MockResponse {
-        response
-    }
+  func run(from _: any ServiceInterface) async throws -> MockResponse {
+    response
+  }
 }

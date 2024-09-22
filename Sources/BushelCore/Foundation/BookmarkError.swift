@@ -1,6 +1,6 @@
 //
 //  BookmarkError.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -50,13 +50,11 @@ extension BookmarkError {
     BookmarkError(innerError: nil, details: .notFound(identifier))
   }
 
-
   public static func accessDeniedError(_ error: any Error, at url: URL) -> BookmarkError {
     let nsError = error as NSError
     if nsError.code == NSFileReadNoSuchFileError {
       return BookmarkError(innerError: error, details: .fileDoesNotExistAt(url))
-    }
-    else {
+    } else {
       return BookmarkError(innerError: error, details: .accessDeniedAt(url))
     }
   }

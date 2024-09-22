@@ -1,6 +1,6 @@
 //
 //  SPSyncServicesDataTypeItem.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -48,7 +48,6 @@ public struct SPSyncServicesDataTypeItem: Codable, Equatable, Sendable {
   public let lastModified: Date?
   public let size: String?
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     summaryOfSyncLog: String?,

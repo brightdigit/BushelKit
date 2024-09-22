@@ -1,6 +1,6 @@
 //
 //  SPFirewallDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -44,7 +44,6 @@ public struct SPFirewallDataType: Codable, Equatable, Sendable {
   public let spfirewallLoggingenabled: String
   public let spfirewallStealthenabled: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     spfirewallGlobalstate: String,

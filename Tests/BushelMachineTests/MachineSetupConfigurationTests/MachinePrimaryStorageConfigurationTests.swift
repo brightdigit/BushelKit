@@ -27,41 +27,42 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelMachine
 import XCTest
 
+@testable import BushelMachine
+
 final class MachinePrimaryStorageConfigurationTests: XCTestCase {
-    func testEmptyStorageConfiguration() {
-        let sut = MachineSetupConfiguration(storage: [])
+  func testEmptyStorageConfiguration() {
+    let sut = MachineSetupConfiguration(storage: [])
 
-        assertPrimaryStorage(sut: sut, against: .defaultPrimary)
-    }
+    assertPrimaryStorage(sut: sut, against: .defaultPrimary)
+  }
 
-    func testDefaultPrimaryStorage() {
-        let sut = MachineSetupConfiguration()
+  func testDefaultPrimaryStorage() {
+    let sut = MachineSetupConfiguration()
 
-        assertPrimaryStorage(sut: sut, against: .defaultPrimary)
-    }
+    assertPrimaryStorage(sut: sut, against: .defaultPrimary)
+  }
 
-    func testCustomPrimaryStorage() {
-        var sut = MachineSetupConfiguration()
+  func testCustomPrimaryStorage() {
+    var sut = MachineSetupConfiguration()
 
-        let expectedPrimaryStorage = MachineStorageSpecification(
-            label: "test",
-            size: .makeGigaByte(1)
-        )
+    let expectedPrimaryStorage = MachineStorageSpecification(
+      label: "test",
+      size: .makeGigaByte(1)
+    )
 
-        sut.primaryStorage = expectedPrimaryStorage
+    sut.primaryStorage = expectedPrimaryStorage
 
-        assertPrimaryStorage(sut: sut, against: expectedPrimaryStorage)
-    }
+    assertPrimaryStorage(sut: sut, against: expectedPrimaryStorage)
+  }
 
-    // MARK: - Helpers
+  // MARK: - Helpers
 
-    private func assertPrimaryStorage(
-        sut: MachineSetupConfiguration,
-        against actualStorage: MachineStorageSpecification
-    ) {
-        XCTAssertEqual(sut.primaryStorage, actualStorage)
-    }
+  private func assertPrimaryStorage(
+    sut: MachineSetupConfiguration,
+    against actualStorage: MachineStorageSpecification
+  ) {
+    XCTAssertEqual(sut.primaryStorage, actualStorage)
+  }
 }

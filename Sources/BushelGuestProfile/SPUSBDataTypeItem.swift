@@ -1,6 +1,6 @@
 //
 //  SPUSBDataTypeItem.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -56,7 +56,6 @@ public struct SPUSBDataTypeItem: Codable, Equatable, Sendable {
   public let productID: String
   public let vendorID: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     bcdDevice: String,

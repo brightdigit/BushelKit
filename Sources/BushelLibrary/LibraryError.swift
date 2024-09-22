@@ -1,6 +1,6 @@
 //
 //  LibraryError.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -73,79 +73,82 @@ public struct LibraryError: LocalizedError, Loggable {
 
     // swiftlint:disable:next cyclomatic_complexity
     fileprivate func errorDescription(fromError error: (any Error)?) -> String {
-      switch self { case .bookmarkError:
+      switch self {
+      case .bookmarkError:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue getting the bookmark: \(error)"
-        case .systemResolution:
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return "Unable to resolve new image: \(error)"
-        case let .accessDeniedLibraryAt(at: path):
-          let components: [String?] = [
-            "There's an issue getting access to library at \(path)", error?.localizedDescription,
-          ]
-          return components.compactMap { $0 }.joined(separator: ": ")
-        case let .imageCorruptedAt(at: importingURL):
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return "There's an issue getting the metadata for image at \(importingURL): \(error)"
-        case let .libraryCorruptedAt(at: libraryURL):
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return "There's an issue reading the library at \(libraryURL): \(error)"
-        case let .imageFolderInitializationAt(at: libraryURL):
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return "There's an issue prepping the library at \(libraryURL): \(error)"
-        case let .updateMetadataAt(at: libraryURL):
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return "We were unable to update \(libraryURL): \(error)"
-        case let .missingInitialization(for: property):
-          return "There an issue with this library. Missing \(property)."
-        case .database:
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return "There was an issue syncing with the database: \(error)"
-        case let .copyImage(source: importingURL, destination: libraryURL):
-          assert(error != nil)
-          let error = error ?? UnknownError.shared
-          return
-            "There was an error copying the image at \(importingURL) to library at: \(libraryURL): \(error)"
+      case .systemResolution:
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "Unable to resolve new image: \(error)"
+      case let .accessDeniedLibraryAt(at: path):
+        let components: [String?] = [
+          "There's an issue getting access to library at \(path)", error?.localizedDescription,
+        ]
+        return components.compactMap { $0 }.joined(separator: ": ")
+      case let .imageCorruptedAt(at: importingURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue getting the metadata for image at \(importingURL): \(error)"
+      case let .libraryCorruptedAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue reading the library at \(libraryURL): \(error)"
+      case let .imageFolderInitializationAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue prepping the library at \(libraryURL): \(error)"
+      case let .updateMetadataAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "We were unable to update \(libraryURL): \(error)"
+      case let .missingInitialization(for: property):
+        return "There an issue with this library. Missing \(property)."
+      case .database:
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There was an issue syncing with the database: \(error)"
+      case let .copyImage(source: importingURL, destination: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return
+          "There was an error copying the image at \(importingURL) to library at: \(libraryURL): \(error)"
       }
     }
 
     fileprivate func recoverySuggestion(fromError _: (any Error)?) -> String? {
-      switch self { case .accessDeniedLibraryAt: "Close and open the library again."
-        case let .imageCorruptedAt(at: imageURL): "Invalid Restore Image at \(imageURL)"
-        case .imageFolderInitializationAt: "Close and open the library again."
-        case .missingInitialization: "Close and open the library again."
-        default: nil
+      switch self {
+      case .accessDeniedLibraryAt: "Close and open the library again."
+      case let .imageCorruptedAt(at: imageURL): "Invalid Restore Image at \(imageURL)"
+      case .imageFolderInitializationAt: "Close and open the library again."
+      case .missingInitialization: "Close and open the library again."
+      default: nil
       }
     }
 
     // swiftlint:disable:next cyclomatic_complexity
     fileprivate func isRecoverable(fromError _: (any Error)?) -> Bool {
-      switch self { case .bookmarkError: false
+      switch self {
+      case .bookmarkError: false
 
-        case .accessDeniedLibraryAt: false
+      case .accessDeniedLibraryAt: false
 
-        case .imageCorruptedAt: true
+      case .imageCorruptedAt: true
 
-        case .libraryCorruptedAt: false
+      case .libraryCorruptedAt: false
 
-        case .imageFolderInitializationAt: false
+      case .imageFolderInitializationAt: false
 
-        case .updateMetadataAt: false
+      case .updateMetadataAt: false
 
-        case .missingInitialization: false
+      case .missingInitialization: false
 
-        case .database: false
+      case .database: false
 
-        case .copyImage: true
+      case .copyImage: true
 
-        case .systemResolution: false
+      case .systemResolution: false
       }
     }
   }

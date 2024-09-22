@@ -1,6 +1,6 @@
 //
 //  SnapshotError.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -41,8 +41,7 @@ enum SnapshotError: Error, LocalizedError, Sendable {
   static func inner(error: any Error) -> SnapshotError {
     if let snapshotError = error as? SnapshotError {
       snapshotError
-    }
-    else {
+    } else {
       .innerError(error)
     }
   }
@@ -52,13 +51,14 @@ enum SnapshotError: Error, LocalizedError, Sendable {
       assertionFailure()
       return error.localizedDescription
     }
-    switch error { case let .innerError(error):
+    switch error {
+    case let .innerError(error):
       assertionFailure(error.localizedDescription)
       return error.localizedDescription
-      case let .missingSnapshotVersionID(id): return "Missing Snapshot Based on Info from ID: \(id)"
-      case let .missingSnapshotVersionAt(url): return "Missing Snapshot at \(url)"
-      case let .missingSnapshotFile(id): return "Missing Snapshot File with ID: \(id)"
-      case let .unarchiveError(data): return "Unable to Parse Snapshot ID from Data: \(data)"
+    case let .missingSnapshotVersionID(id): return "Missing Snapshot Based on Info from ID: \(id)"
+    case let .missingSnapshotVersionAt(url): return "Missing Snapshot at \(url)"
+    case let .missingSnapshotFile(id): return "Missing Snapshot File with ID: \(id)"
+    case let .unarchiveError(data): return "Unable to Parse Snapshot ID from Data: \(data)"
     }
   }
 }

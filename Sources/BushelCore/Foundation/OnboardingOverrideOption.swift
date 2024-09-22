@@ -1,6 +1,6 @@
 //
 //  OnboardingOverrideOption.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -39,8 +39,11 @@ public enum OnboardingOverrideOption: String, EnvironmentValue {
 
 extension OnboardingOverrideOption {
   public func shouldBasedOn(date: Date?) -> Bool {
-    switch (self, date) { case (.skip, _): false case (.force, _): true case (.none, .some): false
-      case (.none, .none): true
+    switch (self, date) {
+    case (.skip, _): false
+    case (.force, _): true
+    case (.none, .some): false
+    case (.none, .none): true
     }
   }
 }

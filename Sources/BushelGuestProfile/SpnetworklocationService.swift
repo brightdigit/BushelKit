@@ -1,6 +1,6 @@
 //
 //  SpnetworklocationService.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -50,7 +50,6 @@ public struct SpnetworklocationService: Codable, Equatable, Sendable {
   public let proxies: Proxies
   public let type: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     bsdDeviceName: String,

@@ -1,6 +1,6 @@
 //
 //  InstallerImageSub.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -45,8 +45,8 @@ public struct InstallerImageSub: InstallerImage {
     buildVersion: "",
     imageResourceName: "",
     systemName: "",
-    systemID: .sampleVMSystemID
+    systemID: .sample
   )
 
-  public func getURL() throws -> URL { .bushelappURL }
+  public func getURL() throws -> URL { .bushelWebSite }
 }

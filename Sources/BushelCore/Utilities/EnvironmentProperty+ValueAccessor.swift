@@ -1,6 +1,6 @@
 //
 //  EnvironmentProperty+ValueAccessor.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -35,10 +35,11 @@ extension EnvironmentProperty {
     case value(Value)
 
     var value: Value {
-      switch self { case let .value(value): value
+      switch self {
+      case let .value(value): value
 
-        case let .dictionary(dictionary, key: key):
-          dictionary[key].flatMap(Value.init) ?? Value.default
+      case let .dictionary(dictionary, key: key):
+        dictionary[key].flatMap(Value.init) ?? Value.default
       }
     }
 
