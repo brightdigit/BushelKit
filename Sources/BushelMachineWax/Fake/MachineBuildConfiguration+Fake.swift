@@ -33,7 +33,7 @@ import Foundation
 
 extension MachineBuildConfiguration where RestoreImageType == RestoreImageStub {
   public static let sample: Self = .init(
-    configuration: .sampleMachineConfiguration,
+    configuration: .sample,
     restoreImage: .init()
   )
 }

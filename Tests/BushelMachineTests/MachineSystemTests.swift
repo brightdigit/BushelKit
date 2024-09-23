@@ -39,7 +39,7 @@ internal final class MachineSystemTests: XCTestCase {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try await sut.createBuilder(
-      for: .sampleMachineBuildConfiguration,
+      for: .sample,
       at: .bushelWebSite
     )
 
@@ -50,8 +50,8 @@ internal final class MachineSystemTests: XCTestCase {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try await sut.createBuilder(
-      for: .sampleMachineSetupConfiguration,
-      image: .sampleInstallerImage,
+      for: MachineSetupConfiguration.sample,
+      image: .sample,
       withDataDirectoryAt: .bushelWebSite
     )
 
@@ -67,7 +67,7 @@ internal final class MachineSystemTests: XCTestCase {
       expectedError: expectedError
     ) {
       try await sut.createBuilder(
-        for: .sampleMachineBuildConfiguration,
+        for: .sample,
         at: .bushelWebSite
       )
     }
@@ -80,7 +80,7 @@ internal final class MachineSystemTests: XCTestCase {
 
     _ = try sut.machine(
       at: .bushelWebSite,
-      withConfiguration: .sampleMachineConfiguration
+      withConfiguration: .sample
     )
 
     XCTAssertTrue(sut.isMachineAtURLCalled)
@@ -96,7 +96,7 @@ internal final class MachineSystemTests: XCTestCase {
     ) {
       try sut.machine(
         at: .bushelWebSite,
-        withConfiguration: .sampleMachineConfiguration
+        withConfiguration: .sample
       )
     }
   }
@@ -106,7 +106,7 @@ internal final class MachineSystemTests: XCTestCase {
   func testSuccessfulRestoreImage() async throws {
     let sut = MachineSystemSpy(result: .success(()))
 
-    _ = try await sut.restoreImage(from: .sampleInstallerImage)
+    _ = try await sut.restoreImage(from: .sample)
 
     XCTAssertTrue(sut.isRestoreImageFromCalled)
   }
@@ -119,7 +119,7 @@ internal final class MachineSystemTests: XCTestCase {
     await assertAsyncThrowableBlock(
       expectedError: expectedError
     ) {
-      try await sut.restoreImage(from: .sampleInstallerImage)
+      try await sut.restoreImage(from: .sample)
     }
   }
 }
