@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 extension LibraryError {
   public enum Details: Sendable {
@@ -49,7 +49,7 @@ extension LibraryError {
     case copyImage(source: URL, destination: URL)
 
     // swiftlint:disable:next cyclomatic_complexity
-    fileprivate func errorDescription(fromError error: (any Error)?) -> String {
+    internal func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:
         assert(error != nil)
@@ -94,7 +94,7 @@ extension LibraryError {
       }
     }
 
-    fileprivate func recoverySuggestion(fromError _: (any Error)?) -> String? {
+    internal func recoverySuggestion(fromError _: (any Error)?) -> String? {
       switch self {
       case .accessDeniedLibraryAt: "Close and open the library again."
       case let .imageCorruptedAt(at: imageURL): "Invalid Restore Image at \(imageURL)"
@@ -105,7 +105,7 @@ extension LibraryError {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    fileprivate func isRecoverable(fromError _: (any Error)?) -> Bool {
+    internal func isRecoverable(fromError _: (any Error)?) -> Bool {
       switch self {
       case .bookmarkError: false
 
