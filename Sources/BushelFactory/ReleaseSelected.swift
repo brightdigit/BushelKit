@@ -1,6 +1,6 @@
 //
 //  ReleaseSelected.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -39,8 +39,7 @@ extension ReleaseSelected {
   public init(metadata: ReleaseMetadata) {
     if metadata.isCustom {
       self = .custom
-    }
-    else {
+    } else {
       self = .version(metadata)
     }
   }

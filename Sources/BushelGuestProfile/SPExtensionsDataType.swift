@@ -1,6 +1,6 @@
 //
 //  SPExtensionsDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -74,7 +74,6 @@ public struct SPExtensionsDataType: Codable, Equatable, Sendable {
   public let spextLoadAddress: String?
   public let spextHasAllDependenciesErrors: SpextHasAllDependenciesErrors?
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     spextArchitectures: [SpextArchitecture]?,

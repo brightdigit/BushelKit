@@ -1,6 +1,6 @@
 //
 //  ValidationFailures.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -42,7 +42,6 @@ public struct ValidationFailures: Codable, Equatable, Sendable {
   public let infoDictionaryMissingRequiredPropertyValue: [String]
   public let infoDictionaryPropertyValueIsIllegal: [String]
 
-  // swiftlint:disable:next line_length
   public init(
     infoDictionaryMissingRequiredPropertyValue: [String],
     infoDictionaryPropertyValueIsIllegal: [String]

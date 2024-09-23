@@ -1,6 +1,6 @@
 //
 //  KVNSObservation.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,7 +30,7 @@
 #if canImport(ObjectiveC)
   import Foundation
 
-  @available(*, deprecated) @MainActor final class KVNSObservation: KVObservation {
+  @available(*, deprecated) @MainActor internal final class KVNSObservation: KVObservation {
     let observed: NSObject
     let observer: NSObject
     let keyPaths: [String]

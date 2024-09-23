@@ -1,6 +1,6 @@
 //
 //  URL+Wax.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -171,5 +171,3 @@ extension URL {
     fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
   }
 }
-
-// swiftlint:enable line_length

@@ -1,6 +1,6 @@
 //
 //  Task.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -48,8 +48,7 @@ extension Task where Success == Never, Failure == Never {
 
     do {
       try await Self.sleep(for: .seconds(durationSeconds), tolerance: .seconds(toleranceSeconds))
-    }
-    catch {
+    } catch {
       assertionFailure(error: error)
       onError(error)
     }

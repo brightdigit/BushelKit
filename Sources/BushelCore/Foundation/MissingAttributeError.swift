@@ -1,6 +1,6 @@
 //
 //  MissingAttributeError.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -55,9 +55,10 @@ public struct MissingAttributeError: LocalizedError {
 
 extension FileAttributeKey {
   fileprivate init(headerName: MissingAttributeError.HeaderName) {
-    switch headerName { case .contentLength: self = .size
+    switch headerName {
+    case .contentLength: self = .size
 
-      case .lastModified: self = .modificationDate
+    case .lastModified: self = .modificationDate
     }
   }
 }

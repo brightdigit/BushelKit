@@ -28,45 +28,46 @@
 //
 
 import BushelCoreWax
-@testable import BushelLibrary
 import BushelLibraryWax
 import XCTest
 
-final class LibrarySystemManagerTests: XCTestCase {
-    func testResolveSystemBasedOnID() {
-        let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
-        let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")
+@testable import BushelLibrary
 
-        let sut = LibrarySystemManager(
-            [macOSSystem, ubuntuSystem],
-            fileTypeBasedOnURL: { _ in nil }
-        )
+internal final class LibrarySystemManagerTests: XCTestCase {
+  func testResolveSystemBasedOnID() {
+    let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
+    let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")
 
-        XCTAssertEqual(sut.resolve(macOSSystem.id).id, macOSSystem.id)
-    }
+    let sut = LibrarySystemManager(
+      [macOSSystem, ubuntuSystem],
+      fileTypeBasedOnURL: { _ in nil }
+    )
 
-    func test() async throws {
-        let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
-        let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")
+    XCTAssertEqual(sut.resolve(macOSSystem.id).id, macOSSystem.id)
+  }
 
-        let sut = LibrarySystemManager(
-            [macOSSystem, ubuntuSystem],
-            fileTypeBasedOnURL: { _ in nil }
-        )
+  func test() async throws {
+    let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
+    let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")
 
-        try await assertLabel(byManager: sut, forSystem: macOSSystem)
-        try await assertLabel(byManager: sut, forSystem: ubuntuSystem)
-    }
+    let sut = LibrarySystemManager(
+      [macOSSystem, ubuntuSystem],
+      fileTypeBasedOnURL: { _ in nil }
+    )
 
-    private func assertLabel(
-        byManager manager: any LibrarySystemManaging,
-        forSystem system: any LibrarySystem
-    ) async throws {
-        let metadata = try await system.metadata(fromURL: .temporaryDir)
+    try await assertLabel(byManager: sut, forSystem: macOSSystem)
+    try await assertLabel(byManager: sut, forSystem: ubuntuSystem)
+  }
 
-        XCTAssertEqual(
-            manager.labelForSystem(system.id, metadata: metadata),
-            system.label(fromMetadata: metadata)
-        )
-    }
+  private func assertLabel(
+    byManager manager: any LibrarySystemManaging,
+    forSystem system: any LibrarySystem
+  ) async throws {
+    let metadata = try await system.metadata(fromURL: .temporaryDir)
+
+    XCTAssertEqual(
+      manager.labelForSystem(system.id, metadata: metadata),
+      system.label(fromMetadata: metadata)
+    )
+  }
 }

@@ -27,41 +27,42 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelMachine
 import XCTest
 
-final class MachinePrimaryStorageConfigurationTests: XCTestCase {
-    func testEmptyStorageConfiguration() {
-        let sut = MachineSetupConfiguration(storage: [])
+@testable import BushelMachine
 
-        assertPrimaryStorage(sut: sut, against: .defaultPrimary)
-    }
+internal final class MachinePrimaryStorageConfigurationTests: XCTestCase {
+  func testEmptyStorageConfiguration() {
+    let sut = MachineSetupConfiguration(storage: [])
 
-    func testDefaultPrimaryStorage() {
-        let sut = MachineSetupConfiguration()
+    assertPrimaryStorage(sut: sut, against: .defaultPrimary)
+  }
 
-        assertPrimaryStorage(sut: sut, against: .defaultPrimary)
-    }
+  func testDefaultPrimaryStorage() {
+    let sut = MachineSetupConfiguration()
 
-    func testCustomPrimaryStorage() {
-        var sut = MachineSetupConfiguration()
+    assertPrimaryStorage(sut: sut, against: .defaultPrimary)
+  }
 
-        let expectedPrimaryStorage = MachineStorageSpecification(
-            label: "test",
-            size: .makeGigaByte(1)
-        )
+  func testCustomPrimaryStorage() {
+    var sut = MachineSetupConfiguration()
 
-        sut.primaryStorage = expectedPrimaryStorage
+    let expectedPrimaryStorage = MachineStorageSpecification(
+      label: "test",
+      size: .makeGigaByte(1)
+    )
 
-        assertPrimaryStorage(sut: sut, against: expectedPrimaryStorage)
-    }
+    sut.primaryStorage = expectedPrimaryStorage
 
-    // MARK: - Helpers
+    assertPrimaryStorage(sut: sut, against: expectedPrimaryStorage)
+  }
 
-    private func assertPrimaryStorage(
-        sut: MachineSetupConfiguration,
-        against actualStorage: MachineStorageSpecification
-    ) {
-        XCTAssertEqual(sut.primaryStorage, actualStorage)
-    }
+  // MARK: - Helpers
+
+  private func assertPrimaryStorage(
+    sut: MachineSetupConfiguration,
+    against actualStorage: MachineStorageSpecification
+  ) {
+    XCTAssertEqual(sut.primaryStorage, actualStorage)
+  }
 }

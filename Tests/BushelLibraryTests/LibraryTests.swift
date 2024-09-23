@@ -27,18 +27,19 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelLibrary
 import XCTest
 
-final class LibraryTests: XCTestCase {
-    func testCorrectInitialization() {
-        let items: [LibraryImageFile] = [
-            .monterey_12_6_0,
-            .sonoma_13_6_0
-        ]
+@testable import BushelLibrary
 
-        let sut = Library(items: items)
+internal final class LibraryTests: XCTestCase {
+  func testCorrectInitialization() {
+    let items: [LibraryImageFile] = [
+      .monterey_12_6_0,
+      .sonoma_13_6_0,
+    ]
 
-        XCTAssertEqual(sut.items, items)
-    }
+    let sut = Library(items: items)
+
+    XCTAssertEqual(sut.items, items)
+  }
 }

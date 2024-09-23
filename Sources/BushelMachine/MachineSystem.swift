@@ -1,6 +1,6 @@
 //
 //  MachineSystem.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -83,13 +83,11 @@ extension MachineSystem {
     withDataDirectoryAt url: URL
   ) async throws -> any MachineBuilder {
     let restoreImage: RestoreImageType
-    do { restoreImage = try await self.restoreImage(from: image) }
-    catch let error as NSError {
+    do { restoreImage = try await self.restoreImage(from: image) } catch let error as NSError {
       if let error = BuilderError.restoreImage(image, withError: error) { throw error }
       assertionFailure(error: error)
       throw error
-    }
-    catch {
+    } catch {
       assertionFailure(error: error)
       throw error
     }
@@ -113,13 +111,11 @@ extension MachineSystem {
     withDataDirectoryAt url: URL
   ) async throws -> any MachineBuilder {
     let restoreImage: RestoreImageType
-    do { restoreImage = try await self.restoreImage(from: image) }
-    catch let error as NSError {
+    do { restoreImage = try await self.restoreImage(from: image) } catch let error as NSError {
       if let error = BuilderError.restoreImage(image, withError: error) { throw error }
       assertionFailure(error: error)
       throw error
-    }
-    catch {
+    } catch {
       assertionFailure(error: error)
       throw error
     }

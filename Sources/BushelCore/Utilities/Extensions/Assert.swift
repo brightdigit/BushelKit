@@ -1,6 +1,6 @@
 //
 //  Assert.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -60,14 +60,16 @@ public import Foundation
   file: StaticString = #file,
   line: UInt = #line
 ) throws -> Result<Success, NewFailure> {
-  switch result { case let .success(value): return .success(value)
+  switch result {
+  case let .success(value): return .success(value)
 
-    case let .failure(error):
-      switch error as? NewFailure { case .none:
-        assertionFailure(error.localizedDescription, file: file, line: line)
-        throw error
+  case let .failure(error):
+    switch error as? NewFailure {
+    case .none:
+      assertionFailure(error.localizedDescription, file: file, line: line)
+      throw error
 
-        case let .some(newError): return .failure(newError)
-      }
+    case let .some(newError): return .failure(newError)
+    }
   }
 }

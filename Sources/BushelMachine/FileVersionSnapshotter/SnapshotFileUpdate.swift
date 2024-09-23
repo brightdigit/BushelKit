@@ -1,6 +1,6 @@
 //
 //  SnapshotFileUpdate.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,7 +31,7 @@
 
   import Foundation
 
-  struct SnapshotFileUpdate {
+  internal struct SnapshotFileUpdate {
     let filesToDelete: [URL]
     let versionsToAdd: [NSFileVersion]
   }

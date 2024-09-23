@@ -1,6 +1,6 @@
 //
 //  UInt128.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -80,7 +80,7 @@ public struct UInt128 {
 // MARK: - FixedWidthInteger Conformance
 
 // swiftlint:disable all
-
+// swift-format-ignore
 extension UInt128: FixedWidthInteger {
   // MARK: Instance Properties
 
@@ -347,11 +347,9 @@ extension UInt128: FixedWidthInteger {
 
     if dividend.high > 0 {
       numeratorBitsToWalk = dividend.high.significantBits + 128 - 1
-    }
-    else if dividend.low == 0 {
+    } else if dividend.low == 0 {
       return (0, 0)
-    }
-    else {
+    } else {
       numeratorBitsToWalk = dividend.low.significantBits - 1
     }
 
@@ -385,13 +383,14 @@ extension UInt128: FixedWidthInteger {
   static func _bitFromDoubleWidth(at bitPosition: UInt128, for input: (high: UInt128, low: UInt128))
     -> UInt128
   {
-    switch bitPosition { case 0: input.low & 1
+    switch bitPosition {
+    case 0: input.low & 1
 
-      case 1...127: input.low >> bitPosition & 1
+    case 1...127: input.low >> bitPosition & 1
 
-      case 128: input.high & 1
+    case 128: input.high & 1
 
-      default: input.high >> (bitPosition - 128) & 1
+    default: input.high >> (bitPosition - 128) & 1
     }
   }
 }
@@ -419,11 +418,9 @@ extension UInt128: BinaryInteger {
   public init?(exactly source: some BinaryFloatingPoint) {
     if source.isZero {
       self = UInt128()
-    }
-    else if source.exponent < 0 || source.rounded() != source {
+    } else if source.exponent < 0 || source.rounded() != source {
       return nil
-    }
-    else {
+    } else {
       self = UInt128(UInt64(source))
     }
   }
@@ -481,20 +478,21 @@ extension UInt128: BinaryInteger {
   public static func &>>= (lhs: inout UInt128, rhs: UInt128) {
     let shiftWidth = rhs.value.lowerBits & 127
 
-    switch shiftWidth { case 0: return  // Do nothing shift.
-      case 1...63:
-        let upperBits = lhs.value.upperBits >> shiftWidth
-        let lowerBits =
-          (lhs.value.lowerBits >> shiftWidth) + (lhs.value.upperBits << (64 - shiftWidth))
-        lhs = UInt128(upperBits: upperBits, lowerBits: lowerBits)
+    switch shiftWidth {
+    case 0: return  // Do nothing shift.
+    case 1...63:
+      let upperBits = lhs.value.upperBits >> shiftWidth
+      let lowerBits =
+        (lhs.value.lowerBits >> shiftWidth) + (lhs.value.upperBits << (64 - shiftWidth))
+      lhs = UInt128(upperBits: upperBits, lowerBits: lowerBits)
 
-      case 64:
-        // Shift 64 means move upper bits to lower bits.
-        lhs = UInt128(upperBits: 0, lowerBits: lhs.value.upperBits)
+    case 64:
+      // Shift 64 means move upper bits to lower bits.
+      lhs = UInt128(upperBits: 0, lowerBits: lhs.value.upperBits)
 
-      default:
-        let lowerBits = lhs.value.upperBits >> (shiftWidth - 64)
-        lhs = UInt128(upperBits: 0, lowerBits: lowerBits)
+    default:
+      let lowerBits = lhs.value.upperBits >> (shiftWidth - 64)
+      lhs = UInt128(upperBits: 0, lowerBits: lowerBits)
     }
   }
 
@@ -507,20 +505,21 @@ extension UInt128: BinaryInteger {
   public static func &<<= (lhs: inout UInt128, rhs: UInt128) {
     let shiftWidth = rhs.value.lowerBits & 127
 
-    switch shiftWidth { case 0: return  // Do nothing shift.
-      case 1...63:
-        let upperBits =
-          (lhs.value.upperBits << shiftWidth) + (lhs.value.lowerBits >> (64 - shiftWidth))
-        let lowerBits = lhs.value.lowerBits << shiftWidth
-        lhs = UInt128(upperBits: upperBits, lowerBits: lowerBits)
+    switch shiftWidth {
+    case 0: return  // Do nothing shift.
+    case 1...63:
+      let upperBits =
+        (lhs.value.upperBits << shiftWidth) + (lhs.value.lowerBits >> (64 - shiftWidth))
+      let lowerBits = lhs.value.lowerBits << shiftWidth
+      lhs = UInt128(upperBits: upperBits, lowerBits: lowerBits)
 
-      case 64:
-        // Shift 64 means move lower bits to upper bits.
-        lhs = UInt128(upperBits: lhs.value.lowerBits, lowerBits: 0)
+    case 64:
+      // Shift 64 means move lower bits to upper bits.
+      lhs = UInt128(upperBits: lhs.value.lowerBits, lowerBits: 0)
 
-      default:
-        let upperBits = lhs.value.lowerBits << (shiftWidth - 64)
-        lhs = UInt128(upperBits: upperBits, lowerBits: 0)
+    default:
+      let upperBits = lhs.value.lowerBits << (shiftWidth - 64)
+      lhs = UInt128(upperBits: upperBits, lowerBits: 0)
     }
   }
 }
@@ -587,7 +586,7 @@ extension UInt128: ExpressibleByIntegerLiteral {
 }
 
 // MARK: - CustomStringConvertible Conformance
-
+// swift-format-ignore
 extension UInt128: CustomStringConvertible {
   // MARK: Instance Properties
 
@@ -614,18 +613,19 @@ extension UInt128: CustomStringConvertible {
 
     // Reserve maxbuffer size for UInt.max as ASCII for respective radix.
     // ex. print(UInt128.max._valueToString(radix: 2).count)
-    switch radix { case 10: result.reserveCapacity(39)
+    switch radix {
+    case 10: result.reserveCapacity(39)
 
-      case 16: result.reserveCapacity(32)
+    case 16: result.reserveCapacity(32)
 
-      case 2: result.reserveCapacity(128)
+    case 2: result.reserveCapacity(128)
 
-      case 8: result.reserveCapacity(43)
+    case 8: result.reserveCapacity(43)
 
-      default:
-        // Base3 is next worst case after Base2
-        // General for any other radix not enumerated above.
-        result.reserveCapacity(81)
+    default:
+      // Base3 is next worst case after Base2
+      // General for any other radix not enumerated above.
+      result.reserveCapacity(81)
     }
 
     // Used as the check for indexing through UInt128 for string interpolation.
@@ -660,8 +660,8 @@ extension UInt128: Comparable {
   public static func < (lhs: UInt128, rhs: UInt128) -> Bool {
     if lhs.value.upperBits < rhs.value.upperBits {
       return true
-    }
-    else if lhs.value.upperBits == rhs.value.upperBits, lhs.value.lowerBits < rhs.value.lowerBits {
+    } else if lhs.value.upperBits == rhs.value.upperBits, lhs.value.lowerBits < rhs.value.lowerBits
+    {
       return true
     }
     return false
@@ -756,7 +756,7 @@ extension String {
     self = value._valueToString(radix: radix, uppercase: uppercase)
   }
 }
-
+// swift-format-ignore
 extension UInt128 {
   static func _valueFromString(_ value: String) -> UInt128? {
     let radix = UInt128._determineRadixFromString(value)
@@ -767,7 +767,11 @@ extension UInt128 {
   }
 
   static func _determineRadixFromString(_ string: String) -> Int {
-    switch string.prefix(2) { case "0b": 2 case "0o": 8 case "0x": 16 default: 10
+    switch string.prefix(2) {
+    case "0b": 2
+    case "0o": 8
+    case "0x": 16
+    default: 10
     }
   }
 }

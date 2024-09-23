@@ -1,6 +1,6 @@
 //
 //  CalculationParameters.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -29,7 +29,7 @@
 
 import BushelCore
 
-struct SpecificationCalculationParameters: CalculationParameters {
+internal struct SpecificationCalculationParameters: CalculationParameters {
   let indexRange: ClosedRange<Int>
   let valueRange: ClosedRange<Int>
   private let indexForValue: @Sendable (Int) -> Int

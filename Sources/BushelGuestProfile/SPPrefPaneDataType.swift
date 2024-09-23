@@ -1,6 +1,6 @@
 //
 //  SPPrefPaneDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -50,7 +50,6 @@ public struct SPPrefPaneDataType: Codable, Equatable, Sendable {
   public let spprefpaneSupport: SpprefpaneSupport
   public let spprefpaneVersion: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     spprefpaneBundlePath: String,

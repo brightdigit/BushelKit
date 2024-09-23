@@ -27,35 +27,36 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelMachine
 import XCTest
 
-final class MachinePrimaryStorageSizeTests: XCTestCase {
-    func testCorrectDefaultPrimaryStorageSize() {
-        let sut = MachineSetupConfiguration()
+@testable import BushelMachine
 
-        assertPrimaryStorageSizeFloat(
-            sut: sut,
-            against: MachineStorageSpecification.defaultSize
-        )
-    }
+internal final class MachinePrimaryStorageSizeTests: XCTestCase {
+  func testCorrectDefaultPrimaryStorageSize() {
+    let sut = MachineSetupConfiguration()
 
-    func testDefaultPrimaryStorageSize() {
-        var sut = MachineSetupConfiguration()
+    assertPrimaryStorageSizeFloat(
+      sut: sut,
+      against: MachineStorageSpecification.defaultSize
+    )
+  }
 
-        let expectedSize = UInt64.makeGigaByte(1)
+  func testDefaultPrimaryStorageSize() {
+    var sut = MachineSetupConfiguration()
 
-        sut.primaryStorageSizeFloat = Float(expectedSize)
+    let expectedSize = UInt64.makeGigaByte(1)
 
-        assertPrimaryStorageSizeFloat(sut: sut, against: expectedSize)
-    }
+    sut.primaryStorageSizeFloat = Float(expectedSize)
 
-    // MARK: - Helpers
+    assertPrimaryStorageSizeFloat(sut: sut, against: expectedSize)
+  }
 
-    private func assertPrimaryStorageSizeFloat(
-        sut: MachineSetupConfiguration,
-        against actualSize: UInt64
-    ) {
-        XCTAssertEqual(sut.primaryStorageSizeFloat, Float(actualSize))
-    }
+  // MARK: - Helpers
+
+  private func assertPrimaryStorageSizeFloat(
+    sut: MachineSetupConfiguration,
+    against actualSize: UInt64
+  ) {
+    XCTAssertEqual(sut.primaryStorageSizeFloat, Float(actualSize))
+  }
 }

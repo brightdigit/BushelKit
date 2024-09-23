@@ -1,6 +1,6 @@
 //
 //  Sequence.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -39,8 +39,7 @@ extension Sequence {
     -> [T]
   {
     compactMap { element in
-      do { return try transform(element) }
-      catch {
+      do { return try transform(element) } catch {
         assertionFailure(error: error)
         logger?.error("Unable to transform element: \(error.localizedDescription)")
       }

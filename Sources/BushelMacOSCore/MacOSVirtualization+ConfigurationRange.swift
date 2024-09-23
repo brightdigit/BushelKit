@@ -1,6 +1,6 @@
 //
 //  MacOSVirtualization+ConfigurationRange.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -45,7 +45,7 @@
       cpuCount: Float(
         VZVirtualMachineConfiguration.minimumAllowedCPUCount
       )...Float(Self.maximumAllowedCPUCount),
-      memory:  // swiftlint:disable:next line_length
+      memory:
         Float(
           VZVirtualMachineConfiguration.minimumAllowedMemorySize
         )...Float(VZVirtualMachineConfiguration.maximumAllowedMemorySize)

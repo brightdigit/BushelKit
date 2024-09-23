@@ -27,36 +27,37 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelService
 import XCTest
 
-final class SynchronousTaskTests: XCTestCase {
-    func testSuccessfulRun() throws {
-        let startTime = Date()
-        let timeout: DispatchTime = .now() + .seconds(5)
-        try SynchronousTask(timeout: timeout) {
-            try await Task.sleep(for: .seconds(2.0))
-        }.run()
-        let time = -startTime.timeIntervalSinceNow
+@testable import BushelService
 
-        XCTAssertEqual(round(time), 2.0)
+internal final class SynchronousTaskTests: XCTestCase {
+  func testSuccessfulRun() throws {
+    let startTime = Date()
+    let timeout: DispatchTime = .now() + .seconds(5)
+    try SynchronousTask(timeout: timeout) {
+      try await Task.sleep(for: .seconds(2.0))
+    }.run()
+    let time = -startTime.timeIntervalSinceNow
+
+    XCTAssertEqual(round(time), 2.0)
+  }
+
+  func testFailedRun() throws {
+    var timeoutError: TimeoutError?
+    let startTime = Date()
+    let timeout: DispatchTime = .now() + .seconds(2)
+    do {
+      try SynchronousTask(timeout: timeout) {
+        try await Task.sleep(for: .seconds(5.0))
+      }.run()
+      timeoutError = nil
+    } catch let error as TimeoutError {
+      timeoutError = error
     }
+    let time = -startTime.timeIntervalSinceNow
 
-    func testFailedRun() throws {
-        var timeoutError: TimeoutError?
-        let startTime = Date()
-        let timeout: DispatchTime = .now() + .seconds(2)
-        do {
-            try SynchronousTask(timeout: timeout) {
-                try await Task.sleep(for: .seconds(5.0))
-            }.run()
-            timeoutError = nil
-        } catch let error as TimeoutError {
-            timeoutError = error
-        }
-        let time = -startTime.timeIntervalSinceNow
-
-        XCTAssertEqual(round(time), 2.0)
-        XCTAssertEqual(timeoutError?.timeout, timeout)
-    }
+    XCTAssertEqual(round(time), 2.0)
+    XCTAssertEqual(timeoutError?.timeout, timeout)
+  }
 }

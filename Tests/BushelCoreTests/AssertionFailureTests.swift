@@ -27,29 +27,30 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
 
-final class AssertionFailureTests: XCTestCase {
-    private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>
+@testable import BushelCore
 
-    func testSuccessResult() throws {
-        let expectedResult: ResultType = .success(true)
+internal final class AssertionFailureTests: XCTestCase {
+  private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>
 
-        let actualResult: ResultType = try BushelCore.assertionFailure(
-            result: expectedResult
-        )
+  func testSuccessResult() throws {
+    let expectedResult: ResultType = .success(true)
 
-        XCTAssertEqual(actualResult, expectedResult)
-    }
+    let actualResult: ResultType = try BushelCore.assertionFailure(
+      result: expectedResult
+    )
 
-    func testLocalizedErrorResult() throws {
-        let expectedResult: ResultType = .failure(.sample)
+    XCTAssertEqual(actualResult, expectedResult)
+  }
 
-        let actualResult: ResultType = try BushelCore.assertionFailure(
-            result: expectedResult
-        )
+  func testLocalizedErrorResult() throws {
+    let expectedResult: ResultType = .failure(.sample)
 
-        XCTAssertEqual(actualResult, expectedResult)
-    }
+    let actualResult: ResultType = try BushelCore.assertionFailure(
+      result: expectedResult
+    )
+
+    XCTAssertEqual(actualResult, expectedResult)
+  }
 }

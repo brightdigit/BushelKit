@@ -1,6 +1,6 @@
 //
 //  SPUSBDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -48,7 +48,6 @@ public struct SPUSBDataType: Codable, Equatable, Sendable {
   public let pciRevision: String
   public let pciVendor: String
 
-  // swiftlint:disable:next line_length
   public init(
     items: [SPUSBDataTypeItem],
     name: String,

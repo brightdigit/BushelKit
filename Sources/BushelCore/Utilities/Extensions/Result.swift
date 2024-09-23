@@ -1,6 +1,6 @@
 //
 //  Result.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -32,8 +32,7 @@ import Foundation
 extension Result {
   public init(catching body: @Sendable () async throws -> Success) async
   where Failure == any Error {
-    do { self = try await .success(body()) }
-    catch { self = .failure(error) }
+    do { self = try await .success(body()) } catch { self = .failure(error) }
   }
 
   public func unwrap<NewSuccess>(or failure: Failure) -> Result<NewSuccess, Failure>
@@ -41,8 +40,7 @@ extension Result {
     flatMap { value in
       if let value {
         .success(value)
-      }
-      else {
+      } else {
         .failure(failure)
       }
     }

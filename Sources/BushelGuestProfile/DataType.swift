@@ -1,6 +1,6 @@
 //
 //  DataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,6 +31,7 @@ public import Foundation
 
 public protocol SystemProfileType: Decodable { static var dataType: DataType { get } }
 
+// swift-format-ignore: AlwaysUseLowerCamelCase
 public enum DataType: String {
   case SPParallelATADataType
   case SPUniversalAccessDataType

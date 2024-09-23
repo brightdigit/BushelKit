@@ -1,6 +1,6 @@
 //
 //  IPv6Address.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,7 +31,29 @@ import Foundation
 
 public typealias IPv6Address = UInt128
 
+// swiftlint:disable all
 @available(*, unavailable, message: "Not Ready for Use.") extension IPv6Address {
+  init(fromIPv6Address string: String) {
+    // Parse string and convert to high and low parts
+    // This is a simplified example
+    // You would need proper parsing and error handling here
+    let parts = string.split(separator: ":")
+    var high: UInt64 = 0
+    var low: UInt64 = 0
+
+    for (index, part) in parts.enumerated() {
+      if index < 4 {
+        high <<= 16
+        high |= UInt64(part, radix: 16)!
+      } else {
+        low <<= 16
+        low |= UInt64(part, radix: 16)!
+      }
+    }
+
+    self.init(upperBits: high, lowerBits: low)
+  }
+
   func toIPv6AddressFormat() -> String {
     // Convert high and low parts to string representation
     // This is a simplified example
@@ -48,28 +70,5 @@ public typealias IPv6Address = UInt128
       value.lowerBits & 0xFFFF
     )
   }
-
-  init(fromIPv6Address string: String) {
-    // Parse string and convert to high and low parts
-    // This is a simplified example
-    // You would need proper parsing and error handling here
-    let parts = string.split(separator: ":")
-    var high: UInt64 = 0
-    var low: UInt64 = 0
-
-    for (index, part) in parts.enumerated() {
-      if index < 4 {
-        high <<= 16
-        high |= UInt64(part, radix: 16)!
-      }
-      else {
-        low <<= 16
-        low |= UInt64(part, radix: 16)!
-      }
-    }
-
-    self.init(upperBits: high, lowerBits: low)
-  }
 }
-
 // swiftlint:enable all

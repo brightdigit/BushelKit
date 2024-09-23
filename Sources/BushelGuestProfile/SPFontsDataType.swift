@@ -1,6 +1,6 @@
 //
 //  SPFontsDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -48,7 +48,6 @@ public struct SPFontsDataType: Codable, Equatable, Sendable {
   public let typefaces: [Typeface]
   public let valid: PrivateFramework
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     enabled: PrivateFramework,

@@ -29,7 +29,7 @@
 
 import Foundation
 
-struct MockResponse: Codable {
-    let id: UUID
-    let items: [Item]
+internal struct MockResponse: Codable {
+  let id: UUID
+  let items: [Item]
 }

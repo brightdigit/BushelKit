@@ -27,25 +27,26 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
 
-final class DirectoryExistsTests: XCTestCase {
-    func testFileExists() {
-        let sut = DirectoryExists(fileExists: true, isDirectory: false)
+@testable import BushelCore
 
-        XCTAssertEqual(sut, .fileExists)
-    }
+internal final class DirectoryExistsTests: XCTestCase {
+  func testFileExists() {
+    let sut = DirectoryExists(fileExists: true, isDirectory: false)
 
-    func testDirectoryExists() {
-        let sut = DirectoryExists(fileExists: true, isDirectory: true)
+    XCTAssertEqual(sut, .fileExists)
+  }
 
-        XCTAssertEqual(sut, .directoryExists)
-    }
+  func testDirectoryExists() {
+    let sut = DirectoryExists(fileExists: true, isDirectory: true)
 
-    func testNotExists() {
-        let sut = DirectoryExists(fileExists: false, isDirectory: false)
+    XCTAssertEqual(sut, .directoryExists)
+  }
 
-        XCTAssertEqual(sut, .notExists)
-    }
+  func testNotExists() {
+    let sut = DirectoryExists(fileExists: false, isDirectory: false)
+
+    XCTAssertEqual(sut, .notExists)
+  }
 }

@@ -1,6 +1,6 @@
 //
 //  InstallerImage+Fake.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,5 +31,5 @@ public import BushelMachine
 import Foundation
 
 extension InstallerImage where Self == InstallerImageSub {
-  public static var sampleInstallerImage: Self { InstallerImageSub() }
+  public static var sample: Self { InstallerImageSub() }
 }

@@ -1,6 +1,6 @@
 //
 //  SortComparator+Linux.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,6 +31,7 @@
   // swiftlint:disable all
   public import Foundation
 
+  // swift-format-ignore
   /// A comparison algorithm for a given type.
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   public protocol SortComparator<Compared>: Hashable {
@@ -71,15 +72,16 @@
       let isForward = try container.decode(Bool.self)
       if isForward {
         self = .forward
-      }
-      else {
+      } else {
         self = .reverse
       }
     }
 
     public func encode(to encoder: any Encoder) throws {
       var container = encoder.singleValueContainer()
-      switch self { case .forward: try container.encode(true) case .reverse:
+      switch self {
+      case .forward: try container.encode(true)
+      case .reverse:
         try container.encode(false)
       }
     }
@@ -95,6 +97,7 @@
     }
   }
 
+  // swift-format-ignore
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   package struct AnySortComparator: SortComparator {
     var _base: Any  // internal for testing
@@ -265,3 +268,4 @@
   }
 // swiftlint:enable all
 #endif
+// swiftlint:disable:this file_length

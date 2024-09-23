@@ -1,6 +1,6 @@
 //
 //  SPInternationalDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -68,7 +68,6 @@ public struct SPInternationalDataType: Codable, Equatable, Sendable {
   public let bootKbd: String?
   public let bootLocale: String?
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     linguisticDataAssetsRequested: [String]?,

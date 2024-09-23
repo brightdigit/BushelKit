@@ -1,5 +1,5 @@
 //
-//  MachineError+Details.swift
+//  LibraryError+Details.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,14 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
 public import Foundation
 
-#if canImport(FoundationNetworking)
-  public import FoundationNetworking
-#endif
-
-extension MachineError {
+extension LibraryError {
   public enum Details: Sendable {
     private struct UnknownError: Error {
       private init() {}
@@ -44,93 +39,93 @@ extension MachineError {
 
     case bookmarkError
     case systemResolution
-    case missingRestoreImageWithID(InstallerImageIdentifier)
     case accessDeniedLibraryAt(URL)
-    case corruptedAt(URL)
+    case imageCorruptedAt(URL)
+    case libraryCorruptedAt(URL)
+    case imageFolderInitializationAt(URL)
+    case updateMetadataAt(URL)
+    case missingInitialization(for: InitializationProperty)
     case database
-    case missingProperty(ObjectProperty)
-    case snapshot
-    case session
-    case notFoundBookmarkID(UUID)
+    case copyImage(source: URL, destination: URL)
 
     // swiftlint:disable:next cyclomatic_complexity
-    func errorDescription(fromError error: (any Error)?) -> String {
+    internal func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue getting the bookmark: \(error)"
-
       case .systemResolution:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to resolve new image: \(error)"
-
-      case let .accessDeniedLibraryAt(path):
+      case let .accessDeniedLibraryAt(at: path):
         let components: [String?] = [
           "There's an issue getting access to library at \(path)", error?.localizedDescription,
         ]
         return components.compactMap { $0 }.joined(separator: ": ")
-
-      case let .corruptedAt(libraryURL):
+      case let .imageCorruptedAt(at: importingURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue getting the metadata for image at \(importingURL): \(error)"
+      case let .libraryCorruptedAt(at: libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There's an issue reading the library at \(libraryURL): \(error)"
-
+      case let .imageFolderInitializationAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue prepping the library at \(libraryURL): \(error)"
+      case let .updateMetadataAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "We were unable to update \(libraryURL): \(error)"
+      case let .missingInitialization(for: property):
+        return "There an issue with this library. Missing \(property)."
       case .database:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "There was an issue syncing with the database: \(error)"
-
-      case let .missingRestoreImageWithID(id):
-        return "There's an issue finding referenced restore image: \(id)"
-
-      case let .missingProperty(property): return "Missing object property: \(property)"
-
-      case .snapshot:
+      case let .copyImage(source: importingURL, destination: libraryURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared
-        return SnapshotError.description(from: error)
-
-      case .session:
-        assert(error != nil)
-        let error = error ?? UnknownError.shared
-        return "Unable to contnue with session: \(error.localizedDescription)"
-
-      case let .notFoundBookmarkID(id):
-        return "There's an issue finding machine with bookmark ID: \(id)"
+        return
+          "There was an error copying the image at \(importingURL) to library at: \(libraryURL): \(error)"
       }
     }
 
-    func recoverySuggestion(fromError _: (any Error)?) -> String? {
+    internal func recoverySuggestion(fromError _: (any Error)?) -> String? {
       switch self {
       case .accessDeniedLibraryAt: "Close and open the library again."
+      case let .imageCorruptedAt(at: imageURL): "Invalid Restore Image at \(imageURL)"
+      case .imageFolderInitializationAt: "Close and open the library again."
+      case .missingInitialization: "Close and open the library again."
       default: nil
       }
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func isRecoverable(fromError _: (any Error)?) -> Bool {
+    internal func isRecoverable(fromError _: (any Error)?) -> Bool {
       switch self {
       case .bookmarkError: false
 
       case .accessDeniedLibraryAt: false
 
-      case .corruptedAt: false
+      case .imageCorruptedAt: true
+
+      case .libraryCorruptedAt: false
+
+      case .imageFolderInitializationAt: false
+
+      case .updateMetadataAt: false
+
+      case .missingInitialization: false
 
       case .database: false
 
+      case .copyImage: true
+
       case .systemResolution: false
-
-      case .missingRestoreImageWithID: true
-
-      case .missingProperty: false
-
-      case .snapshot: false
-
-      case .session: false
-
-      case .notFoundBookmarkID: false
       }
     }
   }

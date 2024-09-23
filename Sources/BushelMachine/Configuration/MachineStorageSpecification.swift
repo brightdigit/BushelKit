@@ -1,6 +1,6 @@
 //
 //  MachineStorageSpecification.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -44,12 +44,12 @@ public struct MachineStorageSpecification: Codable, Identifiable, Equatable, Sen
 extension MachineStorageSpecification {
   // swiftlint:disable:next force_unwrapping
   private static let defaultPrimaryID = UUID(uuidString: "70fe323b-efc9-410f-b642-bc8e15636a49")!
-  internal static let defaultPrimary: MachineStorageSpecification = MachineStorageSpecification(
+  internal static let defaultPrimary = MachineStorageSpecification(
     id: Self.defaultPrimaryID,
     label: "",
     size: Self.defaultSize
   )
-  public static let defaultSize : UInt64 = UInt64(64 * 1_024 * 1_024 * 1_024)
+  public static let defaultSize = UInt64(64 * 1_024 * 1_024 * 1_024)
   public static func `default`(forSystem system: any MachineSystem) -> MachineStorageSpecification {
     .init(label: system.defaultStorageLabel, size: Self.defaultSize)
   }

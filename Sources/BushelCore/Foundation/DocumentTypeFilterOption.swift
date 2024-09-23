@@ -1,6 +1,6 @@
 //
 //  DocumentTypeFilterOption.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -43,9 +43,10 @@ public enum DocumentTypeFilterOption: Int, CaseIterable, Identifiable, Localizab
   public var id: Int { rawValue }
 
   public var typeFilter: DocumentTypeFilter {
-    switch self { case .machinesAndLibraries: []
+    switch self {
+    case .machinesAndLibraries: []
 
-      case .machinesOnly: .libraries
+    case .machinesOnly: .libraries
     }
   }
 

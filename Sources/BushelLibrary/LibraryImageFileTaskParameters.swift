@@ -1,6 +1,6 @@
 //
 //  LibraryImageFileTaskParameters.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,7 +31,7 @@ import BushelLogging
 public import FelinePine
 public import Foundation
 
-fileprivate struct LibraryImageFileTaskParameters: Sendable {
+private struct LibraryImageFileTaskParameters: Sendable {
   private let system: any LibrarySystem
   fileprivate let id: UUID
   fileprivate let url: URL
@@ -69,8 +69,7 @@ extension TaskGroup<LibraryImageFile?> {
       )
     else {
       logger.warning("Invalid Image File: \(imageFileURL.lastPathComponent)")
-      do { try FileManager.default.removeItem(at: imageFileURL) }
-      catch {
+      do { try FileManager.default.removeItem(at: imageFileURL) } catch {
         logger.error(
           "Unable to Delete \(imageFileURL.lastPathComponent): \(error.localizedDescription)"
         )
@@ -79,11 +78,9 @@ extension TaskGroup<LibraryImageFile?> {
     }
     logger.debug("Updating Metadata for \(parameters.id)")
     addTask {
-      do { return try await parameters.resolve() }
-      catch {
+      do { return try await parameters.resolve() } catch {
         logger.debug("Error Metadata for \(parameters.id): \(error.localizedDescription)")
-        do { try FileManager.default.removeItem(at: imageFileURL) }
-        catch {
+        do { try FileManager.default.removeItem(at: imageFileURL) } catch {
           logger.error(
             "Unable to Delete \(parameters.url.lastPathComponent): \(error.localizedDescription)"
           )

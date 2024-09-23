@@ -27,25 +27,26 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import Foundation
 import XCTest
 
-final class LibraryIdentifierTests: XCTestCase {
-    func testBookmarkIDFromString() {
-        let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
+@testable import BushelCore
 
-        let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
+internal final class LibraryIdentifierTests: XCTestCase {
+  func testBookmarkIDFromString() {
+    let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
 
-        XCTAssertEqual(sut.description, expectedID.description)
-    }
+    let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
 
-    func testURLFromString() {
-        let fileURL = URL.homeDirectory.appendingPathComponent("file.txt")
-        let url = LibraryIdentifier.url(fileURL)
+    XCTAssertEqual(sut.description, expectedID.description)
+  }
 
-        let sut = LibraryIdentifier(string: fileURL.path)
+  func testURLFromString() {
+    let fileURL = URL.homeDirectory.appendingPathComponent("file.txt")
+    let url = LibraryIdentifier.url(fileURL)
 
-        XCTAssertEqual(sut.description, url.description)
-    }
+    let sut = LibraryIdentifier(string: fileURL.path)
+
+    XCTAssertEqual(sut.description, url.description)
+  }
 }

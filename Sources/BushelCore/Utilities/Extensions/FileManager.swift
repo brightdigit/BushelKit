@@ -1,6 +1,6 @@
 //
 //  FileManager.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -87,18 +87,19 @@ extension FileManager {
     let directoryExistsStatus = directoryExists(at: url)
 
     #warning("logging-note: we could log each case for better debugging")
-    switch directoryExistsStatus { case .directoryExists: break
+    switch directoryExistsStatus {
+    case .directoryExists: break
 
-      case .fileExists:
-        if deleteExistingFile { try FileManager.default.removeItem(at: url) }
-        fallthrough
+    case .fileExists:
+      if deleteExistingFile { try FileManager.default.removeItem(at: url) }
+      fallthrough
 
-      case .notExists:
-        try FileManager.default.createDirectory(
-          at: url,
-          withIntermediateDirectories: createIntermediates,
-          attributes: attributes
-        )
+    case .notExists:
+      try FileManager.default.createDirectory(
+        at: url,
+        withIntermediateDirectories: createIntermediates,
+        attributes: attributes
+      )
     }
 
     return directoryExistsStatus

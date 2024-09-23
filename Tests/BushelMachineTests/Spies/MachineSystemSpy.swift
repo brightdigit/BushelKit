@@ -33,70 +33,70 @@ import BushelMachine
 import BushelMachineWax
 import Foundation
 
-final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
-    typealias RestoreImageType = RestoreImageStub
+internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
+  typealias RestoreImageType = RestoreImageStub
 
-    var id: VMSystemID { "spyOS" }
+  var id: VMSystemID { "spyOS" }
 
-    private(set) var isCreateBuiderForConfigurationCalled = false
-    private(set) var isMachineAtURLCalled = false
-    private(set) var isRestoreImageFromCalled = false
+  private(set) var isCreateBuiderForConfigurationCalled = false
+  private(set) var isMachineAtURLCalled = false
+  private(set) var isRestoreImageFromCalled = false
 
-    private let result: Result<Void, MachineSystemError>
+  private let result: Result<Void, MachineSystemError>
 
-    var defaultStorageLabel: String {
-        "spyOS System"
+  var defaultStorageLabel: String {
+    "spyOS System"
+  }
+
+  var defaultSnapshotSystem: BushelCore.SnapshotterID {
+    "spysnapshot"
+  }
+
+  init(result: Result<Void, MachineSystemError>) {
+    self.result = result
+  }
+
+  func createBuilder(
+    for _: MachineBuildConfiguration<RestoreImageType>,
+    at url: URL
+  ) throws -> any MachineBuilder {
+    isCreateBuiderForConfigurationCalled = true
+
+    try handleResult()
+
+    return MachineBuilderStub(url: url)
+  }
+
+  func machine(
+    at _: URL,
+    withConfiguration configuration: MachineConfiguration
+  ) throws -> any Machine {
+    isMachineAtURLCalled = true
+
+    try handleResult()
+
+    return MachineStub(configuration: configuration, state: .starting)
+  }
+
+  func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
+    isRestoreImageFromCalled = true
+
+    try handleResult()
+
+    return .init()
+  }
+
+  func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
+    .default
+  }
+
+  private func handleResult() throws {
+    switch result {
+    case .success:
+      break
+
+    case let .failure(failure):
+      throw failure
     }
-
-    var defaultSnapshotSystem: BushelCore.SnapshotterID {
-        "spysnapshot"
-    }
-
-    init(result: Result<Void, MachineSystemError>) {
-        self.result = result
-    }
-
-    func createBuilder(
-        for _: MachineBuildConfiguration<RestoreImageType>,
-        at url: URL
-    ) throws -> any MachineBuilder {
-        isCreateBuiderForConfigurationCalled = true
-
-        try handleResult()
-
-        return MachineBuilderStub(url: url)
-    }
-
-    func machine(
-        at _: URL,
-        withConfiguration configuration: MachineConfiguration
-    ) throws -> any Machine {
-        isMachineAtURLCalled = true
-
-        try handleResult()
-
-        return MachineStub(configuration: configuration, state: .starting)
-    }
-
-    func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
-        isRestoreImageFromCalled = true
-
-        try handleResult()
-
-        return .init()
-    }
-
-    func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
-        .default
-    }
-
-    private func handleResult() throws {
-        switch result {
-        case .success:
-            break
-
-        case let .failure(failure):
-            throw failure
-        }
-    }
+  }
 }

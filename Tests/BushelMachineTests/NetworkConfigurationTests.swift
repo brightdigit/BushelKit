@@ -27,13 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelMachine
 import XCTest
 
-final class NetworkConfigurationTests: XCTestCase {
-    func testDefaultInstanceOfTypeNat() {
-        let sut = NetworkConfiguration.default()
+@testable import BushelMachine
 
-        XCTAssertEqual(sut.attachment, .nat)
-    }
+internal final class NetworkConfigurationTests: XCTestCase {
+  func testDefaultInstanceOfTypeNat() {
+    let sut = NetworkConfiguration.default()
+
+    XCTAssertEqual(sut.attachment, .nat)
+  }
 }

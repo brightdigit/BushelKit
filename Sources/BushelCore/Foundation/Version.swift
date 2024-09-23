@@ -1,6 +1,6 @@
 //
 //  Version.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -78,8 +78,8 @@ extension Version {
   public var description: String {
     guard let prereleaseLabel else { return marketingSemVer.description }
 
-    // swiftlint:disable:next line_length
     return
+      // swiftlint:disable:next line_length
       "\(marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 
@@ -97,8 +97,7 @@ extension Version {
     prereleaseLabel: PrereleaseLabel? = nil
   ) {
     let marketingSemVer: Semver
-    do { marketingSemVer = try Semver(string: marketingVersionText) }
-    catch {
+    do { marketingSemVer = try Semver(string: marketingVersionText) } catch {
       assertionFailure(error: error)
       return nil
     }
@@ -164,8 +163,7 @@ extension Version {
     let prereleaseLabel: PrereleaseLabel? =
       if let prereleaseDictionary = objectForInfoDictionaryKey(.prelease) as? [String: Any] {
         .init(dictionary: prereleaseDictionary)
-      }
-      else { nil }
+      } else { nil }
 
     self.init(
       marketingVersionText: marketingVersionText,

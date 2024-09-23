@@ -1,6 +1,6 @@
 //
 //  FileManagerHandler.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -46,8 +46,7 @@ public struct FileManagerHandler: FileHandler {
   public func copy(at fromURL: URL, to toURL: URL) async throws {
     try await withCheckedThrowingContinuation {
       (continuation: CheckedContinuation<Void, any Error>) in
-      do { try fileManager().copyItem(at: fromURL, to: toURL) }
-      catch {
+      do { try fileManager().copyItem(at: fromURL, to: toURL) } catch {
         continuation.resume(throwing: error)
         return
       }

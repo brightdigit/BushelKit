@@ -1,6 +1,6 @@
 //
 //  MachineSetupConfiguration+Fake.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -31,7 +31,7 @@ public import BushelMachine
 import Foundation
 
 extension MachineSetupConfiguration {
-  public static let sampleMachineSetupConfiguration: Self = .init(
+  public static let sample: Self = .init(
     libraryID: .sampleLibraryID,
     restoreImageID: .imageIDSample,
     storage: [.init(label: "", size: MachineStorageSpecification.defaultSize)],

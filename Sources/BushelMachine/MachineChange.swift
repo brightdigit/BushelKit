@@ -1,6 +1,6 @@
 //
 //  MachineChange.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -41,9 +41,11 @@ public struct MachineChange: Sendable {
     case networkDetatchedWithError(any Error)
 
     public var description: String {
-      switch self { case .property: "property" case .guestDidStop: "guestDidStop"
-        case .stopWithError: "stopWithError"
-        case .networkDetatchedWithError: "networkDetatchedWithError"
+      switch self {
+      case .property: "property"
+      case .guestDidStop: "guestDidStop"
+      case .stopWithError: "stopWithError"
+      case .networkDetatchedWithError: "networkDetatchedWithError"
       }
     }
   }

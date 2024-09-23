@@ -1,6 +1,6 @@
 //
 //  MockDataSet.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -30,7 +30,7 @@
 package import BushelCore
 public import Foundation
 
-fileprivate let hardwareModelFormatString = """
+private let hardwareModelFormatString = """
   <?xml version="1.0" encoding="UTF-8"?>
   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
   <plist version="1.0">
@@ -49,7 +49,7 @@ fileprivate let hardwareModelFormatString = """
   </plist>
   """
 
-fileprivate let machineIdentifierFormatString = """
+private let machineIdentifierFormatString = """
   <?xml version="1.0" encoding="UTF-8"?>
   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
   <plist version="1.0">
@@ -109,11 +109,12 @@ package struct MockDataSet: VirtualizationDataSet {
   package func data(from name: KeyPath<any BushelCore.VirtualizationData.Paths, String>) throws
     -> Data
   {
-    switch name { case \.hardwareModelFileName: hardwareModelData
+    switch name {
+    case \.hardwareModelFileName: hardwareModelData
 
-      case \.machineIdentifierFileName: machineIdentifierData
+    case \.machineIdentifierFileName: machineIdentifierData
 
-      default: throw Error.notSupportedKeyPath
+    default: throw Error.notSupportedKeyPath
     }
   }
 }

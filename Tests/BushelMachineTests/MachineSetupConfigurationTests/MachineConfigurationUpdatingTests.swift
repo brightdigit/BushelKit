@@ -28,23 +28,24 @@
 //
 
 import BushelCore
-@testable import BushelMachine
 import XCTest
 
-final class MachineConfigurationUpdatingTests: XCTestCase {
-    func testUpdatingUsingBuildRequest() {
-        var sut = MachineSetupConfiguration(request: .sampleBuildRequest)
+@testable import BushelMachine
 
-        let request = MachineBuildRequest(
-            restoreImage: .init(
-                imageID: UUID(),
-                libraryID: LibraryIdentifier(string: UUID().uuidString)
-            )
-        )
+internal final class MachineConfigurationUpdatingTests: XCTestCase {
+  func testUpdatingUsingBuildRequest() {
+    var sut = MachineSetupConfiguration(request: .sampleBuildRequest)
 
-        sut.updating(forRequest: request)
+    let request = MachineBuildRequest(
+      restoreImage: .init(
+        imageID: UUID(),
+        libraryID: LibraryIdentifier(string: UUID().uuidString)
+      )
+    )
 
-        XCTAssertEqual(sut.libraryID, request.restoreImage?.libraryID)
-        XCTAssertEqual(sut.restoreImageID, request.restoreImage?.imageID)
-    }
+    sut.updating(forRequest: request)
+
+    XCTAssertEqual(sut.libraryID, request.restoreImage?.libraryID)
+    XCTAssertEqual(sut.restoreImageID, request.restoreImage?.imageID)
+  }
 }

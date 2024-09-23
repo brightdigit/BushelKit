@@ -1,6 +1,6 @@
 //
 //  SPUniversalAccessDataType.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -60,7 +60,6 @@ public struct SPUniversalAccessDataType: Codable, Equatable, Sendable {
   public let voiceover: String
   public let zoomMode: String
 
-  // swiftlint:disable:next line_length
   public init(
     name: String,
     contrast: String,

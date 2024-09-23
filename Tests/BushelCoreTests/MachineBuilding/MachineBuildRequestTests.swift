@@ -27,21 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
 
-final class MachineBuildRequestTests: XCTestCase {
-    func testNillMachineRestoreImageIdentifier() {
-        let sut = MachineBuildRequest(restoreImage: nil)
+@testable import BushelCore
 
-        XCTAssertNil(sut.restoreImage)
-    }
+internal final class MachineBuildRequestTests: XCTestCase {
+  func testNillMachineRestoreImageIdentifier() {
+    let sut = MachineBuildRequest(restoreImage: nil)
 
-    func testNotNillMachineRestoreImageIdentifier() {
-        let restoreImage = InstallerImageIdentifier.sampleInstallerIdentifier
-        let sut = MachineBuildRequest(restoreImage: restoreImage)
+    XCTAssertNil(sut.restoreImage)
+  }
 
-        XCTAssertNotNil(sut.restoreImage)
-        XCTAssertEqual(sut.restoreImage, restoreImage)
-    }
+  func testNotNillMachineRestoreImageIdentifier() {
+    let restoreImage = InstallerImageIdentifier.sampleInstallerIdentifier
+    let sut = MachineBuildRequest(restoreImage: restoreImage)
+
+    XCTAssertNotNil(sut.restoreImage)
+    XCTAssertEqual(sut.restoreImage, restoreImage)
+  }
 }

@@ -1,6 +1,6 @@
 //
 //  URL.swift
-//  Sublimation
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2024 BrightDigit.
@@ -38,7 +38,9 @@ extension URL {
   }
 
   #if !os(Linux)
-    public init(resolvingSecurityScopeBookmarkData data: Data, bookmarkDataIsStale: inout Bool) throws {
+    public init(resolvingSecurityScopeBookmarkData data: Data, bookmarkDataIsStale: inout Bool)
+      throws
+    {
       #if os(macOS)
         try self.init(
           resolvingBookmarkData: data,
