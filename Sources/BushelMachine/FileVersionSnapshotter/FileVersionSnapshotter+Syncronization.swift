@@ -55,8 +55,8 @@
     private func applyUpdates(_ updates: SnapshotFileUpdate, to snapshotCollectionURL: URL) throws
       -> [Snapshot]
     {
-      try updates.filesToDelete.forEach {
-        url in try fileManager.removeItem(at: url)
+      for url in updates.filesToDelete {
+        try fileManager.removeItem(at: url)
       }
 
       return try updates.versionsToAdd.map { versionToAdd in
