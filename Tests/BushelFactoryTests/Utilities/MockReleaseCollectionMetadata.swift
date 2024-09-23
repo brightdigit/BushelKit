@@ -29,7 +29,7 @@
 
 import BushelCore
 
-struct MockReleaseCollectionMetadata: ReleaseCollectionMetadata {
+internal struct MockReleaseCollectionMetadata: ReleaseCollectionMetadata {
   typealias InstallerReleaseType = MockInstallerRelease
 
   let releases: [MockInstallerRelease]

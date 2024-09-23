@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelMachine
 
-final class MachinePrimaryStorageConfigurationTests: XCTestCase {
+internal final class MachinePrimaryStorageConfigurationTests: XCTestCase {
   func testEmptyStorageConfiguration() {
     let sut = MachineSetupConfiguration(storage: [])
 

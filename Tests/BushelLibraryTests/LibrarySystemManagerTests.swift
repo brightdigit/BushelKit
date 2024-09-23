@@ -33,7 +33,7 @@ import XCTest
 
 @testable import BushelLibrary
 
-final class LibrarySystemManagerTests: XCTestCase {
+internal final class LibrarySystemManagerTests: XCTestCase {
   func testResolveSystemBasedOnID() {
     let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
     let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")

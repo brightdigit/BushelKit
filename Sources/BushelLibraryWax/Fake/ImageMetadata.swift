@@ -31,6 +31,7 @@ import BushelCore
 import BushelMacOSCore
 import Foundation
 
+// swift-format-ignore: AlwaysUseLowerCamelCase
 extension ImageMetadata {
   // swiftlint:disable:next identifier_name
   static let macOS_13_6_0_22G120: Self = .init(

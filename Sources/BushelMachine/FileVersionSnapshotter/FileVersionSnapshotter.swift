@@ -94,7 +94,8 @@
         )
       }
       .mapError(SnapshotError.inner(error:))
-      .unwrap(or: SnapshotError.missingSnapshotVersionID(snapshot.id)).get()
+      .unwrap(or: SnapshotError.missingSnapshotVersionID(snapshot.id))
+      .get()
 
       do {
         Self.logger.debug(

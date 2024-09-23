@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelCore
 
-final class AssertionFailureTests: XCTestCase {
+internal final class AssertionFailureTests: XCTestCase {
   private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>
 
   func testSuccessResult() throws {

@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelLibrary
 
-final class LibraryTests: XCTestCase {
+internal final class LibraryTests: XCTestCase {
   func testCorrectInitialization() {
     let items: [LibraryImageFile] = [
       .monterey_12_6_0,

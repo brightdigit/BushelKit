@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelCore
 
-final class FormattersTests: XCTestCase {
+internal final class FormattersTests: XCTestCase {
   private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"

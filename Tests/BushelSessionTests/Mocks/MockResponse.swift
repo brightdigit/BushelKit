@@ -29,7 +29,7 @@
 
 import Foundation
 
-struct MockResponse: Codable, Equatable {
+internal struct MockResponse: Codable, Equatable {
   let id: UUID
   init(id: UUID = .init()) {
     self.id = id

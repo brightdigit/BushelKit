@@ -32,7 +32,7 @@
   import Foundation
   import SwiftData
 
-  class MockDatabase: Database {
+  internal class MockDatabase: Database {
     var didRequestCount: Int?
     func contextMatchesModel(_: some PersistentModel) async -> Bool {
       false

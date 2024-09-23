@@ -31,7 +31,7 @@ import BushelMessageCore
 import BushelSessionCore
 import Foundation
 
-class MockService: SessionService {
+internal class MockService: SessionService {
   enum Error: Swift.Error {
     case wrongMessage
     case wrongResponse

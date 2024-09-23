@@ -31,24 +31,8 @@ import Foundation
 
 public typealias IPv6Address = UInt128
 
+// swiftlint:disable all
 @available(*, unavailable, message: "Not Ready for Use.") extension IPv6Address {
-  func toIPv6AddressFormat() -> String {
-    // Convert high and low parts to string representation
-    // This is a simplified example
-    // You would need proper formatting here
-    String(
-      format: "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x",
-      (value.upperBits >> 48) & 0xFFFF,
-      (value.upperBits >> 32) & 0xFFFF,
-      (value.upperBits >> 16) & 0xFFFF,
-      value.upperBits & 0xFFFF,
-      (value.lowerBits >> 48) & 0xFFFF,
-      (value.lowerBits >> 32) & 0xFFFF,
-      (value.lowerBits >> 16) & 0xFFFF,
-      value.lowerBits & 0xFFFF
-    )
-  }
-
   init(fromIPv6Address string: String) {
     // Parse string and convert to high and low parts
     // This is a simplified example
@@ -69,6 +53,22 @@ public typealias IPv6Address = UInt128
 
     self.init(upperBits: high, lowerBits: low)
   }
-}
 
+  func toIPv6AddressFormat() -> String {
+    // Convert high and low parts to string representation
+    // This is a simplified example
+    // You would need proper formatting here
+    String(
+      format: "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x",
+      (value.upperBits >> 48) & 0xFFFF,
+      (value.upperBits >> 32) & 0xFFFF,
+      (value.upperBits >> 16) & 0xFFFF,
+      value.upperBits & 0xFFFF,
+      (value.lowerBits >> 48) & 0xFFFF,
+      (value.lowerBits >> 32) & 0xFFFF,
+      (value.lowerBits >> 16) & 0xFFFF,
+      value.lowerBits & 0xFFFF
+    )
+  }
+}
 // swiftlint:enable all

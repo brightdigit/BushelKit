@@ -34,7 +34,7 @@ import XCTest
 
 @testable import BushelMachine
 
-final class MachineSetupRequestConfigurationTests: XCTestCase {
+internal final class MachineSetupRequestConfigurationTests: XCTestCase {
   func testNilMachineBuildRequest() {
     let sut = MachineSetupConfiguration(request: nil)
 

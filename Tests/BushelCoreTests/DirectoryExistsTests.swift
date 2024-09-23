@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelCore
 
-final class DirectoryExistsTests: XCTestCase {
+internal final class DirectoryExistsTests: XCTestCase {
   func testFileExists() {
     let sut = DirectoryExists(fileExists: true, isDirectory: false)
 

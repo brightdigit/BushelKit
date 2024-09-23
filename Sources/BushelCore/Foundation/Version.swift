@@ -78,8 +78,8 @@ extension Version {
   public var description: String {
     guard let prereleaseLabel else { return marketingSemVer.description }
 
-    // swiftlint:disable:next line_length
     return
+      // swiftlint:disable:next line_length
       "\(marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 

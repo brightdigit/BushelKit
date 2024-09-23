@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelService
 
-final class SynchronousTaskTests: XCTestCase {
+internal final class SynchronousTaskTests: XCTestCase {
   func testSuccessfulRun() throws {
     let startTime = Date()
     let timeout: DispatchTime = .now() + .seconds(5)

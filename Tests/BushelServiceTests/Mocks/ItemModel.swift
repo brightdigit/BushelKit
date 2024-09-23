@@ -31,7 +31,7 @@
   import Foundation
   import SwiftData
 
-  class ItemModel: PersistentModel {
+  internal class ItemModel: PersistentModel {
     static var schemaMetadata: [Schema.PropertyMetadata] = .init()
 
     var id: UUID

@@ -45,7 +45,7 @@
       cpuCount: Float(
         VZVirtualMachineConfiguration.minimumAllowedCPUCount
       )...Float(Self.maximumAllowedCPUCount),
-      memory:  // swiftlint:disable:next line_length
+      memory:
         Float(
           VZVirtualMachineConfiguration.minimumAllowedMemorySize
         )...Float(VZVirtualMachineConfiguration.maximumAllowedMemorySize)

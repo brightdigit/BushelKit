@@ -756,7 +756,7 @@ extension String {
     self = value._valueToString(radix: radix, uppercase: uppercase)
   }
 }
-
+// swift-format-ignore
 extension UInt128 {
   static func _valueFromString(_ value: String) -> UInt128? {
     let radix = UInt128._determineRadixFromString(value)

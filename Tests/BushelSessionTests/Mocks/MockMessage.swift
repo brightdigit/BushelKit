@@ -30,7 +30,7 @@
 import BushelMessageCore
 import Foundation
 
-struct MockMessage: Message, Equatable {
+internal struct MockMessage: Message, Equatable {
   typealias ResponseType = MockResponse
 
   let id: UUID

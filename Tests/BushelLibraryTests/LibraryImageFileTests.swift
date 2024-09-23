@@ -34,7 +34,7 @@ import XCTest
 
 @testable import BushelLibrary
 
-final class LibraryImageFileTests: XCTestCase {
+internal final class LibraryImageFileTests: XCTestCase {
   func testDecoding() throws {
     #if canImport(FoundationNetworking)
       XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")

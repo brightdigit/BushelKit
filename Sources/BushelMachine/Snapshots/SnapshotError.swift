@@ -29,7 +29,7 @@
 
 import Foundation
 
-enum SnapshotError: Error, LocalizedError, Sendable {
+internal enum SnapshotError: Error, LocalizedError, Sendable {
   case innerError(any Error)
   case missingSnapshotVersionID(UUID)
   case missingSnapshotVersionAt(URL)

@@ -29,7 +29,7 @@
 
 import Foundation
 
-struct MockError: Error {
+internal struct MockError: Error {
   let id: UUID
 
   init(id: UUID = .init()) {

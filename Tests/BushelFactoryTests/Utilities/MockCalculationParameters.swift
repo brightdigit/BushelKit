@@ -29,7 +29,7 @@
 
 import BushelFactory
 
-struct MockCalculationParameters: CalculationParameters {
+internal struct MockCalculationParameters: CalculationParameters {
   let expectedIndex: Int
   let indexRange: ClosedRange<Int>
 

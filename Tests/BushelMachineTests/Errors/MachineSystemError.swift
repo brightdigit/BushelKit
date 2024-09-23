@@ -30,7 +30,7 @@
 import BushelTestUtilities
 import Foundation
 
-struct MachineSystemError: MockError {
+internal struct MachineSystemError: MockError {
   static let createBuilderForConfiguration: Self = .init(value: "createBuilderForConfiguration")
   static let machineAtURL: Self = .init(value: "machineAtURL")
   static let restoreImage: Self = .init(value: "restoreImage")

@@ -33,7 +33,7 @@ import BushelFactory
 import BushelMachine
 import XCTest
 
-final class ReleaseCollectionTests: XCTestCase {
+internal final class ReleaseCollectionTests: XCTestCase {
   private struct TestParameters {
     let customReleaseCount: Int
     let expectedFirstMajorVersion: Int
@@ -156,7 +156,8 @@ final class ReleaseCollectionTests: XCTestCase {
     XCTAssertEqual(actualReleaseCollection.firstMajorVersion, parameters.expectedFirstMajorVersion)
     XCTAssertEqual(actualCustomVersions, expectedCustomVersions)
 
-    let sortedReleases = releaseCollection.releases.sorted(by: { $0.majorVersion < $1.majorVersion }
+    let sortedReleases = releaseCollection.releases.sorted(
+      by: { $0.majorVersion < $1.majorVersion }
     )
     for expectedRelease in sortedReleases {
       guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {

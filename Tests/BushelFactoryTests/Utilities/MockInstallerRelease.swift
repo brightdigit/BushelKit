@@ -29,7 +29,7 @@
 
 import BushelCore
 
-struct MockInstallerRelease: InstallerRelease {
+internal struct MockInstallerRelease: InstallerRelease {
   let versionName: String
 
   let releaseName: String

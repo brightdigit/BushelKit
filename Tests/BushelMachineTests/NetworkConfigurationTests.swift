@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelMachine
 
-final class NetworkConfigurationTests: XCTestCase {
+internal final class NetworkConfigurationTests: XCTestCase {
   func testDefaultInstanceOfTypeNat() {
     let sut = NetworkConfiguration.default()
 

@@ -32,7 +32,7 @@ import XCTest
 
 @testable import BushelMachine
 
-final class MachineSystemTests: XCTestCase {
+internal final class MachineSystemTests: XCTestCase {
   // MARK: - CreateBuilder
 
   func testSuccessfulCreateBuilderForBuildConfiguration() async throws {

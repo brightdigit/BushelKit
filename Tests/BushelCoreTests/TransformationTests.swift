@@ -31,7 +31,7 @@ import XCTest
 
 @testable import BushelCore
 
-final class TransformationTests: XCTestCase {
+internal final class TransformationTests: XCTestCase {
   private static func intToString(_ value: Int) -> String {
     "\(value)"
   }

@@ -69,7 +69,6 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     graphicsConfigurations: [GraphicsConfiguration] = [.default()],
     snapshots: [Snapshot] = []
   ) {
-    // swiftlint:disable:next line_length
     assert(
       memory.isMultiple(of: 1_024 * 1_024),
       "Memory is not correct multiple of 1MiB. Should be \(memory.roundToMultiple(of: 1_024 * 1_024))"

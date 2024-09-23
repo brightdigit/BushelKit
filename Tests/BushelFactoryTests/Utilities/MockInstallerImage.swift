@@ -32,7 +32,7 @@ import BushelMachine
 import BushelMachineWax
 import Foundation
 
-struct MockInstallerImage: InstallerImage, Equatable {
+internal struct MockInstallerImage: InstallerImage, Equatable {
   let libraryID: BushelCore.LibraryIdentifier?
 
   let imageID: UUID

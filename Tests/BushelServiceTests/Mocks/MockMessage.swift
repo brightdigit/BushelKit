@@ -33,7 +33,7 @@
   import Foundation
   import SwiftData
 
-  struct MockMessage: Message {
+  internal struct MockMessage: Message {
     typealias ResponseType = MockResponse
     let id: UUID
     let count: Int

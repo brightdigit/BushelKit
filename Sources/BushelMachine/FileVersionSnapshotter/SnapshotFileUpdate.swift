@@ -31,7 +31,7 @@
 
   import Foundation
 
-  struct SnapshotFileUpdate {
+  internal struct SnapshotFileUpdate {
     let filesToDelete: [URL]
     let versionsToAdd: [NSFileVersion]
   }

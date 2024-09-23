@@ -97,6 +97,7 @@
     }
   }
 
+  // swift-format-ignore
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   package struct AnySortComparator: SortComparator {
     var _base: Any  // internal for testing

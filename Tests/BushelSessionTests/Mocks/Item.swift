@@ -29,7 +29,7 @@
 
 import Foundation
 
-struct Item: Codable {
+internal struct Item: Codable {
   var id: UUID
 
   init(id: UUID = .init()) {

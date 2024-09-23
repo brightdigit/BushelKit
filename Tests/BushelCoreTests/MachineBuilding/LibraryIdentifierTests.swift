@@ -32,7 +32,7 @@ import XCTest
 
 @testable import BushelCore
 
-final class LibraryIdentifierTests: XCTestCase {
+internal final class LibraryIdentifierTests: XCTestCase {
   func testBookmarkIDFromString() {
     let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
 
