@@ -36,13 +36,6 @@ extension UserDefaults {
 
     return defaultValue
   }
-  //
-  //  public func value<AppStoredType: AppStored>(
-  //    for _: AppStoredType.Type,
-  //    defaultValue: AppStoredType.Value
-  //  ) -> AppStoredType.Value where AppStoredType.Value == Bool {
-  //    bool(forKey: AppStoredType.key, defaultValue: defaultValue)
-  //  }
 
   public func value<AppStoredType: DefaultWrapped>(
     for _: AppStoredType.Type,
