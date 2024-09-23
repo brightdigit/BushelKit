@@ -31,7 +31,6 @@ public import Foundation
 
 public struct BookmarkError: Error, Sendable {
   public enum Details: Equatable, Sendable {
-    case database
     case accessDeniedAt(URL)
     case fileDoesNotExistAt(URL)
     case notFound(Identifier)
@@ -51,9 +50,6 @@ extension BookmarkError {
     BookmarkError(innerError: nil, details: .notFound(identifier))
   }
 
-  public static func databaseError(_ error: any Error) -> BookmarkError {
-    BookmarkError(innerError: error, details: .database)
-  }
 
   public static func accessDeniedError(_ error: any Error, at url: URL) -> BookmarkError {
     let nsError = error as NSError

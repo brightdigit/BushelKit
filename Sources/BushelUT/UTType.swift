@@ -43,22 +43,22 @@
       }
     }
 
-    public static func allowedContentTypes(for fileType: FileType) -> [UTType] {
-      var types = [UTType]()
-
-      if fileType.isOwned { types.append(.init(exportedAs: fileType.utIdentifier)) }
-
-      if let fileExtensionType = fileType.fileExtension.flatMap({ UTType(filenameExtension: $0) }) {
-        types.append(fileExtensionType)
-      }
-
-      if let utIdentified = UTType(fileType.utIdentifier) { types.append(utIdentified) }
-
-      return types
-    }
-
-    public static func allowedContentTypes(for fileTypes: FileType...) -> [UTType] {
-      fileTypes.flatMap(allowedContentTypes(for:))
-    }
+//    public static func allowedContentTypes(for fileType: FileType) -> [UTType] {
+//      var types = [UTType]()
+//
+//      if fileType.isOwned { types.append(.init(exportedAs: fileType.utIdentifier)) }
+//
+//      if let fileExtensionType = fileType.fileExtension.flatMap({ UTType(filenameExtension: $0) }) {
+//        types.append(fileExtensionType)
+//      }
+//
+//      if let utIdentified = UTType(fileType.utIdentifier) { types.append(utIdentified) }
+//
+//      return types
+//    }
+//
+//    public static func allowedContentTypes(for fileTypes: FileType...) -> [UTType] {
+//      fileTypes.flatMap(allowedContentTypes(for:))
+//    }
   }
 #endif

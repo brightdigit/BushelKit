@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-import BushelLogging
 public import Foundation
 
 public struct InstallerImageError: Error, Sendable {

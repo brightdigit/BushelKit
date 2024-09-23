@@ -51,7 +51,7 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
 
   public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
 
-  public var isRecoverable: Bool { details.isRecoverable(fromError: innerError) }
+  
 
   public var isCritical: Bool {
     switch details { case .corruptedAt: true
