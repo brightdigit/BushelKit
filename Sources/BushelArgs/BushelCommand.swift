@@ -33,5 +33,7 @@ import Foundation
 public protocol BushelCommand: ParsableCommand {}
 
 extension BushelCommand {
-  public static var configuration: CommandConfiguration { Bushel.configuration }
+  public static var configuration: CommandConfiguration {
+    Bushel.configuration
+  }
 }

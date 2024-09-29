@@ -29,7 +29,9 @@
 
 public import BushelHub
 import BushelMacOSCore
+
 import Foundation
+
 public import IPSWDownloads
 
 extension HubImage {

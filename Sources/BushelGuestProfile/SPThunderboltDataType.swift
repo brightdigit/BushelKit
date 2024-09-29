@@ -32,9 +32,13 @@ public import Foundation
 // MARK: - SPThunderboltDataType
 
 public struct SPThunderboltDataType: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey { case thunderbolt = "Thunderbolt" }
+  public enum CodingKeys: String, CodingKey {
+    case thunderbolt = "Thunderbolt"
+  }
 
   public let thunderbolt: String
 
-  public init(thunderbolt: String) { self.thunderbolt = thunderbolt }
+  public init(thunderbolt: String) {
+    self.thunderbolt = thunderbolt
+  }
 }

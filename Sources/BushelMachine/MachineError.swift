@@ -28,7 +28,9 @@
 //
 
 public import BushelCore
+
 public import BushelLogging
+
 public import Foundation
 
 #if canImport(FoundationNetworking)
@@ -42,22 +44,35 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     case snapshot
   }
 
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 
   public let innerError: (any Error)?
   public let details: Details
 
-  public var errorDescription: String? { details.errorDescription(fromError: innerError) }
+  public var errorDescription: String? {
+    details.errorDescription(fromError: innerError)
+  }
 
-  public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
+  public var recoverySuggestion: String? {
+    details.recoverySuggestion(fromError: innerError)
+  }
+
+  public var isRecoverable: Bool {
+    details.isRecoverable(fromError: innerError)
+  }
 
   public var isCritical: Bool {
-    switch details {
-    case .corruptedAt: true
+    switch self.details {
+    case .corruptedAt:
+      true
 
-    case .session: true
+    case .session:
+      true
 
-    default: false
+    default:
+      false
     }
   }
 
@@ -66,15 +81,15 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     as _: TypedError.Type,
     details: MachineError.Details
   ) throws {
-    guard let innerError = innerError as? TypedError else { throw innerError }
+    guard let innerError = innerError as? TypedError else {
+      throw innerError
+    }
     self.init(details: details, innerError: innerError)
   }
 
   private init(details: MachineError.Details, innerError: (any Error)? = nil) {
     if let innerError = innerError as? MachineError {
-      assertionFailure(
-        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)"
-      )
+      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
       Self.logger.critical(
         // swiftlint:disable:next line_length
         "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"

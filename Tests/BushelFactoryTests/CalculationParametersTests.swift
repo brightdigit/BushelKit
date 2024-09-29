@@ -28,18 +28,17 @@
 //
 
 import BushelCoreWax
+@testable import BushelFactory
 import XCTest
 
-@testable import BushelFactory
-
 internal final class CalculationParametersTests: XCTestCase {
-  func testIndexForValue() {
+  internal func testIndexForValue() {
     let exp = expectation(description: "Called Closure")
-    let expectedValue: Int = .random(in: 1...100)
-    let expectedPassingValue: Int = .random(in: 1...100)
+    let expectedValue: Int = .random(in: 1 ... 100)
+    let expectedPassingValue: Int = .random(in: 1 ... 100)
     let specCalcParameters = SpecificationCalculationParameters(
-      indexRange: 1...50,
-      valueRange: 100...1_000
+      indexRange: 1 ... 50,
+      valueRange: 100 ... 1_000
     ) { passedValue in
       defer {
         exp.fulfill()
@@ -52,13 +51,13 @@ internal final class CalculationParametersTests: XCTestCase {
     wait(for: [exp], timeout: 5.0)
   }
 
-  func testValueUsing() {
+  internal func testValueUsing() {
     let exp = expectation(description: "Called Closure")
-    let expectedValue: Int = .random(in: 1...100)
-    let expectedPassingValue: Int = .random(in: 1...100)
+    let expectedValue: Int = .random(in: 1 ... 100)
+    let expectedPassingValue: Int = .random(in: 1 ... 100)
     let specCalcParameters = SpecificationCalculationParameters(
-      indexRange: 1...50,
-      valueRange: 100...1_000
+      indexRange: 1 ... 50,
+      valueRange: 100 ... 1_000
     ) { passedValue in
       XCTFail("Shouldn't be called")
       return passedValue
@@ -73,10 +72,10 @@ internal final class CalculationParametersTests: XCTestCase {
     wait(for: [exp], timeout: 5.0)
   }
 
-  func testFloats() {
+  internal func testFloats() {
     let specCalcParameters = SpecificationCalculationParameters(
-      indexRange: 0.1...50.1,
-      valueRange: 99.1...1_000.1
+      indexRange: 0.1 ... 50.1,
+      valueRange: 99.1 ... 1_000.1
     ) { passedValue in
       XCTFail("Shouldn't be called")
       return passedValue
@@ -88,17 +87,17 @@ internal final class CalculationParametersTests: XCTestCase {
     XCTAssertEqual(specCalcParameters.valueRange.upperBound, 1_000)
   }
 
-  func testValue() {
-    let indexRange: ClosedRange<Int> = .random(startingIn: 0...100, withSizeWithin: 10...20)
+  internal func testValue() {
+    let indexRange: ClosedRange<Int> = .random(startingIn: 0 ... 100, withSizeWithin: 10 ... 20)
 
-    let valueRange: ClosedRange<Int> = .random(startingIn: 0...100, withSizeWithin: 10...20)
+    let valueRange: ClosedRange<Int> = .random(startingIn: 0 ... 100, withSizeWithin: 10 ... 20)
     let parameters = MockCalculationParameters(
-      expectedIndex: .random(in: 0...100),
+      expectedIndex: .random(in: 0 ... 100),
       indexRange: indexRange,
       valueRange: valueRange
     )
     let expectation = expectation(description: "Called closure.")
-    let expectedValue: Int = .random(in: 100...200)
+    let expectedValue: Int = .random(in: 100 ... 200)
     let actualValue = parameters.value {
       defer {
         expectation.fulfill()

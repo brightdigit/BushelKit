@@ -36,9 +36,13 @@ public protocol Localizable: Hashable {
 }
 
 extension Localizable {
-  public static var emptyLocalizedStringID: String { "" }
+  public static var emptyLocalizedStringID: String {
+    ""
+  }
 
-  public static var defaultLocalizedStringID: String { emptyLocalizedStringID }
+  public static var defaultLocalizedStringID: String {
+    emptyLocalizedStringID
+  }
 
   public var localizedStringIDRawValue: String {
     let string = Self.localizedStringIDMapping[self]
@@ -49,7 +53,9 @@ extension Localizable {
 
 extension Optional where Wrapped: Localizable {
   public var localizedStringIDRawValue: String {
-    guard let value = self else { return Wrapped.defaultLocalizedStringID }
+    guard let value = self else {
+      return Wrapped.defaultLocalizedStringID
+    }
     let string = Wrapped.localizedStringIDMapping[value]
     assert(string != nil)
     return string ?? ""

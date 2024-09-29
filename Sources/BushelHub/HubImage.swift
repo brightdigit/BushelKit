@@ -28,13 +28,14 @@
 //
 
 public import BushelCore
+
 public import Foundation
 
 public struct HubImage: Identifiable, InstallImage, Sendable {
   public let title: String
   public let metadata: ImageMetadata
   public let url: URL
-  public var id: URL { url }
+  public var id: URL { self.url }
 
   public init(title: String, metadata: ImageMetadata, url: URL) {
     self.title = title

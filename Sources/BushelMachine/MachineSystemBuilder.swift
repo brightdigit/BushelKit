@@ -29,8 +29,9 @@
 
 import Foundation
 
-@resultBuilder public enum MachineSystemBuilder {
-  public static func buildBlock(_ components: any MachineSystem...) -> [any MachineSystem] {
+@resultBuilder
+public enum MachineSystemBuilder {
+  public static func buildBlock(_ components: any MachineSystem ...) -> [any MachineSystem] {
     components
   }
 }

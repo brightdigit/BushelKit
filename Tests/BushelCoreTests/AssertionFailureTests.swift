@@ -27,14 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-
 @testable import BushelCore
+import XCTest
 
 internal final class AssertionFailureTests: XCTestCase {
   private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>
 
-  func testSuccessResult() throws {
+  internal func testSuccessResult() throws {
     let expectedResult: ResultType = .success(true)
 
     let actualResult: ResultType = try BushelCore.assertionFailure(
@@ -44,7 +43,7 @@ internal final class AssertionFailureTests: XCTestCase {
     XCTAssertEqual(actualResult, expectedResult)
   }
 
-  func testLocalizedErrorResult() throws {
+  internal func testLocalizedErrorResult() throws {
     let expectedResult: ResultType = .failure(.sample)
 
     let actualResult: ResultType = try BushelCore.assertionFailure(

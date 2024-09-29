@@ -28,7 +28,9 @@
 //
 
 public import BushelCore
+
 public import BushelLogging
+
 import Foundation
 
 /// Implementation of a ``MachineSystemManaging``
@@ -38,7 +40,11 @@ public final class MachineSystemManager: MachineSystemManaging, Loggable {
   /// Creates a ``MachineSystemManager`` based on the list of implementations.
   /// - Parameter implementations: Array of ``MachineSystem``
   public init(_ implementations: [any MachineSystem]) {
-    self.implementations = .init(uniqueKeysWithValues: implementations.map { ($0.id, $0) })
+    self.implementations = .init(
+      uniqueKeysWithValues: implementations.map {
+        ($0.id, $0)
+      }
+    )
   }
 
   /// Resolve the ``MachineSystem`` based on the ``VMSystemID``

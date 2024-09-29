@@ -27,6 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import BushelCore
+
 import Foundation
 
 #if canImport(SwiftUI)
@@ -42,10 +44,14 @@ public struct MachineChange: Sendable {
 
     public var description: String {
       switch self {
-      case .property: "property"
-      case .guestDidStop: "guestDidStop"
-      case .stopWithError: "stopWithError"
-      case .networkDetatchedWithError: "networkDetatchedWithError"
+      case .property:
+        "property"
+      case .guestDidStop:
+        "guestDidStop"
+      case .stopWithError:
+        "stopWithError"
+      case .networkDetatchedWithError:
+        "networkDetatchedWithError"
       }
     }
   }

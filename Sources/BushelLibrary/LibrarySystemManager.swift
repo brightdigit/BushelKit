@@ -28,9 +28,12 @@
 //
 
 public import BushelCore
-public import BushelLogging
-public import Foundation
+
 public import RadiantDocs
+
+public import BushelLogging
+
+public import Foundation
 
 public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendable {
   public let fileTypeBasedOnURL: @Sendable (URL) -> FileType?
@@ -46,23 +49,30 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
     _ implementations: [any LibrarySystem],
     fileTypeBasedOnURL: @escaping @Sendable (URL) -> FileType?
   ) {
-    self.implementations = .init(uniqueKeysWithValues: implementations.map { ($0.id, $0) })
-
-    fileTypeMap = self.implementations.mapValues { $0.allowedContentTypes }
-      .reduce(into: [FileType: VMSystemID]()) { partialResult, pair in
-        for value in pair.value { partialResult[value] = pair.key }
+    self.implementations = .init(
+      uniqueKeysWithValues:
+      implementations.map {
+        ($0.id, $0)
       }
+    )
+
+    fileTypeMap = self.implementations.mapValues {
+      $0.allowedContentTypes
+    }
+    .reduce(into: [FileType: VMSystemID]()) { partialResult, pair in
+      for value in pair.value {
+        partialResult[value] = pair.key
+      }
+    }
 
     Self.logger.debug("LibrarySystems Initialized: \(implementations.map(\.shortName))")
-    Self.logger.debug(
-      "LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))"
-    )
+    Self.logger.debug("LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))")
 
     self.fileTypeBasedOnURL = fileTypeBasedOnURL
   }
 
   public func resolveSystemFor(url: URL) -> VMSystemID? {
-    guard let type = fileTypeBasedOnURL(url) else {
+    guard let type = self.fileTypeBasedOnURL(url) else {
       Self.logger.error("Unknown path extension: \(url.pathExtension)")
       return nil
     }

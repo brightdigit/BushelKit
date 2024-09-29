@@ -28,9 +28,12 @@
 //
 
 import BushelCore
+
 import Foundation
 
 public struct Library: Codable, Equatable, Sendable {
   public var items: [LibraryImageFile]
-  public init(items: [LibraryImageFile] = .init()) { self.items = items }
+  public init(items: [LibraryImageFile] = .init()) {
+    self.items = items
+  }
 }

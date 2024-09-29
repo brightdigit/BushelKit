@@ -31,12 +31,12 @@ import BushelFactory
 import XCTest
 
 internal final class SpecificationConfigurationTests: XCTestCase {
-  func testTemplateUpdate() {
+  internal func testTemplateUpdate() {
     var configuration = SpecificationConfiguration<UUID>()
     configuration.template = .init(
       nameID: .init(),
       systemImageName: "basic",
-      idealStorage: .random(in: 100...1_000),
+      idealStorage: .random(in: 100 ... 1_000),
       memoryWithin: Specifications.Handlers.min,
       cpuWithin: Specifications.Handlers.min
     )

@@ -36,7 +36,8 @@ public struct MetadataLabel: Equatable, Sendable {
   public let systemName: String
   public let versionName: String
 
-  @Sendable public init(
+  @Sendable
+  public init(
     operatingSystemLongName: String,
     defaultName: String,
     imageName: String,

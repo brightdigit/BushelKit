@@ -41,7 +41,7 @@ internal final class ReleaseCollectionTests: XCTestCase {
     let averageImageCountPerRelease: Int
 
     var indexRange: Range<Int> {
-      expectedFirstMajorVersion..<(expectedFirstMajorVersion + releaseCount)
+      self.expectedFirstMajorVersion ..< (self.expectedFirstMajorVersion + self.releaseCount)
     }
 
     static func random(
@@ -51,10 +51,10 @@ internal final class ReleaseCollectionTests: XCTestCase {
       averageImageCountPerRelease: Int? = nil
     ) -> TestParameters {
       self.init(
-        customReleaseCount: expectedCustomVersionsAllowed ? .random(in: 0...2) : 0,
-        expectedFirstMajorVersion: expectedFirstMajorVersion ?? .random(in: 4...30),
-        releaseCount: releaseCount ?? .random(in: 3...10),
-        averageImageCountPerRelease: averageImageCountPerRelease ?? .random(in: 3...6)
+        customReleaseCount: expectedCustomVersionsAllowed ? .random(in: 0 ... 2) : 0,
+        expectedFirstMajorVersion: expectedFirstMajorVersion ?? .random(in: 4 ... 30),
+        releaseCount: releaseCount ?? .random(in: 3 ... 10),
+        averageImageCountPerRelease: averageImageCountPerRelease ?? .random(in: 3 ... 6)
       )
     }
 
@@ -104,28 +104,6 @@ internal final class ReleaseCollectionTests: XCTestCase {
       }
   }
 
-  fileprivate func assertActualReleases(
-    _ releaseCollection: any ReleaseCollectionMetadata,
-    _ actualReleaseCollection: ReleaseCollection,
-    _ imageDictionary: [Int: [MockInstallerImage]]
-  ) {
-    let sortedReleases = releaseCollection.releases.sorted(
-      by: { $0.majorVersion < $1.majorVersion }
-    )
-    for expectedRelease in sortedReleases {
-      guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {
-        XCTAssertNotNil(actualReleaseCollection[expectedRelease.majorVersion])
-        continue
-      }
-
-      assertThat(
-        actualRelease: actualRelease,
-        equalsExpectedRelease: expectedRelease,
-        fromDictionary: imageDictionary
-      )
-    }
-  }
-
   private func doTestReleaseCollectionWhere(
     customVersionsAllowed expectedCustomVersionsAllowed: Bool,
     withCustomReleaseCount customReleaseCount: Int? = nil
@@ -147,8 +125,7 @@ internal final class ReleaseCollectionTests: XCTestCase {
       includingCustomReleaseCount: parameters.customReleaseCount
     )
 
-    let expectedCustomVersions =
-      imageDictionary
+    let expectedCustomVersions = imageDictionary
       .filter { (key: Int, _: [MockInstallerImage]) in
         !parameters.indexRange.contains(key)
       }
@@ -166,38 +143,46 @@ internal final class ReleaseCollectionTests: XCTestCase {
       fromCollection: actualReleaseCollection
     )
 
-    XCTAssertEqual(
-      actualReleaseCollection.containsCustomVersions, parameters.customReleaseCount > 0
-    )
+    XCTAssertEqual(actualReleaseCollection.containsCustomVersions, parameters.customReleaseCount > 0)
     XCTAssertEqual(actualReleaseCollection.customVersionsAllowed, expectedCustomVersionsAllowed)
 
-    XCTAssertEqual(
-      actualReleaseCollection.customVersionsAllowed, releaseCollection.customVersionsAllowed
-    )
+    XCTAssertEqual(actualReleaseCollection.customVersionsAllowed, releaseCollection.customVersionsAllowed)
     XCTAssertEqual(actualReleaseCollection.prefix, releaseCollection.prefix)
     XCTAssertEqual(actualReleaseCollection.firstMajorVersion, parameters.expectedFirstMajorVersion)
     XCTAssertEqual(actualCustomVersions, expectedCustomVersions)
 
-    assertActualReleases(releaseCollection, actualReleaseCollection, imageDictionary)
+    let sortedReleases = releaseCollection.releases.sorted(by: { $0.majorVersion < $1.majorVersion })
+    for expectedRelease in sortedReleases {
+      guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {
+        XCTAssertNotNil(actualReleaseCollection[expectedRelease.majorVersion])
+        continue
+      }
+
+      assertThat(
+        actualRelease: actualRelease,
+        equalsExpectedRelease: expectedRelease,
+        fromDictionary: imageDictionary
+      )
+    }
   }
 
   func testInit() {
-    let testCount: Int = .random(in: 10...20)
-    for _ in 0..<testCount {
+    let testCount: Int = .random(in: 10 ... 20)
+    for _ in 0 ..< testCount {
       doTestReleaseCollectionWhere(
         customVersionsAllowed: false
       )
     }
-    for _ in 0..<testCount {
+    for _ in 0 ..< testCount {
       doTestReleaseCollectionWhere(
         customVersionsAllowed: true
       )
     }
-    //    for _ in 0..<testCount {
-    //      doTestReleaseCollectionWhere(
-    //        customVersionsAllowed: false,
-    //        withCustomReleaseCount: .random(in: 1...3)
-    //      )
-    //    }
+//    for _ in 0..<testCount {
+//      doTestReleaseCollectionWhere(
+//        customVersionsAllowed: false,
+//        withCustomReleaseCount: .random(in: 1...3)
+//      )
+//    }
   }
 }

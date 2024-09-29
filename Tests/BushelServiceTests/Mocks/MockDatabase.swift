@@ -44,8 +44,8 @@
       guard let count = descriptor.fetchLimit else {
         return []
       }
-      didRequestCount = count
-      return (0..<count).map { _ in
+      self.didRequestCount = count
+      return (0 ..< count).map { _ in
         ItemModel()
       }
       .compactMap { $0 as? T }

@@ -40,5 +40,6 @@ public struct NetworkConfiguration: Codable, Identifiable, Sendable {
 }
 
 extension NetworkConfiguration {
-  public static func `default`() -> NetworkConfiguration { .init(attachment: .nat) }
+  public static func `default`() -> NetworkConfiguration { .init(attachment: .nat)
+  }
 }

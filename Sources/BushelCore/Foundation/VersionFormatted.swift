@@ -41,6 +41,9 @@ public struct VersionFormatted: Sendable {
 
 extension VersionFormatted {
   public init(version: Version) {
-    self.init(marketingVersion: version.description, buildNumberHex: version.buildNumberHex())
+    self.init(
+      marketingVersion: version.description,
+      buildNumberHex: version.buildNumberHex()
+    )
   }
 }

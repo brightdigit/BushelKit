@@ -30,4 +30,6 @@
 public import BushelCore
 import Foundation
 
-extension VMSystemID { public static let macOS: VMSystemID = "macOSApple" }
+extension VMSystemID {
+  public static let macOS: VMSystemID = "macOSApple"
+}

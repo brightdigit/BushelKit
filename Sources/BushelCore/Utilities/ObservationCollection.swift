@@ -37,13 +37,21 @@
 
     public func append(_ observation: NSKeyValueObservation, withID id: UUID) {
       assert(observations[id] == nil)
-      observations[id] = observation
+      self.observations[id] = observation
     }
 
-    public func remove(withID id: UUID) -> Bool { observations.removeValue(forKey: id) != nil }
+    public func remove(withID id: UUID) -> Bool {
+      self.observations.removeValue(forKey: id) != nil
+    }
 
-    private func removeAll() { observations.removeAll() }
+    private func removeAll() {
+      self.observations.removeAll()
+    }
 
-    public nonisolated func clear() { Task { await self.removeAll() } }
+    public nonisolated func clear() {
+      Task {
+        await self.removeAll()
+      }
+    }
   }
 #endif

@@ -36,9 +36,11 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
   case missingSnapshotFile(UUID)
   case unarchiveError(Data)
 
-  var errorDescription: String? { Self.description(from: self) }
+  internal var errorDescription: String? {
+    Self.description(from: self)
+  }
 
-  static func inner(error: any Error) -> SnapshotError {
+  internal static func inner(error: any Error) -> SnapshotError {
     if let snapshotError = error as? SnapshotError {
       snapshotError
     } else {
@@ -46,7 +48,7 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
     }
   }
 
-  static func description(from error: any Error) -> String {
+  internal static func description(from error: any Error) -> String {
     guard let error = error as? SnapshotError else {
       assertionFailure()
       return error.localizedDescription
@@ -55,10 +57,14 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
     case let .innerError(error):
       assertionFailure(error.localizedDescription)
       return error.localizedDescription
-    case let .missingSnapshotVersionID(id): return "Missing Snapshot Based on Info from ID: \(id)"
-    case let .missingSnapshotVersionAt(url): return "Missing Snapshot at \(url)"
-    case let .missingSnapshotFile(id): return "Missing Snapshot File with ID: \(id)"
-    case let .unarchiveError(data): return "Unable to Parse Snapshot ID from Data: \(data)"
+    case let .missingSnapshotVersionID(id):
+      return "Missing Snapshot Based on Info from ID: \(id)"
+    case let .missingSnapshotVersionAt(url):
+      return "Missing Snapshot at \(url)"
+    case let .missingSnapshotFile(id):
+      return "Missing Snapshot File with ID: \(id)"
+    case let .unarchiveError(data):
+      return "Unable to Parse Snapshot ID from Data: \(data)"
     }
   }
 }

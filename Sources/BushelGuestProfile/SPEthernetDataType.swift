@@ -60,20 +60,8 @@ public struct SPEthernetDataType: Codable, Equatable, Sendable {
   public let spethernetSubsystemVendorID: String
   public let spethernetVendorID: String
 
-  public init(
-    name: String,
-    spethernetAvbSupport: String,
-    spethernetBSDDeviceName: String,
-    spethernetBus: String,
-    spethernetDeviceID: String,
-    spethernetDriver: String,
-    spethernetMACAddress: String,
-    spethernetMaxLinkSpeed: String,
-    spethernetRevisionID: String,
-    spethernetSubsystemID: String,
-    spethernetSubsystemVendorID: String,
-    spethernetVendorID: String
-  ) {
+  // swiftlint:disable:next line_length
+  public init(name: String, spethernetAvbSupport: String, spethernetBSDDeviceName: String, spethernetBus: String, spethernetDeviceID: String, spethernetDriver: String, spethernetMACAddress: String, spethernetMaxLinkSpeed: String, spethernetRevisionID: String, spethernetSubsystemID: String, spethernetSubsystemVendorID: String, spethernetVendorID: String) {
     self.name = name
     self.spethernetAvbSupport = spethernetAvbSupport
     self.spethernetBSDDeviceName = spethernetBSDDeviceName

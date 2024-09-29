@@ -48,14 +48,8 @@ public struct SPUSBDataType: Codable, Equatable, Sendable {
   public let pciRevision: String
   public let pciVendor: String
 
-  public init(
-    items: [SPUSBDataTypeItem],
-    name: String,
-    hostController: String,
-    pciDevice: String,
-    pciRevision: String,
-    pciVendor: String
-  ) {
+  // swiftlint:disable:next line_length
+  public init(items: [SPUSBDataTypeItem], name: String, hostController: String, pciDevice: String, pciRevision: String, pciVendor: String) {
     self.items = items
     self.name = name
     self.hostController = hostController

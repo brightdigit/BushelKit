@@ -70,25 +70,8 @@ public struct Typeface: Codable, Equatable, Sendable {
   public let version: String
   public let description: String?
 
-  public init(
-    name: String,
-    copyProtected: PrivateFramework,
-    copyright: String,
-    designer: String?,
-    duplicate: PrivateFramework,
-    embeddable: PrivateFramework,
-    enabled: PrivateFramework,
-    family: String,
-    fullname: String,
-    outline: PrivateFramework,
-    style: String,
-    trademark: String?,
-    unique: String,
-    valid: PrivateFramework,
-    vendor: String?,
-    version: String,
-    description: String?
-  ) {
+  // swiftlint:disable:next line_length
+  public init(name: String, copyProtected: PrivateFramework, copyright: String, designer: String?, duplicate: PrivateFramework, embeddable: PrivateFramework, enabled: PrivateFramework, family: String, fullname: String, outline: PrivateFramework, style: String, trademark: String?, unique: String, valid: PrivateFramework, vendor: String?, version: String, description: String?) {
     self.name = name
     self.copyProtected = copyProtected
     self.copyright = copyright

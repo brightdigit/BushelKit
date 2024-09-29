@@ -45,7 +45,9 @@ public struct Version: CustomStringConvertible, Sendable {
 
     var value: String {
       #if !os(Linux)
-        if self == .bundleVersion { return kCFBundleVersionKey as String }
+        if self == .bundleVersion {
+          return kCFBundleVersionKey as String
+        }
       #endif
       return rawValue
     }
@@ -59,7 +61,7 @@ public struct Version: CustomStringConvertible, Sendable {
   public let prereleaseLabel: PrereleaseLabel?
 
   /// Creates a new `Version` instance with the provided components.
-  init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil) {
+  internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil) {
     self.marketingSemVer = marketingSemVer
     self.buildNumber = buildNumber
     self.prereleaseLabel = prereleaseLabel
@@ -68,7 +70,7 @@ public struct Version: CustomStringConvertible, Sendable {
 
 extension Version {
   #if canImport(os)
-    nonisolated(unsafe) static let logger: Logger = .init(
+    public nonisolated(unsafe) static let logger: Logger = .init(
       subsystem: Bundle.main.bundleIdentifier ?? "Bushel",
       category: "application"
     )
@@ -76,11 +78,12 @@ extension Version {
 
   /// A formatted description of this version, suitable for display.
   public var description: String {
-    guard let prereleaseLabel else { return marketingSemVer.description }
+    guard let prereleaseLabel else {
+      return self.marketingSemVer.description
+    }
 
-    return
-      // swiftlint:disable:next line_length
-      "\(marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
+    // swiftlint:disable:next line_length
+    return "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 
   /// Creates a new `Version` instance by parsing a marketing version string, build number string,
@@ -97,7 +100,9 @@ extension Version {
     prereleaseLabel: PrereleaseLabel? = nil
   ) {
     let marketingSemVer: Semver
-    do { marketingSemVer = try Semver(string: marketingVersionText) } catch {
+    do {
+      marketingSemVer = try Semver(string: marketingVersionText)
+    } catch {
       assertionFailure(error: error)
       return nil
     }
@@ -142,18 +147,22 @@ extension Version {
   ///   and returns the corresponding value from the Info.plist dictionary.
   /// - Returns: A new `Version` instance if information is successfully retrieved, otherwise nil.
   public init?(objectForInfoDictionaryKey: @escaping (String) -> Any?) {
-    self.init { key in objectForInfoDictionaryKey(key.value) }
+    self.init { key in
+      objectForInfoDictionaryKey(key.value)
+    }
   }
 
   private init?(objectForInfoDictionaryKey: @escaping (Key) -> Any?) {
-    guard let marketingVersionText = objectForInfoDictionaryKey(.marketingVersion) as? String else {
+    guard
+      let marketingVersionText = objectForInfoDictionaryKey(.marketingVersion) as? String else {
       #if canImport(os)
         Self.logger.critical("Missing Marketing Version \(Key.marketingVersion.rawValue)")
       #endif
       return nil
     }
 
-    guard let buildNumberString = objectForInfoDictionaryKey(.bundleVersion) as? String else {
+    guard
+      let buildNumberString = objectForInfoDictionaryKey(.bundleVersion) as? String else {
       #if canImport(os)
         Self.logger.critical("Missing Bundle Version \(Key.bundleVersion.rawValue)")
       #endif
@@ -163,7 +172,9 @@ extension Version {
     let prereleaseLabel: PrereleaseLabel? =
       if let prereleaseDictionary = objectForInfoDictionaryKey(.prelease) as? [String: Any] {
         .init(dictionary: prereleaseDictionary)
-      } else { nil }
+      } else {
+        nil
+      }
 
     self.init(
       marketingVersionText: marketingVersionText,
@@ -180,7 +191,9 @@ extension Version {
   /// - Returns: A hexadecimal string representing the build number.
   public func buildNumberHex(withLength length: Int? = 8) -> String {
     let hexString = String(buildNumber, radix: 16)
-    guard let length else { return hexString }
+    guard let length else {
+      return hexString
+    }
     return String(String(repeating: "0", count: length).appending(hexString).suffix(length))
   }
 }
@@ -191,15 +204,18 @@ extension Bundle {
   public static let applicationVersion: Version = Bundle.main.version!
   // swiftlint:enable force_unwrapping
   /// Accesses a formatted representation of the application version.
-  public static let applicationVersionFormatted: VersionFormatted = .init(
-    version: Bundle.applicationVersion
-  )
+  public static let applicationVersionFormatted: VersionFormatted =
+    .init(version: Bundle.applicationVersion)
 
   /// Retrieves a `Version` instance for this bundle, if available.
-  public var version: Version? { .init(bundle: self) }
+  public var version: Version? {
+    .init(bundle: self)
+  }
 
   /// Retrieves the name of the XPC service associated with this bundle, if available.
   public var xpcService: String? {
-    object(forInfoDictionaryKey: "BrightDigitXPCService") as? String
+    self.object(
+      forInfoDictionaryKey: "BrightDigitXPCService"
+    ) as? String
   }
 }

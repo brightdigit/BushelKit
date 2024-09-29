@@ -30,4 +30,6 @@
 public import BushelCore
 import Foundation
 
-extension VMSystemID { public static let sample: Self = .init(stringLiteral: "sample") }
+extension VMSystemID {
+  public static let sampleVMSystemID: Self = .init(stringLiteral: "sample")
+}

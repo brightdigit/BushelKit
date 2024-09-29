@@ -28,6 +28,7 @@
 //
 
 import BushelCore
+
 import Foundation
 
 public struct Hub: Hashable, Identifiable, Sendable {
@@ -45,10 +46,14 @@ public struct Hub: Hashable, Identifiable, Sendable {
     self.title = title
     self.id = id
     self.count = count
-    getImages = images
+    self.getImages = images
   }
 
-  public static func == (lhs: Hub, rhs: Hub) -> Bool { lhs.id == rhs.id }
+  public static func == (lhs: Hub, rhs: Hub) -> Bool {
+    lhs.id == rhs.id
+  }
 
-  public func hash(into hasher: inout Hasher) { hasher.combine(id) }
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
 }

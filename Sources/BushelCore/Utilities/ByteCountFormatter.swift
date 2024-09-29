@@ -38,5 +38,9 @@ extension ByteCountFormatter {
     modifications(self)
   }
 
-  public convenience init(countStyle: CountStyle) { self.init { $0.countStyle = countStyle } }
+  public convenience init(countStyle: CountStyle) {
+    self.init {
+      $0.countStyle = countStyle
+    }
+  }
 }

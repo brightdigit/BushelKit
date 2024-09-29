@@ -27,24 +27,23 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelMachine
 import XCTest
 
-@testable import BushelMachine
-
 internal final class MachinePrimaryStorageConfigurationTests: XCTestCase {
-  func testEmptyStorageConfiguration() {
+  internal func testEmptyStorageConfiguration() {
     let sut = MachineSetupConfiguration(storage: [])
 
     assertPrimaryStorage(sut: sut, against: .defaultPrimary)
   }
 
-  func testDefaultPrimaryStorage() {
+  internal func testDefaultPrimaryStorage() {
     let sut = MachineSetupConfiguration()
 
     assertPrimaryStorage(sut: sut, against: .defaultPrimary)
   }
 
-  func testCustomPrimaryStorage() {
+  internal func testCustomPrimaryStorage() {
     var sut = MachineSetupConfiguration()
 
     let expectedPrimaryStorage = MachineStorageSpecification(

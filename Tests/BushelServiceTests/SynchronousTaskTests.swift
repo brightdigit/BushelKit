@@ -27,9 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-
 @testable import BushelService
+import XCTest
 
 internal final class SynchronousTaskTests: XCTestCase {
   func testSuccessfulRun() throws {

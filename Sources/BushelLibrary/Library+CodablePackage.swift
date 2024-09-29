@@ -28,20 +28,31 @@
 //
 
 import BushelCore
-public import Foundation
-public import RadiantDocs
+
 import RadiantKit
 
-extension Library: InitializablePackage {
-  public static var decoder: JSONDecoder { JSON.decoder }
+public import Foundation
 
-  public static var encoder: JSONEncoder { JSON.encoder }
+public import RadiantDocs
+
+extension Library: InitializablePackage {
+  public static var decoder: JSONDecoder {
+    JSON.decoder
+  }
+
+  public static var encoder: JSONEncoder {
+    JSON.encoder
+  }
 
   public static var configurationFileWrapperKey: String {
     URL.bushel.paths.restoreLibraryJSONFileName
   }
 
-  public static var readableContentTypes: [FileType] { [.restoreImageLibrary] }
+  public static var readableContentTypes: [FileType] {
+    [.restoreImageLibrary]
+  }
 
-  public init() { self.init(items: []) }
+  public init() {
+    self.init(items: [])
+  }
 }

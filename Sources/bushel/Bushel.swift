@@ -27,8 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import ArgumentParser
 public import BushelArgs
 import Foundation
 
-@main public struct Bushel: BushelCommand { public init() {} }
+public import ArgumentParser
+
+@main
+public struct Bushel: BushelCommand {
+  public init() {}
+}

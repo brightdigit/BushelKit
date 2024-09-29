@@ -33,7 +33,9 @@ extension Date: @retroactive RawRepresentable {
   public typealias RawValue = Int
   private static let millisecondsInSeconds: TimeInterval = 1_000
 
-  public var rawValue: Int { Int(timeIntervalSince1970 * Self.millisecondsInSeconds) }
+  public var rawValue: Int {
+    Int(self.timeIntervalSince1970 * Self.millisecondsInSeconds)
+  }
 
   public init?(rawValue: Int) {
     self.init(timeIntervalSince1970: TimeInterval(rawValue) / Self.millisecondsInSeconds)

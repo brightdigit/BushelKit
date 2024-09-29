@@ -28,12 +28,13 @@
 //
 
 public import BushelCoreWax
+
 public import BushelMachine
 import Foundation
 
 extension MachineBuildConfiguration where RestoreImageType == RestoreImageStub {
-  public static let sample: Self = .init(
-    configuration: .sample,
+  public static let sampleMachineBuildConfiguration: Self = .init(
+    configuration: .sampleMachineConfiguration,
     restoreImage: .init()
   )
 }

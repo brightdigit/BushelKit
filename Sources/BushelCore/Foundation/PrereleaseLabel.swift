@@ -46,16 +46,16 @@ extension PrereleaseLabel {
   }
 
   public init?(dictionary: [String: Any]) {
-    guard let label = dictionary[Keys.label.rawValue] as? String,
-      let base = dictionary[Keys.base.rawValue] as? Int
-    else {
+    guard
+      let label = dictionary[Keys.label.rawValue] as? String,
+      let base = dictionary[Keys.base.rawValue] as? Int else {
       assertionFailure("Bundle InfoDictionary Missing Label and Base for Prerelease Info")
       return nil
     }
     self.init(label: label, baseNumber: base)
   }
 
-  public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int)
-    -> Int
-  { (buildNumber - baseNumber + additionalOffset) / factor }
+  public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int) -> Int {
+    (buildNumber - baseNumber + additionalOffset) / factor
+  }
 }

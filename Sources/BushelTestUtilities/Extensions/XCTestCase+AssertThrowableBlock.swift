@@ -34,8 +34,12 @@ extension XCTestCase {
     expectedError: T,
     _ throwableBlock: () async throws -> Any
   ) async {
-    do { _ = try await throwableBlock() } catch {
-      guard let actualError = error as? T, actualError == expectedError else {
+    do {
+      _ = try await throwableBlock()
+    } catch {
+      guard
+        let actualError = error as? T,
+        actualError == expectedError else {
         XCTFail("Expected error of type \(expectedError)")
         return
       }
@@ -49,7 +53,9 @@ extension XCTestCase {
     let expectation = XCTestExpectation()
 
     XCTAssertThrowsError(try throwableBlock()) { actualError in
-      guard let actualError = actualError as? T, actualError == expectedError else {
+      guard
+        let actualError = actualError as? T,
+        actualError == expectedError else {
         XCTFail("Expected error of type \(expectedError)")
         expectation.fulfill()
         return

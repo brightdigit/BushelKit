@@ -31,7 +31,9 @@ public import Foundation
 
 public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
   public typealias Compared = LibraryImageFile
-  public enum Field: Equatable, Sendable { case operatingSystemBuild }
+  public enum Field: Equatable, Sendable {
+    case operatingSystemBuild
+  }
 
   public static let `default` = LibraryImageFileComparator()
 
@@ -62,10 +64,11 @@ public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
     }
   }
 
-  public func compare(_ lhs: BushelLibrary.LibraryImageFile, _ rhs: BushelLibrary.LibraryImageFile)
-    -> ComparisonResult
-  {
-    switch field {
+  public func compare(
+    _ lhs: BushelLibrary.LibraryImageFile,
+    _ rhs: BushelLibrary.LibraryImageFile
+  ) -> ComparisonResult {
+    switch self.field {
     case .operatingSystemBuild:
       Self.compareByOperatingSystemBuild(lhs, rhs, order: order)
     }

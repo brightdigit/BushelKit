@@ -27,38 +27,37 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelMachine
 import BushelMachineWax
 import XCTest
-
-@testable import BushelMachine
 
 internal final class MachineSystemTests: XCTestCase {
   // MARK: - CreateBuilder
 
-  func testSuccessfulCreateBuilderForBuildConfiguration() async throws {
+  internal func testSuccessfulCreateBuilderForBuildConfiguration() async throws {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try await sut.createBuilder(
-      for: .sample,
-      at: .bushelWebSite
+      for: .sampleMachineBuildConfiguration,
+      at: .bushelappURL
     )
 
     XCTAssertTrue(sut.isCreateBuiderForConfigurationCalled)
   }
 
-  func testSuccessfulCreateBuilderForSetupConfiguration() async throws {
+  internal func testSuccessfulCreateBuilderForSetupConfiguration() async throws {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try await sut.createBuilder(
-      for: MachineSetupConfiguration.sample,
-      image: .sample,
-      withDataDirectoryAt: .bushelWebSite
+      for: .sampleMachineSetupConfiguration,
+      image: .sampleInstallerImage,
+      withDataDirectoryAt: .bushelappURL
     )
 
     XCTAssertTrue(sut.isCreateBuiderForConfigurationCalled)
   }
 
-  func testFailedCreateBuilderForConfiguration() async throws {
+  internal func testFailedCreateBuilderForConfiguration() async throws {
     let expectedError = MachineSystemError.createBuilderForConfiguration
 
     let sut = MachineSystemSpy(result: .failure(expectedError))
@@ -67,26 +66,26 @@ internal final class MachineSystemTests: XCTestCase {
       expectedError: expectedError
     ) {
       try await sut.createBuilder(
-        for: .sample,
-        at: .bushelWebSite
+        for: .sampleMachineBuildConfiguration,
+        at: .bushelappURL
       )
     }
   }
 
   // MARK: - MachineAtURL
 
-  func testSuccessfulMachineAtURL() throws {
+  internal func testSuccessfulMachineAtURL() throws {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try sut.machine(
-      at: .bushelWebSite,
-      withConfiguration: .sample
+      at: .bushelappURL,
+      withConfiguration: .sampleMachineConfiguration
     )
 
     XCTAssertTrue(sut.isMachineAtURLCalled)
   }
 
-  func testFailedMachineAtURL() async throws {
+  internal func testFailedMachineAtURL() async throws {
     let expectedError = MachineSystemError.machineAtURL
 
     let sut = MachineSystemSpy(result: .failure(expectedError))
@@ -95,23 +94,23 @@ internal final class MachineSystemTests: XCTestCase {
       expectedError: expectedError
     ) {
       try sut.machine(
-        at: .bushelWebSite,
-        withConfiguration: .sample
+        at: .bushelappURL,
+        withConfiguration: .sampleMachineConfiguration
       )
     }
   }
 
   // MARK: - RestoreImage
 
-  func testSuccessfulRestoreImage() async throws {
+  internal func testSuccessfulRestoreImage() async throws {
     let sut = MachineSystemSpy(result: .success(()))
 
-    _ = try await sut.restoreImage(from: .sample)
+    _ = try await sut.restoreImage(from: .sampleInstallerImage)
 
     XCTAssertTrue(sut.isRestoreImageFromCalled)
   }
 
-  func testFailedRestoreImage() async throws {
+  internal func testFailedRestoreImage() async throws {
     let expectedError = MachineSystemError.restoreImage
 
     let sut = MachineSystemSpy(result: .failure(expectedError))
@@ -119,7 +118,7 @@ internal final class MachineSystemTests: XCTestCase {
     await assertAsyncThrowableBlock(
       expectedError: expectedError
     ) {
-      try await sut.restoreImage(from: .sample)
+      try await sut.restoreImage(from: .sampleInstallerImage)
     }
   }
 }

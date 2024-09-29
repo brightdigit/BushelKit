@@ -36,7 +36,7 @@ import Foundation
 internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
   typealias RestoreImageType = RestoreImageStub
 
-  var id: VMSystemID { "spyOS" }
+  internal var id: VMSystemID { "spyOS" }
 
   private(set) var isCreateBuiderForConfigurationCalled = false
   private(set) var isMachineAtURLCalled = false
@@ -52,11 +52,11 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     "spysnapshot"
   }
 
-  init(result: Result<Void, MachineSystemError>) {
+  internal init(result: Result<Void, MachineSystemError>) {
     self.result = result
   }
 
-  func createBuilder(
+  internal func createBuilder(
     for _: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
   ) throws -> any MachineBuilder {
@@ -67,7 +67,7 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     return MachineBuilderStub(url: url)
   }
 
-  func machine(
+  internal func machine(
     at _: URL,
     withConfiguration configuration: MachineConfiguration
   ) throws -> any Machine {
@@ -78,7 +78,7 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     return MachineStub(configuration: configuration, state: .starting)
   }
 
-  func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
+  internal func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
     isRestoreImageFromCalled = true
 
     try handleResult()

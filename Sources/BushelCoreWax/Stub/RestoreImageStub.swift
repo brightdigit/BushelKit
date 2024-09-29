@@ -29,4 +29,6 @@
 
 import Foundation
 
-public struct RestoreImageStub: Sendable { public init() {} }
+public struct RestoreImageStub: Sendable {
+  public init() {}
+}

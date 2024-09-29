@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import RadiantDocs
 import RadiantKit
+
+public import RadiantDocs
 
 public enum MachineFileTypeSpecification: FileTypeSpecification {
   public static let fileType: FileType = .virtualMachine

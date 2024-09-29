@@ -36,6 +36,6 @@ public protocol OperatingSystemInstalled {
 
 extension OperatingSystemInstalled {
   public var components: OperatingSystemVersionComponents {
-    .init(buildVersion: buildVersion, operatingSystemVersion: operatingSystemVersion)
+    .init(buildVersion: self.buildVersion, operatingSystemVersion: self.operatingSystemVersion)
   }
 }

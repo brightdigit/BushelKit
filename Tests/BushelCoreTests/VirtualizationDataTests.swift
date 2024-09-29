@@ -27,10 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelCore
 import BushelCoreWax
 import XCTest
-
-@testable import BushelCore
 
 internal final class VirtualizationDataTests: XCTestCase {
   private func randomVirtualizationDataTest() throws {
@@ -38,13 +37,9 @@ internal final class VirtualizationDataTests: XCTestCase {
       XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
     #else
       let expectedMachineIdentifier =
-        MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502...UInt64.max))
+        MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502 ... UInt64.max))
       let expectedHardwareModel =
-        HardwareModel(
-          dataRepresentationVersion: 1,
-          minimumSupportedOS: .random(),
-          platformVersion: 2
-        )
+        HardwareModel(dataRepresentationVersion: 1, minimumSupportedOS: .random(), platformVersion: 2)
 
       let dataSet = try MockDataSet(
         machineIdentifier: expectedMachineIdentifier,
@@ -58,9 +53,9 @@ internal final class VirtualizationDataTests: XCTestCase {
     #endif
   }
 
-  func testSuccessfulParsing() throws {
-    let count = Int.random(in: 5...10)
-    for _ in 0..<count {
+  internal func testSuccessfulParsing() throws {
+    let count = Int.random(in: 5 ... 10)
+    for _ in 0 ..< count {
       try randomVirtualizationDataTest()
     }
   }

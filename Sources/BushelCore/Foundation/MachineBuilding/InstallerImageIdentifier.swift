@@ -46,12 +46,19 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
   #warning("log meaningful message about else of guard statements here too")
   public init?(string: String) {
     let components = string.components(separatedBy: ":").filter { $0.isEmpty == false }
-    guard components.count > 1, components.count < 4 else { return nil }
-    guard let imageID = components.last.flatMap(UUID.init(uuidString:)) else { return nil }
+    guard components.count > 1, components.count < 4 else {
+      return nil
+    }
+    guard let imageID = components.last.flatMap(UUID.init(uuidString:)) else {
+      return nil
+    }
 
     #warning("what does a nullable libraryID mean, maybe this case needs to be logged")
-    let libraryID: LibraryIdentifier? =
-      if components.count == 2 { LibraryIdentifier(string: components[0]) } else { nil }
+    let libraryID: LibraryIdentifier? = if components.count == 2 {
+      LibraryIdentifier(string: components[0])
+    } else {
+      nil
+    }
     self.init(imageID: imageID, libraryID: libraryID)
   }
 
@@ -67,6 +74,6 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
 
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.singleValueContainer()
-    try container.encode(description)
+    try container.encode(self.description)
   }
 }

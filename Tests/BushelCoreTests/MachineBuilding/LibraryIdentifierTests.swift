@@ -27,10 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelCore
 import Foundation
 import XCTest
-
-@testable import BushelCore
 
 internal final class LibraryIdentifierTests: XCTestCase {
   func testBookmarkIDFromString() {

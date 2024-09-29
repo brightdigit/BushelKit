@@ -33,7 +33,9 @@
   import Foundation
 
   public struct FileVersionSnapshotterFactory: SnapshotterFactory {
-    public static var systemID: SnapshotterID { .fileVersion }
+    public static var systemID: SnapshotterID {
+      .fileVersion
+    }
 
     public init() {}
 
@@ -42,20 +44,18 @@
       request: SnapshotRequest,
       options: SnapshotOptions
     ) async throws -> Snapshot {
-      guard let snapshotter = snapshotter(supports: type(of: machine).self) else {
+      guard let snapshotter = self.snapshotter(supports: type(of: machine).self) else {
         assertionFailure()
         fatalError("Not implmented error")
       }
 
-      return try await snapshotter.createNewSnapshot(
-        of: machine,
-        request: request,
-        options: options
-      )
+      return try await snapshotter.createNewSnapshot(of: machine, request: request, options: options)
     }
 
-    public func snapshotter<MachineType>(supports: MachineType.Type) -> (
-      any Snapshotter<MachineType>
-    )? where MachineType: Machine { FileVersionSnapshotter(for: supports) }
+    public func snapshotter<MachineType>(
+      supports: MachineType.Type
+    ) -> (any Snapshotter<MachineType>)? where MachineType: Machine {
+      FileVersionSnapshotter(for: supports)
+    }
   }
 #endif

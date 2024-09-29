@@ -27,8 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// swiftlint:disable file_length
 import BushelCore
+
 public import BushelLogging
+
 public import Foundation
 
 #if canImport(FoundationNetworking)
@@ -53,27 +56,155 @@ public struct LibraryError: LocalizedError, Loggable {
     case librarySystemManager
   }
 
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public enum Details: Sendable {
+    private struct UnknownError: Error {
+      private init() {}
+
+      fileprivate static let shared = UnknownError()
+    }
+
+    case bookmarkError
+    case systemResolution
+    case accessDeniedLibraryAt(URL)
+    case imageCorruptedAt(URL)
+    case libraryCorruptedAt(URL)
+    case imageFolderInitializationAt(URL)
+    case updateMetadataAt(URL)
+    case missingInitialization(for: InitializationProperty)
+    case database
+    case copyImage(source: URL, destination: URL)
+
+    // swiftlint:disable:next cyclomatic_complexity
+    fileprivate func errorDescription(fromError error: (any Error)?) -> String {
+      switch self {
+      case .bookmarkError:
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue getting the bookmark: \(error)"
+      case .systemResolution:
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "Unable to resolve new image: \(error)"
+      case let .accessDeniedLibraryAt(at: path):
+        let components: [String?] = [
+          "There's an issue getting access to library at \(path)", error?.localizedDescription
+        ]
+        return components.compactMap { $0 }.joined(separator: ": ")
+      case let .imageCorruptedAt(at: importingURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue getting the metadata for image at \(importingURL): \(error)"
+      case let .libraryCorruptedAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue reading the library at \(libraryURL): \(error)"
+      case let .imageFolderInitializationAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There's an issue prepping the library at \(libraryURL): \(error)"
+      case let .updateMetadataAt(at: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "We were unable to update \(libraryURL): \(error)"
+      case let .missingInitialization(for: property):
+        return "There an issue with this library. Missing \(property)."
+      case .database:
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "There was an issue syncing with the database: \(error)"
+      case let .copyImage(source: importingURL, destination: libraryURL):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return
+          "There was an error copying the image at \(importingURL) to library at: \(libraryURL): \(error)"
+      }
+    }
+
+    fileprivate func recoverySuggestion(fromError _: (any Error)?) -> String? {
+      switch self {
+      case .accessDeniedLibraryAt:
+        "Close and open the library again."
+      case let .imageCorruptedAt(at: imageURL):
+        "Invalid Restore Image at \(imageURL)"
+      case .imageFolderInitializationAt:
+        "Close and open the library again."
+      case .missingInitialization:
+        "Close and open the library again."
+      default:
+        nil
+      }
+    }
+
+    // swiftlint:disable:next cyclomatic_complexity
+    fileprivate func isRecoverable(fromError _: (any Error)?) -> Bool {
+      switch self {
+      case .bookmarkError:
+        false
+
+      case .accessDeniedLibraryAt:
+        false
+
+      case .imageCorruptedAt:
+        true
+
+      case .libraryCorruptedAt:
+        false
+
+      case .imageFolderInitializationAt:
+        false
+
+      case .updateMetadataAt:
+        false
+
+      case .missingInitialization:
+        false
+
+      case .database:
+        false
+
+      case .copyImage:
+        true
+
+      case .systemResolution:
+        false
+      }
+    }
+  }
+
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 
   public let innerError: (any Error)?
   public let details: Details
 
-  public var errorDescription: String? { details.errorDescription(fromError: innerError) }
+  public var errorDescription: String? {
+    details.errorDescription(fromError: innerError)
+  }
 
-  public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
+  public var recoverySuggestion: String? {
+    details.recoverySuggestion(fromError: innerError)
+  }
 
-  public var isRecoverable: Bool { details.isRecoverable(fromError: innerError) }
+  public var isRecoverable: Bool {
+    details.isRecoverable(fromError: innerError)
+  }
 
   private init<TypedError: Error>(
     innerError: any Error,
     as _: TypedError.Type,
     details: LibraryError.Details
   ) throws {
-    guard let innerError = innerError as? TypedError else { throw innerError }
+    guard let innerError = innerError as? TypedError else {
+      throw innerError
+    }
     self.init(details: details, innerError: innerError)
   }
 
-  private init(details: LibraryError.Details, innerError: (any Error)? = nil) {
+  private init(
+    details: LibraryError.Details,
+    innerError: (any Error)? = nil
+  ) {
     if let innerError = innerError as? LibraryError {
       assertionFailure(
         "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)"
@@ -109,8 +240,9 @@ extension LibraryError {
     LibraryError(details: .imageFolderInitializationAt(url), innerError: error)
   }
 
-  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError
-  { LibraryError(details: .missingInitialization(for: property)) }
+  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError {
+    LibraryError(details: .missingInitialization(for: property))
+  }
 
   public static func metadataUpdateError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .updateMetadataAt(url), innerError: error)
@@ -120,13 +252,12 @@ extension LibraryError {
     LibraryError(details: .database, innerError: error)
   }
 
-  public static func copyFrom(_ importingURL: URL, to libraryURL: URL, withError error: any Error)
-    -> LibraryError
-  {
-    LibraryError(
-      details: .copyImage(source: importingURL, destination: libraryURL),
-      innerError: error
-    )
+  public static func copyFrom(
+    _ importingURL: URL,
+    to libraryURL: URL,
+    withError error: any Error
+  ) -> LibraryError {
+    LibraryError(details: .copyImage(source: importingURL, destination: libraryURL), innerError: error)
   }
 
   public static func systemResolutionError(_ error: any Error) throws -> LibraryError {

@@ -30,5 +30,7 @@
 import Foundation
 
 extension UInt64 {
-  public static func makeGigaByte(_ num: Int) -> Self { .init(num * 1_024 * 1_024 * 1_024) }
+  public static func makeGigaByte(_ num: Int) -> Self {
+    .init(num * 1_024 * 1_024 * 1_024)
+  }
 }

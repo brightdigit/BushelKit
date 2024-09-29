@@ -28,6 +28,7 @@
 //
 
 import BushelCore
+
 public import Foundation
 
 public struct SnapshotPaths {
@@ -37,9 +38,7 @@ public struct SnapshotPaths {
   public init(machinePathURL: URL) {
     self.init(
       snapshottingSourceURL: machinePathURL,
-      snapshotCollectionURL: machinePathURL.appendingPathComponent(
-        URL.bushel.paths.snapshotsDirectoryName
-      )
+      snapshotCollectionURL: machinePathURL.appendingPathComponent(URL.bushel.paths.snapshotsDirectoryName)
     )
   }
 

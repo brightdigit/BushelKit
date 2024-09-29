@@ -1,5 +1,5 @@
 //
-//  MachineBuilderObserver.swift
+//  FileManager.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,6 +29,16 @@
 
 public import Foundation
 
-public protocol MachineBuilderObserver: Sendable {
-  func getID() async -> UUID?
-}
+#if canImport(UniformTypeIdentifiers)
+  public import UniformTypeIdentifiers
+
+  extension FileManager {
+    public func createTemporaryFile(for source: UTType) -> URL {
+      let tempFile: URL
+      tempFile = temporaryDirectory
+        .appending(path: UUID().uuidString)
+        .appendingPathExtension(for: source)
+      return tempFile
+    }
+  }
+#endif

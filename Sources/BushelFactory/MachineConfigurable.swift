@@ -28,6 +28,7 @@
 //
 
 public import BushelMachine
+
 import Foundation
 
 public protocol MachineConfigurable {

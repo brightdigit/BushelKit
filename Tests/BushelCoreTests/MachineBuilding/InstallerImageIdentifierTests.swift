@@ -27,9 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-
 @testable import BushelCore
+import XCTest
 
 internal final class InstallerImageIdentifierTests: XCTestCase {
   func testFailedInitializeFromEmptyString() {

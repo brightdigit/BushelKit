@@ -29,12 +29,12 @@
 
 package import Foundation
 
-extension OperatingSystemVersion {
+package extension OperatingSystemVersion {
   package static func random() -> OperatingSystemVersion {
     .init(
-      majorVersion: .random(in: 12...15),
-      minorVersion: .random(in: 0...6),
-      patchVersion: .random(in: 0...7)
+      majorVersion: .random(in: 12 ... 15),
+      minorVersion: .random(in: 0 ... 6),
+      patchVersion: .random(in: 0 ... 7)
     )
   }
 }

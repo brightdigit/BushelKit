@@ -29,8 +29,9 @@
 
 import Foundation
 
-@resultBuilder public enum LibrarySystemBuilder {
-  public static func buildBlock(_ components: any LibrarySystem...) -> [any LibrarySystem] {
+@resultBuilder
+public enum LibrarySystemBuilder {
+  public static func buildBlock(_ components: any LibrarySystem ...) -> [any LibrarySystem] {
     components
   }
 }

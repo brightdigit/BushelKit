@@ -28,6 +28,7 @@
 //
 
 import BushelCore
+
 import Foundation
 
 public struct SnapshotSynchronizeOptions: OptionSet, Sendable {
@@ -35,5 +36,7 @@ public struct SnapshotSynchronizeOptions: OptionSet, Sendable {
 
   public let rawValue: Int
 
-  public init(rawValue: Int) { self.rawValue = rawValue }
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
 }

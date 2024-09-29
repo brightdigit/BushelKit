@@ -52,16 +52,8 @@ public struct SPSDataType: Codable, Equatable, Sendable {
   public let info: String?
   public let privateFramework: PrivateFramework?
 
-  public init(
-    name: String,
-    archKind: ArchKind?,
-    lastModified: Date,
-    obtainedFrom: ObtainedFrom,
-    path: String,
-    version: String?,
-    info: String?,
-    privateFramework: PrivateFramework?
-  ) {
+  // swiftlint:disable:next line_length
+  public init(name: String, archKind: ArchKind?, lastModified: Date, obtainedFrom: ObtainedFrom, path: String, version: String?, info: String?, privateFramework: PrivateFramework?) {
     self.name = name
     self.archKind = archKind
     self.lastModified = lastModified

@@ -29,5 +29,5 @@
 
 import Foundation
 
-public typealias ReleaseCollectionMetadataProvider = @Sendable (VMSystemID) ->
-  any ReleaseCollectionMetadata
+public typealias ReleaseCollectionMetadataProvider =
+  @Sendable (VMSystemID) -> any ReleaseCollectionMetadata

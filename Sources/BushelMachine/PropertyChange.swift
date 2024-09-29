@@ -31,37 +31,49 @@ public struct StatePropertyChange: PropertyChange {
   public typealias ValueType = MachineState
   public nonisolated(unsafe) static let property: MachineProperty = .state
   public let values: PropertyValues<MachineState>
-  public init(values: PropertyValues<MachineState>) { self.values = values }
+  public init(values: PropertyValues<MachineState>) {
+    self.values = values
+  }
 }
 
 public struct CanStartPropertyChange: PropertyChange {
   public nonisolated(unsafe) static let property: MachineProperty = .canStart
   public let values: PropertyValues<Bool>
-  public init(values: PropertyValues<Bool>) { self.values = values }
+  public init(values: PropertyValues<Bool>) {
+    self.values = values
+  }
 }
 
 public struct CanStopPropertyChange: PropertyChange {
   public nonisolated(unsafe) static let property: MachineProperty = .canStop
   public let values: PropertyValues<Bool>
-  public init(values: PropertyValues<Bool>) { self.values = values }
+  public init(values: PropertyValues<Bool>) {
+    self.values = values
+  }
 }
 
 public struct CanPausePropertyChange: PropertyChange {
   public nonisolated(unsafe) static let property: MachineProperty = .canPause
   public let values: PropertyValues<Bool>
-  public init(values: PropertyValues<Bool>) { self.values = values }
+  public init(values: PropertyValues<Bool>) {
+    self.values = values
+  }
 }
 
 public struct CanResumePropertyChange: PropertyChange {
   public nonisolated(unsafe) static let property: MachineProperty = .canResume
   public let values: PropertyValues<Bool>
-  public init(values: PropertyValues<Bool>) { self.values = values }
+  public init(values: PropertyValues<Bool>) {
+    self.values = values
+  }
 }
 
 public struct CanRequestStopPropertyChange: PropertyChange {
   public nonisolated(unsafe) static let property: MachineProperty = .canRequestStop
   public let values: PropertyValues<Bool>
-  public init(values: PropertyValues<Bool>) { self.values = values }
+  public init(values: PropertyValues<Bool>) {
+    self.values = values
+  }
 }
 
 public protocol PropertyChange: PropertyChangeFromValue, Sendable {
@@ -73,7 +85,7 @@ public protocol PropertyChange: PropertyChangeFromValue, Sendable {
 
 extension PropertyChange {
   public func getValue<Value: Sendable>() -> Value? {
-    let value = values.new as? Value
+    let value = self.values.new as? Value
     return value
   }
 }

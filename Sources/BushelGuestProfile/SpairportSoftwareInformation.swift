@@ -50,15 +50,8 @@ public struct SpairportSoftwareInformation: Codable, Equatable, Sendable {
   public let spairportProfilerVersion: String
   public let spairportUtilityVersion: String
 
-  public init(
-    spairportCorewlanVersion: String,
-    spairportCorewlankitVersion: String,
-    spairportDiagnosticsVersion: String,
-    spairportExtraVersion: String,
-    spairportFamilyVersion: String,
-    spairportProfilerVersion: String,
-    spairportUtilityVersion: String
-  ) {
+  // swiftlint:disable:next line_length
+  public init(spairportCorewlanVersion: String, spairportCorewlankitVersion: String, spairportDiagnosticsVersion: String, spairportExtraVersion: String, spairportFamilyVersion: String, spairportProfilerVersion: String, spairportUtilityVersion: String) {
     self.spairportCorewlanVersion = spairportCorewlanVersion
     self.spairportCorewlankitVersion = spairportCorewlankitVersion
     self.spairportDiagnosticsVersion = spairportDiagnosticsVersion

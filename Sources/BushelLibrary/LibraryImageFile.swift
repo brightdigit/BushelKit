@@ -28,6 +28,7 @@
 //
 
 public import BushelCore
+
 public import Foundation
 
 public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
@@ -40,7 +41,9 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
   public var name: String
   public let id: UUID
   public let metadata: ImageMetadata
-  public var fileName: String { [id.uuidString, metadata.fileExtension].joined(separator: ".") }
+  public var fileName: String {
+    [id.uuidString, metadata.fileExtension].joined(separator: ".")
+  }
 
   public init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: Self.CodingKeys.self)
@@ -51,13 +54,22 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
     self.init(id: id, metadata: metadata, name: name)
   }
 
-  public init(id: UUID = UUID(), metadata: ImageMetadata, name: String) {
+  public init(
+    id: UUID = UUID(),
+    metadata: ImageMetadata,
+    name: String
+  ) {
     self.id = id
     self.name = name
     self.metadata = metadata
   }
 
-  public static func == (lhs: LibraryImageFile, rhs: LibraryImageFile) -> Bool { lhs.id == rhs.id }
+  public static func == (
+    lhs: LibraryImageFile,
+    rhs: LibraryImageFile
+  ) -> Bool {
+    lhs.id == rhs.id
+  }
 
   public func hash(into hasher: inout Hasher) {
     hasher.combine(id)
@@ -66,6 +78,6 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
   }
 
   public func updatingMetadata(_ metadata: ImageMetadata) -> LibraryImageFile {
-    .init(id: id, metadata: metadata, name: name)
+    .init(id: self.id, metadata: metadata, name: name)
   }
 }

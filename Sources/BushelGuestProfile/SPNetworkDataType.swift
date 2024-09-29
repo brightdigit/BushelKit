@@ -60,20 +60,8 @@ public struct SPNetworkDataType: Codable, Equatable, Sendable {
   public let spnetworkServiceOrder: Int
   public let type: String
 
-  public init(
-    name: String,
-    dhcp: DHCP?,
-    dns: DNS?,
-    ethernet: Ethernet,
-    hardware: String,
-    interface: String,
-    ipAddress: [String]?,
-    iPv4: IPv4,
-    iPv6: IPv6,
-    proxies: Proxies,
-    spnetworkServiceOrder: Int,
-    type: String
-  ) {
+  // swiftlint:disable:next line_length
+  public init(name: String, dhcp: DHCP?, dns: DNS?, ethernet: Ethernet, hardware: String, interface: String, ipAddress: [String]?, iPv4: IPv4, iPv6: IPv6, proxies: Proxies, spnetworkServiceOrder: Int, type: String) {
     self.name = name
     self.dhcp = dhcp
     self.dns = dns

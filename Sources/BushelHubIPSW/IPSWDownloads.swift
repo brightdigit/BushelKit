@@ -28,7 +28,9 @@
 //
 
 public import BushelHub
+
 public import BushelLogging
+
 import Foundation
 import OpenAPIURLSession
 
@@ -45,12 +47,15 @@ extension IPSWDownloads: Loggable {
   public static var lastCount: Int? {
     get {
       let userDefaults = UserDefaults(suiteName: Bundle.suiteName)
-      guard userDefaults?.object(forKey: lastCountUserDefaultsKey) != nil else { return nil }
+      guard userDefaults?.object(forKey: lastCountUserDefaultsKey) != nil else {
+        return nil
+      }
       let value = userDefaults?.integer(forKey: lastCountUserDefaultsKey)
       assert(value != 0)
-      return value.flatMap { $0 == 0 ? nil : $0 }
-    }
-    set {
+      return value.flatMap {
+        $0 == 0 ? nil : $0
+      }
+    } set {
       assert(newValue != nil)
       let userDefaults = UserDefaults(suiteName: Bundle.suiteName)
       assert(userDefaults != nil)
@@ -58,14 +63,18 @@ extension IPSWDownloads: Loggable {
     }
   }
 
-  @Sendable public static func hubs() -> [Hub] {
-    [.init(title: title, id: hubID, count: lastCount, hubImages)]
+  @Sendable
+  public static func hubs() -> [Hub] {
+    [
+      .init(title: title, id: hubID, count: lastCount, self.hubImages)
+    ]
   }
 
-  @Sendable public static func hubImages() async throws -> [HubImage] {
+  @Sendable
+  public static func hubImages() async throws -> [HubImage] {
     let client = IPSWDownloads(transport: URLSessionTransport())
     let firmwares = try await client.device(withIdentifier: virtualMacID, type: .ipsw).firmwares
-    lastCount = firmwares.count
+    self.lastCount = firmwares.count
     return firmwares.tryCompactMap(HubImage.init)
   }
 }

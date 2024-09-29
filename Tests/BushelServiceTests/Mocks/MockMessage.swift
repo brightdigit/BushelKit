@@ -37,7 +37,7 @@
     typealias ResponseType = MockResponse
     let id: UUID
     let count: Int
-    init(id: UUID = .init(), count: Int = .random(in: 3...7)) {
+    internal init(id: UUID = .init(), count: Int = .random(in: 3 ... 7)) {
       self.id = id
       self.count = count
     }

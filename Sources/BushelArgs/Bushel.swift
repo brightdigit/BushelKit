@@ -31,7 +31,7 @@ import ArgumentParser
 import Foundation
 
 internal enum Bushel {
-  static let configuration = CommandConfiguration(
+  internal static let configuration = CommandConfiguration(
     abstract: "A utility for performing maths.",
     subcommands: [Machine.self, Image.self],
     defaultSubcommand: Machine.self

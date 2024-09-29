@@ -27,16 +27,18 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
 public import RadiantDocs
+
+public import Foundation
 
 extension InitializablePackage {
   #warning("logging-note: let's log what is going on here")
   #warning("Might want to add parameters for creating data and creating directory.")
-  @discardableResult public static func createAt(_ fileURL: URL) throws -> Self {
+  @discardableResult
+  public static func createAt(_ fileURL: URL) throws -> Self {
     let library = self.init()
     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: false)
-    let metadataJSONPath = fileURL.appendingPathComponent(configurationFileWrapperKey)
+    let metadataJSONPath = fileURL.appendingPathComponent(self.configurationFileWrapperKey)
     let data = try JSON.encoder.encode(library)
     try data.write(to: metadataJSONPath)
     return library

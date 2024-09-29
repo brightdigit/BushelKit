@@ -30,22 +30,27 @@
 import Foundation
 
 extension EnvironmentProperty {
-  enum ValueAccessor: Sendable {
+  internal enum ValueAccessor: Sendable {
     case dictionary([String: String], key: String)
     case value(Value)
 
-    var value: Value {
+    internal var value: Value {
       switch self {
-      case let .value(value): value
+      case let .value(value):
+        value
 
       case let .dictionary(dictionary, key: key):
         dictionary[key].flatMap(Value.init) ?? Value.default
       }
     }
 
-    var dictionary: [String: String]? {
-      guard case let .dictionary(source, key: key) = self else { return nil }
-      guard let value = source[key] else { return nil }
+    internal var dictionary: [String: String]? {
+      guard case let .dictionary(source, key: key) = self else {
+        return nil
+      }
+      guard let value = source[key] else {
+        return nil
+      }
 
       return [key: value]
     }

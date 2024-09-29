@@ -28,6 +28,7 @@
 //
 
 public import BushelCore
+
 public import Foundation
 
 public struct InstallerImageMetadata: Equatable, Sendable {
@@ -40,7 +41,9 @@ public struct InstallerImageMetadata: Equatable, Sendable {
   public let systemName: String
   public let vmSystemID: VMSystemID
 
-  public var shortName: String { "\(labelName) (\(defaultName))" }
+  public var shortName: String {
+    "\(labelName) (\(defaultName))"
+  }
 
   public init(
     longName: String,
@@ -59,6 +62,6 @@ public struct InstallerImageMetadata: Equatable, Sendable {
     self.buildVersion = buildVersion
     self.imageResourceName = imageResourceName
     self.systemName = systemName
-    vmSystemID = systemID
+    self.vmSystemID = systemID
   }
 }

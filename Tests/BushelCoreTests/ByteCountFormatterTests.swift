@@ -27,12 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelCore
 import XCTest
 
-@testable import BushelCore
-
 internal final class ByteCountFormatterTests: XCTestCase {
-  func testCountStyleInit() {
+  internal func testCountStyleInit() {
     let sut = ByteCountFormatter(countStyle: .binary)
 
     XCTAssertEqual(sut.countStyle, .binary)

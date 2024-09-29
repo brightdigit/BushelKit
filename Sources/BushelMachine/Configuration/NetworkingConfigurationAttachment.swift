@@ -27,4 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public enum NetworkingConfigurationAttachment: Codable, Sendable { case nat }
+public enum NetworkingConfigurationAttachment: Codable, Sendable {
+  case nat
+}

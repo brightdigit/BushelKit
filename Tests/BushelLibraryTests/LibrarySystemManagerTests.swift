@@ -28,13 +28,12 @@
 //
 
 import BushelCoreWax
+@testable import BushelLibrary
 import BushelLibraryWax
 import XCTest
 
-@testable import BushelLibrary
-
 internal final class LibrarySystemManagerTests: XCTestCase {
-  func testResolveSystemBasedOnID() {
+  internal func testResolveSystemBasedOnID() {
     let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
     let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")
 
@@ -46,7 +45,7 @@ internal final class LibrarySystemManagerTests: XCTestCase {
     XCTAssertEqual(sut.resolve(macOSSystem.id).id, macOSSystem.id)
   }
 
-  func test() async throws {
+  internal func test() async throws {
     let macOSSystem = MacOSLibrarySystemStub(id: "macOS")
     let ubuntuSystem = UbuntuLibrarySystemStub(id: "ubuntu")
 

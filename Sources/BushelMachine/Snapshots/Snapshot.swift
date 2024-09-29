@@ -28,6 +28,7 @@
 //
 
 public import BushelCore
+
 public import Foundation
 
 public struct Snapshot: Codable, Identifiable, Sendable {
@@ -62,22 +63,24 @@ public struct Snapshot: Codable, Identifiable, Sendable {
 
 extension Snapshot {
   internal struct OperatingSystem: OperatingSystemInstalled {
-    let operatingSystemVersion: OperatingSystemVersion
-    let buildVersion: String?
+    internal let operatingSystemVersion: OperatingSystemVersion
+    internal let buildVersion: String?
 
-    init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
+    internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
       self.operatingSystemVersion = operatingSystemVersion
       self.buildVersion = buildVersion
     }
 
-    init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
-      guard let operatingSystemVersion else { return nil }
+    internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
+      guard let operatingSystemVersion else {
+        return nil
+      }
       self.init(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
     }
   }
 
   public var operatingSystemInstalled: (any OperatingSystemInstalled)? {
-    OperatingSystem(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
+    OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
   }
 
   public func updatingWith(name newName: String, notes newNotes: String) -> Snapshot {

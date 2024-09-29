@@ -27,13 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelLibrary
 import BushelLibraryWax
 import XCTest
 
-@testable import BushelLibrary
-
 internal final class LibrarySystemBuilderTests: XCTestCase {
-  func testBuildBlock() {
+  internal func testBuildBlock() {
     let macOS = MacOSLibrarySystemStub(id: "macOS")
     let ubuntu = UbuntuLibrarySystemStub(id: "Ubuntu")
 

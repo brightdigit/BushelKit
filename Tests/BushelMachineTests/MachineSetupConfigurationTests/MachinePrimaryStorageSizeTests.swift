@@ -27,12 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@testable import BushelMachine
 import XCTest
 
-@testable import BushelMachine
-
 internal final class MachinePrimaryStorageSizeTests: XCTestCase {
-  func testCorrectDefaultPrimaryStorageSize() {
+  internal func testCorrectDefaultPrimaryStorageSize() {
     let sut = MachineSetupConfiguration()
 
     assertPrimaryStorageSizeFloat(
@@ -41,7 +40,7 @@ internal final class MachinePrimaryStorageSizeTests: XCTestCase {
     )
   }
 
-  func testDefaultPrimaryStorageSize() {
+  internal func testDefaultPrimaryStorageSize() {
     var sut = MachineSetupConfiguration()
 
     let expectedSize = UInt64.makeGigaByte(1)

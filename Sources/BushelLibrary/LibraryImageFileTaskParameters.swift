@@ -28,7 +28,9 @@
 //
 
 import BushelLogging
+
 public import FelinePine
+
 public import Foundation
 
 private struct LibraryImageFileTaskParameters: Sendable {
@@ -43,9 +45,11 @@ private struct LibraryImageFileTaskParameters: Sendable {
   }
 
   fileprivate init?(url: URL, manager: any LibrarySystemManaging) {
-    guard let id = UUID(uuidString: url.deletingPathExtension().lastPathComponent),
-      let systemID = manager.resolveSystemFor(url: url)
-    else { return nil }
+    guard
+      let id = UUID(uuidString: url.deletingPathExtension().lastPathComponent),
+      let systemID = manager.resolveSystemFor(url: url) else {
+      return nil
+    }
 
     let system = manager.resolve(systemID)
     self.init(system: system, id: id, url: url)
@@ -62,25 +66,27 @@ extension TaskGroup<LibraryImageFile?> {
     librarySystemManager: any LibrarySystemManaging,
     logger: Logger
   ) {
-    guard
-      let parameters = LibraryImageFileTaskParameters(
-        url: imageFileURL,
-        manager: librarySystemManager
-      )
-    else {
+    guard let parameters = LibraryImageFileTaskParameters(
+      url: imageFileURL,
+      manager: librarySystemManager
+    ) else {
       logger.warning("Invalid Image File: \(imageFileURL.lastPathComponent)")
-      do { try FileManager.default.removeItem(at: imageFileURL) } catch {
-        logger.error(
-          "Unable to Delete \(imageFileURL.lastPathComponent): \(error.localizedDescription)"
-        )
+      do {
+        try FileManager.default.removeItem(at: imageFileURL)
+      } catch {
+        logger.error("Unable to Delete \(imageFileURL.lastPathComponent): \(error.localizedDescription)")
       }
       return
     }
     logger.debug("Updating Metadata for \(parameters.id)")
-    addTask {
-      do { return try await parameters.resolve() } catch {
+    self.addTask {
+      do {
+        return try await parameters.resolve()
+      } catch {
         logger.debug("Error Metadata for \(parameters.id): \(error.localizedDescription)")
-        do { try FileManager.default.removeItem(at: imageFileURL) } catch {
+        do {
+          try FileManager.default.removeItem(at: imageFileURL)
+        } catch {
           logger.error(
             "Unable to Delete \(parameters.url.lastPathComponent): \(error.localizedDescription)"
           )

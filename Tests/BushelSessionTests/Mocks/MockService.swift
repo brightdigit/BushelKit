@@ -43,7 +43,7 @@ internal class MockService: SessionService {
   func sendMessage<MessageType>(
     _ message: MessageType
   ) async throws -> MessageType.ResponseType where MessageType: Message {
-    messagesSent.append(message)
+    self.messagesSent.append(message)
     guard let message = message as? MockMessage else {
       throw Error.wrongMessage
     }

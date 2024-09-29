@@ -46,13 +46,8 @@ public struct SPDeveloperToolsDataType: Codable, Equatable, Sendable {
   public let spdevtoolsSdks: SpdevtoolsSdks
   public let spdevtoolsVersion: String
 
-  public init(
-    name: String,
-    spdevtoolsApps: SpdevtoolsApps,
-    spdevtoolsPath: String,
-    spdevtoolsSdks: SpdevtoolsSdks,
-    spdevtoolsVersion: String
-  ) {
+  // swiftlint:disable:next line_length
+  public init(name: String, spdevtoolsApps: SpdevtoolsApps, spdevtoolsPath: String, spdevtoolsSdks: SpdevtoolsSdks, spdevtoolsVersion: String) {
     self.name = name
     self.spdevtoolsApps = spdevtoolsApps
     self.spdevtoolsPath = spdevtoolsPath

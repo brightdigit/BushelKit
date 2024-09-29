@@ -35,15 +35,23 @@ public struct DocumentTypeFilter: OptionSet, Sendable {
 
   public let rawValue: Int
 
-  public init(rawValue: Int) { self.rawValue = rawValue }
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
 }
 
 extension DocumentTypeFilter {
   public var searchStrings: [String] {
     var pathExtensions = [String?]()
-    if contains(.libraries) { pathExtensions.append(FileType.restoreImageLibrary.fileExtension) }
+    if self.contains(.libraries) {
+      pathExtensions.append(
+        FileType.restoreImageLibrary.fileExtension
+      )
+    }
     return pathExtensions.compactMap { pathExtension in
-      guard let pathExtension else { return nil }
+      guard let pathExtension else {
+        return nil
+      }
       return ".\(pathExtension)"
     }
   }

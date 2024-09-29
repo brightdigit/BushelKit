@@ -30,4 +30,6 @@
 import ArgumentParser
 import Foundation
 
-extension Machine { struct Create: ParsableCommand {} }
+extension Machine {
+  internal struct Create: ParsableCommand {}
+}

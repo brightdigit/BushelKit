@@ -35,9 +35,11 @@ public enum LibraryIdentifier: CustomStringConvertible, Hashable, Sendable {
 
   public var description: String {
     switch self {
-    case let .bookmarkID(id): id.uuidString
+    case let .bookmarkID(id):
+      id.uuidString
 
-    case let .url(url): url.path
+    case let .url(url):
+      url.path
     }
   }
 
