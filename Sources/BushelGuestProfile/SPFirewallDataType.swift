@@ -45,7 +45,10 @@ public struct SPFirewallDataType: Codable, Equatable, Sendable {
   public let spfirewallStealthenabled: String
 
   // swiftlint:disable:next line_length
-  public init(name: String, spfirewallGlobalstate: String, spfirewallLoggingenabled: String, spfirewallStealthenabled: String) {
+  public init(
+    name: String, spfirewallGlobalstate: String, spfirewallLoggingenabled: String,
+    spfirewallStealthenabled: String
+  ) {
     self.name = name
     self.spfirewallGlobalstate = spfirewallGlobalstate
     self.spfirewallLoggingenabled = spfirewallLoggingenabled

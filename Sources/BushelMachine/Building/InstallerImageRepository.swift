@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 public protocol InstallerImageRepository: Sendable {

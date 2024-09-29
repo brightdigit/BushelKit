@@ -28,8 +28,9 @@
 //
 
 import BushelCore
-@testable import BushelMachine
 import XCTest
+
+@testable import BushelMachine
 
 internal final class MachineConfigurationUpdatingTests: XCTestCase {
   internal func testUpdatingUsingBuildRequest() {

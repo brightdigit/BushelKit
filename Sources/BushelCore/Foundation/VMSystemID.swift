@@ -29,7 +29,9 @@
 
 import Foundation
 
-public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, Sendable {
+public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable,
+  Sendable
+{
   public typealias StringLiteralType = String
 
   public let rawValue: String

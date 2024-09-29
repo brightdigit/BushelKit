@@ -50,7 +50,8 @@
       } else {
         snapshotFileDataDictionary = [:]
       }
-      let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value }).mapValues {
+      let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value }).mapValues
+      {
         $0.map(\.key)
       }
 
@@ -84,12 +85,14 @@
     internal func filenameUUIDs(atDirectoryURL snapshotCollectionURL: URL) throws -> [UUID] {
       let snapshotCollectionDirectoryExists =
         self.directoryExists(at: snapshotCollectionURL) == .directoryExists
-      let snapshotFileURLs = try snapshotCollectionDirectoryExists ?
-        self.contentsOfDirectory(
+      let snapshotFileURLs =
+        try snapshotCollectionDirectoryExists
+        ? self.contentsOfDirectory(
           at: snapshotCollectionURL,
           includingPropertiesForKeys: []
         ) : []
-      let snapshotIDs = snapshotFileURLs
+      let snapshotIDs =
+        snapshotFileURLs
         .map { $0.deletingPathExtension().lastPathComponent }
         .compactMap(UUID.init(uuidString:))
       assert(snapshotFileURLs.count == snapshotIDs.count)

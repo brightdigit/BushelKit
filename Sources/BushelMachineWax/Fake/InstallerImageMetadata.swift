@@ -28,7 +28,6 @@
 //
 
 public import BushelMachine
-
 public import Foundation
 
 extension InstallerImageMetadata {

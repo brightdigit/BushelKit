@@ -51,7 +51,11 @@ public struct SPPrefPaneDataType: Codable, Equatable, Sendable {
   public let spprefpaneVersion: String
 
   // swiftlint:disable:next line_length
-  public init(name: String, spprefpaneBundlePath: String, spprefpaneIdentifier: String, spprefpaneIsVisible: PrivateFramework, spprefpaneKind: SpprefpaneKind, spprefpaneSupport: SpprefpaneSupport, spprefpaneVersion: String) {
+  public init(
+    name: String, spprefpaneBundlePath: String, spprefpaneIdentifier: String,
+    spprefpaneIsVisible: PrivateFramework, spprefpaneKind: SpprefpaneKind,
+    spprefpaneSupport: SpprefpaneSupport, spprefpaneVersion: String
+  ) {
     self.name = name
     self.spprefpaneBundlePath = spprefpaneBundlePath
     self.spprefpaneIdentifier = spprefpaneIdentifier

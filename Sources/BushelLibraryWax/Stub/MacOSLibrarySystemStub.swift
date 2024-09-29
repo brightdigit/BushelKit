@@ -28,19 +28,16 @@
 //
 
 public import BushelCore
-
-public import RadiantDocs
-
 public import BushelLibrary
-
 public import Foundation
+public import RadiantDocs
 
 public struct MacOSLibrarySystemStub: LibrarySystem {
   private static let codeNames: [Int: String] = [
     11: "Big Sur",
     12: "Monterey",
     13: "Ventura",
-    14: "Sonoma"
+    14: "Sonoma",
   ]
 
   public var id: VMSystemID
@@ -70,7 +67,9 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
 
   // MARK: - Helpers
 
-  private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
+  private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled)
+    -> String
+  {
     let shortName = defaultName(fromOSMetadata: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName
@@ -84,7 +83,8 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
   }
 
   private func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
-    Self.codeNames[operatingSystemVersion.majorVersion] ?? operatingSystemVersion.majorVersion.description
+    Self.codeNames[operatingSystemVersion.majorVersion]
+      ?? operatingSystemVersion.majorVersion.description
   }
 
   private func imageName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {

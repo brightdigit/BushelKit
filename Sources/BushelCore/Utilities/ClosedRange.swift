@@ -31,7 +31,7 @@ extension ClosedRange where Bound == Int {
   public init(floatRange: ClosedRange<Float>) {
     let lowerBound = Int(floatRange.lowerBound.rounded(.up))
     let upperBound = Int(floatRange.upperBound.rounded(.down))
-    self = lowerBound ... upperBound
+    self = lowerBound...upperBound
   }
 }
 
@@ -39,7 +39,7 @@ extension ClosedRange where Bound == Float {
   public init(intRange: ClosedRange<Int>) {
     let lowerBound = Float(intRange.lowerBound)
     let upperBound = Float(intRange.upperBound)
-    self = lowerBound ... upperBound
+    self = lowerBound...upperBound
   }
 }
 
@@ -55,6 +55,6 @@ extension ClosedRange where Bound: BinaryInteger {
 
     let lowerBound = self.lowerBound - lowerBoundExpand
     let upperBound = self.upperBound + upperBoundExpand
-    return lowerBound ... upperBound
+    return lowerBound...upperBound
   }
 }

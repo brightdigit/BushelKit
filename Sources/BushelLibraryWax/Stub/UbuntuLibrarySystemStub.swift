@@ -28,12 +28,9 @@
 //
 
 public import BushelCore
-
-public import RadiantDocs
-
 public import BushelLibrary
-
 public import Foundation
+public import RadiantDocs
 
 public struct UbuntuLibrarySystemStub: LibrarySystem {
   public var releaseCollectionMetadata: any BushelCore.ReleaseCollectionMetadata {
@@ -64,7 +61,9 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
 
   // MARK: - Helpers
 
-  private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
+  private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled)
+    -> String
+  {
     let shortName = defaultName(fromOSMetadata: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName

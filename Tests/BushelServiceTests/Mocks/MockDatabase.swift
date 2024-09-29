@@ -45,7 +45,7 @@
         return []
       }
       self.didRequestCount = count
-      return (0 ..< count).map { _ in
+      return (0..<count).map { _ in
         ItemModel()
       }
       .compactMap { $0 as? T }

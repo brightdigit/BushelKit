@@ -28,7 +28,6 @@
 //
 
 public import BushelCoreWax
-
 public import BushelMachine
 import Foundation
 

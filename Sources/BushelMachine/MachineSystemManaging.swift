@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
-
 public import Foundation
 
 /// A collection of machine systems for managing virtual machines

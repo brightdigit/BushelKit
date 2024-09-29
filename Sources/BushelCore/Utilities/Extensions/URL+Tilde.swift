@@ -60,13 +60,14 @@ public import Foundation
       // In a case that any of these issues arise, we directly return the full path
       guard
         pathComponents.count > 3,
-        pathComponents[1] == "Users" else {
+        pathComponents[1] == "Users"
+      else {
         return path
       }
 
       // pathComponents[1] is the "Users" and pathComponent[2] is the user name. Thus, both of them are
       //   joined together to form the home directory
-      let homeDirectory = "/" + pathComponents[1 ... 2].joined(separator: "/")
+      let homeDirectory = "/" + pathComponents[1...2].joined(separator: "/")
 
       // Remove the home directory from the file path
       var abbreviatedPath = path.suffix(path.count - homeDirectory.count)
@@ -104,7 +105,7 @@ public import Foundation
 
       // pathComponents[1] is the "Users" and pathComponent[2] is the user name. Thus, both of them are
       //   joined together to form the home directory
-      let homeDirectory = "/" + filePath.pathComponents[1 ... 2].joined(separator: "/")
+      let homeDirectory = "/" + filePath.pathComponents[1...2].joined(separator: "/")
 
       // Create a mutable path to work with
       var path = abbreviatedPath

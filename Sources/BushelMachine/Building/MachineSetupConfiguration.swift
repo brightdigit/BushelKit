@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 /// Writable configuration used for setting up and configuring a new machine.

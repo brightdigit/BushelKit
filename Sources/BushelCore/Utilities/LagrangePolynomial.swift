@@ -77,8 +77,12 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
     let newValue = isInverse ? (maxX - value) : value
 
     // swiftlint:disable identifier_name
-    let x0 = point0.x, x1 = point1.x, x2 = point2.x
-    let y0 = point0.y, y1 = point1.y, y2 = point2.y
+    let x0 = point0.x
+    let x1 = point1.x
+    let x2 = point2.x
+    let y0 = point0.y
+    let y1 = point1.y
+    let y2 = point2.y
     // swiftlint:enable identifier_name
 
     let term0 = y0 * ((newValue - x1) * (newValue - x2)) / ((x0 - x1) * (x0 - x2))

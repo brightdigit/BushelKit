@@ -52,7 +52,8 @@
     }
 
     public var operatingSystem: any OperatingSystemInstalled {
-      OperatingSystem(operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
+      OperatingSystem(
+        operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
     }
 
     @available(*, deprecated, message: "Temporary method until Swift 6 migration.")

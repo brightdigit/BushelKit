@@ -140,14 +140,17 @@ extension FileManager {
     directoryAt directoryURL: URL
   ) throws -> [String: Data] {
     let keys: Set<URLResourceKey> = Set([.isDirectoryKey, .isRegularFileKey])
-    guard let enumerator = self.enumerator(
-      at: directoryURL,
-      includingPropertiesForKeys: Array(keys)
-    ) else {
+    guard
+      let enumerator = self.enumerator(
+        at: directoryURL,
+        includingPropertiesForKeys: Array(keys)
+      )
+    else {
       throw .fileNotFound(at: directoryURL)
     }
 
-    #warning("logging-note: descriptive error/logging here might help some other developer in debugging")
+    #warning(
+      "logging-note: descriptive error/logging here might help some other developer in debugging")
     return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
       guard let url = item as? URL else {
         return
@@ -180,7 +183,7 @@ extension Error where Self == NSError {
       code: NSFileNoSuchFileError,
       userInfo: [
         NSFilePathErrorKey: url.path,
-        NSUnderlyingErrorKey: POSIXError(.ENOENT)
+        NSUnderlyingErrorKey: POSIXError(.ENOENT),
       ]
     )
   }

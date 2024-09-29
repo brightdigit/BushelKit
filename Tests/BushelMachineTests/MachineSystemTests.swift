@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelMachine
 import BushelMachineWax
 import XCTest
+
+@testable import BushelMachine
 
 internal final class MachineSystemTests: XCTestCase {
   // MARK: - CreateBuilder

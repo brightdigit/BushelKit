@@ -28,7 +28,6 @@
 //
 
 public import Foundation
-
 import OperatingSystemVersion
 
 public struct HardwareModel: Codable, Equatable, Sendable {

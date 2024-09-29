@@ -46,7 +46,7 @@ extension MockReleaseCollectionMetadata {
     customVersionsAllowed: Bool,
     prefix: String? = nil
   ) -> any ReleaseCollectionMetadata {
-    let releases = (0 ..< count).map { offset in
+    let releases = (0..<count).map { offset in
       MockInstallerRelease(
         versionName: .randomLowerCaseAlphaNumberic(),
         releaseName: .randomLowerCaseAlphaNumberic(),

@@ -48,9 +48,10 @@ extension MachineStorageSpecification {
     id: Self.defaultPrimaryID, label: "", size: Self.defaultSize
   )
   public static let defaultSize = UInt64(64 * 1_024 * 1_024 * 1_024)
-  public static func `default`(forSystem system: any MachineSystem) -> MachineStorageSpecification { .init(
-    label: system.defaultStorageLabel,
-    size: UInt64(64 * 1_024 * 1_024 * 1_024)
-  )
+  public static func `default`(forSystem system: any MachineSystem) -> MachineStorageSpecification {
+    .init(
+      label: system.defaultStorageLabel,
+      size: UInt64(64 * 1_024 * 1_024 * 1_024)
+    )
   }
 }

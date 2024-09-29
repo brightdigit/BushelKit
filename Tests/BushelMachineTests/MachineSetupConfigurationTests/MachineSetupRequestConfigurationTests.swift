@@ -29,9 +29,10 @@
 
 import BushelCore
 import BushelCoreWax
-@testable import BushelMachine
 import BushelMachineWax
 import XCTest
+
+@testable import BushelMachine
 
 internal final class MachineSetupRequestConfigurationTests: XCTestCase {
   internal func testNilMachineBuildRequest() {

@@ -27,9 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import RadiantDocs
-
 public import Foundation
+public import RadiantDocs
 
 extension InitializablePackage {
   #warning("logging-note: let's log what is going on here")

@@ -28,7 +28,6 @@
 //
 
 import Foundation
-
 public import RadiantDocs
 
 public enum TestFileTypeSpecification: FileTypeSpecification {

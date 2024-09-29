@@ -49,7 +49,8 @@
         fatalError("Not implmented error")
       }
 
-      return try await snapshotter.createNewSnapshot(of: machine, request: request, options: options)
+      return try await snapshotter.createNewSnapshot(
+        of: machine, request: request, options: options)
     }
 
     public func snapshotter<MachineType>(

@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import Foundation
-
 public import IPSWDownloads
 
 extension Firmware: OperatingSystemInstalled {

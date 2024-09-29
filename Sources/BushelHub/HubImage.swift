@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 public struct HubImage: Identifiable, InstallImage, Sendable {

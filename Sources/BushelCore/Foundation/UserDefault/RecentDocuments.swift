@@ -28,7 +28,6 @@
 //
 
 public import Foundation
-
 public import RadiantKit
 
 public enum RecentDocuments {

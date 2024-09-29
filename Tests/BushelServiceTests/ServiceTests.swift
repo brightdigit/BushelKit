@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelService
 import XCTest
+
+@testable import BushelService
 
 internal final class ServiceTests: XCTestCase {
   func testService() async throws {

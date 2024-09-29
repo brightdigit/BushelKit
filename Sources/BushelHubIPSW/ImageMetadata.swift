@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import RadiantDocs
-
-public import IPSWDownloads
-
 public import BushelCore
+public import IPSWDownloads
+import RadiantDocs
 
 extension ImageMetadata {
   public init(firmware: Firmware) throws {

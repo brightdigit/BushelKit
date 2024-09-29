@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 import BushelMachine
 
 public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, Sendable {

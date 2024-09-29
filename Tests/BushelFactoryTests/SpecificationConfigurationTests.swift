@@ -36,7 +36,7 @@ internal final class SpecificationConfigurationTests: XCTestCase {
     configuration.template = .init(
       nameID: .init(),
       systemImageName: "basic",
-      idealStorage: .random(in: 100 ... 1_000),
+      idealStorage: .random(in: 100...1_000),
       memoryWithin: Specifications.Handlers.min,
       cpuWithin: Specifications.Handlers.min
     )

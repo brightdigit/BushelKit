@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
-
 public import Foundation
 
 #if canImport(FoundationNetworking)
@@ -89,7 +87,8 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
 
   private init(details: MachineError.Details, innerError: (any Error)? = nil) {
     if let innerError = innerError as? MachineError {
-      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
+      assertionFailure(
+        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
       Self.logger.critical(
         // swiftlint:disable:next line_length
         "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"

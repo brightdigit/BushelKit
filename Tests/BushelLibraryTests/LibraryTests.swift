@@ -27,14 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelLibrary
 import XCTest
+
+@testable import BushelLibrary
 
 internal final class LibraryTests: XCTestCase {
   internal func testCorrectInitialization() {
     let items: [LibraryImageFile] = [
       .monterey_12_6_0,
-      .sonoma_13_6_0
+      .sonoma_13_6_0,
     ]
 
     let sut = Library(items: items)

@@ -31,8 +31,8 @@ import Foundation
 
 public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
   public static let `default` = ConfigurationRange(
-    cpuCount: 1 ... 4,
-    memory: (8 * 1_024 * 1_024 * 1_024) ... (128 * 1_024 * 1_024 * 1_024)
+    cpuCount: 1...4,
+    memory: (8 * 1_024 * 1_024 * 1_024)...(128 * 1_024 * 1_024 * 1_024)
   )
 
   public let cpuCount: ClosedRange<Float>

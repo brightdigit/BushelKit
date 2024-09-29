@@ -60,7 +60,7 @@
       return types
     }
 
-    public static func allowedContentTypes(for fileTypes: FileType ...) -> [UTType] {
+    public static func allowedContentTypes(for fileTypes: FileType...) -> [UTType] {
       fileTypes.flatMap(allowedContentTypes(for:))
     }
   }

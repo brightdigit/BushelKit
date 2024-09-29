@@ -34,7 +34,8 @@ public import Foundation
 // swiftlint:disable identifier_name
 public struct ValidationFailures: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {
-    case infoDictionaryMissingRequiredPropertyValue = "Info dictionary missing required property/value"
+    case infoDictionaryMissingRequiredPropertyValue =
+      "Info dictionary missing required property/value"
     case infoDictionaryPropertyValueIsIllegal = "Info dictionary property value is illegal"
   }
 
@@ -42,7 +43,10 @@ public struct ValidationFailures: Codable, Equatable, Sendable {
   public let infoDictionaryPropertyValueIsIllegal: [String]
 
   // swiftlint:disable:next line_length
-  public init(infoDictionaryMissingRequiredPropertyValue: [String], infoDictionaryPropertyValueIsIllegal: [String]) {
+  public init(
+    infoDictionaryMissingRequiredPropertyValue: [String],
+    infoDictionaryPropertyValueIsIllegal: [String]
+  ) {
     self.infoDictionaryMissingRequiredPropertyValue = infoDictionaryMissingRequiredPropertyValue
     self.infoDictionaryPropertyValueIsIllegal = infoDictionaryPropertyValueIsIllegal
   }

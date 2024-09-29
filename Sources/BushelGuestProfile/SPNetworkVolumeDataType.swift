@@ -47,7 +47,10 @@ public struct SPNetworkVolumeDataType: Codable, Equatable, Sendable {
   public let spnetworkvolumeMntfromname: String
 
   // swiftlint:disable:next line_length
-  public init(name: String, spnetworkvolumeAutomounted: String, spnetworkvolumeFsmtnonname: String, spnetworkvolumeFstypename: String, spnetworkvolumeMntfromname: String) {
+  public init(
+    name: String, spnetworkvolumeAutomounted: String, spnetworkvolumeFsmtnonname: String,
+    spnetworkvolumeFstypename: String, spnetworkvolumeMntfromname: String
+  ) {
     self.name = name
     self.spnetworkvolumeAutomounted = spnetworkvolumeAutomounted
     self.spnetworkvolumeFsmtnonname = spnetworkvolumeFsmtnonname

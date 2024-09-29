@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelCore
 import XCTest
+
+@testable import BushelCore
 
 internal final class AssertionFailureTests: XCTestCase {
   private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>

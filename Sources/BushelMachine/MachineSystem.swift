@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 /// Manages a set of machines for a system

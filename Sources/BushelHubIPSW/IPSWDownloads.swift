@@ -28,9 +28,7 @@
 //
 
 public import BushelHub
-
 public import BushelLogging
-
 import Foundation
 import OpenAPIURLSession
 
@@ -55,7 +53,8 @@ extension IPSWDownloads: Loggable {
       return value.flatMap {
         $0 == 0 ? nil : $0
       }
-    } set {
+    }
+    set {
       assert(newValue != nil)
       let userDefaults = UserDefaults(suiteName: Bundle.suiteName)
       assert(userDefaults != nil)

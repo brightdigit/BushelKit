@@ -42,9 +42,9 @@ extension Task where Success == Never, Failure == Never {
     let maximumSeconds = max(value, otherValue)
 
     let range = maximumSeconds - minimumSeconds
-    toleranceSeconds = Int.random(in: 1 ... (range / 2))
+    toleranceSeconds = Int.random(in: 1...(range / 2))
 
-    durationSeconds = .random(in: minimumSeconds ... (maximumSeconds - toleranceSeconds))
+    durationSeconds = .random(in: minimumSeconds...(maximumSeconds - toleranceSeconds))
 
     do {
       try await Self.sleep(

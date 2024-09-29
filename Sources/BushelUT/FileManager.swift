@@ -35,7 +35,8 @@ public import Foundation
   extension FileManager {
     public func createTemporaryFile(for source: UTType) -> URL {
       let tempFile: URL
-      tempFile = temporaryDirectory
+      tempFile =
+        temporaryDirectory
         .appending(path: UUID().uuidString)
         .appendingPathExtension(for: source)
       return tempFile

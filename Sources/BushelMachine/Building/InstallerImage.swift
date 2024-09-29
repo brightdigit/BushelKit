@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
-
 public import Foundation
 
 public protocol InstallerImage: OperatingSystemInstalled, Sendable {

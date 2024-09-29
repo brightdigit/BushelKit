@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// swiftlint:disable all
 import Foundation
 
 public typealias IPv6Address = UInt128
@@ -38,15 +37,16 @@ extension IPv6Address {
     // Convert high and low parts to string representation
     // This is a simplified example
     // You would need proper formatting here
-    String(format: "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x",
-           (value.upperBits >> 48) & 0xFFFF,
-           (value.upperBits >> 32) & 0xFFFF,
-           (value.upperBits >> 16) & 0xFFFF,
-           value.upperBits & 0xFFFF,
-           (value.lowerBits >> 48) & 0xFFFF,
-           (value.lowerBits >> 32) & 0xFFFF,
-           (value.lowerBits >> 16) & 0xFFFF,
-           value.lowerBits & 0xFFFF)
+    String(
+      format: "%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x",
+      (value.upperBits >> 48) & 0xFFFF,
+      (value.upperBits >> 32) & 0xFFFF,
+      (value.upperBits >> 16) & 0xFFFF,
+      value.upperBits & 0xFFFF,
+      (value.lowerBits >> 48) & 0xFFFF,
+      (value.lowerBits >> 32) & 0xFFFF,
+      (value.lowerBits >> 16) & 0xFFFF,
+      value.lowerBits & 0xFFFF)
   }
 
   init(fromIPv6Address string: String) {

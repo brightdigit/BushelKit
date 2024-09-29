@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import Foundation
 
 public enum BuilderError: LocalizedError, Equatable, Sendable {
@@ -83,7 +82,9 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     .installationFailure(.fromError(error))
   }
 
-  public static func restoreImage(_ image: any InstallerImage, withError error: NSError) -> BuilderError? {
+  public static func restoreImage(_ image: any InstallerImage, withError error: NSError)
+    -> BuilderError?
+  {
     #if !os(Linux)
       let reason: NSError? = error.underlyingErrors.first as? NSError
       if reason?.localizedFailureReason?.contains("non-existent path") == true {

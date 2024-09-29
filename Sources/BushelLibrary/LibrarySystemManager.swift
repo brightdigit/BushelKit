@@ -28,12 +28,9 @@
 //
 
 public import BushelCore
-
-public import RadiantDocs
-
 public import BushelLogging
-
 public import Foundation
+public import RadiantDocs
 
 public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendable {
   public let fileTypeBasedOnURL: @Sendable (URL) -> FileType?
@@ -51,9 +48,9 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
   ) {
     self.implementations = .init(
       uniqueKeysWithValues:
-      implementations.map {
-        ($0.id, $0)
-      }
+        implementations.map {
+          ($0.id, $0)
+        }
     )
 
     fileTypeMap = self.implementations.mapValues {
@@ -66,7 +63,8 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
     }
 
     Self.logger.debug("LibrarySystems Initialized: \(implementations.map(\.shortName))")
-    Self.logger.debug("LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))")
+    Self.logger.debug(
+      "LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))")
 
     self.fileTypeBasedOnURL = fileTypeBasedOnURL
   }

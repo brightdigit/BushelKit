@@ -52,12 +52,14 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   public var resetApplication: Bool
 
   public var customMirror: Mirror {
-    Mirror(self, children: [
-      "disableAssertionFailureForError": disableAssertionFailureForError,
-      "disallowDatabaseRebuild": disallowDatabaseRebuild,
-      "onboardingOveride": onboardingOveride,
-      "resetApplication": resetApplication
-    ])
+    Mirror(
+      self,
+      children: [
+        "disableAssertionFailureForError": disableAssertionFailureForError,
+        "disallowDatabaseRebuild": disallowDatabaseRebuild,
+        "onboardingOveride": onboardingOveride,
+        "resetApplication": resetApplication,
+      ])
   }
 
   internal init() {}

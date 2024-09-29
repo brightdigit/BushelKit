@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelMachine
-
 public import Foundation
 
 #if canImport(SwiftData)

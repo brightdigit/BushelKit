@@ -28,12 +28,9 @@
 //
 
 import BushelCore
-
-import RadiantKit
-
 public import Foundation
-
 public import RadiantDocs
+import RadiantKit
 
 extension Library: InitializablePackage {
   public static var decoder: JSONDecoder {

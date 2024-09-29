@@ -28,11 +28,8 @@
 //
 
 public import BushelCore
-
 public import BushelCoreWax
-
 public import BushelMachine
-
 public import Foundation
 
 public struct MachineSystemStub: MachineSystem, Equatable {

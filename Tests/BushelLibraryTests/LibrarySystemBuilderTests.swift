@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelLibrary
 import BushelLibraryWax
 import XCTest
+
+@testable import BushelLibrary
 
 internal final class LibrarySystemBuilderTests: XCTestCase {
   internal func testBuildBlock() {

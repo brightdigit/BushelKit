@@ -28,13 +28,9 @@
 //
 
 public import BushelCore
-
 import BushelLibrary
-
 public import BushelLogging
-
 public import BushelMachine
-
 public import Foundation
 
 public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
@@ -64,7 +60,8 @@ public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
       throw error
     }
 
-    let metadata: Metadata = .init(labelName: image.name, imageMetadata: image.metadata, labelProvider)
+    let metadata: Metadata = .init(
+      labelName: image.name, imageMetadata: image.metadata, labelProvider)
 
     self.init(imageID: imageID, url: url, metadata: metadata)
   }

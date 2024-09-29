@@ -45,8 +45,9 @@
       guard let contentLength = Int(contentLengthString) else {
         throw MissingAttributeError(.contentLength, from: url, headers: headers)
       }
-      guard let lastModified =
-        (headers["Last-Modified"] as? String)
+      guard
+        let lastModified =
+          (headers["Last-Modified"] as? String)
           .flatMap(Formatters.lastModifiedDateFormatter.date(from:))
       else {
         throw MissingAttributeError(.lastModified, from: url, headers: headers)
@@ -80,7 +81,8 @@
           atPath: vzRestoreImage.url.path
         )
         guard
-          let contentLength: Int = attrs[.size] as? Int else {
+          let contentLength: Int = attrs[.size] as? Int
+        else {
           throw MissingAttributeError(.size, from: url)
         }
 

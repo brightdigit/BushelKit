@@ -49,7 +49,7 @@ extension Array {
       return []
     }
 
-    return .init(1 ..< self.count)
+    return .init(1..<self.count)
   }
 
   #if canImport(SwiftUI)
@@ -63,7 +63,7 @@ extension Array {
       for index in sortedIndices {
         assert(index >= 0 && index < self.count)
         guard index >= 0, index < self.count else {
-          continue // Skip invalid indices
+          continue  // Skip invalid indices
         }
         self.remove(at: index)
       }

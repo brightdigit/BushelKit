@@ -44,7 +44,8 @@ public struct SPInstallHistoryDataType: Codable, Equatable, Sendable {
   public let installVersion: String
   public let packageSource: PackageSource
 
-  public init(name: String, installDate: Date, installVersion: String, packageSource: PackageSource) {
+  public init(name: String, installDate: Date, installVersion: String, packageSource: PackageSource)
+  {
     self.name = name
     self.installDate = installDate
     self.installVersion = installVersion

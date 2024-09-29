@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// import BushelLocalization
-
 public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Sendable, Equatable {
   public let nameID: Name
   public let idealStorage: Int

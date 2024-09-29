@@ -69,7 +69,14 @@ public struct SPInternationalDataType: Codable, Equatable, Sendable {
   public let bootLocale: String?
 
   // swiftlint:disable:next line_length
-  public init(name: String, linguisticDataAssetsRequested: [String]?, userCalendar: String?, userCountryCode: String?, userLanguageCode: String?, userLocale: String?, userPreferredInterfaceLanguages: [String]?, userUsesMetricSystem: String?, systemCountry: String?, systemInterfaceLanguages: [String]?, systemLanguages: [String]?, systemLocale: String?, systemTextDirection: String?, systemUsesMetricSystem: String?, bootKbd: String?, bootLocale: String?) {
+  public init(
+    name: String, linguisticDataAssetsRequested: [String]?, userCalendar: String?,
+    userCountryCode: String?, userLanguageCode: String?, userLocale: String?,
+    userPreferredInterfaceLanguages: [String]?, userUsesMetricSystem: String?,
+    systemCountry: String?, systemInterfaceLanguages: [String]?, systemLanguages: [String]?,
+    systemLocale: String?, systemTextDirection: String?, systemUsesMetricSystem: String?,
+    bootKbd: String?, bootLocale: String?
+  ) {
     self.name = name
     self.linguisticDataAssetsRequested = linguisticDataAssetsRequested
     self.userCalendar = userCalendar

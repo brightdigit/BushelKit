@@ -41,12 +41,14 @@ public struct FileManagerHandler: FileHandler {
   }
 
   public func sizeOf(_ url: URL) throws -> Int? {
-    let dictionary: [FileAttributeKey: Any] = try self.fileManager().attributesOfItem(atPath: url.path)
+    let dictionary: [FileAttributeKey: Any] = try self.fileManager().attributesOfItem(
+      atPath: url.path)
     return dictionary[.size] as? Int
   }
 
   public func copy(at fromURL: URL, to toURL: URL) async throws {
-    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+    try await withCheckedThrowingContinuation {
+      (continuation: CheckedContinuation<Void, any Error>) in
       do {
         try self.fileManager().copyItem(at: fromURL, to: toURL)
       } catch {

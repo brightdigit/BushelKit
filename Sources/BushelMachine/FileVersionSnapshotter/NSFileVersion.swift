@@ -80,11 +80,14 @@
         throw SnapshotError.innerError(error)
       }
       unarchiver.requiresSecureCoding = false
-      guard let persistentIdentifier =
-        unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) else {
+      guard
+        let persistentIdentifier =
+          unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey)
+      else {
         throw SnapshotError.unarchiveError(identifierData)
       }
-      guard let version = self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier) else {
+      guard let version = self.version(itemAt: url, forPersistentIdentifier: persistentIdentifier)
+      else {
         throw SnapshotError.missingSnapshotVersionAt(url)
       }
       return version

@@ -52,10 +52,10 @@
       let properties = class_copyPropertyList(classType, &count)
       var propertyKeys: [String] = []
 
-      for index in 0 ..< Int(count) {
-        if
-          let property = properties?[index],
-          let propertyName = String(utf8String: property_getName(property)) {
+      for index in 0..<Int(count) {
+        if let property = properties?[index],
+          let propertyName = String(utf8String: property_getName(property))
+        {
           propertyKeys.append(propertyName)
         }
       }

@@ -28,7 +28,6 @@
 //
 
 public import BushelMachine
-
 public import Foundation
 
 public struct MachineStub: Machine {
@@ -81,7 +80,8 @@ public struct MachineStub: Machine {
     // nothing for now
   }
 
-  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID {
+  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID
+  {
     UUID()
   }
 
@@ -93,12 +93,16 @@ public struct MachineStub: Machine {
   }
 
   // swiftlint:disable:next unavailable_function
-  public func finishedWithSnapshot(_: BushelMachine.Snapshot, by _: BushelMachine.SnapshotDifference) {
+  public func finishedWithSnapshot(
+    _: BushelMachine.Snapshot, by _: BushelMachine.SnapshotDifference
+  ) {
     fatalError("Not implemented")
   }
 
   // swiftlint:disable:next unavailable_function
-  public func finishedWithSynchronization(_: BushelMachine.SnapshotSynchronizationDifference?) throws {
+  public func finishedWithSynchronization(_: BushelMachine.SnapshotSynchronizationDifference?)
+    throws
+  {
     fatalError("Not implemented")
   }
 

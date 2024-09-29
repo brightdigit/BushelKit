@@ -53,7 +53,9 @@
       self.init(fileManager: fileManager)
     }
 
-    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws {
+    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL)
+      async throws
+    {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
@@ -78,7 +80,8 @@
 
     public func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws {
       let paths = try machine.beginSnapshot()
-      let oldSnapshots = try self.fileManager.dataDictionary(directoryAt: paths.snapshotCollectionURL)
+      let oldSnapshots = try self.fileManager.dataDictionary(
+        directoryAt: paths.snapshotCollectionURL)
 
       let snapshotFileNameKey = [snapshot.id.uuidString, "bshsnapshot"].joined(separator: ".")
 
@@ -86,7 +89,8 @@
         throw SnapshotError.missingSnapshotFile(snapshot.id)
       }
 
-      Self.logger.debug("Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)")
+      Self.logger.debug(
+        "Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)")
       let fileVersion = try Result {
         try NSFileVersion.version(
           itemAt: paths.snapshottingSourceURL,
@@ -98,7 +102,7 @@
       )
       .unwrap(
         or:
-        SnapshotError.missingSnapshotVersionID(snapshot.id)
+          SnapshotError.missingSnapshotVersionID(snapshot.id)
       )
       .get()
 
@@ -135,8 +139,8 @@
 
       let snapshotFileURL =
         snapshotCollectionURL
-          .appendingPathComponent(id.uuidString)
-          .appendingPathExtension("bshsnapshot")
+        .appendingPathComponent(id.uuidString)
+        .appendingPathExtension("bshsnapshot")
 
       Self.logger.debug("Creating snapshot with id \(id)")
 

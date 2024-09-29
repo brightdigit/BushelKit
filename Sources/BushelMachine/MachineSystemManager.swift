@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
-
 import Foundation
 
 /// Implementation of a ``MachineSystemManaging``

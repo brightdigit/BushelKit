@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 public struct InstallFailure: Equatable, Sendable {

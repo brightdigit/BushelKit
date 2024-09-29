@@ -28,9 +28,10 @@
 //
 
 import BushelCoreWax
-@testable import BushelLibrary
 import BushelLibraryWax
 import XCTest
+
+@testable import BushelLibrary
 
 internal final class LibrarySystemManagerTests: XCTestCase {
   internal func testResolveSystemBasedOnID() {

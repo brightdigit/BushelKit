@@ -42,9 +42,10 @@ public struct MissingAttributeError: LocalizedError {
   public init(_ headerName: HeaderName, from url: URL, headers: [AnyHashable: Any]? = nil) {
     self.attributeKey = .init(headerName: headerName)
     self.url = url
-    self.headers = (headers?.map { pair in
-      ("\(pair.key)", "\(pair.value)")
-    }).map(Dictionary.init(uniqueKeysWithValues:))
+    self.headers =
+      (headers?.map { pair in
+        ("\(pair.key)", "\(pair.value)")
+      }).map(Dictionary.init(uniqueKeysWithValues:))
   }
 
   public init(_ attributeKey: FileAttributeKey, from url: URL, headers: [String: String]? = nil) {

@@ -34,7 +34,8 @@ public struct SnapshotterID: ExpressibleByStringInterpolation,
   Hashable,
   RawRepresentable,
   CustomStringConvertible,
-  Sendable {
+  Sendable
+{
   public typealias StringLiteralType = String
 
   public static let fileVersion: SnapshotterID = "fileVersion"

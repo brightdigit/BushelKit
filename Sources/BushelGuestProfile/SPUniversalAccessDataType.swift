@@ -61,7 +61,11 @@ public struct SPUniversalAccessDataType: Codable, Equatable, Sendable {
   public let zoomMode: String
 
   // swiftlint:disable:next line_length
-  public init(name: String, contrast: String, cursorMag: String, display: String, flashScreen: String, keyboardZoom: String, mouseKeys: String, scrollZoom: String, slowKeys: String, stickyKeys: String, voiceover: String, zoomMode: String) {
+  public init(
+    name: String, contrast: String, cursorMag: String, display: String, flashScreen: String,
+    keyboardZoom: String, mouseKeys: String, scrollZoom: String, slowKeys: String,
+    stickyKeys: String, voiceover: String, zoomMode: String
+  ) {
     self.name = name
     self.contrast = contrast
     self.cursorMag = cursorMag

@@ -50,18 +50,19 @@ public enum Specifications {
 
     @Sendable
     public static func cpuWithin(_ parameters: any CalculationParameters) -> Int {
-      let valueRange = parameters.valueRange.clamped(to: 2 ... parameters.valueRange.upperBound - 2)
-      let value = valueRange.clamped(to: 2 ... 6).upperBound
+      let valueRange = parameters.valueRange.clamped(to: 2...parameters.valueRange.upperBound - 2)
+      let value = valueRange.clamped(to: 2...6).upperBound
       return parameters.indexFor(value: value)
     }
   }
 
-  internal static let fullMemoryRange = 1 ... 11
-  internal static let fullStorageRange = 36 ... 42
+  internal static let fullMemoryRange = 1...11
+  internal static let fullStorageRange = 36...42
   public static let fullStorageBoundsRange: ClosedRange<Float> = .init(intRange: fullStorageRange)
 
   private static func handler(
-    using: @escaping @Sendable (Int, Int) -> Int) -> @Sendable (any CalculationParameters) -> Int {
+    using: @escaping @Sendable (Int, Int) -> Int
+  ) -> @Sendable (any CalculationParameters) -> Int {
     { $0.value(using: using) }
   }
 }

@@ -40,7 +40,8 @@ public struct MacOSRelease: InstallerRelease {
   }
 
   public init?(majorVersion: Int) {
-    guard let releaseName = OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion) else {
+    guard let releaseName = OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion)
+    else {
       assertionFailure("Missing Metadata for macOS \(majorVersion).")
       return nil
     }

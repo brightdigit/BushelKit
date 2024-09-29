@@ -28,7 +28,6 @@
 //
 
 public import BushelCore
-
 public import BushelLogging
 
 public protocol SnapshotterFactory: Loggable, Sendable {
@@ -38,7 +37,9 @@ public protocol SnapshotterFactory: Loggable, Sendable {
     request: SnapshotRequest,
     options: SnapshotOptions
   ) async throws -> Snapshot
-  func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (any Snapshotter<MachineType>)?
+  func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (
+    any Snapshotter<MachineType>
+  )?
 }
 
 extension SnapshotterFactory {

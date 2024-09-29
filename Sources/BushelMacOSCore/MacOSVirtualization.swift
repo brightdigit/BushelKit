@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 import Foundation
-
 public import RadiantDocs
 
 public enum MacOSVirtualization: Sendable {
@@ -84,7 +82,8 @@ public enum MacOSVirtualization: Sendable {
     OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion) ?? defaultName
   }
 
-  public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String {
+  public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String
+  {
     // swiftlint:disable:next line_length
     "macOS \(codeNameWithDefaultFor(majorVersion: metadata.operatingSystemVersion.majorVersion)) \(metadata.operatingSystemVersion)"
   }

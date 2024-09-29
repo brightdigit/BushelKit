@@ -115,7 +115,8 @@ public enum DataType: String {
       guard let data = try pipe.fileHandleForReading.readToEnd() else {
         throw Error.missingData
       }
-      guard let dict = try JSONDecoder().decode([String: [T]].self, from: data)[T.dataType.rawValue] else {
+      guard let dict = try JSONDecoder().decode([String: [T]].self, from: data)[T.dataType.rawValue]
+      else {
         throw Error.missingRoot
       }
       return dict

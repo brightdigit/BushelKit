@@ -28,12 +28,9 @@
 //
 
 public import BushelCore
-
-public import RadiantDocs
-
 public import BushelLogging
-
 public import Foundation
+public import RadiantDocs
 
 public protocol LibrarySystemManaging: Loggable, Sendable {
   var allAllowedFileTypes: [FileType] { get }
@@ -51,7 +48,8 @@ extension LibrarySystemManaging {
   public func resolve(_ url: URL) throws -> any LibrarySystem {
     guard let systemID = resolveSystemFor(url: url) else {
       let error = VMSystemError.unknownSystemBasedOn(url)
-      Self.logger.error("Unable able to resolve system for url \(url): \(error.localizedDescription)")
+      Self.logger.error(
+        "Unable able to resolve system for url \(url): \(error.localizedDescription)")
       throw error
     }
 
@@ -65,7 +63,9 @@ extension LibrarySystemManaging {
   }
 
   @Sendable
-  public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled) -> MetadataLabel {
+  public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled)
+    -> MetadataLabel
+  {
     let system = self.resolve(id)
     return system.label(fromMetadata: metadata)
   }
@@ -79,7 +79,8 @@ extension LibrarySystemManaging {
     let files = await withTaskGroup(of: LibraryImageFile?.self) { group in
       var files = [LibraryImageFile]()
       for imageFileURL in imageFileURLs {
-        group.addLibraryImageFileTask(forURL: imageFileURL, librarySystemManager: self, logger: Self.logger)
+        group.addLibraryImageFileTask(
+          forURL: imageFileURL, librarySystemManager: self, logger: Self.logger)
       }
       for await file in group {
         if let file {

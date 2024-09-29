@@ -27,10 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// swiftlint:disable all
-
-// MARK: Error Type
-
 /// An `ErrorType` for `UInt128` data types. It includes cases
 /// for errors that can occur during string
 /// conversion.
@@ -212,13 +208,13 @@ extension UInt128: FixedWidthInteger {
     // Decompose lhs into an array of 4, 32 significant bit UInt64s.
     let lhsArray = [
       self.value.upperBits >> 32, /* 0 */ self.value.upperBits & lower32, /* 1 */
-      self.value.lowerBits >> 32, /* 2 */ self.value.lowerBits & lower32 /* 3 */
+      self.value.lowerBits >> 32, /* 2 */ self.value.lowerBits & lower32 /* 3 */,
     ]
 
     // Decompose rhs into an array of 4, 32 significant bit UInt64s.
     let rhsArray = [
       other.value.upperBits >> 32, /* 0 */ other.value.upperBits & lower32, /* 1 */
-      other.value.lowerBits >> 32, /* 2 */ other.value.lowerBits & lower32 /* 3 */
+      other.value.lowerBits >> 32, /* 2 */ other.value.lowerBits & lower32 /* 3 */,
     ]
 
     // The future contents of this array will be used to store segment
@@ -228,8 +224,8 @@ extension UInt128: FixedWidthInteger {
     )
 
     // Loop through every combination of lhsArray[x] * rhsArray[y]
-    for rhsSegment in 0 ..< rhsArray.count {
-      for lhsSegment in 0 ..< lhsArray.count {
+    for rhsSegment in 0..<rhsArray.count {
+      for lhsSegment in 0..<lhsArray.count {
         let currentValue = lhsArray[lhsSegment] * rhsArray[rhsSegment]
         resultArray[lhsSegment][rhsSegment] = currentValue
       }
@@ -241,13 +237,13 @@ extension UInt128: FixedWidthInteger {
       resultArray[2][3] & lower32,
       resultArray[3][2] & lower32,
       resultArray[3][3] >> 32
-    ) // overflow from bitSegment8
+    )  // overflow from bitSegment8
     let bitSegment6 = UInt128._variadicAdditionWithOverflowCount(
       resultArray[1][3] & lower32,
       resultArray[2][2] & lower32,
       resultArray[3][1] & lower32,
-      resultArray[2][3] >> 32, // overflow from bitSegment7
-      resultArray[3][2] >> 32, // overflow from bitSegment7
+      resultArray[2][3] >> 32,  // overflow from bitSegment7
+      resultArray[3][2] >> 32,  // overflow from bitSegment7
       bitSegment7.overflowCount
     )
     let bitSegment5 = UInt128._variadicAdditionWithOverflowCount(
@@ -255,33 +251,33 @@ extension UInt128: FixedWidthInteger {
       resultArray[1][2] & lower32,
       resultArray[2][1] & lower32,
       resultArray[3][0] & lower32,
-      resultArray[1][3] >> 32, // overflow from bitSegment6
-      resultArray[2][2] >> 32, // overflow from bitSegment6
-      resultArray[3][1] >> 32, // overflow from bitSegment6
+      resultArray[1][3] >> 32,  // overflow from bitSegment6
+      resultArray[2][2] >> 32,  // overflow from bitSegment6
+      resultArray[3][1] >> 32,  // overflow from bitSegment6
       bitSegment6.overflowCount
     )
     let bitSegment4 = UInt128._variadicAdditionWithOverflowCount(
       resultArray[0][2] & lower32,
       resultArray[1][1] & lower32,
       resultArray[2][0] & lower32,
-      resultArray[0][3] >> 32, // overflow from bitSegment5
-      resultArray[1][2] >> 32, // overflow from bitSegment5
-      resultArray[2][1] >> 32, // overflow from bitSegment5
-      resultArray[3][0] >> 32, // overflow from bitSegment5
+      resultArray[0][3] >> 32,  // overflow from bitSegment5
+      resultArray[1][2] >> 32,  // overflow from bitSegment5
+      resultArray[2][1] >> 32,  // overflow from bitSegment5
+      resultArray[3][0] >> 32,  // overflow from bitSegment5
       bitSegment5.overflowCount
     )
     let bitSegment3 = UInt128._variadicAdditionWithOverflowCount(
       resultArray[0][1] & lower32,
       resultArray[1][0] & lower32,
-      resultArray[0][2] >> 32, // overflow from bitSegment4
-      resultArray[1][1] >> 32, // overflow from bitSegment4
-      resultArray[2][0] >> 32, // overflow from bitSegment4
+      resultArray[0][2] >> 32,  // overflow from bitSegment4
+      resultArray[1][1] >> 32,  // overflow from bitSegment4
+      resultArray[2][0] >> 32,  // overflow from bitSegment4
       bitSegment4.overflowCount
     )
     let bitSegment1 = UInt128._variadicAdditionWithOverflowCount(
       resultArray[0][0],
-      resultArray[0][1] >> 32, // overflow from bitSegment3
-      resultArray[1][0] >> 32, // overflow from bitSegment3
+      resultArray[0][1] >> 32,  // overflow from bitSegment3
+      resultArray[1][0] >> 32,  // overflow from bitSegment3
       bitSegment3.overflowCount
     )
 
@@ -378,7 +374,8 @@ extension UInt128: FixedWidthInteger {
 
   /// Provides the quotient and remainder when dividing the provided value by self.
   internal func _quotientAndRemainderFullWidth(dividingBy dividend: (high: UInt128, low: UInt128))
-    -> (quotient: UInt128, remainder: UInt128) {
+    -> (quotient: UInt128, remainder: UInt128)
+  {
     let divisor = self
     let numeratorBitsToWalk: UInt128
 
@@ -398,7 +395,7 @@ extension UInt128: FixedWidthInteger {
     var quotient = UInt128.min
     var remainder = UInt128.min
 
-    for numeratorShiftWidth in (0 ... numeratorBitsToWalk).reversed() {
+    for numeratorShiftWidth in (0...numeratorBitsToWalk).reversed() {
       remainder <<= 1
       remainder |= UInt128._bitFromDoubleWidth(at: numeratorShiftWidth, for: dividend)
 
@@ -424,7 +421,7 @@ extension UInt128: FixedWidthInteger {
     case 0:
       input.low & 1
 
-    case 1 ... 127:
+    case 1...127:
       input.low >> bitPosition & 1
 
     case 128:
@@ -530,8 +527,8 @@ extension UInt128: BinaryInteger {
     let shiftWidth = rhs.value.lowerBits & 127
 
     switch shiftWidth {
-    case 0: return // Do nothing shift.
-    case 1 ... 63:
+    case 0: return  // Do nothing shift.
+    case 1...63:
       let upperBits = lhs.value.upperBits >> shiftWidth
       let lowerBits =
         (lhs.value.lowerBits >> shiftWidth) + (lhs.value.upperBits << (64 - shiftWidth))
@@ -557,8 +554,8 @@ extension UInt128: BinaryInteger {
     let shiftWidth = rhs.value.lowerBits & 127
 
     switch shiftWidth {
-    case 0: return // Do nothing shift.
-    case 1 ... 63:
+    case 0: return  // Do nothing shift.
+    case 1...63:
       let upperBits =
         (lhs.value.upperBits << shiftWidth) + (lhs.value.lowerBits >> (64 - shiftWidth))
       let lowerBits = lhs.value.lowerBits << shiftWidth
@@ -661,7 +658,7 @@ extension UInt128: CustomStringConvertible {
   /// - Precondition: Valid radix is from 2...36
   /// - Complexity: O(n) where n is the number of decimal digits in the final representation
   internal func _valueToString(radix: Int = 10, uppercase: Bool = true) -> String {
-    precondition((2 ... 36) ~= radix, "radix must be within the range of 2-36.")
+    precondition((2...36) ~= radix, "radix must be within the range of 2-36.")
 
     // Simple case.
     if self == 0 {
@@ -728,7 +725,8 @@ extension UInt128: Comparable {
     if lhs.value.upperBits < rhs.value.upperBits {
       return true
     } else if lhs.value.upperBits == rhs.value.upperBits,
-              lhs.value.lowerBits < rhs.value.lowerBits {
+      lhs.value.lowerBits < rhs.value.lowerBits
+    {
       return true
     }
     return false
@@ -781,7 +779,7 @@ extension UInt128 {
   @available(
     swift, deprecated: 5.0,
     message:
-    "The ExpressibleByStringLiteral conformance has been removed. Use failable initializer instead.",
+      "The ExpressibleByStringLiteral conformance has been removed. Use failable initializer instead.",
     renamed: "init(_:)"
   )
   public init(stringLiteral value: StringLiteralType) {

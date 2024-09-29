@@ -80,7 +80,8 @@
         return nil
       }
 
-      let snapshotIDs = try self.fileManager.filenameUUIDs(atDirectoryURL: paths.snapshotCollectionURL)
+      let snapshotIDs = try self.fileManager.filenameUUIDs(
+        atDirectoryURL: paths.snapshotCollectionURL)
 
       return .init(addedSnapshots: snapshotsAdded, snapshotIDs: snapshotIDs)
     }

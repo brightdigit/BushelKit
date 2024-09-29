@@ -38,7 +38,7 @@ extension OperatingSystemVersion {
     12: "Monterey",
     13: "Ventura",
     14: "Sonoma",
-    15: "Sequoia"
+    15: "Sequoia",
   ]
 
   private static let minimumVirtualizationMajorVersion = 12
@@ -51,7 +51,9 @@ extension OperatingSystemVersion {
     codeNames[majorVersion]
   }
 
-  public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<Int> {
+  public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<
+    Int
+  > {
     guard onlyVirtualizationSupported else {
       return codeNames.keys
     }

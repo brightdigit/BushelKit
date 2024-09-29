@@ -28,7 +28,6 @@
 //
 
 import BushelCore
-
 import Foundation
 
 extension LibraryImageFile {
@@ -47,6 +46,6 @@ extension LibraryImageFile {
       id: .init(),
       metadata: .Previews.monterey,
       name: "macOS Ventura 13.4.0"
-    )
+    ),
   ]
 }

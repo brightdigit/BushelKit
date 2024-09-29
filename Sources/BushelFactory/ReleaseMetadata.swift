@@ -28,9 +28,7 @@
 //
 
 public import BushelCore
-
 public import BushelMachine
-
 import Foundation
 
 public struct ReleaseMetadata: Identifiable, Equatable {

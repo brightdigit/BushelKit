@@ -29,9 +29,7 @@
 
 public import BushelCore
 import BushelCoreWax
-
 public import BushelMachine
-
 public import Foundation
 
 public struct InstallerImageSub: InstallerImage {

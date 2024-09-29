@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@testable import BushelMachine
 import XCTest
+
+@testable import BushelMachine
 
 internal final class NetworkConfigurationTests: XCTestCase {
   internal func testDefaultInstanceOfTypeNat() {
