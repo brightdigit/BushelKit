@@ -54,8 +54,7 @@
     }
 
     public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL)
-      async throws
-    {
+      async throws {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
@@ -81,7 +80,8 @@
     public func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws {
       let paths = try machine.beginSnapshot()
       let oldSnapshots = try self.fileManager.dataDictionary(
-        directoryAt: paths.snapshotCollectionURL)
+        directoryAt: paths.snapshotCollectionURL
+      )
 
       let snapshotFileNameKey = [snapshot.id.uuidString, "bshsnapshot"].joined(separator: ".")
 
@@ -90,7 +90,8 @@
       }
 
       Self.logger.debug(
-        "Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)")
+        "Retrieving snapshot \(snapshot.id) for machine at \(paths.snapshottingSourceURL)"
+      )
       let fileVersion = try Result {
         try NSFileVersion.version(
           itemAt: paths.snapshottingSourceURL,

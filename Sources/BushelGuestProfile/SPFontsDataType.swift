@@ -48,9 +48,12 @@ public struct SPFontsDataType: Codable, Equatable, Sendable {
   public let typefaces: [Typeface]
   public let valid: PrivateFramework
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, enabled: PrivateFramework, path: String, type: TypeEnum, typefaces: [Typeface],
+    name: String,
+    enabled: PrivateFramework,
+    path: String,
+    type: TypeEnum,
+    typefaces: [Typeface],
     valid: PrivateFramework
   ) {
     self.name = name

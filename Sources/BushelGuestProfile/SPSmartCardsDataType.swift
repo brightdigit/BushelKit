@@ -42,7 +42,11 @@ public struct SPSmartCardsDataType: Codable, Equatable, Sendable {
   public let the01: String?
   public let items: [SPRawCameraDataType]?
 
-  public init(name: String, the01: String?, items: [SPRawCameraDataType]?) {
+  public init(
+    name: String,
+    the01: String?,
+    items: [SPRawCameraDataType]?
+  ) {
     self.name = name
     self.the01 = the01
     self.items = items

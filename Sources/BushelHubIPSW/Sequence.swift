@@ -36,8 +36,7 @@ import BushelLogging
 
 extension Sequence {
   public func tryCompactMap<T>(logger: Logger? = nil, _ transform: (Self.Element) throws -> T)
-    -> [T]
-  {
+    -> [T] {
     self.compactMap { element in
       do {
         return try transform(element)

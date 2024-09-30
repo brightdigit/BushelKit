@@ -48,10 +48,13 @@ public struct SPSyncServicesDataTypeItem: Codable, Equatable, Sendable {
   public let lastModified: Date?
   public let size: String?
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, summaryOfSyncLog: String?, contents: String?, description: String?,
-    lastModified: Date?, size: String?
+    name: String,
+    summaryOfSyncLog: String?,
+    contents: String?,
+    description: String?,
+    lastModified: Date?,
+    size: String?
   ) {
     self.name = name
     self.summaryOfSyncLog = summaryOfSyncLog

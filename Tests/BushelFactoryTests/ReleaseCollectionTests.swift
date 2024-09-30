@@ -104,6 +104,7 @@ internal final class ReleaseCollectionTests: XCTestCase {
       }
   }
 
+  // swiftlint:disable:next function_body_length
   private func doTestReleaseCollectionWhere(
     customVersionsAllowed expectedCustomVersionsAllowed: Bool,
     withCustomReleaseCount customReleaseCount: Int? = nil
@@ -145,16 +146,21 @@ internal final class ReleaseCollectionTests: XCTestCase {
     )
 
     XCTAssertEqual(
-      actualReleaseCollection.containsCustomVersions, parameters.customReleaseCount > 0)
+      actualReleaseCollection.containsCustomVersions,
+      parameters.customReleaseCount > 0
+    )
     XCTAssertEqual(actualReleaseCollection.customVersionsAllowed, expectedCustomVersionsAllowed)
 
     XCTAssertEqual(
-      actualReleaseCollection.customVersionsAllowed, releaseCollection.customVersionsAllowed)
+      actualReleaseCollection.customVersionsAllowed,
+      releaseCollection.customVersionsAllowed
+    )
     XCTAssertEqual(actualReleaseCollection.prefix, releaseCollection.prefix)
     XCTAssertEqual(actualReleaseCollection.firstMajorVersion, parameters.expectedFirstMajorVersion)
     XCTAssertEqual(actualCustomVersions, expectedCustomVersions)
 
-    let sortedReleases = releaseCollection.releases.sorted(by: { $0.majorVersion < $1.majorVersion }
+    let sortedReleases = releaseCollection.releases.sorted(
+      by: { $0.majorVersion < $1.majorVersion }
     )
     for expectedRelease in sortedReleases {
       guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {

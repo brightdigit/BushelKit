@@ -126,3 +126,4 @@ disabled_rules:
     - nesting
     - implicit_getter
     - switch_case_alignment
+    - closure_parameter_position

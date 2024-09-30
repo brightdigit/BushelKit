@@ -68,9 +68,9 @@ public struct SPInternationalDataType: Codable, Equatable, Sendable {
   public let bootKbd: String?
   public let bootLocale: String?
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, linguisticDataAssetsRequested: [String]?, userCalendar: String?,
+    name: String,
+    linguisticDataAssetsRequested: [String]?, userCalendar: String?,
     userCountryCode: String?, userLanguageCode: String?, userLocale: String?,
     userPreferredInterfaceLanguages: [String]?, userUsesMetricSystem: String?,
     systemCountry: String?, systemInterfaceLanguages: [String]?, systemLanguages: [String]?,

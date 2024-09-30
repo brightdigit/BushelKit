@@ -38,7 +38,7 @@ public enum SessionCloseButtonActionOption: Int, CaseIterable, Localizable, Send
   public static let defaultLocalizedStringID = "settingsSessionCloseAskUser"
   public static let localizedStringIDMapping: [Self: String] = [
     .forceTurnOff: "settingsSessionCloseForceTurnOff",
-    .saveSnapshotAndForceTurnOff: "settingsSessionCloseSaveSnapshotTurnOff",
+    .saveSnapshotAndForceTurnOff: "settingsSessionCloseSaveSnapshotTurnOff"
   ]
 }
 

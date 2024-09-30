@@ -80,7 +80,9 @@ extension Snapshot {
 
   public var operatingSystemInstalled: (any OperatingSystemInstalled)? {
     OperatingSystem(
-      operatingSystemVersion: self.operatingSystemVersion, buildVersion: self.buildVersion)
+      operatingSystemVersion: self.operatingSystemVersion,
+      buildVersion: self.buildVersion
+    )
   }
 
   public func updatingWith(name newName: String, notes newNotes: String) -> Snapshot {

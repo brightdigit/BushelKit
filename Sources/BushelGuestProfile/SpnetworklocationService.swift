@@ -50,10 +50,14 @@ public struct SpnetworklocationService: Codable, Equatable, Sendable {
   public let proxies: Proxies
   public let type: String
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, bsdDeviceName: String, hardwareAddress: String, iPv4: IPV, iPv6: IPV,
-    proxies: Proxies, type: String
+    name: String,
+    bsdDeviceName: String,
+    hardwareAddress: String,
+    iPv4: IPV,
+    iPv6: IPV,
+    proxies: Proxies,
+    type: String
   ) {
     self.name = name
     self.bsdDeviceName = bsdDeviceName

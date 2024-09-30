@@ -56,10 +56,16 @@ public struct SPUSBDataTypeItem: Codable, Equatable, Sendable {
   public let productID: String
   public let vendorID: String
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, bcdDevice: String, busPower: String, busPowerUsed: String, deviceSpeed: String,
-    extraCurrentUsed: String, locationID: String, manufacturer: String, productID: String,
+    name: String,
+    bcdDevice: String,
+    busPower: String,
+    busPowerUsed: String,
+    deviceSpeed: String,
+    extraCurrentUsed: String,
+    locationID: String,
+    manufacturer: String,
+    productID: String,
     vendorID: String
   ) {
     self.name = name

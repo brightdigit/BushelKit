@@ -61,8 +61,7 @@ public struct Version: CustomStringConvertible, Sendable {
   public let prereleaseLabel: PrereleaseLabel?
 
   /// Creates a new `Version` instance with the provided components.
-  internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil)
-  {
+  internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil) {
     self.marketingSemVer = marketingSemVer
     self.buildNumber = buildNumber
     self.prereleaseLabel = prereleaseLabel
@@ -83,8 +82,8 @@ extension Version {
       return self.marketingSemVer.description
     }
 
-    // swiftlint:disable:next line_length
     return
+    // swiftlint:disable:next line_length
       "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 

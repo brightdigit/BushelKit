@@ -50,7 +50,10 @@
       }
 
       return try await snapshotter.createNewSnapshot(
-        of: machine, request: request, options: options)
+        of: machine,
+        request: request,
+        options: options
+      )
     }
 
     public func snapshotter<MachineType>(

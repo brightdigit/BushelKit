@@ -64,7 +64,9 @@ internal final class LibraryImageFileTests: XCTestCase {
       XCTAssertEqual(sut.name, expectedImageFile.name)
       XCTAssertEqual(sut.metadata.vmSystemID, expectedImageFile.metadata.vmSystemID)
       XCTAssertEqual(
-        sut.metadata.operatingSystemVersion, expectedImageFile.metadata.operatingSystemVersion)
+        sut.metadata.operatingSystemVersion,
+        expectedImageFile.metadata.operatingSystemVersion
+      )
       XCTAssertEqual(sut.metadata.contentLength, expectedImageFile.metadata.contentLength)
       XCTAssertEqual(sut.metadata.buildVersion, expectedImageFile.metadata.buildVersion)
       XCTAssertEqual(sut.metadata.fileExtension, expectedImageFile.metadata.fileExtension)

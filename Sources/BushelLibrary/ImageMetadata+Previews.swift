@@ -61,7 +61,10 @@ extension ImageMetadata {
       isImageSupported: true,
       buildVersion: "21F79",
       operatingSystemVersion: OperatingSystemVersion(
-        majorVersion: 12, minorVersion: 4, patchVersion: 0),
+        majorVersion: 12,
+        minorVersion: 4,
+        patchVersion: 0
+      ),
       contentLength: 679_276_356_959_953,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959953),
       fileExtension: MacOSVirtualization.ipswFileExtension,

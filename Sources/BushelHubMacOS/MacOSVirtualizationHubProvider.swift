@@ -46,7 +46,9 @@
     fileprivate static func hubImages() async throws -> [HubImage] {
       let restoreImage = try await VZMacOSRestoreImage.unsafeFetchLatestSupported()
       let imageMetadata = try await ImageMetadata(
-        vzRestoreImage: restoreImage, url: restoreImage.url)
+        vzRestoreImage: restoreImage,
+        url: restoreImage.url
+      )
 
       return [
         .init(

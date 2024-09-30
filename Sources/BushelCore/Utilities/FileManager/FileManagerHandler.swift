@@ -42,7 +42,8 @@ public struct FileManagerHandler: FileHandler {
 
   public func sizeOf(_ url: URL) throws -> Int? {
     let dictionary: [FileAttributeKey: Any] = try self.fileManager().attributesOfItem(
-      atPath: url.path)
+      atPath: url.path
+    )
     return dictionary[.size] as? Int
   }
 

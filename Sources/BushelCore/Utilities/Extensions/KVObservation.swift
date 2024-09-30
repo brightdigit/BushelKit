@@ -54,8 +54,7 @@
 
       for index in 0..<Int(count) {
         if let property = properties?[index],
-          let propertyName = String(utf8String: property_getName(property))
-        {
+          let propertyName = String(utf8String: property_getName(property)) {
           propertyKeys.append(propertyName)
         }
       }

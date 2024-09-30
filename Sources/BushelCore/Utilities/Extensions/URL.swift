@@ -39,8 +39,7 @@ extension URL {
 
   #if !os(Linux)
     public init(resolvingSecurityScopeBookmarkData data: Data, bookmarkDataIsStale: inout Bool)
-      throws
-    {
+      throws {
       #if os(macOS)
         try self.init(
           resolvingBookmarkData: data,

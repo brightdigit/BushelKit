@@ -28,7 +28,7 @@
 //
 
 import Foundation
-
+// swiftlint:disable all
 public typealias IPv6Address = UInt128
 
 @available(*, unavailable, message: "Not Ready for Use.")

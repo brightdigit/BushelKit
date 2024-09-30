@@ -62,8 +62,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
   // MARK: - Helpers
 
   private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled)
-    -> String
-  {
+    -> String {
     let shortName = defaultName(fromOSMetadata: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName

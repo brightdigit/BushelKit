@@ -94,7 +94,9 @@ extension VirtualizationData {
   ) throws {
     let machineIdentifierData = try set.data(from: \(any Paths).machineIdentifierFileName)
     let machineIdentifier = try plistDecoder.decode(
-      MachineIdentifier.self, from: machineIdentifierData)
+      MachineIdentifier.self,
+      from: machineIdentifierData
+    )
 
     let hardwareModelData = try set.data(from: \(any Paths).hardwareModelFileName)
 

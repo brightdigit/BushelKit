@@ -40,7 +40,10 @@ public struct SpdevtoolsApps: Codable, Equatable, Sendable {
   public let spinstrumentsApp: String
   public let spxcodeApp: String
 
-  public init(spinstrumentsApp: String, spxcodeApp: String) {
+  public init(
+    spinstrumentsApp: String,
+    spxcodeApp: String
+  ) {
     self.spinstrumentsApp = spinstrumentsApp
     self.spxcodeApp = spxcodeApp
   }

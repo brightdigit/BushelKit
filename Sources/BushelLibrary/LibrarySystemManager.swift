@@ -64,7 +64,8 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
 
     Self.logger.debug("LibrarySystems Initialized: \(implementations.map(\.shortName))")
     Self.logger.debug(
-      "LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))")
+      "LibrarySystems Supported FileTypes: \(self.fileTypeMap.keys.map(\.utIdentifier))"
+    )
 
     self.fileTypeBasedOnURL = fileTypeBasedOnURL
   }

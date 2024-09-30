@@ -76,7 +76,8 @@ extension TaskGroup<LibraryImageFile?> {
         try FileManager.default.removeItem(at: imageFileURL)
       } catch {
         logger.error(
-          "Unable to Delete \(imageFileURL.lastPathComponent): \(error.localizedDescription)")
+          "Unable to Delete \(imageFileURL.lastPathComponent): \(error.localizedDescription)"
+        )
       }
       return
     }

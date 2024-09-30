@@ -42,7 +42,11 @@ public struct SPPowerDataType: Codable, Equatable, Sendable {
   public let acPower: ACPower?
   public let sppowerUPSInstalled: String?
 
-  public init(name: String, acPower: ACPower?, sppowerUPSInstalled: String?) {
+  public init(
+    name: String,
+    acPower: ACPower?,
+    sppowerUPSInstalled: String?
+  ) {
     self.name = name
     self.acPower = acPower
     self.sppowerUPSInstalled = sppowerUPSInstalled

@@ -42,7 +42,11 @@ public struct DNS: Codable, Equatable, Sendable {
   public let searchDomains: [String]
   public let serverAddresses: [String]
 
-  public init(domainName: String, searchDomains: [String], serverAddresses: [String]) {
+  public init(
+    domainName: String,
+    searchDomains: [String],
+    serverAddresses: [String]
+  ) {
     self.domainName = domainName
     self.searchDomains = searchDomains
     self.serverAddresses = serverAddresses

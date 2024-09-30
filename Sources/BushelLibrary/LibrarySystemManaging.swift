@@ -49,7 +49,8 @@ extension LibrarySystemManaging {
     guard let systemID = resolveSystemFor(url: url) else {
       let error = VMSystemError.unknownSystemBasedOn(url)
       Self.logger.error(
-        "Unable able to resolve system for url \(url): \(error.localizedDescription)")
+        "Unable able to resolve system for url \(url): \(error.localizedDescription)"
+      )
       throw error
     }
 
@@ -64,8 +65,7 @@ extension LibrarySystemManaging {
 
   @Sendable
   public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled)
-    -> MetadataLabel
-  {
+    -> MetadataLabel {
     let system = self.resolve(id)
     return system.label(fromMetadata: metadata)
   }
@@ -80,7 +80,10 @@ extension LibrarySystemManaging {
       var files = [LibraryImageFile]()
       for imageFileURL in imageFileURLs {
         group.addLibraryImageFileTask(
-          forURL: imageFileURL, librarySystemManager: self, logger: Self.logger)
+          forURL: imageFileURL,
+          librarySystemManager: self,
+          logger: Self.logger
+        )
       }
       for await file in group {
         if let file {

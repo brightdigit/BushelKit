@@ -56,11 +56,17 @@ public struct SPSoftwareDataType: Codable, Equatable, Sendable {
   public let uptime: String
   public let userName: String
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, bootMode: String, bootVolume: String, kernelVersion: String,
-    localHostName: String, osVersion: String, secureVM: String, systemIntegrity: String,
-    uptime: String, userName: String
+    name: String,
+    bootMode: String,
+    bootVolume: String,
+    kernelVersion: String,
+    localHostName: String,
+    osVersion: String,
+    secureVM: String,
+    systemIntegrity: String,
+    uptime: String,
+    userName: String
   ) {
     self.name = name
     self.bootMode = bootMode

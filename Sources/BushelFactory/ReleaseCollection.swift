@@ -94,7 +94,8 @@ public struct ReleaseCollection {
     }
     if releaseCollection.customVersionsAllowed {
       let customReleaseKeys = Set(imageDictionary.keys).subtracting(
-        sourceReleases.map(\.majorVersion))
+        sourceReleases.map(\.majorVersion)
+      )
       let customImages: [any InstallerImage] =
         imageDictionary.flatMap { (key: Int, value: [any InstallerImage]) -> [any InstallerImage] in
           guard customReleaseKeys.contains(key) else {
@@ -118,7 +119,9 @@ public struct ReleaseCollection {
     for release in releases {
       if let image = release.images.first(where: { $0.identifier.imageID == identifier.imageID }) {
         return ReleaseQueryResult(
-          release: .init(metadata: release), version: SelectedVersion(image: image))
+          release: .init(metadata: release),
+          version: SelectedVersion(image: image)
+        )
       }
     }
     return nil

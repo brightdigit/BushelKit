@@ -57,8 +57,7 @@ extension PrereleaseLabel {
   }
 
   public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int)
-    -> Int
-  {
+    -> Int {
     (buildNumber - baseNumber + additionalOffset) / factor
   }
 }

@@ -37,7 +37,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     11: "Big Sur",
     12: "Monterey",
     13: "Ventura",
-    14: "Sonoma",
+    14: "Sonoma"
   ]
 
   public var id: VMSystemID
@@ -68,8 +68,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
   // MARK: - Helpers
 
   private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled)
-    -> String
-  {
+    -> String {
     let shortName = defaultName(fromOSMetadata: metadata)
     guard let buildVersion = metadata.buildVersion else {
       return shortName

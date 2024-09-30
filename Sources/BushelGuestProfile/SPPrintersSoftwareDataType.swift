@@ -42,7 +42,11 @@ public struct SPPrintersSoftwareDataType: Codable, Equatable, Sendable {
   public let imageCaptureSupport: [Extension]?
   public let extensions: [Extension]?
 
-  public init(name: String, imageCaptureSupport: [Extension]?, extensions: [Extension]?) {
+  public init(
+    name: String,
+    imageCaptureSupport: [Extension]?,
+    extensions: [Extension]?
+  ) {
     self.name = name
     self.imageCaptureSupport = imageCaptureSupport
     self.extensions = extensions

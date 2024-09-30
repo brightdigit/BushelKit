@@ -61,7 +61,10 @@ public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
     }
 
     let metadata: Metadata = .init(
-      labelName: image.name, imageMetadata: image.metadata, labelProvider)
+      labelName: image.name,
+      imageMetadata: image.metadata,
+      labelProvider
+    )
 
     self.init(imageID: imageID, url: url, metadata: metadata)
   }

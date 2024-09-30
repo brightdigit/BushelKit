@@ -122,8 +122,7 @@ extension LibraryError {
     LibraryError(details: .imageFolderInitializationAt(url), innerError: error)
   }
 
-  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError
-  {
+  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError {
     LibraryError(details: .missingInitialization(for: property))
   }
 
@@ -141,7 +140,12 @@ extension LibraryError {
     withError error: any Error
   ) -> LibraryError {
     LibraryError(
-      details: .copyImage(source: importingURL, destination: libraryURL), innerError: error)
+      details: .copyImage(
+        source: importingURL,
+        destination: libraryURL
+      ),
+      innerError: error
+    )
   }
 
   public static func systemResolutionError(_ error: any Error) throws -> LibraryError {

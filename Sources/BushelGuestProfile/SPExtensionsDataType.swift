@@ -74,15 +74,26 @@ public struct SPExtensionsDataType: Codable, Equatable, Sendable {
   public let spextLoadAddress: String?
   public let spextHasAllDependenciesErrors: SpextHasAllDependenciesErrors?
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, spextArchitectures: [SpextArchitecture]?, spextBundleid: String,
-    spextHas64BitIntelCode: Spext?, spextHasAllDependencies: SpextHasAllDependencies,
-    spextLastModified: Date, spextLoadable: Spext, spextLoaded: Spext, spextNotarized: Spext,
-    spextObtainedFrom: SpextObtainedFrom, spextPath: String,
-    spextRuntimeEnvironment: SpextRuntimeEnvironment?, spextSignedBy: String, spextVersion: String,
-    version: String, spextValidErrors: SpextValidErrors?, spextInfo: String?,
-    spextLoadAddress: String?, spextHasAllDependenciesErrors: SpextHasAllDependenciesErrors?
+    name: String,
+    spextArchitectures: [SpextArchitecture]?,
+    spextBundleid: String,
+    spextHas64BitIntelCode: Spext?,
+    spextHasAllDependencies: SpextHasAllDependencies,
+    spextLastModified: Date,
+    spextLoadable: Spext,
+    spextLoaded: Spext,
+    spextNotarized: Spext,
+    spextObtainedFrom: SpextObtainedFrom,
+    spextPath: String,
+    spextRuntimeEnvironment: SpextRuntimeEnvironment?,
+    spextSignedBy: String,
+    spextVersion: String,
+    version: String,
+    spextValidErrors: SpextValidErrors?,
+    spextInfo: String?,
+    spextLoadAddress: String?,
+    spextHasAllDependenciesErrors: SpextHasAllDependenciesErrors?
   ) {
     self.name = name
     self.spextArchitectures = spextArchitectures

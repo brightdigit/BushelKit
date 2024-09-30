@@ -42,9 +42,9 @@ public struct SPNetworkLocationDataType: Codable, Equatable, Sendable {
   public let spnetworklocationIsActive: PrivateFramework
   public let spnetworklocationServices: [SpnetworklocationService]
 
-  // swiftlint:disable:next line_length
   public init(
-    name: String, spnetworklocationIsActive: PrivateFramework,
+    name: String,
+    spnetworklocationIsActive: PrivateFramework,
     spnetworklocationServices: [SpnetworklocationService]
   ) {
     self.name = name

@@ -116,8 +116,7 @@ package struct MockDataSet: VirtualizationDataSet {
   }
 
   package func data(from name: KeyPath<any BushelCore.VirtualizationData.Paths, String>) throws
-    -> Data
-  {
+    -> Data {
     switch name {
     case \.hardwareModelFileName:
       hardwareModelData

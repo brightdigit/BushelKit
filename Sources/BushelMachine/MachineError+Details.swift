@@ -69,7 +69,7 @@ extension MachineError {
 
       case let .accessDeniedLibraryAt(path):
         let components: [String?] = [
-          "There's an issue getting access to library at \(path)", error?.localizedDescription,
+          "There's an issue getting access to library at \(path)", error?.localizedDescription
         ]
         return components.compactMap { $0 }.joined(separator: ": ")
 

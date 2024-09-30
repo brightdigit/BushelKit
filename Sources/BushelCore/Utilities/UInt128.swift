@@ -151,6 +151,7 @@ extension UInt128: FixedWidthInteger {
 
   // MARK: Instance Methods
 
+  // swiftlint:disable all
   public func addingReportingOverflow(_ rhs: UInt128) -> (partialValue: UInt128, overflow: Bool) {
     var resultOverflow = false
     let (lowerBits, lowerOverflow) = self.value.lowerBits.addingReportingOverflow(
@@ -208,13 +209,13 @@ extension UInt128: FixedWidthInteger {
     // Decompose lhs into an array of 4, 32 significant bit UInt64s.
     let lhsArray = [
       self.value.upperBits >> 32, /* 0 */ self.value.upperBits & lower32, /* 1 */
-      self.value.lowerBits >> 32, /* 2 */ self.value.lowerBits & lower32 /* 3 */,
+      self.value.lowerBits >> 32, /* 2 */ self.value.lowerBits & lower32 /* 3 */
     ]
 
     // Decompose rhs into an array of 4, 32 significant bit UInt64s.
     let rhsArray = [
       other.value.upperBits >> 32, /* 0 */ other.value.upperBits & lower32, /* 1 */
-      other.value.lowerBits >> 32, /* 2 */ other.value.lowerBits & lower32 /* 3 */,
+      other.value.lowerBits >> 32, /* 2 */ other.value.lowerBits & lower32 /* 3 */
     ]
 
     // The future contents of this array will be used to store segment
@@ -374,8 +375,7 @@ extension UInt128: FixedWidthInteger {
 
   /// Provides the quotient and remainder when dividing the provided value by self.
   internal func _quotientAndRemainderFullWidth(dividingBy dividend: (high: UInt128, low: UInt128))
-    -> (quotient: UInt128, remainder: UInt128)
-  {
+    -> (quotient: UInt128, remainder: UInt128) {
     let divisor = self
     let numeratorBitsToWalk: UInt128
 
@@ -725,8 +725,7 @@ extension UInt128: Comparable {
     if lhs.value.upperBits < rhs.value.upperBits {
       return true
     } else if lhs.value.upperBits == rhs.value.upperBits,
-      lhs.value.lowerBits < rhs.value.lowerBits
-    {
+      lhs.value.lowerBits < rhs.value.lowerBits {
       return true
     }
     return false

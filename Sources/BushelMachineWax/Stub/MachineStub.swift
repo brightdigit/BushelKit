@@ -80,8 +80,7 @@ public struct MachineStub: Machine {
     // nothing for now
   }
 
-  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID
-  {
+  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID {
     UUID()
   }
 
@@ -101,8 +100,7 @@ public struct MachineStub: Machine {
 
   // swiftlint:disable:next unavailable_function
   public func finishedWithSynchronization(_: BushelMachine.SnapshotSynchronizationDifference?)
-    throws
-  {
+    throws {
     fatalError("Not implemented")
   }
 

@@ -29,6 +29,7 @@
 
 public import Foundation
 
+// swiftlint:disable line_length
 extension URL {
   public static let urlsString = """
     http://parallels.com/interdum.jpg?sed=primis&ante=in&vivamus=faucibus&tortor=orci&duis=luctus&mattis=et&egestas=ultrices&metus=posuere&aenean=cubilia&fermentum=curae&donec=donec&ut=pharetra&mauris=magna&eget=vestibulum&massa=aliquet&tempor=ultrices&convallis=erat&nulla=tortor&neque=sollicitudin&libero=mi&convallis=sit&eget=amet&eleifend=lobortis&luctus=sapien&ultricies=sapien&eu=non&nibh=mi&quisque=integer&id=ac&justo=neque&sit=duis
@@ -159,7 +160,8 @@ extension URL {
     """
 
   public static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines).compactMap(
-    URL.init(string:))
+    URL.init(string:)
+  )
 
   public static func randomHTTP() -> URL {
     // swiftlint:disable:next force_unwrapping
