@@ -31,7 +31,9 @@ public import BushelMachine
 import Foundation
 
 extension MachineConfiguration {
-  public init(configurable: some MachineConfigurable) async throws {
+  public init(
+    configurable: some MachineConfigurable
+  ) async throws {
     guard let machineSystem = await configurable.machineSystem else {
       throw ConfigurationError.missingSystemManager
     }

@@ -35,5 +35,7 @@ public struct SnapshotOptions: OptionSet, Sendable {
   public static let byMoving: SnapshotOptions = .init(rawValue: 2)
 
   public let rawValue: Int
-  public init(rawValue: Int) { self.rawValue = rawValue }
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
 }

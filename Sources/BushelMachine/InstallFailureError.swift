@@ -30,4 +30,6 @@
 import BushelCore
 import Foundation
 
-public protocol InstallFailureError: Error { func installationFailure() -> InstallFailure? }
+public protocol InstallFailureError: Error {
+  func installationFailure() -> InstallFailure?
+}

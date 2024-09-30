@@ -31,7 +31,7 @@ import BushelFactory
 import XCTest
 
 internal final class SpecificationConfigurationTests: XCTestCase {
-  func testTemplateUpdate() {
+  internal func testTemplateUpdate() {
     var configuration = SpecificationConfiguration<UUID>()
     configuration.template = .init(
       nameID: .init(),

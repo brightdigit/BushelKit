@@ -32,7 +32,9 @@ public import Foundation
 // MARK: - SpextValidErrors
 
 public struct SpextValidErrors: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey { case validationFailures = "Validation Failures" }
+  public enum CodingKeys: String, CodingKey {
+    case validationFailures = "Validation Failures"
+  }
 
   public let validationFailures: ValidationFailures
 

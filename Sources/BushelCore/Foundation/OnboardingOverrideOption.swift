@@ -40,10 +40,14 @@ public enum OnboardingOverrideOption: String, EnvironmentValue {
 extension OnboardingOverrideOption {
   public func shouldBasedOn(date: Date?) -> Bool {
     switch (self, date) {
-    case (.skip, _): false
-    case (.force, _): true
-    case (.none, .some): false
-    case (.none, .none): true
+    case (.skip, _):
+      false
+    case (.force, _):
+      true
+    case (.none, .some):
+      false
+    case (.none, .none):
+      true
     }
   }
 }

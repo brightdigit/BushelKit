@@ -58,7 +58,12 @@ public import Foundation
       //   Shared directories or external drives. We should only abbreviate the home directory.
       //
       // In a case that any of these issues arise, we directly return the full path
-      guard pathComponents.count > 3, pathComponents[1] == "Users" else { return path }
+      guard
+        pathComponents.count > 3,
+        pathComponents[1] == "Users"
+      else {
+        return path
+      }
 
       // pathComponents[1] is the "Users" and pathComponent[2] is the user name. Thus, both of them are
       //   joined together to form the home directory
@@ -91,7 +96,9 @@ public import Foundation
     /// - Parameter abbreviatedPath: a `String` path, abbreviated with ~
     /// - Returns: The `URL` if it is able to expand the ~ into a full URL, or `nil` if it is unable do so
     static func expandingTilde(from abbreviatedPath: String) -> URL? {
-      guard abbreviatedPath.first == "~" else { return nil }
+      guard abbreviatedPath.first == "~" else {
+        return nil
+      }
 
       // Grab a file path that will definitely contain the "/Users/username" prefix
       let filePath = FileManager.default.homeDirectoryForCurrentUser

@@ -40,7 +40,10 @@ public struct Extension: Codable, Equatable, Sendable {
   public let infoPath: String
   public let infoVersion: String
 
-  public init(infoPath: String, infoVersion: String) {
+  public init(
+    infoPath: String,
+    infoVersion: String
+  ) {
     self.infoPath = infoPath
     self.infoVersion = infoVersion
   }

@@ -35,11 +35,15 @@ public struct ReleaseMetadata: Identifiable, Equatable {
   public let metadata: any InstallerRelease
   public let images: [any InstallerImage]
 
-  public var id: Int { metadata.majorVersion }
+  public var id: Int {
+    metadata.majorVersion
+  }
 
-  public var isCustom: Bool { metadata.isCustom }
+  public var isCustom: Bool {
+    self.metadata.isCustom
+  }
 
-  init(metadata: any InstallerRelease, images: [any InstallerImage]) {
+  internal init(metadata: any InstallerRelease, images: [any InstallerImage]) {
     self.metadata = metadata
     self.images = images
   }

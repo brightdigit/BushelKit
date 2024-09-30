@@ -42,13 +42,16 @@
     )
 
     public static let configurationRange = ConfigurationRange(
-      cpuCount: Float(
-        VZVirtualMachineConfiguration.minimumAllowedCPUCount
-      )...Float(Self.maximumAllowedCPUCount),
+      cpuCount:
+        Float(
+          VZVirtualMachineConfiguration.minimumAllowedCPUCount
+        )...Float(Self.maximumAllowedCPUCount),
       memory:
         Float(
           VZVirtualMachineConfiguration.minimumAllowedMemorySize
-        )...Float(VZVirtualMachineConfiguration.maximumAllowedMemorySize)
+        )...Float(
+          VZVirtualMachineConfiguration.maximumAllowedMemorySize
+        )
     )
   }
 #endif

@@ -33,7 +33,7 @@ import XCTest
 @testable import BushelMachine
 
 internal final class MachineSystemManagerTests: XCTestCase {
-  func testResolveById() {
+  internal func testResolveById() {
     let stubOS1: MachineSystemStub = .stubOS1
     let stubOS2: MachineSystemStub = .stubOS2
     let stubOS3: MachineSystemStub = .stubOS3

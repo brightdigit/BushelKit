@@ -37,11 +37,15 @@ public struct UserAudience: OptionSet, Sendable {
   public static let any: UserAudience = .init(rawValue: .max)
   public static let `default`: UserAudience = [.testFlightBeta, proSubscriber]
   public static let none: UserAudience = []
-  public static var availableValues: UserAudience { .default }
+  public static var availableValues: UserAudience {
+    .default
+  }
 
   public var rawValue: Int
 
-  public init(rawValue: Int) { self.rawValue = rawValue }
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
 
   //  public static func includes(_ value: UserAudience) -> Bool {
   //    guard value.rawValue > 0 else {

@@ -71,16 +71,26 @@ public enum MachineState: Int, Sendable {
 extension MachineState {
   public var sfSystemName: String {
     switch self {
-    case .stopped: "stop.fill"
-    case .running: "play.fill"
-    case .paused: "pause.fill"
-    case .error: "exclamationmark.triangle.fill"
-    case .starting: "play"
-    case .pausing: "pause"
-    case .resuming: "play"
-    case .stopping: "stop"
-    case .saving: "camera"
-    case .restoring: "camera.badge.clock"
+    case .stopped:
+      "stop.fill"
+    case .running:
+      "play.fill"
+    case .paused:
+      "pause.fill"
+    case .error:
+      "exclamationmark.triangle.fill"
+    case .starting:
+      "play"
+    case .pausing:
+      "pause"
+    case .resuming:
+      "play"
+    case .stopping:
+      "stop"
+    case .saving:
+      "camera"
+    case .restoring:
+      "camera.badge.clock"
     }
   }
 }

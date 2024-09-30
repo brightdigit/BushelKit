@@ -30,12 +30,13 @@
 public import Foundation
 
 extension CGSize {
-  @inlinable public func resizing(
+  @inlinable
+  public func resizing(
     toAspectRatio aspectRatio: CGFloat,
     minimumWidth: CGFloat,
     withAdditionalHeight additionalHeight: CGFloat
   ) -> CGSize {
-    let remainingHeight = max(height - additionalHeight, 0)
+    let remainingHeight = max(self.height - additionalHeight, 0)
     let calculatedWidth = remainingHeight * aspectRatio
     if calculatedWidth < minimumWidth {
       return .init(width: minimumWidth, height: minimumWidth / aspectRatio + additionalHeight)

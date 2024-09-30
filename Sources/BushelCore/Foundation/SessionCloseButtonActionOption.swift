@@ -38,16 +38,22 @@ public enum SessionCloseButtonActionOption: Int, CaseIterable, Localizable, Send
   public static let defaultLocalizedStringID = "settingsSessionCloseAskUser"
   public static let localizedStringIDMapping: [Self: String] = [
     .forceTurnOff: "settingsSessionCloseForceTurnOff",
-    .saveSnapshotAndForceTurnOff: "settingsSessionCloseSaveSnapshotTurnOff",
+    .saveSnapshotAndForceTurnOff: "settingsSessionCloseSaveSnapshotTurnOff"
   ]
 }
 
 extension SessionCloseButtonActionOption {
-  public static var pickerValues: [SessionCloseButtonActionOption?] { allCases + [nil] }
+  public static var pickerValues: [SessionCloseButtonActionOption?] {
+    allCases + [nil]
+  }
 }
 
-extension SessionCloseButtonActionOption? {
-  public var tag: Int { self?.rawValue ?? Wrapped.emptyValue }
+extension Optional where Wrapped == SessionCloseButtonActionOption {
+  public var tag: Int {
+    self?.rawValue ?? Wrapped.emptyValue
+  }
 
-  public var requiresSubscription: Bool { self == .saveSnapshotAndForceTurnOff }
+  public var requiresSubscription: Bool {
+    self == .saveSnapshotAndForceTurnOff
+  }
 }

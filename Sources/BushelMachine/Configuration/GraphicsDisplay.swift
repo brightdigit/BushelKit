@@ -36,7 +36,9 @@ public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConv
   public let heightInPixels: Int
   public let pixelsPerInch: Int
 
-  public var description: String { "\(widthInPixels) x \(heightInPixels) (\(pixelsPerInch) ppi)" }
+  public var description: String {
+    "\(widthInPixels) x \(heightInPixels) (\(pixelsPerInch) ppi)"
+  }
 
   public init(id: UUID = .init(), widthInPixels: Int, heightInPixels: Int, pixelsPerInch: Int) {
     self.id = id
@@ -47,7 +49,9 @@ public struct GraphicsDisplay: Codable, Identifiable, Hashable, CustomStringConv
 }
 
 extension GraphicsDisplay {
-  public var aspectRatio: CGFloat { CGFloat(widthInPixels) / CGFloat(heightInPixels) }
+  public var aspectRatio: CGFloat {
+    CGFloat(self.widthInPixels) / CGFloat(self.heightInPixels)
+  }
 
   public static func `default`() -> GraphicsDisplay {
     .init(widthInPixels: 1_920, heightInPixels: 1_080, pixelsPerInch: 80)

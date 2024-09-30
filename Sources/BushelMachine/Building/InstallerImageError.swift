@@ -28,6 +28,7 @@
 //
 
 public import BushelCore
+import BushelLogging
 public import Foundation
 
 public struct InstallerImageError: Error, Sendable {
@@ -42,9 +43,7 @@ public struct InstallerImageError: Error, Sendable {
   public let type: ErrorType
 
   public init(
-    imageID: UUID,
-    type: InstallerImageError.ErrorType,
-    libraryID: LibraryIdentifier? = nil
+    imageID: UUID, type: InstallerImageError.ErrorType, libraryID: LibraryIdentifier? = nil
   ) {
     self.imageID = imageID
     self.libraryID = libraryID

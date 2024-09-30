@@ -32,9 +32,13 @@ public import Foundation
 // MARK: - SPRawCameraDataType
 
 public struct SPRawCameraDataType: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey { case name = "_name" }
+  public enum CodingKeys: String, CodingKey {
+    case name = "_name"
+  }
 
   public let name: String
 
-  public init(name: String) { self.name = name }
+  public init(name: String) {
+    self.name = name
+  }
 }

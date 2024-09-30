@@ -32,7 +32,7 @@ import XCTest
 @testable import BushelFactory
 
 internal final class SpecificationTemplateTests: XCTestCase {
-  func testIndex() {
+  internal func testIndex() {
     let expectedCPUIndex: Int = .random(in: 10...100)
     let expectedMemoryIndex: Int = .random(in: 10...100)
     let template = SpecificationTemplate<UUID>(

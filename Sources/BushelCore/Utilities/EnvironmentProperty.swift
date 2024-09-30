@@ -29,19 +29,26 @@
 
 import Foundation
 
-@propertyWrapper public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
-  public var wrappedValue: Value { accessor.value }
+@propertyWrapper
+public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
+  public var wrappedValue: Value {
+    accessor.value
+  }
 
   private let accessor: ValueAccessor
 
-  private init(accessor: EnvironmentProperty<Value>.ValueAccessor) { self.accessor = accessor }
+  private init(accessor: EnvironmentProperty<Value>.ValueAccessor) {
+    self.accessor = accessor
+  }
 
-  init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
+  internal init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
     self.init(accessor: .dictionary(source, key: key))
   }
 
-  init<KeyType: RawRepresentable>(
+  internal init<KeyType: RawRepresentable>(
     _ key: KeyType,
     source: [String: String] = ProcessInfo.processInfo.environment
-  ) where KeyType.RawValue == String { self.init(key.rawValue, source: source) }
+  ) where KeyType.RawValue == String {
+    self.init(key.rawValue, source: source)
+  }
 }

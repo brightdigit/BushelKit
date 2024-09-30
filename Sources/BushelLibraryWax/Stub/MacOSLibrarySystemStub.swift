@@ -34,7 +34,10 @@ public import RadiantDocs
 
 public struct MacOSLibrarySystemStub: LibrarySystem {
   private static let codeNames: [Int: String] = [
-    11: "Big Sur", 12: "Monterey", 13: "Ventura", 14: "Sonoma",
+    11: "Big Sur",
+    12: "Monterey",
+    13: "Ventura",
+    14: "Sonoma"
   ]
 
   public var id: VMSystemID
@@ -44,27 +47,32 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     fatalError("Not Implemented")
   }
 
-  public init(id: VMSystemID) { self.id = id }
+  public init(id: VMSystemID) {
+    self.id = id
+  }
 
-  public func metadata(fromURL _: URL) async throws -> ImageMetadata { .macOS_12_6_0_21G115 }
+  public func metadata(fromURL _: URL) async throws -> ImageMetadata {
+    .macOS_12_6_0_21G115
+  }
 
   public func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
     .init(
-      operatingSystemLongName: operatingSystemLongName(forOSMetadata: metadata),
-      defaultName: defaultName(fromOSMetadata: metadata),
-      imageName: imageName(forOSMetadata: metadata),
+      operatingSystemLongName: self.operatingSystemLongName(forOSMetadata: metadata),
+      defaultName: self.defaultName(fromOSMetadata: metadata),
+      imageName: self.imageName(forOSMetadata: metadata),
       systemName: "macOS",
-      versionName: codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)
+      versionName: self.codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)
     )
   }
 
   // MARK: - Helpers
 
   private func operatingSystemLongName(forOSMetadata metadata: any OperatingSystemInstalled)
-    -> String
-  {
+    -> String {
     let shortName = defaultName(fromOSMetadata: metadata)
-    guard let buildVersion = metadata.buildVersion else { return shortName }
+    guard let buildVersion = metadata.buildVersion else {
+      return shortName
+    }
     return shortName.appending(" (\(buildVersion))")
   }
 

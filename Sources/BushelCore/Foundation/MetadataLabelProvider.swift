@@ -29,5 +29,5 @@
 
 import Foundation
 
-public typealias MetadataLabelProvider = @Sendable (VMSystemID, any OperatingSystemInstalled) ->
-  MetadataLabel
+public typealias MetadataLabelProvider =
+  @Sendable (VMSystemID, any OperatingSystemInstalled) -> MetadataLabel

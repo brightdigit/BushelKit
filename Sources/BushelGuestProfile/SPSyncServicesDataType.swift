@@ -42,7 +42,11 @@ public struct SPSyncServicesDataType: Codable, Equatable, Sendable {
   public let name: String
   public let summaryOSVersion: String?
 
-  public init(items: [SPSyncServicesDataTypeItem], name: String, summaryOSVersion: String?) {
+  public init(
+    items: [SPSyncServicesDataTypeItem],
+    name: String,
+    summaryOSVersion: String?
+  ) {
     self.items = items
     self.name = name
     self.summaryOSVersion = summaryOSVersion

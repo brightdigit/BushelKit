@@ -40,7 +40,10 @@ public struct AdditionalRoute: Codable, Equatable, Sendable {
   public let destinationAddress: String
   public let subnetMask: String
 
-  public init(destinationAddress: String, subnetMask: String) {
+  public init(
+    destinationAddress: String,
+    subnetMask: String
+  ) {
     self.destinationAddress = destinationAddress
     self.subnetMask = subnetMask
   }

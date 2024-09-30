@@ -43,13 +43,13 @@
         backingData
       }
       set {
-        backingData = newValue
+        self.backingData = newValue
       }
     }
 
     required init(backingData: any BackingData<ItemModel>) {
       self.backingData = backingData
-      id = .init()
+      self.id = .init()
     }
 
     init(id: UUID = .init()) {

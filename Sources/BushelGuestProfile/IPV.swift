@@ -32,9 +32,13 @@ public import Foundation
 // MARK: - IPV
 
 public struct IPV: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey { case configMethod = "ConfigMethod" }
+  public enum CodingKeys: String, CodingKey {
+    case configMethod = "ConfigMethod"
+  }
 
   public let configMethod: String
 
-  public init(configMethod: String) { self.configMethod = configMethod }
+  public init(configMethod: String) {
+    self.configMethod = configMethod
+  }
 }

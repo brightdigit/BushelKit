@@ -35,18 +35,24 @@ public enum DocumentTypeFilterOption: Int, CaseIterable, Identifiable, Localizab
 
   public static let localizedStringIDMapping: [Self: String] = [
     .machinesOnly: "settingsFilterRecentDocumentsMachinesOnly",
-    .machinesAndLibraries: "settingsFilterRecentDocumentsNone",
+    .machinesAndLibraries: "settingsFilterRecentDocumentsNone"
   ]
 
-  public var tag: Int { rawValue }
+  public var tag: Int {
+    self.rawValue
+  }
 
-  public var id: Int { rawValue }
+  public var id: Int {
+    self.rawValue
+  }
 
   public var typeFilter: DocumentTypeFilter {
     switch self {
-    case .machinesAndLibraries: []
+    case .machinesAndLibraries:
+      []
 
-    case .machinesOnly: .libraries
+    case .machinesOnly:
+      .libraries
     }
   }
 

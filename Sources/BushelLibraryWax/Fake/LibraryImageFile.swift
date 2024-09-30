@@ -30,7 +30,6 @@
 public import BushelLibrary
 import Foundation
 
-// swift-format-ignore: AlwaysUseLowerCamelCase
 extension LibraryImageFile {
   public static let libraryImageSample: Self = .init(
     // swiftlint:disable:next force_unwrapping

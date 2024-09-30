@@ -33,7 +33,7 @@ import XCTest
 @testable import BushelFactory
 
 internal final class CalculationParametersTests: XCTestCase {
-  func testIndexForValue() {
+  internal func testIndexForValue() {
     let exp = expectation(description: "Called Closure")
     let expectedValue: Int = .random(in: 1...100)
     let expectedPassingValue: Int = .random(in: 1...100)
@@ -52,7 +52,7 @@ internal final class CalculationParametersTests: XCTestCase {
     wait(for: [exp], timeout: 5.0)
   }
 
-  func testValueUsing() {
+  internal func testValueUsing() {
     let exp = expectation(description: "Called Closure")
     let expectedValue: Int = .random(in: 1...100)
     let expectedPassingValue: Int = .random(in: 1...100)
@@ -73,7 +73,7 @@ internal final class CalculationParametersTests: XCTestCase {
     wait(for: [exp], timeout: 5.0)
   }
 
-  func testFloats() {
+  internal func testFloats() {
     let specCalcParameters = SpecificationCalculationParameters(
       indexRange: 0.1...50.1,
       valueRange: 99.1...1_000.1
@@ -88,7 +88,7 @@ internal final class CalculationParametersTests: XCTestCase {
     XCTAssertEqual(specCalcParameters.valueRange.upperBound, 1_000)
   }
 
-  func testValue() {
+  internal func testValue() {
     let indexRange: ClosedRange<Int> = .random(startingIn: 0...100, withSizeWithin: 10...20)
 
     let valueRange: ClosedRange<Int> = .random(startingIn: 0...100, withSizeWithin: 10...20)

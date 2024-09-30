@@ -41,11 +41,10 @@ extension String {
 
   public static func randomLowerCaseAlphaNumberic(ofLength length: Int = 32) -> String {
     String(
-      (1...length)
-        .map { _ in
-          // swiftlint:disable:next force_unwrapping
-          lowerCaseAlphaNumberic.randomElement()!
-        }
+      (1...length).map { _ in
+        // swiftlint:disable:next force_unwrapping
+        lowerCaseAlphaNumberic.randomElement()!
+      }
     )
   }
 }

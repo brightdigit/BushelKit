@@ -42,22 +42,35 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     case snapshot
   }
 
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 
   public let innerError: (any Error)?
   public let details: Details
 
-  public var errorDescription: String? { details.errorDescription(fromError: innerError) }
+  public var errorDescription: String? {
+    details.errorDescription(fromError: innerError)
+  }
 
-  public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
+  public var recoverySuggestion: String? {
+    details.recoverySuggestion(fromError: innerError)
+  }
+
+  public var isRecoverable: Bool {
+    details.isRecoverable(fromError: innerError)
+  }
 
   public var isCritical: Bool {
-    switch details {
-    case .corruptedAt: true
+    switch self.details {
+    case .corruptedAt:
+      true
 
-    case .session: true
+    case .session:
+      true
 
-    default: false
+    default:
+      false
     }
   }
 
@@ -66,7 +79,9 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     as _: TypedError.Type,
     details: MachineError.Details
   ) throws {
-    guard let innerError = innerError as? TypedError else { throw innerError }
+    guard let innerError = innerError as? TypedError else {
+      throw innerError
+    }
     self.init(details: details, innerError: innerError)
   }
 

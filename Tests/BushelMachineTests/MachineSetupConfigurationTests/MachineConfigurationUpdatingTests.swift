@@ -33,7 +33,7 @@ import XCTest
 @testable import BushelMachine
 
 internal final class MachineConfigurationUpdatingTests: XCTestCase {
-  func testUpdatingUsingBuildRequest() {
+  internal func testUpdatingUsingBuildRequest() {
     var sut = MachineSetupConfiguration(request: .sampleBuildRequest)
 
     let request = MachineBuildRequest(

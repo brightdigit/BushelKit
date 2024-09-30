@@ -36,6 +36,6 @@ extension UUID {
 
   public static let bookmarkIDSample: Self = .init(
     uuidString: "C90C2C17-7CA1-466C-93C0-D73591D65C94"
-      // swiftlint:disable:next force_unwrapping
+    // swiftlint:disable:next force_unwrapping
   )!
 }

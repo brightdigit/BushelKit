@@ -38,7 +38,9 @@ public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
   public let cpuCount: ClosedRange<Float>
   public let memory: ClosedRange<Float>
 
-  public var description: String { "cpuCount: \(cpuCount); memory: \(memory)" }
+  public var description: String {
+    "cpuCount: \(cpuCount); memory: \(memory)"
+  }
 
   public init(cpuCount: ClosedRange<Float>, memory: ClosedRange<Float>) {
     self.cpuCount = cpuCount

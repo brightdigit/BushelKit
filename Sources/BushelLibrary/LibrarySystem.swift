@@ -41,11 +41,12 @@ public protocol LibrarySystem: Sendable {
 }
 
 extension LibrarySystem {
-  public func restoreImageLibraryItemFile(fromURL url: URL, id: UUID = UUID()) async throws
-    -> LibraryImageFile
-  {
-    let metadata = try await metadata(fromURL: url)
-    let name = label(fromMetadata: metadata).defaultName
+  public func restoreImageLibraryItemFile(
+    fromURL url: URL,
+    id: UUID = UUID()
+  ) async throws -> LibraryImageFile {
+    let metadata = try await self.metadata(fromURL: url)
+    let name = self.label(fromMetadata: metadata).defaultName
     return LibraryImageFile(id: id, metadata: metadata, name: name)
   }
 }

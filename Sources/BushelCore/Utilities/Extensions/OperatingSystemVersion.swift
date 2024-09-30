@@ -34,19 +34,29 @@ public import Foundation
 #endif
 extension OperatingSystemVersion {
   private static let codeNames: [Int: String] = [
-    11: "Big Sur", 12: "Monterey", 13: "Ventura", 14: "Sonoma", 15: "Sequoia",
+    11: "Big Sur",
+    12: "Monterey",
+    13: "Ventura",
+    14: "Sonoma",
+    15: "Sequoia"
   ]
 
   private static let minimumVirtualizationMajorVersion = 12
 
-  public var macOSReleaseName: String? { Self.macOSReleaseName(majorVersion: majorVersion) }
+  public var macOSReleaseName: String? {
+    Self.macOSReleaseName(majorVersion: majorVersion)
+  }
 
-  public static func macOSReleaseName(majorVersion: Int) -> String? { codeNames[majorVersion] }
+  public static func macOSReleaseName(majorVersion: Int) -> String? {
+    codeNames[majorVersion]
+  }
 
   public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<
     Int
   > {
-    guard onlyVirtualizationSupported else { return codeNames.keys }
+    guard onlyVirtualizationSupported else {
+      return codeNames.keys
+    }
     return codeNames.keys.filter { $0 >= minimumVirtualizationMajorVersion }
   }
 }

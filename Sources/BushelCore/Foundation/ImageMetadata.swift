@@ -31,9 +31,11 @@ public import Foundation
 import OperatingSystemVersion
 
 /// Represents metadata associated with an image file.
-public struct ImageMetadata: Codable, CustomDebugStringConvertible, Hashable,
-  OperatingSystemInstalled, Sendable
-{
+public struct ImageMetadata: Codable,
+  CustomDebugStringConvertible,
+  Hashable,
+  OperatingSystemInstalled,
+  Sendable {
   /// Indicates whether the image format is supported by the system.
   public let isImageSupported: Bool
   /// The build version associated with the image, if available.

@@ -30,4 +30,6 @@
 import ArgumentParser
 import Foundation
 
-extension Image { struct List: ParsableCommand {} }
+extension Image {
+  internal struct List: ParsableCommand {}
+}

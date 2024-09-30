@@ -32,5 +32,5 @@ import Foundation
 public enum TestDecodingError: String, MockError {
   case dataEncoding
 
-  public var value: String { rawValue }
+  public var value: String { self.rawValue }
 }

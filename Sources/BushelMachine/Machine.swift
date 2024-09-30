@@ -104,15 +104,22 @@ public protocol Machine: Loggable, Sendable {
 }
 
 extension Machine {
-  public static var loggingCategory: BushelLogging.Category { .machine }
+  public static var loggingCategory: BushelLogging.Category {
+    .machine
+  }
 
-  public func removeObservation(withID id: UUID?) { if let id { removeObservation(withID: id) } }
+  public func removeObservation(withID id: UUID?) {
+    if let id {
+      self.removeObservation(withID: id)
+    }
+  }
 
   public func synchronizeSnapshots(
-    using provider: any SnapshotProvider,
+    using provider:
+      any SnapshotProvider,
     options: SnapshotSynchronizeOptions
   ) async throws {
-    let configuration = await updatedConfiguration
+    let configuration = await self.updatedConfiguration
     guard
       let snapshotter = provider.snapshotter(
         withID: configuration.snapshotSystemID,
@@ -123,15 +130,16 @@ extension Machine {
       preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
     let snapshots = try await snapshotter.synchronizeSnapshots(for: self, options: options)
-    try await finishedWithSynchronization(snapshots)
+    try await self.finishedWithSynchronization(snapshots)
   }
 
-  @discardableResult public func createNewSnapshot(
+  @discardableResult
+  public func createNewSnapshot(
     request: SnapshotRequest,
     options: SnapshotOptions,
     using provider: any SnapshotProvider
   ) async throws -> Snapshot {
-    let configuration = await updatedConfiguration
+    let configuration = await self.updatedConfiguration
     guard
       let snapshotter = provider.snapshotter(
         withID: configuration.snapshotSystemID,
@@ -145,10 +153,11 @@ extension Machine {
     return try await snapshotter.createNewSnapshot(of: self, request: request, options: options)
   }
 
-  public func deleteSnapshot(_ snapshot: Snapshot, using provider: any SnapshotProvider)
-    async throws
-  {
-    let configuration = await updatedConfiguration
+  public func deleteSnapshot(
+    _ snapshot: Snapshot,
+    using provider: any SnapshotProvider
+  ) async throws {
+    let configuration = await self.updatedConfiguration
     guard
       let snapshotter = provider.snapshotter(
         withID: configuration.snapshotSystemID,
@@ -162,10 +171,11 @@ extension Machine {
     return try await snapshotter.deleteSnapshot(snapshot, from: self)
   }
 
-  public func restoreSnapshot(_ snapshot: Snapshot, using provider: any SnapshotProvider)
-    async throws
-  {
-    let configuration = await updatedConfiguration
+  public func restoreSnapshot(
+    _ snapshot: Snapshot,
+    using provider: any SnapshotProvider
+  ) async throws {
+    let configuration = await self.updatedConfiguration
     guard
       let snapshotter = provider.snapshotter(
         withID: configuration.snapshotSystemID,
@@ -184,7 +194,7 @@ extension Machine {
     to url: URL,
     using provider: any SnapshotProvider
   ) async throws {
-    let configuration = await updatedConfiguration
+    let configuration = await self.updatedConfiguration
     guard
       let snapshotter = provider.snapshotter(
         withID: configuration.snapshotSystemID,

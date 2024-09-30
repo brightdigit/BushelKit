@@ -39,7 +39,9 @@ extension Bundle {
   public static let suiteName = "group.com.brightdigit.Bushel"
 
   public func clearUserDefaults() throws {
-    guard let domainName = bundleIdentifier else { throw MissingIdentifierError.shared }
+    guard let domainName = self.bundleIdentifier else {
+      throw MissingIdentifierError.shared
+    }
     UserDefaults.standard.removePersistentDomain(forName: domainName)
   }
 }

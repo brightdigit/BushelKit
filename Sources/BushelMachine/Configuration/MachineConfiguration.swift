@@ -120,13 +120,21 @@ extension MachineConfiguration {
 }
 
 extension MachineConfiguration: CodablePackage {
-  public static var decoder: JSONDecoder { JSON.decoder }
+  public static var decoder: JSONDecoder {
+    JSON.decoder
+  }
 
-  public static var encoder: JSONEncoder { JSON.encoder }
+  public static var encoder: JSONEncoder {
+    JSON.encoder
+  }
 
-  public static var configurationFileWrapperKey: String { URL.bushel.paths.machineJSONFileName }
+  public static var configurationFileWrapperKey: String {
+    URL.bushel.paths.machineJSONFileName
+  }
 
-  public static var readableContentTypes: [FileType] { [.virtualMachine] }
+  public static var readableContentTypes: [FileType] {
+    [.virtualMachine]
+  }
 }
 
 extension MachineConfiguration {

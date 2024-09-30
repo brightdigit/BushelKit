@@ -42,7 +42,11 @@ public struct Ethernet: Codable, Equatable, Sendable {
   public let mediaOptions: [String]
   public let mediaSubType: String
 
-  public init(macAddress: String, mediaOptions: [String], mediaSubType: String) {
+  public init(
+    macAddress: String,
+    mediaOptions: [String],
+    mediaSubType: String
+  ) {
     self.macAddress = macAddress
     self.mediaOptions = mediaOptions
     self.mediaSubType = mediaSubType

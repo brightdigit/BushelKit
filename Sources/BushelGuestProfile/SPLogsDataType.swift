@@ -46,7 +46,13 @@ public struct SPLogsDataType: Codable, Equatable, Sendable {
   public let lastModified: Date?
   public let source: String
 
-  public init(name: String, byteSize: Int, contents: String, lastModified: Date?, source: String) {
+  public init(
+    name: String,
+    byteSize: Int,
+    contents: String,
+    lastModified: Date?,
+    source: String
+  ) {
     self.name = name
     self.byteSize = byteSize
     self.contents = contents

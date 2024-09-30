@@ -35,18 +35,22 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
   public let memoryIndexRange: ClosedRange<Float>
   private var updatingValues = false
   public var isValid: Bool {
-    guard configurationRange.cpuCount.contains(cpuCount) else { return false }
-    guard configurationRange.memory.contains(Float(memory)) else { return false }
+    guard self.configurationRange.cpuCount.contains(self.cpuCount) else {
+      return false
+    }
+    guard self.configurationRange.memory.contains(Float(self.memory)) else {
+      return false
+    }
     return storage > 0
   }
 
   public var template: SpecificationTemplate<Name>? {
     didSet {
       if let template {
-        updatingValues = true
-        memoryIndex = template.memoryIndex(
-          within: memoryIndexRange,
-          valuesWith: configurationRange.memory,
+        self.updatingValues = true
+        self.memoryIndex = template.memoryIndex(
+          within: self.memoryIndexRange,
+          valuesWith: self.configurationRange.memory,
           indexForValue: {
             Self.binarySearch(
               for: $0,
@@ -55,37 +59,49 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
             )
           }
         )
-        cpuCount = template.cpuIndex(
-          within: configurationRange.cpuCount,
-          valuesWith: configurationRange.cpuCount,
-          indexForValue: { $0 }
+        self.cpuCount = template.cpuIndex(
+          within: self.configurationRange.cpuCount,
+          valuesWith: self.configurationRange.cpuCount,
+          indexForValue: {
+            $0
+          }
         )
 
-        storageIndex = Self.binarySearch(
+        self.storageIndex = Self.binarySearch(
           for: .init(template.idealStorage),
           using: { Self.storageValue(forIndex: $0) },
           within: Specifications.fullStorageRange
         )
-        updatingValues = false
+        self.updatingValues = false
       }
     }
   }
 
-  public var cpuCount: Float = 1 { didSet { if !updatingValues { template = .none } } }
+  public var cpuCount: Float = 1 {
+    didSet {
+      if !updatingValues {
+        self.template = .none
+      }
+    }
+  }
 
   public private(set) var memory: Int64
   public var memoryIndex: Float = 1 {
     didSet {
-      memory = Self.memoryValue(forIndex: memoryIndex)
-      if !updatingValues { template = nil }
+      self.memory = Self.memoryValue(forIndex: memoryIndex)
+      if !updatingValues {
+        self.template = nil
+      }
     }
   }
 
   public private(set) var storage: Int64
   public var storageIndex: Float = 36 {
     didSet {
-      storage = Self.storageValue(forIndex: storageIndex)
-      if !updatingValues { template = nil }
+      self.storage = Self.storageValue(forIndex: storageIndex)
+      if !updatingValues {
+        self.template = nil
+      }
     }
   }
 
@@ -96,14 +112,14 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     memoryIndex: Float = 1,
     storageIndex: Float = 36
   ) {
-    configurationRange = range
+    self.configurationRange = range
     self.template = template
     self.cpuCount = cpuCount
-    memory = Self.memoryValue(forIndex: memoryIndex)
+    self.memory = Self.memoryValue(forIndex: memoryIndex)
     self.memoryIndex = memoryIndex
-    storage = Self.storageValue(forIndex: storageIndex)
+    self.storage = Self.storageValue(forIndex: storageIndex)
     self.storageIndex = storageIndex
-    memoryIndexRange = .init(
+    self.memoryIndexRange = .init(
       uncheckedBounds: (
         lower: 1,
         upper: Self.binarySearch(
@@ -120,14 +136,16 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     using: @escaping @Sendable (Int) -> Int,
     within range: ClosedRange<Int>
   ) -> Int {
-    binarySearch(for: Int(value), using: using, low: range.lowerBound, high: range.upperBound)
+    self.binarySearch(for: Int(value), using: using, low: range.lowerBound, high: range.upperBound)
   }
 
   private static func binarySearch(
     for value: Float,
     using: @escaping @Sendable (Int) -> Int,
     within range: ClosedRange<Int>
-  ) -> Float { Float(binarySearch(for: Int(value), using: using, within: range)) }
+  ) -> Float {
+    Float(self.binarySearch(for: Int(value), using: using, within: range))
+  }
 
   private static func binarySearch(
     for value: Int,
@@ -135,7 +153,9 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     low: Int,
     high: Int
   ) -> Int {
-    guard low <= high else { return low - 1 }
+    guard low <= high else {
+      return low - 1
+    }
 
     let mid = (low + high) / 2
     let calculatedMemoryValue = using(mid)
@@ -150,17 +170,21 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
   }
 
   private static func storageValue(forIndex index: Int) -> Int {
-    Int(storageValue(forIndex: Float(index)))
+    Int(self.storageValue(forIndex: Float(index)))
   }
 
-  private static func storageValue(forIndex index: Float) -> Int64 { Int64(1 << Int(index)) }
+  private static func storageValue(forIndex index: Float) -> Int64 {
+    Int64(1 << Int(index))
+  }
 
   private static func memoryValue(forIndex index: Float) -> Int64 {
     Int64(memoryValue(forIndex: Int(index)))
   }
 
   private static func memoryValue(forIndex index: Int) -> Int {
-    guard index > 0 else { return 0 }
+    guard index > 0 else {
+      return 0
+    }
 
     let factor = ((index - 1) / 4)
     let increment = (1 << factor) * 8 * .bytesPerGB

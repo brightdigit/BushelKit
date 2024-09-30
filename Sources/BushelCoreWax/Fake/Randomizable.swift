@@ -29,6 +29,8 @@
 
 import Foundation
 
-public protocol Randomizable: Comparable { static func random(in range: ClosedRange<Self>) -> Self }
+public protocol Randomizable: Comparable {
+  static func random(in range: ClosedRange<Self>) -> Self
+}
 
 extension Int: Randomizable {}

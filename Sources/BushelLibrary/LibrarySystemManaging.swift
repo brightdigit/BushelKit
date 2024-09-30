@@ -39,7 +39,9 @@ public protocol LibrarySystemManaging: Loggable, Sendable {
 }
 
 extension LibrarySystemManaging where Self: Loggable {
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 }
 
 extension LibrarySystemManaging {
@@ -55,17 +57,16 @@ extension LibrarySystemManaging {
     return resolve(systemID)
   }
 
-  @Sendable public func releaseCollectionMetadata(forSystem id: VMSystemID)
-    -> any ReleaseCollectionMetadata
-  {
-    let system = resolve(id)
+  @Sendable
+  public func releaseCollectionMetadata(forSystem id: VMSystemID) -> any ReleaseCollectionMetadata {
+    let system = self.resolve(id)
     return system.releaseCollectionMetadata
   }
 
-  @Sendable public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled)
-    -> MetadataLabel
-  {
-    let system = resolve(id)
+  @Sendable
+  public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled)
+    -> MetadataLabel {
+    let system = self.resolve(id)
     return system.label(fromMetadata: metadata)
   }
 
@@ -91,8 +92,7 @@ extension LibrarySystemManaging {
         }
       }
       return files
-    }
-    .sorted(using: LibraryImageFileComparator.default)
+    }.sorted(using: LibraryImageFileComparator.default)
 
     return files
   }

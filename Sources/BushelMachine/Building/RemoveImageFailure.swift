@@ -35,8 +35,10 @@ public enum RemoveImageFailure: CustomStringConvertible {
 
   public var description: String {
     switch self {
-    case .notFound: "Image Not Found"
-    case .notSupported: "Removal Not Support by DB"
+    case .notFound:
+      "Image Not Found"
+    case .notSupported:
+      "Removal Not Support by DB"
     }
   }
 }

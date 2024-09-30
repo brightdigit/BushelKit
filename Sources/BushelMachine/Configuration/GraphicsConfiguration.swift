@@ -40,5 +40,7 @@ public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
 }
 
 extension GraphicsConfiguration {
-  public static func `default`() -> GraphicsConfiguration { .init(displays: [.default()]) }
+  public static func `default`() -> GraphicsConfiguration {
+    .init(displays: [.default()])
+  }
 }

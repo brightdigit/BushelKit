@@ -158,9 +158,10 @@ extension URL {
     http://virginia.edu/massa/id/lobortis/convallis/tortor.html?in=ut&hac=massa&habitasse=volutpat&platea=convallis&dictumst=morbi&maecenas=odio&ut=odio&massa=elementum&quis=eu&augue=interdum&luctus=eu&tincidunt=tincidunt&nulla=in&mollis=leo&molestie=maecenas&lorem=pulvinar&quisque=lobortis&ut=est&erat=phasellus&curabitur=sit&gravida=amet&nisi=erat&at=nulla&nibh=tempus&in=vivamus&hac=in&habitasse=felis&platea=eu&dictumst=sapien&aliquam=cursus&augue=vestibulum&quam=proin&sollicitudin=eu&vitae=mi&consectetuer=nulla&eget=ac&rutrum=enim&at=in&lorem=tempor&integer=turpis&tincidunt=nec&ante=euismod&vel=scelerisque&ipsum=quam&praesent=turpis&blandit=adipiscing&lacinia=lorem&erat=vitae&vestibulum=mattis&sed=nibh
     https://tamu.edu/potenti/in/eleifend/quam/a/odio.json?sed=cursus&accumsan=urna&felis=ut&ut=tellus&at=nulla&dolor=ut&quis=erat&odio=id&consequat=mauris&varius=vulputate&integer=elementum&ac=nullam&leo=varius&pellentesque=nulla&ultrices=facilisi&mattis=cras&odio=non&donec=velit&vitae=nec&nisi=nisi&nam=vulputate&ultrices=nonummy&libero=maecenas&non=tincidunt&mattis=lacus&pulvinar=at&nulla=velit&pede=vivamus&ullamcorper=vel&augue=nulla&a=eget&suscipit=eros&nulla=elementum&elit=pellentesque&ac=quisque&nulla=porta&sed=volutpat&vel=erat&enim=quisque&sit=erat&amet=eros&nunc=viverra&viverra=eget&dapibus=congue&nulla=eget&suscipit=semper&ligula=rutrum&in=nulla&lacus=nunc&curabitur=purus&at=phasellus&ipsum=in&ac=felis&tellus=donec&semper=semper&interdum=sapien
     """
-  // swiftlint:enable line_length
-  public static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines)
-    .compactMap(URL.init(string:))
+
+  public static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines).compactMap(
+    URL.init(string:)
+  )
 
   public static func randomHTTP() -> URL {
     // swiftlint:disable:next force_unwrapping
@@ -171,3 +172,5 @@ extension URL {
     fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
   }
 }
+
+// swiftlint:enable line_length

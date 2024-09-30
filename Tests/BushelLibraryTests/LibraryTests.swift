@@ -32,10 +32,10 @@ import XCTest
 @testable import BushelLibrary
 
 internal final class LibraryTests: XCTestCase {
-  func testCorrectInitialization() {
+  internal func testCorrectInitialization() {
     let items: [LibraryImageFile] = [
       .monterey_12_6_0,
-      .sonoma_13_6_0,
+      .sonoma_13_6_0
     ]
 
     let sut = Library(items: items)

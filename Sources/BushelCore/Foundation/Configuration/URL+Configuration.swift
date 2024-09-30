@@ -31,7 +31,7 @@ public import Foundation
 
 extension URL {
   public struct Bushel: Sendable {
-    init(
+    internal init(
       scheme: String,
       privacyPolicy: URL,
       termsOfUse: URL,
@@ -66,7 +66,9 @@ extension URL {
     }
   }
 
-  public static var bushel: Bushel { .shared }
+  public static var bushel: Bushel {
+    .shared
+  }
 }
 
 public protocol VZMacPaths: Sendable {
@@ -97,13 +99,22 @@ extension URL.Bushel {
 
   private init?(bundle: Bundle = .main) {
     guard let urlTypes = bundle.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]]
-    else { return nil }
-    guard let urlSchemes = urlTypes.first?["CFBundleURLSchemes"] as? [String] else { return nil }
-    guard let scheme = urlSchemes.first else { return nil }
+    else {
+      return nil
+    }
+    guard let urlSchemes = urlTypes.first?["CFBundleURLSchemes"] as? [String] else {
+      return nil
+    }
+    guard let scheme = urlSchemes.first else {
+      return nil
+    }
     guard
-      let dictionary = bundle.object(forInfoDictionaryKey: "BrightDigitURLDirectory")
-        as? [String: String]
-    else { return nil }
+      let dictionary = bundle.object(
+        forInfoDictionaryKey: "BrightDigitURLDirectory"
+      ) as? [String: String]
+    else {
+      return nil
+    }
     self.init(scheme: scheme, dictionary: dictionary)
   }
 

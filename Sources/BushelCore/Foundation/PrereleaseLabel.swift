@@ -46,7 +46,8 @@ extension PrereleaseLabel {
   }
 
   public init?(dictionary: [String: Any]) {
-    guard let label = dictionary[Keys.label.rawValue] as? String,
+    guard
+      let label = dictionary[Keys.label.rawValue] as? String,
       let base = dictionary[Keys.base.rawValue] as? Int
     else {
       assertionFailure("Bundle InfoDictionary Missing Label and Base for Prerelease Info")
@@ -56,6 +57,7 @@ extension PrereleaseLabel {
   }
 
   public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int)
-    -> Int
-  { (buildNumber - baseNumber + additionalOffset) / factor }
+    -> Int {
+    (buildNumber - baseNumber + additionalOffset) / factor
+  }
 }

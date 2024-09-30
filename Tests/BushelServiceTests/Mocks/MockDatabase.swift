@@ -44,7 +44,7 @@
       guard let count = descriptor.fetchLimit else {
         return []
       }
-      didRequestCount = count
+      self.didRequestCount = count
       return (0..<count).map { _ in
         ItemModel()
       }

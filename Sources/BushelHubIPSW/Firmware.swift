@@ -32,9 +32,15 @@ public import Foundation
 public import IPSWDownloads
 
 extension Firmware: OperatingSystemInstalled {
-  private struct InvalidURLError: Error { let string: String }
+  private struct InvalidURLError: Error {
+    let string: String
+  }
 
-  public var buildVersion: String? { buildid }
+  public var buildVersion: String? {
+    self.buildid
+  }
 
-  public var operatingSystemVersion: OperatingSystemVersion { version }
+  public var operatingSystemVersion: OperatingSystemVersion {
+    self.version
+  }
 }

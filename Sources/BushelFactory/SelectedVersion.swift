@@ -37,11 +37,17 @@ public struct SelectedVersion: Hashable, Identifiable, Sendable {
   public static let none: SelectedVersion = .init()
 
   public let image: (any InstallerImage)?
-  public var id: InstallerImageIdentifier { image?.identifier ?? .init(imageID: Self.noneID) }
+  public var id: InstallerImageIdentifier {
+    image?.identifier ?? .init(imageID: Self.noneID)
+  }
 
-  public init(image: any InstallerImage) { self.init(optionalImage: image) }
+  public init(image: any InstallerImage) {
+    self.init(optionalImage: image)
+  }
 
-  private init(optionalImage: (any InstallerImage)? = nil) { image = optionalImage }
+  private init(optionalImage: (any InstallerImage)? = nil) {
+    self.image = optionalImage
+  }
 
   public static func == (lhs: SelectedVersion, rhs: SelectedVersion) -> Bool {
     guard let lhsImage = lhs.image, let rhsImage = rhs.image else {
@@ -52,7 +58,9 @@ public struct SelectedVersion: Hashable, Identifiable, Sendable {
   }
 
   public func hash(into hasher: inout Hasher) {
-    guard let image else { return }
+    guard let image else {
+      return
+    }
 
     hasher.combine(image.libraryID)
     hasher.combine(image.imageID)

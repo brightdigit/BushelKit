@@ -59,7 +59,7 @@ public struct InstallFailure: Equatable, Sendable {
     self.isSystem = isSystem
   }
 
-  static func fromError(_ error: any Error) -> InstallFailure {
+  internal static func fromError(_ error: any Error) -> InstallFailure {
     guard let error = error as? any InstallFailureError else {
       assertionFailure(error: error)
       return .unknown

@@ -41,7 +41,7 @@ internal final class ReleaseCollectionTests: XCTestCase {
     let averageImageCountPerRelease: Int
 
     var indexRange: Range<Int> {
-      expectedFirstMajorVersion..<(expectedFirstMajorVersion + releaseCount)
+      self.expectedFirstMajorVersion..<(self.expectedFirstMajorVersion + self.releaseCount)
     }
 
     static func random(
@@ -104,28 +104,7 @@ internal final class ReleaseCollectionTests: XCTestCase {
       }
   }
 
-  fileprivate func assertActualReleases(
-    _ releaseCollection: any ReleaseCollectionMetadata,
-    _ actualReleaseCollection: ReleaseCollection,
-    _ imageDictionary: [Int: [MockInstallerImage]]
-  ) {
-    let sortedReleases = releaseCollection.releases.sorted(
-      by: { $0.majorVersion < $1.majorVersion }
-    )
-    for expectedRelease in sortedReleases {
-      guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {
-        XCTAssertNotNil(actualReleaseCollection[expectedRelease.majorVersion])
-        continue
-      }
-
-      assertThat(
-        actualRelease: actualRelease,
-        equalsExpectedRelease: expectedRelease,
-        fromDictionary: imageDictionary
-      )
-    }
-  }
-
+  // swiftlint:disable:next function_body_length
   private func doTestReleaseCollectionWhere(
     customVersionsAllowed expectedCustomVersionsAllowed: Bool,
     withCustomReleaseCount customReleaseCount: Int? = nil
@@ -167,18 +146,34 @@ internal final class ReleaseCollectionTests: XCTestCase {
     )
 
     XCTAssertEqual(
-      actualReleaseCollection.containsCustomVersions, parameters.customReleaseCount > 0
+      actualReleaseCollection.containsCustomVersions,
+      parameters.customReleaseCount > 0
     )
     XCTAssertEqual(actualReleaseCollection.customVersionsAllowed, expectedCustomVersionsAllowed)
 
     XCTAssertEqual(
-      actualReleaseCollection.customVersionsAllowed, releaseCollection.customVersionsAllowed
+      actualReleaseCollection.customVersionsAllowed,
+      releaseCollection.customVersionsAllowed
     )
     XCTAssertEqual(actualReleaseCollection.prefix, releaseCollection.prefix)
     XCTAssertEqual(actualReleaseCollection.firstMajorVersion, parameters.expectedFirstMajorVersion)
     XCTAssertEqual(actualCustomVersions, expectedCustomVersions)
 
-    assertActualReleases(releaseCollection, actualReleaseCollection, imageDictionary)
+    let sortedReleases = releaseCollection.releases.sorted(
+      by: { $0.majorVersion < $1.majorVersion }
+    )
+    for expectedRelease in sortedReleases {
+      guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {
+        XCTAssertNotNil(actualReleaseCollection[expectedRelease.majorVersion])
+        continue
+      }
+
+      assertThat(
+        actualRelease: actualRelease,
+        equalsExpectedRelease: expectedRelease,
+        fromDictionary: imageDictionary
+      )
+    }
   }
 
   func testInit() {

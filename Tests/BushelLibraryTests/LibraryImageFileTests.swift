@@ -35,7 +35,7 @@ import XCTest
 @testable import BushelLibrary
 
 internal final class LibraryImageFileTests: XCTestCase {
-  func testDecoding() throws {
+  internal func testDecoding() throws {
     #if canImport(FoundationNetworking)
       XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
     #else
@@ -64,7 +64,8 @@ internal final class LibraryImageFileTests: XCTestCase {
       XCTAssertEqual(sut.name, expectedImageFile.name)
       XCTAssertEqual(sut.metadata.vmSystemID, expectedImageFile.metadata.vmSystemID)
       XCTAssertEqual(
-        sut.metadata.operatingSystemVersion, expectedImageFile.metadata.operatingSystemVersion
+        sut.metadata.operatingSystemVersion,
+        expectedImageFile.metadata.operatingSystemVersion
       )
       XCTAssertEqual(sut.metadata.contentLength, expectedImageFile.metadata.contentLength)
       XCTAssertEqual(sut.metadata.buildVersion, expectedImageFile.metadata.buildVersion)
@@ -73,7 +74,7 @@ internal final class LibraryImageFileTests: XCTestCase {
     #endif
   }
 
-  func testEquatable() {
+  internal func testEquatable() {
     let sut1 = LibraryImageFile.libraryImageSample
     let sut2 = LibraryImageFile.libraryImageSample
 

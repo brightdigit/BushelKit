@@ -40,7 +40,10 @@ public struct SPMemoryDataType: Codable, Equatable, Sendable {
   public let dimmType: ObtainedFrom
   public let spMemoryDataType: String
 
-  public init(dimmType: ObtainedFrom, spMemoryDataType: String) {
+  public init(
+    dimmType: ObtainedFrom,
+    spMemoryDataType: String
+  ) {
     self.dimmType = dimmType
     self.spMemoryDataType = spMemoryDataType
   }

@@ -34,7 +34,7 @@
   internal struct MockCommand: Command {
     let message: MockMessage
     let error: MockError
-    init(message: MockMessage = .init(), error: MockError = .init()) {
+    internal init(message: MockMessage = .init(), error: MockError = .init()) {
       self.message = message
       self.error = error
     }

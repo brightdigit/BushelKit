@@ -35,7 +35,9 @@ public struct MacOSRelease: InstallerRelease {
   public let versionName: String
   public let releaseName: String
   public let imageName: String
-  public var id: Int { majorVersion }
+  public var id: Int {
+    majorVersion
+  }
 
   public init?(majorVersion: Int) {
     guard let releaseName = OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion)

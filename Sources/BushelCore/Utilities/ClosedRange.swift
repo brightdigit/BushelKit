@@ -53,8 +53,8 @@ extension ClosedRange where Bound: BinaryInteger {
     let lowerBoundExpand = Bool.random() ? boundExpandLarger : boundExpandSmaller
     let upperBoundExpand = value - lowerBoundExpand
 
-    let lowerBound = lowerBound - lowerBoundExpand
-    let upperBound = upperBound + upperBoundExpand
+    let lowerBound = self.lowerBound - lowerBoundExpand
+    let upperBound = self.upperBound + upperBoundExpand
     return lowerBound...upperBound
   }
 }

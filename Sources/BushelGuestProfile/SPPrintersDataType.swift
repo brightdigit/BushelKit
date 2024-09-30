@@ -40,7 +40,10 @@ public struct SPPrintersDataType: Codable, Equatable, Sendable {
   public let cupsversion: String
   public let status: String
 
-  public init(cupsversion: String, status: String) {
+  public init(
+    cupsversion: String,
+    status: String
+  ) {
     self.cupsversion = cupsversion
     self.status = status
   }

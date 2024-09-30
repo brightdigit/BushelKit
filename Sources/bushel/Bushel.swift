@@ -31,4 +31,7 @@ public import ArgumentParser
 public import BushelArgs
 import Foundation
 
-@main public struct Bushel: BushelCommand { public init() {} }
+@main
+public struct Bushel: BushelCommand {
+  public init() {}
+}

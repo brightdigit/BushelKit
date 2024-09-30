@@ -31,7 +31,7 @@ public import BushelMachine
 import Foundation
 
 extension MachineSetupConfiguration {
-  public static let sample: Self = .init(
+  public static let sampleMachineSetupConfiguration: Self = .init(
     libraryID: .sampleLibraryID,
     restoreImageID: .imageIDSample,
     storage: [.init(label: "", size: MachineStorageSpecification.defaultSize)],

@@ -27,4 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public enum MachineShutdownActionOption: Int, Sendable { case closeWindow = 1 }
+public enum MachineShutdownActionOption: Int, Sendable {
+  case closeWindow = 1
+}

@@ -29,9 +29,10 @@
 
 public import Foundation
 
-public protocol SystemProfileType: Decodable { static var dataType: DataType { get } }
+public protocol SystemProfileType: Decodable {
+  static var dataType: DataType { get }
+}
 
-// swift-format-ignore: AlwaysUseLowerCamelCase
 public enum DataType: String {
   case SPParallelATADataType
   case SPUniversalAccessDataType
@@ -111,18 +112,26 @@ public enum DataType: String {
       let pipe = Pipe()
       process.standardOutput = pipe
       try process.run()
-      guard let data = try pipe.fileHandleForReading.readToEnd() else { throw Error.missingData }
+      guard let data = try pipe.fileHandleForReading.readToEnd() else {
+        throw Error.missingData
+      }
       guard let dict = try JSONDecoder().decode([String: [T]].self, from: data)[T.dataType.rawValue]
-      else { throw Error.missingRoot }
+      else {
+        throw Error.missingRoot
+      }
       return dict
     }
   }
 #endif
 
 extension SPHardwareDataType: SystemProfileType {
-  public static var dataType: DataType { .SPHardwareDataType }
+  public static var dataType: DataType {
+    .SPHardwareDataType
+  }
 }
 
 extension SPNetworkDataType: SystemProfileType {
-  public static var dataType: DataType { .SPNetworkDataType }
+  public static var dataType: DataType {
+    .SPNetworkDataType
+  }
 }

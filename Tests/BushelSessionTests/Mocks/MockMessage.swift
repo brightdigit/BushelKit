@@ -35,7 +35,7 @@ internal struct MockMessage: Message, Equatable {
 
   let id: UUID
   let response: MockResponse
-  init(id: UUID = .init(), response: MockResponse = .init()) {
+  internal init(id: UUID = .init(), response: MockResponse = .init()) {
     self.id = id
     self.response = response
   }

@@ -53,27 +53,40 @@ public struct LibraryError: LocalizedError, Loggable {
     case librarySystemManager
   }
 
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 
   public let innerError: (any Error)?
   public let details: Details
 
-  public var errorDescription: String? { details.errorDescription(fromError: innerError) }
+  public var errorDescription: String? {
+    details.errorDescription(fromError: innerError)
+  }
 
-  public var recoverySuggestion: String? { details.recoverySuggestion(fromError: innerError) }
+  public var recoverySuggestion: String? {
+    details.recoverySuggestion(fromError: innerError)
+  }
 
-  public var isRecoverable: Bool { details.isRecoverable(fromError: innerError) }
+  public var isRecoverable: Bool {
+    details.isRecoverable(fromError: innerError)
+  }
 
   private init<TypedError: Error>(
     innerError: any Error,
     as _: TypedError.Type,
     details: LibraryError.Details
   ) throws {
-    guard let innerError = innerError as? TypedError else { throw innerError }
+    guard let innerError = innerError as? TypedError else {
+      throw innerError
+    }
     self.init(details: details, innerError: innerError)
   }
 
-  private init(details: LibraryError.Details, innerError: (any Error)? = nil) {
+  private init(
+    details: LibraryError.Details,
+    innerError: (any Error)? = nil
+  ) {
     if let innerError = innerError as? LibraryError {
       assertionFailure(
         "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)"
@@ -109,8 +122,9 @@ extension LibraryError {
     LibraryError(details: .imageFolderInitializationAt(url), innerError: error)
   }
 
-  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError
-  { LibraryError(details: .missingInitialization(for: property)) }
+  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError {
+    LibraryError(details: .missingInitialization(for: property))
+  }
 
   public static func metadataUpdateError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .updateMetadataAt(url), innerError: error)
@@ -120,11 +134,16 @@ extension LibraryError {
     LibraryError(details: .database, innerError: error)
   }
 
-  public static func copyFrom(_ importingURL: URL, to libraryURL: URL, withError error: any Error)
-    -> LibraryError
-  {
+  public static func copyFrom(
+    _ importingURL: URL,
+    to libraryURL: URL,
+    withError error: any Error
+  ) -> LibraryError {
     LibraryError(
-      details: .copyImage(source: importingURL, destination: libraryURL),
+      details: .copyImage(
+        source: importingURL,
+        destination: libraryURL
+      ),
       innerError: error
     )
   }

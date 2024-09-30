@@ -36,17 +36,23 @@ public import Foundation
 public struct FileManagerHandler: FileHandler {
   private let fileManager: @Sendable () -> FileManager
 
-  public init(fileManager: @Sendable @escaping () -> FileManager) { self.fileManager = fileManager }
+  public init(fileManager: @Sendable @escaping () -> FileManager) {
+    self.fileManager = fileManager
+  }
 
   public func sizeOf(_ url: URL) throws -> Int? {
-    let dictionary: [FileAttributeKey: Any] = try fileManager().attributesOfItem(atPath: url.path)
+    let dictionary: [FileAttributeKey: Any] = try self.fileManager().attributesOfItem(
+      atPath: url.path
+    )
     return dictionary[.size] as? Int
   }
 
   public func copy(at fromURL: URL, to toURL: URL) async throws {
     try await withCheckedThrowingContinuation {
       (continuation: CheckedContinuation<Void, any Error>) in
-      do { try fileManager().copyItem(at: fromURL, to: toURL) } catch {
+      do {
+        try self.fileManager().copyItem(at: fromURL, to: toURL)
+      } catch {
         continuation.resume(throwing: error)
         return
       }

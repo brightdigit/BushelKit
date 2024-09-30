@@ -30,32 +30,31 @@
 #if canImport(ObjectiveC)
   public import Foundation
 
-  @available(*, deprecated) public protocol KVObservation: AnyObject, Sendable {}
+  @available(*, deprecated)
+  public protocol KVObservation: AnyObject, Sendable {}
 
   #warning("logging-note: what useful logging to do in this file?")
   extension NSObject {
-    @available(*, deprecated) public static func getAllPropertyKeys() -> [String] {
+    @available(*, deprecated)
+    public static func getAllPropertyKeys() -> [String] {
       getAllPropertyKeys(of: Self.self)
     }
 
-    @available(*, deprecated) private static func getAllPropertyKeys<ClassType: AnyObject>(
-      of _: ClassType.Type
-    ) -> [String] {
+    @available(*, deprecated)
+    private static func getAllPropertyKeys<ClassType: AnyObject>(of _: ClassType.Type) -> [String] {
       let classType: AnyClass = ClassType.self
-      return getAllPropertyKeys(of: classType)
+      return self.getAllPropertyKeys(of: classType)
     }
 
-    @available(*, deprecated) private static func getAllPropertyKeys(of classType: AnyClass)
-      -> [String]
-    {
+    @available(*, deprecated)
+    private static func getAllPropertyKeys(of classType: AnyClass) -> [String] {
       var count: UInt32 = 0
       let properties = class_copyPropertyList(classType, &count)
       var propertyKeys: [String] = []
 
       for index in 0..<Int(count) {
         if let property = properties?[index],
-          let propertyName = String(utf8String: property_getName(property))
-        {
+          let propertyName = String(utf8String: property_getName(property)) {
           propertyKeys.append(propertyName)
         }
       }
@@ -64,22 +63,26 @@
       return propertyKeys
     }
 
-    @available(*, deprecated) @MainActor public func addObserver(
+    @available(*, deprecated)
+    @MainActor
+    public func addObserver(
       _ observer: NSObject,
       options: NSKeyValueObservingOptions,
       _ isIncluded: @escaping (String) -> Bool = { _ in true }
     ) -> any KVObservation {
-      let propertyKeys = getAllPropertyKeys().filter(isIncluded)
-      return addObserver(observer, forKeyPaths: propertyKeys, options: options)
+      let propertyKeys = self.getAllPropertyKeys().filter(isIncluded)
+      return self.addObserver(observer, forKeyPaths: propertyKeys, options: options)
     }
 
-    @available(*, deprecated) @MainActor private func addObserver(
+    @available(*, deprecated)
+    @MainActor
+    private func addObserver(
       _ observer: NSObject,
       forKeyPaths keyPaths: [String],
       options: NSKeyValueObservingOptions
     ) -> any KVObservation {
       for keyPath in keyPaths {
-        addObserver(observer, forKeyPath: keyPath, options: options, context: nil)
+        self.addObserver(observer, forKeyPath: keyPath, options: options, context: nil)
       }
 
       return KVNSObservation(observed: self, observer: observer, keyPaths: keyPaths)

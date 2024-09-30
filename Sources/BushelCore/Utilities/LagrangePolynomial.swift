@@ -45,7 +45,9 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
 
   private let isInverse: Bool
 
-  private var maxX: Double { max(point0.x, point1.x, point2.x) }
+  private var maxX: Double {
+    max(point0.x, point1.x, point2.x)
+  }
 
   public var rawValue: String {
     let encoded = try? JSON.encoder.encode(self)
@@ -53,7 +55,7 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
     return string ?? "{}"
   }
 
-  init(point0: CGPoint, point1: CGPoint, point2: CGPoint, isInverse: Bool) {
+  internal init(point0: CGPoint, point1: CGPoint, point2: CGPoint, isInverse: Bool) {
     self.point0 = point0
     self.point1 = point1
     self.point2 = point2
@@ -64,7 +66,9 @@ public struct LagrangePolynomial: Codable, RawRepresentable, Sendable {
     let data = rawValue.data(using: .utf8)
     let decoded = data.flatMap { try? JSON.decoder.decode(Self.self, from: $0) }
 
-    guard let decoded else { return nil }
+    guard let decoded else {
+      return nil
+    }
 
     self = decoded
   }

@@ -40,7 +40,9 @@ public protocol MachineSystemManaging: Sendable {
 }
 
 extension MachineSystemManaging where Self: Loggable {
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 }
 
 extension MachineSystemManaging {
@@ -50,7 +52,7 @@ extension MachineSystemManaging {
   public func machine(contentOf url: URL) async throws -> any Machine {
     let configuration: MachineConfiguration
     configuration = try MachineConfiguration(contentsOf: url)
-    let system = resolve(configuration.vmSystemID)
+    let system = self.resolve(configuration.vmSystemID)
     return try await system.machine(at: url, withConfiguration: configuration)
   }
 }

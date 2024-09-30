@@ -32,10 +32,12 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
   public let idealStorage: Int
   public let systemImageName: String
 
-  let memoryWithin: @Sendable (any CalculationParameters) -> Int
-  let cpuWithin: @Sendable (any CalculationParameters) -> Int
+  internal let memoryWithin: @Sendable (any CalculationParameters) -> Int
+  internal let cpuWithin: @Sendable (any CalculationParameters) -> Int
 
-  public var id: Name { nameID }
+  public var id: Name {
+    nameID
+  }
 
   public init(
     nameID: Name,
@@ -51,9 +53,11 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
     self.idealStorage = idealStorage
   }
 
-  public static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
+  public static func == (lhs: Self, rhs: Self) -> Bool {
+    lhs.id == rhs.id
+  }
 
-  func memoryIndex(
+  internal func memoryIndex(
     within indexRange: ClosedRange<Float>,
     valuesWith valueRange: ClosedRange<Float>,
     indexForValue: @escaping @Sendable (Int) -> Int
@@ -66,7 +70,7 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
     return memoryIndex(for: parameters)
   }
 
-  func cpuIndex(
+  internal func cpuIndex(
     within indexRange: ClosedRange<Float>,
     valuesWith valueRange: ClosedRange<Float>,
     indexForValue: @escaping @Sendable (Int) -> Int
@@ -80,10 +84,10 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
   }
 
   private func memoryIndex(for parameters: any CalculationParameters) -> Float {
-    Float(memoryWithin(parameters))
+    Float(self.memoryWithin(parameters))
   }
 
   private func cpuIndex(for parameters: any CalculationParameters) -> Float {
-    Float(cpuWithin(parameters))
+    Float(self.cpuWithin(parameters))
   }
 }

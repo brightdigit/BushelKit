@@ -30,9 +30,11 @@
 public import XCTest
 
 extension XCTestCase {
-  public func decode<T: Decodable>(_: T.Type, from string: String, using decoder: JSONDecoder)
-    throws -> T
-  {
+  public func decode<T: Decodable>(
+    _: T.Type,
+    from string: String,
+    using decoder: JSONDecoder
+  ) throws -> T {
     guard let data = string.data(using: .utf8) else {
       XCTFail("Expect data out of \(string)")
       throw TestDecodingError.dataEncoding

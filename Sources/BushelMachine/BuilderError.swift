@@ -45,7 +45,9 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
   }
 
   public var isSystem: Bool {
-    guard case let .installationFailure(installationFailure) = self else { return false }
+    guard case let .installationFailure(installationFailure) = self else {
+      return false
+    }
     return installationFailure.isSystem
   }
 
@@ -62,7 +64,8 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     case let .restoreImage(image, _, withError: error):
       // swiftlint:disable:next line_length
       "Restore Image \"\(image.metadata.shortName)\" could not loaded due to error: \(error.localizedDescription)"
-    case .missingInitialization: "Missing Installer Initialization"
+    case .missingInitialization:
+      "Missing Installer Initialization"
     }
   }
 
@@ -70,7 +73,8 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     switch self {
     case .noSupportedConfigurationImage, .restoreImage:
       "Use A Different Restore Image."
-    default: nil
+    default:
+      nil
     }
   }
 
@@ -79,8 +83,7 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
   }
 
   public static func restoreImage(_ image: any InstallerImage, withError error: NSError)
-    -> BuilderError?
-  {
+    -> BuilderError? {
     #if !os(Linux)
       let reason: NSError? = error.underlyingErrors.first as? NSError
       if reason?.localizedFailureReason?.contains("non-existent path") == true {
@@ -98,16 +101,21 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     case let (
       .noSupportedConfigurationImage(label1, isSupported1),
       .noSupportedConfigurationImage(label2, isSupported2)
-    ): label1 == label2 && isSupported1 == isSupported2
+    ):
+      label1 == label2 && isSupported1 == isSupported2
 
     case let (.installationFailure(failure1), .installationFailure(failure2)):
       failure1 == failure2
 
     case let (.restoreImage(image1, failure1, error1), .restoreImage(image2, failure2, error2)):
-      image1.metadata == image2.metadata && image1.libraryID == image2.libraryID
-        && image1.imageID == image2.imageID && "\(error1)" == "\(error2)" && failure1 == failure2
+      image1.metadata == image2.metadata
+        && image1.libraryID == image2.libraryID
+        && image1.imageID == image2.imageID
+        && "\(error1)" == "\(error2)"
+        && failure1 == failure2
 
-    default: false
+    default:
+      false
     }
   }
 }

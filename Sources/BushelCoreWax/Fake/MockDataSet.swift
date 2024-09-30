@@ -69,7 +69,10 @@ package struct MockDataSet: VirtualizationDataSet {
   let machineIdentifierData: Data
   let hardwareModelData: Data
 
-  package init(machineIdentifier: MachineIdentifier, hardwareModel: HardwareModel) throws {
+  package init(
+    machineIdentifier: MachineIdentifier,
+    hardwareModel: HardwareModel
+  ) throws {
     let hardwareModelString = String(
       format: hardwareModelFormatString,
       hardwareModel.dataRepresentationVersion,
@@ -90,7 +93,10 @@ package struct MockDataSet: VirtualizationDataSet {
     )
   }
 
-  init(machineIdentifierString: String, hardwareModelString: String) throws {
+  internal init(
+    machineIdentifierString: String,
+    hardwareModelString: String
+  ) throws {
     guard let machineIdentifierData = machineIdentifierString.data(using: .utf8) else {
       throw Error.missingDataForString
     }
@@ -101,20 +107,25 @@ package struct MockDataSet: VirtualizationDataSet {
     self.init(machineIdentifierData: machineIdentifierData, hardwareModelData: hardwareModelData)
   }
 
-  init(machineIdentifierData: Data, hardwareModelData: Data) {
+  internal init(
+    machineIdentifierData: Data,
+    hardwareModelData: Data
+  ) {
     self.machineIdentifierData = machineIdentifierData
     self.hardwareModelData = hardwareModelData
   }
 
   package func data(from name: KeyPath<any BushelCore.VirtualizationData.Paths, String>) throws
-    -> Data
-  {
+    -> Data {
     switch name {
-    case \.hardwareModelFileName: hardwareModelData
+    case \.hardwareModelFileName:
+      hardwareModelData
 
-    case \.machineIdentifierFileName: machineIdentifierData
+    case \.machineIdentifierFileName:
+      machineIdentifierData
 
-    default: throw Error.notSupportedKeyPath
+    default:
+      throw Error.notSupportedKeyPath
     }
   }
 }

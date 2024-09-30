@@ -35,14 +35,14 @@ import XCTest
 @testable import BushelMachine
 
 internal final class MachineSetupRequestConfigurationTests: XCTestCase {
-  func testNilMachineBuildRequest() {
+  internal func testNilMachineBuildRequest() {
     let sut = MachineSetupConfiguration(request: nil)
 
     XCTAssertNil(sut.libraryID)
     XCTAssertNil(sut.restoreImageID)
   }
 
-  func testActualMachineBuildRequest() {
+  internal func testActualMachineBuildRequest() {
     let request = MachineBuildRequest(restoreImage: .sampleInstallerIdentifier)
     let sut = MachineSetupConfiguration(request: request)
 

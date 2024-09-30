@@ -35,39 +35,50 @@
   #warning("Temporary Fix")
   #warning("Remove @unchecked Sendable")
   extension VZMacOSRestoreImage: @unchecked @retroactive Sendable {
-    struct OperatingSystem: OperatingSystemInstalled {
-      let operatingSystemVersion: OperatingSystemVersion
-      let buildVersion: String?
-      init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
+    internal struct OperatingSystem: OperatingSystemInstalled {
+      internal let operatingSystemVersion: OperatingSystemVersion
+      internal let buildVersion: String?
+      internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
         self.operatingSystemVersion = operatingSystemVersion
         self.buildVersion = buildVersion
       }
 
-      init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
-        guard let operatingSystemVersion else { return nil }
+      internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
+        guard let operatingSystemVersion else {
+          return nil
+        }
         self.init(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
       }
     }
 
     public var operatingSystem: any OperatingSystemInstalled {
-      OperatingSystem(operatingSystemVersion: operatingSystemVersion, buildVersion: buildVersion)
+      OperatingSystem(
+        operatingSystemVersion: self.operatingSystemVersion,
+        buildVersion: self.buildVersion
+      )
     }
 
     @available(*, deprecated, message: "Temporary method until Swift 6 migration.")
     public static func unsafeFetchLatestSupported() async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
-        self.fetchLatestSupported { result in continuation.resume(with: result) }
+        self.fetchLatestSupported { result in
+          continuation.resume(with: result)
+        }
       }
     }
 
     @available(*, deprecated, message: "Temporary method until Swift 6 migration.")
     public static func unsafeLoadFromURL(_ url: URL) async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
-        self.load(from: url) { result in continuation.resume(with: result) }
+        self.load(from: url) { result in
+          continuation.resume(with: result)
+        }
       }
     }
 
-    func headers(withSession session: URLSession = .shared) async throws -> [AnyHashable: Any] {
+    internal func headers(
+      withSession session: URLSession = .shared
+    ) async throws -> [AnyHashable: Any] {
       var request = URLRequest(url: url)
       request.httpMethod = "HEAD"
       let (_, response) = try await session.data(for: request)

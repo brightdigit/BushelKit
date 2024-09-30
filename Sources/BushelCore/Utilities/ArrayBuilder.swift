@@ -29,8 +29,11 @@
 
 import Foundation
 
-@resultBuilder public enum ArrayBuilder<Item> {
-  public static func buildPartialBlock(first: Item) -> [Item] { [first] }
+@resultBuilder
+public enum ArrayBuilder<Item> {
+  public static func buildPartialBlock(first: Item) -> [Item] {
+    [first]
+  }
 
   public static func buildPartialBlock(accumulated: [Item], next: Item) -> [Item] {
     accumulated + [next]

@@ -40,18 +40,24 @@ public protocol InstallerImage: OperatingSystemInstalled, Sendable {
 }
 
 extension InstallerImage {
-  public var operatingSystemVersion: OperatingSystemVersion { metadata.operatingSystem }
+  public var operatingSystemVersion: OperatingSystemVersion {
+    metadata.operatingSystem
+  }
 
-  public var buildVersion: String? { metadata.buildVersion }
+  public var buildVersion: String? {
+    metadata.buildVersion
+  }
 
   public func getConfigurationRange(from manager: any MachineSystemManaging) -> ConfigurationRange {
-    let manager = manager.resolve(metadata.vmSystemID)
+    let manager = manager.resolve(self.metadata.vmSystemID)
     return manager.configurationRange(for: self)
   }
 }
 
 extension InstallerImage where Self: Loggable {
-  public static var loggingCategory: BushelLogging.Category { .library }
+  public static var loggingCategory: BushelLogging.Category {
+    .library
+  }
 }
 
 extension InstallerImage {

@@ -48,16 +48,20 @@ public protocol MachineSystem: Sendable {
   ///   - configuration: Build configuration for the machine.
   ///   - url: Destination URL for the new machine.
   /// - Returns: The MachineBuilder to use.
-  func createBuilder(for configuration: MachineBuildConfiguration<RestoreImageType>, at url: URL)
-    async throws -> any MachineBuilder
+  func createBuilder(
+    for configuration: MachineBuildConfiguration<RestoreImageType>,
+    at url: URL
+  ) async throws -> any MachineBuilder
 
   /// Creates a machine based on the url and configuration.
   /// - Parameters:
   ///   - url: URL of the machine bundle.
   ///   - configuration: The machine configuration.
   /// - Returns: A usable machine.
-  func machine(at url: URL, withConfiguration configuration: MachineConfiguration) async throws
-    -> any Machine
+  func machine(
+    at url: URL,
+    withConfiguration configuration: MachineConfiguration
+  ) async throws -> any Machine
 
   /// Creates the nessecary restore image based on the installer image info.
   /// - Parameter restoreImage: The installer image to use.
@@ -83,20 +87,27 @@ extension MachineSystem {
     withDataDirectoryAt url: URL
   ) async throws -> any MachineBuilder {
     let restoreImage: RestoreImageType
-    do { restoreImage = try await self.restoreImage(from: image) } catch let error as NSError {
-      if let error = BuilderError.restoreImage(image, withError: error) { throw error }
+    do {
+      restoreImage = try await self.restoreImage(from: image)
+    } catch let error as NSError {
+      if let error = BuilderError.restoreImage(image, withError: error) {
+        throw error
+      }
       assertionFailure(error: error)
       throw error
     } catch {
       assertionFailure(error: error)
       throw error
     }
-    let machineConfiguration = MachineConfiguration(setup: configuration, restoreImageFile: image)
+    let machineConfiguration = MachineConfiguration(
+      setup: configuration,
+      restoreImageFile: image
+    )
     let setupConfiguration = MachineBuildConfiguration(
       configuration: machineConfiguration,
       restoreImage: restoreImage
     )
-    return try await createBuilder(for: setupConfiguration, at: url)
+    return try await self.createBuilder(for: setupConfiguration, at: url)
   }
 
   /// Create a builder based on the specification.
@@ -111,8 +122,12 @@ extension MachineSystem {
     withDataDirectoryAt url: URL
   ) async throws -> any MachineBuilder {
     let restoreImage: RestoreImageType
-    do { restoreImage = try await self.restoreImage(from: image) } catch let error as NSError {
-      if let error = BuilderError.restoreImage(image, withError: error) { throw error }
+    do {
+      restoreImage = try await self.restoreImage(from: image)
+    } catch let error as NSError {
+      if let error = BuilderError.restoreImage(image, withError: error) {
+        throw error
+      }
       assertionFailure(error: error)
       throw error
     } catch {
@@ -123,6 +138,6 @@ extension MachineSystem {
       configuration: configuration,
       restoreImage: restoreImage
     )
-    return try await createBuilder(for: setupConfiguration, at: url)
+    return try await self.createBuilder(for: setupConfiguration, at: url)
   }
 }

@@ -58,7 +58,7 @@ internal final class VirtualizationDataTests: XCTestCase {
     #endif
   }
 
-  func testSuccessfulParsing() throws {
+  internal func testSuccessfulParsing() throws {
     let count = Int.random(in: 5...10)
     for _ in 0..<count {
       try randomVirtualizationDataTest()

@@ -1,5 +1,5 @@
 //
-//  MachineBuilderObserver.swift
+//  BookmarkErrorTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,8 +27,31 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import XCTest
 
-public protocol MachineBuilderObserver: Sendable {
-  func getID() async -> UUID?
+@testable import BushelCore
+
+internal final class BookmarkErrorTests: XCTestCase {
+  func testDatabaseError() {
+    let expectedError = BushelCoreTestError.database
+
+    let sut = BookmarkError.databaseError(expectedError)
+
+    let actualError = sut.innerError as? BushelCoreTestError
+
+    XCTAssertEqual(actualError, expectedError)
+    XCTAssertEqual(sut.details, .database)
+  }
+
+  func testAccessDeniedError() {
+    let expectedError = BushelCoreTestError.accessDenied
+    let expectedURL = URL.bushelappURL
+
+    let sut = BookmarkError.accessDeniedError(expectedError, at: expectedURL)
+
+    let actualError = sut.innerError as? BushelCoreTestError
+
+    XCTAssertEqual(actualError, expectedError)
+    XCTAssertEqual(sut.details, .accessDeniedAt(expectedURL))
+  }
 }

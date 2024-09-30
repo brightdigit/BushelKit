@@ -34,7 +34,9 @@ public import BushelMachine
 public import Foundation
 
 public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
-  public var libraryID: LibraryIdentifier? { .url(url) }
+  public var libraryID: LibraryIdentifier? {
+    .url(url)
+  }
 
   public let imageID: UUID
 
@@ -67,5 +69,7 @@ public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
     self.init(imageID: imageID, url: url, metadata: metadata)
   }
 
-  public func getURL() throws -> URL { url }
+  public func getURL() throws -> URL {
+    url
+  }
 }

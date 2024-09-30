@@ -31,7 +31,7 @@ import Foundation
 
 internal struct MockResponse: Codable, Equatable {
   let id: UUID
-  init(id: UUID = .init()) {
+  internal init(id: UUID = .init()) {
     self.id = id
   }
 }
