@@ -51,6 +51,8 @@
     }
 
     @available(iOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     internal static func addOfItem(
       at url: URL,
       withContentsOf contentsURL: URL,
