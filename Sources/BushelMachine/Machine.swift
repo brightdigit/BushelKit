@@ -101,6 +101,10 @@ public protocol Machine: Loggable, Sendable {
   func beginObservation(_ update: @escaping @Sendable (MachineChange) -> Void) -> UUID
 
   func removeObservation(withID id: UUID)
+  
+  func saveCaptureVideo(_ video: CaptureVideo, using parser: any VideoParser) async throws (VideoProperties.InfoError) -> VideoInfo
+  
+  func saveCaptureImage(_ image: CaptureImage, using parser: any ImageInfoParser) async throws (ImageInfo.InfoError)  -> ImageInfo
 }
 
 extension Machine {
@@ -108,6 +112,7 @@ extension Machine {
     .machine
   }
 
+  
   public func removeObservation(withID id: UUID?) {
     if let id {
       self.removeObservation(withID: id)

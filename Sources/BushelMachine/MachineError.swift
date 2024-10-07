@@ -158,4 +158,8 @@ extension MachineError {
   public static func notFound(bookmarkID: UUID) -> MachineError {
     .init(details: .notFoundBookmarkID(bookmarkID))
   }
+  
+  public static func captureError(_ error: any Error) -> MachineError {
+    MachineError(details: .captureError, innerError: error)
+  }
 }

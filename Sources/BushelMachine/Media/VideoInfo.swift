@@ -61,7 +61,7 @@ extension VideoProperties.NaturalSize {
   }
 }
 
-public protocol VideoParser {
+public protocol VideoParser : Sendable {
   func propertiesFromURL(_ url: URL) async throws (VideoProperties.InfoError) -> VideoProperties
 }
 
@@ -90,7 +90,7 @@ extension VideoProperties {
  public enum InfoError : Error {
     case missingField(Field)
     case assetError(Error)
-    case fileAttributesError(Error)
+   case fileManagerError(Error)
   }
 }
 
