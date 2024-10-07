@@ -15,18 +15,18 @@ public struct CaptureVideo: Sendable {
   public let configuration : CaptureVideoConfiguration
 }
 
-public enum CaptureVideoFileType : Sendable {
+public enum CaptureVideoFileType : String, Sendable, Codable {
   case quickTimeMovie
 }
 
-public enum CaptureVideoPixelFormat : Sendable {
-  case BGRA32
+public enum CaptureVideoPixelFormat : String, Sendable, Codable {
+  case BGRA32 = "32BGRA"
 }
-public enum CaptureVideoCodec : Sendable {
+public enum CaptureVideoCodec : String, Sendable, Codable {
   case h264
 }
 
-public struct CaptureVideoConfiguration : Sendable {
+public struct CaptureVideoConfiguration : Sendable, Codable {
   private init(
     format: CaptureVideoPixelFormat = .BGRA32,
     fileType: CaptureVideoFileType = .quickTimeMovie,

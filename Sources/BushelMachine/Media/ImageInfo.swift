@@ -20,7 +20,7 @@ extension ImageInfo {
   }
 }
 
-public struct ImageInfo : Sendable{
+public struct ImageInfo : Sendable, Codable{
   public enum Field : Sendable{
     case imageUUID
     case size
@@ -83,6 +83,7 @@ public struct ImageFileParser : ImageInfoParser {
       .appendingPathComponent(imageUUID.uuidString)
       .appendingPathExtension(for: .init(imageType: image.configuration.fileType))
     do {
+      try self.fileManager.createEmptyDirectory(at: directoryURL, withIntermediateDirectories: false, deleteExistingFile: false)
       try self.fileManager.moveItem(at: image.url, to: captureDestinationURL)
     } catch {
       throw .innerError(error)

@@ -5,7 +5,7 @@
 
 public import Foundation
 
-public enum ImageFileType: Sendable {
+public enum ImageFileType: Sendable, Codable {
   case jpeg
 }
 
@@ -17,7 +17,7 @@ public struct CaptureImage: Sendable {
   
 
 
-  public struct Configuration: Sendable {
+  public struct Configuration: Sendable, Codable {
     public static let `default` = Configuration(compression: 0.8, fileType: .jpeg)
 
     public let compression: Double

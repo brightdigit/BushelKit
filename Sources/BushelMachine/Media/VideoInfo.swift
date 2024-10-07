@@ -67,7 +67,7 @@ public protocol VideoParser  {
 
 }
 
-public struct VideoInfo : Sendable {
+public struct VideoInfo : Sendable, Codable {
   public init(
     videoUUID: UUID,
     fileSize: UInt64,
