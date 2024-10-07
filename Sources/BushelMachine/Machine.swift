@@ -102,9 +102,11 @@ public protocol Machine: Loggable, Sendable {
 
   func removeObservation(withID id: UUID)
   
-  func saveCaptureVideo(_ video: CaptureVideo, using parser: any VideoParser) async throws (VideoProperties.InfoError) -> VideoInfo
+  func saveCaptureVideo(with closure: @escaping @Sendable (URL) async throws -> VideoInfo)
+    async rethrows -> VideoInfo
   
-  func saveCaptureImage(_ image: CaptureImage, using parser: any ImageInfoParser) async throws (ImageInfo.InfoError)  -> ImageInfo
+  func saveCaptureImage(with closure: @escaping @Sendable (URL) async throws -> ImageInfo)
+  async throws -> ImageInfo
 }
 
 extension Machine {

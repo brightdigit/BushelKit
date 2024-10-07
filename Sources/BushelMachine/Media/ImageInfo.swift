@@ -47,7 +47,7 @@ public struct ImageInfo : Sendable{
 
 
 public protocol ImageInfoParser {
-  func imageInfo(fromImage image: CaptureImage) throws(ImageInfo.InfoError) -> ImageInfo
+  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws(ImageInfo.InfoError) -> ImageInfo
 }
 
 public struct ImageFileParser : ImageInfoParser {
@@ -59,7 +59,7 @@ public struct ImageFileParser : ImageInfoParser {
   let cgSizeFromURL : (URL) -> CGSize?
   let fileManager : FileManager
   
-  public func imageInfo(fromImage image: CaptureImage) throws(ImageInfo.InfoError) -> ImageInfo {
+  public func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws(ImageInfo.InfoError) -> ImageInfo {
     let url = image.url
     guard let imageUUID = UUID(uuidString: url.deletingPathExtension().lastPathComponent) else {
       throw .missingField(.imageUUID)
@@ -78,6 +78,14 @@ public struct ImageFileParser : ImageInfoParser {
     
     guard let size = cgSizeFromURL(url) else {
       throw .missingField(.size)
+    }
+    let captureDestinationURL = directoryURL
+      .appendingPathComponent(imageUUID.uuidString)
+      .appendingPathExtension(for: .init(imageType: image.configuration.fileType))
+    do {
+      try self.fileManager.moveItem(at: image.url, to: captureDestinationURL)
+    } catch {
+      throw .innerError(error)
     }
     
     return .init(

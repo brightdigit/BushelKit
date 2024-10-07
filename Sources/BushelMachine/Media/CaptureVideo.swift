@@ -46,7 +46,7 @@ public struct CaptureVideoConfiguration : Sendable {
   
   static let defaultHeight = 1_080
   
-  static let `default` : CaptureVideoConfiguration = .init()
+  public static let `default` : CaptureVideoConfiguration = .init()
 }
 
 #if canImport(UniformTypeIdentifiers)
