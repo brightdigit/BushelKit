@@ -108,57 +108,8 @@ extension VideoInfo {
     capture video: CaptureVideo,
     using parser: any VideoParser
   ) async throws (VideoProperties.InfoError) {
-//    guard let videoUUID = UUID(uuidString: video.url.deletingPathExtension().lastPathComponent) else {
-//      throw .missingField(.videoUUID)
-//    }
     
     let properties = try await parser.propertiesFromURL(video.url)
     self.init(properties: properties)
-//    let attributes: [FileAttributeKey : Any]
-//    do {
-//      attributes = try fileManager.attributesOfItem(atPath: video.url.path())
-//    } catch {
-//      throw .fileAttributesError(error)
-//    }
-//    
-//    guard let fileSize = attributes[.size] as? UInt64 else {
-//      throw .missingField(.fileSize)
-//    }
-//    
-//    let asset = AVAsset(url: video.url)
-//    
-//    let duration : CMTime
-//    do {
-//      duration = try await asset.load(.duration)
-//    } catch {
-//      throw .assetError(error)
-//    }
-//    let durationInSeconds = CMTimeGetSeconds(duration)
-//    
-//    let size : CGSize?
-//    
-//    do {
-//      let tracks = try await asset.loadTracks(withMediaType: .video)
-//
-//    
-//      assert(tracks.count == 1)
-//    
-//      size = try await tracks.first?.load(.naturalSize)
-//  } catch {
-//    throw .assetError(error)
-//  }
-//    
-//    guard let size else {
-//      throw .missingField(.naturalSize)
-//    }
-//    
-//    self.init(
-//      videoUUID: videoUUID,
-//      fileSize: fileSize,
-//      width: Int(size.width),
-//      height: Int(size.height),
-//      duration: durationInSeconds
-//    )
-    
   }
 }
