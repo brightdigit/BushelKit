@@ -56,9 +56,9 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   /// Snapshot of the machine
   public let snapshots: [Snapshot]
   
-  public let videos: [VideoInfo]?
+  public let videos: [RecordedVideo]?
   
-  public let images: [ImageInfo]?
+  public let images: [RecordedImage]?
 
   public init(
     restoreImageFile: InstallerImageIdentifier,
@@ -72,8 +72,8 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()],
     snapshots: [Snapshot] = [],
-    videos: [VideoInfo] = [],
-    images: [ImageInfo] = []
+    videos: [RecordedVideo] = [],
+    images: [RecordedImage] = []
   ) {
     assert(
       memory.isMultiple(of: 1_024 * 1_024),
@@ -168,7 +168,7 @@ extension MachineConfiguration {
     )
   }
   
-  public func updatesImage(_ closure: @escaping @Sendable ([ImageInfo]) -> [ImageInfo]) -> MachineConfiguration {
+  public func updatesImage(_ closure: @escaping @Sendable ([RecordedImage]) -> [RecordedImage]) -> MachineConfiguration {
     
       .init(
         restoreImageFile: self.restoreImageFile,
@@ -188,7 +188,7 @@ extension MachineConfiguration {
   }
   
   
-  public func updatesVideos(_ closure: @escaping @Sendable ([VideoInfo]) -> [VideoInfo]) -> MachineConfiguration {
+  public func updatesVideos(_ closure: @escaping @Sendable ([RecordedVideo]) -> [RecordedVideo]) -> MachineConfiguration {
     .init(
       restoreImageFile: self.restoreImageFile,
       vmSystemID: self.vmSystemID,

@@ -8,7 +8,7 @@
 public import Foundation
 
 
-extension ImageInfo {
+extension RecordedImage {
   init(imageUUID: UUID,
        name : String,
 notes : String,
@@ -27,7 +27,7 @@ createdAt : Date,
   }
 }
 
-public struct ImageInfo : Sendable, Codable{
+public struct RecordedImage : Sendable, Codable{
   public enum Field : Sendable{
     case imageUUID
     case size
@@ -69,7 +69,7 @@ public struct ImageInfo : Sendable, Codable{
 
 
 public protocol ImageInfoParser {
-  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws(ImageInfo.InfoError) -> ImageInfo
+  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws(RecordedImage.InfoError) -> RecordedImage
 }
 
 public struct ImageFileParser : ImageInfoParser {
@@ -81,7 +81,7 @@ public struct ImageFileParser : ImageInfoParser {
   let cgSizeFromURL : (URL) -> CGSize?
   let fileManager : FileManager
   
-  public func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws(ImageInfo.InfoError) -> ImageInfo {
+  public func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws(RecordedImage.InfoError) -> RecordedImage {
     let url = image.url
     guard let imageUUID = UUID(uuidString: url.deletingPathExtension().lastPathComponent) else {
       throw .missingField(.imageUUID)

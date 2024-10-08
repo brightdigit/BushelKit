@@ -7,67 +7,67 @@
 
 public import Foundation
 
-@available(*, deprecated)
-public struct VideoProperties : Sendable{
-  internal init(
-    videoUUID: UUID,
-    fileSize: UInt64,
-    naturalSize: VideoProperties.NaturalSize,
-    duration: Double
-  ) {
-    self.videoUUID = videoUUID
-    self.fileSize = fileSize
-    self.naturalSize = naturalSize
-    self.duration = duration
-  }
-  
-  public let videoUUID: UUID
-  public let fileSize: UInt64
-  public let naturalSize : NaturalSize
-  public let duration: Double
-  
-  public struct NaturalSize: Sendable {
-    internal init(width: Int, height: Int) {
-      self.width = width
-      self.height = height
-    }
-    
-    public let width: Int
-    public let height: Int
-  }
-}
+//@available(*, deprecated)
+//public struct VideoProperties : Sendable{
+//  internal init(
+//    videoUUID: UUID,
+//    fileSize: UInt64,
+//    naturalSize: VideoProperties.NaturalSize,
+//    duration: Double
+//  ) {
+//    self.videoUUID = videoUUID
+//    self.fileSize = fileSize
+//    self.naturalSize = naturalSize
+//    self.duration = duration
+//  }
+//  
+//  public let videoUUID: UUID
+//  public let fileSize: UInt64
+//  public let naturalSize : NaturalSize
+//  public let duration: Double
+//  
+//  public struct NaturalSize: Sendable {
+//    internal init(width: Int, height: Int) {
+//      self.width = width
+//      self.height = height
+//    }
+//    
+//    public let width: Int
+//    public let height: Int
+//  }
+//}
+//
+//extension VideoProperties {
+//  public init(
+//    videoUUID: UUID,
+//    fileSize: UInt64,
+//    size: CGSize,
+//    duration: Double
+//  ) {
+//    self.init(
+//      videoUUID: videoUUID,
+//      fileSize: fileSize,
+//      naturalSize: .init(size: size),
+//      duration: duration
+//    )
+//  }
+//}
 
-extension VideoProperties {
-  public init(
-    videoUUID: UUID,
-    fileSize: UInt64,
-    size: CGSize,
-    duration: Double
-  ) {
-    self.init(
-      videoUUID: videoUUID,
-      fileSize: fileSize,
-      naturalSize: .init(size: size),
-      duration: duration
-    )
-  }
-}
-
-extension VideoProperties.NaturalSize {
-  public init (size: CGSize) {
-    self.init(
-      width: Int(size.width),
-      height: Int(size.height)
-    )
-  }
-}
+//extension VideoProperties.NaturalSize {
+//  public init (size: CGSize) {
+//    self.init(
+//      width: Int(size.width),
+//      height: Int(size.height)
+//    )
+//  }
+//}
 
 public protocol VideoParser  {
-  func videoInfo(fromVideo video: CaptureVideo, toDirectory directoryURL: URL) async throws (VideoProperties.InfoError) -> VideoInfo
+  func videoInfo(fromVideo video: CaptureVideo, toDirectory directoryURL: URL) async throws (RecordedVideo.InfoError) -> RecordedVideo
 
 }
 
-public struct VideoInfo : Sendable, Codable {
+public struct RecordedVideo : Sendable, Codable {
   public init(
     videoUUID: UUID,
     name: String,
@@ -128,7 +128,7 @@ public struct VideoInfo : Sendable, Codable {
   public let configuration : CaptureVideoConfiguration
 }
 
-extension VideoProperties {
+extension RecordedVideo {
   
   public enum Field : Sendable{
     case videoUUID
