@@ -29,22 +29,28 @@
 
 public struct CaptureVideoConfiguration: Sendable, Codable {
   public static let defaultHeight = 1_080
-  public static let `default`: CaptureVideoConfiguration = .init()
 
   public let format: CaptureVideoPixelFormat
   public let fileType: CaptureVideoFileType
   public let codec: CaptureVideoCodec
   public let height: Int
+  public let watermark : Watermark?
 
   private init(
     format: CaptureVideoPixelFormat = .bgra32,
     fileType: CaptureVideoFileType = .quickTimeMovie,
     codec: CaptureVideoCodec = .h264,
-    height: Int = defaultHeight
+    height: Int = defaultHeight,
+    watermark: Watermark?
   ) {
     self.format = format
     self.fileType = fileType
     self.codec = codec
     self.height = height
+    self.watermark = watermark
+  }
+  
+  public init(watermark: Watermark?) {
+    self.init(watermark: watermark)
   }
 }
