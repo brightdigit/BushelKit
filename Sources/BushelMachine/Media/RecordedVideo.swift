@@ -41,8 +41,7 @@ public struct RecordedVideo: Sendable, Codable {
   public let createdAt: Date
   public let notes: String
   public let fileSize: UInt64
-  public let width: Int
-  public let height: Int
+  public let resolution: RecordedResolution
   public let imageTimeInterval: Double
   public let duration: Double
   public let configuration: CaptureVideoConfiguration
@@ -53,8 +52,7 @@ public struct RecordedVideo: Sendable, Codable {
     createdAt: Date,
     notes: String,
     fileSize: UInt64,
-    width: Int,
-    height: Int,
+    resolution: RecordedResolution,
     duration: Double,
     imageTimeInterval: Double,
     configuration: CaptureVideoConfiguration
@@ -64,8 +62,7 @@ public struct RecordedVideo: Sendable, Codable {
     self.createdAt = createdAt
     self.notes = notes
     self.fileSize = fileSize
-    self.width = width
-    self.height = height
+    self.resolution = resolution
     self.duration = duration
     self.imageTimeInterval = imageTimeInterval
     self.configuration = configuration
@@ -88,8 +85,7 @@ public struct RecordedVideo: Sendable, Codable {
       createdAt: createdAt,
       notes: notes,
       fileSize: fileSize,
-      width: Int(size.width),
-      height: Int(size.height),
+      resolution: .init(cgSize: size),
       duration: duration,
       imageTimeInterval: imageTimeInterval,
       configuration: configuration

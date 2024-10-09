@@ -1,5 +1,5 @@
 //
-//  RecordedImageParser.swift
+//  RecordedResolution.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,9 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+public struct RecordedResolution: Sendable, Codable {
+  public let width: Int
+  public let height: Int
 
-public protocol RecordedImageParser {
-  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL)
-    async throws(RecordedImage.InfoError) -> RecordedImage
+  public init(width: Int, height: Int) {
+    self.width = width
+    self.height = height
+  }
 }
+
+#if canImport(CoreFoundation)
+  public import CoreFoundation
+
+  extension RecordedResolution {
+    public init(cgSize: CGSize) {
+      self.init(width: .init(cgSize.width), height: .init(cgSize.height))
+    }
+  }
+#endif

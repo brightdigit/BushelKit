@@ -1,5 +1,5 @@
 //
-//  VideoParser.swift
+//  RecordedVideoParser.swift
 //  BushelKit
 //
 //  Created by Leo Dion.

@@ -44,8 +44,7 @@ public struct RecordedImage: Sendable, Codable {
   public let name: String
   public let notes: String
   public let createdAt: Date
-  public let width: Int
-  public let height: Int
+  public let resolution: RecordedResolution
   public let fileSize: UInt64
   public let configuration: CaptureImageConfiguration
 
@@ -54,8 +53,7 @@ public struct RecordedImage: Sendable, Codable {
     name: String,
     notes: String,
     createdAt: Date,
-    width: Int,
-    height: Int,
+    resolution: RecordedResolution,
     fileSize: UInt64,
     configuration: CaptureImageConfiguration
   ) {
@@ -63,8 +61,7 @@ public struct RecordedImage: Sendable, Codable {
     self.name = name
     self.notes = notes
     self.createdAt = createdAt
-    self.width = width
-    self.height = height
+    self.resolution = resolution
     self.fileSize = fileSize
     self.configuration = configuration
   }
@@ -85,8 +82,7 @@ extension RecordedImage {
       name: name,
       notes: notes,
       createdAt: createdAt,
-      width: .init(size.width),
-      height: .init(size.height),
+      resolution: .init(cgSize: size),
       fileSize: fileSize,
       configuration: configuration
     )
