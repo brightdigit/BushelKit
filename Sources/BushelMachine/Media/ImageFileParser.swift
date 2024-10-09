@@ -29,7 +29,7 @@
 
 public import Foundation
 
-public struct ImageFileParser: ImageInfoParser {
+public struct ImageFileParser: RecordedImageParser {
   private let cgSizeFromURL: (URL) -> CGSize?
   private let fileManager: FileManager
 

@@ -1,5 +1,5 @@
 //
-//  ImageInfoParser.swift
+//  VideoParser.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,7 +29,7 @@
 
 public import Foundation
 
-public protocol ImageInfoParser {
-  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL)
-    async throws(RecordedImage.InfoError) -> RecordedImage
+public protocol RecordedVideoParser {
+  func videoInfo(fromVideo video: CaptureVideo, toDirectory directoryURL: URL)
+    async throws(RecordedVideoError) -> RecordedVideo
 }

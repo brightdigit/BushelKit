@@ -31,4 +31,5 @@ public enum RecordedVideoError: Error {
   case missingField(RecordedVideo.Field)
   case assetError(Error)
   case fileManagerError(Error)
+  case notImplmented
 }
