@@ -34,7 +34,7 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
   public let fileType: CaptureVideoFileType
   public let codec: CaptureVideoCodec
   public let height: Int
-  public let watermark : Watermark?
+  public let watermark: Watermark?
 
   private init(
     format: CaptureVideoPixelFormat = .bgra32,
@@ -49,7 +49,7 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
     self.height = height
     self.watermark = watermark
   }
-  
+
   public init(watermark: Watermark?) {
     self.init(watermark: watermark)
   }

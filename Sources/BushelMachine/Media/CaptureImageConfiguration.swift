@@ -28,17 +28,16 @@
 //
 
 public struct CaptureImageConfiguration: Sendable, Codable {
-  
   public let fileType: ImageFileType
   public let compression: Double
   public let watermark: Watermark?
-  
+
   private init(fileType: ImageFileType = .jpeg, compression: Double = 0.8, watermark: Watermark?) {
     self.fileType = fileType
     self.compression = compression
     self.watermark = watermark
   }
-  
+
   public init(watermark: Watermark?) {
     self.init(watermark: watermark)
   }
