@@ -1,5 +1,5 @@
 //
-//  MockDatabase.swift
+//  CaptureVideoPixelFormat.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,36 +27,17 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if canImport(SwiftData)
-  import BushelDataCore
-  import Foundation
-  import SwiftData
-
-  internal class MockDatabase: Database {
-    var didRequestCount: Int?
-    func contextMatchesModel(_: some PersistentModel) async -> Bool {
-      false
-    }
-
-    func delete(where _: Predicate<some PersistentModel>?) async throws {}
-
-    func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
-      guard let count = descriptor.fetchLimit else {
-        return []
+public enum CaptureVideoPixelFormat: String, Sendable, Codable {
+  case bgra32 = "32BGRA"
+}
+#if canImport(CoreVideo)
+  public import CoreVideo
+  extension CaptureVideoPixelFormat {
+    public var osType: OSType {
+      switch self {
+      case .bgra32:
+        kCVPixelFormatType_32BGRA
       }
-      self.didRequestCount = count
-      return (0..<count).map { _ in
-        ItemModel()
-      }
-      .compactMap { $0 as? T }
     }
-
-    func delete(_: some PersistentModel) async {}
-
-    func insert(_: some PersistentModel) async {}
-
-    func save() async throws {}
-
-    func transaction(_: @escaping (ModelContext) throws -> Void) async throws {}
   }
 #endif

@@ -38,7 +38,7 @@ internal final class FormattersTests: XCTestCase {
     return formatter
   }()
 
-  func testLastModifiedDateFormate() {
+  internal func testLastModifiedDateFormate() {
     let sut = Formatters.lastModifiedDateFormatter
 
     let now = Date.now

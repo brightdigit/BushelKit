@@ -33,12 +33,12 @@ import BushelMachineWax
 import Foundation
 
 internal struct MockInstallerImage: InstallerImage, Equatable {
-  let libraryID: BushelCore.LibraryIdentifier?
+  internal let libraryID: BushelCore.LibraryIdentifier?
 
-  let imageID: UUID
+  internal let imageID: UUID
 
-  let metadata: Metadata
-  static func random(
+  internal let metadata: Metadata
+  internal static func random(
     withReleaseCount releaseCount: Int,
     startingAt firstMajorVersion: Int,
     withAverageImageCount averageImageCountPerRelease: Int,
@@ -68,7 +68,7 @@ internal struct MockInstallerImage: InstallerImage, Equatable {
     return dictionary
   }
 
-  func getURL() async throws -> URL {
+  internal func getURL() async throws -> URL {
     assertionFailure("Shouldn't be called.")
     return URL.randomFile()
   }

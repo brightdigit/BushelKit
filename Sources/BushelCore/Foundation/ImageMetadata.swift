@@ -35,7 +35,8 @@ public struct ImageMetadata: Codable,
   CustomDebugStringConvertible,
   Hashable,
   OperatingSystemInstalled,
-  Sendable {
+  Sendable
+{
   /// Indicates whether the image format is supported by the system.
   public let isImageSupported: Bool
   /// The build version associated with the image, if available.

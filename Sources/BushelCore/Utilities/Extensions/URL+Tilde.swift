@@ -95,7 +95,7 @@ public import Foundation
     /// - Author: Jia Chen
     /// - Parameter abbreviatedPath: a `String` path, abbreviated with ~
     /// - Returns: The `URL` if it is able to expand the ~ into a full URL, or `nil` if it is unable do so
-    static func expandingTilde(from abbreviatedPath: String) -> URL? {
+    internal static func expandingTilde(from abbreviatedPath: String) -> URL? {
       guard abbreviatedPath.first == "~" else {
         return nil
       }

@@ -83,12 +83,16 @@ extension URL.Bushel {
     public let restoreImagesDirectoryName = Defaults.restoreImagesDirectoryName
     public let machineDataDirectoryName = Defaults.machineDataDirectoryName
     public let snapshotsDirectoryName = Defaults.snapshotsDirectoryName
+    public let captureVideoDirectoryName = Defaults.captureVideoDirectoryName
+    public let captureImageDirectoryName = Defaults.captureImageDirectoryName
     public let machineJSONFileName = Defaults.machineJSONFileName
     public let restoreLibraryJSONFileName = Defaults.restoreLibraryJSONFileName
     private enum Defaults {
       fileprivate static let restoreImagesDirectoryName = "Restore Images"
       fileprivate static let machineDataDirectoryName = "data"
       fileprivate static let snapshotsDirectoryName = "snapshots"
+      fileprivate static let captureImageDirectoryName = "images"
+      fileprivate static let captureVideoDirectoryName = "videos"
       fileprivate static let machineJSONFileName = "machine.json"
       fileprivate static let restoreLibraryJSONFileName = "metadata.json"
     }

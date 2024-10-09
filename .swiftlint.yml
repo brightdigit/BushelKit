@@ -18,7 +18,7 @@ opt_in_rules:
   - empty_xctest_method
   - enum_case_associated_values_count
   - expiring_todo
-  # - explicit_acl
+  - explicit_acl
   - explicit_init
   - explicit_top_level_acl
   # - fallthrough
@@ -127,3 +127,5 @@ disabled_rules:
     - implicit_getter
     - switch_case_alignment
     - closure_parameter_position
+    - trailing_comma
+    - opening_brace

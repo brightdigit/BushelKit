@@ -28,9 +28,10 @@
 //
 
 #if canImport(FoundationNetworking)
+  // swiftlint:disable all
   public import Foundation
 
-// swiftlint:disable all
+  // swift-format-ignore
   /// A comparison algorithm for a given type.
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   public protocol SortComparator<Compared>: Hashable {
@@ -97,6 +98,7 @@
     }
   }
 
+  // swift-format-ignore
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   package struct AnySortComparator: SortComparator {
     var _base: Any  // internal for testing
@@ -243,7 +245,8 @@
     public func sorted<Comparator: SortComparator>(using comparators: some Sequence<Comparator>)
       -> [Element]
     where
-      Element == Comparator.Compared {
+      Element == Comparator.Compared
+    {
       self.sorted {
         comparators.compare($0, $1) == .orderedAscending
       }

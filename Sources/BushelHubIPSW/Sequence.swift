@@ -36,11 +36,10 @@ import BushelLogging
 
 extension Sequence {
   public func tryCompactMap<T>(logger: Logger? = nil, _ transform: (Self.Element) throws -> T)
-    -> [T] {
-    self.compactMap { element in
-      do {
-        return try transform(element)
-      } catch {
+    -> [T]
+  {
+    compactMap { element in
+      do { return try transform(element) } catch {
         assertionFailure(error: error)
         logger?.error("Unable to transform element: \(error.localizedDescription)")
       }

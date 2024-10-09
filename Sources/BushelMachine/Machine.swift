@@ -101,6 +101,12 @@ public protocol Machine: Loggable, Sendable {
   func beginObservation(_ update: @escaping @Sendable (MachineChange) -> Void) -> UUID
 
   func removeObservation(withID id: UUID)
+
+  func saveCaptureVideo(with closure: @escaping @Sendable (URL) async throws -> RecordedVideo)
+    async rethrows -> RecordedVideo
+
+  func saveCaptureImage(with closure: @escaping @Sendable (URL) async throws -> RecordedImage)
+    async throws -> RecordedImage
 }
 
 extension Machine {

@@ -56,6 +56,10 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   /// Snapshot of the machine
   public let snapshots: [Snapshot]
 
+  public let videos: [RecordedVideo]?
+
+  public let images: [RecordedImage]?
+
   public init(
     restoreImageFile: InstallerImageIdentifier,
     vmSystemID: VMSystemID,
@@ -67,7 +71,9 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     memory: Int = (128 * 1_024 * 1_024 * 1_024),
     networkConfigurations: [NetworkConfiguration] = [.default()],
     graphicsConfigurations: [GraphicsConfiguration] = [.default()],
-    snapshots: [Snapshot] = []
+    snapshots: [Snapshot] = [],
+    videos: [RecordedVideo] = [],
+    images: [RecordedImage] = []
   ) {
     assert(
       memory.isMultiple(of: 1_024 * 1_024),
@@ -84,6 +90,8 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     self.networkConfigurations = networkConfigurations
     self.graphicsConfigurations = graphicsConfigurations
     self.snapshots = snapshots
+    self.videos = videos
+    self.images = images
   }
 }
 
@@ -138,6 +146,7 @@ extension MachineConfiguration: CodablePackage {
 }
 
 extension MachineConfiguration {
+  @available(*, deprecated)
   public init(
     original: MachineConfiguration,
     _ withSnapshots: @escaping @Sendable ([Snapshot]) -> [Snapshot]
@@ -153,7 +162,49 @@ extension MachineConfiguration {
       memory: Int(original.memory),
       networkConfigurations: original.networkConfigurations,
       graphicsConfigurations: original.graphicsConfigurations,
-      snapshots: withSnapshots(original.snapshots)
+      snapshots: withSnapshots(original.snapshots),
+      videos: original.videos ?? [],
+      images: original.images ?? []
+    )
+  }
+
+  public func updatesImage(_ closure: @escaping @Sendable ([RecordedImage]) -> [RecordedImage])
+    -> MachineConfiguration
+  {
+    .init(
+      restoreImageFile: self.restoreImageFile,
+      vmSystemID: self.vmSystemID,
+      snapshotSystemID: self.snapshotSystemID,
+      operatingSystemVersion: self.operatingSystemVersion,
+      buildVersion: self.buildVersion,
+      storage: self.storage,
+      cpuCount: Int(self.cpuCount),
+      memory: Int(self.memory),
+      networkConfigurations: self.networkConfigurations,
+      graphicsConfigurations: self.graphicsConfigurations,
+      snapshots: self.snapshots,
+      videos: self.videos ?? [],
+      images: closure(self.images ?? [])
+    )
+  }
+
+  public func updatesVideos(_ closure: @escaping @Sendable ([RecordedVideo]) -> [RecordedVideo])
+    -> MachineConfiguration
+  {
+    .init(
+      restoreImageFile: self.restoreImageFile,
+      vmSystemID: self.vmSystemID,
+      snapshotSystemID: self.snapshotSystemID,
+      operatingSystemVersion: self.operatingSystemVersion,
+      buildVersion: self.buildVersion,
+      storage: self.storage,
+      cpuCount: Int(self.cpuCount),
+      memory: Int(self.memory),
+      networkConfigurations: self.networkConfigurations,
+      graphicsConfigurations: self.graphicsConfigurations,
+      snapshots: self.snapshots,
+      videos: closure(self.videos ?? []),
+      images: self.images ?? []
     )
   }
 }

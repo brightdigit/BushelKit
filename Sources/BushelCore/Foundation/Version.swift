@@ -61,7 +61,8 @@ public struct Version: CustomStringConvertible, Sendable {
   public let prereleaseLabel: PrereleaseLabel?
 
   /// Creates a new `Version` instance with the provided components.
-  internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil) {
+  internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil)
+  {
     self.marketingSemVer = marketingSemVer
     self.buildNumber = buildNumber
     self.prereleaseLabel = prereleaseLabel
@@ -70,7 +71,7 @@ public struct Version: CustomStringConvertible, Sendable {
 
 extension Version {
   #if canImport(os)
-    public nonisolated(unsafe) static let logger: Logger = .init(
+    public static let logger: Logger = .init(
       subsystem: Bundle.main.bundleIdentifier ?? "Bushel",
       category: "application"
     )
@@ -83,7 +84,7 @@ extension Version {
     }
 
     return
-    // swiftlint:disable:next line_length
+      // swiftlint:disable:next line_length
       "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 

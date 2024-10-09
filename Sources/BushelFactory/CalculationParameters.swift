@@ -56,7 +56,7 @@ internal struct SpecificationCalculationParameters: CalculationParameters {
     )
   }
 
-  func indexFor(value: Int) -> Int {
+  internal func indexFor(value: Int) -> Int {
     indexForValue(value)
   }
 }

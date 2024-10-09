@@ -122,9 +122,8 @@ extension LibraryError {
     LibraryError(details: .imageFolderInitializationAt(url), innerError: error)
   }
 
-  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError {
-    LibraryError(details: .missingInitialization(for: property))
-  }
+  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError
+  { LibraryError(details: .missingInitialization(for: property)) }
 
   public static func metadataUpdateError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .updateMetadataAt(url), innerError: error)

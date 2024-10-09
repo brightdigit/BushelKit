@@ -30,8 +30,8 @@
 import BushelTestUtilities
 
 internal struct BushelCoreTestError: MockError {
-  static let database = Self(value: "database")
-  static let accessDenied = Self(value: "accessDenied")
+  internal static let database = Self(value: "database")
+  internal static let accessDenied = Self(value: "accessDenied")
 
-  let value: String
+  internal let value: String
 }

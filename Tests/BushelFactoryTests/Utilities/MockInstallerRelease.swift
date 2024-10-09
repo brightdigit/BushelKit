@@ -30,15 +30,15 @@
 import BushelCore
 
 internal struct MockInstallerRelease: InstallerRelease {
-  let versionName: String
+  internal let versionName: String
 
-  let releaseName: String
+  internal let releaseName: String
 
-  let imageName: String
+  internal let imageName: String
 
-  let majorVersion: Int
+  internal let majorVersion: Int
 
-  var id: Int {
+  internal var id: Int {
     majorVersion
   }
 }

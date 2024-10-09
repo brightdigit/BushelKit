@@ -32,7 +32,7 @@ import XCTest
 @testable import BushelService
 
 internal final class ServiceTests: XCTestCase {
-  func testService() async throws {
+  internal func testService() async throws {
     #if canImport(SwiftData) && !os(iOS)
       let database = MockDatabase()
       let service = Service(database: database, messageTypes: [MockMessage.self])

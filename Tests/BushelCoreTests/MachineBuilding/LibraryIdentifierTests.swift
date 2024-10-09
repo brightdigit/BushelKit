@@ -33,7 +33,7 @@ import XCTest
 @testable import BushelCore
 
 internal final class LibraryIdentifierTests: XCTestCase {
-  func testBookmarkIDFromString() {
+  internal func testBookmarkIDFromString() {
     let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
 
     let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
@@ -41,7 +41,7 @@ internal final class LibraryIdentifierTests: XCTestCase {
     XCTAssertEqual(sut.description, expectedID.description)
   }
 
-  func testURLFromString() {
+  internal func testURLFromString() {
     let fileURL = URL.homeDirectory.appendingPathComponent("file.txt")
     let url = LibraryIdentifier.url(fileURL)
 

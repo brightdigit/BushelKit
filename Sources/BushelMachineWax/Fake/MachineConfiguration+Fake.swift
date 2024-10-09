@@ -31,15 +31,11 @@ public import BushelMachine
 import Foundation
 
 extension MachineConfiguration {
-  public static let sampleMachineConfiguration: Self = .init(
+  public static let sample: Self = .init(
     restoreImageFile: .sampleInstallerIdentifier,
-    vmSystemID: .sampleVMSystemID,
+    vmSystemID: .sample,
     snapshotSystemID: .sampleSnapshotSystemID,
-    operatingSystemVersion: .init(
-      majorVersion: 1,
-      minorVersion: 0,
-      patchVersion: 0
-    ),
+    operatingSystemVersion: .init(majorVersion: 1, minorVersion: 0, patchVersion: 0),
     storage: [.init(label: "", size: MachineStorageSpecification.defaultSize)]
   )
 }

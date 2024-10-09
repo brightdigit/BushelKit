@@ -1,5 +1,5 @@
 //
-//  ItemModel.swift
+//  CaptureVideoFileType.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,33 +27,19 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if canImport(SwiftData)
-  import Foundation
-  import SwiftData
+public enum CaptureVideoFileType: String, Sendable, Codable {
+  case quickTimeMovie
+}
 
-  internal class ItemModel: PersistentModel {
-    static var schemaMetadata: [Schema.PropertyMetadata] = .init()
+#if canImport(UniformTypeIdentifiers)
+  public import UniformTypeIdentifiers
 
-    var id: UUID
-
-    // swiftlint:disable:next implicitly_unwrapped_optional
-    var backingData: (any BackingData<ItemModel>)! = nil
-    var persistentBackingData: any BackingData<ItemModel> {
-      get {
-        backingData
+  extension UTType {
+    public init(videoType: CaptureVideoFileType) {
+      switch videoType {
+      case .quickTimeMovie:
+        self = .quickTimeMovie
       }
-      set {
-        self.backingData = newValue
-      }
-    }
-
-    required init(backingData: any BackingData<ItemModel>) {
-      self.backingData = backingData
-      self.id = .init()
-    }
-
-    init(id: UUID = .init()) {
-      self.id = id
     }
   }
 #endif

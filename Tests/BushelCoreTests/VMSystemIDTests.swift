@@ -32,13 +32,13 @@ import XCTest
 @testable import BushelCore
 
 internal final class VMSystemIDTests: XCTestCase {
-  func testExpressibleByStringInterpolation() {
+  internal func testExpressibleByStringInterpolation() {
     let sut: VMSystemID = "86F07806-1F75-4E77-AA1C-BC33DD96A9DC"
 
     XCTAssertEqual(sut.rawValue, "86F07806-1F75-4E77-AA1C-BC33DD96A9DC")
   }
 
-  func testInit() {
+  internal func testInit() {
     let expectedID = UUID().uuidString
 
     let sut = VMSystemID(stringLiteral: expectedID)
@@ -48,7 +48,7 @@ internal final class VMSystemIDTests: XCTestCase {
     XCTAssertEqual(actualID, expectedID)
   }
 
-  func testEncode() throws {
+  internal func testEncode() throws {
     let uuidString = UUID().uuidString
     let sut = VMSystemID(stringLiteral: uuidString)
 
@@ -60,7 +60,7 @@ internal final class VMSystemIDTests: XCTestCase {
     XCTAssertEqual(actualEncodedUUID, expectedEncodedUUID)
   }
 
-  func testDecode() throws {
+  internal func testDecode() throws {
     let uuidString = UUID().uuidString
     let json = Data("\"\(uuidString)\"".utf8)
 
