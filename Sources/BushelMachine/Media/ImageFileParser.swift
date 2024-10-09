@@ -39,7 +39,7 @@ public struct ImageFileParser: RecordedImageParser {
   }
 
   public func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL)
-    async throws(RecordedImage.InfoError) -> RecordedImage
+    async throws(RecordedImageError) -> RecordedImage
   {
     let url = image.url
     guard let imageUUID = UUID(uuidString: url.deletingPathExtension().lastPathComponent) else {

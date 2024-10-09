@@ -31,5 +31,5 @@ public import Foundation
 
 public protocol RecordedImageParser {
   func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL)
-    async throws(RecordedImage.InfoError) -> RecordedImage
+    async throws(RecordedImageError) -> RecordedImage
 }

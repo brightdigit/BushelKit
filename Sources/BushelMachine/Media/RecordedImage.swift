@@ -35,10 +35,6 @@ public struct RecordedImage: Sendable, Codable {
     case size
     case fileSize
   }
-  public enum InfoError: Error {
-    case missingField(Field)
-    case innerError(Error)
-  }
 
   public let imageUUID: UUID
   public let name: String
