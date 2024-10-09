@@ -32,13 +32,13 @@ import XCTest
 @testable import BushelCore
 
 internal final class MachineBuildRequestTests: XCTestCase {
-  func testNillMachineRestoreImageIdentifier() {
+  internal func testNillMachineRestoreImageIdentifier() {
     let sut = MachineBuildRequest(restoreImage: nil)
 
     XCTAssertNil(sut.restoreImage)
   }
 
-  func testNotNillMachineRestoreImageIdentifier() {
+  internal func testNotNillMachineRestoreImageIdentifier() {
     let restoreImage = InstallerImageIdentifier.sampleInstallerIdentifier
     let sut = MachineBuildRequest(restoreImage: restoreImage)
 

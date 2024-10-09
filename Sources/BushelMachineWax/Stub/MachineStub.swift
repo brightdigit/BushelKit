@@ -31,6 +31,7 @@ public import BushelMachine
 public import Foundation
 
 public struct MachineStub: Machine {
+  
   public var updatedConfiguration: BushelMachine.MachineConfiguration
 
   public var machineIdentifer: UInt64? {
@@ -80,7 +81,8 @@ public struct MachineStub: Machine {
     // nothing for now
   }
 
-  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID {
+  public func beginObservation(_: @escaping @Sendable (BushelMachine.MachineChange) -> Void) -> UUID
+  {
     UUID()
   }
 
@@ -100,12 +102,24 @@ public struct MachineStub: Machine {
 
   // swiftlint:disable:next unavailable_function
   public func finishedWithSynchronization(_: BushelMachine.SnapshotSynchronizationDifference?)
-    throws {
+    throws
+  {
     fatalError("Not implemented")
   }
 
   // swiftlint:disable:next unavailable_function
   public func updatedMetadata(forSnapshot _: BushelMachine.Snapshot, atIndex _: Int) {
+    fatalError("Not implemented")
+  }
+  
+  
+  // swiftlint:disable:next unavailable_function
+  public func saveCaptureVideo(with closure: @escaping @Sendable (URL) async throws -> BushelMachine.RecordedVideo) async rethrows -> BushelMachine.RecordedVideo {
+    fatalError("Not implemented")
+  }
+  
+  // swiftlint:disable:next unavailable_function
+  public func saveCaptureImage(with closure: @escaping @Sendable (URL) async throws -> BushelMachine.RecordedImage) async throws -> BushelMachine.RecordedImage {
     fatalError("Not implemented")
   }
 }

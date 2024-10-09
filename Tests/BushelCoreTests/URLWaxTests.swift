@@ -32,13 +32,13 @@ import XCTest
 @testable import BushelCore
 
 internal final class URLWaxTests: XCTestCase {
-  func testRandomHTTP() {
+  internal func testRandomHTTP() {
     let sut = URL.randomHTTP()
 
     XCTAssertTrue(URL.urlsString.contains(sut.absoluteString))
   }
 
-  func testRandomFile() {
+  internal func testRandomFile() {
     let sut = URL.randomFile()
 
     XCTAssertTrue(sut.isFileURL)

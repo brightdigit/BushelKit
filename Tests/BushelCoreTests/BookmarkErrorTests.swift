@@ -32,7 +32,7 @@ import XCTest
 @testable import BushelCore
 
 internal final class BookmarkErrorTests: XCTestCase {
-  func testDatabaseError() {
+  internal func testDatabaseError() {
     let expectedError = BushelCoreTestError.database
 
     let sut = BookmarkError.databaseError(expectedError)
@@ -43,9 +43,9 @@ internal final class BookmarkErrorTests: XCTestCase {
     XCTAssertEqual(sut.details, .database)
   }
 
-  func testAccessDeniedError() {
+  internal func testAccessDeniedError() {
     let expectedError = BushelCoreTestError.accessDenied
-    let expectedURL = URL.bushelappURL
+    let expectedURL = URL.bushelWebSite
 
     let sut = BookmarkError.accessDeniedError(expectedError, at: expectedURL)
 

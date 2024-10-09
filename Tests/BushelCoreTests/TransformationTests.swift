@@ -36,7 +36,7 @@ internal final class TransformationTests: XCTestCase {
     "\(value)"
   }
 
-  func testTransformAsFunction() {
+  internal func testTransformAsFunction() {
     let sut = Transformation<Int, String> {
       Self.intToString($0)
     }

@@ -54,7 +54,8 @@
     }
 
     public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL)
-      async throws {
+      async throws
+    {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)

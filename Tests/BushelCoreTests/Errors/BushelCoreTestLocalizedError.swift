@@ -30,7 +30,7 @@
 import BushelTestUtilities
 
 internal struct BushelCoreTestLocalizedError: MockLocalizedError {
-  static let sample = Self(value: "sample")
+  internal static let sample = Self(value: "sample")
 
-  let value: String
+  internal let value: String
 }

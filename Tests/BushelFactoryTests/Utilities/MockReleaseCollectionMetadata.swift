@@ -30,17 +30,17 @@
 import BushelCore
 
 internal struct MockReleaseCollectionMetadata: ReleaseCollectionMetadata {
-  typealias InstallerReleaseType = MockInstallerRelease
+  internal typealias InstallerReleaseType = MockInstallerRelease
 
-  let releases: [MockInstallerRelease]
+  internal let releases: [MockInstallerRelease]
 
-  let customVersionsAllowed: Bool
+  internal let customVersionsAllowed: Bool
 
-  let prefix: String
+  internal let prefix: String
 }
 
 extension MockReleaseCollectionMetadata {
-  static func random(
+  internal static func random(
     startingAt firstMajorVersion: Int,
     count: Int,
     customVersionsAllowed: Bool,

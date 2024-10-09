@@ -39,8 +39,8 @@ internal final class MachineSystemTests: XCTestCase {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try await sut.createBuilder(
-      for: .sampleMachineBuildConfiguration,
-      at: .bushelappURL
+      for: .sample,
+      at: .bushelWebSite
     )
 
     XCTAssertTrue(sut.isCreateBuiderForConfigurationCalled)
@@ -50,9 +50,9 @@ internal final class MachineSystemTests: XCTestCase {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try await sut.createBuilder(
-      for: .sampleMachineSetupConfiguration,
-      image: .sampleInstallerImage,
-      withDataDirectoryAt: .bushelappURL
+      for: MachineSetupConfiguration.sample,
+      image: .sample,
+      withDataDirectoryAt: .bushelWebSite
     )
 
     XCTAssertTrue(sut.isCreateBuiderForConfigurationCalled)
@@ -67,8 +67,8 @@ internal final class MachineSystemTests: XCTestCase {
       expectedError: expectedError
     ) {
       try await sut.createBuilder(
-        for: .sampleMachineBuildConfiguration,
-        at: .bushelappURL
+        for: .sample,
+        at: .bushelWebSite
       )
     }
   }
@@ -79,8 +79,8 @@ internal final class MachineSystemTests: XCTestCase {
     let sut = MachineSystemSpy(result: .success(()))
 
     _ = try sut.machine(
-      at: .bushelappURL,
-      withConfiguration: .sampleMachineConfiguration
+      at: .bushelWebSite,
+      withConfiguration: .sample
     )
 
     XCTAssertTrue(sut.isMachineAtURLCalled)
@@ -95,8 +95,8 @@ internal final class MachineSystemTests: XCTestCase {
       expectedError: expectedError
     ) {
       try sut.machine(
-        at: .bushelappURL,
-        withConfiguration: .sampleMachineConfiguration
+        at: .bushelWebSite,
+        withConfiguration: .sample
       )
     }
   }
@@ -106,7 +106,7 @@ internal final class MachineSystemTests: XCTestCase {
   internal func testSuccessfulRestoreImage() async throws {
     let sut = MachineSystemSpy(result: .success(()))
 
-    _ = try await sut.restoreImage(from: .sampleInstallerImage)
+    _ = try await sut.restoreImage(from: .sample)
 
     XCTAssertTrue(sut.isRestoreImageFromCalled)
   }
@@ -119,7 +119,7 @@ internal final class MachineSystemTests: XCTestCase {
     await assertAsyncThrowableBlock(
       expectedError: expectedError
     ) {
-      try await sut.restoreImage(from: .sampleInstallerImage)
+      try await sut.restoreImage(from: .sample)
     }
   }
 }

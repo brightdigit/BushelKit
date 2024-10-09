@@ -50,7 +50,8 @@
       } else {
         snapshotFileDataDictionary = [:]
       }
-      let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value }).mapValues {
+      let dataLookup = Dictionary(grouping: snapshotFileDataDictionary, by: { $0.value }).mapValues
+      {
         $0.map(\.key)
       }
 

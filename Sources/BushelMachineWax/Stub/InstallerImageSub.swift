@@ -49,10 +49,10 @@ public struct InstallerImageSub: InstallerImage {
     buildVersion: "",
     imageResourceName: "",
     systemName: "",
-    systemID: .sampleVMSystemID
+    systemID: .sample
   )
 
   public func getURL() throws -> URL {
-    .bushelappURL
+    .bushelWebSite
   }
 }

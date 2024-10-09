@@ -70,7 +70,7 @@ extension MachineError {
 
       case let .accessDeniedLibraryAt(path):
         let components: [String?] = [
-          "There's an issue getting access to library at \(path)", error?.localizedDescription
+          "There's an issue getting access to library at \(path)", error?.localizedDescription,
         ]
         return components.compactMap { $0 }.joined(separator: ": ")
 
@@ -99,7 +99,7 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to contnue with session: \(error.localizedDescription)"
-        
+
       case .captureError:
         assert(error != nil)
         let error = error ?? UnknownError.shared

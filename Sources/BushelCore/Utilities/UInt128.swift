@@ -87,6 +87,8 @@ public struct UInt128 {
 
 // MARK: - FixedWidthInteger Conformance
 
+// swiftlint:disable all
+// swift-format-ignore
 extension UInt128: FixedWidthInteger {
   // MARK: Instance Properties
 
@@ -640,7 +642,7 @@ extension UInt128: ExpressibleByIntegerLiteral {
 }
 
 // MARK: - CustomStringConvertible Conformance
-
+// swift-format-ignore
 extension UInt128: CustomStringConvertible {
   // MARK: Instance Properties
 
@@ -725,7 +727,8 @@ extension UInt128: Comparable {
     if lhs.value.upperBits < rhs.value.upperBits {
       return true
     } else if lhs.value.upperBits == rhs.value.upperBits,
-      lhs.value.lowerBits < rhs.value.lowerBits {
+      lhs.value.lowerBits < rhs.value.lowerBits
+    {
       return true
     }
     return false
@@ -825,7 +828,7 @@ extension String {
     self = value._valueToString(radix: radix, uppercase: uppercase)
   }
 }
-
+// swift-format-ignore
 extension UInt128 {
   static func _valueFromString(_ value: String) -> UInt128? {
     let radix = UInt128._determineRadixFromString(value)

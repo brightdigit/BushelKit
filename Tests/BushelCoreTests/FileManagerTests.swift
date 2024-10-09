@@ -43,7 +43,7 @@ internal final class FileManagerTests: XCTestCase {
   //    try sut.createFile(atPath: fileURL.absoluteString, withSize: 1000)
   //  }
 
-  func testDirectoryExists() {
+  internal func testDirectoryExists() {
     let sut = FileManager.default
 
     let dirURL = URL.temporaryDir
@@ -51,7 +51,7 @@ internal final class FileManagerTests: XCTestCase {
     XCTAssertEqual(sut.directoryExists(at: dirURL), .directoryExists)
   }
 
-  func testNotExists() {
+  internal func testNotExists() {
     let sut = FileManager.default
 
     let fileURL = URL.temporaryDir.appendingPathComponent("file.txt")

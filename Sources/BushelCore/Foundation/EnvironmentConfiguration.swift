@@ -58,7 +58,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
         "disableAssertionFailureForError": disableAssertionFailureForError,
         "disallowDatabaseRebuild": disallowDatabaseRebuild,
         "onboardingOveride": onboardingOveride,
-        "resetApplication": resetApplication
+        "resetApplication": resetApplication,
       ]
     )
   }

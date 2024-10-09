@@ -30,6 +30,6 @@
 import Foundation
 
 internal struct MockResponse: Codable {
-  let id: UUID
-  let items: [Item]
+  internal let id: UUID
+  internal let items: [Item]
 }

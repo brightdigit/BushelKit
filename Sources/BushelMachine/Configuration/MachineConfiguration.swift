@@ -55,9 +55,9 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   public let graphicsConfigurations: [GraphicsConfiguration]
   /// Snapshot of the machine
   public let snapshots: [Snapshot]
-  
+
   public let videos: [RecordedVideo]?
-  
+
   public let images: [RecordedImage]?
 
   public init(
@@ -167,28 +167,30 @@ extension MachineConfiguration {
       images: original.images ?? []
     )
   }
-  
-  public func updatesImage(_ closure: @escaping @Sendable ([RecordedImage]) -> [RecordedImage]) -> MachineConfiguration {
-    
-      .init(
-        restoreImageFile: self.restoreImageFile,
-        vmSystemID: self.vmSystemID,
-        snapshotSystemID: self.snapshotSystemID,
-        operatingSystemVersion: self.operatingSystemVersion,
-        buildVersion: self.buildVersion,
-        storage: self.storage,
-        cpuCount: Int(self.cpuCount),
-        memory: Int(self.memory),
-        networkConfigurations: self.networkConfigurations,
-        graphicsConfigurations: self.graphicsConfigurations,
-        snapshots: self.snapshots,
-        videos: self.videos ?? [],
-        images: closure(self.images ?? [])
-      )
+
+  public func updatesImage(_ closure: @escaping @Sendable ([RecordedImage]) -> [RecordedImage])
+    -> MachineConfiguration
+  {
+    .init(
+      restoreImageFile: self.restoreImageFile,
+      vmSystemID: self.vmSystemID,
+      snapshotSystemID: self.snapshotSystemID,
+      operatingSystemVersion: self.operatingSystemVersion,
+      buildVersion: self.buildVersion,
+      storage: self.storage,
+      cpuCount: Int(self.cpuCount),
+      memory: Int(self.memory),
+      networkConfigurations: self.networkConfigurations,
+      graphicsConfigurations: self.graphicsConfigurations,
+      snapshots: self.snapshots,
+      videos: self.videos ?? [],
+      images: closure(self.images ?? [])
+    )
   }
-  
-  
-  public func updatesVideos(_ closure: @escaping @Sendable ([RecordedVideo]) -> [RecordedVideo]) -> MachineConfiguration {
+
+  public func updatesVideos(_ closure: @escaping @Sendable ([RecordedVideo]) -> [RecordedVideo])
+    -> MachineConfiguration
+  {
     .init(
       restoreImageFile: self.restoreImageFile,
       vmSystemID: self.vmSystemID,

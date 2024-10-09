@@ -32,13 +32,13 @@ import XCTest
 @testable import BushelCore
 
 internal final class InstallerImageIdentifierTests: XCTestCase {
-  func testFailedInitializeFromEmptyString() {
+  internal func testFailedInitializeFromEmptyString() {
     let sut = InstallerImageIdentifier(string: "")
 
     XCTAssertNil(sut)
   }
 
-  func testFailedInitializeFromInvalidStrings() {
+  internal func testFailedInitializeFromInvalidStrings() {
     var sut = InstallerImageIdentifier(string: "2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")
 
     XCTAssertNil(sut)
@@ -48,7 +48,7 @@ internal final class InstallerImageIdentifierTests: XCTestCase {
     XCTAssertNil(sut)
   }
 
-  func testSuccessfulInitFromValidStringIdentifier() {
+  internal func testSuccessfulInitFromValidStringIdentifier() {
     let expectedIdentifier = String.restoreImageIdentiferSample
 
     guard let sut = InstallerImageIdentifier(string: expectedIdentifier) else {
@@ -60,7 +60,7 @@ internal final class InstallerImageIdentifierTests: XCTestCase {
     XCTAssertEqual(actualIdentifier, expectedIdentifier)
   }
 
-  func testInitializeFromLibraryIDAndImageID() {
+  internal func testInitializeFromLibraryIDAndImageID() {
     let expectedLibraryID = LibraryIdentifier.sampleLibraryID
     let expectedImageID = UUID.imageIDSample
 
@@ -70,7 +70,7 @@ internal final class InstallerImageIdentifierTests: XCTestCase {
     XCTAssertEqual(sut.imageID, expectedImageID)
   }
 
-  func testEncodeIntoJsonString() throws {
+  internal func testEncodeIntoJsonString() throws {
     let restoreImageIdentifier = String.restoreImageIdentiferSample
 
     guard let sut = InstallerImageIdentifier(string: restoreImageIdentifier) else {
@@ -85,7 +85,7 @@ internal final class InstallerImageIdentifierTests: XCTestCase {
     XCTAssertEqual(expectedEncodedIdentifier, actualEncodedIdentifier)
   }
 
-  func testDecodeFromJsonString() throws {
+  internal func testDecodeFromJsonString() throws {
     let restoreImageIdentifier = String.restoreImageIdentiferSample
 
     let sut = Data("\"\(restoreImageIdentifier)\"".utf8)

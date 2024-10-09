@@ -61,7 +61,7 @@ extension LibraryError {
         return "Unable to resolve new image: \(error)"
       case let .accessDeniedLibraryAt(at: path):
         let components: [String?] = [
-          "There's an issue getting access to library at \(path)", error?.localizedDescription
+          "There's an issue getting access to library at \(path)", error?.localizedDescription,
         ]
         return components.compactMap { $0 }.joined(separator: ": ")
       case let .imageCorruptedAt(at: importingURL):

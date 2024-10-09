@@ -61,7 +61,7 @@
       _ updates: SnapshotFileUpdate,
       to snapshotCollectionURL: URL
     ) throws -> [Snapshot] {
-      try updates.filesToDelete.forEach { url in
+      for url in updates.filesToDelete {
         try fileManager.removeItem(at: url)
       }
 

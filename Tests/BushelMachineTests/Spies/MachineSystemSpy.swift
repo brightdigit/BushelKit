@@ -34,21 +34,21 @@ import BushelMachineWax
 import Foundation
 
 internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
-  typealias RestoreImageType = RestoreImageStub
+  internal typealias RestoreImageType = RestoreImageStub
 
   internal var id: VMSystemID { "spyOS" }
 
-  private(set) var isCreateBuiderForConfigurationCalled = false
-  private(set) var isMachineAtURLCalled = false
-  private(set) var isRestoreImageFromCalled = false
+  internal private(set) var isCreateBuiderForConfigurationCalled = false
+  internal private(set) var isMachineAtURLCalled = false
+  internal private(set) var isRestoreImageFromCalled = false
 
   private let result: Result<Void, MachineSystemError>
 
-  var defaultStorageLabel: String {
+  internal var defaultStorageLabel: String {
     "spyOS System"
   }
 
-  var defaultSnapshotSystem: BushelCore.SnapshotterID {
+  internal var defaultSnapshotSystem: BushelCore.SnapshotterID {
     "spysnapshot"
   }
 
@@ -86,7 +86,7 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     return .init()
   }
 
-  func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
+  internal func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
   }
 

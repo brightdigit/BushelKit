@@ -32,7 +32,7 @@ import XCTest
 @testable import BushelService
 
 internal final class SynchronousTaskTests: XCTestCase {
-  func testSuccessfulRun() throws {
+  internal func testSuccessfulRun() throws {
     let startTime = Date()
     let timeout: DispatchTime = .now() + .seconds(5)
     try SynchronousTask(timeout: timeout) {
@@ -43,7 +43,7 @@ internal final class SynchronousTaskTests: XCTestCase {
     XCTAssertEqual(round(time), 2.0)
   }
 
-  func testFailedRun() throws {
+  internal func testFailedRun() throws {
     var timeoutError: TimeoutError?
     let startTime = Date()
     let timeout: DispatchTime = .now() + .seconds(2)

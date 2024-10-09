@@ -42,7 +42,7 @@ public final class Initialization {
     }
   }
 
-  func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {
+  internal func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {
     guard !isCompleted else {
       return
     }

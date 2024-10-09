@@ -61,13 +61,13 @@ private let machineIdentifierFormatString = """
   """
 
 package struct MockDataSet: VirtualizationDataSet {
-  enum Error: Swift.Error {
+  internal enum Error: Swift.Error {
     case notSupportedKeyPath
     case missingDataForString
   }
 
-  let machineIdentifierData: Data
-  let hardwareModelData: Data
+  internal let machineIdentifierData: Data
+  internal let hardwareModelData: Data
 
   package init(
     machineIdentifier: MachineIdentifier,
@@ -116,7 +116,8 @@ package struct MockDataSet: VirtualizationDataSet {
   }
 
   package func data(from name: KeyPath<any BushelCore.VirtualizationData.Paths, String>) throws
-    -> Data {
+    -> Data
+  {
     switch name {
     case \.hardwareModelFileName:
       hardwareModelData

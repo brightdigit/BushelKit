@@ -31,7 +31,7 @@ import BushelSession
 import XCTest
 
 internal final class InitializedSessionTests: XCTestCase {
-  func testSession() async throws {
+  internal func testSession() async throws {
     let service = MockService()
     let session = InitializedSession {
       service

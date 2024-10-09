@@ -176,7 +176,7 @@ internal final class ReleaseCollectionTests: XCTestCase {
     }
   }
 
-  func testInit() {
+  internal func testInit() {
     let testCount: Int = .random(in: 10...20)
     for _ in 0..<testCount {
       doTestReleaseCollectionWhere(
