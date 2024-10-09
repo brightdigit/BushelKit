@@ -27,6 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import Foundation
+
 public struct RecordedResolution: Sendable, Codable {
   public let width: Int
   public let height: Int
@@ -37,12 +39,8 @@ public struct RecordedResolution: Sendable, Codable {
   }
 }
 
-#if canImport(CoreFoundation)
-  public import CoreFoundation
-
-  extension RecordedResolution {
-    public init(cgSize: CGSize) {
-      self.init(width: .init(cgSize.width), height: .init(cgSize.height))
-    }
+extension RecordedResolution {
+  public init(cgSize: CGSize) {
+    self.init(width: .init(cgSize.width), height: .init(cgSize.height))
   }
-#endif
+}
