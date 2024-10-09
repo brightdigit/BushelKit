@@ -30,6 +30,7 @@
 public enum ImageFileType: Sendable, Codable {
   case jpeg
 }
+
 #if canImport(UniformTypeIdentifiers)
   public import UniformTypeIdentifiers
 
@@ -41,5 +42,13 @@ public enum ImageFileType: Sendable, Codable {
       }
     }
   }
-
+#else
+  extension ImageFileType {
+    public var fileExtension: String {
+      switch self {
+      case .jpeg:
+        return "jpg"
+      }
+    }
+  }
 #endif

@@ -60,10 +60,19 @@ public struct ImageFileParser: ImageInfoParser {
     guard let size = cgSizeFromURL(url) else {
       throw .missingField(.size)
     }
-    let captureDestinationURL =
-      directoryURL
-      .appendingPathComponent(imageUUID.uuidString)
-      .appendingPathExtension(for: .init(imageType: image.configuration.fileType))
+
+    #if canImport(UniformTypeIdentifiers)
+      let captureDestinationURL =
+        directoryURL
+        .appendingPathComponent(imageUUID.uuidString)
+        .appendingPathExtension(for: .init(imageType: image.configuration.fileType))
+    #else
+      let captureDestinationURL =
+        directoryURL
+        .appendingPathComponent(imageUUID.uuidString)
+        .appendingPathExtension(image.configuration.fileType.fileExtension)
+    #endif
+
     do {
       try self.fileManager.createEmptyDirectory(
         at: directoryURL,
