@@ -28,8 +28,14 @@
 //
 
 import BushelLogging
-public import FelinePine
+import FelinePine
 public import Foundation
+
+#if canImport(os)
+public import os
+#elseif canImport(Logging)
+public import Logging
+#endif
 
 private struct LibraryImageFileTaskParameters: Sendable {
   private let system: any LibrarySystem
