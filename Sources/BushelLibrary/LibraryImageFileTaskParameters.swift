@@ -28,7 +28,7 @@
 //
 
 import BushelLogging
-import FelinePine
+public import FelinePine
 public import Foundation
 
 #if canImport(os)
