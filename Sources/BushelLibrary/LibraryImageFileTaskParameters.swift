@@ -30,25 +30,28 @@
 import BushelLogging
 public import FelinePine
 public import Foundation
+public import BushelCore
 
 #if canImport(os)
-public import os
+  public import os
 #elseif canImport(Logging)
-public import Logging
+  public import Logging
 #endif
 
 private struct LibraryImageFileTaskParameters: Sendable {
   private let system: any LibrarySystem
+  private let verifier: any SigVerifier
   fileprivate let id: UUID
   fileprivate let url: URL
 
-  private init(system: any LibrarySystem, id: UUID, url: URL) {
+  private init(system: any LibrarySystem, verifier: any SigVerifier, id: UUID, url: URL) {
     self.system = system
+    self.verifier = verifier
     self.id = id
     self.url = url
   }
 
-  fileprivate init?(url: URL, manager: any LibrarySystemManaging) {
+  fileprivate init?(url: URL, manager: any LibrarySystemManaging, verifyManager: any SigVerificationManaging) {
     guard
       let id = UUID(uuidString: url.deletingPathExtension().lastPathComponent),
       let systemID = manager.resolveSystemFor(url: url)
@@ -57,11 +60,12 @@ private struct LibraryImageFileTaskParameters: Sendable {
     }
 
     let system = manager.resolve(systemID)
-    self.init(system: system, id: id, url: url)
+    let verifier = verifyManager.resolve(systemID)
+    self.init(system: system, verifier: verifier, id: id, url: url)
   }
 
   fileprivate func resolve() async throws -> LibraryImageFile {
-    try await system.restoreImageLibraryItemFile(fromURL: url, id: id)
+    try await system.restoreImageLibraryItemFile(fromURL: url, verifier: verifier, id: id)
   }
 }
 
@@ -69,12 +73,14 @@ extension TaskGroup<LibraryImageFile?> {
   public mutating func addLibraryImageFileTask(
     forURL imageFileURL: URL,
     librarySystemManager: any LibrarySystemManaging,
+    verifyManager: any SigVerificationManaging,
     logger: Logger
   ) {
     guard
       let parameters = LibraryImageFileTaskParameters(
         url: imageFileURL,
-        manager: librarySystemManager
+        manager: librarySystemManager,
+        verifyManager: verifyManager
       )
     else {
       logger.warning("Invalid Image File: \(imageFileURL.lastPathComponent)")

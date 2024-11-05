@@ -51,6 +51,8 @@ public struct ImageMetadata: Codable,
   public let vmSystemID: VMSystemID
   /// The file extension of the image.
   public let fileExtension: String
+  
+  public let sigVerification: SigVerification
 
   /// A custom debug description string providing details about the image metadata.
   public var debugDescription: String {
@@ -75,6 +77,7 @@ public struct ImageMetadata: Codable,
     contentLength: Int,
     lastModified: Date,
     fileExtension: String,
+    sigVerification: SigVerification,
     vmSystemID: VMSystemID
   ) {
     self.isImageSupported = isImageSupported
@@ -83,6 +86,7 @@ public struct ImageMetadata: Codable,
     self.contentLength = contentLength
     self.lastModified = lastModified
     self.fileExtension = fileExtension
+    self.sigVerification = sigVerification
     self.vmSystemID = vmSystemID
   }
 }

@@ -47,6 +47,7 @@
       let restoreImage = try await VZMacOSRestoreImage.unsafeFetchLatestSupported()
       let imageMetadata = try await ImageMetadata(
         vzRestoreImage: restoreImage,
+        sigVerification: .signed,
         url: restoreImage.url
       )
 

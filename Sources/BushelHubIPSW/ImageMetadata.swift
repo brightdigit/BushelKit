@@ -40,6 +40,7 @@ extension ImageMetadata {
       contentLength: Int(firmware.filesize),
       lastModified: firmware.releasedate,
       fileExtension: FileType.ipswFileExtension,
+      sigVerification: .init(isSigned: firmware.signed),
       vmSystemID: .macOS
     )
   }

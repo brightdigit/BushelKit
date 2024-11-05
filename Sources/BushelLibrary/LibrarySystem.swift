@@ -36,16 +36,17 @@ public protocol LibrarySystem: Sendable {
   var shortName: String { get }
   var allowedContentTypes: Set<FileType> { get }
   var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
-  func metadata(fromURL url: URL) async throws -> ImageMetadata
+  func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata
   func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
 }
 
 extension LibrarySystem {
   public func restoreImageLibraryItemFile(
     fromURL url: URL,
+    verifier: any SigVerifier,
     id: UUID = UUID()
   ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url)
+    let metadata = try await self.metadata(fromURL: url, verifier: verifier)
     let name = self.label(fromMetadata: metadata).defaultName
     return LibraryImageFile(id: id, metadata: metadata, name: name)
   }

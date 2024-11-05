@@ -51,6 +51,7 @@ public struct LibraryError: LocalizedError, Loggable {
     case bookmarkData
     case database
     case librarySystemManager
+    case sigVerificationManaging
   }
 
   public static var loggingCategory: BushelLogging.Category {

@@ -37,6 +37,7 @@
     internal init(
       vzRestoreImage: VZMacOSRestoreImage,
       headers: [AnyHashable: Any],
+      sigVerification: SigVerification,
       from url: URL
     ) throws {
       guard let contentLengthString = headers["Content-Length"] as? String else {
@@ -56,11 +57,12 @@
       self.init(
         contentLength: contentLength,
         lastModified: lastModified,
+        sigVerification: sigVerification,
         vzRestoreImage: vzRestoreImage
       )
     }
 
-    private init(contentLength: Int, lastModified: Date, vzRestoreImage: VZMacOSRestoreImage) {
+    private init(contentLength: Int, lastModified: Date, sigVerification: SigVerification, vzRestoreImage: VZMacOSRestoreImage) {
       self.init(
         isImageSupported: vzRestoreImage.isSupported,
         buildVersion: vzRestoreImage.buildVersion,
@@ -68,12 +70,14 @@
         contentLength: contentLength,
         lastModified: lastModified,
         fileExtension: MacOSVirtualization.ipswFileExtension,
+        sigVerification: sigVerification,
         vmSystemID: VMSystemID.macOS
       )
     }
 
     public init(
       vzRestoreImage: VZMacOSRestoreImage,
+      sigVerification: SigVerification,
       url: URL
     ) async throws {
       if vzRestoreImage.url.isFileURL {
@@ -94,6 +98,7 @@
         self.init(
           contentLength: contentLength,
           lastModified: lastModified,
+          sigVerification: sigVerification,
           vzRestoreImage: vzRestoreImage
         )
       } else {
@@ -101,6 +106,7 @@
         try self.init(
           vzRestoreImage: vzRestoreImage,
           headers: headers,
+          sigVerification: sigVerification,
           from: url
         )
       }
