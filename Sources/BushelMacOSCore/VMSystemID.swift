@@ -33,3 +33,74 @@ import Foundation
 extension VMSystemID {
   public static let macOS: VMSystemID = "macOSApple"
 }
+
+private enum VirtualBuddyError : Error {
+  case unsupportedURL(URL)
+  case networkError(Error)
+  case decodingError(Error)
+}
+
+private struct VirtualBuddySig : Codable {
+  let uuid: UUID
+  let version: OperatingSystemVersion
+  let build: String
+  let code: Int
+  let message: String
+  let isSigned: Bool
+}
+
+private struct VirtualBuddyService {
+  //let apiKey : String
+  let decoder: JSONDecoder
+  let urlSession: URLSession
+  let baseURLComponents : URLComponents
+  static let baseURLComponents = URLComponents(string: "https://tss.virtualbuddy.app/v1/status")!
+  
+  private func endpointURL(ipsw: URL) -> URL? {
+    var endpointComponents = self.baseURLComponents
+    assert(endpointComponents.queryItems != nil)
+    endpointComponents.queryItems?.append(.init(name: "ipsw", value: ipsw.absoluteString))
+    assert(endpointComponents.url != nil)
+    return endpointComponents.url
+  }
+  
+  public func status (ipsw: URL) async throws(VirtualBuddyError) -> VirtualBuddySig {
+    guard let endpointURL = endpointURL(ipsw: ipsw) else {
+      throw .unsupportedURL(ipsw)
+    }
+    let data : Data
+    let response: URLResponse
+    do {
+      (data, response) = try await urlSession.data(from: endpointURL)
+    } catch {
+      throw .networkError(error)
+    }
+    do {
+      return try decoder.decode(VirtualBuddySig.self, from: data)
+    } catch {
+      throw .decodingError(error)
+    }
+  }
+}
+
+public struct VirtualBuddySigVerifier : SigVerifier {
+  
+  
+  //URL(string: "GET https://tss.virtualbuddy.app/v1/status?apiKey=<your api key>&ipsw=<IPSW URL>")!
+  private let service : VirtualBuddyService
+  private let urlFromSource: @Sendable (SignatureSource) -> URL?
+  public var id: VMSystemID { .macOS }
+  
+  public func isSignatureSigned(from source: SignatureSource) async throws (SigVerificationError) -> SigVerification {
+    guard let url = urlFromSource(source) else {
+      throw SigVerificationError.unsupportedSource
+    }
+    let isSigned : Bool
+    do {
+      isSigned = try await service.status(ipsw: url).isSigned
+    } catch {
+      throw .internalError(error)
+    }
+    return .init(isSigned: isSigned)
+  }
+}

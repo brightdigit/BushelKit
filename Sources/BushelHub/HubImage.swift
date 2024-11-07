@@ -42,3 +42,19 @@ public struct HubImage: Identifiable, InstallImage, Sendable {
     self.url = url
   }
 }
+
+extension ImageSignature {
+  public init (sourceID: String, priority: SignaturePriority, hubImage: HubImage, timestamp: Date = .now) {
+    self.init(
+      metadataID: hubImage.url.standardized.description,
+      sourceID: sourceID,
+      hubID: hubImage.url.standardized.description,
+      vmSystemID: hubImage.metadata.vmSystemID,
+      operatingSystemVersion: hubImage.metadata.operatingSystemVersion,
+      buildVersion: hubImage.metadata.buildVersion,
+      verification: hubImage.metadata.sigVerification,
+      priority: priority,
+      timestamp: timestamp
+    )
+  }
+}

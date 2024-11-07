@@ -39,7 +39,7 @@
 
   extension MacOSVirtualization {
     fileprivate static let hubs: [Hub] = [
-      Hub(title: "Apple", id: "apple", count: 1, Self.hubImages)
+      Hub(title: "Apple", id: "apple", signaturePriority: .always, count: 1, Self.hubImages)
     ]
 
     @Sendable
