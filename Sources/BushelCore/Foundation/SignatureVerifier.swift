@@ -23,7 +23,13 @@ public enum SigVerificationError : Error {
 }
 
 public enum SignatureSource {
-  case url(URL)
+  case hubID(String)
+}
+
+extension SignatureSource {
+  public static func url(_ url: URL) -> Self {
+    .hubID(url.standardized.description)
+  }
 }
 
 public protocol SigVerifier : Sendable {
@@ -36,7 +42,7 @@ public protocol SigVerificationManaging: Sendable {
 }
 
 extension SigVerificationManaging {
-  func isSignatureSigned(from source: SignatureSource, for id: VMSystemID) throws (SigVerificationError) -> SigVerification {
+  public func isSignatureSigned(from source: SignatureSource, for id: VMSystemID) throws (SigVerificationError) -> SigVerification {
     try self.resolve(id).isSignatureSigned(from: source)
   }
 }
