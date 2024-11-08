@@ -65,7 +65,9 @@ extension IPSWDownloads: Loggable {
   @Sendable
   public static func hubs() -> [Hub] {
     [
-      .init(title: title, id: hubID, systemID: .macOS, signaturePriority: .never, count: lastCount, self.hubImages)
+      .init(
+        title: title, id: hubID, systemID: .macOS, signaturePriority: .never, count: lastCount,
+        self.hubImages)
     ]
   }
 

@@ -45,7 +45,6 @@ extension LibrarySystemManaging where Self: Loggable {
 }
 
 extension LibrarySystemManaging {
-  
   public func resolve(_ url: URL) throws -> any LibrarySystem {
     guard let systemID = resolveSystemFor(url: url) else {
       let error = VMSystemError.unknownSystemBasedOn(url)
@@ -72,7 +71,9 @@ extension LibrarySystemManaging {
     return system.label(fromMetadata: metadata)
   }
 
-  public func libraryImageFiles(ofDirectoryAt imagesURL: URL, verifyUsing verifyManager: any SigVerificationManaging) async throws -> [LibraryImageFile] {
+  public func libraryImageFiles(
+    ofDirectoryAt imagesURL: URL, verifyUsing verifyManager: any SigVerificationManaging
+  ) async throws -> [LibraryImageFile] {
     let imageFileURLs = try FileManager.default.contentsOfDirectory(
       at: imagesURL,
       includingPropertiesForKeys: []

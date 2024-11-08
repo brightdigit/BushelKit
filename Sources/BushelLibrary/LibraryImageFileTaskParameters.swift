@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import BushelCore
 import BushelLogging
 public import FelinePine
 public import Foundation
-public import BushelCore
 
 #if canImport(os)
   public import os
@@ -51,7 +51,9 @@ private struct LibraryImageFileTaskParameters: Sendable {
     self.url = url
   }
 
-  fileprivate init?(url: URL, manager: any LibrarySystemManaging, verifyManager: any SigVerificationManaging) {
+  fileprivate init?(
+    url: URL, manager: any LibrarySystemManaging, verifyManager: any SigVerificationManaging
+  ) {
     guard
       let id = UUID(uuidString: url.deletingPathExtension().lastPathComponent),
       let systemID = manager.resolveSystemFor(url: url)

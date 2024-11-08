@@ -37,17 +37,21 @@ public struct HubImage: Identifiable, InstallImage, Sendable {
   public let verification: SigVerification
   public var id: URL { self.url }
 
-  public init(title: String, metadata: ImageMetadata,  verification: SigVerification, url: URL) {
+  public init(title: String, metadata: ImageMetadata, verification: SigVerification, url: URL) {
     self.title = title
     self.metadata = metadata
     self.verification = verification
-    assert(self.metadata.sigVerification == nil || self.metadata.sigVerification == verification, "Verification mismatch")
+    assert(
+      self.metadata.sigVerification == nil || self.metadata.sigVerification == verification,
+      "Verification mismatch")
     self.url = url
   }
 }
 
 extension ImageSignature {
-  public init (sourceID: String, priority: SignaturePriority, hubImage: HubImage, timestamp: Date = .now) {
+  public init(
+    sourceID: String, priority: SignaturePriority, hubImage: HubImage, timestamp: Date = .now
+  ) {
     self.init(
       sourceID: sourceID,
       signatureID: hubImage.url.standardized.description,

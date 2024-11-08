@@ -33,9 +33,6 @@ import Foundation
   import SwiftUI
 #endif
 
-
-
-
 extension Array {
   @Sendable
   public static func remove(from array: inout Self, atOffsets offsets: [Int]) {

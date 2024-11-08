@@ -62,7 +62,10 @@
       )
     }
 
-    private init(contentLength: Int, lastModified: Date, sigVerification: SigVerification?, vzRestoreImage: VZMacOSRestoreImage) {
+    private init(
+      contentLength: Int, lastModified: Date, sigVerification: SigVerification?,
+      vzRestoreImage: VZMacOSRestoreImage
+    ) {
       self.init(
         isImageSupported: vzRestoreImage.isSupported,
         buildVersion: vzRestoreImage.buildVersion,

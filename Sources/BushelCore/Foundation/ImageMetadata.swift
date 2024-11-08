@@ -51,7 +51,7 @@ public struct ImageMetadata: Codable,
   public let vmSystemID: VMSystemID
   /// The file extension of the image.
   public let fileExtension: String
-  
+
   public let sigVerification: SigVerification?
 
   /// A custom debug description string providing details about the image metadata.
