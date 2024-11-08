@@ -35,11 +35,13 @@ public struct Hub: Hashable, Identifiable, Sendable {
   public let id: String
   public let count: Int?
   public let signaturePriority: SignaturePriority
+  public let systemID: VMSystemID
   public let getImages: @Sendable () async throws -> [HubImage]
 
   public init(
     title: String,
     id: String,
+    systemID: VMSystemID,
     signaturePriority: SignaturePriority,
     count: Int?,
     _ images: @escaping @Sendable () async throws -> [HubImage]
@@ -48,6 +50,7 @@ public struct Hub: Hashable, Identifiable, Sendable {
     self.id = id
     self.signaturePriority = signaturePriority
     self.count = count
+    self.systemID = systemID
     self.getImages = images
   }
 

@@ -28,18 +28,59 @@ extension SigVerification {
 public enum SigVerificationError : Error {
   case unsupportedSource
   case internalError(Error)
+  case notFound
 }
 
-public enum SignatureSource {
-  case hubID(String)
+public enum SignatureSource : Sendable {
+  case signatureID(String)
 }
 
 extension SignatureSource {
   public static func url(_ url: URL) -> Self {
-    .hubID(url.standardized.description)
+    .signatureID(url.standardized.description)
+  }
+  
+   
+}
+
+public struct SignatureMetadata : Sendable, Codable {
+  public let signatureID: String
+  public let operatingSystemVersion : OperatingSystemVersion
+  public let buildVersion: String?
+}
+
+public protocol SourceSigVerifier : Sendable {
+  var id: VMSystemID { get }
+  var sourceID: String { get }
+  var priority: SignaturePriority { get }
+  func imageSignature(from source: SignatureSource, timestamp : Date) async throws (SigVerificationError) -> ImageSignature
+  //func metadata(from source: SignatureSource) async throws (SigVerificationError) -> SignatureMetadata
+  //func signatureID(from source: SignatureSource) -> String
+  
+}
+
+extension SourceSigVerifier {
+  public func imageSignature(from source: SignatureSource) async throws (SigVerificationError) -> ImageSignature {
+    try await self.imageSignature(from: source, timestamp: .now)
   }
 }
 
+//extension SourceSigVerifier {
+//  public func imageSignature(from source: SignatureSource, timestamp : Date = .now) async throws (SigVerificationError) -> ImageSignature {
+//    let metadata = try await metadata(from: source)
+//    let verification = try await isSignatureSigned(from: source)
+//    return .init(
+//      sourceID: self.sourceID,
+//      signatureID: metadata.signatureID,
+//      vmSystemID: self.id,
+//      operatingSystemVersion: metadata.operatingSystemVersion,
+//      buildVersion: metadata.buildVersion,
+//      verification: verification,
+//      priority: self.priority,
+//      timestamp: timestamp
+//    )
+//  }
+//}
 public protocol SigVerifier : Sendable {
   var id: VMSystemID { get }
   func isSignatureSigned(from source: SignatureSource) async throws (SigVerificationError) -> SigVerification
@@ -58,15 +99,15 @@ extension SigVerificationManaging {
 }
 
 public enum SignaturePriority: Int, Codable, CaseIterable, Sendable {
-  case never = 0
+  case never = -2147483648
+  case medium = 0
   case always = 2147483647
 }
 
 public struct ImageSignature : Sendable {
   public init(
-    metadataID: String,
     sourceID: String,
-    hubID: String,
+          signatureID: String,
     vmSystemID: VMSystemID,
     operatingSystemVersion: OperatingSystemVersion,
     buildVersion: String?,
@@ -74,9 +115,8 @@ public struct ImageSignature : Sendable {
     priority: SignaturePriority,
     timestamp: Date
   ) {
-    self.metadataID = metadataID
     self.sourceID = sourceID
-    self.hubID = hubID
+    self.signatureID =       signatureID
     self.vmSystemID = vmSystemID
     self.operatingSystemVersion = operatingSystemVersion
     self.buildVersion = buildVersion
@@ -85,11 +125,8 @@ public struct ImageSignature : Sendable {
     self.timestamp = timestamp
   }
   
-  @available(*, deprecated, message: "Fix ID")
-  public let metadataID: String
   public let sourceID: String
-  @available(*, deprecated, message: "Fix ID")
-  public let hubID: String
+  public let signatureID: String
   public let vmSystemID: VMSystemID
   public let operatingSystemVersion: OperatingSystemVersion
   public let buildVersion: String?
@@ -101,3 +138,4 @@ public struct ImageSignature : Sendable {
     return [operatingSystemVersion.description, buildVersion ?? ""].joined(separator: ":")
   }
 }
+

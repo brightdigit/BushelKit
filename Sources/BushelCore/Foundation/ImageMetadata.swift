@@ -52,7 +52,7 @@ public struct ImageMetadata: Codable,
   /// The file extension of the image.
   public let fileExtension: String
   
-  public let sigVerification: SigVerification
+  public let sigVerification: SigVerification?
 
   /// A custom debug description string providing details about the image metadata.
   public var debugDescription: String {
