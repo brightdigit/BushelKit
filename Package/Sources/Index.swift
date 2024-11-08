@@ -44,6 +44,7 @@ let package = Package(
     BushelMachine()
     BushelMacOSCore()
     BushelUT()
+    BushelVirtualBuddy()
     BushelTestUtilities()
   },
   testTargets: {

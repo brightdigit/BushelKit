@@ -784,6 +784,12 @@ BushelLibrary()
 BushelLogging()
 }
 }
+struct BushelVirtualBuddy: Product, Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelMacOSCore()
+}
+}
 struct BushelCoreWax: Product, Target {
 var dependencies: any Dependencies {
 BushelCore()
@@ -945,6 +951,7 @@ BushelLogging()
 BushelMachine()
 BushelMacOSCore()
 BushelUT()
+BushelVirtualBuddy()
 BushelTestUtilities()
 },
 testTargets: {

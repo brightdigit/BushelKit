@@ -93,6 +93,34 @@ public protocol SigVerifier : Sendable {
 }
 
 
+public struct SigVerificationManager: SigVerificationManaging {
+  private init(implementations: [VMSystemID: any SigVerifier]) {
+    self.implementations = implementations
+  }
+
+  public init(_ implementations: [any SigVerifier]) {
+    self.init(implementations: .init(uniqueValues: implementations, keyBy: \.id))
+  }
+
+  private let implementations: [VMSystemID: any SigVerifier]
+
+  public func resolve(_ id: BushelCore.VMSystemID) -> any BushelCore.SigVerifier {
+    guard let implementations = implementations[id] else {
+      // Self.logger.critical("Unknown system: \(id.rawValue)")
+      preconditionFailure("")
+    }
+
+    return implementations
+  }
+}
+
+@resultBuilder
+public enum SigVerificationBuilder {
+  public static func buildBlock(_ components: any SigVerifier...) -> [any SigVerifier] {
+    components
+  }
+}
+
 
 public protocol SigVerificationManaging: Sendable {
   func resolve(_ id: VMSystemID) -> SigVerifier

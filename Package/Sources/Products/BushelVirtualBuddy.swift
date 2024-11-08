@@ -1,5 +1,5 @@
 //
-//  VMSystemID.swift
+//  BushelMacOSCore.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,7 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
-import Foundation
-
-extension VMSystemID { public static let macOS: VMSystemID = "macOSApple" }
+struct BushelVirtualBuddy: Product, Target {
+  var dependencies: any Dependencies {
+    BushelCore()
+    BushelMacOSCore()
+  }
+}
