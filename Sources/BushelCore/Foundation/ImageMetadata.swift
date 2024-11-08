@@ -77,7 +77,7 @@ public struct ImageMetadata: Codable,
     contentLength: Int,
     lastModified: Date,
     fileExtension: String,
-    sigVerification: SigVerification,
+    sigVerification: SigVerification?,
     vmSystemID: VMSystemID
   ) {
     self.isImageSupported = isImageSupported

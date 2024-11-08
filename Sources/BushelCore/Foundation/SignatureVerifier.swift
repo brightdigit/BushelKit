@@ -7,7 +7,7 @@
 
 public import Foundation
 
-public enum SigVerification : Sendable, Codable, CustomDebugStringConvertible {
+public enum SigVerification : Int, Sendable, Codable,  CustomDebugStringConvertible {
   public var debugDescription: String {
     switch self {
     case .signed: return "Signed"
@@ -32,12 +32,18 @@ public enum SigVerificationError : Error {
 }
 
 public enum SignatureSource : Sendable {
+#warning("add OS and build")
   case signatureID(String)
+  case operatingSystemVersion(OperatingSystemVersion, String?)
 }
 
 extension SignatureSource {
-  public static func url(_ url: URL) -> Self {
-    .signatureID(url.standardized.description)
+#warning("Make optional")
+  public static func url(_ url: URL) -> Self? {
+    guard url.scheme?.starts(with: "http") != false else {
+      return nil
+    }
+    return .signatureID(url.standardized.description)
   }
   
    
@@ -133,7 +139,7 @@ public struct ImageSignature : Sendable {
   public let verification: SigVerification
   public let priority: SignaturePriority
   public let timestamp: Date
-  public var id : String {
+  public var buildID : String {
 #warning("Make method on OS")
     return [operatingSystemVersion.description, buildVersion ?? ""].joined(separator: ":")
   }

@@ -123,13 +123,16 @@ extension LibraryError {
     LibraryError(details: .imageFolderInitializationAt(url), innerError: error)
   }
 
+  @available(*, deprecated)
   public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError
   { LibraryError(details: .missingInitialization(for: property)) }
 
+  @available(*, deprecated)
   public static func metadataUpdateError(_ error: any Error, at url: URL) -> LibraryError {
     LibraryError(details: .updateMetadataAt(url), innerError: error)
   }
 
+  @available(*, deprecated)
   public static func fromDatabaseError(_ error: any Error) -> LibraryError {
     LibraryError(details: .database, innerError: error)
   }

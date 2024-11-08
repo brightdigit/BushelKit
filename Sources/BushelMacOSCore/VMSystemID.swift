@@ -73,6 +73,9 @@ private struct VirtualBuddyService {
   }
   
   private func endpointURL(ipsw: URL) -> URL? {
+    if ipsw.scheme == "file" {
+      return nil
+    }
     var endpointComponents = self.baseURLComponents
     assert(endpointComponents.queryItems != nil)
     endpointComponents.queryItems?.append(.init(name: "ipsw", value: ipsw.absoluteString))
@@ -126,14 +129,14 @@ public struct VirtualBuddySigVerifier : SourceSigVerifier {
     self.urlFromSource = urlFromSource
   }
   
-  public init(apiKey: String, decoder: JSONDecoder, urlSession: URLSession = .shared, urlFromSource: @escaping @Sendable (SignatureSource) -> URL?)  {
+  public init(apiKey: String, decoder: JSONDecoder, urlSession: URLSession = .shared, urlFromSource: @escaping @Sendable (SignatureSource) async -> URL?)  {
     self.init(
       service: .init(apiKey: apiKey, decoder: decoder, urlSession: urlSession),
       urlFromSource: urlFromSource
     )
   }
   
-  public init?(configuration: VirtualBuddyConfiguration? = .main, decoder: JSONDecoder, urlSession: URLSession = .shared, urlFromSource: @escaping @Sendable (SignatureSource) -> URL?)  {
+  public init?(configuration: VirtualBuddyConfiguration? = .main, decoder: JSONDecoder, urlSession: URLSession = .shared, urlFromSource: @escaping @Sendable (SignatureSource) async -> URL?)  {
     assert(configuration != nil, "VirtualBuddyConfiguration is nil")
     guard let configuration else { return nil }
     self.init(apiKey: configuration.apiKey, decoder: decoder, urlSession: urlSession, urlFromSource: urlFromSource)
