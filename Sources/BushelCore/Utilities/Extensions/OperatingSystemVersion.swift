@@ -59,4 +59,12 @@ extension OperatingSystemVersion {
     }
     return codeNames.keys.filter { $0 >= minimumVirtualizationMajorVersion }
   }
+  
+  public func id(buildVersion: String?) -> String {
+    return [
+      description,
+      buildVersion ?? ""
+    ]
+      .joined(separator: ":")
+  }
 }

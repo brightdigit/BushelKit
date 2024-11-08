@@ -47,6 +47,7 @@ public struct LibraryError: LocalizedError, Loggable {
     public let libraryURL: URL
   }
 
+  @available(*, deprecated)
   public enum InitializationProperty: Sendable {
     case bookmarkData
     case database
