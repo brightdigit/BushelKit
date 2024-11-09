@@ -30,7 +30,7 @@
 public import Foundation
 
 public struct VirtualBuddyConfiguration: Sendable {
-  enum Keys: String {
+  internal enum Keys: String {
     case virtualBuddy = "VirtualBuddy"
     case apiKey = "APIKey"
   }

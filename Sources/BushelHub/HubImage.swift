@@ -43,7 +43,8 @@ public struct HubImage: Identifiable, InstallImage, Sendable {
     self.verification = verification
     assert(
       self.metadata.sigVerification == nil || self.metadata.sigVerification == verification,
-      "Verification mismatch")
+      "Verification mismatch"
+    )
     self.url = url
   }
 }

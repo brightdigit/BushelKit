@@ -28,15 +28,15 @@
 //
 
 public enum SigVerification: Int, Sendable, Codable, CustomDebugStringConvertible {
+  case unsigned
+  case signed
+
   public var debugDescription: String {
     switch self {
     case .signed: return "Signed"
     case .unsigned: return "Unsigned"
     }
   }
-
-  case unsigned
-  case signed
 }
 
 extension SigVerification {

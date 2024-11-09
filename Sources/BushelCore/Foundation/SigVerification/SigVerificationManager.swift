@@ -28,6 +28,8 @@
 //
 
 public struct SigVerificationManager: SigVerificationManaging {
+  private let implementations: [VMSystemID: any SigVerifier]
+
   private init(implementations: [VMSystemID: any SigVerifier]) {
     self.implementations = implementations
   }
@@ -35,8 +37,6 @@ public struct SigVerificationManager: SigVerificationManaging {
   public init(_ implementations: [any SigVerifier]) {
     self.init(implementations: .init(uniqueValues: implementations, keyBy: \.id))
   }
-
-  private let implementations: [VMSystemID: any SigVerifier]
 
   public func resolve(_ id: BushelCore.VMSystemID) -> any BushelCore.SigVerifier {
     guard let implementations = implementations[id] else {

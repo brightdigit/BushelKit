@@ -63,7 +63,9 @@
     }
 
     private init(
-      contentLength: Int, lastModified: Date, sigVerification: SigVerification?,
+      contentLength: Int,
+      lastModified: Date,
+      sigVerification: SigVerification?,
       vzRestoreImage: VZMacOSRestoreImage
     ) {
       self.init(

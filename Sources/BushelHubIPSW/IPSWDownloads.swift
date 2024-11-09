@@ -66,8 +66,13 @@ extension IPSWDownloads: Loggable {
   public static func hubs() -> [Hub] {
     [
       .init(
-        title: title, id: hubID, systemID: .macOS, signaturePriority: .never, count: lastCount,
-        self.hubImages)
+        title: title,
+        id: hubID,
+        systemID: .macOS,
+        signaturePriority: .never,
+        count: lastCount,
+        self.hubImages
+      )
     ]
   }
 

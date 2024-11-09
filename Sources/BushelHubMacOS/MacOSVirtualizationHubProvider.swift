@@ -40,8 +40,13 @@
   extension MacOSVirtualization {
     fileprivate static let hubs: [Hub] = [
       Hub(
-        title: "Apple", id: "apple", systemID: .macOS, signaturePriority: .always, count: 1,
-        Self.hubImages)
+        title: "Apple",
+        id: "apple",
+        systemID: .macOS,
+        signaturePriority: .always,
+        count: 1,
+        Self.hubImages
+      )
     ]
 
     @Sendable

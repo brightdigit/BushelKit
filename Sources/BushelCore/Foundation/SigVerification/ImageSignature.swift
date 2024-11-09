@@ -30,6 +30,18 @@
 public import Foundation
 
 public struct ImageSignature: Sendable {
+  public let sourceID: String
+  public let signatureID: String
+  public let vmSystemID: VMSystemID
+  public let operatingSystemVersion: OperatingSystemVersion
+  public let buildVersion: String?
+  public let verification: SigVerification
+  public let priority: SignaturePriority
+  public let timestamp: Date
+  public var buildID: String {
+    operatingSystemVersion.id(buildVersion: self.buildVersion)
+  }
+
   public init(
     sourceID: String,
     signatureID: String,
@@ -48,17 +60,5 @@ public struct ImageSignature: Sendable {
     self.priority = priority
     self.verification = verification
     self.timestamp = timestamp
-  }
-
-  public let sourceID: String
-  public let signatureID: String
-  public let vmSystemID: VMSystemID
-  public let operatingSystemVersion: OperatingSystemVersion
-  public let buildVersion: String?
-  public let verification: SigVerification
-  public let priority: SignaturePriority
-  public let timestamp: Date
-  public var buildID: String {
-    operatingSystemVersion.id(buildVersion: self.buildVersion)
   }
 }

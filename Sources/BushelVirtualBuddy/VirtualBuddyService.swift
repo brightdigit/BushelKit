@@ -34,6 +34,16 @@ import Foundation
 #endif
 
 internal struct VirtualBuddyService {
+  // swiftlint:disable force_unwrapping
+  internal static let baseURLComponents = URLComponents(
+    string: "https://tss.virtualbuddy.app/v1/status"
+  )!
+  // swiftlint:enable force_unwrapping
+
+  private let decoder: JSONDecoder
+  private let urlSession: URLSession
+  private let baseURLComponents: URLComponents
+
   private init(decoder: JSONDecoder, urlSession: URLSession, baseURLComponents: URLComponents) {
     self.decoder = decoder
     self.urlSession = urlSession
@@ -42,17 +52,13 @@ internal struct VirtualBuddyService {
 
   internal init(apiKey: String, decoder: JSONDecoder, urlSession: URLSession = .shared) {
     self.init(
-      decoder: decoder, urlSession: urlSession,
-      baseURLComponents: Self.baseURLComponents(apiKey: apiKey))
+      decoder: decoder,
+      urlSession: urlSession,
+      baseURLComponents: Self.baseURLComponents(apiKey: apiKey)
+    )
   }
 
-  // let apiKey : String
-  let decoder: JSONDecoder
-  let urlSession: URLSession
-  let baseURLComponents: URLComponents
-  static let baseURLComponents = URLComponents(string: "https://tss.virtualbuddy.app/v1/status")!
-
-  static func baseURLComponents(apiKey: String) -> URLComponents {
+  private static func baseURLComponents(apiKey: String) -> URLComponents {
     var components = Self.baseURLComponents
     components.queryItems = [.init(name: "apiKey", value: apiKey)]
     return components
@@ -69,7 +75,7 @@ internal struct VirtualBuddyService {
     return endpointComponents.url
   }
 
-  func status(ipsw: URL) async throws(VirtualBuddyError) -> VirtualBuddySig {
+  internal func status(ipsw: URL) async throws(VirtualBuddyError) -> VirtualBuddySig {
     #warning("Handle network connection error")
     guard let endpointURL = endpointURL(ipsw: ipsw) else {
       throw .unsupportedURL(ipsw)
