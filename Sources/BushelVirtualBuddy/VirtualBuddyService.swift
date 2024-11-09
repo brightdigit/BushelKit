@@ -29,6 +29,10 @@
 
 import Foundation
 
+#if canImport(FoundationNetworking)
+  import FoundationNetworking
+#endif
+
 internal struct VirtualBuddyService {
   private init(decoder: JSONDecoder, urlSession: URLSession, baseURLComponents: URLComponents) {
     self.decoder = decoder

@@ -51,7 +51,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     self.id = id
   }
 
-  public func metadata(fromURL _: URL) async throws -> ImageMetadata {
+  public func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata {
     .macOS_12_6_0_21G115
   }
 

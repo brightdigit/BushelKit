@@ -31,6 +31,10 @@ public import BushelCore
 import BushelMacOSCore
 public import Foundation
 
+#if canImport(FoundationNetworking)
+  public import FoundationNetworking
+#endif
+
 public struct VirtualBuddySigVerifier: SourceSigVerifier {
   public let sourceID: String = "virtualbuddy"
 
