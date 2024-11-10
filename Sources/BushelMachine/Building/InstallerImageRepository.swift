@@ -46,3 +46,4 @@ public protocol InstallerImageRepository: Sendable {
   @discardableResult
   func removeImage(_ image: any InstallerImage) async throws -> RemoveImageFailure?
 }
+
