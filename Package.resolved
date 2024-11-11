@@ -1,13 +1,22 @@
 {
-  "originHash" : "94d1cc665d81d50c8e6342c95cc7681d8be5d3aac63a96d47f02bed620448484",
+  "originHash" : "c81406e4c02159006c442fd3d9947f4109e16afd415542a8d361dc2f63fb78c7",
   "pins" : [
     {
       "identity" : "felinepine",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/FelinePine.git",
       "state" : {
-        "revision" : "54c727e0b069ffda7f80db7af99bfab2518e0780",
-        "version" : "1.0.0-beta.2"
+        "revision" : "b89389fcf3f1100d0765a6a21244df02b00fbc9e",
+        "version" : "1.0.0-beta.5"
+      }
+    },
+    {
+      "identity" : "felinepineswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/brightdigit/FelinePineSwift.git",
+      "state" : {
+        "revision" : "60bef82f6a8e57475020a1a1fadcc6ed36088769",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -15,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/IPSWDownloads.git",
       "state" : {
-        "revision" : "2fa4b95e1d91aff657963d145d30fcbff1a933c9",
-        "version" : "1.0.0-beta.4"
+        "revision" : "f49b4c9a356ee031ec3874354f4d273174e5c570",
+        "version" : "1.0.0-beta.5"
       }
     },
     {
@@ -51,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections",
       "state" : {
-        "revision" : "3d2dc41a01f9e49d84f0a3925fb858bed64f702d",
-        "version" : "1.1.2"
+        "revision" : "671108c96644956dddcd89dd59c203dcdb36cec7",
+        "version" : "1.1.4"
       }
     },
     {
@@ -78,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "71fcfa7691794054aa44538420acc281cc8e94e9",
-        "version" : "1.4.1"
+        "revision" : "daa2fb54fe4a7f5187d7286047d5144c8cb97477",
+        "version" : "1.6.0"
       }
     },
     {

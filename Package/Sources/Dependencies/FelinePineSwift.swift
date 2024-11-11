@@ -1,5 +1,5 @@
 //
-//  BushelLogging.swift
+//  FelinePine.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-struct BushelLogging: Product, Target {
-  var dependencies: any Dependencies {
-    FelinePine()
-    FelinePineSwift()
+import PackageDescription
+
+struct FelinePineSwift: PackageDependency, TargetDependency {
+  var dependency: Package.Dependency {
+    .package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0-alpha.1")
   }
 }

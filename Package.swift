@@ -798,6 +798,7 @@ BushelCore()
 struct BushelLogging: Product, Target {
 var dependencies: any Dependencies {
 FelinePine()
+FelinePineSwift()
 }
 }
 struct BushelGuestProfile: Product, Target {
@@ -929,6 +930,11 @@ var dependency: Package.Dependency {
 struct IPSWDownloads: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.4")
+}
+}
+struct FelinePineSwift: PackageDependency, TargetDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0-alpha.1")
 }
 }
 struct ArgumentParser: PackageDependency, TargetDependency {
