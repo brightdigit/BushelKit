@@ -35,19 +35,19 @@ public enum SignatureSource: Sendable, CustomDebugStringConvertible {
 }
 
 extension SignatureSource {
+  public var debugDescription: String {
+    switch self {
+    case let .operatingSystemVersion(version, build):
+      "os:\(version.id(buildVersion: build))"
+    case let .signatureID(signature):
+      "sig:\(signature)"
+    }
+  }
+
   public static func url(_ url: URL) -> Self? {
     guard url.scheme?.starts(with: "http") != false else {
       return nil
     }
     return .signatureID(url.standardized.description)
-  }
-  
-  public var debugDescription: String {
-    switch self {
-    case .operatingSystemVersion(let version, let build):
-      "os:\(version.id(buildVersion: build))"
-    case .signatureID(let signature):
-      "sig:\(signature)"
-    }
   }
 }
