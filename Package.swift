@@ -784,6 +784,12 @@ BushelLibrary()
 BushelLogging()
 }
 }
+struct BushelVirtualBuddy: Product, Target {
+var dependencies: any Dependencies {
+BushelCore()
+BushelMacOSCore()
+}
+}
 struct BushelCoreWax: Product, Target {
 var dependencies: any Dependencies {
 BushelCore()
@@ -792,6 +798,7 @@ BushelCore()
 struct BushelLogging: Product, Target {
 var dependencies: any Dependencies {
 FelinePine()
+FelinePineSwift()
 }
 }
 struct BushelGuestProfile: Product, Target {
@@ -925,6 +932,25 @@ var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.4")
 }
 }
+struct FelinePineSwift: PackageDependency, TargetDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0-alpha.1")
+}
+var condition: TargetDependencyCondition? {
+.notApple()
+}
+}
+extension TargetDependencyCondition {
+nonisolated static func notApple() -> TargetDependencyCondition? {
+.when(platforms: [
+.android,
+.linux,
+.openbsd,
+.wasi,
+.windows
+])
+}
+}
 struct ArgumentParser: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0")
@@ -945,6 +971,7 @@ BushelLogging()
 BushelMachine()
 BushelMacOSCore()
 BushelUT()
+BushelVirtualBuddy()
 BushelTestUtilities()
 },
 testTargets: {

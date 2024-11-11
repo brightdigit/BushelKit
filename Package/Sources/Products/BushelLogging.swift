@@ -30,5 +30,6 @@
 struct BushelLogging: Product, Target {
   var dependencies: any Dependencies {
     FelinePine()
+    FelinePineSwift()
   }
 }

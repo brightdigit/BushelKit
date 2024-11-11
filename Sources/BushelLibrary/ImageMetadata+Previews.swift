@@ -42,6 +42,7 @@ extension ImageMetadata {
       contentLength: 16_000_000_000,
       lastModified: .init(),
       fileExtension: MacOSVirtualization.ipswFileExtension,
+      sigVerification: .unsigned,
       vmSystemID: "macOSApple"
     )
 
@@ -54,6 +55,7 @@ extension ImageMetadata {
       contentLength: 679_094_144,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_094_144.0),
       fileExtension: MacOSVirtualization.ipswFileExtension,
+      sigVerification: .signed,
       vmSystemID: "macOSApple"
     )
 
@@ -68,6 +70,7 @@ extension ImageMetadata {
       contentLength: 679_276_356_959_953,
       lastModified: Date(timeIntervalSinceReferenceDate: 679_276_356.959953),
       fileExtension: MacOSVirtualization.ipswFileExtension,
+      sigVerification: .signed,
       vmSystemID: "macOSApple"
     )
   }

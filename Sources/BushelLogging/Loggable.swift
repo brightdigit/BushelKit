@@ -29,4 +29,8 @@
 
 public import FelinePine
 
+#if !canImport(os)
+import FelinePineSwift
+#endif
+
 public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}

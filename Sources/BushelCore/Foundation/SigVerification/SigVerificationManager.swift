@@ -1,5 +1,5 @@
 //
-//  LibrarySystem.swift
+//  SigVerificationManager.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,27 +27,23 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
-public import Foundation
-public import RadiantDocs
+public struct SigVerificationManager: SigVerificationManaging {
+  private let implementations: [VMSystemID: any SigVerifier]
 
-public protocol LibrarySystem: Sendable {
-  var id: VMSystemID { get }
-  var shortName: String { get }
-  var allowedContentTypes: Set<FileType> { get }
-  var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
-  func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata
-  func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
-}
+  private init(implementations: [VMSystemID: any SigVerifier]) {
+    self.implementations = implementations
+  }
 
-extension LibrarySystem {
-  public func restoreImageLibraryItemFile(
-    fromURL url: URL,
-    verifier: any SigVerifier,
-    id: UUID = UUID()
-  ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url, verifier: verifier)
-    let name = self.label(fromMetadata: metadata).defaultName
-    return LibraryImageFile(id: id, metadata: metadata, name: name)
+  public init(_ implementations: [any SigVerifier]) {
+    self.init(implementations: .init(uniqueValues: implementations, keyBy: \.id))
+  }
+
+  public func resolve(_ id: BushelCore.VMSystemID) -> any BushelCore.SigVerifier {
+    guard let implementations = implementations[id] else {
+      // Self.logger.critical("Unknown system: \(id.rawValue)")
+      preconditionFailure("")
+    }
+
+    return implementations
   }
 }

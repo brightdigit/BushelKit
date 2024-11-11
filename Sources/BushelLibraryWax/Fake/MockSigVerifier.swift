@@ -1,5 +1,5 @@
 //
-//  LibrarySystem.swift
+//  MockSigVerifier.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -28,26 +28,19 @@
 //
 
 public import BushelCore
-public import Foundation
-public import RadiantDocs
 
-public protocol LibrarySystem: Sendable {
-  var id: VMSystemID { get }
-  var shortName: String { get }
-  var allowedContentTypes: Set<FileType> { get }
-  var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
-  func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata
-  func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
-}
+public actor MockSigVerifier: SigVerifier {
+  public let id: BushelCore.VMSystemID
+  public var verification: BushelCore.SigVerification
 
-extension LibrarySystem {
-  public func restoreImageLibraryItemFile(
-    fromURL url: URL,
-    verifier: any SigVerifier,
-    id: UUID = UUID()
-  ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url, verifier: verifier)
-    let name = self.label(fromMetadata: metadata).defaultName
-    return LibraryImageFile(id: id, metadata: metadata, name: name)
+  public init(id: BushelCore.VMSystemID, verification: BushelCore.SigVerification) {
+    self.id = id
+    self.verification = verification
+  }
+
+  public func isSignatureSigned(from source: BushelCore.SignatureSource) async throws(BushelCore
+    .SigVerificationError) -> BushelCore.SigVerification
+  {
+    verification
   }
 }

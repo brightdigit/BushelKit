@@ -1,5 +1,5 @@
 //
-//  LibrarySystem.swift
+//  SigVerifier.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,27 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
-public import Foundation
-public import RadiantDocs
-
-public protocol LibrarySystem: Sendable {
+public protocol SigVerifier: Sendable {
   var id: VMSystemID { get }
-  var shortName: String { get }
-  var allowedContentTypes: Set<FileType> { get }
-  var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
-  func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata
-  func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
-}
-
-extension LibrarySystem {
-  public func restoreImageLibraryItemFile(
-    fromURL url: URL,
-    verifier: any SigVerifier,
-    id: UUID = UUID()
-  ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url, verifier: verifier)
-    let name = self.label(fromMetadata: metadata).defaultName
-    return LibraryImageFile(id: id, metadata: metadata, name: name)
-  }
+  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
+    -> SigVerification
 }

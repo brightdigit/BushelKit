@@ -34,11 +34,34 @@ public struct HubImage: Identifiable, InstallImage, Sendable {
   public let title: String
   public let metadata: ImageMetadata
   public let url: URL
+  public let verification: SigVerification
   public var id: URL { self.url }
 
-  public init(title: String, metadata: ImageMetadata, url: URL) {
+  public init(title: String, metadata: ImageMetadata, verification: SigVerification, url: URL) {
     self.title = title
     self.metadata = metadata
+    self.verification = verification
+    assert(
+      self.metadata.sigVerification == nil || self.metadata.sigVerification == verification,
+      "Verification mismatch"
+    )
     self.url = url
+  }
+}
+
+extension ImageSignature {
+  public init(
+    sourceID: String, priority: SignaturePriority, hubImage: HubImage, timestamp: Date = .now
+  ) {
+    self.init(
+      sourceID: sourceID,
+      signatureID: hubImage.url.standardized.description,
+      vmSystemID: hubImage.metadata.vmSystemID,
+      operatingSystemVersion: hubImage.metadata.operatingSystemVersion,
+      buildVersion: hubImage.metadata.buildVersion,
+      verification: hubImage.verification,
+      priority: priority,
+      timestamp: timestamp
+    )
   }
 }

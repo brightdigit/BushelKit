@@ -44,8 +44,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
   public init(id: VMSystemID) {
     self.id = id
   }
-
-  public func metadata(fromURL _: URL) async throws -> ImageMetadata {
+  public func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata {
     .ubuntu_22_10_0_21F125
   }
 

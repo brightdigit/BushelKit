@@ -1,5 +1,5 @@
 //
-//  LibrarySystem.swift
+//  VirtualBuddyConfiguration.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,27 +27,32 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
 public import Foundation
-public import RadiantDocs
 
-public protocol LibrarySystem: Sendable {
-  var id: VMSystemID { get }
-  var shortName: String { get }
-  var allowedContentTypes: Set<FileType> { get }
-  var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
-  func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata
-  func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
+public struct VirtualBuddyConfiguration: Sendable {
+  internal enum Keys: String {
+    case virtualBuddy = "VirtualBuddy"
+    case apiKey = "APIKey"
+  }
+
+  public static let main: VirtualBuddyConfiguration? = .init()
+  public let apiKey: String
 }
 
-extension LibrarySystem {
-  public func restoreImageLibraryItemFile(
-    fromURL url: URL,
-    verifier: any SigVerifier,
-    id: UUID = UUID()
-  ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url, verifier: verifier)
-    let name = self.label(fromMetadata: metadata).defaultName
-    return LibraryImageFile(id: id, metadata: metadata, name: name)
+extension VirtualBuddyConfiguration {
+  public init?(bundle: Bundle = .main) {
+    guard
+      let dictionary = bundle.object(
+        forInfoDictionaryKey: Keys.virtualBuddy.rawValue
+      ) as? [String: String]
+    else {
+      return nil
+    }
+
+    guard let apiKey = dictionary[Keys.apiKey.rawValue] else {
+      return nil
+    }
+
+    self.init(apiKey: apiKey)
   }
 }

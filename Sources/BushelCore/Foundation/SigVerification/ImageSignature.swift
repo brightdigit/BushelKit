@@ -1,5 +1,5 @@
 //
-//  LibrarySystem.swift
+//  ImageSignature.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,27 +27,38 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
 public import Foundation
-public import RadiantDocs
 
-public protocol LibrarySystem: Sendable {
-  var id: VMSystemID { get }
-  var shortName: String { get }
-  var allowedContentTypes: Set<FileType> { get }
-  var releaseCollectionMetadata: any ReleaseCollectionMetadata { get }
-  func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata
-  func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel
-}
+public struct ImageSignature: Sendable {
+  public let sourceID: String
+  public let signatureID: String
+  public let vmSystemID: VMSystemID
+  public let operatingSystemVersion: OperatingSystemVersion
+  public let buildVersion: String?
+  public let verification: SigVerification
+  public let priority: SignaturePriority
+  public let timestamp: Date
+  public var buildID: String {
+    operatingSystemVersion.id(buildVersion: self.buildVersion)
+  }
 
-extension LibrarySystem {
-  public func restoreImageLibraryItemFile(
-    fromURL url: URL,
-    verifier: any SigVerifier,
-    id: UUID = UUID()
-  ) async throws -> LibraryImageFile {
-    let metadata = try await self.metadata(fromURL: url, verifier: verifier)
-    let name = self.label(fromMetadata: metadata).defaultName
-    return LibraryImageFile(id: id, metadata: metadata, name: name)
+  public init(
+    sourceID: String,
+    signatureID: String,
+    vmSystemID: VMSystemID,
+    operatingSystemVersion: OperatingSystemVersion,
+    buildVersion: String?,
+    verification: SigVerification,
+    priority: SignaturePriority,
+    timestamp: Date
+  ) {
+    self.sourceID = sourceID
+    self.signatureID = signatureID
+    self.vmSystemID = vmSystemID
+    self.operatingSystemVersion = operatingSystemVersion
+    self.buildVersion = buildVersion
+    self.priority = priority
+    self.verification = verification
+    self.timestamp = timestamp
   }
 }

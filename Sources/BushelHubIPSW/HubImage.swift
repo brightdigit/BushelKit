@@ -37,6 +37,7 @@ extension HubImage {
     try self.init(
       title: MacOSVirtualization.operatingSystemShortName(for: firmware),
       metadata: .init(firmware: firmware),
+      verification: .init(isSigned: firmware.signed),
       url: firmware.url
     )
   }

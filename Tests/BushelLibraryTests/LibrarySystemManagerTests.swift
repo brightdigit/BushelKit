@@ -63,7 +63,8 @@ internal final class LibrarySystemManagerTests: XCTestCase {
     byManager manager: any LibrarySystemManaging,
     forSystem system: any LibrarySystem
   ) async throws {
-    let metadata = try await system.metadata(fromURL: .temporaryDir)
+    let verifier = MockSigVerifier(id: .macOS, verification: .signed)
+    let metadata = try await system.metadata(fromURL: .temporaryDir, verifier: verifier)
 
     XCTAssertEqual(
       manager.labelForSystem(system.id, metadata: metadata),

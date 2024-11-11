@@ -41,6 +41,7 @@ extension ImageMetadata {
     contentLength: 12_893_555_341,
     lastModified: .now,
     fileExtension: MacOSVirtualization.ipswFileExtension,
+    sigVerification: .unsigned,
     vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
@@ -52,6 +53,7 @@ extension ImageMetadata {
     contentLength: 13_893_555_341,
     lastModified: .now,
     fileExtension: MacOSVirtualization.ipswFileExtension,
+    sigVerification: .unsigned,
     vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
@@ -63,6 +65,7 @@ extension ImageMetadata {
     contentLength: 14_893_555_341,
     lastModified: .now,
     fileExtension: MacOSVirtualization.ipswFileExtension,
+    sigVerification: .unsigned,
     vmSystemID: .init(stringLiteral: "macOSApple")
   )
 
@@ -74,6 +77,7 @@ extension ImageMetadata {
     contentLength: 14_893_555_341,
     lastModified: .now,
     fileExtension: "iso",
+    sigVerification: .unsigned,
     vmSystemID: .init(stringLiteral: "LinuxUbuntu")
   )
 }

@@ -39,7 +39,14 @@
 
   extension MacOSVirtualization {
     fileprivate static let hubs: [Hub] = [
-      Hub(title: "Apple", id: "apple", count: 1, Self.hubImages)
+      Hub(
+        title: "Apple",
+        id: "apple",
+        systemID: .macOS,
+        signaturePriority: .always,
+        count: 1,
+        Self.hubImages
+      )
     ]
 
     @Sendable
@@ -47,6 +54,7 @@
       let restoreImage = try await VZMacOSRestoreImage.unsafeFetchLatestSupported()
       let imageMetadata = try await ImageMetadata(
         vzRestoreImage: restoreImage,
+        sigVerification: .signed,
         url: restoreImage.url
       )
 
@@ -54,6 +62,7 @@
         .init(
           title: self.operatingSystemShortName(for: imageMetadata),
           metadata: imageMetadata,
+          verification: .signed,
           url: restoreImage.url
         )
       ]
