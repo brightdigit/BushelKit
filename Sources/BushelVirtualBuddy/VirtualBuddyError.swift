@@ -31,6 +31,7 @@ public import Foundation
 
 public enum VirtualBuddyError: Error {
   case unsupportedURL(URL)
-  case networkError(Error)
-  case decodingError(Error)
+  case networkError(URLError)
+  case decodingError(DecodingError)
+  case unknownError(Error)
 }

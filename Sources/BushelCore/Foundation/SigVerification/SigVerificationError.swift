@@ -31,4 +31,5 @@ public enum SigVerificationError: Error {
   case unsupportedSource
   case internalError(Error)
   case notFound
+  case unknownError(Error)
 }

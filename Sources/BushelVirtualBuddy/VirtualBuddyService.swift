@@ -76,21 +76,23 @@ internal struct VirtualBuddyService {
   }
 
   internal func status(ipsw: URL) async throws(VirtualBuddyError) -> VirtualBuddySig {
-    #warning("Handle network connection error")
     guard let endpointURL = endpointURL(ipsw: ipsw) else {
       throw .unsupportedURL(ipsw)
     }
     let data: Data
-    // let response: URLResponse
     do {
       (data, _) = try await urlSession.data(from: endpointURL)
-    } catch {
+    } catch let error as URLError {
       throw .networkError(error)
+    } catch {
+      throw .unknownError(error)
     }
     do {
       return try decoder.decode(VirtualBuddySig.self, from: data)
-    } catch {
+    } catch let error as DecodingError {
       throw .decodingError(error)
+    } catch {
+      throw .unknownError(error)
     }
   }
 }

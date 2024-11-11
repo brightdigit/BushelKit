@@ -29,7 +29,7 @@
 
 public import Foundation
 
-public enum SignatureSource: Sendable {
+public enum SignatureSource: Sendable, CustomDebugStringConvertible {
   case signatureID(String)
   case operatingSystemVersion(OperatingSystemVersion, String?)
 }
@@ -40,5 +40,14 @@ extension SignatureSource {
       return nil
     }
     return .signatureID(url.standardized.description)
+  }
+  
+  public var debugDescription: String {
+    switch self {
+    case .operatingSystemVersion(let version, let build):
+      "os:\(version.id(buildVersion: build))"
+    case .signatureID(let signature):
+      "sig:\(signature)"
+    }
   }
 }

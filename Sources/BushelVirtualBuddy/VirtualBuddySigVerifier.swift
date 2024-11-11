@@ -89,6 +89,8 @@ public struct VirtualBuddySigVerifier: SourceSigVerifier {
     let sig: VirtualBuddySig
     do {
       sig = try await service.status(ipsw: url)
+    } catch .unknownError(let error) {
+      throw .unknownError(error)
     } catch {
       throw .internalError(error)
     }
