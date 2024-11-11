@@ -33,4 +33,20 @@ struct FelinePineSwift: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
     .package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0-alpha.1")
   }
+  
+  var condition: TargetDependencyCondition? {
+    .notApple()
+  }
+}
+
+extension TargetDependencyCondition {
+  nonisolated static func notApple() -> TargetDependencyCondition? {
+    .when(platforms: [
+      .android,
+      .linux,
+      .openbsd,
+      .wasi,
+      .windows
+    ])
+  }
 }

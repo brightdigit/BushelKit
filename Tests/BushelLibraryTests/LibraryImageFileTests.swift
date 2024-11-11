@@ -37,7 +37,7 @@ import XCTest
 internal final class LibraryImageFileTests: XCTestCase {
   internal func testDecoding() throws {
     #if canImport(FoundationNetworking)
-      XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
+      throw XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
     #else
       let expectedImageFile = LibraryImageFile.libraryImageSample
 
