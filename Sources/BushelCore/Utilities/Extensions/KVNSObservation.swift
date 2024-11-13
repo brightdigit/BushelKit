@@ -29,12 +29,12 @@
 
 #if canImport(ObjectiveC)
 
-import Foundation
+  import Foundation
 
-/// Represents an observation of key-value changes on an `NSObject`.
-@available(*, deprecated)
-@MainActor
-internal final class KVNSObservation: KVObservation {
+  /// Represents an observation of key-value changes on an `NSObject`.
+  @available(*, deprecated)
+  @MainActor
+  internal final class KVNSObservation: KVObservation {
     /// The object being observed.
     internal let observed: NSObject
 
@@ -51,17 +51,17 @@ internal final class KVNSObservation: KVObservation {
     ///   - observer: The observer of the key-value changes.
     ///   - keyPaths: The key paths being observed.
     internal init(observed: NSObject, observer: NSObject, keyPaths: [String]) {
-        self.observed = observed
-        self.observer = observer
-        self.keyPaths = keyPaths
+      self.observed = observed
+      self.observer = observer
+      self.keyPaths = keyPaths
     }
 
     deinit {
-        MainActor.assumeIsolated {
-            for keyPath in keyPaths {
-                observed.removeObserver(observer, forKeyPath: keyPath)
-            }
+      MainActor.assumeIsolated {
+        for keyPath in keyPaths {
+          observed.removeObserver(observer, forKeyPath: keyPath)
         }
+      }
     }
-}
+  }
 #endif

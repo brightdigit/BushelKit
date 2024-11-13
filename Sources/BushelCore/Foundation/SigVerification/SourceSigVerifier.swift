@@ -31,32 +31,32 @@ public import Foundation
 
 /// A protocol that defines a source signature verifier.
 public protocol SourceSigVerifier: Sendable {
-    /// The unique identifier of the verifier system.
-    var id: VMSystemID { get }
+  /// The unique identifier of the verifier system.
+  var id: VMSystemID { get }
 
-    /// The identifier of the source.
-    var sourceID: String { get }
+  /// The identifier of the source.
+  var sourceID: String { get }
 
-    /// The priority of the signature.
-    var priority: SignaturePriority { get }
+  /// The priority of the signature.
+  var priority: SignaturePriority { get }
 
-    /// Retrieves the image signature from the specified source and timestamp.
-    ///
-    /// - Parameters:
-    ///   - source: The signature source.
-    ///   - timestamp: The timestamp of the signature.
-    /// - Returns: The image signature.
-    /// - Throws: `SigVerificationError` if there is an error verifying the signature.
-    func imageSignature(from source: SignatureSource, timestamp: Date) async throws -> ImageSignature
+  /// Retrieves the image signature from the specified source and timestamp.
+  ///
+  /// - Parameters:
+  ///   - source: The signature source.
+  ///   - timestamp: The timestamp of the signature.
+  /// - Returns: The image signature.
+  /// - Throws: `SigVerificationError` if there is an error verifying the signature.
+  func imageSignature(from source: SignatureSource, timestamp: Date) async throws -> ImageSignature
 }
 
-public extension SourceSigVerifier {
-    /// Retrieves the image signature from the specified source.
-    ///
-    /// - Parameter source: The signature source.
-    /// - Returns: The image signature.
-    /// - Throws: `SigVerificationError` if there is an error verifying the signature.
-    public func imageSignature(from source: SignatureSource) async throws -> ImageSignature {
-        try await self.imageSignature(from: source, timestamp: .now)
-    }
+extension SourceSigVerifier {
+  /// Retrieves the image signature from the specified source.
+  ///
+  /// - Parameter source: The signature source.
+  /// - Returns: The image signature.
+  /// - Throws: `SigVerificationError` if there is an error verifying the signature.
+  public func imageSignature(from source: SignatureSource) async throws -> ImageSignature {
+    try await self.imageSignature(from: source, timestamp: .now)
+  }
 }

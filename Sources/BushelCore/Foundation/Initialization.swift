@@ -53,7 +53,7 @@ public final class Initialization {
   ///
   /// - Parameter closure: The closure to be executed on the main actor.
   internal func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {
-    guard !isCompleted else {
+    guard !self.isCompleted else {
       return
     }
     self.isCompleted = true

@@ -29,13 +29,13 @@
 
 /// A protocol that defines a system for verifying signatures.
 public protocol SigVerifier: Sendable {
-    /// The unique identifier of the system.
-    var id: VMSystemID { get }
+  /// The unique identifier of the system.
+  var id: VMSystemID { get }
 
-    /// Verifies whether a signature is signed.
-    ///
-    /// - Parameter source: The source of the signature to be verified.
-    /// - Returns: The result of the signature verification.
-    /// - Throws: A `SigVerificationError` if the verification fails.
-    func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError) -> SigVerification
+  /// Verifies whether a signature is signed.
+  ///
+  /// - Parameter source: The source of the signature to be verified.
+  /// - Returns: The result of the signature verification.
+  /// - Throws: A `SigVerificationError` if the verification fails.
+  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError) -> SigVerification
 }

@@ -31,36 +31,36 @@ import RadiantDocs
 
 /// Represents a set of document types that can be used to filter search results.
 public struct DocumentTypeFilter: OptionSet, Sendable {
-    /// The raw value of the document type filter.
-    public typealias RawValue = Int
+  /// The raw value of the document type filter.
+  public typealias RawValue = Int
 
-    /// A filter that includes library documents.
-    public static let libraries: DocumentTypeFilter = .init(rawValue: 1)
+  /// A filter that includes library documents.
+  public static let libraries: DocumentTypeFilter = .init(rawValue: 1)
 
-    /// The raw value of the document type filter.
-    public let rawValue: Int
+  /// The raw value of the document type filter.
+  public let rawValue: Int
 
-    /// Initializes a new instance of the `DocumentTypeFilter` with the specified raw value.
-    /// - Parameter rawValue: The raw value of the document type filter.
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
+  /// Initializes a new instance of the `DocumentTypeFilter` with the specified raw value.
+  /// - Parameter rawValue: The raw value of the document type filter.
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
 }
 
 extension DocumentTypeFilter {
-    /// Retrieves a list of search strings based on the current document type filter.
-    public var searchStrings: [String] {
-        var pathExtensions = [String?]()
-        if self.contains(.libraries) {
-            pathExtensions.append(
-                FileType.restoreImageLibrary.fileExtension
-            )
-        }
-        return pathExtensions.compactMap { pathExtension in
-            guard let pathExtension else {
-                return nil
-            }
-            return ".\(pathExtension)"
-        }
+  /// Retrieves a list of search strings based on the current document type filter.
+  public var searchStrings: [String] {
+    var pathExtensions = [String?]()
+    if self.contains(.libraries) {
+      pathExtensions.append(
+        FileType.restoreImageLibrary.fileExtension
+      )
     }
+    return pathExtensions.compactMap { pathExtension in
+      guard let pathExtension else {
+        return nil
+      }
+      return ".\(pathExtension)"
+    }
+  }
 }

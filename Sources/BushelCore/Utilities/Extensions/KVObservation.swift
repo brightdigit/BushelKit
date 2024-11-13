@@ -28,17 +28,17 @@
 //
 
 #if canImport(ObjectiveC)
-public import Foundation
+  public import Foundation
 
-/// A protocol that represents a key-value observation.
-@available(*, deprecated)
-public protocol KVObservation: AnyObject, Sendable {}
+  /// A protocol that represents a key-value observation.
+  @available(*, deprecated)
+  public protocol KVObservation: AnyObject, Sendable {}
 
-extension NSObject {
+  extension NSObject {
     /// Returns an array of all property keys for the current class.
     @available(*, deprecated)
     public static func getAllPropertyKeys() -> [String] {
-        getAllPropertyKeys(of: Self.self)
+      self.getAllPropertyKeys(of: Self.self)
     }
 
     /// Returns an array of all property keys for the specified class.
@@ -47,8 +47,8 @@ extension NSObject {
     /// - Returns: An array of property keys.
     @available(*, deprecated)
     private static func getAllPropertyKeys<ClassType: AnyObject>(of _: ClassType.Type) -> [String] {
-        let classType: AnyClass = ClassType.self
-        return self.getAllPropertyKeys(of: classType)
+      let classType: AnyClass = ClassType.self
+      return self.getAllPropertyKeys(of: classType)
     }
 
     /// Returns an array of all property keys for the specified class.
@@ -57,19 +57,20 @@ extension NSObject {
     /// - Returns: An array of property keys.
     @available(*, deprecated)
     private static func getAllPropertyKeys(of classType: AnyClass) -> [String] {
-        var count: UInt32 = 0
-        let properties = class_copyPropertyList(classType, &count)
-        var propertyKeys: [String] = []
+      var count: UInt32 = 0
+      let properties = class_copyPropertyList(classType, &count)
+      var propertyKeys: [String] = []
 
-        for index in 0..<Int(count) {
-            if let property = properties?[index],
-               let propertyName = String(utf8String: property_getName(property)) {
-                propertyKeys.append(propertyName)
-            }
+      for index in 0..<Int(count) {
+        if let property = properties?[index],
+           let propertyName = String(utf8String: property_getName(property))
+        {
+          propertyKeys.append(propertyName)
         }
+      }
 
-        free(properties)
-        return propertyKeys
+      free(properties)
+      return propertyKeys
     }
 
     /// Adds an observer for the specified key paths.
@@ -82,12 +83,12 @@ extension NSObject {
     @available(*, deprecated)
     @MainActor
     public func addObserver(
-        _ observer: NSObject,
-        options: NSKeyValueObservingOptions,
-        _ isIncluded: @escaping (String) -> Bool = { _ in true }
+      _ observer: NSObject,
+      options: NSKeyValueObservingOptions,
+      _ isIncluded: @escaping (String) -> Bool = { _ in true }
     ) -> any KVObservation {
-        let propertyKeys = self.getAllPropertyKeys().filter(isIncluded)
-        return self.addObserver(observer, forKeyPaths: propertyKeys, options: options)
+      let propertyKeys = self.getAllPropertyKeys().filter(isIncluded)
+      return self.addObserver(observer, forKeyPaths: propertyKeys, options: options)
     }
 
     /// Adds an observer for the specified key paths.
@@ -100,22 +101,22 @@ extension NSObject {
     @available(*, deprecated)
     @MainActor
     private func addObserver(
-        _ observer: NSObject,
-        forKeyPaths keyPaths: [String],
-        options: NSKeyValueObservingOptions
+      _ observer: NSObject,
+      forKeyPaths keyPaths: [String],
+      options: NSKeyValueObservingOptions
     ) -> any KVObservation {
-        for keyPath in keyPaths {
-            self.addObserver(observer, forKeyPath: keyPath, options: options, context: nil)
-        }
+      for keyPath in keyPaths {
+        self.addObserver(observer, forKeyPath: keyPath, options: options, context: nil)
+      }
 
-        return KVNSObservation(observed: self, observer: observer, keyPaths: keyPaths)
+      return KVNSObservation(observed: self, observer: observer, keyPaths: keyPaths)
     }
 
     /// Returns an array of all property keys for the current object.
     private func getAllPropertyKeys() -> [String] {
-        let classType: AnyClass = type(of: self)
+      let classType: AnyClass = type(of: self)
 
-        return Self.getAllPropertyKeys(of: classType)
+      return Self.getAllPropertyKeys(of: classType)
     }
-}
+  }
 #endif

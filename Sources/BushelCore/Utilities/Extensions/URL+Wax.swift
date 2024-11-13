@@ -165,7 +165,7 @@ extension URL {
 
   public static func randomHTTP() -> URL {
     // swiftlint:disable:next force_unwrapping
-    urls.randomElement()!
+    self.urls.randomElement()!
   }
 
   public static func randomFile(usingFileManager fileManager: FileManager = .default) -> URL {

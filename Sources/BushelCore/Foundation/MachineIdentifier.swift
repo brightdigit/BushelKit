@@ -35,12 +35,12 @@
 
 /// A unique identifier for a machine.
 public struct MachineIdentifier: Codable, Equatable, Sendable {
-    /// Coding keys for the `MachineIdentifier` struct.
-    public enum CodingKeys: String, CodingKey {
-        /// The unique 64-bit identifier for the machine.
-        case ecID = "ECID"
-    }
-
+  /// Coding keys for the `MachineIdentifier` struct.
+  public enum CodingKeys: String, CodingKey {
     /// The unique 64-bit identifier for the machine.
-    public let ecID: UInt64
+    case ecID = "ECID"
+  }
+
+  /// The unique 64-bit identifier for the machine.
+  public let ecID: UInt64
 }

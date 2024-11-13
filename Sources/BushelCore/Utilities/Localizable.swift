@@ -31,43 +31,43 @@ import Foundation
 
 /// A protocol that defines the requirements for a type to be localizable.
 public protocol Localizable: Hashable {
-    /// The empty localized string ID.
-    static var emptyLocalizedStringID: String { get }
+  /// The empty localized string ID.
+  static var emptyLocalizedStringID: String { get }
 
-    /// The default localized string ID.
-    static var defaultLocalizedStringID: String { get }
+  /// The default localized string ID.
+  static var defaultLocalizedStringID: String { get }
 
-    /// The mapping of the type to its localized string ID.
-    static var localizedStringIDMapping: [Self: String] { get }
+  /// The mapping of the type to its localized string ID.
+  static var localizedStringIDMapping: [Self: String] { get }
 }
 
 extension Localizable {
-    /// The empty localized string ID.
-    public static var emptyLocalizedStringID: String {
-        ""
-    }
+  /// The empty localized string ID.
+  public static var emptyLocalizedStringID: String {
+    ""
+  }
 
-    /// The default localized string ID.
-    public static var defaultLocalizedStringID: String {
-        emptyLocalizedStringID
-    }
+  /// The default localized string ID.
+  public static var defaultLocalizedStringID: String {
+    emptyLocalizedStringID
+  }
 
-    /// The raw value of the localized string ID for the current instance.
-    public var localizedStringIDRawValue: String {
-        let string = Self.localizedStringIDMapping[self]
-        assert(string != nil)
-        return string ?? ""
-    }
+  /// The raw value of the localized string ID for the current instance.
+  public var localizedStringIDRawValue: String {
+    let string = Self.localizedStringIDMapping[self]
+    assert(string != nil)
+    return string ?? ""
+  }
 }
 
 extension Optional where Wrapped: Localizable {
-    /// The raw value of the localized string ID for the current instance.
-    public var localizedStringIDRawValue: String {
-        guard let value = self else {
-            return Wrapped.defaultLocalizedStringID
-        }
-        let string = Wrapped.localizedStringIDMapping[value]
-        assert(string != nil)
-        return string ?? ""
+  /// The raw value of the localized string ID for the current instance.
+  public var localizedStringIDRawValue: String {
+    guard let value = self else {
+      return Wrapped.defaultLocalizedStringID
     }
+    let string = Wrapped.localizedStringIDMapping[value]
+    assert(string != nil)
+    return string ?? ""
+  }
 }

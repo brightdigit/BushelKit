@@ -31,49 +31,49 @@ import Foundation
 
 /// An identifier for a Snapshotter.
 public struct SnapshotterID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, CustomStringConvertible, Sendable {
-    /// The type used for string literal initialization.
-    public typealias StringLiteralType = String
+  /// The type used for string literal initialization.
+  public typealias StringLiteralType = String
 
-    /// The identifier for the file version.
-    public static let fileVersion: SnapshotterID = "fileVersion"
+  /// The identifier for the file version.
+  public static let fileVersion: SnapshotterID = "fileVersion"
 
-    /// The raw value of the identifier.
-    public let rawValue: String
+  /// The raw value of the identifier.
+  public let rawValue: String
 
-    /// The string representation of the identifier.
-    public var description: String {
-        rawValue
-    }
+  /// The string representation of the identifier.
+  public var description: String {
+    self.rawValue
+  }
 
-    /// Initializes a `SnapshotterID` with the given raw value.
-    ///
-    /// - Parameter value: The raw value of the identifier.
-    public init(rawValue value: String) {
-        rawValue = value
-    }
+  /// Initializes a `SnapshotterID` with the given raw value.
+  ///
+  /// - Parameter value: The raw value of the identifier.
+  public init(rawValue value: String) {
+    self.rawValue = value
+  }
 
-    /// Initializes a `SnapshotterID` with a string literal.
-    ///
-    /// - Parameter value: The string literal to use as the identifier.
-    public init(stringLiteral value: String) {
-        rawValue = value
-    }
+  /// Initializes a `SnapshotterID` with a string literal.
+  ///
+  /// - Parameter value: The string literal to use as the identifier.
+  public init(stringLiteral value: String) {
+    self.rawValue = value
+  }
 
-    /// Initializes a `SnapshotterID` from a decoder.
-    ///
-    /// - Parameter decoder: The decoder to use for initialization.
-    /// - Throws: Any errors that may occur during decoding.
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        rawValue = try container.decode(String.self)
-    }
+  /// Initializes a `SnapshotterID` from a decoder.
+  ///
+  /// - Parameter decoder: The decoder to use for initialization.
+  /// - Throws: Any errors that may occur during decoding.
+  public init(from decoder: any Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    self.rawValue = try container.decode(String.self)
+  }
 
-    /// Encodes the `SnapshotterID` to an encoder.
-    ///
-    /// - Parameter encoder: The encoder to use for encoding.
-    /// - Throws: Any errors that may occur during encoding.
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
-    }
+  /// Encodes the `SnapshotterID` to an encoder.
+  ///
+  /// - Parameter encoder: The encoder to use for encoding.
+  /// - Throws: Any errors that may occur during encoding.
+  public func encode(to encoder: any Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(self.rawValue)
+  }
 }

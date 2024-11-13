@@ -31,19 +31,19 @@ import Foundation
 
 /// A result builder for creating arrays.
 public enum ArrayBuilder<Item> {
-    /// Builds a partial block with a single item.
-    /// - Parameter first: The first item in the array.
-    /// - Returns: An array containing the first item.
-    public static func buildPartialBlock(first: Item) -> [Item] {
-        [first]
-    }
+  /// Builds a partial block with a single item.
+  /// - Parameter first: The first item in the array.
+  /// - Returns: An array containing the first item.
+  public static func buildPartialBlock(first: Item) -> [Item] {
+    [first]
+  }
 
-    /// Builds a partial block by appending an item to the accumulated array.
-    /// - Parameters:
-    ///   - accumulated: The array of items accumulated so far.
-    ///   - next: The next item to add to the array.
-    /// - Returns: The updated array with the next item added.
-    public static func buildPartialBlock(accumulated: [Item], next: Item) -> [Item] {
-        accumulated + [next]
-    }
+  /// Builds a partial block by appending an item to the accumulated array.
+  /// - Parameters:
+  ///   - accumulated: The array of items accumulated so far.
+  ///   - next: The next item to add to the array.
+  /// - Returns: The updated array with the next item added.
+  public static func buildPartialBlock(accumulated: [Item], next: Item) -> [Item] {
+    accumulated + [next]
+  }
 }

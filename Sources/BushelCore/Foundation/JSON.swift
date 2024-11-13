@@ -31,41 +31,41 @@ public import Foundation
 
 /// A static namespace for working with JSON data.
 public enum JSON {
-    #if canImport(FoundationNetworking)
-        /// A thread-safe, shared instance of `JSONEncoder` with the following configuration:
-        /// - `outputFormatting: .prettyPrinted`
-        /// - `dateEncodingStrategy: .iso8601`
-        public nonisolated(unsafe) static let encoder: JSONEncoder = {
-            let value = JSONEncoder()
-            value.outputFormatting = .prettyPrinted
-            value.dateEncodingStrategy = .iso8601
-            return value
-        }()
+  #if canImport(FoundationNetworking)
+    /// A thread-safe, shared instance of `JSONEncoder` with the following configuration:
+    /// - `outputFormatting: .prettyPrinted`
+    /// - `dateEncodingStrategy: .iso8601`
+    public nonisolated(unsafe) static let encoder: JSONEncoder = {
+      let value = JSONEncoder()
+      value.outputFormatting = .prettyPrinted
+      value.dateEncodingStrategy = .iso8601
+      return value
+    }()
 
-        /// A thread-safe, shared instance of `JSONDecoder` with the following configuration:
-        /// - `dateDecodingStrategy: .iso8601`
-        public nonisolated(unsafe) static let decoder: JSONDecoder = {
-            let value = JSONDecoder()
-            value.dateDecodingStrategy = .iso8601
-            return value
-        }()
-    #else
-        /// A shared instance of `JSONEncoder` with the following configuration:
-        /// - `outputFormatting: .prettyPrinted`
-        /// - `dateEncodingStrategy: .iso8601`
-        public static let encoder: JSONEncoder = {
-            let value = JSONEncoder()
-            value.outputFormatting = .prettyPrinted
-            value.dateEncodingStrategy = .iso8601
-            return value
-        }()
+    /// A thread-safe, shared instance of `JSONDecoder` with the following configuration:
+    /// - `dateDecodingStrategy: .iso8601`
+    public nonisolated(unsafe) static let decoder: JSONDecoder = {
+      let value = JSONDecoder()
+      value.dateDecodingStrategy = .iso8601
+      return value
+    }()
+  #else
+    /// A shared instance of `JSONEncoder` with the following configuration:
+    /// - `outputFormatting: .prettyPrinted`
+    /// - `dateEncodingStrategy: .iso8601`
+    public static let encoder: JSONEncoder = {
+      let value = JSONEncoder()
+      value.outputFormatting = .prettyPrinted
+      value.dateEncodingStrategy = .iso8601
+      return value
+    }()
 
-        /// A shared instance of `JSONDecoder` with the following configuration:
-        /// - `dateDecodingStrategy: .iso8601`
-        public static let decoder: JSONDecoder = {
-            let value = JSONDecoder()
-            value.dateDecodingStrategy = .iso8601
-            return value
-        }()
-    #endif
+    /// A shared instance of `JSONDecoder` with the following configuration:
+    /// - `dateDecodingStrategy: .iso8601`
+    public static let decoder: JSONDecoder = {
+      let value = JSONDecoder()
+      value.dateDecodingStrategy = .iso8601
+      return value
+    }()
+  #endif
 }

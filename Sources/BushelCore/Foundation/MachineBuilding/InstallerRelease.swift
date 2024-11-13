@@ -31,39 +31,39 @@ import Foundation
 
 /// A protocol that represents an installer release.
 public protocol InstallerRelease: Sendable, Identifiable, Equatable {
-    /// The version name of the release.
-    var versionName: String { get }
+  /// The version name of the release.
+  var versionName: String { get }
 
-    /// The release name of the release.
-    var releaseName: String { get }
+  /// The release name of the release.
+  var releaseName: String { get }
 
-    /// The image name of the release.
-    var imageName: String { get }
+  /// The image name of the release.
+  var imageName: String { get }
 
-    /// The major version of the release.
-    var majorVersion: Int { get }
+  /// The major version of the release.
+  var majorVersion: Int { get }
 }
 
 extension InstallerRelease {
-    /// Compares two `InstallerRelease` instances for equality.
-    ///
-    /// - Parameters:
-    ///   - lhs: The first `InstallerRelease` instance to compare.
-    ///   - rhs: The second `InstallerRelease` instance to compare.
-    /// - Returns: `true` if the two `InstallerRelease` instances are equal, `false` otherwise.
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
+  /// Compares two `InstallerRelease` instances for equality.
+  ///
+  /// - Parameters:
+  ///   - lhs: The first `InstallerRelease` instance to compare.
+  ///   - rhs: The second `InstallerRelease` instance to compare.
+  /// - Returns: `true` if the two `InstallerRelease` instances are equal, `false` otherwise.
+  public static func == (lhs: Self, rhs: Self) -> Bool {
+    lhs.id == rhs.id
+  }
+
+  /// Checks if the current `InstallerRelease` instance is equal to another `InstallerRelease` instance.
+  ///
+  /// - Parameter other: The `InstallerRelease` instance to compare against.
+  /// - Returns: `true` if the two `InstallerRelease` instances are equal, `false` otherwise.
+  package func isEqual(to other: some InstallerRelease) -> Bool {
+    guard let otherID = other.id as? Self.ID else {
+      return false
     }
 
-    /// Checks if the current `InstallerRelease` instance is equal to another `InstallerRelease` instance.
-    ///
-    /// - Parameter other: The `InstallerRelease` instance to compare against.
-    /// - Returns: `true` if the two `InstallerRelease` instances are equal, `false` otherwise.
-    package func isEqual(to other: some InstallerRelease) -> Bool {
-        guard let otherID = other.id as? Self.ID else {
-            return false
-        }
-
-        return id == otherID
-    }
+    return id == otherID
+  }
 }

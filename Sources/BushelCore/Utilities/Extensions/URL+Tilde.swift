@@ -67,7 +67,7 @@ public import Foundation
 
       // pathComponents[1] is the "Users" and pathComponent[2] is the user name. Thus, both of them are
       //   joined together to form the home directory
-      let homeDirectory = "/" + pathComponents[1...2].joined(separator: "/")
+      let homeDirectory = "/" + pathComponents[1 ... 2].joined(separator: "/")
 
       // Remove the home directory from the file path
       var abbreviatedPath = path.suffix(path.count - homeDirectory.count)
@@ -105,7 +105,7 @@ public import Foundation
 
       // pathComponents[1] is the "Users" and pathComponent[2] is the user name. Thus, both of them are
       //   joined together to form the home directory
-      let homeDirectory = "/" + filePath.pathComponents[1...2].joined(separator: "/")
+      let homeDirectory = "/" + filePath.pathComponents[1 ... 2].joined(separator: "/")
 
       // Create a mutable path to work with
       var path = abbreviatedPath

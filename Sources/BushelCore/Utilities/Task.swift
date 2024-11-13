@@ -31,48 +31,48 @@ import Foundation
 
 /// Extends the `Task` type where the `Success` type is `Never` and the `Failure` type is also `Never`.
 extension Task where Success == Never, Failure == Never {
-    /// Sleeps the current task for a random duration of seconds between the specified `value` and `otherValue` parameters, with a tolerance of up to half the range between the minimum and maximum values.
-    ///
-    /// - Parameters:
-    ///   - value: The first value used to determine the range of seconds to sleep.
-    ///   - otherValue: The second value used to determine the range of seconds to sleep.
-    ///   - onError: A closure that is called if an error occurs while sleeping the task.
-    public static func sleepForSecondsBetween(_ value: Int, and otherValue: Int, _ onError: @escaping @Sendable (any Error) -> Void) async {
-        let toleranceSeconds: Int
-        let durationSeconds: Int
+  /// Sleeps the current task for a random duration of seconds between the specified `value` and `otherValue` parameters, with a tolerance of up to half the range between the minimum and maximum values.
+  ///
+  /// - Parameters:
+  ///   - value: The first value used to determine the range of seconds to sleep.
+  ///   - otherValue: The second value used to determine the range of seconds to sleep.
+  ///   - onError: A closure that is called if an error occurs while sleeping the task.
+  public static func sleepForSecondsBetween(_ value: Int, and otherValue: Int, _ onError: @escaping @Sendable (any Error) -> Void) async {
+    let toleranceSeconds: Int
+    let durationSeconds: Int
 
-        let minimumSeconds = min(value, otherValue)
-        let maximumSeconds = max(value, otherValue)
+    let minimumSeconds = min(value, otherValue)
+    let maximumSeconds = max(value, otherValue)
 
-        let range = maximumSeconds - minimumSeconds
-        toleranceSeconds = Int.random(in: 1...(range / 2))
+    let range = maximumSeconds - minimumSeconds
+    toleranceSeconds = Int.random(in: 1 ... (range / 2))
 
-        durationSeconds = .random(in: minimumSeconds...(maximumSeconds - toleranceSeconds))
+    durationSeconds = .random(in: minimumSeconds ... (maximumSeconds - toleranceSeconds))
 
-        do {
-            try await Self.sleep(
-                for: .seconds(durationSeconds),
-                tolerance: .seconds(toleranceSeconds)
-            )
-        } catch {
-            assertionFailure(error: error)
-            onError(error)
-        }
+    do {
+      try await Self.sleep(
+        for: .seconds(durationSeconds),
+        tolerance: .seconds(toleranceSeconds)
+      )
+    } catch {
+      assertionFailure(error: error)
+      onError(error)
     }
+  }
 }
 
 /// Extends the `Task` type where the `Success` type is `Void` and the `Failure` type is `Never`.
 extension Task where Success == Void, Failure == Never {
-    /// Awaits the completion of the task.
-    public func callAsFunction() async {
-        await self.value
-    }
+  /// Awaits the completion of the task.
+  public func callAsFunction() async {
+    await self.value
+  }
 }
 
 /// Extends the `Task` type where the `Success` type is `Void`.
 extension Task where Success == Void {
-    /// Awaits the completion of the task and throws any errors that occur.
-    public func callAsFunction() async throws {
-        try await self.value
-    }
+  /// Awaits the completion of the task and throws any errors that occur.
+  public func callAsFunction() async throws {
+    try await self.value
+  }
 }

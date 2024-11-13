@@ -58,10 +58,10 @@ public actor AsyncReducer<
   /// - Returns: An array of the elements in the `AsyncSequence`.
   private func reduce() async throws -> [AsyncSequenceType.Element] {
     var elements = [AsyncSequenceType.Element]()
-    for try await element in sequence {
+    for try await element in self.sequence {
       elements.append(element)
     }
-    currentElements = elements
+    self.currentElements = elements
     return elements
   }
 }

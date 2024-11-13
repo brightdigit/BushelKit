@@ -40,10 +40,10 @@ extension EnvironmentProperty {
     internal var value: Value {
       switch self {
       case let .value(value):
-        return value
+        value
 
       case let .dictionary(dictionary, key: key):
-        return dictionary[key].flatMap(Value.init) ?? Value.default
+        dictionary[key].flatMap(Value.init) ?? Value.default
       }
     }
 

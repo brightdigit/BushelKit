@@ -31,9 +31,9 @@ public import Foundation
 
 /// Represents the version components of an operating system.
 public struct OperatingSystemVersionComponents: Sendable {
-    /// The build version of the operating system.
-    public let buildVersion: String?
+  /// The build version of the operating system.
+  public let buildVersion: String?
 
-    /// The version of the operating system.
-    public let operatingSystemVersion: OperatingSystemVersion
+  /// The version of the operating system.
+  public let operatingSystemVersion: OperatingSystemVersion
 }

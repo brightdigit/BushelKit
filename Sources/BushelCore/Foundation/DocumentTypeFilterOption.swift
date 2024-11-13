@@ -31,40 +31,40 @@ import Foundation
 
 /// An enumeration representing different options for filtering documents by type.
 public enum DocumentTypeFilterOption: Int, CaseIterable, Identifiable, Localizable, Sendable {
-    /// Filters documents to include only machine-type documents.
-    case machinesOnly
-    /// Filters documents to include both machine-type and library-type documents.
-    case machinesAndLibraries
+  /// Filters documents to include only machine-type documents.
+  case machinesOnly
+  /// Filters documents to include both machine-type and library-type documents.
+  case machinesAndLibraries
 
-    /// A mapping of each case to its corresponding localized string identifier.
-    public static let localizedStringIDMapping: [Self: String] = [
-        .machinesOnly: "settingsFilterRecentDocumentsMachinesOnly",
-        .machinesAndLibraries: "settingsFilterRecentDocumentsNone"
-    ]
+  /// A mapping of each case to its corresponding localized string identifier.
+  public static let localizedStringIDMapping: [Self: String] = [
+    .machinesOnly: "settingsFilterRecentDocumentsMachinesOnly",
+    .machinesAndLibraries: "settingsFilterRecentDocumentsNone",
+  ]
 
-    /// The associated tag value for the case.
-    public var tag: Int {
-        self.rawValue
+  /// The associated tag value for the case.
+  public var tag: Int {
+    self.rawValue
+  }
+
+  /// The unique identifier for the case.
+  public var id: Int {
+    self.rawValue
+  }
+
+  /// The document type filter associated with the case.
+  public var typeFilter: DocumentTypeFilter {
+    switch self {
+    case .machinesAndLibraries:
+      []
+    case .machinesOnly:
+      .libraries
     }
+  }
 
-    /// The unique identifier for the case.
-    public var id: Int {
-        self.rawValue
-    }
-
-    /// The document type filter associated with the case.
-    public var typeFilter: DocumentTypeFilter {
-        switch self {
-        case .machinesAndLibraries:
-            return []
-        case .machinesOnly:
-            return .libraries
-        }
-    }
-
-    /// Initializes a `DocumentTypeFilterOption` instance from a given `DocumentTypeFilter`.
-    /// - Parameter filter: The `DocumentTypeFilter` to use for initialization.
-    public init(filter: DocumentTypeFilter) {
-        self = filter.contains(.libraries) ? .machinesOnly : .machinesAndLibraries
-    }
+  /// Initializes a `DocumentTypeFilterOption` instance from a given `DocumentTypeFilter`.
+  /// - Parameter filter: The `DocumentTypeFilter` to use for initialization.
+  public init(filter: DocumentTypeFilter) {
+    self = filter.contains(.libraries) ? .machinesOnly : .machinesAndLibraries
+  }
 }

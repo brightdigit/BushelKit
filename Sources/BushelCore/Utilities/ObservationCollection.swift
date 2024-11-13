@@ -29,9 +29,9 @@
 
 #if canImport(ObjectiveC)
 
-public import Foundation
+  public import Foundation
 
-public actor ObservationCollection {
+  public actor ObservationCollection {
     /// A dictionary of `NSKeyValueObservation` instances, keyed by `UUID`.
     private var observations = [UUID: NSKeyValueObservation]()
 
@@ -44,8 +44,8 @@ public actor ObservationCollection {
     ///   - observation: The `NSKeyValueObservation` instance to be added.
     ///   - id: The `UUID` to associate with the observation.
     public func append(_ observation: NSKeyValueObservation, withID id: UUID) {
-        assert(observations[id] == nil)
-        self.observations[id] = observation
+      assert(self.observations[id] == nil)
+      self.observations[id] = observation
     }
 
     /// Removes the `NSKeyValueObservation` associated with the provided `UUID` from the collection.
@@ -53,19 +53,19 @@ public actor ObservationCollection {
     /// - Parameter id: The `UUID` of the observation to be removed.
     /// - Returns: `true` if the observation was successfully removed, `false` otherwise.
     public func remove(withID id: UUID) -> Bool {
-        self.observations.removeValue(forKey: id) != nil
+      self.observations.removeValue(forKey: id) != nil
     }
 
     /// Removes all `NSKeyValueObservation` instances from the collection.
     private func removeAll() {
-        self.observations.removeAll()
+      self.observations.removeAll()
     }
 
     /// Asynchronously clears the `ObservationCollection` by removing all `NSKeyValueObservation` instances.
     public nonisolated func clear() {
-        Task {
-            await self.removeAll()
-        }
+      Task {
+        await self.removeAll()
+      }
     }
-}
+  }
 #endif

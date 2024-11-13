@@ -31,69 +31,69 @@ public import Foundation
 
 /// A collection of pre-configured date formatters.
 public enum Formatters {
-    #if os(macOS)
+  #if os(macOS)
     /// A date components formatter that displays time in a seconds-based format (e.g. "1m 30s").
     public static let seconds: DateComponentsFormatter = {
-        let secondsFormatter = DateComponentsFormatter()
-        secondsFormatter.allowedUnits = [.minute, .second]
-        secondsFormatter.zeroFormattingBehavior = .dropAll
-        secondsFormatter.allowsFractionalUnits = true
-        secondsFormatter.unitsStyle = .abbreviated
-        return secondsFormatter
+      let secondsFormatter = DateComponentsFormatter()
+      secondsFormatter.allowedUnits = [.minute, .second]
+      secondsFormatter.zeroFormattingBehavior = .dropAll
+      secondsFormatter.allowsFractionalUnits = true
+      secondsFormatter.unitsStyle = .abbreviated
+      return secondsFormatter
     }()
-    #endif
+  #endif
 
-    #if canImport(FoundationNetworking)
+  #if canImport(FoundationNetworking)
     /// A date formatter that parses and formats dates in the "E, d MMM yyyy HH:mm:ss Z" format.
     ///
     /// - Parameter dateFormat: The date format string to use.
     /// - Returns: A date formatter configured with the provided date format.
     public nonisolated(unsafe) static let lastModifiedDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
-        return formatter
+      let formatter = DateFormatter()
+      formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+      return formatter
     }()
 
     /// A date formatter that displays dates and times in a medium-length format (e.g. "Jan 1, 2023, 12:00:00 AM").
     public nonisolated(unsafe) static let snapshotDateFormatter = {
-        var formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .medium
-        return formatter
+      var formatter = DateFormatter()
+      formatter.dateStyle = .medium
+      formatter.timeStyle = .medium
+      return formatter
     }()
 
     /// A date formatter that displays dates in a long format (e.g. "January 1, 2023").
     public nonisolated(unsafe) static let longDate: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        return dateFormatter
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateStyle = .long
+      dateFormatter.timeStyle = .none
+      return dateFormatter
     }()
-    #else
+  #else
     /// A date formatter that parses and formats dates in the "E, d MMM yyyy HH:mm:ss Z" format.
     ///
     /// - Parameter dateFormat: The date format string to use.
     /// - Returns: A date formatter configured with the provided date format.
     public static let lastModifiedDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
-        return formatter
+      let formatter = DateFormatter()
+      formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+      return formatter
     }()
 
     /// A date formatter that displays dates and times in a medium-length format (e.g. "Jan 1, 2023, 12:00:00 AM").
     public static let snapshotDateFormatter = {
-        var formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .medium
-        return formatter
+      var formatter = DateFormatter()
+      formatter.dateStyle = .medium
+      formatter.timeStyle = .medium
+      return formatter
     }()
 
     /// A date formatter that displays dates in a long format (e.g. "January 1, 2023").
     public static let longDate: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        return dateFormatter
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateStyle = .long
+      dateFormatter.timeStyle = .none
+      return dateFormatter
     }()
-    #endif
+  #endif
 }

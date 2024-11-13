@@ -75,7 +75,7 @@ extension VirtualizationData {
     /// - Returns: The data retrieved from the corresponding file.
     /// - Throws: An error if data retrieval fails (e.g., file not found, permission issues).
     func data(from name: KeyPath<any Paths, String>) throws -> Data {
-      let fileURL = url.appendingPathComponent(paths[keyPath: name])
+      let fileURL = self.url.appendingPathComponent(self.paths[keyPath: name])
       return try Data(contentsOf: fileURL)
     }
   }

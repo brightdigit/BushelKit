@@ -31,53 +31,53 @@ import Foundation
 
 /// Represents a prerelease label with a base number.
 public struct PrereleaseLabel: Sendable {
-    /// The prerelease label.
-    public let label: String
-    private let baseNumber: Int
+  /// The prerelease label.
+  public let label: String
+  private let baseNumber: Int
 
-    /// Initializes a new instance of `PrereleaseLabel`.
-    ///
-    /// - Parameters:
-    ///   - label: The prerelease label.
-    ///   - baseNumber: The base number for the prerelease label.
-    public init(label: String, baseNumber: Int) {
-        self.label = label
-        self.baseNumber = baseNumber
-    }
+  /// Initializes a new instance of `PrereleaseLabel`.
+  ///
+  /// - Parameters:
+  ///   - label: The prerelease label.
+  ///   - baseNumber: The base number for the prerelease label.
+  public init(label: String, baseNumber: Int) {
+    self.label = label
+    self.baseNumber = baseNumber
+  }
 }
 
 extension PrereleaseLabel {
-    /// Represents the keys used in the prerelease label dictionary.
-    public enum Keys: String {
-        /// The key for the prerelease label.
-        case label = "Label"
-        /// The key for the base number.
-        case base = "Base"
-    }
+  /// Represents the keys used in the prerelease label dictionary.
+  public enum Keys: String {
+    /// The key for the prerelease label.
+    case label = "Label"
+    /// The key for the base number.
+    case base = "Base"
+  }
 
-    /// Initializes a new instance of `PrereleaseLabel` from a dictionary.
-    ///
-    /// - Parameter dictionary: The dictionary containing the prerelease label information.
-    /// - Returns: An instance of `PrereleaseLabel`, or `nil` if the dictionary is missing the required information.
-    public init?(dictionary: [String: Any]) {
-        guard
-            let label = dictionary[Keys.label.rawValue] as? String,
-            let base = dictionary[Keys.base.rawValue] as? Int
-        else {
-            assertionFailure("Bundle InfoDictionary Missing Label and Base for Prerelease Info")
-            return nil
-        }
-        self.init(label: label, baseNumber: base)
+  /// Initializes a new instance of `PrereleaseLabel` from a dictionary.
+  ///
+  /// - Parameter dictionary: The dictionary containing the prerelease label information.
+  /// - Returns: An instance of `PrereleaseLabel`, or `nil` if the dictionary is missing the required information.
+  public init?(dictionary: [String: Any]) {
+    guard
+      let label = dictionary[Keys.label.rawValue] as? String,
+      let base = dictionary[Keys.base.rawValue] as? Int
+    else {
+      assertionFailure("Bundle InfoDictionary Missing Label and Base for Prerelease Info")
+      return nil
     }
+    self.init(label: label, baseNumber: base)
+  }
 
-    /// Calculates the offset from the build number based on the prerelease label.
-    ///
-    /// - Parameters:
-    ///   - buildNumber: The current build number.
-    ///   - additionalOffset: An additional offset to apply.
-    ///   - factor: The factor to divide the result by.
-    /// - Returns: The calculated offset.
-    public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int) -> Int {
-        (buildNumber - baseNumber + additionalOffset) / factor
-    }
+  /// Calculates the offset from the build number based on the prerelease label.
+  ///
+  /// - Parameters:
+  ///   - buildNumber: The current build number.
+  ///   - additionalOffset: An additional offset to apply.
+  ///   - factor: The factor to divide the result by.
+  /// - Returns: The calculated offset.
+  public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int) -> Int {
+    (buildNumber - self.baseNumber + additionalOffset) / factor
+  }
 }

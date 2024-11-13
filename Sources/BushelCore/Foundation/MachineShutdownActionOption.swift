@@ -29,6 +29,6 @@
 
 /// Represents the available options for machine shutdown actions.
 public enum MachineShutdownActionOption: Int, Sendable {
-    /// Closes the window.
-    case closeWindow = 1
+  /// Closes the window.
+  case closeWindow = 1
 }

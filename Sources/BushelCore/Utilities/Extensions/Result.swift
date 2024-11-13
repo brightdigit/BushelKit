@@ -34,7 +34,8 @@ extension Result {
   /// - Parameter body: An asynchronous closure that may throw an error.
   /// - Returns: A `Result` instance containing the success value or the thrown error.
   public init(catching body: @Sendable () async throws -> Success) async
-  where Failure == any Error {
+    where Failure == any Error
+  {
     do {
       self = try await .success(body())
     } catch {

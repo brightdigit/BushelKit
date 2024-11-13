@@ -47,13 +47,13 @@ extension OnboardingOverrideOption {
   public func shouldBasedOn(date: Date?) -> Bool {
     switch (self, date) {
     case (.skip, _):
-      return false
+      false
     case (.force, _):
-      return true
+      true
     case (.none, .some):
-      return false
+      false
     case (.none, .none):
-      return true
+      true
     }
   }
 }

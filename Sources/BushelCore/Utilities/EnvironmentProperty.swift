@@ -38,35 +38,35 @@ import Foundation
 ///   - source: The source of the environment values, which defaults to `ProcessInfo.processInfo.environment`.
 @propertyWrapper
 public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
-    /// The wrapped value, which is the environment value associated with the specified key.
-    public var wrappedValue: Value {
-        accessor.value
-    }
+  /// The wrapped value, which is the environment value associated with the specified key.
+  public var wrappedValue: Value {
+    self.accessor.value
+  }
 
-    private let accessor: ValueAccessor
+  private let accessor: ValueAccessor
 
-    private init(accessor: EnvironmentProperty<Value>.ValueAccessor) {
-        self.accessor = accessor
-    }
+  private init(accessor: EnvironmentProperty<Value>.ValueAccessor) {
+    self.accessor = accessor
+  }
 
-    /// Initializes a new `EnvironmentProperty` instance with the specified key and optional source.
-    ///
-    /// - Parameters:
-    ///   - key: The key associated with the environment value.
-    ///   - source: The source of the environment values, which defaults to `ProcessInfo.processInfo.environment`.
-    internal init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
-        self.init(accessor: .dictionary(source, key: key))
-    }
+  /// Initializes a new `EnvironmentProperty` instance with the specified key and optional source.
+  ///
+  /// - Parameters:
+  ///   - key: The key associated with the environment value.
+  ///   - source: The source of the environment values, which defaults to `ProcessInfo.processInfo.environment`.
+  internal init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
+    self.init(accessor: .dictionary(source, key: key))
+  }
 
-    /// Initializes a new `EnvironmentProperty` instance with the specified key and optional source, where the key is a raw representable type.
-    ///
-    /// - Parameters:
-    ///   - key: The key associated with the environment value, represented as a raw representable type.
-    ///   - source: The source of the environment values, which defaults to `ProcessInfo.processInfo.environment`.
-    internal init<KeyType: RawRepresentable>(
-        _ key: KeyType,
-        source: [String: String] = ProcessInfo.processInfo.environment
-    ) where KeyType.RawValue == String {
-        self.init(key.rawValue, source: source)
-    }
+  /// Initializes a new `EnvironmentProperty` instance with the specified key and optional source, where the key is a raw representable type.
+  ///
+  /// - Parameters:
+  ///   - key: The key associated with the environment value, represented as a raw representable type.
+  ///   - source: The source of the environment values, which defaults to `ProcessInfo.processInfo.environment`.
+  internal init<KeyType: RawRepresentable>(
+    _ key: KeyType,
+    source: [String: String] = ProcessInfo.processInfo.environment
+  ) where KeyType.RawValue == String {
+    self.init(key.rawValue, source: source)
+  }
 }

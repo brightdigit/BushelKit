@@ -31,15 +31,15 @@ import Foundation
 
 /// A protocol that represents metadata for a collection of releases.
 public protocol ReleaseCollectionMetadata: Sendable {
-    /// The type of `InstallerRelease` associated with this metadata.
-    associatedtype InstallerReleaseType: InstallerRelease
+  /// The type of `InstallerRelease` associated with this metadata.
+  associatedtype InstallerReleaseType: InstallerRelease
 
-    /// The collection of releases.
-    var releases: [InstallerReleaseType] { get }
+  /// The collection of releases.
+  var releases: [InstallerReleaseType] { get }
 
-    /// A boolean value indicating whether custom versions are allowed.
-    var customVersionsAllowed: Bool { get }
+  /// A boolean value indicating whether custom versions are allowed.
+  var customVersionsAllowed: Bool { get }
 
-    /// The prefix for the releases.
-    var prefix: String { get }
+  /// The prefix for the releases.
+  var prefix: String { get }
 }

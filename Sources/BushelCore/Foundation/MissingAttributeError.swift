@@ -31,60 +31,60 @@ public import Foundation
 
 /// An error that represents a missing file attribute.
 public struct MissingAttributeError: LocalizedError {
-    /// Represents the name of a header attribute.
-    public enum HeaderName: String {
-        /// Represents the "Content-Length" header.
-        case contentLength = "Content-Length"
-        /// Represents the "Last-Modified" header.
-        case lastModified = "Last-Modified"
-    }
+  /// Represents the name of a header attribute.
+  public enum HeaderName: String {
+    /// Represents the "Content-Length" header.
+    case contentLength = "Content-Length"
+    /// Represents the "Last-Modified" header.
+    case lastModified = "Last-Modified"
+  }
 
-    /// The file attribute key that is missing.
-    public let attributeKey: FileAttributeKey
-    /// The URL of the file.
-    public let url: URL
-    /// The headers associated with the file, if available.
-    public let headers: [String: String]?
+  /// The file attribute key that is missing.
+  public let attributeKey: FileAttributeKey
+  /// The URL of the file.
+  public let url: URL
+  /// The headers associated with the file, if available.
+  public let headers: [String: String]?
 
-    /// Initializes a `MissingAttributeError` instance for a specific header name.
-    ///
-    /// - Parameters:
-    ///   - headerName: The name of the missing header.
-    ///   - url: The URL of the file.
-    ///   - headers: The headers associated with the file, if available.
-    public init(_ headerName: HeaderName, from url: URL, headers: [AnyHashable: Any]? = nil) {
-        self.attributeKey = .init(headerName: headerName)
-        self.url = url
-        self.headers =
-            (headers?.map { _ in
-                ("\\(pair.key)", "\\(pair.value)")
-            }).map(Dictionary.init(uniqueKeysWithValues:))
-    }
+  /// Initializes a `MissingAttributeError` instance for a specific header name.
+  ///
+  /// - Parameters:
+  ///   - headerName: The name of the missing header.
+  ///   - url: The URL of the file.
+  ///   - headers: The headers associated with the file, if available.
+  public init(_ headerName: HeaderName, from url: URL, headers: [AnyHashable: Any]? = nil) {
+    self.attributeKey = .init(headerName: headerName)
+    self.url = url
+    self.headers =
+      (headers?.map { _ in
+        ("\\(pair.key)", "\\(pair.value)")
+      }).map(Dictionary.init(uniqueKeysWithValues:))
+  }
 
-    /// Initializes a `MissingAttributeError` instance for a specific file attribute key.
-    ///
-    /// - Parameters:
-    ///   - attributeKey: The file attribute key that is missing.
-    ///   - url: The URL of the file.
-    ///   - headers: The headers associated with the file, if available.
-    public init(_ attributeKey: FileAttributeKey, from url: URL, headers: [String: String]? = nil) {
-        self.attributeKey = attributeKey
-        self.url = url
-        self.headers = headers
-    }
+  /// Initializes a `MissingAttributeError` instance for a specific file attribute key.
+  ///
+  /// - Parameters:
+  ///   - attributeKey: The file attribute key that is missing.
+  ///   - url: The URL of the file.
+  ///   - headers: The headers associated with the file, if available.
+  public init(_ attributeKey: FileAttributeKey, from url: URL, headers: [String: String]? = nil) {
+    self.attributeKey = attributeKey
+    self.url = url
+    self.headers = headers
+  }
 }
 
 extension FileAttributeKey {
-    fileprivate init(headerName: MissingAttributeError.HeaderName) {
-        switch headerName {
-        case .contentLength:
-            self = .size
-        case .lastModified:
-            self = .modificationDate
-        }
+  fileprivate init(headerName: MissingAttributeError.HeaderName) {
+    switch headerName {
+    case .contentLength:
+      self = .size
+    case .lastModified:
+      self = .modificationDate
     }
+  }
 }
 
 #if canImport(FoundationNetworking)
-    extension FileAttributeKey: @unchecked Sendable {}
+  extension FileAttributeKey: @unchecked Sendable {}
 #endif

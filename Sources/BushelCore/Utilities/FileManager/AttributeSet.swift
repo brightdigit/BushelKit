@@ -28,11 +28,12 @@
 //
 
 public import Foundation
+
 /// Represents a set of file attributes.
 public protocol AttributeSet: Sendable {
-    /// Retrieves the value of a file attribute.
-    ///
-    /// - Parameter key: The file attribute key.
-    /// - Returns: The value of the file attribute, or `nil` if the attribute is not set.
-    func get<ValueType: BinaryInteger & Sendable>(_ key: FileAttributeKey) -> ValueType?
+  /// Retrieves the value of a file attribute.
+  ///
+  /// - Parameter key: The file attribute key.
+  /// - Returns: The value of the file attribute, or `nil` if the attribute is not set.
+  func get<ValueType: BinaryInteger & Sendable>(_ key: FileAttributeKey) -> ValueType?
 }

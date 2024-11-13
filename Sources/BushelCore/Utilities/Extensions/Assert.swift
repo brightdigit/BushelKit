@@ -32,7 +32,7 @@ public import Foundation
 /// Asserts that the current thread is the main thread.
 @inlinable
 public func assert(isMainThread: Bool) {
-    assert(isMainThread == Thread.isMainThread)
+  assert(isMainThread == Thread.isMainThread)
 }
 
 /// Logs an assertion failure with the provided error's localized description.
@@ -43,10 +43,10 @@ public func assert(isMainThread: Bool) {
 ///   - line: The line where the assertion failure occurred. Defaults to the current line.
 @inlinable
 public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line) {
-    guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else {
-        return
-    }
-    assertionFailure(error.localizedDescription, file: file, line: line)
+  guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else {
+    return
+  }
+  assertionFailure(error.localizedDescription, file: file, line: line)
 }
 
 /// Logs an assertion failure with the provided error, and optionally passes the error to a custom error handling function.
@@ -59,18 +59,18 @@ public func assertionFailure(error: any Error, file: StaticString = #file, line:
 /// - Returns: The `NewFailure` error, if the `error` parameter can be cast to that type. Otherwise, `nil`.
 @inlinable
 public func assertionFailure<NewFailure: LocalizedError>(
-    error: any Error,
-    _ unknownError: @escaping (any Error) -> Void,
-    file: StaticString = #file,
-    line: UInt = #line
+  error: any Error,
+  _ unknownError: @escaping (any Error) -> Void,
+  file: StaticString = #file,
+  line: UInt = #line
 ) -> NewFailure? {
-    guard let newError = error as? NewFailure else {
-        BushelCore.assertionFailure(error: error, file: file, line: line)
-        unknownError(error)
-        return nil
-    }
-    BushelCore.assertionFailure(error: newError, file: file, line: line)
-    return newError
+  guard let newError = error as? NewFailure else {
+    BushelCore.assertionFailure(error: error, file: file, line: line)
+    unknownError(error)
+    return nil
+  }
+  BushelCore.assertionFailure(error: newError, file: file, line: line)
+  return newError
 }
 
 /// Handles the result of an operation, logging an assertion failure if the result is a failure.
@@ -82,22 +82,22 @@ public func assertionFailure<NewFailure: LocalizedError>(
 /// - Returns: The `Success` value if the result was successful, or throws the `NewFailure` error if the result was a failure.
 @inlinable
 public func assertionFailure<Success, NewFailure: LocalizedError>(
-    result: Result<Success, some Any>,
-    file: StaticString = #file,
-    line: UInt = #line
+  result: Result<Success, some Any>,
+  file: StaticString = #file,
+  line: UInt = #line
 ) throws -> Result<Success, NewFailure> {
-    switch result {
-    case let .success(value):
-        return .success(value)
+  switch result {
+  case let .success(value):
+    return .success(value)
 
-    case let .failure(error):
-        switch error as? NewFailure {
-        case .none:
-            assertionFailure(error.localizedDescription, file: file, line: line)
-            throw error
+  case let .failure(error):
+    switch error as? NewFailure {
+    case .none:
+      assertionFailure(error.localizedDescription, file: file, line: line)
+      throw error
 
-        case let .some(newError):
-            return .failure(newError)
-        }
+    case let .some(newError):
+      return .failure(newError)
     }
+  }
 }

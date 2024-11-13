@@ -31,63 +31,63 @@ public import Foundation
 
 /// Represents an image signature, containing information about the source, system, and verification details.
 public struct ImageSignature: Sendable {
-    /// The unique identifier of the source.
-    public let sourceID: String
+  /// The unique identifier of the source.
+  public let sourceID: String
 
-    /// The unique identifier of the signature.
-    public let signatureID: String
+  /// The unique identifier of the signature.
+  public let signatureID: String
 
-    /// The unique identifier of the virtual machine system.
-    public let vmSystemID: VMSystemID
+  /// The unique identifier of the virtual machine system.
+  public let vmSystemID: VMSystemID
 
-    /// The version of the operating system.
-    public let operatingSystemVersion: OperatingSystemVersion
+  /// The version of the operating system.
+  public let operatingSystemVersion: OperatingSystemVersion
 
-    /// The build version of the operating system, if available.
-    public let buildVersion: String?
+  /// The build version of the operating system, if available.
+  public let buildVersion: String?
 
-    /// The verification details of the signature.
-    public let verification: SigVerification
+  /// The verification details of the signature.
+  public let verification: SigVerification
 
-    /// The priority of the signature.
-    public let priority: SignaturePriority
+  /// The priority of the signature.
+  public let priority: SignaturePriority
 
-    /// The timestamp of the signature.
-    public let timestamp: Date
+  /// The timestamp of the signature.
+  public let timestamp: Date
 
-    /// The build ID, which is a combination of the operating system version and the build version.
-    public var buildID: String {
-        operatingSystemVersion.id(buildVersion: self.buildVersion)
-    }
+  /// The build ID, which is a combination of the operating system version and the build version.
+  public var buildID: String {
+    self.operatingSystemVersion.id(buildVersion: self.buildVersion)
+  }
 
-    /// Initializes an `ImageSignature` instance.
-    ///
-    /// - Parameters:
-    ///   - sourceID: The unique identifier of the source.
-    ///   - signatureID: The unique identifier of the signature.
-    ///   - vmSystemID: The unique identifier of the virtual machine system.
-    ///   - operatingSystemVersion: The version of the operating system.
-    ///   - buildVersion: The build version of the operating system, if available.
-    ///   - verification: The verification details of the signature.
-    ///   - priority: The priority of the signature.
-    ///   - timestamp: The timestamp of the signature.
-    public init(
-        sourceID: String,
-        signatureID: String,
-        vmSystemID: VMSystemID,
-        operatingSystemVersion: OperatingSystemVersion,
-        buildVersion: String?,
-        verification: SigVerification,
-        priority: SignaturePriority,
-        timestamp: Date
-    ) {
-        self.sourceID = sourceID
-        self.signatureID = signatureID
-        self.vmSystemID = vmSystemID
-        self.operatingSystemVersion = operatingSystemVersion
-        self.buildVersion = buildVersion
-        self.priority = priority
-        self.verification = verification
-        self.timestamp = timestamp
-    }
+  /// Initializes an `ImageSignature` instance.
+  ///
+  /// - Parameters:
+  ///   - sourceID: The unique identifier of the source.
+  ///   - signatureID: The unique identifier of the signature.
+  ///   - vmSystemID: The unique identifier of the virtual machine system.
+  ///   - operatingSystemVersion: The version of the operating system.
+  ///   - buildVersion: The build version of the operating system, if available.
+  ///   - verification: The verification details of the signature.
+  ///   - priority: The priority of the signature.
+  ///   - timestamp: The timestamp of the signature.
+  public init(
+    sourceID: String,
+    signatureID: String,
+    vmSystemID: VMSystemID,
+    operatingSystemVersion: OperatingSystemVersion,
+    buildVersion: String?,
+    verification: SigVerification,
+    priority: SignaturePriority,
+    timestamp: Date
+  ) {
+    self.sourceID = sourceID
+    self.signatureID = signatureID
+    self.vmSystemID = vmSystemID
+    self.operatingSystemVersion = operatingSystemVersion
+    self.buildVersion = buildVersion
+    self.priority = priority
+    self.verification = verification
+    self.timestamp = timestamp
+  }
 }

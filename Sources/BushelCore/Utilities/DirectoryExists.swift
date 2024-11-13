@@ -29,25 +29,25 @@
 
 /// Represents the existence of a directory or file.
 public enum DirectoryExists {
-    /// The path exists as a directory.
-    case directoryExists
-    /// The path exists as a file.
-    case fileExists
-    /// The path does not exist.
-    case notExists
+  /// The path exists as a directory.
+  case directoryExists
+  /// The path exists as a file.
+  case fileExists
+  /// The path does not exist.
+  case notExists
 }
 
 extension DirectoryExists {
-    /// Initializes a `DirectoryExists` value based on the existence and type of the file system entry.
-    ///
-    /// - Parameters:
-    ///   - fileExists: A boolean indicating whether the file system entry exists.
-    ///   - isDirectory: A boolean indicating whether the file system entry is a directory.
-    public init(fileExists: Bool, isDirectory: Bool) {
-        if fileExists {
-            self = isDirectory ? .directoryExists : .fileExists
-        } else {
-            self = .notExists
-        }
+  /// Initializes a `DirectoryExists` value based on the existence and type of the file system entry.
+  ///
+  /// - Parameters:
+  ///   - fileExists: A boolean indicating whether the file system entry exists.
+  ///   - isDirectory: A boolean indicating whether the file system entry is a directory.
+  public init(fileExists: Bool, isDirectory: Bool) {
+    if fileExists {
+      self = isDirectory ? .directoryExists : .fileExists
+    } else {
+      self = .notExists
     }
+  }
 }

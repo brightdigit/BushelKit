@@ -28,5 +28,6 @@
 //
 
 public import Foundation
+
 /// Represents a Semantic Version (SemVer) using the `OperatingSystemVersion` type.
 public typealias Semver = OperatingSystemVersion

@@ -57,7 +57,7 @@ public struct ImageMetadata: Codable,
   /// A custom debug description string providing details about the image metadata.
   public var debugDescription: String {
     // swiftlint:disable:next line_length
-    "\(Self.self)(isImageSupported: \(isImageSupported), buildVersion: \"\(buildVersion ?? "")\", operatingSystemVersion: \(operatingSystemVersion.debugDescription), contentLength: \(contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(lastModified.timeIntervalSinceReferenceDate))"
+    "\(Self.self)(isImageSupported: \(self.isImageSupported), buildVersion: \"\(self.buildVersion ?? "")\", operatingSystemVersion: \(self.operatingSystemVersion.debugDescription), contentLength: \(self.contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(self.lastModified.timeIntervalSinceReferenceDate))"
   }
 
   /// Creates a new `ImageMetadata` instance.

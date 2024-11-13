@@ -31,64 +31,64 @@ public import Foundation
 
 /// An identifier for an installer image.
 public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashable, Sendable {
-    /// The identifier of the library that the image belongs to.
-    public let libraryID: LibraryIdentifier?
-    /// The unique identifier of the image.
-    public let imageID: UUID
+  /// The identifier of the library that the image belongs to.
+  public let libraryID: LibraryIdentifier?
+  /// The unique identifier of the image.
+  public let imageID: UUID
 
-    /// A string representation of the identifier.
-    public var description: String {
-        let values: [String?] = [libraryID?.description, imageID.uuidString]
-        return values.compactMap { $0 }.joined(separator: ":")
+  /// A string representation of the identifier.
+  public var description: String {
+    let values: [String?] = [libraryID?.description, self.imageID.uuidString]
+    return values.compactMap { $0 }.joined(separator: ":")
+  }
+
+  /// Initializes a new `InstallerImageIdentifier` instance.
+  /// - Parameters:
+  ///   - imageID: The unique identifier of the image.
+  ///   - libraryID: The identifier of the library that the image belongs to, or `nil` if the image doesn't belong to a library.
+  public init(imageID: UUID, libraryID: LibraryIdentifier? = nil) {
+    self.libraryID = libraryID
+    self.imageID = imageID
+  }
+
+  #warning("log meaningful message about else of guard statements here too")
+  /// Initializes a new `InstallerImageIdentifier` instance from a string.
+  /// - Parameter string: A string representation of the identifier.
+  public init?(string: String) {
+    let components = string.components(separatedBy: ":").filter { $0.isEmpty == false }
+    guard components.count > 1, components.count < 4 else {
+      return nil
+    }
+    guard let imageID = components.last.flatMap(UUID.init(uuidString:)) else {
+      return nil
     }
 
-    /// Initializes a new `InstallerImageIdentifier` instance.
-    /// - Parameters:
-    ///   - imageID: The unique identifier of the image.
-    ///   - libraryID: The identifier of the library that the image belongs to, or `nil` if the image doesn't belong to a library.
-    public init(imageID: UUID, libraryID: LibraryIdentifier? = nil) {
-        self.libraryID = libraryID
-        self.imageID = imageID
-    }
+    #warning("what does a nullable libraryID mean, maybe this case needs to be logged")
+    let libraryID: LibraryIdentifier? =
+      components.count == 2 ?
+      LibraryIdentifier(string: components[0]) :
+      nil
+    self.init(imageID: imageID, libraryID: libraryID)
+  }
 
-    #warning("log meaningful message about else of guard statements here too")
-    /// Initializes a new `InstallerImageIdentifier` instance from a string.
-    /// - Parameter string: A string representation of the identifier.
-    public init?(string: String) {
-        let components = string.components(separatedBy: ":").filter { $0.isEmpty == false }
-        guard components.count > 1, components.count < 4 else {
-            return nil
-        }
-        guard let imageID = components.last.flatMap(UUID.init(uuidString:)) else {
-            return nil
-        }
-
-        #warning("what does a nullable libraryID mean, maybe this case needs to be logged")
-        let libraryID: LibraryIdentifier? =
-            components.count == 2 ?
-            LibraryIdentifier(string: components[0]) :
-            nil
-        self.init(imageID: imageID, libraryID: libraryID)
+  /// Initializes a new `InstallerImageIdentifier` instance from a decoder.
+  /// - Parameter decoder: The decoder to use for decoding the identifier.
+  /// - Throws: A `DecodingError` if the identifier cannot be decoded.
+  public init(from decoder: any Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    let string = try container.decode(String.self)
+    let value = Self(string: string)
+    guard let value else {
+      throw DecodingError.dataCorruptedError(in: container, debugDescription: "Could not parse")
     }
+    self = value
+  }
 
-    /// Initializes a new `InstallerImageIdentifier` instance from a decoder.
-    /// - Parameter decoder: The decoder to use for decoding the identifier.
-    /// - Throws: A `DecodingError` if the identifier cannot be decoded.
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        let value = Self(string: string)
-        guard let value else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Could not parse")
-        }
-        self = value
-    }
-
-    /// Encodes the `InstallerImageIdentifier` instance to an encoder.
-    /// - Parameter encoder: The encoder to use for encoding the identifier.
-    /// - Throws: An error if the identifier cannot be encoded.
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.description)
-    }
+  /// Encodes the `InstallerImageIdentifier` instance to an encoder.
+  /// - Parameter encoder: The encoder to use for encoding the identifier.
+  /// - Throws: An error if the identifier cannot be encoded.
+  public func encode(to encoder: any Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(self.description)
+  }
 }

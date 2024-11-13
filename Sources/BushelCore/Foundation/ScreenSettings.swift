@@ -31,25 +31,25 @@ import Foundation
 
 /// A struct that represents screen settings.
 public struct ScreenSettings: CustomDebugStringConvertible {
-    /// A boolean value indicating whether the screen captures system keys.
-    public var capturesSystemKeys = false
+  /// A boolean value indicating whether the screen captures system keys.
+  public var capturesSystemKeys = false
 
-    /// A boolean value indicating whether the display is automatically reconfigured.
-    public var automaticallyReconfiguresDisplay = false
+  /// A boolean value indicating whether the display is automatically reconfigured.
+  public var automaticallyReconfiguresDisplay = false
 
-    /// A string that provides a textual representation of the screen settings for debugging purposes.
-    public var debugDescription: String {
-        // swiftlint:disable:next line_length
-        "capturesSystemKeys : \(capturesSystemKeys); automaticallyReconfiguresDisplay : \(automaticallyReconfiguresDisplay)"
-    }
+  /// A string that provides a textual representation of the screen settings for debugging purposes.
+  public var debugDescription: String {
+    // swiftlint:disable:next line_length
+    "capturesSystemKeys : \(self.capturesSystemKeys); automaticallyReconfiguresDisplay : \(self.automaticallyReconfiguresDisplay)"
+  }
 
-    /// Initializes a new instance of `ScreenSettings`.
-    ///
-    /// - Parameters:
-    ///   - capturesSystemKeys: A boolean value indicating whether the screen captures system keys.
-    ///   - automaticallyReconfiguresDisplay: A boolean value indicating whether the display is automatically reconfigured.
-    public init(capturesSystemKeys: Bool = false, automaticallyReconfiguresDisplay: Bool = false) {
-        self.capturesSystemKeys = capturesSystemKeys
-        self.automaticallyReconfiguresDisplay = automaticallyReconfiguresDisplay
-    }
+  /// Initializes a new instance of `ScreenSettings`.
+  ///
+  /// - Parameters:
+  ///   - capturesSystemKeys: A boolean value indicating whether the screen captures system keys.
+  ///   - automaticallyReconfiguresDisplay: A boolean value indicating whether the display is automatically reconfigured.
+  public init(capturesSystemKeys: Bool = false, automaticallyReconfiguresDisplay: Bool = false) {
+    self.capturesSystemKeys = capturesSystemKeys
+    self.automaticallyReconfiguresDisplay = automaticallyReconfiguresDisplay
+  }
 }

@@ -29,11 +29,11 @@
 
 /// A result builder for constructing a collection of `SigVerifier` instances.
 public enum SigVerificationBuilder {
-    /// Builds a collection of `SigVerifier` instances from the provided components.
-    ///
-    /// - Parameter components: The `SigVerifier` instances to be included in the collection.
-    /// - Returns: An array of the provided `SigVerifier` instances.
-    public static func buildBlock(_ components: any SigVerifier...) -> [any SigVerifier] {
-        components
-    }
+  /// Builds a collection of `SigVerifier` instances from the provided components.
+  ///
+  /// - Parameter components: The `SigVerifier` instances to be included in the collection.
+  /// - Returns: An array of the provided `SigVerifier` instances.
+  public static func buildBlock(_ components: any SigVerifier...) -> [any SigVerifier] {
+    components
+  }
 }

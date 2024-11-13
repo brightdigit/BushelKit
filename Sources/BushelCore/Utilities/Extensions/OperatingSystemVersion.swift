@@ -30,7 +30,7 @@
 public import Foundation
 
 #if canImport(FoundationNetworking)
-  extension OperatingSystemVersion: @unchecked Sendable {}
+extension OperatingSystemVersion: @unchecked Sendable {}
 #endif
 
 extension OperatingSystemVersion {
@@ -56,7 +56,7 @@ extension OperatingSystemVersion {
   /// - Parameter majorVersion: The major version number of the macOS release.
   /// - Returns: The release name for the specified major version, or `nil` if it is not available.
   public static func macOSReleaseName(majorVersion: Int) -> String? {
-    codeNames[majorVersion]
+    self.codeNames[majorVersion]
   }
 
   /// Returns a collection of available macOS major versions, optionally filtering for only those supported by virtualization.
@@ -65,9 +65,9 @@ extension OperatingSystemVersion {
   /// - Returns: A collection of available macOS major versions, either all or only those supported for virtualization.
   public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<Int> {
     guard onlyVirtualizationSupported else {
-      return codeNames.keys
+      return self.codeNames.keys
     }
-    return codeNames.keys.filter { $0 >= minimumVirtualizationMajorVersion }
+    return self.codeNames.keys.filter { $0 >= self.minimumVirtualizationMajorVersion }
   }
 
   /// Returns a unique identifier for the current macOS version, composed of the version description and the build version (if available).

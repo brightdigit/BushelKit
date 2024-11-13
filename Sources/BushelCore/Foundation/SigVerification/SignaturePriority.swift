@@ -29,10 +29,10 @@
 
 /// A priority for signing messages or other data.
 public enum SignaturePriority: Int, Codable, CaseIterable, Sendable {
-    /// Never sign messages or data.
-    case never = -2_147_483_648
-    /// Sign messages or data with medium priority.
-    case medium = 0
-    /// Always sign messages or data.
-    case always = 2_147_483_647
+  /// Never sign messages or data.
+  case never = -2_147_483_648
+  /// Sign messages or data with medium priority.
+  case medium = 0
+  /// Always sign messages or data.
+  case always = 2_147_483_647
 }

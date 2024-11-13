@@ -31,26 +31,26 @@ public import Foundation
 
 /// Provides extensions to the `ByteCountFormatter` type.
 extension ByteCountFormatter {
-    /// A static `ByteCountFormatter` instance with the `memory` count style.
-    public nonisolated(unsafe) static let memory: ByteCountFormatter = .init(countStyle: .memory)
+  /// A static `ByteCountFormatter` instance with the `memory` count style.
+  public nonisolated(unsafe) static let memory: ByteCountFormatter = .init(countStyle: .memory)
 
-    /// A static `ByteCountFormatter` instance with the `file` count style.
-    public nonisolated(unsafe) static let file: ByteCountFormatter = .init(countStyle: .file)
+  /// A static `ByteCountFormatter` instance with the `file` count style.
+  public nonisolated(unsafe) static let file: ByteCountFormatter = .init(countStyle: .file)
 
-    /// Initializes a `ByteCountFormatter` instance and applies the specified modifications.
-    ///
-    /// - Parameter modifications: A closure that modifies the `ByteCountFormatter` instance.
-    public convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
-        self.init()
-        modifications(self)
+  /// Initializes a `ByteCountFormatter` instance and applies the specified modifications.
+  ///
+  /// - Parameter modifications: A closure that modifies the `ByteCountFormatter` instance.
+  public convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
+    self.init()
+    modifications(self)
+  }
+
+  /// Initializes a `ByteCountFormatter` instance with the specified count style.
+  ///
+  /// - Parameter countStyle: The count style to be used by the `ByteCountFormatter` instance.
+  public convenience init(countStyle: CountStyle) {
+    self.init {
+      $0.countStyle = countStyle
     }
-
-    /// Initializes a `ByteCountFormatter` instance with the specified count style.
-    ///
-    /// - Parameter countStyle: The count style to be used by the `ByteCountFormatter` instance.
-    public convenience init(countStyle: CountStyle) {
-        self.init {
-            $0.countStyle = countStyle
-        }
-    }
+  }
 }

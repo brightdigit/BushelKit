@@ -29,33 +29,33 @@
 
 /// A manager for handling signature verification across different systems.
 public struct SigVerificationManager: SigVerificationManaging {
-    /// A dictionary of signature verifiers, keyed by their system IDs.
-    private let implementations: [VMSystemID: any SigVerifier]
+  /// A dictionary of signature verifiers, keyed by their system IDs.
+  private let implementations: [VMSystemID: any SigVerifier]
 
-    /// Initializes a `SigVerificationManager` with the provided signature verifiers.
-    ///
-    /// - Parameter implementations: An array of signature verifiers.
-    private init(implementations: [VMSystemID: any SigVerifier]) {
-        self.implementations = implementations
+  /// Initializes a `SigVerificationManager` with the provided signature verifiers.
+  ///
+  /// - Parameter implementations: An array of signature verifiers.
+  private init(implementations: [VMSystemID: any SigVerifier]) {
+    self.implementations = implementations
+  }
+
+  /// Initializes a `SigVerificationManager` with the provided signature verifiers.
+  ///
+  /// - Parameter implementations: An array of signature verifiers.
+  public init(_ implementations: [any SigVerifier]) {
+    self.init(implementations: .init(uniqueValues: implementations, keyBy: \.id))
+  }
+
+  /// Resolves a signature verifier for the given system ID.
+  ///
+  /// - Parameter id: The system ID for which to resolve the signature verifier.
+  /// - Returns: The signature verifier for the given system ID.
+  public func resolve(_ id: BushelCore.VMSystemID) -> any BushelCore.SigVerifier {
+    guard let implementations = implementations[id] else {
+      // Self.logger.critical("Unknown system: \(id.rawValue)")
+      preconditionFailure("")
     }
 
-    /// Initializes a `SigVerificationManager` with the provided signature verifiers.
-    ///
-    /// - Parameter implementations: An array of signature verifiers.
-    public init(_ implementations: [any SigVerifier]) {
-        self.init(implementations: .init(uniqueValues: implementations, keyBy: \.id))
-    }
-
-    /// Resolves a signature verifier for the given system ID.
-    ///
-    /// - Parameter id: The system ID for which to resolve the signature verifier.
-    /// - Returns: The signature verifier for the given system ID.
-    public func resolve(_ id: BushelCore.VMSystemID) -> any BushelCore.SigVerifier {
-        guard let implementations = implementations[id] else {
-            // Self.logger.critical("Unknown system: \(id.rawValue)")
-            preconditionFailure("")
-        }
-
-        return implementations
-    }
+    return implementations
+  }
 }

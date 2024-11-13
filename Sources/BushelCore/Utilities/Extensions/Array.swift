@@ -30,73 +30,72 @@
 import Foundation
 
 #if canImport(SwiftUI)
-
-import SwiftUI
+  import SwiftUI
 #endif
 
 extension Array {
-    /// Removes elements at the specified indices from the array.
-    /// - Parameter array: The array to remove elements from.
-    /// - Parameter offsets: The indices of the elements to remove.
-    @Sendable
-    public static func remove(from array: inout Self, atOffsets offsets: [Int]) {
-        array.remove(atOffsets: offsets)
+  /// Removes elements at the specified indices from the array.
+  /// - Parameter array: The array to remove elements from.
+  /// - Parameter offsets: The indices of the elements to remove.
+  @Sendable
+  public static func remove(from array: inout Self, atOffsets offsets: [Int]) {
+    array.remove(atOffsets: offsets)
+  }
+
+  /// Returns an array of indices that expects the first element to be removed.
+  /// - Parameter array: The array to get indices for.
+  /// - Returns: An array of indices that expects the first element to be removed.
+  @Sendable
+  public static func indiciesExpectFirst(_ array: Self) -> [Int] {
+    array.indiciesExpectFirst()
+  }
+
+  private func indiciesExpectFirst() -> [Int] {
+    if self.isEmpty {
+      return []
     }
 
-    /// Returns an array of indices that expects the first element to be removed.
-    /// - Parameter array: The array to get indices for.
-    /// - Returns: An array of indices that expects the first element to be removed.
-    @Sendable
-    public static func indiciesExpectFirst(_ array: Self) -> [Int] {
-        array.indiciesExpectFirst()
-    }
+    return .init(1 ..< self.count)
+  }
 
-    private func indiciesExpectFirst() -> [Int] {
-        if self.isEmpty {
-            return []
-        }
-
-        return .init(1..<self.count)
-    }
-
-    #if canImport(SwiftUI)
+  #if canImport(SwiftUI)
     private mutating func remove(atOffsets offsets: [Int]) {
-        self.remove(atOffsets: IndexSet(offsets))
+      self.remove(atOffsets: IndexSet(offsets))
     }
-    #else
+  #else
     private mutating func remove(atOffsets _: [Int]) {
-        let sortedIndices = indices.sorted(by: >)
-        for index in sortedIndices {
-            assert(index >= 0 && index < self.count)
-            guard index >= 0, index < self.count else {
-                continue  // Skip invalid indices
-            }
-            self.remove(at: index)
+      let sortedIndices = indices.sorted(by: >)
+      for index in sortedIndices {
+        assert(index >= 0 && index < self.count)
+        guard index >= 0, index < self.count else {
+          continue // Skip invalid indices
         }
+        self.remove(at: index)
+      }
     }
-    #endif
+  #endif
 
-    /// Removes duplicate elements from the array based on a provided grouping function.
-    /// - Parameter groupingBy: A closure that takes an element and returns a hashable value to group the elements by.
-    /// - Parameter indiciesToRemove: A closure that takes an array of grouped elements and returns the indices of the elements to remove. Defaults to `indiciesExpectFirst`.
-    /// - Parameter removeAtOffsets: A closure that takes the array and a list of indices to remove elements at. Defaults to `Self.remove(from:atOffsets:)`.
-    public mutating func removeDuplicates(
-        groupingBy: @Sendable @escaping (Element) -> some Hashable,
-        indiciesToRemove: @Sendable @escaping ([Element]) -> [Int] = indiciesExpectFirst,
-        removeAtOffsets: @Sendable @escaping (inout Self, [Int]) -> Void = Self.remove(from:atOffsets:)
-    ) {
-        let duplicateIndicies: [Int] = Dictionary(
-            grouping: self.enumerated(),
-            by: { groupingBy($0.element) }
-        )
-        .flatMap { pair -> [Int] in
-            indiciesToRemove(
-                pair.value.map(\.element)
-            )
-            .map { index in
-                pair.value[index].offset
-            }
-        }
-        removeAtOffsets(&self, duplicateIndicies)
+  /// Removes duplicate elements from the array based on a provided grouping function.
+  /// - Parameter groupingBy: A closure that takes an element and returns a hashable value to group the elements by.
+  /// - Parameter indiciesToRemove: A closure that takes an array of grouped elements and returns the indices of the elements to remove. Defaults to `indiciesExpectFirst`.
+  /// - Parameter removeAtOffsets: A closure that takes the array and a list of indices to remove elements at. Defaults to `Self.remove(from:atOffsets:)`.
+  public mutating func removeDuplicates(
+    groupingBy: @Sendable @escaping (Element) -> some Hashable,
+    indiciesToRemove: @Sendable @escaping ([Element]) -> [Int] = indiciesExpectFirst,
+    removeAtOffsets: @Sendable @escaping (inout Self, [Int]) -> Void = Self.remove(from:atOffsets:)
+  ) {
+    let duplicateIndicies: [Int] = Dictionary(
+      grouping: self.enumerated(),
+      by: { groupingBy($0.element) }
+    )
+    .flatMap { pair -> [Int] in
+      indiciesToRemove(
+        pair.value.map(\.element)
+      )
+      .map { index in
+        pair.value[index].offset
+      }
     }
+    removeAtOffsets(&self, duplicateIndicies)
+  }
 }

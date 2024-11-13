@@ -34,23 +34,23 @@ public import RadiantKit
 
 /// Represents different types of tracking-related errors.
 public enum Tracking {
-    /// Represents different types of tracking-related errors.
-    public enum Error: DefaultWrapped {
-        /// The key type used for this error type.
-        public static let keyType: KeyType = .reflecting
-        /// The value type associated with this error type.
-        public typealias Value = Bool
-        /// The default value for this error type.
-        public static let `default`: Bool = true
-    }
+  /// Represents different types of tracking-related errors.
+  public enum Error: DefaultWrapped {
+    /// The key type used for this error type.
+    public static let keyType: KeyType = .reflecting
+    /// The value type associated with this error type.
+    public typealias Value = Bool
+    /// The default value for this error type.
+    public static let `default`: Bool = true
+  }
 
-    /// Represents different types of analytics-related settings.
-    public enum Analytics: DefaultWrapped {
-        /// The key type used for this analytics type.
-        public static let keyType: KeyType = .reflecting
-        /// The value type associated with this analytics type.
-        public typealias Value = Bool
-        /// The default value for this analytics type.
-        public static let `default`: Bool = true
-    }
+  /// Represents different types of analytics-related settings.
+  public enum Analytics: DefaultWrapped {
+    /// The key type used for this analytics type.
+    public static let keyType: KeyType = .reflecting
+    /// The value type associated with this analytics type.
+    public typealias Value = Bool
+    /// The default value for this analytics type.
+    public static let `default`: Bool = true
+  }
 }
