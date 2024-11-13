@@ -36,7 +36,8 @@ public struct VersionFormatted: Sendable {
   /// The build number of the app in hexadecimal format.
   public let buildNumberHex: String
 
-  /// Initializes a `VersionFormatted` struct with the given marketing version and build number in hexadecimal format.
+  /// Initializes a `VersionFormatted` struct
+  /// with the given marketing version and build number in hexadecimal format.
   ///
   /// - Parameters:
   ///   - marketingVersion: The marketing version of the app.

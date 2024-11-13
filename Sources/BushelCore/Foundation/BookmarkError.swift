@@ -74,7 +74,8 @@ extension BookmarkError {
     BookmarkError(innerError: error, details: .database)
   }
 
-  /// Creates a `BookmarkError` with the `accessDeniedAt` or `fileDoesNotExistAt` details, depending on the underlying error.
+  /// Creates a `BookmarkError` with the `accessDeniedAt` or `fileDoesNotExistAt` details,
+  /// depending on the underlying error.
   ///
   /// - Parameters:
   ///   - error: The underlying error that occurred.

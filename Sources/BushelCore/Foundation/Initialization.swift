@@ -49,7 +49,8 @@ public final class Initialization {
     }
   }
 
-  /// Executes the provided closure on the main actor, ensuring that the initialization process is completed only once.
+  /// Executes the provided closure on the main actor,
+  /// ensuring that the initialization process is completed only once.
   ///
   /// - Parameter closure: The closure to be executed on the main actor.
   internal func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {

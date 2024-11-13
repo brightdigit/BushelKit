@@ -49,11 +49,13 @@ public func assertionFailure(error: any Error, file: StaticString = #file, line:
   assertionFailure(error.localizedDescription, file: file, line: line)
 }
 
-/// Logs an assertion failure with the provided error, and optionally passes the error to a custom error handling function.
+/// Logs an assertion failure with the provided error,
+/// and optionally passes the error to a custom error handling function.
 ///
 /// - Parameters:
 ///   - error: The error that caused the assertion failure.
-///   - unknownError: A closure that will be called with the error if it cannot be cast to the `NewFailure` type.
+///   - unknownError: A closure that will be called with the error
+///   if it cannot be cast to the `NewFailure` type.
 ///   - file: The file where the assertion failure occurred. Defaults to the current file.
 ///   - line: The line where the assertion failure occurred. Defaults to the current line.
 /// - Returns: The `NewFailure` error, if the `error` parameter can be cast to that type. Otherwise, `nil`.
@@ -79,7 +81,8 @@ public func assertionFailure<NewFailure: LocalizedError>(
 ///   - result: The result of an operation.
 ///   - file: The file where the assertion failure occurred. Defaults to the current file.
 ///   - line: The line where the assertion failure occurred. Defaults to the current line.
-/// - Returns: The `Success` value if the result was successful, or throws the `NewFailure` error if the result was a failure.
+/// - Returns: The `Success` value if the result was successful,
+/// or throws the `NewFailure` error if the result was a failure.
 @inlinable
 public func assertionFailure<Success, NewFailure: LocalizedError>(
   result: Result<Success, some Any>,

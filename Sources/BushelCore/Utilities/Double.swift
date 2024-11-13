@@ -39,7 +39,8 @@ extension Double {
 
   /// Rounds the current `Double` value to the nearest multiple of the provided `value`.
   /// - Parameter value: The value to round to.
-  /// - Parameter unlessThan: A boolean that determines whether the current value should be returned if it is less than the provided `value`. Defaults to `true`.
+  /// - Parameter unlessThan: A boolean that determines whether the current value
+  /// should be returned if it is less than the provided `value`. Defaults to `true`.
   /// - Returns: The rounded `Double` value.
   public func roundToNearest(value: Double, unlessThan: Bool = true) -> Double {
     if self < value, unlessThan {

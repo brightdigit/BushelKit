@@ -59,7 +59,11 @@ public struct Version: CustomStringConvertible, Sendable {
   public let prereleaseLabel: PrereleaseLabel?
 
   /// Creates a new `Version` instance with the provided components.
-  internal init(marketingSemVer: Semver, buildNumber: Int, prereleaseLabel: PrereleaseLabel? = nil) {
+  internal init(
+    marketingSemVer: Semver,
+    buildNumber: Int,
+    prereleaseLabel: PrereleaseLabel? = nil
+  ) {
     self.marketingSemVer = marketingSemVer
     self.buildNumber = buildNumber
     self.prereleaseLabel = prereleaseLabel
@@ -80,6 +84,7 @@ extension Version {
       return self.marketingSemVer.description
     }
 
+    // swiftlint:disable:next line_length
     return "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 
@@ -105,9 +110,9 @@ extension Version {
     }
 
     guard let buildNumber = Int(buildNumberString) else {
-#if canImport(os)
-      Self.logger.critical("Invalid build number \(buildNumberString)")
-#endif
+      #if canImport(os)
+        Self.logger.critical("Invalid build number \(buildNumberString)")
+      #endif
       assertionFailure()
       return nil
     }
@@ -153,18 +158,18 @@ extension Version {
     guard
       let marketingVersionText = objectForInfoDictionaryKey(.marketingVersion) as? String
     else {
-#if canImport(os)
-      Self.logger.critical("Missing Marketing Version \(Key.marketingVersion.rawValue)")
-#endif
+      #if canImport(os)
+        Self.logger.critical("Missing Marketing Version \(Key.marketingVersion.rawValue)")
+      #endif
       return nil
     }
 
     guard
       let buildNumberString = objectForInfoDictionaryKey(.bundleVersion) as? String
     else {
-#if canImport(os)
-      Self.logger.critical("Missing Bundle Version \(Key.bundleVersion.rawValue)")
-#endif
+      #if canImport(os)
+        Self.logger.critical("Missing Bundle Version \(Key.bundleVersion.rawValue)")
+      #endif
       return nil
     }
 

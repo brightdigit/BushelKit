@@ -36,21 +36,6 @@ public import Foundation
 #endif
 /// The file manager extension that provides additional functionality.
 extension FileManager {
-  /// An error that occurs during file creation.
-  public struct CreationError: Error {
-    /// The source of the error.
-    public enum Source: Sendable {
-      case open
-      case ftruncate
-      case close
-    }
-
-    /// The error code.
-    public let code: Int
-    /// The source of the error.
-    public let source: Source
-  }
-
   /// Creates a file with the specified size at the given path.
   ///
   /// - Parameters:
@@ -203,7 +188,8 @@ extension FileManager {
 
   /// Clears the saved application state.
   ///
-  /// This method removes all directories with the name "Saved Application State" within the user's library directory.
+  /// This method removes all directories with the name "Saved Application State"
+  /// within the user's library directory.
   /// - Throws: An error if the saved application state directories cannot be removed.
   public func clearSavedApplicationState() throws {
     let savedApplicationStates = self.urls(for: .libraryDirectory, in: .userDomainMask)
@@ -215,18 +201,5 @@ extension FileManager {
       }
 
     try savedApplicationStates.forEach(self.removeItem(at:))
-  }
-}
-
-extension Error where Self == NSError {
-  internal static func fileNotFound(at url: URL) -> NSError {
-    NSError(
-      domain: NSCocoaErrorDomain,
-      code: NSFileNoSuchFileError,
-      userInfo: [
-        NSFilePathErrorKey: url.path,
-        NSUnderlyingErrorKey: POSIXError(.ENOENT),
-      ]
-    )
   }
 }

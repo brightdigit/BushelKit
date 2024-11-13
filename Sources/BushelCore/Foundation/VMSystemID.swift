@@ -30,7 +30,12 @@
 import Foundation
 
 /// A type-safe wrapper around a string that represents a virtual machine system ID.
-public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, Sendable {
+public struct VMSystemID:
+  ExpressibleByStringInterpolation,
+  Codable,
+  Hashable,
+  RawRepresentable,
+  Sendable {
   /// The underlying string value.
   public let rawValue: String
 

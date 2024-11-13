@@ -38,7 +38,8 @@
     /// Initializes a new `ObservationCollection` instance.
     public init() {}
 
-    /// Appends an `NSKeyValueObservation` instance to the collection, associating it with the provided `UUID`.
+    /// Appends an `NSKeyValueObservation` instance to the collection,
+    /// associating it with the provided `UUID`.
     ///
     /// - Parameters:
     ///   - observation: The `NSKeyValueObservation` instance to be added.

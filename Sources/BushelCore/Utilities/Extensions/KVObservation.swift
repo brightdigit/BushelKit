@@ -63,7 +63,7 @@
 
       for index in 0..<Int(count) {
         if let property = properties?[index],
-           let propertyName = String(utf8String: property_getName(property))
+          let propertyName = String(utf8String: property_getName(property))
         {
           propertyKeys.append(propertyName)
         }
@@ -78,7 +78,8 @@
     /// - Parameters:
     ///   - observer: The observer to add.
     ///   - options: The options to use when observing the key paths.
-    ///   - isIncluded: A closure that determines which key paths to observe. If `nil`, all key paths are observed.
+    ///   - isIncluded: A closure that determines which key paths to observe.
+    ///   If `nil`, all key paths are observed.
     /// - Returns: A `KVObservation` object that represents the observation.
     @available(*, deprecated)
     @MainActor

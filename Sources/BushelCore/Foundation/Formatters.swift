@@ -54,7 +54,8 @@ public enum Formatters {
       return formatter
     }()
 
-    /// A date formatter that displays dates and times in a medium-length format (e.g. "Jan 1, 2023, 12:00:00 AM").
+    /// A date formatter that displays dates and times
+    /// in a medium-length format (e.g. "Jan 1, 2023, 12:00:00 AM").
     public nonisolated(unsafe) static let snapshotDateFormatter = {
       var formatter = DateFormatter()
       formatter.dateStyle = .medium
@@ -80,7 +81,7 @@ public enum Formatters {
       return formatter
     }()
 
-    /// A date formatter that displays dates and times in a medium-length format (e.g. "Jan 1, 2023, 12:00:00 AM").
+    /// A date formatter that displays dates and times in a medium-length format.
     public static let snapshotDateFormatter = {
       var formatter = DateFormatter()
       formatter.dateStyle = .medium

@@ -43,7 +43,8 @@ extension Result {
     }
   }
 
-  /// Unwraps the success value of the current `Result` instance, or returns a new `Result` with the provided failure value if the success value is `nil`.
+  /// Unwraps the success value of the current `Result` instance,
+  /// or returns a new `Result` with the provided failure value if the success value is `nil`.
   /// - Parameter failure: The failure value to be used if the success value is `nil`.
   /// - Returns: A new `Result` instance with the unwrapped success value or the provided failure value.
   public func unwrap<NewSuccess>(

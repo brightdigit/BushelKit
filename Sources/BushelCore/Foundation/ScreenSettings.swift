@@ -47,7 +47,8 @@ public struct ScreenSettings: CustomDebugStringConvertible {
   ///
   /// - Parameters:
   ///   - capturesSystemKeys: A boolean value indicating whether the screen captures system keys.
-  ///   - automaticallyReconfiguresDisplay: A boolean value indicating whether the display is automatically reconfigured.
+  ///   - automaticallyReconfiguresDisplay: A boolean value indicating whether the display
+  ///   is automatically reconfigured.
   public init(capturesSystemKeys: Bool = false, automaticallyReconfiguresDisplay: Bool = false) {
     self.capturesSystemKeys = capturesSystemKeys
     self.automaticallyReconfiguresDisplay = automaticallyReconfiguresDisplay

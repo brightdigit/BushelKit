@@ -40,7 +40,8 @@ public enum OnboardingOverrideOption: String, EnvironmentValue {
 }
 
 extension OnboardingOverrideOption {
-  /// Determines whether the onboarding flow should be displayed based on the current `OnboardingOverrideOption` and an optional `Date`.
+  /// Determines whether the onboarding flow should be displayed
+  /// based on the current `OnboardingOverrideOption` and an optional `Date`.
   ///
   /// - Parameter date: An optional `Date` value.
   /// - Returns: A `Bool` indicating whether the onboarding flow should be displayed.

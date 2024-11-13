@@ -30,7 +30,13 @@
 import Foundation
 
 /// An identifier for a Snapshotter.
-public struct SnapshotterID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, CustomStringConvertible, Sendable {
+public struct SnapshotterID:
+  ExpressibleByStringInterpolation,
+  Codable,
+  Hashable,
+  RawRepresentable,
+  CustomStringConvertible,
+  Sendable {
   /// The type used for string literal initialization.
   public typealias StringLiteralType = String
 

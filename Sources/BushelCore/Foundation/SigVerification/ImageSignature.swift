@@ -29,7 +29,8 @@
 
 public import Foundation
 
-/// Represents an image signature, containing information about the source, system, and verification details.
+/// Represents an image signature,
+/// containing information about the source, system, and verification details.
 public struct ImageSignature: Sendable {
   /// The unique identifier of the source.
   public let sourceID: String

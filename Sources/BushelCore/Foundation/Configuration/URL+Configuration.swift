@@ -30,7 +30,8 @@
 public import Foundation
 
 extension URL {
-  /// A struct that encapsulates various URLs related to an app's privacy policy, terms of use, support, company, and contact information.
+  /// A struct that encapsulates various URLs related to
+  /// an app's privacy policy, terms of use, support, company, and contact information.
   public struct Bushel: Sendable {
     /// Initializes a new `Bushel` instance with the provided parameters.
     internal init(
@@ -123,9 +124,10 @@ extension URL.Bushel {
     }
   }
 
+  // swiftlint:disable force_unwrapping
   /// A shared instance of the `URL.Bushel` struct.
-  // swiftlint:disable:next force_unwrapping
   fileprivate static let shared: URL.Bushel = .init()!
+  // swiftlint:enable force_unwrapping
 
   /// Initializes a new `URL.Bushel` instance from the app's Info.plist file.
   ///

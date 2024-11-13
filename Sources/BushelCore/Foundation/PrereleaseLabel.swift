@@ -58,7 +58,8 @@ extension PrereleaseLabel {
   /// Initializes a new instance of `PrereleaseLabel` from a dictionary.
   ///
   /// - Parameter dictionary: The dictionary containing the prerelease label information.
-  /// - Returns: An instance of `PrereleaseLabel`, or `nil` if the dictionary is missing the required information.
+  /// - Returns: An instance of `PrereleaseLabel`, or `nil`
+  /// if the dictionary is missing the required information.
   public init?(dictionary: [String: Any]) {
     guard
       let label = dictionary[Keys.label.rawValue] as? String,
@@ -77,7 +78,11 @@ extension PrereleaseLabel {
   ///   - additionalOffset: An additional offset to apply.
   ///   - factor: The factor to divide the result by.
   /// - Returns: The calculated offset.
-  public func offset(fromBuildNumber buildNumber: Int, additionalOffset: Int, factorOf factor: Int) -> Int {
+  public func offset(
+    fromBuildNumber buildNumber: Int,
+    additionalOffset: Int,
+    factorOf factor: Int
+  ) -> Int {
     (buildNumber - self.baseNumber + additionalOffset) / factor
   }
 }

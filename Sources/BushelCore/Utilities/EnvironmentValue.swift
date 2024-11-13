@@ -29,7 +29,8 @@
 
 import Foundation
 
-/// A protocol that represents an environment value that can be sent between different parts of an application.
+/// A protocol that represents an environment value
+/// that can be sent between different parts of an application.
 public protocol EnvironmentValue: Sendable {
   /// The default value for the environment value.
   static var `default`: Self { get }

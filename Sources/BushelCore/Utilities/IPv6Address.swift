@@ -80,3 +80,4 @@ extension IPv6Address {
     self.init(upperBits: high, lowerBits: low)
   }
 }
+// swiftlint:enable all

@@ -34,7 +34,8 @@ public struct Transformation<T, U>: Sendable {
   /// The closure that performs the transformation.
   private let closure: @Sendable (T) -> U
 
-  /// Initializes the `Transformation` with a closure that transforms a value of type `T` to a value of type `U`.
+  /// Initializes the `Transformation` with a closure
+  /// that transforms a value of type `T` to a value of type `U`.
   /// - Parameter closure: The closure that performs the transformation.
   public init(_ closure: @Sendable @escaping (T) -> U) {
     self.closure = closure

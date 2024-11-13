@@ -45,7 +45,8 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
   /// Initializes a new `InstallerImageIdentifier` instance.
   /// - Parameters:
   ///   - imageID: The unique identifier of the image.
-  ///   - libraryID: The identifier of the library that the image belongs to, or `nil` if the image doesn't belong to a library.
+  ///   - libraryID: The identifier of the library that the image belongs to,
+  ///   or `nil` if the image doesn't belong to a library.
   public init(imageID: UUID, libraryID: LibraryIdentifier? = nil) {
     self.libraryID = libraryID
     self.imageID = imageID
@@ -65,9 +66,7 @@ public struct InstallerImageIdentifier: CustomStringConvertible, Codable, Hashab
 
     #warning("what does a nullable libraryID mean, maybe this case needs to be logged")
     let libraryID: LibraryIdentifier? =
-      components.count == 2 ?
-      LibraryIdentifier(string: components[0]) :
-      nil
+      components.count == 2 ? LibraryIdentifier(string: components[0]) : nil
     self.init(imageID: imageID, libraryID: libraryID)
   }
 

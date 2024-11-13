@@ -1,5 +1,5 @@
 //
-//  ConfigurationRange.swift
+//  FileManager+Errors.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,34 +27,35 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
-/// A struct that represents a range of configuration values for CPU count and memory.
-public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
-  /// The default configuration range.
-  public static let `default` = ConfigurationRange(
-    cpuCount: 1...4,
-    memory: (8 * 1_024 * 1_024 * 1_024)...(128 * 1_024 * 1_024 * 1_024)
-  )
+/// The file manager extension that provides additional functionality.
+extension FileManager {
+  /// An error that occurs during file creation.
+  public struct CreationError: Error {
+    /// The source of the error.
+    public enum Source: Sendable {
+      case open
+      case ftruncate
+      case close
+    }
 
-  /// The range of CPU count values.
-  public let cpuCount: ClosedRange<Float>
-
-  /// The range of memory values.
-  public let memory: ClosedRange<Float>
-
-  /// The description of the configuration range.
-  public var description: String {
-    "cpuCount: \(self.cpuCount); memory: \(self.memory)"
+    /// The error code.
+    public let code: Int
+    /// The source of the error.
+    public let source: Source
   }
+}
 
-  /// Initializes a new `ConfigurationRange` instance.
-  ///
-  /// - Parameters:
-  ///   - cpuCount: The range of CPU count values.
-  ///   - memory: The range of memory values.
-  public init(cpuCount: ClosedRange<Float>, memory: ClosedRange<Float>) {
-    self.cpuCount = cpuCount
-    self.memory = memory
+extension Error where Self == NSError {
+  internal static func fileNotFound(at url: URL) -> NSError {
+    NSError(
+      domain: NSCocoaErrorDomain,
+      code: NSFileNoSuchFileError,
+      userInfo: [
+        NSFilePathErrorKey: url.path,
+        NSUnderlyingErrorKey: POSIXError(.ENOENT),
+      ]
+    )
   }
 }

@@ -55,7 +55,7 @@ extension Array {
       return []
     }
 
-    return .init(1 ..< self.count)
+    return .init(1..<self.count)
   }
 
   #if canImport(SwiftUI)
@@ -68,7 +68,7 @@ extension Array {
       for index in sortedIndices {
         assert(index >= 0 && index < self.count)
         guard index >= 0, index < self.count else {
-          continue // Skip invalid indices
+          continue  // Skip invalid indices
         }
         self.remove(at: index)
       }
@@ -76,9 +76,14 @@ extension Array {
   #endif
 
   /// Removes duplicate elements from the array based on a provided grouping function.
-  /// - Parameter groupingBy: A closure that takes an element and returns a hashable value to group the elements by.
-  /// - Parameter indiciesToRemove: A closure that takes an array of grouped elements and returns the indices of the elements to remove. Defaults to `indiciesExpectFirst`.
-  /// - Parameter removeAtOffsets: A closure that takes the array and a list of indices to remove elements at. Defaults to `Self.remove(from:atOffsets:)`.
+  /// - Parameter groupingBy: A closure that takes an element and returns a hashable value
+  /// to group the elements by.
+  /// - Parameter indiciesToRemove: A closure that takes an array of grouped elements and
+  /// returns the indices of the elements to remove.
+  /// Defaults to `indiciesExpectFirst`.
+  /// - Parameter removeAtOffsets:
+  /// A closure that takes the array and a list of indices to remove elements at.
+  /// Defaults to `Self.remove(from:atOffsets:)`.
   public mutating func removeDuplicates(
     groupingBy: @Sendable @escaping (Element) -> some Hashable,
     indiciesToRemove: @Sendable @escaping ([Element]) -> [Int] = indiciesExpectFirst,

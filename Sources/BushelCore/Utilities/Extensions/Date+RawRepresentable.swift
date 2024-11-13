@@ -46,7 +46,8 @@ extension Date: @retroactive RawRepresentable {
   /// Initializes a Date from a raw value.
   ///
   /// - Parameter rawValue: The raw value to initialize the Date from.
-  /// - Returns: An optional Date instance initialized from the raw value, or nil if the raw value is invalid.
+  /// - Returns: An optional Date instance initialized from the raw value,
+  /// or nil if the raw value is invalid.
   public init?(rawValue: Int) {
     self.init(timeIntervalSince1970: TimeInterval(rawValue) / Self.millisecondsInSeconds)
   }
