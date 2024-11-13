@@ -29,21 +29,32 @@
 
 import Foundation
 
+/// A struct that represents a range of configuration values for CPU count and memory.
 public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
-  public static let `default` = ConfigurationRange(
-    cpuCount: 1...4,
-    memory: (8 * 1_024 * 1_024 * 1_024)...(128 * 1_024 * 1_024 * 1_024)
-  )
+    /// The default configuration range.
+    public static let `default` = ConfigurationRange(
+        cpuCount: 1...4,
+        memory: (8 * 1_024 * 1_024 * 1_024)...(128 * 1_024 * 1_024 * 1_024)
+    )
 
-  public let cpuCount: ClosedRange<Float>
-  public let memory: ClosedRange<Float>
+    /// The range of CPU count values.
+    public let cpuCount: ClosedRange<Float>
 
-  public var description: String {
-    "cpuCount: \(cpuCount); memory: \(memory)"
-  }
+    /// The range of memory values.
+    public let memory: ClosedRange<Float>
 
-  public init(cpuCount: ClosedRange<Float>, memory: ClosedRange<Float>) {
-    self.cpuCount = cpuCount
-    self.memory = memory
-  }
+    /// The description of the configuration range.
+    public var description: String {
+        "cpuCount: \(cpuCount); memory: \(memory)"
+    }
+
+    /// Initializes a new `ConfigurationRange` instance.
+    ///
+    /// - Parameters:
+    ///   - cpuCount: The range of CPU count values.
+    ///   - memory: The range of memory values.
+    public init(cpuCount: ClosedRange<Float>, memory: ClosedRange<Float>) {
+        self.cpuCount = cpuCount
+        self.memory = memory
+    }
 }

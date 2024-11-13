@@ -29,25 +29,31 @@
 
 public import Foundation
 
+/// A type that represents a unique identifier for a library item.
 public enum LibraryIdentifier: CustomStringConvertible, Hashable, Sendable {
-  case url(URL)
-  case bookmarkID(UUID)
+    /// A URL-based identifier.
+    case url(URL)
+    /// A UUID-based identifier.
+    case bookmarkID(UUID)
 
-  public var description: String {
-    switch self {
-    case let .bookmarkID(id):
-      id.uuidString
-
-    case let .url(url):
-      url.path
+    /// A textual representation of the library identifier.
+    public var description: String {
+        switch self {
+        case let .bookmarkID(id):
+            return id.uuidString
+        case let .url(url):
+            return url.path
+        }
     }
-  }
 
-  public init(string: String) {
-    if let id = UUID(uuidString: string) {
-      self = .bookmarkID(id)
-    } else {
-      self = .url(.init(fileURLWithPath: string))
+    /// Initializes a `LibraryIdentifier` from a string representation.
+    ///
+    /// - Parameter string: A string representation of the library identifier.
+    public init(string: String) {
+        if let id = UUID(uuidString: string) {
+            self = .bookmarkID(id)
+        } else {
+            self = .url(.init(fileURLWithPath: string))
+        }
     }
-  }
 }

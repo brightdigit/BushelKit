@@ -32,7 +32,9 @@ public import Foundation
 #if canImport(FoundationNetworking)
   extension OperatingSystemVersion: @unchecked Sendable {}
 #endif
+
 extension OperatingSystemVersion {
+  /// A private dictionary mapping macOS major version numbers to their corresponding release names.
   private static let codeNames: [Int: String] = [
     11: "Big Sur",
     12: "Monterey",
@@ -41,25 +43,37 @@ extension OperatingSystemVersion {
     15: "Sequoia",
   ]
 
+  /// The minimum macOS major version number that is supported for virtualization.
   private static let minimumVirtualizationMajorVersion = 12
 
+  /// The release name of the current macOS version, if available.
   public var macOSReleaseName: String? {
     Self.macOSReleaseName(majorVersion: majorVersion)
   }
 
+  /// Returns the release name for the specified macOS major version, if available.
+  ///
+  /// - Parameter majorVersion: The major version number of the macOS release.
+  /// - Returns: The release name for the specified major version, or `nil` if it is not available.
   public static func macOSReleaseName(majorVersion: Int) -> String? {
     codeNames[majorVersion]
   }
 
-  public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<
-    Int
-  > {
+  /// Returns a collection of available macOS major versions, optionally filtering for only those supported by virtualization.
+  ///
+  /// - Parameter onlyVirtualizationSupported: If `true`, the returned collection will only include major versions that are supported for virtualization. If `false`, all available major versions will be returned.
+  /// - Returns: A collection of available macOS major versions, either all or only those supported for virtualization.
+  public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<Int> {
     guard onlyVirtualizationSupported else {
       return codeNames.keys
     }
     return codeNames.keys.filter { $0 >= minimumVirtualizationMajorVersion }
   }
 
+  /// Returns a unique identifier for the current macOS version, composed of the version description and the build version (if available).
+  ///
+  /// - Parameter buildVersion: The build version of the macOS release, or `nil` if not available.
+  /// - Returns: A string representing the unique identifier for the current macOS version.
   public func id(buildVersion: String?) -> String {
     [
       description,

@@ -39,10 +39,17 @@ public import Foundation
 // swiftlint:enable file_types_order
 #endif
 
+/// Error representing an invalid response from a URL request.
 public struct InvalidResponseError: LocalizedError {
+  /// The URL response that was considered invalid.
   public let response: URLResponse
+  /// The URL the response was received from.
   public let url: URL
 
+  /// Initializes a new `InvalidResponseError` instance.
+  /// - Parameters:
+  ///   - response: The `URLResponse` that was considered invalid.
+  ///   - url: The `URL` the response was received from.
   public init(_ response: URLResponse, from url: URL) {
     self.response = response
     self.url = url

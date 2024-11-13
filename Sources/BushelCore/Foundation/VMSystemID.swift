@@ -29,27 +29,40 @@
 
 import Foundation
 
-public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable,
-  Sendable
-{
-  public typealias StringLiteralType = String
+/// A type-safe wrapper around a string that represents a virtual machine system ID.
+public struct VMSystemID: ExpressibleByStringInterpolation, Codable, Hashable, RawRepresentable, Sendable {
+    /// The underlying string value.
+    public let rawValue: String
 
-  public let rawValue: String
-  public init(rawValue value: String) {
-    rawValue = value
-  }
+    /// Initializes a `VMSystemID` with the specified raw value.
+    ///
+    /// - Parameter value: The raw string value to use.
+    public init(rawValue value: String) {
+        rawValue = value
+    }
 
-  public init(stringLiteral value: String) {
-    rawValue = value
-  }
+    /// Initializes a `VMSystemID` from a string literal.
+    ///
+    /// - Parameter value: The string literal to use.
+    public init(stringLiteral value: String) {
+        rawValue = value
+    }
 
-  public init(from decoder: any Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    rawValue = try container.decode(String.self)
-  }
+    /// Initializes a `VMSystemID` by decoding a string from the given decoder.
+    ///
+    /// - Parameter decoder: The decoder to use for decoding the string.
+    /// - Throws: Any errors that occur during the decoding process.
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        rawValue = try container.decode(String.self)
+    }
 
-  public func encode(to encoder: any Encoder) throws {
-    var container = encoder.singleValueContainer()
-    try container.encode(rawValue)
-  }
+    /// Encodes the `VMSystemID` instance to the given encoder.
+    ///
+    /// - Parameter encoder: The encoder to use for encoding the `VMSystemID`.
+    /// - Throws: Any errors that occur during the encoding process.
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
 }

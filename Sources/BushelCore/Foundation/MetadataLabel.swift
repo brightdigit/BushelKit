@@ -30,12 +30,29 @@
 import Foundation
 
 public struct MetadataLabel: Equatable, Sendable {
+  /// The long name of the operating system.
   public let operatingSystemLongName: String
+
+  /// The default name of the metadata label.
   public let defaultName: String
+
+  /// The name of the image associated with the metadata label.
   public let imageName: String
+
+  /// The system name of the metadata label.
   public let systemName: String
+
+  /// The version name of the metadata label.
   public let versionName: String
 
+  /// Initializes a new instance of `MetadataLabel`.
+  ///
+  /// - Parameters:
+  ///   - operatingSystemLongName: The long name of the operating system.
+  ///   - defaultName: The default name of the metadata label.
+  ///   - imageName: The name of the image associated with the metadata label.
+  ///   - systemName: The system name of the metadata label.
+  ///   - versionName: The version name of the metadata label.
   @Sendable
   public init(
     operatingSystemLongName: String,

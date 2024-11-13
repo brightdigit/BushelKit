@@ -30,6 +30,10 @@
 public import Foundation
 
 extension DateComponents {
+  /// Initializes a `DateComponents` instance from a `TimeInterval` value.
+  ///
+  /// - Parameter secondsInterval: The time interval, in seconds, to use for initializing the `DateComponents` instance.
+  /// - Returns: A `DateComponents` instance initialized with the provided `secondsInterval` value.
   public init(fromSeconds secondsInterval: TimeInterval) {
     let seconds = Int(secondsInterval)
     let nanoSeconds = Int(secondsInterval.remainder(dividingBy: 1.0) * 1_000_000)

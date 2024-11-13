@@ -29,10 +29,14 @@
 
 import Foundation
 
+/// Represents a request to build a machine.
 public struct MachineBuildRequest: Codable, Hashable, Sendable {
-  public let restoreImage: InstallerImageIdentifier?
+    /// The identifier of the installer image to be used for restoring the machine.
+    public let restoreImage: InstallerImageIdentifier?
 
-  public init(restoreImage: InstallerImageIdentifier? = nil) {
-    self.restoreImage = restoreImage
-  }
+    /// Initializes a new instance of `MachineBuildRequest`.
+    /// - Parameter restoreImage: The identifier of the installer image to be used for restoring the machine.
+    public init(restoreImage: InstallerImageIdentifier? = nil) {
+        self.restoreImage = restoreImage
+    }
 }

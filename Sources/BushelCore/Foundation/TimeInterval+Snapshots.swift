@@ -29,9 +29,14 @@
 
 public import Foundation
 
+/// An extension to `TimeInterval` that provides static properties for snapshot-related intervals.
 extension TimeInterval {
+  /// A nested type containing static properties related to snapshot intervals.
   public enum Snapshot {
+    /// The interval in seconds between snapshots.
     public static let intervalIncrements: TimeInterval = 15.0
+
+    /// The default interval in seconds for snapshots.
     public static let defaultInterval: TimeInterval = 5.0
   }
 }

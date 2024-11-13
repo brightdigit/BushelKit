@@ -29,5 +29,10 @@
 
 import Foundation
 
-public typealias MetadataLabelProvider =
-  @Sendable (VMSystemID, any OperatingSystemInstalled) -> MetadataLabel
+/// A type alias for a function that provides a `MetadataLabel` given a `VMSystemID` and an `OperatingSystemInstalled` instance.
+///
+/// - Parameters:
+///   - vmSystemId: The `VMSystemID` to use for the metadata label.
+///   - osInstalled: The `OperatingSystemInstalled` instance to use for the metadata label.
+/// - Returns: A `MetadataLabel` based on the provided `VMSystemID` and `OperatingSystemInstalled`.
+public typealias MetadataLabelProvider = @Sendable (VMSystemID, any OperatingSystemInstalled) -> MetadataLabel

@@ -31,14 +31,21 @@ public import Foundation
 public import RadiantKit
 
 public enum RecentDocuments {
+  /// Represents a type filter for recent documents.
   public enum TypeFilter: AppStored, DefaultWrapped {
+    /// The value type for the type filter.
     public typealias Value = DocumentTypeFilter
+    /// The key type for the type filter.
     public static let keyType: KeyType = .reflecting
+    /// The default value for the type filter.
     public static let `default`: DocumentTypeFilter = .init()
   }
 
+  /// Represents the clear date for recent documents.
   public enum ClearDate: AppStored {
+    /// The value type for the clear date.
     public typealias Value = Date?
+    /// The key type for the clear date.
     public static let keyType: KeyType = .reflecting
   }
 }

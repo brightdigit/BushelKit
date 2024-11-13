@@ -30,10 +30,17 @@
 import Foundation
 
 extension Double {
+  /// Transforms the current `Double` value using the provided `LagrangePolynomial`.
+  /// - Parameter polynomial: The `LagrangePolynomial` to use for the transformation.
+  /// - Returns: The transformed `Double` value.
   public func transform(using polynomial: LagrangePolynomial) -> Double {
     polynomial.transform(self)
   }
 
+  /// Rounds the current `Double` value to the nearest multiple of the provided `value`.
+  /// - Parameter value: The value to round to.
+  /// - Parameter unlessThan: A boolean that determines whether the current value should be returned if it is less than the provided `value`. Defaults to `true`.
+  /// - Returns: The rounded `Double` value.
   public func roundToNearest(value: Double, unlessThan: Bool = true) -> Double {
     if self < value, unlessThan {
       return self

@@ -30,6 +30,7 @@
 /// An `ErrorType` for `UInt128` data types. It includes cases
 /// for errors that can occur during string
 /// conversion.
+
 public enum UInt128Errors: Error {
   /// Input cannot be converted to a UInt128 value.
   case invalidString

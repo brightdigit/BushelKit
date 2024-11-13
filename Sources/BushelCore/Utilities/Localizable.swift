@@ -29,35 +29,45 @@
 
 import Foundation
 
+/// A protocol that defines the requirements for a type to be localizable.
 public protocol Localizable: Hashable {
-  static var emptyLocalizedStringID: String { get }
-  static var defaultLocalizedStringID: String { get }
-  static var localizedStringIDMapping: [Self: String] { get }
+    /// The empty localized string ID.
+    static var emptyLocalizedStringID: String { get }
+
+    /// The default localized string ID.
+    static var defaultLocalizedStringID: String { get }
+
+    /// The mapping of the type to its localized string ID.
+    static var localizedStringIDMapping: [Self: String] { get }
 }
 
 extension Localizable {
-  public static var emptyLocalizedStringID: String {
-    ""
-  }
+    /// The empty localized string ID.
+    public static var emptyLocalizedStringID: String {
+        ""
+    }
 
-  public static var defaultLocalizedStringID: String {
-    emptyLocalizedStringID
-  }
+    /// The default localized string ID.
+    public static var defaultLocalizedStringID: String {
+        emptyLocalizedStringID
+    }
 
-  public var localizedStringIDRawValue: String {
-    let string = Self.localizedStringIDMapping[self]
-    assert(string != nil)
-    return string ?? ""
-  }
+    /// The raw value of the localized string ID for the current instance.
+    public var localizedStringIDRawValue: String {
+        let string = Self.localizedStringIDMapping[self]
+        assert(string != nil)
+        return string ?? ""
+    }
 }
 
 extension Optional where Wrapped: Localizable {
-  public var localizedStringIDRawValue: String {
-    guard let value = self else {
-      return Wrapped.defaultLocalizedStringID
+    /// The raw value of the localized string ID for the current instance.
+    public var localizedStringIDRawValue: String {
+        guard let value = self else {
+            return Wrapped.defaultLocalizedStringID
+        }
+        let string = Wrapped.localizedStringIDMapping[value]
+        assert(string != nil)
+        return string ?? ""
     }
-    let string = Wrapped.localizedStringIDMapping[value]
-    assert(string != nil)
-    return string ?? ""
-  }
 }

@@ -30,6 +30,9 @@
 import Foundation
 
 extension Result {
+  /// Initializes a `Result` by catching any errors thrown by the provided asynchronous closure.
+  /// - Parameter body: An asynchronous closure that may throw an error.
+  /// - Returns: A `Result` instance containing the success value or the thrown error.
   public init(catching body: @Sendable () async throws -> Success) async
   where Failure == any Error {
     do {
@@ -39,6 +42,9 @@ extension Result {
     }
   }
 
+  /// Unwraps the success value of the current `Result` instance, or returns a new `Result` with the provided failure value if the success value is `nil`.
+  /// - Parameter failure: The failure value to be used if the success value is `nil`.
+  /// - Returns: A new `Result` instance with the unwrapped success value or the provided failure value.
   public func unwrap<NewSuccess>(
     or failure: Failure
   ) -> Result<NewSuccess, Failure> where Success == NewSuccess? {

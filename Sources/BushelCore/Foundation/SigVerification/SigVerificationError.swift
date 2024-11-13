@@ -27,9 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// An error that can occur during signature verification.
 public enum SigVerificationError: Error {
-  case unsupportedSource
-  case internalError(Error)
-  case notFound
-  case unknownError(Error)
+    /// Indicates that the source of the signature is not supported.
+    case unsupportedSource
+    /// Indicates an internal error occurred during signature verification.
+    case internalError(Error)
+    /// Indicates that the necessary data for verification was not found.
+    case notFound
+    /// Indicates an unknown error occurred during signature verification.
+    case unknownError(Error)
 }

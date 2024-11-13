@@ -33,7 +33,20 @@ public import Foundation
   public import FoundationNetworking
 #endif
 
+/// A protocol that defines the required methods for handling files.
 public protocol FileHandler: Sendable {
+  /// Retrieves the size of the file at the specified URL.
+  ///
+  /// - Parameter url: The URL of the file to get the size for.
+  /// - Returns: The size of the file in bytes, or `nil` if the size could not be determined.
+  /// - Throws: Any errors that occur while trying to get the file size.
   func sizeOf(_ url: URL) throws -> Int?
+
+  /// Copies a file from one URL to another.
+  ///
+  /// - Parameters:
+  ///   - fromURL: The URL of the file to be copied.
+  ///   - toURL: The URL of the destination for the copied file.
+  /// - Throws: Any errors that occur during the copy operation.
   func copy(at fromURL: URL, to toURL: URL) async throws
 }

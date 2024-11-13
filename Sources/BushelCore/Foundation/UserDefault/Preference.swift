@@ -30,13 +30,19 @@
 public import RadiantKit
 
 public enum Preference {
+  /// An enum representing machine shutdown action preferences.
   public enum MachineShutdownAction: AppStored {
+    /// The underlying value type for the machine shutdown action preference.
     public typealias Value = MachineShutdownActionOption?
+    /// The key type used to store the machine shutdown action preference.
     public static let keyType: KeyType = .reflecting
   }
 
+  /// An enum representing session close button action preferences.
   public enum SessionCloseButtonAction: AppStored {
+    /// The underlying value type for the session close button action preference.
     public typealias Value = SessionCloseButtonActionOption?
+    /// The key type used to store the session close button action preference.
     public static let keyType: KeyType = .reflecting
   }
 }

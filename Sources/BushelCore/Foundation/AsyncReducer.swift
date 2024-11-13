@@ -29,12 +29,16 @@
 
 import Foundation
 
+/// An actor that asynchronously reduces an `AsyncSequence` to an array of its elements.
 public actor AsyncReducer<
   AsyncSequenceType: AsyncSequence & Sendable
 > where AsyncSequenceType.Element: Sendable {
+  /// The underlying `AsyncSequence` to be reduced.
   private let sequence: AsyncSequenceType
+  /// The cached elements of the reduced sequence, if available.
   private var currentElements: [AsyncSequenceType.Element]?
 
+  /// The elements of the reduced `AsyncSequence`.
   public var elements: [AsyncSequenceType.Element] {
     get async throws {
       if let currentElements {
@@ -44,10 +48,14 @@ public actor AsyncReducer<
     }
   }
 
+  /// Initializes the `AsyncReducer` with the given `AsyncSequence`.
+  /// - Parameter sequence: The `AsyncSequence` to be reduced.
   public init(sequence: AsyncSequenceType) {
     self.sequence = sequence
   }
 
+  /// Reduces the `AsyncSequence` to an array of its elements.
+  /// - Returns: An array of the elements in the `AsyncSequence`.
   private func reduce() async throws -> [AsyncSequenceType.Element] {
     var elements = [AsyncSequenceType.Element]()
     for try await element in sequence {

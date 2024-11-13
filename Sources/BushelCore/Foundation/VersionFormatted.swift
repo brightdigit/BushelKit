@@ -30,20 +30,31 @@
 import Foundation
 
 public struct VersionFormatted: Sendable {
-  public let marketingVersion: String
-  public let buildNumberHex: String
+    /// The marketing version of the app.
+    public let marketingVersion: String
 
-  public init(marketingVersion: String, buildNumberHex: String) {
-    self.marketingVersion = marketingVersion
-    self.buildNumberHex = buildNumberHex
-  }
+    /// The build number of the app in hexadecimal format.
+    public let buildNumberHex: String
+
+    /// Initializes a `VersionFormatted` struct with the given marketing version and build number in hexadecimal format.
+    ///
+    /// - Parameters:
+    ///   - marketingVersion: The marketing version of the app.
+    ///   - buildNumberHex: The build number of the app in hexadecimal format.
+    public init(marketingVersion: String, buildNumberHex: String) {
+        self.marketingVersion = marketingVersion
+        self.buildNumberHex = buildNumberHex
+    }
 }
 
 extension VersionFormatted {
-  public init(version: Version) {
-    self.init(
-      marketingVersion: version.description,
-      buildNumberHex: version.buildNumberHex()
-    )
-  }
+    /// Initializes a `VersionFormatted` struct from a `Version` object.
+    ///
+    /// - Parameter version: The `Version` object to be converted.
+    public init(version: Version) {
+        self.init(
+            marketingVersion: version.description,
+            buildNumberHex: version.buildNumberHex()
+        )
+    }
 }

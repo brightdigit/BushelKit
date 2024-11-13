@@ -29,13 +29,18 @@
 
 public import Foundation
 
+/// A protocol that represents an operating system that is installed on a device.
 public protocol OperatingSystemInstalled {
-  var buildVersion: String? { get }
-  var operatingSystemVersion: OperatingSystemVersion { get }
+    /// The build version of the operating system.
+    var buildVersion: String? { get }
+
+    /// The version of the operating system.
+    var operatingSystemVersion: OperatingSystemVersion { get }
 }
 
 extension OperatingSystemInstalled {
-  public var components: OperatingSystemVersionComponents {
-    .init(buildVersion: self.buildVersion, operatingSystemVersion: self.operatingSystemVersion)
-  }
+    /// The components of the operating system version.
+    public var components: OperatingSystemVersionComponents {
+        .init(buildVersion: self.buildVersion, operatingSystemVersion: self.operatingSystemVersion)
+    }
 }

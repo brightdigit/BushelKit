@@ -29,39 +29,53 @@
 
 import Foundation
 
+/// Represents the environment configuration for the application.
+/// This type conforms to `CustomReflectable` and `Sendable` protocols.
 public struct EnvironmentConfiguration: CustomReflectable, Sendable {
-  public enum Key: String {
-    case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
-    case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
-    case onboardingOveride = "ONBOARDING_OVERRIDE"
-    case resetApplication = "RESET_APPLICATION"
-  }
+    /// Represents the available configuration keys.
+    public enum Key: String {
+        /// Disables assertion failures for errors.
+        case disableAssertionFailureForError = "DISABLE_ASSERTION_FAILURE_FOR_ERROR"
+        /// Disallows database rebuild.
+        case disallowDatabaseRebuild = "DISALLOW_DATABASE_REBUILD"
+        /// Overrides the onboarding process.
+        case onboardingOveride = "ONBOARDING_OVERRIDE"
+        /// Resets the application.
+        case resetApplication = "RESET_APPLICATION"
+    }
 
-  public static let shared: EnvironmentConfiguration = .init()
+    /// The shared instance of `EnvironmentConfiguration`.
+    public static let shared: EnvironmentConfiguration = .init()
 
-  @EnvironmentProperty(Key.disableAssertionFailureForError)
-  public var disableAssertionFailureForError: Bool
+    /// Indicates whether assertion failures for errors should be disabled.
+    @EnvironmentProperty(Key.disableAssertionFailureForError)
+    public var disableAssertionFailureForError: Bool
 
-  @EnvironmentProperty(Key.disallowDatabaseRebuild)
-  public var disallowDatabaseRebuild: Bool
+    /// Indicates whether database rebuild is disallowed.
+    @EnvironmentProperty(Key.disallowDatabaseRebuild)
+    public var disallowDatabaseRebuild: Bool
 
-  @EnvironmentProperty(Key.onboardingOveride)
-  public var onboardingOveride: OnboardingOverrideOption
+    /// Represents the onboarding override option.
+    @EnvironmentProperty(Key.onboardingOveride)
+    public var onboardingOveride: OnboardingOverrideOption
 
-  @EnvironmentProperty(Key.resetApplication)
-  public var resetApplication: Bool
+    /// Indicates whether the application should be reset.
+    @EnvironmentProperty(Key.resetApplication)
+    public var resetApplication: Bool
 
-  public var customMirror: Mirror {
-    Mirror(
-      self,
-      children: [
-        "disableAssertionFailureForError": disableAssertionFailureForError,
-        "disallowDatabaseRebuild": disallowDatabaseRebuild,
-        "onboardingOveride": onboardingOveride,
-        "resetApplication": resetApplication,
-      ]
-    )
-  }
+    /// Provides a custom mirror for the `EnvironmentConfiguration` instance.
+    public var customMirror: Mirror {
+        Mirror(
+            self,
+            children: [
+                "disableAssertionFailureForError": disableAssertionFailureForError,
+                "disallowDatabaseRebuild": disallowDatabaseRebuild,
+                "onboardingOveride": onboardingOveride,
+                "resetApplication": resetApplication,
+            ]
+        )
+    }
 
-  internal init() {}
+    /// Initializes a new instance of `EnvironmentConfiguration`.
+    internal init() {}
 }

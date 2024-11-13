@@ -30,6 +30,8 @@
 public import Foundation
 
 #warning("Not sure about this")
+/// Represents errors that can occur when working with a VM system.
 public enum VMSystemError: Error {
-  case unknownSystemBasedOn(URL)
+    /// Represents an error that occurs when the system is unknown based on the provided URL.
+    case unknownSystemBasedOn(URL)
 }

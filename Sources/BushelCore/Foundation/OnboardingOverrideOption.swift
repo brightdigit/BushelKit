@@ -29,25 +29,31 @@
 
 public import Foundation
 
+/// Represents an option for overriding the onboarding flow.
 public enum OnboardingOverrideOption: String, EnvironmentValue {
   case skip
   case force
   case none
 
+  /// The default `OnboardingOverrideOption` value.
   public static let `default`: OnboardingOverrideOption = .none
 }
 
 extension OnboardingOverrideOption {
+  /// Determines whether the onboarding flow should be displayed based on the current `OnboardingOverrideOption` and an optional `Date`.
+  ///
+  /// - Parameter date: An optional `Date` value.
+  /// - Returns: A `Bool` indicating whether the onboarding flow should be displayed.
   public func shouldBasedOn(date: Date?) -> Bool {
     switch (self, date) {
     case (.skip, _):
-      false
+      return false
     case (.force, _):
-      true
+      return true
     case (.none, .some):
-      false
+      return false
     case (.none, .none):
-      true
+      return true
     }
   }
 }

@@ -29,5 +29,9 @@
 
 import Foundation
 
+/// A type alias for a closure that provides `ReleaseCollectionMetadata` for a given `VMSystemID`.
+///
+/// - Parameter vmSystemID: The `VMSystemID` for which to provide `ReleaseCollectionMetadata`.
+/// - Returns: An `ReleaseCollectionMetadata` instance.
 public typealias ReleaseCollectionMetadataProvider =
   @Sendable (VMSystemID) -> any ReleaseCollectionMetadata

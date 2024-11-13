@@ -29,23 +29,41 @@
 
 import Foundation
 
+/// A protocol that represents an installer release.
 public protocol InstallerRelease: Sendable, Identifiable, Equatable {
-  var versionName: String { get }
-  var releaseName: String { get }
-  var imageName: String { get }
-  var majorVersion: Int { get }
+    /// The version name of the release.
+    var versionName: String { get }
+
+    /// The release name of the release.
+    var releaseName: String { get }
+
+    /// The image name of the release.
+    var imageName: String { get }
+
+    /// The major version of the release.
+    var majorVersion: Int { get }
 }
 
 extension InstallerRelease {
-  public static func == (lhs: Self, rhs: Self) -> Bool {
-    lhs.id == rhs.id
-  }
-
-  package func isEqual(to other: some InstallerRelease) -> Bool {
-    guard let otherID = other.id as? Self.ID else {
-      return false
+    /// Compares two `InstallerRelease` instances for equality.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first `InstallerRelease` instance to compare.
+    ///   - rhs: The second `InstallerRelease` instance to compare.
+    /// - Returns: `true` if the two `InstallerRelease` instances are equal, `false` otherwise.
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 
-    return id == otherID
-  }
+    /// Checks if the current `InstallerRelease` instance is equal to another `InstallerRelease` instance.
+    ///
+    /// - Parameter other: The `InstallerRelease` instance to compare against.
+    /// - Returns: `true` if the two `InstallerRelease` instances are equal, `false` otherwise.
+    package func isEqual(to other: some InstallerRelease) -> Bool {
+        guard let otherID = other.id as? Self.ID else {
+            return false
+        }
+
+        return id == otherID
+    }
 }

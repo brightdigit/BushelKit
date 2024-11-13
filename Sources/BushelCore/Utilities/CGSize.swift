@@ -30,6 +30,14 @@
 public import Foundation
 
 extension CGSize {
+  /// Resizes the `CGSize` to maintain the given aspect ratio, while ensuring a minimum width.
+  ///
+  /// - Parameters:
+  ///   - aspectRatio: The desired aspect ratio of the resized size.
+  ///   - minimumWidth: The minimum width of the resized size.
+  ///   - additionalHeight: Additional height to be added to the resized size.
+  ///
+  /// - Returns: The resized `CGSize` that maintains the given aspect ratio and has a minimum width.
   @inlinable
   public func resizing(
     toAspectRatio aspectRatio: CGFloat,

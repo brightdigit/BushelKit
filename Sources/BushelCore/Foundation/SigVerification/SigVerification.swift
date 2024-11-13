@@ -27,20 +27,29 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents the signature verification state of a message.
 public enum SigVerification: Int, Sendable, Codable, CustomDebugStringConvertible {
-  case unsigned
-  case signed
+    /// The message is unsigned.
+    case unsigned
+    /// The message is signed.
+    case signed
 
-  public var debugDescription: String {
-    switch self {
-    case .signed: return "Signed"
-    case .unsigned: return "Unsigned"
+    /// A textual description of the verification state.
+    public var debugDescription: String {
+        switch self {
+        case .signed:
+            return "Signed"
+        case .unsigned:
+            return "Unsigned"
+        }
     }
-  }
 }
 
 extension SigVerification {
-  public init(isSigned: Bool) {
-    self = isSigned ? .signed : .unsigned
-  }
+    /// Initializes a `SigVerification` instance based on the specified signing state.
+    ///
+    /// - Parameter isSigned: A Boolean value indicating whether the message is signed.
+    public init(isSigned: Bool) {
+        self = isSigned ? .signed : .unsigned
+    }
 }

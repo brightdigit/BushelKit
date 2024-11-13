@@ -29,34 +29,48 @@
 
 import Foundation
 
+/// A protocol that represents an environment value that can be sent between different parts of an application.
 public protocol EnvironmentValue: Sendable {
-  static var `default`: Self { get }
-  var environmentStringValue: String { get }
-  init?(environmentStringValue: String)
+    /// The default value for the environment value.
+    static var `default`: Self { get }
+
+    /// The string representation of the environment value.
+    var environmentStringValue: String { get }
+
+    /// Initializes the environment value from a string representation.
+    /// - Parameter environmentStringValue: The string representation of the environment value.
+    init?(environmentStringValue: String)
 }
 
 extension EnvironmentValue where Self: LosslessStringConvertible {
-  public var environmentStringValue: String {
-    self.description
-  }
+    /// The string representation of the environment value.
+    public var environmentStringValue: String {
+        self.description
+    }
 
-  public init?(environmentStringValue: String) {
-    self.init(environmentStringValue)
-  }
+    /// Initializes the environment value from a string representation.
+    /// - Parameter environmentStringValue: The string representation of the environment value.
+    public init?(environmentStringValue: String) {
+        self.init(environmentStringValue)
+    }
 }
 
 extension EnvironmentValue where Self: RawRepresentable, RawValue == String {
-  public var environmentStringValue: String {
-    self.rawValue
-  }
+    /// The string representation of the environment value.
+    public var environmentStringValue: String {
+        self.rawValue
+    }
 
-  public init?(environmentStringValue: String) {
-    self.init(rawValue: environmentStringValue)
-  }
+    /// Initializes the environment value from a string representation.
+    /// - Parameter environmentStringValue: The string representation of the environment value.
+    public init?(environmentStringValue: String) {
+        self.init(rawValue: environmentStringValue)
+    }
 }
 
 extension Bool: EnvironmentValue {
-  public static var `default`: Bool {
-    false
-  }
+    /// The default value for the environment value.
+    public static var `default`: Bool {
+        false
+    }
 }

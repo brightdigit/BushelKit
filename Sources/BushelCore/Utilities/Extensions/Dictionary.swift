@@ -28,6 +28,12 @@
 //
 
 extension Dictionary {
+  /// Initializes a new dictionary from a sequence of values, using a closure to generate unique keys.
+  ///
+  /// - Parameters:
+  ///   - values: A sequence of values to be used to initialize the dictionary.
+  ///   - key: A closure that takes a value and returns a key for that value.
+  /// - Returns: A new dictionary initialized with the unique keys and their corresponding values.
   @inlinable public init<S>(uniqueValues values: S, keyBy key: @escaping (Value) -> Key)
   where S: Sequence, S.Element == Value {
     let uniqueKeysWithValues: [(Key, Value)] = values.map { (key($0), $0) }

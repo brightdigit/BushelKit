@@ -28,31 +28,40 @@
 //
 
 #if canImport(ObjectiveC)
-  import Foundation
 
-  @available(*, deprecated)
-  @MainActor
-  internal final class KVNSObservation: KVObservation {
+import Foundation
+
+/// Represents an observation of key-value changes on an `NSObject`.
+@available(*, deprecated)
+@MainActor
+internal final class KVNSObservation: KVObservation {
+    /// The object being observed.
     internal let observed: NSObject
+
+    /// The observer of the key-value changes.
     internal let observer: NSObject
+
+    /// The key paths being observed.
     internal let keyPaths: [String]
 
+    /// Initializes a new `KVNSObservation` instance.
+    ///
+    /// - Parameters:
+    ///   - observed: The object being observed.
+    ///   - observer: The observer of the key-value changes.
+    ///   - keyPaths: The key paths being observed.
     internal init(observed: NSObject, observer: NSObject, keyPaths: [String]) {
-      self.observed = observed
-      self.observer = observer
-      self.keyPaths = keyPaths
+        self.observed = observed
+        self.observer = observer
+        self.keyPaths = keyPaths
     }
 
-    #warning(
-      // swiftlint:disable:next line_length
-      "logging-note: I wanted to note that I used to log every init while developing, just to make sure I am not leaving any leaks behind me, but not sure if this is useful for the current state of bushel development"
-    )
     deinit {
-      MainActor.assumeIsolated {
-        for keyPath in keyPaths {
-          observed.removeObserver(observer, forKeyPath: keyPath)
+        MainActor.assumeIsolated {
+            for keyPath in keyPaths {
+                observed.removeObserver(observer, forKeyPath: keyPath)
+            }
         }
-      }
     }
-  }
+}
 #endif

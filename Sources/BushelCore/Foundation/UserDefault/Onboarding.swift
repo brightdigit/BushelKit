@@ -33,7 +33,10 @@ public import RadiantKit
 public enum Onboarding {
   /// Onboarding Flag for v1.2.0
   public enum Fuji: RadiantKit.AppStored {
+    /// The key type for the stored value.
     public static let keyType: RadiantKit.KeyType = .reflecting
+
+    /// The type of the stored value.
     public typealias Value = Date?
   }
 }

@@ -29,15 +29,21 @@
 
 public import Foundation
 import OperatingSystemVersion
-
+/// A struct representing a hardware model.
 public struct HardwareModel: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case dataRepresentationVersion = "DataRepresentationVersion"
-    case minimumSupportedOS = "MinimumSupportedOS"
-    case platformVersion = "PlatformVersion"
-  }
+    /// The coding keys used for encoding and decoding the hardware model.
+    public enum CodingKeys: String, CodingKey {
+        case dataRepresentationVersion = "DataRepresentationVersion"
+        case minimumSupportedOS = "MinimumSupportedOS"
+        case platformVersion = "PlatformVersion"
+    }
 
-  public let dataRepresentationVersion: Int
-  public let minimumSupportedOS: OperatingSystemVersion
-  public let platformVersion: Int
+    /// The data representation version of the hardware model.
+    public let dataRepresentationVersion: Int
+
+    /// The minimum supported operating system version for the hardware model.
+    public let minimumSupportedOS: OperatingSystemVersion
+
+    /// The platform version of the hardware model.
+    public let platformVersion: Int
 }

@@ -31,6 +31,12 @@ public import Foundation
 public import RadiantKit
 
 extension UserDefaults {
+  /// Retrieves a boolean value from the `UserDefaults` store, with a fallback default value.
+  ///
+  /// - Parameters:
+  ///   - key: The key to use when retrieving the value from the `UserDefaults` store.
+  ///   - defaultValue: The default value to return if the key does not exist in the `UserDefaults` store.
+  /// - Returns: The boolean value associated with the specified key, or the provided default value if the key does not exist.
   public func bool(forKey key: String, defaultValue: Bool) -> Bool {
     guard self.object(forKey: key) == nil else {
       return self.bool(forKey: key)
@@ -39,6 +45,12 @@ extension UserDefaults {
     return defaultValue
   }
 
+  /// Retrieves a value from the `UserDefaults` store for a type that conforms to the `AppStored` protocol, with a fallback default value.
+  ///
+  /// - Parameters:
+  ///   - _: The type that conforms to the `AppStored` protocol.
+  ///   - defaultValue: The default value to return if the key does not exist in the `UserDefaults` store.
+  /// - Returns: The value associated with the specified type's key, or the provided default value if the key does not exist.
   public func value<AppStoredType: AppStored>(
     for _: AppStoredType.Type,
     defaultValue: AppStoredType.Value
@@ -46,6 +58,12 @@ extension UserDefaults {
     self.bool(forKey: AppStoredType.key, defaultValue: defaultValue)
   }
 
+  /// Retrieves a value from the `UserDefaults` store for a type that conforms to the `DefaultWrapped` protocol, with a fallback default value.
+  ///
+  /// - Parameters:
+  ///   - _: The type that conforms to the `DefaultWrapped` protocol.
+  ///   - defaultValue: The default value to return if the key does not exist in the `UserDefaults` store. Defaults to the type's `default` value if not provided.
+  /// - Returns: The value associated with the specified type's key, or the provided default value if the key does not exist.
   public func value<AppStoredType: DefaultWrapped>(
     for _: AppStoredType.Type,
     defaultValue: AppStoredType.Value = AppStoredType.default

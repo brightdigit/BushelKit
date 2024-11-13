@@ -30,14 +30,19 @@
 public import Foundation
 
 extension Bundle {
+  /// An error that occurs when a bundle identifier is missing.
   public struct MissingIdentifierError: Error {
     private init() {}
 
     fileprivate static let shared: any Error = MissingIdentifierError()
   }
 
+  /// The suite name for the application group.
   public static let suiteName = "group.com.brightdigit.Bushel"
 
+  /// Clears the user defaults for the application's bundle identifier.
+  ///
+  /// - Throws: `MissingIdentifierError` if the bundle identifier is missing.
   public func clearUserDefaults() throws {
     guard let domainName = self.bundleIdentifier else {
       throw MissingIdentifierError.shared

@@ -29,31 +29,42 @@
 
 import Foundation
 
+/// Represents the different options for the session close button action.
 public enum SessionCloseButtonActionOption: Int, CaseIterable, Localizable, Sendable {
-  case forceTurnOff = 10
-  case saveSnapshotAndForceTurnOff = 20
+    /// Forcefully turns off the session.
+    case forceTurnOff = 10
+    /// Saves a snapshot and forcefully turns off the session.
+    case saveSnapshotAndForceTurnOff = 20
 
-  public static let emptyValue = 0
+    /// The empty value for this enum.
+    public static let emptyValue = 0
 
-  public static let defaultLocalizedStringID = "settingsSessionCloseAskUser"
-  public static let localizedStringIDMapping: [Self: String] = [
-    .forceTurnOff: "settingsSessionCloseForceTurnOff",
-    .saveSnapshotAndForceTurnOff: "settingsSessionCloseSaveSnapshotTurnOff",
-  ]
+    /// The default localized string ID for this enum.
+    public static let defaultLocalizedStringID = "settingsSessionCloseAskUser"
+
+    /// A mapping of each case to its corresponding localized string ID.
+    public static let localizedStringIDMapping: [Self: String] = [
+        .forceTurnOff: "settingsSessionCloseForceTurnOff",
+        .saveSnapshotAndForceTurnOff: "settingsSessionCloseSaveSnapshotTurnOff",
+    ]
 }
 
 extension SessionCloseButtonActionOption {
-  public static var pickerValues: [SessionCloseButtonActionOption?] {
-    allCases + [nil]
-  }
+    /// A list of all the cases in this enum, plus a `nil` value.
+    public static var pickerValues: [SessionCloseButtonActionOption?] {
+        allCases + [nil]
+    }
 }
 
 extension Optional where Wrapped == SessionCloseButtonActionOption {
-  public var tag: Int {
-    self?.rawValue ?? Wrapped.emptyValue
-  }
+    /// The tag value for this option, which is the raw value of the enum case.
+    /// If the value is `nil`, the `emptyValue` is returned.
+    public var tag: Int {
+        self?.rawValue ?? Wrapped.emptyValue
+    }
 
-  public var requiresSubscription: Bool {
-    self == .saveSnapshotAndForceTurnOff
-  }
+    /// A boolean indicating whether this option requires a subscription.
+    public var requiresSubscription: Bool {
+        self == .saveSnapshotAndForceTurnOff
+    }
 }

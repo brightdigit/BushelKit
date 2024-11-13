@@ -29,17 +29,34 @@
 
 public import Foundation
 
+/// A protocol that defines a source signature verifier.
 public protocol SourceSigVerifier: Sendable {
-  var id: VMSystemID { get }
-  var sourceID: String { get }
-  var priority: SignaturePriority { get }
-  func imageSignature(from source: SignatureSource, timestamp: Date)
-    async throws(SigVerificationError) -> ImageSignature
+    /// The unique identifier of the verifier system.
+    var id: VMSystemID { get }
+
+    /// The identifier of the source.
+    var sourceID: String { get }
+
+    /// The priority of the signature.
+    var priority: SignaturePriority { get }
+
+    /// Retrieves the image signature from the specified source and timestamp.
+    ///
+    /// - Parameters:
+    ///   - source: The signature source.
+    ///   - timestamp: The timestamp of the signature.
+    /// - Returns: The image signature.
+    /// - Throws: `SigVerificationError` if there is an error verifying the signature.
+    func imageSignature(from source: SignatureSource, timestamp: Date) async throws -> ImageSignature
 }
-extension SourceSigVerifier {
-  public func imageSignature(from source: SignatureSource) async throws(SigVerificationError)
-    -> ImageSignature
-  {
-    try await self.imageSignature(from: source, timestamp: .now)
-  }
+
+public extension SourceSigVerifier {
+    /// Retrieves the image signature from the specified source.
+    ///
+    /// - Parameter source: The signature source.
+    /// - Returns: The image signature.
+    /// - Throws: `SigVerificationError` if there is an error verifying the signature.
+    public func imageSignature(from source: SignatureSource) async throws -> ImageSignature {
+        try await self.imageSignature(from: source, timestamp: .now)
+    }
 }

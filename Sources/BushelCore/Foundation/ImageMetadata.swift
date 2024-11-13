@@ -69,6 +69,7 @@ public struct ImageMetadata: Codable,
   ///   - contentLength: The size of the image file in bytes.
   ///   - lastModified: The last modification date of the image file.
   ///   - fileExtension: The file extension of the image (e.g., ".dmg", ".iso").
+  ///   - sigVerification: The signature verification information for the image (optional).
   ///   - vmSystemID: The virtual machine system identifier associated with the image.
   public init(
     isImageSupported: Bool,

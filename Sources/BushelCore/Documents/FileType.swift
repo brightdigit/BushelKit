@@ -30,22 +30,33 @@
 public import RadiantDocs
 
 extension FileType {
+  /// The file extension for an IPSW (iPhone Software Update) file.
   public static let ipswFileExtension = "ipsw"
+
+  /// The file type for an iTunes IPSW file.
   public static let iTunesIPSW: FileType = "com.apple.itunes.ipsw"
+
+  /// The file type for an iPhone IPSW file.
   public static let iPhoneIPSW: FileType = "com.apple.iphone.ipsw"
 
+  /// The file extension for a virtual machine file.
   public static let virtualMachineFileExtension = "bshvm"
+
+  /// The file extension for a restore image library file.
   public static let restoreImageLibraryFileExtension = "bshrilib"
 
+  /// The file type for a virtual machine file.
   public static let virtualMachine: FileType = .exportedAs(
     "com.brightdigit.bushel-vm",
     virtualMachineFileExtension
   )
 
+  /// The file type for a restore image library file.
   public static let restoreImageLibrary: FileType = .exportedAs(
     "com.brightdigit.bushel-rilib",
     restoreImageLibraryFileExtension
   )
 
+  /// An array of all IPSW file types.
   public static let ipswTypes = [iTunesIPSW, iPhoneIPSW]
 }

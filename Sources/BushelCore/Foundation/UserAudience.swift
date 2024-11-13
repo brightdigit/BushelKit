@@ -29,29 +29,51 @@
 
 import Foundation
 
+/// Represents a set of user audience types for a particular purpose.
 public struct UserAudience: OptionSet, Sendable {
-  public typealias RawValue = Int
+    /// The raw value of the user audience.
+    public typealias RawValue = Int
 
-  public static let proSubscriber: UserAudience = .init(rawValue: 1)
-  public static let testFlightBeta: UserAudience = .init(rawValue: 2)
-  public static let any: UserAudience = .init(rawValue: .max)
-  public static let `default`: UserAudience = [.testFlightBeta, proSubscriber]
-  public static let none: UserAudience = []
-  public static var availableValues: UserAudience {
-    .default
-  }
+    /// The Pro subscriber audience.
+    public static let proSubscriber: UserAudience = .init(rawValue: 1)
 
-  public var rawValue: Int
+    /// The TestFlight beta audience.
+    public static let testFlightBeta: UserAudience = .init(rawValue: 2)
 
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
+    /// The any audience, which includes all possible user audiences.
+    public static let any: UserAudience = .init(rawValue: .max)
 
-  //  public static func includes(_ value: UserAudience) -> Bool {
-  //    guard value.rawValue > 0 else {
-  //      return false
-  //    }
-  //    let value: Bool = .random()
-  //    return value
-  //  }
+    /// The default audience, which includes the TestFlight beta and Pro subscriber audiences.
+    public static let `default`: UserAudience = [.testFlightBeta, proSubscriber]
+
+    /// The empty audience, which includes no user audiences.
+    public static let none: UserAudience = []
+
+    /// The available user audiences.
+    public static var availableValues: UserAudience {
+        .default
+    }
+
+    /// The raw value of the user audience.
+    public var rawValue: Int
+
+    /// Initializes a new `UserAudience` instance with the given raw value.
+    ///
+    /// - Parameter rawValue: The raw value of the user audience.
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    // Commented-out function:
+    // /// Checks if the given user audience is included in the current user audience.
+    // ///
+    // /// - Parameter value: The user audience to check.
+    // /// - Returns: `true` if the given user audience is included, `false` otherwise.
+    // public static func includes(_ value: UserAudience) -> Bool {
+    //     guard value.rawValue > 0 else {
+    //         return false
+    //     }
+    //     let value: Bool = .random()
+    //     return value
+    // }
 }

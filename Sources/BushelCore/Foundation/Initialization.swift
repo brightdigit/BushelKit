@@ -31,17 +31,27 @@ import Foundation
 
 @MainActor
 public final class Initialization {
+  /// A static instance of the `Initialization` class.
   public static let begin = Initialization()
+
+  /// A flag indicating whether the initialization process has been completed.
   private var isCompleted = false
 
+  /// Initializes a new instance of the `Initialization` class.
   private init() {}
 
+  /// Executes the provided closure asynchronously on the main actor.
+  ///
+  /// - Parameter closure: The closure to be executed on the main actor.
   public nonisolated func callAsFunction(_ closure: @MainActor @Sendable @escaping () -> Void) {
     Task {
       await self.execute(closure)
     }
   }
 
+  /// Executes the provided closure on the main actor, ensuring that the initialization process is completed only once.
+  ///
+  /// - Parameter closure: The closure to be executed on the main actor.
   internal func execute(_ closure: @MainActor @Sendable @escaping () -> Void) {
     guard !isCompleted else {
       return

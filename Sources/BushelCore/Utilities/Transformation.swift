@@ -29,14 +29,22 @@
 
 import Foundation
 
+/// A struct that applies a transformation to a value of type `T` and returns a value of type `U`.
 public struct Transformation<T, U>: Sendable {
-  private let closure: @Sendable (T) -> U
-  public init(_ closure: @Sendable @escaping (T) -> U) {
-    self.closure = closure
-  }
+    /// The closure that performs the transformation.
+    private let closure: @Sendable (T) -> U
 
-  @Sendable
-  public func callAsFunction(_ input: T) -> U {
-    self.closure(input)
-  }
+    /// Initializes the `Transformation` with a closure that transforms a value of type `T` to a value of type `U`.
+    /// - Parameter closure: The closure that performs the transformation.
+    public init(_ closure: @Sendable @escaping (T) -> U) {
+        self.closure = closure
+    }
+
+    /// Applies the transformation to the provided input and returns the transformed value.
+    /// - Parameter input: The value to be transformed.
+    /// - Returns: The transformed value.
+    @Sendable
+    public func callAsFunction(_ input: T) -> U {
+        self.closure(input)
+    }
 }

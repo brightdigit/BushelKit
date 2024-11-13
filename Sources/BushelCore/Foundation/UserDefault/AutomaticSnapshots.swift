@@ -28,23 +28,36 @@
 //
 
 import Foundation
+
 public import RadiantKit
 
+/// Represents automatic snapshots settings.
 public enum AutomaticSnapshots {
-  public enum Enabled: AppStored, DefaultWrapped {
-    public typealias Value = Bool
-    public static let keyType: KeyType = .reflecting
-    public static let `default`: Bool = true
-  }
+    /// Represents whether automatic snapshots are enabled.
+    public enum Enabled: AppStored, DefaultWrapped {
+        /// The type of the value.
+        public typealias Value = Bool
+        /// The key type used for storing the value.
+        public static let keyType: KeyType = .reflecting
+        /// The default value for automatic snapshots.
+        public static let `default`: Bool = true
+    }
 
-  public enum Value: AppStored {
-    public typealias Value = Int?
-    public static let keyType: KeyType = .reflecting
-  }
+    /// Represents the value of automatic snapshots.
+    public enum Value: AppStored {
+        /// The type of the value.
+        public typealias Value = Int?
+        /// The key type used for storing the value.
+        public static let keyType: KeyType = .reflecting
+    }
 
-  public enum Polynomial: AppStored, DefaultWrapped {
-    public typealias Value = LagrangePolynomial
-    public static let keyType: KeyType = .reflecting
-    public static let `default`: LagrangePolynomial = .default
-  }
+    /// Represents the polynomial used for automatic snapshots.
+    public enum Polynomial: AppStored, DefaultWrapped {
+        /// The type of the value.
+        public typealias Value = LagrangePolynomial
+        /// The key type used for storing the value.
+        public static let keyType: KeyType = .reflecting
+        /// The default value for the polynomial.
+        public static let `default`: LagrangePolynomial = .default
+    }
 }

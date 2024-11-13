@@ -31,19 +31,23 @@ import Foundation
 
 extension EnvironmentProperty {
   internal enum ValueAccessor: Sendable {
+    /// Represents a value stored in a dictionary, with a corresponding key.
     case dictionary([String: String], key: String)
+    /// Represents a directly stored value.
     case value(Value)
 
+    /// The value represented by the `ValueAccessor`.
     internal var value: Value {
       switch self {
       case let .value(value):
-        value
+        return value
 
       case let .dictionary(dictionary, key: key):
-        dictionary[key].flatMap(Value.init) ?? Value.default
+        return dictionary[key].flatMap(Value.init) ?? Value.default
       }
     }
 
+    /// The dictionary represented by the `ValueAccessor`, if applicable.
     internal var dictionary: [String: String]? {
       guard case let .dictionary(source, key: key) = self else {
         return nil

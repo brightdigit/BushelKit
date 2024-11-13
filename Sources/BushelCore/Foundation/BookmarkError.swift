@@ -29,38 +29,63 @@
 
 public import Foundation
 
+/// An error that represents a problem with a bookmark.
 public struct BookmarkError: Error, Sendable {
-  public enum Details: Equatable, Sendable {
-    case database
-    case accessDeniedAt(URL)
-    case fileDoesNotExistAt(URL)
-    case notFound(Identifier)
-  }
+    /// Represents the details of a `BookmarkError`.
+    public enum Details: Equatable, Sendable {
+        /// Indicates a database-related error.
+        case database
+        /// Indicates that access was denied at a specific URL.
+        case accessDeniedAt(URL)
+        /// Indicates that a file does not exist at a specific URL.
+        case fileDoesNotExistAt(URL)
+        /// Indicates that a bookmark with the given identifier was not found.
+        case notFound(Identifier)
+    }
 
-  public enum Identifier: Equatable, Sendable {
-    case id(UUID)
-    case url(URL)
-  }
+    /// Represents the identifier of a bookmark.
+    public enum Identifier: Equatable, Sendable {
+        /// Identifies a bookmark by its UUID.
+        case id(UUID)
+        /// Identifies a bookmark by its URL.
+        case url(URL)
+    }
 
-  public let innerError: (any Error)?
-  public let details: Details
+    /// The underlying error, if any.
+    public let innerError: (any Error)?
+    /// The details of the error.
+    public let details: Details
 }
 
 extension BookmarkError {
-  public static func notFound(_ identifier: Identifier) -> BookmarkError {
-    BookmarkError(innerError: nil, details: .notFound(identifier))
-  }
-
-  public static func databaseError(_ error: any Error) -> BookmarkError {
-    BookmarkError(innerError: error, details: .database)
-  }
-
-  public static func accessDeniedError(_ error: any Error, at url: URL) -> BookmarkError {
-    let nsError = error as NSError
-    if nsError.code == NSFileReadNoSuchFileError {
-      return BookmarkError(innerError: error, details: .fileDoesNotExistAt(url))
-    } else {
-      return BookmarkError(innerError: error, details: .accessDeniedAt(url))
+    /// Creates a `BookmarkError` with the `notFound` details.
+    ///
+    /// - Parameter identifier: The identifier of the bookmark that was not found.
+    /// - Returns: A `BookmarkError` with the `notFound` details.
+    public static func notFound(_ identifier: Identifier) -> BookmarkError {
+        BookmarkError(innerError: nil, details: .notFound(identifier))
     }
-  }
+
+    /// Creates a `BookmarkError` with the `database` details.
+    ///
+    /// - Parameter error: The underlying error that occurred.
+    /// - Returns: A `BookmarkError` with the `database` details.
+    public static func databaseError(_ error: any Error) -> BookmarkError {
+        BookmarkError(innerError: error, details: .database)
+    }
+
+    /// Creates a `BookmarkError` with the `accessDeniedAt` or `fileDoesNotExistAt` details, depending on the underlying error.
+    ///
+    /// - Parameters:
+    ///   - error: The underlying error that occurred.
+    ///   - url: The URL associated with the error.
+    /// - Returns: A `BookmarkError` with the appropriate details.
+    public static func accessDeniedError(_ error: any Error, at url: URL) -> BookmarkError {
+        let nsError = error as NSError
+        if nsError.code == NSFileReadNoSuchFileError {
+            return BookmarkError(innerError: error, details: .fileDoesNotExistAt(url))
+        } else {
+            return BookmarkError(innerError: error, details: .accessDeniedAt(url))
+        }
+    }
 }

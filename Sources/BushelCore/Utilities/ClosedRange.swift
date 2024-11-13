@@ -28,6 +28,9 @@
 //
 
 extension ClosedRange where Bound == Int {
+  /// Initializes a `ClosedRange<Int>` from a `ClosedRange<Float>`.
+  ///
+  /// - Parameter floatRange: The `ClosedRange<Float>` to be converted.
   public init(floatRange: ClosedRange<Float>) {
     let lowerBound = Int(floatRange.lowerBound.rounded(.up))
     let upperBound = Int(floatRange.upperBound.rounded(.down))
@@ -36,6 +39,9 @@ extension ClosedRange where Bound == Int {
 }
 
 extension ClosedRange where Bound == Float {
+  /// Initializes a `ClosedRange<Float>` from a `ClosedRange<Int>`.
+  ///
+  /// - Parameter intRange: The `ClosedRange<Int>` to be converted.
   public init(intRange: ClosedRange<Int>) {
     let lowerBound = Float(intRange.lowerBound)
     let upperBound = Float(intRange.upperBound)
@@ -44,9 +50,12 @@ extension ClosedRange where Bound == Float {
 }
 
 extension ClosedRange where Bound: BinaryInteger {
+  /// Expands the current `ClosedRange` by the given value.
+  ///
+  /// - Parameter value: The value to expand the range by.
+  /// - Returns: A new `ClosedRange` that is expanded by the given value.
   public func expanded(by value: Bound) -> ClosedRange<Bound> {
     // Ensure the added value is odd
-
     let boundExpandSmaller = value / 2
     let boundExpandLarger = value - boundExpandSmaller
 

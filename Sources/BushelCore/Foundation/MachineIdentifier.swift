@@ -32,11 +32,15 @@
 /// This struct conforms to the `Codable`, `Equatable`, and `Sendable` protocols,
 /// allowing it to be encoded/decoded to different representations, compared for equality,
 /// and safely transferred between processes.
-public struct MachineIdentifier: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case ecID = "ECID"
-  }
 
-  /// A unique 64-bit identifier for the machine.
-  public let ecID: UInt64
+/// A unique identifier for a machine.
+public struct MachineIdentifier: Codable, Equatable, Sendable {
+    /// Coding keys for the `MachineIdentifier` struct.
+    public enum CodingKeys: String, CodingKey {
+        /// The unique 64-bit identifier for the machine.
+        case ecID = "ECID"
+    }
+
+    /// The unique 64-bit identifier for the machine.
+    public let ecID: UInt64
 }

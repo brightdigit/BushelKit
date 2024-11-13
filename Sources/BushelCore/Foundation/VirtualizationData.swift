@@ -32,7 +32,7 @@ public import Foundation
 /// A protocol defining a contract for retrieving data from a specific location.
 /// - Note: This protocol is likely used to abstract data retrieval from different sources,
 /// such as disk directories or network resources.
-package protocol VirtualizationDataSet {
+protocol VirtualizationDataSet {
   /// Retrieves data associated with a specific key path within the `Paths` type.
   ///
   /// - Parameter name: The key path to the data to retrieve.

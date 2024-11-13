@@ -31,8 +31,11 @@ public import Foundation
 public import RadiantDocs
 
 extension InitializablePackage {
-  #warning("logging-note: let's log what is going on here")
-  #warning("Might want to add parameters for creating data and creating directory.")
+  /// Creates a new instance of the `InitializablePackage` at the specified file URL.
+  ///
+  /// - Parameter fileURL: The URL where the package should be created.
+  /// - Throws: Any errors that occur during the creation of the directory or the writing of the metadata JSON file.
+  /// - Returns: The newly created instance of the `InitializablePackage`.
   @discardableResult
   public static func createAt(_ fileURL: URL) throws -> Self {
     let library = self.init()

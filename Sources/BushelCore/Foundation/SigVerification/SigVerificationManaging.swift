@@ -27,14 +27,25 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// A protocol that manages the verification of signatures.
 public protocol SigVerificationManaging: Sendable {
-  func resolve(_ id: VMSystemID) -> SigVerifier
+    /// Resolves the `SigVerifier` for the given `VMSystemID`.
+    ///
+    /// - Parameter id: The `VMSystemID` to resolve the `SigVerifier` for.
+    /// - Returns: The `SigVerifier` for the given `VMSystemID`.
+    func resolve(_ id: VMSystemID) -> SigVerifier
 }
 
 extension SigVerificationManaging {
-  public func isSignatureSigned(from source: SignatureSource, for id: VMSystemID)
-    async throws(SigVerificationError) -> SigVerification
-  {
-    try await self.resolve(id).isSignatureSigned(from: source)
-  }
+    /// Checks if a signature is signed from the given `SignatureSource` for the specified `VMSystemID`.
+    ///
+    /// - Parameters:
+    ///   - source: The `SignatureSource` to check the signature from.
+    ///   - id: The `VMSystemID` to check the signature for.
+    /// - Returns: The `SigVerification` result.
+    /// - Throws: A `SigVerificationError` if the signature verification fails.
+    public func isSignatureSigned(from source: SignatureSource, for id: VMSystemID)
+        async throws(SigVerificationError) -> SigVerification {
+        try await self.resolve(id).isSignatureSigned(from: source)
+    }
 }

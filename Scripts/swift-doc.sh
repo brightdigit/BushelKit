@@ -31,6 +31,45 @@ if [ "$2" = "--skip-backup" ]; then
     SKIP_BACKUP=1
 fi
 
+# Function to extract header (comments, imports, etc.)
+extract_header() {
+    local file="$1"
+    local header
+    # Capture file header (comments, imports, conditional compilation blocks)
+    header=$(awk '
+        BEGIN { in_comment=0; in_imports=1; printed=0 }
+        /^\/\// { print; next }
+        /^\/\*/ { in_comment=1; print; next }
+        in_comment==1 { print; if ($0 ~ /\*\//) in_comment=0; next }
+        /^import/ { if (in_imports) print; next }
+        /^#if/ { print; next }
+        /^#else/ { print; next }
+        /^#endif/ { print; next }
+        /^$/ { if (!printed) print; next }
+        { if (in_imports) in_imports=0; if (!printed) printed=1; exit }
+    ' "$file")
+    echo "$header"
+}
+
+# Function to extract main code (excluding header)
+extract_main_code() {
+    local file="$1"
+    local main_code
+    main_code=$(awk '
+        BEGIN { in_header=1; in_comment=0; buffer="" }
+        in_header && /^\/\// { next }
+        in_header && /^\/\*/ { in_comment=1; next }
+        in_header && in_comment { if ($0 ~ /\*\//) in_comment=0; next }
+        in_header && /^import/ { next }
+        in_header && /^#if/ { next }
+        in_header && /^#else/ { next }
+        in_header && /^#endif/ { next }
+        in_header && /^$/ { next }
+        { in_header=0; print }
+    ' "$file")
+    echo "$main_code"
+}
+
 # Function to clean markdown code blocks
 clean_markdown() {
     local content="$1"
@@ -51,9 +90,16 @@ process_swift_file() {
         echo "Created backup: ${SWIFT_FILE}.backup"
     fi
 
-    # Read and escape the Swift file content for JSON
+    # Extract header and main code separately
+    local header
+    header=$(extract_header "$SWIFT_FILE")
+    
+    local main_code
+    main_code=$(extract_main_code "$SWIFT_FILE")
+
+    # Read and escape the main code for JSON
     local SWIFT_CODE
-    SWIFT_CODE=$(jq -Rs . < "$SWIFT_FILE")
+    SWIFT_CODE=$(echo "$main_code" | jq -Rs .)
 
     # Create the JSON payload
     local JSON_PAYLOAD
@@ -96,8 +142,12 @@ process_swift_file() {
     # Clean the markdown formatting from the response
     documented_code=$(clean_markdown "$documented_code")
 
-    # Save the documented code to the file
-    echo "$documented_code" > "$SWIFT_FILE"
+    # Combine header and documented code
+    {
+        echo "$header"
+        [ ! -z "$header" ] && echo "" # Add blank line if header exists
+        echo "$documented_code"
+    } > "$SWIFT_FILE"
 
     # Show diff if available and backup exists
     if [ $SKIP_BACKUP -eq 0 ] && command -v diff &> /dev/null; then

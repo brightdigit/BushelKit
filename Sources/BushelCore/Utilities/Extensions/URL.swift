@@ -30,6 +30,9 @@
 public import Foundation
 
 extension URL {
+  /// Initializes a `URL` instance from a `StaticString`.
+  ///
+  /// - Parameter staticString: The static string to be used as the URL string.
   public init(_ staticString: StaticString) {
     guard let url = URL(string: .init(describing: staticString)) else {
       fatalError("Invalid URL String")
@@ -38,6 +41,12 @@ extension URL {
   }
 
   #if !os(Linux)
+    /// Initializes a `URL` instance by resolving a security-scoped bookmark data.
+    ///
+    /// - Parameters:
+    ///   - data: The bookmark data to be resolved.
+    ///   - bookmarkDataIsStale: A boolean value indicating whether the bookmark data is stale.
+    /// - Throws: An error if the bookmark data cannot be resolved.
     public init(resolvingSecurityScopeBookmarkData data: Data, bookmarkDataIsStale: inout Bool)
       throws
     {
@@ -52,6 +61,10 @@ extension URL {
       #endif
     }
 
+    /// Creates bookmark data with security scope.
+    ///
+    /// - Returns: The bookmark data with security scope.
+    /// - Throws: An error if the bookmark data cannot be created.
     public func bookmarkDataWithSecurityScope() throws -> Data {
       #if os(macOS)
         return try bookmarkData(options: .withSecurityScope)

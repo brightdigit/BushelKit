@@ -28,8 +28,13 @@
 //
 
 extension Int {
+  /// The number of bytes in one gigabyte.
   public static let bytesPerGB = 1_073_741_824
 
+  /// Rounds the current integer value to the nearest multiple of the specified factor.
+  ///
+  /// - Parameter factor: The integer value to round to a multiple of.
+  /// - Returns: The rounded integer value.
   @inlinable public func roundToMultiple(of factor: Int) -> Int {
     let multiplyBy = (self + (factor / 2)) / factor
     return multiplyBy * factor

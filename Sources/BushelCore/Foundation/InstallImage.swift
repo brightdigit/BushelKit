@@ -29,7 +29,10 @@
 
 public import Foundation
 
+/// A protocol that defines the requirements for an installable image.
 public protocol InstallImage {
-  var url: URL { get }
-  var metadata: ImageMetadata { get }
+    /// The URL of the image.
+    var url: URL { get }
+    /// The metadata associated with the image.
+    var metadata: ImageMetadata { get }
 }
