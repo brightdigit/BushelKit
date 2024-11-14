@@ -1,5 +1,5 @@
 //
-//  SigVerifier.swift
+//  BushelCore.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,15 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-/// A protocol that defines a system for verifying signatures.
-public protocol SigVerifier: Sendable {
-  /// The unique identifier of the system.
-  var id: VMSystemID { get }
-
-  /// Verifies whether a signature is signed.
-  ///
-  /// - Parameter source: The source of the signature to be verified.
-  /// - Returns: The result of the signature verification.
-  /// - Throws: A `SigVerificationError` if the verification fails.
-  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError) -> SigVerification
+struct BushelFoundation: Product, Target {
+  var dependencies: any Dependencies {
+    BushelUtilities()
+    OperatingSystemVersion()
+  }
 }

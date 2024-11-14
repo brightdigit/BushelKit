@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+public import BushelUtilities
 
 #if canImport(os)
   public import os.log
@@ -85,7 +86,8 @@ extension Version {
     }
 
     // swiftlint:disable:next line_length
-    return "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1, factorOf: 2))"
+    return
+      "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 
   /// Creates a new `Version` instance by parsing a marketing version string, build number string,

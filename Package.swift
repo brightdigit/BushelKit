@@ -757,7 +757,15 @@ SupportedPlatform.macCatalyst(.v17)
 }
 struct BushelMacOSCore: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
+BushelUtilities()
+BushelDocs()
+RadiantKit()
+}
+}
+struct BushelUtilities: Product, Target {
+var dependencies: any Dependencies {
+#warning("Remove this")
 RadiantKit()
 }
 }
@@ -778,7 +786,7 @@ BushelMacOSCore()
 }
 struct BushelFactory: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 BushelMachine()
 BushelLibrary()
 BushelLogging()
@@ -786,13 +794,13 @@ BushelLogging()
 }
 struct BushelVirtualBuddy: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 BushelMacOSCore()
 }
 }
 struct BushelCoreWax: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelLogging: Product, Target {
@@ -803,39 +811,33 @@ FelinePineSwift()
 }
 struct BushelGuestProfile: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
 BushelLogging()
 }
 }
 struct BushelUT: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelMachine: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
+BushelDocs()
 BushelLogging()
 }
 }
 struct BushelLibrary: Product, Target {
 var dependencies: any Dependencies {
 BushelLogging()
-BushelCore()
+BushelFoundation()
 BushelMacOSCore()
 RadiantKit()
-}
-}
-struct BushelCore: Product, Target {
-var dependencies: any Dependencies {
-OperatingSystemVersion()
-RadiantDocs()
 }
 }
 struct BushelHub: Product, Target {
 var dependencies: any Dependencies {
 BushelLogging()
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelCommand: Target, Product {
@@ -849,6 +851,18 @@ var productType: ProductType {
 .executable
 }
 }
+struct BushelDocs: Product, Target {
+var dependencies: any Dependencies {
+RadiantDocs()
+BushelFoundation()
+}
+}
+struct BushelFoundation: Product, Target {
+var dependencies: any Dependencies {
+BushelUtilities()
+OperatingSystemVersion()
+}
+}
 struct BushelLibraryWax: Target {
 var dependencies: any Dependencies {
 BushelLibrary()
@@ -858,7 +872,7 @@ BushelMacOSCore()
 struct BushelArgs: Target {
 var dependencies: any Dependencies {
 ArgumentParser()
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelMachineWax: Target {
@@ -892,7 +906,7 @@ BushelTestUtilities()
 }
 struct BushelCoreTests: TestTarget {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 BushelCoreWax()
 BushelTestUtilities()
 }
@@ -959,7 +973,9 @@ var dependency: Package.Dependency {
 let package = Package(
 entries: {
 BushelCommand()
-BushelCore()
+BushelFoundation()
+BushelDocs()
+BushelUtilities()
 BushelCoreWax()
 BushelFactory()
 BushelGuestProfile()

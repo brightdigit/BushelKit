@@ -27,8 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+
 public import Foundation
+public import BushelFoundation
 
 public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
   public enum CodingKeys: String, CodingKey {

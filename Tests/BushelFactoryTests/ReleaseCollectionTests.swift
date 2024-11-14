@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+import BushelFoundation
 import BushelCoreWax
 import BushelFactory
 import BushelMachine

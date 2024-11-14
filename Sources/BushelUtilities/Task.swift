@@ -61,7 +61,7 @@ extension Task where Success == Never, Failure == Never {
         tolerance: .seconds(toleranceSeconds)
       )
     } catch {
-      assertionFailure(error: error)
+      assertionFailure(error: error, disableAssertionFailureForError: false)
       onError(error)
     }
   }

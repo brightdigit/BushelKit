@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-package import BushelCore
+package import BushelFoundation
 public import Foundation
 
 private let hardwareModelFormatString = """
@@ -115,7 +115,7 @@ package struct MockDataSet: VirtualizationDataSet {
     self.hardwareModelData = hardwareModelData
   }
 
-  package func data(from name: KeyPath<any BushelCore.VirtualizationData.Paths, String>) throws
+  package func data(from name: KeyPath<any VirtualizationData.Paths, String>) throws
     -> Data
   {
     switch name {

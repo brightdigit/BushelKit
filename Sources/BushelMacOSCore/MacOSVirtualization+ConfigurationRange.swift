@@ -28,7 +28,7 @@
 //
 
 #if canImport(Virtualization)
-  public import BushelCore
+  public import BushelFoundation
   import Foundation
 
   import Virtualization

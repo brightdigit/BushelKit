@@ -50,7 +50,7 @@ public struct SigVerificationManager: SigVerificationManaging {
   ///
   /// - Parameter id: The system ID for which to resolve the signature verifier.
   /// - Returns: The signature verifier for the given system ID.
-  public func resolve(_ id: BushelCore.VMSystemID) -> any BushelCore.SigVerifier {
+  public func resolve(_ id: VMSystemID) -> any SigVerifier {
     guard let implementations = implementations[id] else {
       // Self.logger.critical("Unknown system: \(id.rawValue)")
       preconditionFailure("")

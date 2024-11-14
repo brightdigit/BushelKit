@@ -29,7 +29,7 @@
 
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class URLWaxTests: XCTestCase {
   internal func testRandomHTTP() {

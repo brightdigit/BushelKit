@@ -1,5 +1,5 @@
 //
-//  FileType.swift
+//  InitializablePackage.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,36 +27,24 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import Foundation
 public import RadiantDocs
+import BushelUtilities
 
-extension FileType {
-  /// The file extension for an IPSW (iPhone Software Update) file.
-  public static let ipswFileExtension = "ipsw"
-
-  /// The file type for an iTunes IPSW file.
-  public static let iTunesIPSW: FileType = "com.apple.itunes.ipsw"
-
-  /// The file type for an iPhone IPSW file.
-  public static let iPhoneIPSW: FileType = "com.apple.iphone.ipsw"
-
-  /// The file extension for a virtual machine file.
-  public static let virtualMachineFileExtension = "bshvm"
-
-  /// The file extension for a restore image library file.
-  public static let restoreImageLibraryFileExtension = "bshrilib"
-
-  /// The file type for a virtual machine file.
-  public static let virtualMachine: FileType = .exportedAs(
-    "com.brightdigit.bushel-vm",
-    virtualMachineFileExtension
-  )
-
-  /// The file type for a restore image library file.
-  public static let restoreImageLibrary: FileType = .exportedAs(
-    "com.brightdigit.bushel-rilib",
-    restoreImageLibraryFileExtension
-  )
-
-  /// An array of all IPSW file types.
-  public static let ipswTypes = [iTunesIPSW, iPhoneIPSW]
+extension InitializablePackage {
+  /// Creates a new instance of the `InitializablePackage` at the specified file URL.
+  ///
+  /// - Parameter fileURL: The URL where the package should be created.
+  /// - Throws: Any errors that occur during the creation
+  /// of the directory or the writing of the metadata JSON file.
+  /// - Returns: The newly created instance of the `InitializablePackage`.
+  @discardableResult
+  public static func createAt(_ fileURL: URL) throws -> Self {
+    let library = self.init()
+    try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: false)
+    let metadataJSONPath = fileURL.appendingPathComponent(self.configurationFileWrapperKey)
+    let data = try JSON.encoder.encode(library)
+    try data.write(to: metadataJSONPath)
+    return library
+  }
 }

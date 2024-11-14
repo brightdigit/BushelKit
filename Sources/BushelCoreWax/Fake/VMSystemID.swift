@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 import Foundation
 
 extension VMSystemID { public static let sample: Self = .init(stringLiteral: "sample") }

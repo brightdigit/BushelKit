@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 
 extension MachineBuildRequest {
   public static let sampleBuildRequest: Self = .init(restoreImage: .sampleInstallerIdentifier)

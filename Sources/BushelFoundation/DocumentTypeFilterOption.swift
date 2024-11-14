@@ -27,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import BushelUtilities
 import Foundation
 
 /// An enumeration representing different options for filtering documents by type.

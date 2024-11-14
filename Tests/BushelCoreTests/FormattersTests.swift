@@ -29,7 +29,7 @@
 
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class FormattersTests: XCTestCase {
   private let dateFormatter: DateFormatter = {

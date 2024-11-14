@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
 
 /// A property wrapper that provides access to an environment value.
 ///
@@ -58,7 +58,7 @@ public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
   ///   - key: The key associated with the environment value.
   ///   - source: The source of the environment values,
   ///   which defaults to `ProcessInfo.processInfo.environment`.
-  internal init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
+  public init(_ key: String, source: [String: String] = ProcessInfo.processInfo.environment) {
     self.init(accessor: .dictionary(source, key: key))
   }
 
@@ -70,7 +70,7 @@ public struct EnvironmentProperty<Value: EnvironmentValue>: Sendable {
   ///   - key: The key associated with the environment value, represented as a raw representable type.
   ///   - source: The source of the environment values,
   ///   which defaults to `ProcessInfo.processInfo.environment`.
-  internal init<KeyType: RawRepresentable>(
+  public init<KeyType: RawRepresentable>(
     _ key: KeyType,
     source: [String: String] = ProcessInfo.processInfo.environment
   ) where KeyType.RawValue == String {

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+public import BushelFoundation
 import Foundation
 
 public struct InstallFailure: Equatable, Sendable {

@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+
 import BushelLogging
-public import FelinePine
+public import BushelFoundation
 public import Foundation
 
 #if canImport(os)

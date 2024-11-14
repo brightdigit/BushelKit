@@ -28,7 +28,8 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  public import BushelCore
+  public import BushelFoundation
+import BushelUtilities
 
   public import Virtualization
 

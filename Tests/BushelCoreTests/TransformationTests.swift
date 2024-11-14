@@ -29,7 +29,7 @@
 
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class TransformationTests: XCTestCase {
   private static func intToString(_ value: Int) -> String {

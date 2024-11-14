@@ -82,7 +82,11 @@ extension OperatingSystemVersion {
   /// - Returns: A string representing the unique identifier for the current macOS version.
   public func id(buildVersion: String?) -> String {
     [
-      description,
+      [
+        majorVersion,
+        minorVersion,
+       patchVersion
+      ].map(String.init).joined(separator: "."),
       buildVersion ?? "",
     ]
     .joined(separator: ":")

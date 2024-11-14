@@ -1,5 +1,5 @@
 //
-//  Tracking.swift
+//  OnboardingOverrideOption.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,30 +27,35 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public import Foundation
+public import BushelUtilities
 
-/// Provides types and values for tracking and analytics in the Radiant Kit.
-public import RadiantKit
+/// Represents an option for overriding the onboarding flow.
+public enum OnboardingOverrideOption: String, EnvironmentValue {
+  case skip
+  case force
+  case none
 
-/// Represents different types of tracking-related errors.
-public enum Tracking {
-  /// Represents different types of tracking-related errors.
-  public enum Error: DefaultWrapped {
-    /// The key type used for this error type.
-    public static let keyType: KeyType = .reflecting
-    /// The value type associated with this error type.
-    public typealias Value = Bool
-    /// The default value for this error type.
-    public static let `default`: Bool = true
-  }
+  /// The default `OnboardingOverrideOption` value.
+  public static let `default`: OnboardingOverrideOption = .none
+}
 
-  /// Represents different types of analytics-related settings.
-  public enum Analytics: DefaultWrapped {
-    /// The key type used for this analytics type.
-    public static let keyType: KeyType = .reflecting
-    /// The value type associated with this analytics type.
-    public typealias Value = Bool
-    /// The default value for this analytics type.
-    public static let `default`: Bool = true
+extension OnboardingOverrideOption {
+  /// Determines whether the onboarding flow should be displayed
+  /// based on the current `OnboardingOverrideOption` and an optional `Date`.
+  ///
+  /// - Parameter date: An optional `Date` value.
+  /// - Returns: A `Bool` indicating whether the onboarding flow should be displayed.
+  public func shouldBasedOn(date: Date?) -> Bool {
+    switch (self, date) {
+    case (.skip, _):
+      false
+    case (.force, _):
+      true
+    case (.none, .some):
+      false
+    case (.none, .none):
+      true
+    }
   }
 }

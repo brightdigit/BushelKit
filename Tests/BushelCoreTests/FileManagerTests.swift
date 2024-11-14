@@ -30,7 +30,7 @@
 import BushelCoreWax
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class FileManagerTests: XCTestCase {
   // Skipped, because cannot be tested.

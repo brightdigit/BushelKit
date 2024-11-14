@@ -29,7 +29,7 @@
 
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class AssertionFailureTests: XCTestCase {
   private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>

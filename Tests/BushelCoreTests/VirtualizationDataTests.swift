@@ -30,7 +30,7 @@
 import BushelCoreWax
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class VirtualizationDataTests: XCTestCase {
   private func randomVirtualizationDataTest() throws {

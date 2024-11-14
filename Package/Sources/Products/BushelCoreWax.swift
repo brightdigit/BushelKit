@@ -31,6 +31,6 @@ import Foundation
 
 struct BushelCoreWax: Product, Target {
   var dependencies: any Dependencies {
-    BushelCore()
+    BushelFoundation()
   }
 }

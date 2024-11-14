@@ -42,8 +42,8 @@ public func assert(isMainThread: Bool) {
 ///   - file: The file where the assertion failure occurred. Defaults to the current file.
 ///   - line: The line where the assertion failure occurred. Defaults to the current line.
 @inlinable
-public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line) {
-  guard !EnvironmentConfiguration.shared.disableAssertionFailureForError else {
+public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line, disableAssertionFailureForError: Bool) {
+  guard !disableAssertionFailureForError else {
     return
   }
   assertionFailure(error.localizedDescription, file: file, line: line)
@@ -64,14 +64,15 @@ public func assertionFailure<NewFailure: LocalizedError>(
   error: any Error,
   _ unknownError: @escaping (any Error) -> Void,
   file: StaticString = #file,
-  line: UInt = #line
+  line: UInt = #line,
+  disableAssertionFailureForError: Bool
 ) -> NewFailure? {
   guard let newError = error as? NewFailure else {
-    BushelCore.assertionFailure(error: error, file: file, line: line)
+    BushelUtilities.assertionFailure(error: error, file: file, line: line, disableAssertionFailureForError: disableAssertionFailureForError)
     unknownError(error)
     return nil
   }
-  BushelCore.assertionFailure(error: newError, file: file, line: line)
+  BushelUtilities.assertionFailure(error: newError, file: file, line: line, disableAssertionFailureForError: disableAssertionFailureForError)
   return newError
 }
 
@@ -87,7 +88,8 @@ public func assertionFailure<NewFailure: LocalizedError>(
 public func assertionFailure<Success, NewFailure: LocalizedError>(
   result: Result<Success, some Any>,
   file: StaticString = #file,
-  line: UInt = #line
+  line: UInt = #line,
+  disableAssertionFailureForError: Bool
 ) throws -> Result<Success, NewFailure> {
   switch result {
   case let .success(value):
@@ -96,7 +98,7 @@ public func assertionFailure<Success, NewFailure: LocalizedError>(
   case let .failure(error):
     switch error as? NewFailure {
     case .none:
-      assertionFailure(error.localizedDescription, file: file, line: line)
+      assertionFailure(error: error, file: file, line: line, disableAssertionFailureForError: disableAssertionFailureForError)
       throw error
 
     case let .some(newError):

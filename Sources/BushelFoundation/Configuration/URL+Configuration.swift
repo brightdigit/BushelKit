@@ -29,6 +29,15 @@
 
 public import Foundation
 
+public enum FileNameExtensions {
+  
+  /// The file extension for a virtual machine file.
+  public static let virtualMachineFileExtension = "bshvm"
+
+  /// The file extension for a restore image library file.
+  public static let restoreImageLibraryFileExtension = "bshrilib"
+}
+
 extension URL {
   /// A struct that encapsulates various URLs related to
   /// an app's privacy policy, terms of use, support, company, and contact information.
@@ -137,7 +146,8 @@ extension URL.Bushel {
       let urlTypes = bundle.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [[String: Any]],
       let urlSchemes = urlTypes.first?["CFBundleURLSchemes"] as? [String],
       let scheme = urlSchemes.first,
-      let dictionary = bundle.object(forInfoDictionaryKey: "BrightDigitURLDirectory") as? [String: String]
+      let dictionary = bundle.object(forInfoDictionaryKey: "BrightDigitURLDirectory")
+        as? [String: String]
     else {
       return nil
     }

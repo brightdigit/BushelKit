@@ -1,5 +1,5 @@
 //
-//  DocumentTypeFilter.swift
+//  SigVerifier.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,40 +27,16 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import RadiantDocs
+/// A protocol that defines a system for verifying signatures.
+public protocol SigVerifier: Sendable {
+  /// The unique identifier of the system.
+  var id: VMSystemID { get }
 
-/// Represents a set of document types that can be used to filter search results.
-public struct DocumentTypeFilter: OptionSet, Sendable {
-  /// The raw value of the document type filter.
-  public typealias RawValue = Int
-
-  /// A filter that includes library documents.
-  public static let libraries: DocumentTypeFilter = .init(rawValue: 1)
-
-  /// The raw value of the document type filter.
-  public let rawValue: Int
-
-  /// Initializes a new instance of the `DocumentTypeFilter` with the specified raw value.
-  /// - Parameter rawValue: The raw value of the document type filter.
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
-}
-
-extension DocumentTypeFilter {
-  /// Retrieves a list of search strings based on the current document type filter.
-  public var searchStrings: [String] {
-    var pathExtensions = [String?]()
-    if self.contains(.libraries) {
-      pathExtensions.append(
-        FileType.restoreImageLibrary.fileExtension
-      )
-    }
-    return pathExtensions.compactMap { pathExtension in
-      guard let pathExtension else {
-        return nil
-      }
-      return ".\(pathExtension)"
-    }
-  }
+  /// Verifies whether a signature is signed.
+  ///
+  /// - Parameter source: The source of the signature to be verified.
+  /// - Returns: The result of the signature verification.
+  /// - Throws: A `SigVerificationError` if the verification fails.
+  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
+    -> SigVerification
 }

@@ -1,5 +1,5 @@
 //
-//  SnapshotSynchronizationDifference.swift
+//  BushelCore.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,10 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-public import Foundation
-
-public struct SnapshotSynchronizationDifference: Sendable {
-  public let addedSnapshots: [Snapshot]
-  public let snapshotIDs: [UUID]
+struct BushelUtilities: Product, Target {
+  var dependencies: any Dependencies {
+  #warning("Remove this")
+        RadiantKit()
+  }
 }

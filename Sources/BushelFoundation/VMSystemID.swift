@@ -1,5 +1,5 @@
 //
-//  SnapshotterID.swift
+//  VMSystemID.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,55 +29,44 @@
 
 import Foundation
 
-/// An identifier for a Snapshotter.
-public struct SnapshotterID:
+/// A type-safe wrapper around a string that represents a virtual machine system ID.
+public struct VMSystemID:
   ExpressibleByStringInterpolation,
   Codable,
   Hashable,
   RawRepresentable,
-  CustomStringConvertible,
-  Sendable {
-  /// The type used for string literal initialization.
-  public typealias StringLiteralType = String
-
-  /// The identifier for the file version.
-  public static let fileVersion: SnapshotterID = "fileVersion"
-
-  /// The raw value of the identifier.
+  Sendable
+{
+  /// The underlying string value.
   public let rawValue: String
 
-  /// The string representation of the identifier.
-  public var description: String {
-    self.rawValue
-  }
-
-  /// Initializes a `SnapshotterID` with the given raw value.
+  /// Initializes a `VMSystemID` with the specified raw value.
   ///
-  /// - Parameter value: The raw value of the identifier.
+  /// - Parameter value: The raw string value to use.
   public init(rawValue value: String) {
     self.rawValue = value
   }
 
-  /// Initializes a `SnapshotterID` with a string literal.
+  /// Initializes a `VMSystemID` from a string literal.
   ///
-  /// - Parameter value: The string literal to use as the identifier.
+  /// - Parameter value: The string literal to use.
   public init(stringLiteral value: String) {
     self.rawValue = value
   }
 
-  /// Initializes a `SnapshotterID` from a decoder.
+  /// Initializes a `VMSystemID` by decoding a string from the given decoder.
   ///
-  /// - Parameter decoder: The decoder to use for initialization.
-  /// - Throws: Any errors that may occur during decoding.
+  /// - Parameter decoder: The decoder to use for decoding the string.
+  /// - Throws: Any errors that occur during the decoding process.
   public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()
     self.rawValue = try container.decode(String.self)
   }
 
-  /// Encodes the `SnapshotterID` to an encoder.
+  /// Encodes the `VMSystemID` instance to the given encoder.
   ///
-  /// - Parameter encoder: The encoder to use for encoding.
-  /// - Throws: Any errors that may occur during encoding.
+  /// - Parameter encoder: The encoder to use for encoding the `VMSystemID`.
+  /// - Throws: Any errors that occur during the encoding process.
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.singleValueContainer()
     try container.encode(self.rawValue)

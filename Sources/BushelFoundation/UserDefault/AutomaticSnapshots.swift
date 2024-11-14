@@ -28,8 +28,8 @@
 //
 
 import Foundation
-
 public import RadiantKit
+public import BushelUtilities
 
 /// Represents automatic snapshots settings.
 public enum AutomaticSnapshots {

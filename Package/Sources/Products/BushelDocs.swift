@@ -1,5 +1,5 @@
 //
-//  SignatureSource.swift
+//  BushelCore.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,36 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-/// Represents the source of a signature, either an operating system version or a signature ID.
-public enum SignatureSource: Sendable, CustomDebugStringConvertible {
-  /// Represents a signature identified by a string.
-  case signatureID(String)
-
-  /// Represents an operating system version, optionally with a build version.
-  case operatingSystemVersion(OperatingSystemVersion, String?)
-}
-
-extension SignatureSource {
-  /// A string representation of the `SignatureSource` for debugging purposes.
-  public var debugDescription: String {
-    switch self {
-    case let .operatingSystemVersion(version, build):
-      "os:\(version.id(buildVersion: build))"
-    case let .signatureID(signature):
-      "sig:\(signature)"
-    }
-  }
-
-  /// Creates a `SignatureSource` from a URL, if possible.
-  ///
-  /// - Parameter url: The URL to be converted to a `SignatureSource`.
-  /// - Returns: A `SignatureSource` if the URL is valid, or `nil` if the URL is not valid.
-  public static func url(_ url: URL) -> Self? {
-    guard url.scheme?.starts(with: "http") != false else {
-      return nil
-    }
-    return .signatureID(url.standardized.description)
+struct BushelDocs: Product, Target {
+  var dependencies: any Dependencies {
+    RadiantDocs()
+    BushelFoundation()
   }
 }

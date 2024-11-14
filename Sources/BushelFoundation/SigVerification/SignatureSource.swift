@@ -1,5 +1,5 @@
 //
-//  OnboardingOverrideOption.swift
+//  SignatureSource.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -28,33 +28,37 @@
 //
 
 public import Foundation
+import OperatingSystemVersion
+import BushelUtilities
 
-/// Represents an option for overriding the onboarding flow.
-public enum OnboardingOverrideOption: String, EnvironmentValue {
-  case skip
-  case force
-  case none
+/// Represents the source of a signature, either an operating system version or a signature ID.
+public enum SignatureSource: Sendable, CustomDebugStringConvertible {
+  /// Represents a signature identified by a string.
+  case signatureID(String)
 
-  /// The default `OnboardingOverrideOption` value.
-  public static let `default`: OnboardingOverrideOption = .none
+  /// Represents an operating system version, optionally with a build version.
+  case operatingSystemVersion(OperatingSystemVersion, String?)
 }
 
-extension OnboardingOverrideOption {
-  /// Determines whether the onboarding flow should be displayed
-  /// based on the current `OnboardingOverrideOption` and an optional `Date`.
-  ///
-  /// - Parameter date: An optional `Date` value.
-  /// - Returns: A `Bool` indicating whether the onboarding flow should be displayed.
-  public func shouldBasedOn(date: Date?) -> Bool {
-    switch (self, date) {
-    case (.skip, _):
-      false
-    case (.force, _):
-      true
-    case (.none, .some):
-      false
-    case (.none, .none):
-      true
+extension SignatureSource {
+  /// A string representation of the `SignatureSource` for debugging purposes.
+  public var debugDescription: String {
+    switch self {
+    case let .operatingSystemVersion(version, build):
+      "os:\(version.id(buildVersion: build))"
+    case let .signatureID(signature):
+      "sig:\(signature)"
     }
+  }
+
+  /// Creates a `SignatureSource` from a URL, if possible.
+  ///
+  /// - Parameter url: The URL to be converted to a `SignatureSource`.
+  /// - Returns: A `SignatureSource` if the URL is valid, or `nil` if the URL is not valid.
+  public static func url(_ url: URL) -> Self? {
+    guard url.scheme?.starts(with: "http") != false else {
+      return nil
+    }
+    return .signatureID(url.standardized.description)
   }
 }

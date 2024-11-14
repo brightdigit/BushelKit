@@ -30,7 +30,7 @@
 import Foundation
 import XCTest
 
-@testable import BushelCore
+@testable import BushelFoundation
 
 internal final class LibraryIdentifierTests: XCTestCase {
   internal func testBookmarkIDFromString() {

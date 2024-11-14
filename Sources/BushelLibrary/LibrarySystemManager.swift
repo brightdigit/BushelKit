@@ -27,10 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+
 public import BushelLogging
 public import Foundation
 public import RadiantDocs
+public import BushelFoundation
 
 public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendable {
   public let fileTypeBasedOnURL: @Sendable (URL) -> FileType?

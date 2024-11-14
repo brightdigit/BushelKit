@@ -32,7 +32,7 @@ import Foundation
 struct BushelFactory: Product, Target {
   var dependencies: any Dependencies {
     // BushelLocalization()
-    BushelCore()
+    BushelFoundation()
     BushelMachine()
     BushelLibrary()
     BushelLogging()

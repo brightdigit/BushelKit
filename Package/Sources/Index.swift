@@ -32,7 +32,9 @@ import PackageDescription
 let package = Package(
   entries: {
     BushelCommand()
-    BushelCore()
+    BushelFoundation()
+    BushelDocs()
+    BushelUtilities()
     BushelCoreWax()
     BushelFactory()
     BushelGuestProfile()

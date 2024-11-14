@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 
 public actor MockSigVerifier: SigVerifier {
   public let id: BushelCore.VMSystemID
