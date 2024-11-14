@@ -901,6 +901,7 @@ BushelTestUtilities()
 struct BushelUtlitiesTests: TestTarget {
 var dependencies: any Dependencies {
 BushelUtilities()
+BushelTestUtilities()
 }
 }
 struct BushelFoundationTests: TestTarget {
