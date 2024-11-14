@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
 public import BushelUtilities
+public import Foundation
 
 #if canImport(os)
   public import os.log
@@ -85,8 +85,8 @@ extension Version {
       return self.marketingSemVer.description
     }
 
-    // swiftlint:disable:next line_length
     return
+    // swiftlint:disable:next line_length
       "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 
@@ -201,27 +201,5 @@ extension Version {
       return hexString
     }
     return String(String(repeating: "0", count: length).appending(hexString).suffix(length))
-  }
-}
-
-extension Bundle {
-  // swiftlint:disable force_unwrapping
-  /// Accesses the application version from the main bundle.
-  public static let applicationVersion: Version = Bundle.main.version!
-  // swiftlint:enable force_unwrapping
-  /// Accesses a formatted representation of the application version.
-  public static let applicationVersionFormatted: VersionFormatted =
-    .init(version: Bundle.applicationVersion)
-
-  /// Retrieves a `Version` instance for this bundle, if available.
-  public var version: Version? {
-    .init(bundle: self)
-  }
-
-  /// Retrieves the name of the XPC service associated with this bundle, if available.
-  public var xpcService: String? {
-    self.object(
-      forInfoDictionaryKey: "BrightDigitXPCService"
-    ) as? String
   }
 }

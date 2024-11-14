@@ -85,7 +85,7 @@ extension OperatingSystemVersion {
       [
         majorVersion,
         minorVersion,
-       patchVersion
+        patchVersion
       ].map(String.init).joined(separator: "."),
       buildVersion ?? "",
     ]

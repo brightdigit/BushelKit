@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 internal struct SpecificationCalculationParameters: CalculationParameters {
   internal let indexRange: ClosedRange<Int>
   internal let valueRange: ClosedRange<Int>

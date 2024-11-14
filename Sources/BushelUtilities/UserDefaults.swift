@@ -30,7 +30,7 @@
 public import Foundation
 public import RadiantKit
 
-@available(*, deprecated,  message: "Should be moved to RadianKit")
+@available(*, deprecated, message: "Should be moved to RadianKit")
 extension UserDefaults {
   /// Retrieves a boolean value from the `UserDefaults` store, with a fallback default value.
   ///

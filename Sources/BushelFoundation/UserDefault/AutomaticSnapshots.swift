@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import BushelUtilities
 import Foundation
 public import RadiantKit
-public import BushelUtilities
 
 /// Represents automatic snapshots settings.
 public enum AutomaticSnapshots {

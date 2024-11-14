@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import RadiantDocs
 import BushelFoundation
+public import RadiantDocs
 
 extension FileType {
   /// The file extension for an IPSW (iPhone Software Update) file.
@@ -44,7 +44,7 @@ extension FileType {
   public static let virtualMachineFileExtension = FileNameExtensions.virtualMachineFileExtension
 
   /// The file extension for a restore image library file.
-  public static let restoreImageLibraryFileExtension =  FileNameExtensions.restoreImageLibraryFileExtension
+  public static let restoreImageLibraryFileExtension = FileNameExtensions.restoreImageLibraryFileExtension
 
   /// The file type for a virtual machine file.
   public static let virtualMachine: FileType = .exportedAs(

@@ -1,5 +1,5 @@
 //
-//  URL+Configuration.swift
+//  URL+Bushel.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -28,15 +28,6 @@
 //
 
 public import Foundation
-
-public enum FileNameExtensions {
-  
-  /// The file extension for a virtual machine file.
-  public static let virtualMachineFileExtension = "bshvm"
-
-  /// The file extension for a restore image library file.
-  public static let restoreImageLibraryFileExtension = "bshrilib"
-}
 
 extension URL {
   /// A struct that encapsulates various URLs related to
@@ -91,48 +82,7 @@ extension URL {
   }
 }
 
-/// A protocol that defines the paths used by a Virtual Zoned macOS app.
-public protocol VZMacPaths: Sendable {
-  /// The file name of the hardware model.
-  var hardwareModelFileName: String { get }
-  /// The file name of the machine identifier.
-  var machineIdentifierFileName: String { get }
-  /// The file name of the auxiliary storage.
-  var auxiliaryStorageFileName: String { get }
-}
-
 extension URL.Bushel {
-  /// A struct that contains various file and directory paths used by the app.
-  public struct Paths: Sendable {
-    /// A type alias for the `VZMacPaths` protocol.
-    public typealias VZMac = VZMacPaths
-
-    /// The name of the directory for restore images.
-    public let restoreImagesDirectoryName = Defaults.restoreImagesDirectoryName
-    /// The name of the directory for machine data.
-    public let machineDataDirectoryName = Defaults.machineDataDirectoryName
-    /// The name of the directory for snapshots.
-    public let snapshotsDirectoryName = Defaults.snapshotsDirectoryName
-    /// The name of the directory for captured videos.
-    public let captureVideoDirectoryName = Defaults.captureVideoDirectoryName
-    /// The name of the directory for captured images.
-    public let captureImageDirectoryName = Defaults.captureImageDirectoryName
-    /// The name of the file for the machine JSON data.
-    public let machineJSONFileName = Defaults.machineJSONFileName
-    /// The name of the file for the restore library JSON data.
-    public let restoreLibraryJSONFileName = Defaults.restoreLibraryJSONFileName
-
-    private enum Defaults {
-      fileprivate static let restoreImagesDirectoryName = "Restore Images"
-      fileprivate static let machineDataDirectoryName = "data"
-      fileprivate static let snapshotsDirectoryName = "snapshots"
-      fileprivate static let captureImageDirectoryName = "images"
-      fileprivate static let captureVideoDirectoryName = "videos"
-      fileprivate static let machineJSONFileName = "machine.json"
-      fileprivate static let restoreLibraryJSONFileName = "metadata.json"
-    }
-  }
-
   // swiftlint:disable force_unwrapping
   /// A shared instance of the `URL.Bushel` struct.
   fileprivate static let shared: URL.Bushel = .init()!

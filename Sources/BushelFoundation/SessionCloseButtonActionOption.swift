@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
 public import BushelUtilities
+import Foundation
 
 /// Represents the different options for the session close button action.
 public enum SessionCloseButtonActionOption: Int, CaseIterable, Localizable, Sendable {

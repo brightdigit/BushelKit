@@ -29,8 +29,6 @@
 
 public import BushelFoundation
 
-
-
 public struct CustomRelease: InstallerRelease {
   public static let instance = CustomRelease()
   public var versionName: String {

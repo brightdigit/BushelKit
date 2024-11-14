@@ -1,5 +1,5 @@
 //
-//  InitializablePackage.swift
+//  VZMacPaths.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,24 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelUtilities
-public import Foundation
-public import RadiantDocs
-
-extension InitializablePackage {
-  /// Creates a new instance of the `InitializablePackage` at the specified file URL.
-  ///
-  /// - Parameter fileURL: The URL where the package should be created.
-  /// - Throws: Any errors that occur during the creation
-  /// of the directory or the writing of the metadata JSON file.
-  /// - Returns: The newly created instance of the `InitializablePackage`.
-  @discardableResult
-  public static func createAt(_ fileURL: URL) throws -> Self {
-    let library = self.init()
-    try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: false)
-    let metadataJSONPath = fileURL.appendingPathComponent(self.configurationFileWrapperKey)
-    let data = try JSON.encoder.encode(library)
-    try data.write(to: metadataJSONPath)
-    return library
-  }
+/// A protocol that defines the paths used by a Virtual Zoned macOS app.
+public protocol VZMacPaths: Sendable {
+  /// The file name of the hardware model.
+  var hardwareModelFileName: String { get }
+  /// The file name of the machine identifier.
+  var machineIdentifierFileName: String { get }
+  /// The file name of the auxiliary storage.
+  var auxiliaryStorageFileName: String { get }
 }

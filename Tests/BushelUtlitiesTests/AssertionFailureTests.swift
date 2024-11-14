@@ -32,14 +32,14 @@ import XCTest
 @testable import BushelUtilities
 
 internal final class AssertionFailureTests: XCTestCase {
-  private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>
+  private typealias ResultType = Result<Bool, TestLocalizedError>
 
   internal func testSuccessResult() throws {
     let expectedResult: ResultType = .success(true)
 
     let actualResult: ResultType = try BushelUtilities.assertionFailure(
       result: expectedResult,
-      disableAssertionFailureForError: false      
+      disableAssertionFailureForError: false
     )
 
     XCTAssertEqual(actualResult, expectedResult)

@@ -1,5 +1,5 @@
 //
-//  BushelCoreTestLocalizedError.swift
+//  Bundle+Version.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,10 +27,26 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelTestUtilities
+public import Foundation
 
-internal struct BushelCoreTestLocalizedError: MockLocalizedError {
-  internal static let sample = Self(value: "sample")
+extension Bundle {
+  // swiftlint:disable force_unwrapping
+  /// Accesses the application version from the main bundle.
+  public static let applicationVersion: Version = Bundle.main.version!
+  // swiftlint:enable force_unwrapping
+  /// Accesses a formatted representation of the application version.
+  public static let applicationVersionFormatted: VersionFormatted =
+    .init(version: Bundle.applicationVersion)
 
-  internal let value: String
+  /// Retrieves a `Version` instance for this bundle, if available.
+  public var version: Version? {
+    .init(bundle: self)
+  }
+
+  /// Retrieves the name of the XPC service associated with this bundle, if available.
+  public var xpcService: String? {
+    self.object(
+      forInfoDictionaryKey: "BrightDigitXPCService"
+    ) as? String
+  }
 }

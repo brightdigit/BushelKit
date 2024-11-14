@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 import Foundation
 
 public protocol InstallFailureError: Error {

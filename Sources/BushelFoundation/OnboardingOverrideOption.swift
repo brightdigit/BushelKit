@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
 public import BushelUtilities
+public import Foundation
 
 /// Represents an option for overriding the onboarding flow.
 public enum OnboardingOverrideOption: String, EnvironmentValue {

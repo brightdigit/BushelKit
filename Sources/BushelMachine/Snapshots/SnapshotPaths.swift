@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 public import Foundation
 
 public struct SnapshotPaths {

@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import BushelUtilities
 public import Foundation
 import OperatingSystemVersion
-import BushelUtilities
 
 /// Represents the source of a signature, either an operating system version or a signature ID.
 public enum SignatureSource: Sendable, CustomDebugStringConvertible {

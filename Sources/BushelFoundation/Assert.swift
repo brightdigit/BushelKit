@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
 public import BushelUtilities
+public import Foundation
 /// Asserts that the current thread is the main thread.
 @inlinable
 public func assert(isMainThread: Bool) {
@@ -43,7 +43,13 @@ public func assert(isMainThread: Bool) {
 ///   - line: The line where the assertion failure occurred. Defaults to the current line.
 @inlinable
 public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line) {
-  BushelUtilities.assertionFailure(error: error, file: file, line: line, disableAssertionFailureForError: EnvironmentConfiguration.shared.disableAssertionFailureForError)
+  BushelUtilities.assertionFailure(
+    error: error,
+    file: file,
+    line: line,
+    disableAssertionFailureForError:
+      EnvironmentConfiguration.shared.disableAssertionFailureForError
+  )
 }
 
 /// Logs an assertion failure with the provided error,
@@ -63,7 +69,14 @@ public func assertionFailure<NewFailure: LocalizedError>(
   file: StaticString = #file,
   line: UInt = #line
 ) -> NewFailure? {
-  BushelUtilities.assertionFailure(error: error, unknownError, file: file, line: line, disableAssertionFailureForError: EnvironmentConfiguration.shared.disableAssertionFailureForError)
+  BushelUtilities.assertionFailure(
+    error: error,
+    unknownError,
+    file: file,
+    line: line,
+    disableAssertionFailureForError:
+      EnvironmentConfiguration.shared.disableAssertionFailureForError
+  )
 }
 
 /// Handles the result of an operation, logging an assertion failure if the result is a failure.
@@ -80,6 +93,11 @@ public func assertionFailure<Success, NewFailure: LocalizedError>(
   file: StaticString = #file,
   line: UInt = #line
 ) throws -> Result<Success, NewFailure> {
-  try BushelUtilities.assertionFailure(result: result, file: file, line: line, disableAssertionFailureForError: EnvironmentConfiguration.shared.disableAssertionFailureForError)
-  
+  try BushelUtilities.assertionFailure(
+    result: result,
+    file: file,
+    line: line,
+    disableAssertionFailureForError:
+      EnvironmentConfiguration.shared.disableAssertionFailureForError
+  )
 }

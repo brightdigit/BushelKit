@@ -29,8 +29,6 @@
 
 public import BushelFoundation
 
-
-
 public protocol SnapshotProvider: Sendable {
   func snapshotter<MachineType: Machine>(
     withID id: SnapshotterID,

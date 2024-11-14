@@ -1,5 +1,5 @@
 //
-//  InitializablePackage.swift
+//  BushelCoreTestLocalizedError.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,24 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelUtilities
-public import Foundation
-public import RadiantDocs
+import BushelTestUtilities
 
-extension InitializablePackage {
-  /// Creates a new instance of the `InitializablePackage` at the specified file URL.
-  ///
-  /// - Parameter fileURL: The URL where the package should be created.
-  /// - Throws: Any errors that occur during the creation
-  /// of the directory or the writing of the metadata JSON file.
-  /// - Returns: The newly created instance of the `InitializablePackage`.
-  @discardableResult
-  public static func createAt(_ fileURL: URL) throws -> Self {
-    let library = self.init()
-    try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: false)
-    let metadataJSONPath = fileURL.appendingPathComponent(self.configurationFileWrapperKey)
-    let data = try JSON.encoder.encode(library)
-    try data.write(to: metadataJSONPath)
-    return library
-  }
+internal struct TestLocalizedError: MockLocalizedError {
+  internal static let sample = Self(value: "sample")
+
+  internal let value: String
 }

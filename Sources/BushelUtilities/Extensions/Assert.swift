@@ -42,7 +42,12 @@ public func assert(isMainThread: Bool) {
 ///   - file: The file where the assertion failure occurred. Defaults to the current file.
 ///   - line: The line where the assertion failure occurred. Defaults to the current line.
 @inlinable
-public func assertionFailure(error: any Error, file: StaticString = #file, line: UInt = #line, disableAssertionFailureForError: Bool) {
+public func assertionFailure(
+  error: any Error,
+  file: StaticString = #file,
+  line: UInt = #line,
+  disableAssertionFailureForError: Bool
+) {
   guard !disableAssertionFailureForError else {
     return
   }
@@ -68,11 +73,21 @@ public func assertionFailure<NewFailure: LocalizedError>(
   disableAssertionFailureForError: Bool
 ) -> NewFailure? {
   guard let newError = error as? NewFailure else {
-    BushelUtilities.assertionFailure(error: error, file: file, line: line, disableAssertionFailureForError: disableAssertionFailureForError)
+    BushelUtilities.assertionFailure(
+      error: error,
+      file: file,
+      line: line,
+      disableAssertionFailureForError: disableAssertionFailureForError
+    )
     unknownError(error)
     return nil
   }
-  BushelUtilities.assertionFailure(error: newError, file: file, line: line, disableAssertionFailureForError: disableAssertionFailureForError)
+  BushelUtilities.assertionFailure(
+    error: newError,
+    file: file,
+    line: line,
+    disableAssertionFailureForError: disableAssertionFailureForError
+  )
   return newError
 }
 
@@ -98,7 +113,12 @@ public func assertionFailure<Success, NewFailure: LocalizedError>(
   case let .failure(error):
     switch error as? NewFailure {
     case .none:
-      assertionFailure(error: error, file: file, line: line, disableAssertionFailureForError: disableAssertionFailureForError)
+      assertionFailure(
+        error: error,
+        file: file,
+        line: line,
+        disableAssertionFailureForError: disableAssertionFailureForError
+      )
       throw error
 
     case let .some(newError):
