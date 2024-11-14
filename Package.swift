@@ -855,6 +855,7 @@ BushelFoundation()
 struct BushelFoundationWax: Product, Target {
 var dependencies: any Dependencies {
 BushelFoundation()
+RadiantDocs()
 }
 }
 struct BushelFoundation: Product, Target {

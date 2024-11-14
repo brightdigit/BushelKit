@@ -28,7 +28,6 @@
 //
 
 public import Foundation
-import OperatingSystemVersion
 
 /// A struct representing a hardware model.
 public struct HardwareModel: Codable, Equatable, Sendable {

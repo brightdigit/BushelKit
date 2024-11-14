@@ -28,7 +28,7 @@
 //
 
 package import BushelFoundation
-public import Foundation
+package import Foundation
 
 private let hardwareModelFormatString = """
   <?xml version="1.0" encoding="UTF-8"?>

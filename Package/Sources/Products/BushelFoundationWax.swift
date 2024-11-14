@@ -32,5 +32,6 @@ import Foundation
 struct BushelFoundationWax: Product, Target {
   var dependencies: any Dependencies {
     BushelFoundation()
+    RadiantDocs()
   }
 }
