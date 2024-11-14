@@ -30,7 +30,7 @@
 #if os(macOS)
   import BushelFoundation
   public import BushelLogging
-import BushelUtilities
+  import BushelUtilities
   public import Foundation
 
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {

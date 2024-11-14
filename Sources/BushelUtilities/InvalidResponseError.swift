@@ -36,7 +36,7 @@ public import Foundation
   extension URLResponse: @unchecked Sendable {}
 
   extension URL: @unchecked Sendable {}
-  // swiftlint:enable file_types_order
+// swiftlint:enable file_types_order
 #endif
 
 /// Error representing an invalid response from a URL request.

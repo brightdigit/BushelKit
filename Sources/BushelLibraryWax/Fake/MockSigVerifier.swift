@@ -40,8 +40,7 @@ public actor MockSigVerifier: SigVerifier {
 
   public func isSignatureSigned(
     from source: SignatureSource
-  ) async throws(SigVerificationError) -> SigVerification
-  {
+  ) async throws(SigVerificationError) -> SigVerification {
     verification
   }
 }

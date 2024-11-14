@@ -44,7 +44,8 @@ extension FileType {
   public static let virtualMachineFileExtension = FileNameExtensions.virtualMachineFileExtension
 
   /// The file extension for a restore image library file.
-  public static let restoreImageLibraryFileExtension = FileNameExtensions.restoreImageLibraryFileExtension
+  public static let restoreImageLibraryFileExtension = FileNameExtensions
+    .restoreImageLibraryFileExtension
 
   /// The file type for a virtual machine file.
   public static let virtualMachine: FileType = .exportedAs(

@@ -30,7 +30,7 @@
 public import Foundation
 
 #if canImport(FoundationNetworking)
-extension OperatingSystemVersion: @unchecked Sendable {}
+  extension OperatingSystemVersion: @unchecked Sendable {}
 #endif
 
 extension OperatingSystemVersion {
@@ -68,7 +68,9 @@ extension OperatingSystemVersion {
   ///   If `false`, all available major versions will be returned.
   /// - Returns: A collection of available macOS major versions,
   /// either all or only those supported for virtualization.
-  public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<Int> {
+  public static func availableMajorVersions(onlyVirtualizationSupported: Bool) -> any Collection<
+    Int
+  > {
     guard onlyVirtualizationSupported else {
       return self.codeNames.keys
     }
@@ -85,7 +87,7 @@ extension OperatingSystemVersion {
       [
         majorVersion,
         minorVersion,
-        patchVersion
+        patchVersion,
       ].map(String.init).joined(separator: "."),
       buildVersion ?? "",
     ]

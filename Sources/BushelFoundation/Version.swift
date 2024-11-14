@@ -86,7 +86,7 @@ extension Version {
     }
 
     return
-    // swiftlint:disable:next line_length
+      // swiftlint:disable:next line_length
       "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1, factorOf: 2))"
   }
 

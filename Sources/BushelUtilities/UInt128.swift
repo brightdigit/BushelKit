@@ -531,8 +531,8 @@ extension UInt128: BinaryInteger {
     let shiftWidth = rhs.value.lowerBits & 127
 
     switch shiftWidth {
-    case 0: return // Do nothing shift.
-    case 1 ... 63:
+    case 0: return  // Do nothing shift.
+    case 1...63:
       let upperBits = lhs.value.upperBits >> shiftWidth
       let lowerBits =
         (lhs.value.lowerBits >> shiftWidth) + (lhs.value.upperBits << (64 - shiftWidth))
@@ -558,8 +558,8 @@ extension UInt128: BinaryInteger {
     let shiftWidth = rhs.value.lowerBits & 127
 
     switch shiftWidth {
-    case 0: return // Do nothing shift.
-    case 1 ... 63:
+    case 0: return  // Do nothing shift.
+    case 1...63:
       let upperBits =
         (lhs.value.upperBits << shiftWidth) + (lhs.value.lowerBits >> (64 - shiftWidth))
       let lowerBits = lhs.value.lowerBits << shiftWidth
@@ -729,7 +729,8 @@ extension UInt128: Comparable {
   public static func < (lhs: UInt128, rhs: UInt128) -> Bool {
     if lhs.value.upperBits < rhs.value.upperBits {
       return true
-    } else if lhs.value.upperBits == rhs.value.upperBits, lhs.value.lowerBits < rhs.value.lowerBits {
+    } else if lhs.value.upperBits == rhs.value.upperBits, lhs.value.lowerBits < rhs.value.lowerBits
+    {
       return true
     }
     return false
@@ -782,7 +783,7 @@ extension UInt128 {
   @available(
     swift, deprecated: 5.0,
     message:
-    "The ExpressibleByStringLiteral conformance has been removed. Use failable initializer instead.",
+      "The ExpressibleByStringLiteral conformance has been removed. Use failable initializer instead.",
     renamed: "init(_:)"
   )
   public init(stringLiteral value: StringLiteralType) {

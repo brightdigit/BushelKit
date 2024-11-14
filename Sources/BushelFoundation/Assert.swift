@@ -29,6 +29,7 @@
 
 public import BushelUtilities
 public import Foundation
+
 /// Asserts that the current thread is the main thread.
 @inlinable
 public func assert(isMainThread: Bool) {
