@@ -28,5 +28,7 @@
 //
 
 struct BushelUtlitiesTests: TestTarget {
-
+  var dependencies: any Dependencies {    
+    BushelUtilities()
+  }
 }

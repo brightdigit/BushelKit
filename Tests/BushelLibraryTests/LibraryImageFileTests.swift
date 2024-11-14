@@ -30,6 +30,7 @@
 import BushelFoundation
 import BushelLibraryWax
 import BushelTestUtilities
+import BushelUtilities
 import XCTest
 
 @testable import BushelLibrary

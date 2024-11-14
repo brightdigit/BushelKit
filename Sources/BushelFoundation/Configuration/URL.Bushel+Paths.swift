@@ -27,6 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import Foundation
+
 extension URL.Bushel {
   /// A struct that contains various file and directory paths used by the app.
   public struct Paths: Sendable {
