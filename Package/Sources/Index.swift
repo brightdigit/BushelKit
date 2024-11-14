@@ -35,7 +35,7 @@ let package = Package(
     BushelFoundation()
     BushelDocs()
     BushelUtilities()
-    BushelCoreWax()
+    BushelFoundationWax()
     BushelFactory()
     BushelGuestProfile()
     BushelHub()
@@ -50,10 +50,11 @@ let package = Package(
     BushelTestUtilities()
   },
   testTargets: {
-    BushelCoreTests()
+    BushelFoundationTests()
     BushelLibraryTests()
     BushelMachineTests()
     BushelFactoryTests()
+    BushelUtlitiesTests()
   },
   swiftSettings: {
     StrictConcurrency()

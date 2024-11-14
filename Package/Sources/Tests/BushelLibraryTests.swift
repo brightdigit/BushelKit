@@ -30,7 +30,7 @@
 struct BushelLibraryTests: TestTarget {
   var dependencies: any Dependencies {
     BushelLibrary()
-    BushelCoreWax()
+    BushelFoundationWax()
     BushelLibraryWax()
     BushelTestUtilities()
   }

@@ -1,5 +1,5 @@
 //
-//  FileManagerTests.swift
+//  VirtualizationDataTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,46 +27,41 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCoreWax
+import BushelFoundationWax
 import XCTest
 
 @testable import BushelFoundation
 
-internal final class FileManagerTests: XCTestCase {
-  // Skipped, because cannot be tested.
-  //  func testSuccessfulCreateFile() throws {
-  //    let sut = FileManager.default
-  //
-  //    let dirURL = URL.temporaryDirectory
-  //    let fileURL = dirURL.appendingPathComponent("file.txt")
-  //
-  //    try sut.createFile(atPath: fileURL.absoluteString, withSize: 1000)
-  //  }
+internal final class VirtualizationDataTests: XCTestCase {
+  private func randomVirtualizationDataTest() throws {
+    #if canImport(FoundationNetworking)
+      XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
+    #else
+      let expectedMachineIdentifier =
+        MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502...UInt64.max))
+      let expectedHardwareModel =
+        HardwareModel(
+          dataRepresentationVersion: 1,
+          minimumSupportedOS: .random(),
+          platformVersion: 2
+        )
 
-  internal func testDirectoryExists() {
-    let sut = FileManager.default
+      let dataSet = try MockDataSet(
+        machineIdentifier: expectedMachineIdentifier,
+        hardwareModel: expectedHardwareModel
+      )
 
-    let dirURL = URL.temporaryDir
+      let virtualizationData = try VirtualizationData(at: dataSet, using: .init())
 
-    XCTAssertEqual(sut.directoryExists(at: dirURL), .directoryExists)
+      XCTAssertEqual(virtualizationData.hardwareModel, expectedHardwareModel)
+      XCTAssertEqual(virtualizationData.machineIdentifier, expectedMachineIdentifier)
+    #endif
   }
 
-  internal func testNotExists() {
-    let sut = FileManager.default
-
-    let fileURL = URL.temporaryDir.appendingPathComponent("file.txt")
-
-    XCTAssertEqual(sut.directoryExists(at: fileURL), .notExists)
+  internal func testSuccessfulParsing() throws {
+    let count = Int.random(in: 5...10)
+    for _ in 0..<count {
+      try randomVirtualizationDataTest()
+    }
   }
-
-  //  // Skipped, because cannot be tested.
-  //  func testFileExists() {
-  //    let sut = FileManager.default
-  //
-  //    let fileURL = URL.temporaryDirectory.appendingPathComponent("file.txt")
-  //
-  //    sut.createFile(atPath: fileURL.absoluteString, contents: nil, attributes: nil)
-  //
-  //    XCTAssertEqual(sut.directoryExists(at: fileURL), .fileExists)
-  //  }
 }

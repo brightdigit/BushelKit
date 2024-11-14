@@ -1,5 +1,5 @@
 //
-//  BushelCoreWax.swift
+//  BushelCoreTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-
-struct BushelCoreWax: Product, Target {
+struct BushelFoundationTests: TestTarget {
   var dependencies: any Dependencies {
     BushelFoundation()
+    BushelFoundationWax()
+    BushelTestUtilities()
   }
 }

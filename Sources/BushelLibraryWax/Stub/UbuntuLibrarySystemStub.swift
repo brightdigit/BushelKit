@@ -33,7 +33,7 @@ public import Foundation
 public import RadiantDocs
 
 public struct UbuntuLibrarySystemStub: LibrarySystem {
-  public var releaseCollectionMetadata: any BushelCore.ReleaseCollectionMetadata {
+  public var releaseCollectionMetadata: any ReleaseCollectionMetadata {
     fatalError("Not Implemented")
   }
 

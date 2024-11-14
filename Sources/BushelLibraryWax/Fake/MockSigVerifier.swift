@@ -30,16 +30,15 @@
 public import BushelFoundation
 
 public actor MockSigVerifier: SigVerifier {
-  public let id: BushelCore.VMSystemID
-  public var verification: BushelCore.SigVerification
+  public let id: VMSystemID
+  public var verification: SigVerification
 
-  public init(id: BushelCore.VMSystemID, verification: BushelCore.SigVerification) {
+  public init(id: VMSystemID, verification: SigVerification) {
     self.id = id
     self.verification = verification
   }
 
-  public func isSignatureSigned(from source: BushelCore.SignatureSource) async throws(BushelCore
-    .SigVerificationError) -> BushelCore.SigVerification
+  public func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError) -> SigVerification
   {
     verification
   }

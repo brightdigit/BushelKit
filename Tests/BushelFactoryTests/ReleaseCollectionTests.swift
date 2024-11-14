@@ -28,7 +28,7 @@
 //
 
 import BushelFoundation
-import BushelCoreWax
+import BushelFoundationWax
 import BushelFactory
 import BushelMachine
 import XCTest

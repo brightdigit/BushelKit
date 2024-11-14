@@ -1,5 +1,5 @@
 //
-//  TransformationTests.swift
+//  DirectoryExistsTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,22 +29,24 @@
 
 import XCTest
 
-@testable import BushelFoundation
+@testable import BushelUtilities
 
-internal final class TransformationTests: XCTestCase {
-  private static func intToString(_ value: Int) -> String {
-    "\(value)"
+internal final class DirectoryExistsTests: XCTestCase {
+  internal func testFileExists() {
+    let sut = DirectoryExists(fileExists: true, isDirectory: false)
+
+    XCTAssertEqual(sut, .fileExists)
   }
 
-  internal func testTransformAsFunction() {
-    let sut = Transformation<Int, String> {
-      Self.intToString($0)
-    }
+  internal func testDirectoryExists() {
+    let sut = DirectoryExists(fileExists: true, isDirectory: true)
 
-    let value = 3
-    let expectedValue = Self.intToString(value)
-    let actualValue = sut(value)
+    XCTAssertEqual(sut, .directoryExists)
+  }
 
-    XCTAssertEqual(actualValue, expectedValue)
+  internal func testNotExists() {
+    let sut = DirectoryExists(fileExists: false, isDirectory: false)
+
+    XCTAssertEqual(sut, .notExists)
   }
 }

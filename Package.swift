@@ -798,11 +798,6 @@ BushelFoundation()
 BushelMacOSCore()
 }
 }
-struct BushelCoreWax: Product, Target {
-var dependencies: any Dependencies {
-BushelFoundation()
-}
-}
 struct BushelLogging: Product, Target {
 var dependencies: any Dependencies {
 FelinePine()
@@ -857,6 +852,11 @@ RadiantDocs()
 BushelFoundation()
 }
 }
+struct BushelFoundationWax: Product, Target {
+var dependencies: any Dependencies {
+BushelFoundation()
+}
+}
 struct BushelFoundation: Product, Target {
 var dependencies: any Dependencies {
 BushelUtilities()
@@ -877,7 +877,7 @@ BushelFoundation()
 }
 struct BushelMachineWax: Target {
 var dependencies: any Dependencies {
-BushelCoreWax()
+BushelFoundationWax()
 BushelMachine()
 }
 }
@@ -885,15 +885,24 @@ struct BushelFactoryTests: TestTarget {
 var dependencies: any Dependencies {
 BushelFactory()
 BushelTestUtilities()
-BushelCoreWax()
+BushelFoundationWax()
 BushelMachineWax()
 }
 }
 struct BushelLibraryTests: TestTarget {
 var dependencies: any Dependencies {
 BushelLibrary()
-BushelCoreWax()
+BushelFoundationWax()
 BushelLibraryWax()
+BushelTestUtilities()
+}
+}
+struct BushelUtlitiesTests: TestTarget {
+}
+struct BushelFoundationTests: TestTarget {
+var dependencies: any Dependencies {
+BushelFoundation()
+BushelFoundationWax()
 BushelTestUtilities()
 }
 }
@@ -901,13 +910,6 @@ struct BushelMachineTests: TestTarget {
 var dependencies: any Dependencies {
 BushelMachine()
 BushelMachineWax()
-BushelTestUtilities()
-}
-}
-struct BushelCoreTests: TestTarget {
-var dependencies: any Dependencies {
-BushelFoundation()
-BushelCoreWax()
 BushelTestUtilities()
 }
 }
@@ -976,7 +978,7 @@ BushelCommand()
 BushelFoundation()
 BushelDocs()
 BushelUtilities()
-BushelCoreWax()
+BushelFoundationWax()
 BushelFactory()
 BushelGuestProfile()
 BushelHub()
@@ -991,10 +993,11 @@ BushelVirtualBuddy()
 BushelTestUtilities()
 },
 testTargets: {
-BushelCoreTests()
+BushelFoundationTests()
 BushelLibraryTests()
 BushelMachineTests()
 BushelFactoryTests()
+BushelUtlitiesTests()
 },
 swiftSettings: {
 StrictConcurrency()

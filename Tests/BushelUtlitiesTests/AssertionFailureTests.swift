@@ -1,5 +1,5 @@
 //
-//  BushelCoreTests.swift
+//  AssertionFailureTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,10 +27,32 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-struct BushelCoreTests: TestTarget {
-  var dependencies: any Dependencies {
-    BushelFoundation()
-    BushelCoreWax()
-    BushelTestUtilities()
+import XCTest
+
+@testable import BushelUtilities
+
+internal final class AssertionFailureTests: XCTestCase {
+  private typealias ResultType = Result<Bool, BushelCoreTestLocalizedError>
+
+  internal func testSuccessResult() throws {
+    let expectedResult: ResultType = .success(true)
+
+    let actualResult: ResultType = try BushelUtilities.assertionFailure(
+      result: expectedResult,
+      disableAssertionFailureForError: false      
+    )
+
+    XCTAssertEqual(actualResult, expectedResult)
+  }
+
+  internal func testLocalizedErrorResult() throws {
+    let expectedResult: ResultType = .failure(.sample)
+
+    let actualResult: ResultType = try BushelUtilities.assertionFailure(
+      result: expectedResult,
+      disableAssertionFailureForError: false
+    )
+
+    XCTAssertEqual(actualResult, expectedResult)
   }
 }

@@ -1,5 +1,5 @@
 //
-//  VirtualizationDataTests.swift
+//  TransformationTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,41 +27,24 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCoreWax
 import XCTest
 
-@testable import BushelFoundation
+@testable import BushelUtilities
 
-internal final class VirtualizationDataTests: XCTestCase {
-  private func randomVirtualizationDataTest() throws {
-    #if canImport(FoundationNetworking)
-      XCTSkip("Unable to import `OperatingSystemVersion` Codable in test target.")
-    #else
-      let expectedMachineIdentifier =
-        MachineIdentifier(ecID: .random(in: 1_755_652_291_379_785_502...UInt64.max))
-      let expectedHardwareModel =
-        HardwareModel(
-          dataRepresentationVersion: 1,
-          minimumSupportedOS: .random(),
-          platformVersion: 2
-        )
-
-      let dataSet = try MockDataSet(
-        machineIdentifier: expectedMachineIdentifier,
-        hardwareModel: expectedHardwareModel
-      )
-
-      let virtualizationData = try VirtualizationData(at: dataSet, using: .init())
-
-      XCTAssertEqual(virtualizationData.hardwareModel, expectedHardwareModel)
-      XCTAssertEqual(virtualizationData.machineIdentifier, expectedMachineIdentifier)
-    #endif
+internal final class TransformationTests: XCTestCase {
+  private static func intToString(_ value: Int) -> String {
+    "\(value)"
   }
 
-  internal func testSuccessfulParsing() throws {
-    let count = Int.random(in: 5...10)
-    for _ in 0..<count {
-      try randomVirtualizationDataTest()
+  internal func testTransformAsFunction() {
+    let sut = Transformation<Int, String> {
+      Self.intToString($0)
     }
+
+    let value = 3
+    let expectedValue = Self.intToString(value)
+    let actualValue = sut(value)
+
+    XCTAssertEqual(actualValue, expectedValue)
   }
 }

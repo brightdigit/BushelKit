@@ -37,7 +37,7 @@ public struct MachineSystemStub: MachineSystem, Equatable {
 
   public let defaultStorageLabel: String = "stub"
 
-  public let defaultSnapshotSystem: BushelCore.SnapshotterID = "testing"
+  public let defaultSnapshotSystem: SnapshotterID = "testing"
 
   public var id: VMSystemID
 

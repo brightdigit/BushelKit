@@ -1,5 +1,5 @@
 //
-//  DirectoryExistsTests.swift
+//  FileManagerTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,26 +27,46 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import BushelFoundationWax
 import XCTest
 
 @testable import BushelFoundation
 
-internal final class DirectoryExistsTests: XCTestCase {
-  internal func testFileExists() {
-    let sut = DirectoryExists(fileExists: true, isDirectory: false)
-
-    XCTAssertEqual(sut, .fileExists)
-  }
+internal final class FileManagerTests: XCTestCase {
+  // Skipped, because cannot be tested.
+  //  func testSuccessfulCreateFile() throws {
+  //    let sut = FileManager.default
+  //
+  //    let dirURL = URL.temporaryDirectory
+  //    let fileURL = dirURL.appendingPathComponent("file.txt")
+  //
+  //    try sut.createFile(atPath: fileURL.absoluteString, withSize: 1000)
+  //  }
 
   internal func testDirectoryExists() {
-    let sut = DirectoryExists(fileExists: true, isDirectory: true)
+    let sut = FileManager.default
 
-    XCTAssertEqual(sut, .directoryExists)
+    let dirURL = URL.temporaryDir
+
+    XCTAssertEqual(sut.directoryExists(at: dirURL), .directoryExists)
   }
 
   internal func testNotExists() {
-    let sut = DirectoryExists(fileExists: false, isDirectory: false)
+    let sut = FileManager.default
 
-    XCTAssertEqual(sut, .notExists)
+    let fileURL = URL.temporaryDir.appendingPathComponent("file.txt")
+
+    XCTAssertEqual(sut.directoryExists(at: fileURL), .notExists)
   }
+
+  //  // Skipped, because cannot be tested.
+  //  func testFileExists() {
+  //    let sut = FileManager.default
+  //
+  //    let fileURL = URL.temporaryDirectory.appendingPathComponent("file.txt")
+  //
+  //    sut.createFile(atPath: fileURL.absoluteString, contents: nil, attributes: nil)
+  //
+  //    XCTAssertEqual(sut.directoryExists(at: fileURL), .fileExists)
+  //  }
 }

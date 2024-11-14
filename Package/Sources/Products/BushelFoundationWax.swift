@@ -1,5 +1,5 @@
 //
-//  InstallerImageSub.swift
+//  BushelFoundationWax.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,32 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelFoundation
-import BushelFoundationWax
-public import BushelMachine
-public import Foundation
+import Foundation
 
-public struct InstallerImageSub: InstallerImage {
-  public var libraryID: LibraryIdentifier? = .sampleLibraryID
-
-  public var imageID: UUID = .imageIDSample
-
-  public var metadata: Metadata = .init(
-    longName: "",
-    defaultName: "",
-    labelName: "",
-    operatingSystem: .init(
-      majorVersion: 1,
-      minorVersion: 1,
-      patchVersion: 1
-    ),
-    buildVersion: "",
-    imageResourceName: "",
-    systemName: "",
-    systemID: .sample
-  )
-
-  public func getURL() throws -> URL {
-    .bushelWebSite
+struct BushelFoundationWax: Product, Target {
+  var dependencies: any Dependencies {
+    BushelFoundation()
   }
 }

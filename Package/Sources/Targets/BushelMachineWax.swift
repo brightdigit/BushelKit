@@ -31,7 +31,7 @@ import Foundation
 
 struct BushelMachineWax: Target {
   var dependencies: any Dependencies {
-    BushelCoreWax()
+    BushelFoundationWax()
     BushelMachine()
   }
 }
