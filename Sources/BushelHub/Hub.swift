@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 import Foundation
 
 public struct Hub: Hashable, Identifiable, Sendable {

@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelCoreWax
+import BushelFoundation
+import BushelFoundationWax
 import BushelMachineWax
 import XCTest
 

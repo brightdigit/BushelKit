@@ -27,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import BushelDocs
 public import RadiantDocs
 import RadiantKit
 

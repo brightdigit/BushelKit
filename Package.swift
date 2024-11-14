@@ -757,7 +757,15 @@ SupportedPlatform.macCatalyst(.v17)
 }
 struct BushelMacOSCore: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
+BushelUtilities()
+BushelDocs()
+RadiantKit()
+}
+}
+struct BushelUtilities: Product, Target {
+var dependencies: any Dependencies {
+#warning("Remove this")
 RadiantKit()
 }
 }
@@ -778,7 +786,7 @@ BushelMacOSCore()
 }
 struct BushelFactory: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 BushelMachine()
 BushelLibrary()
 BushelLogging()
@@ -786,13 +794,8 @@ BushelLogging()
 }
 struct BushelVirtualBuddy: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 BushelMacOSCore()
-}
-}
-struct BushelCoreWax: Product, Target {
-var dependencies: any Dependencies {
-BushelCore()
 }
 }
 struct BushelLogging: Product, Target {
@@ -803,39 +806,33 @@ FelinePineSwift()
 }
 struct BushelGuestProfile: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
 BushelLogging()
 }
 }
 struct BushelUT: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelMachine: Product, Target {
 var dependencies: any Dependencies {
-BushelCore()
+BushelFoundation()
+BushelDocs()
 BushelLogging()
 }
 }
 struct BushelLibrary: Product, Target {
 var dependencies: any Dependencies {
 BushelLogging()
-BushelCore()
+BushelFoundation()
 BushelMacOSCore()
 RadiantKit()
-}
-}
-struct BushelCore: Product, Target {
-var dependencies: any Dependencies {
-OperatingSystemVersion()
-RadiantDocs()
 }
 }
 struct BushelHub: Product, Target {
 var dependencies: any Dependencies {
 BushelLogging()
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelCommand: Target, Product {
@@ -849,6 +846,24 @@ var productType: ProductType {
 .executable
 }
 }
+struct BushelDocs: Product, Target {
+var dependencies: any Dependencies {
+RadiantDocs()
+BushelFoundation()
+}
+}
+struct BushelFoundationWax: Product, Target {
+var dependencies: any Dependencies {
+BushelFoundation()
+RadiantDocs()
+}
+}
+struct BushelFoundation: Product, Target {
+var dependencies: any Dependencies {
+BushelUtilities()
+OperatingSystemVersion()
+}
+}
 struct BushelLibraryWax: Target {
 var dependencies: any Dependencies {
 BushelLibrary()
@@ -858,12 +873,12 @@ BushelMacOSCore()
 struct BushelArgs: Target {
 var dependencies: any Dependencies {
 ArgumentParser()
-BushelCore()
+BushelFoundation()
 }
 }
 struct BushelMachineWax: Target {
 var dependencies: any Dependencies {
-BushelCoreWax()
+BushelFoundationWax()
 BushelMachine()
 }
 }
@@ -871,15 +886,28 @@ struct BushelFactoryTests: TestTarget {
 var dependencies: any Dependencies {
 BushelFactory()
 BushelTestUtilities()
-BushelCoreWax()
+BushelFoundationWax()
 BushelMachineWax()
 }
 }
 struct BushelLibraryTests: TestTarget {
 var dependencies: any Dependencies {
 BushelLibrary()
-BushelCoreWax()
+BushelFoundationWax()
 BushelLibraryWax()
+BushelTestUtilities()
+}
+}
+struct BushelUtlitiesTests: TestTarget {
+var dependencies: any Dependencies {
+BushelUtilities()
+BushelTestUtilities()
+}
+}
+struct BushelFoundationTests: TestTarget {
+var dependencies: any Dependencies {
+BushelFoundation()
+BushelFoundationWax()
 BushelTestUtilities()
 }
 }
@@ -887,13 +915,6 @@ struct BushelMachineTests: TestTarget {
 var dependencies: any Dependencies {
 BushelMachine()
 BushelMachineWax()
-BushelTestUtilities()
-}
-}
-struct BushelCoreTests: TestTarget {
-var dependencies: any Dependencies {
-BushelCore()
-BushelCoreWax()
 BushelTestUtilities()
 }
 }
@@ -959,8 +980,10 @@ var dependency: Package.Dependency {
 let package = Package(
 entries: {
 BushelCommand()
-BushelCore()
-BushelCoreWax()
+BushelFoundation()
+BushelDocs()
+BushelUtilities()
+BushelFoundationWax()
 BushelFactory()
 BushelGuestProfile()
 BushelHub()
@@ -975,10 +998,11 @@ BushelVirtualBuddy()
 BushelTestUtilities()
 },
 testTargets: {
-BushelCoreTests()
+BushelFoundationTests()
 BushelLibraryTests()
 BushelMachineTests()
 BushelFactoryTests()
+BushelUtlitiesTests()
 },
 swiftSettings: {
 StrictConcurrency()

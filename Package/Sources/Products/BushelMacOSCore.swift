@@ -29,7 +29,9 @@
 
 struct BushelMacOSCore: Product, Target {
   var dependencies: any Dependencies {
-    BushelCore()
+    BushelFoundation()
+    BushelUtilities()
+    BushelDocs()
     RadiantKit()
   }
 }

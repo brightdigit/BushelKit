@@ -31,7 +31,7 @@ import Foundation
 
 struct BushelGuestProfile: Product, Target {
   var dependencies: any Dependencies {
-    BushelCore()
+    //BushelCore()
     BushelLogging()
   }
 }

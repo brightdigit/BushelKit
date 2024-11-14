@@ -29,7 +29,8 @@
 
 struct BushelMachine: Product, Target {
   var dependencies: any Dependencies {
-    BushelCore()
+    BushelFoundation()
+    BushelDocs()
     BushelLogging()
   }
 }

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+import BushelFoundation
 
 internal struct MockInstallerRelease: InstallerRelease {
   internal let versionName: String

@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-import BushelCoreWax
+import BushelFoundation
+import BushelFoundationWax
 import BushelMachine
 import BushelMachineWax
 import Foundation
@@ -48,7 +48,7 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     "spyOS System"
   }
 
-  internal var defaultSnapshotSystem: BushelCore.SnapshotterID {
+  internal var defaultSnapshotSystem: SnapshotterID {
     "spysnapshot"
   }
 

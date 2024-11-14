@@ -30,7 +30,7 @@
 struct BushelLibrary: Product, Target {
   var dependencies: any Dependencies {
     BushelLogging()
-    BushelCore()
+    BushelFoundation()
     BushelMacOSCore()
     RadiantKit()
     // BushelAccessibility()

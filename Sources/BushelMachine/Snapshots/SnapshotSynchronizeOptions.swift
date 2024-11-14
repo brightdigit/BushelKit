@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
 import Foundation
 
 public struct SnapshotSynchronizeOptions: OptionSet, Sendable {

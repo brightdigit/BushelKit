@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
-
 internal struct SpecificationCalculationParameters: CalculationParameters {
   internal let indexRange: ClosedRange<Int>
   internal let valueRange: ClosedRange<Int>
