@@ -40,4 +40,9 @@ extension Dictionary {
     let uniqueKeysWithValues: [(Key, Value)] = values.map { (key($0), $0) }
     self.init(uniqueKeysWithValues: uniqueKeysWithValues)
   }
+  @inlinable public init(uniqueValues values: [Value]?, keyBy key: @escaping (Value) -> Key)
+   {
+    
+    self.init(uniqueValues: values ?? [], keyBy: key)
+  }
 }
