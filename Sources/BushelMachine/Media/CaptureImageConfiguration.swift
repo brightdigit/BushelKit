@@ -27,18 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct CaptureImageConfiguration: Sendable, Codable {
+public struct CaptureImageConfiguration: Sendable, Codable, CustomStringConvertible {
+  public var description: String {
+    "\(fileType.rawValue.uppercased()) (\(compression.roundToNearest(value: 0.01)))"
+  }
+
   public let fileType: ImageFileType
   public let compression: Double
   public let watermark: Watermark?
 
-  private init(fileType: ImageFileType = .jpeg, compression: Double = 0.8, watermark: Watermark?) {
+  private init(fileType: ImageFileType, compression: Double, watermark: Watermark?) {
     self.fileType = fileType
     self.compression = compression
     self.watermark = watermark
   }
 
   public init(watermark: Watermark?) {
-    self.init(watermark: watermark)
+    self.init(fileType: .jpeg, compression: 0.8, watermark: watermark)
   }
 }

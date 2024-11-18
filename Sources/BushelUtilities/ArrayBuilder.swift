@@ -30,6 +30,7 @@
 import Foundation
 
 /// A result builder for creating arrays.
+@resultBuilder
 public enum ArrayBuilder<Item> {
   /// Builds a partial block with a single item.
   /// - Parameter first: The first item in the array.

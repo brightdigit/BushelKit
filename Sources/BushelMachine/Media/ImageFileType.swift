@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public enum ImageFileType: Sendable, Codable {
+public enum ImageFileType: String, Sendable, Codable {
   case jpeg
 }
 

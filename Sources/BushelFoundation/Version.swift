@@ -115,7 +115,7 @@ extension Version {
       #if canImport(os)
         Self.logger.critical("Invalid build number \(buildNumberString)")
       #endif
-      assertionFailure()
+      assertionFailure("Invalid build number \(buildNumberString)")
       return nil
     }
 

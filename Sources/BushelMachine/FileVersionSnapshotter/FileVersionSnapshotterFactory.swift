@@ -44,7 +44,6 @@
       options: SnapshotOptions
     ) async throws -> Snapshot {
       guard let snapshotter = self.snapshotter(supports: type(of: machine).self) else {
-        assertionFailure()
         fatalError("Not implmented error")
       }
 

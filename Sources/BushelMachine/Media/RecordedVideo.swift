@@ -44,6 +44,7 @@ public struct RecordedVideo: Sendable, Codable {
   public let resolution: RecordedResolution
   public let imageTimeInterval: Double
   public let duration: Double
+  public let fileExtension: String
   public let configuration: CaptureVideoConfiguration
 
   public init(
@@ -55,6 +56,7 @@ public struct RecordedVideo: Sendable, Codable {
     resolution: RecordedResolution,
     duration: Double,
     imageTimeInterval: Double,
+    fileExtension: String,
     configuration: CaptureVideoConfiguration
   ) {
     self.videoUUID = videoUUID
@@ -64,6 +66,7 @@ public struct RecordedVideo: Sendable, Codable {
     self.fileSize = fileSize
     self.resolution = resolution
     self.duration = duration
+    self.fileExtension = fileExtension
     self.imageTimeInterval = imageTimeInterval
     self.configuration = configuration
   }
@@ -77,6 +80,7 @@ public struct RecordedVideo: Sendable, Codable {
     size: CGSize,
     duration: Double,
     imageTimeInterval: Double,
+    fileExtension: String,
     configuration: CaptureVideoConfiguration
   ) {
     self.init(
@@ -88,7 +92,24 @@ public struct RecordedVideo: Sendable, Codable {
       resolution: .init(cgSize: size),
       duration: duration,
       imageTimeInterval: imageTimeInterval,
+      fileExtension: fileExtension,
       configuration: configuration
+    )
+  }
+
+  public init(initial: RecordedVideo, name: String, notes: String) {
+    self.init(
+      videoUUID: initial.videoUUID,
+      name: name,
+      createdAt: initial.createdAt,
+      notes: notes,
+      fileSize: initial.fileSize,
+      resolution: initial.resolution,
+
+      duration: initial.duration,
+      imageTimeInterval: initial.imageTimeInterval,
+      fileExtension: initial.fileExtension,
+      configuration: initial.configuration
     )
   }
 }

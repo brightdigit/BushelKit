@@ -162,4 +162,8 @@ extension MachineError {
   public static func captureError(_ error: any Error) -> MachineError {
     MachineError(details: .captureError, innerError: error)
   }
+
+  public static func captureUpdateError(_ error: any Error, id: UUID) -> MachineError {
+    MachineError(details: .captureUpdateError(id), innerError: error)
+  }
 }
