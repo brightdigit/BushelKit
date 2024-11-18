@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 public import Foundation
 
 public struct Snapshot: Codable, Identifiable, Sendable {

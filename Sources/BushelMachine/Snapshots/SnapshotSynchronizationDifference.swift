@@ -27,7 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
 public import Foundation
 
 public struct SnapshotSynchronizationDifference: Sendable {

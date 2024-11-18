@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 
 public protocol SnapshotProvider: Sendable {
   func snapshotter<MachineType: Machine>(

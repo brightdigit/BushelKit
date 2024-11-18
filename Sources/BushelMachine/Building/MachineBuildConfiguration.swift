@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelCore
+import BushelFoundation
 import Foundation
 
 ///  Used by the `MachineSystem` to build a new virtual machine.

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 import BushelMacOSCore
 public import Foundation
 
@@ -37,7 +37,7 @@ public import Foundation
 
 public struct VirtualBuddySigVerifier: SourceSigVerifier {
   public let sourceID: String = "virtualbuddy"
-  public let priority: BushelCore.SignaturePriority = .always
+  public let priority: SignaturePriority = .always
   private let service: VirtualBuddyService
   private let urlFromSource: @Sendable (SignatureSource) async -> URL?
   public var id: VMSystemID { .macOS }

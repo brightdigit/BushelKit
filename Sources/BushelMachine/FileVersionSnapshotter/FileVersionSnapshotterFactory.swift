@@ -28,8 +28,7 @@
 //
 
 #if os(macOS)
-  public import BushelCore
-
+  public import BushelFoundation
   import Foundation
 
   public struct FileVersionSnapshotterFactory: SnapshotterFactory {

@@ -32,7 +32,7 @@ import Foundation
 struct BushelHub: Product, Target {
   var dependencies: any Dependencies {
     BushelLogging()
-    BushelCore()
+    BushelFoundation()
     // BushelViewsCore()
   }
 }

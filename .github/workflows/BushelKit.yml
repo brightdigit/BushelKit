@@ -93,6 +93,7 @@ jobs:
         id: coverage-files-spm
         with:          
           fail-on-empty-output: true
+          ignore-conversion-failures: true
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4        
         with:
@@ -109,6 +110,7 @@ jobs:
         id: coverage-files-iOS
         with:          
           fail-on-empty-output: true
+          ignore-conversion-failures: true
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4       
         with:
@@ -123,6 +125,7 @@ jobs:
         id: coverage-files-watchOS
         with:          
           fail-on-empty-output: true
+          ignore-conversion-failures: true
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4       
         with:

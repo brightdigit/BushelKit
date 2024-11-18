@@ -28,10 +28,8 @@
 //
 
 #if os(macOS)
-  import BushelCore
-
+  import BushelFoundation
   import BushelLogging
-
   import Foundation
 
   extension FileVersionSnapshotter {

@@ -29,7 +29,7 @@
 
 struct BushelVirtualBuddy: Product, Target {
   var dependencies: any Dependencies {
-    BushelCore()
+    BushelFoundation()
     BushelMacOSCore()
   }
 }

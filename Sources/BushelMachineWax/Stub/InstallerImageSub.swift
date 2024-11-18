@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
-import BushelCoreWax
+public import BushelFoundation
+import BushelFoundationWax
 public import BushelMachine
 public import Foundation
 

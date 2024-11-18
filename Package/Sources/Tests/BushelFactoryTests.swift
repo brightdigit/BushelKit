@@ -32,7 +32,7 @@ struct BushelFactoryTests: TestTarget {
     // BushelLocalization()
     BushelFactory()
     BushelTestUtilities()
-    BushelCoreWax()
+    BushelFoundationWax()
     BushelMachineWax()
   }
 }

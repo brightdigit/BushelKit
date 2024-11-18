@@ -28,10 +28,9 @@
 //
 
 #if os(macOS)
-  import BushelCore
-
+  import BushelFoundation
   public import BushelLogging
-
+  import BushelUtilities
   public import Foundation
 
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {

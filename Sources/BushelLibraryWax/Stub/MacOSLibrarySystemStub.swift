@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelCore
+public import BushelFoundation
 public import BushelLibrary
 public import Foundation
 public import RadiantDocs
@@ -43,7 +43,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
   public var id: VMSystemID
   public var shortName: String = "macOS"
   public var allowedContentTypes: Set<FileType> = .init()
-  public var releaseCollectionMetadata: any BushelCore.ReleaseCollectionMetadata {
+  public var releaseCollectionMetadata: any ReleaseCollectionMetadata {
     fatalError("Not Implemented")
   }
 
