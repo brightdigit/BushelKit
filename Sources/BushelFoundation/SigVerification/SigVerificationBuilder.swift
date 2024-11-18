@@ -28,6 +28,7 @@
 //
 
 /// A result builder for constructing a collection of `SigVerifier` instances.
+@resultBuilder
 public enum SigVerificationBuilder {
   /// Builds a collection of `SigVerifier` instances from the provided components.
   ///
