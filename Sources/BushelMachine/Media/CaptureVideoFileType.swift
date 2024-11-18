@@ -43,3 +43,37 @@ public enum CaptureVideoFileType: String, Sendable, Codable {
     }
   }
 #endif
+
+extension CaptureVideoFileType {
+    /// Returns a user-friendly display name for the file type
+    public var displayName: String {
+        switch self {
+        case .quickTimeMovie:
+            return "QuickTime Movie"
+        }
+    }
+    
+    /// Returns the common file extension for this file type
+    public var fileExtension: String {
+        switch self {
+        case .quickTimeMovie:
+            return "mov"
+        }
+    }
+    
+    /// Returns a more detailed description of the file type
+    public var description: String {
+        switch self {
+        case .quickTimeMovie:
+            return "QuickTime Movie (.mov) - A multimedia container file format developed by Apple"
+        }
+    }
+    
+    /// Returns the MIME type for the file format
+    public var mimeType: String {
+        switch self {
+        case .quickTimeMovie:
+            return "video/quicktime"
+        }
+    }
+}

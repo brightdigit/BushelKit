@@ -91,6 +91,7 @@ public struct ImageFileParser: RecordedImageParser {
       createdAt: Date(),
       size: size,
       fileSize: fileSize,
+      fileExtension: url.pathExtension,
       configuration: image.configuration
     )
   }

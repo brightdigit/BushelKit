@@ -41,3 +41,43 @@ public enum CaptureVideoPixelFormat: String, Sendable, Codable {
     }
   }
 #endif
+
+extension CaptureVideoPixelFormat {
+    /// Returns a user-friendly description of the pixel format
+    public var description: String {
+        switch self {
+        case .bgra32:
+            return "32-bit BGRA (Blue, Green, Red, Alpha)"
+        }
+    }
+    
+    /// Returns detailed technical information about the pixel format
+    public var technicalDescription: String {
+        switch self {
+        case .bgra32:
+            return """
+            Format: 32-bit BGRA
+            Bits per pixel: 32
+            Channel order: Blue, Green, Red, Alpha
+            Alpha: Yes (8-bit)
+            Memory layout: 8 bits per channel
+            """
+        }
+    }
+    
+    /// Returns the number of bits per pixel
+    public var bitsPerPixel: Int {
+        switch self {
+        case .bgra32:
+            return 32
+        }
+    }
+    
+    /// Returns whether the format includes an alpha channel
+    public var hasAlpha: Bool {
+        switch self {
+        case .bgra32:
+            return true
+        }
+    }
+}

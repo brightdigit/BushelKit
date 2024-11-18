@@ -30,3 +30,42 @@
 public enum CaptureVideoCodec: String, Sendable, Codable {
   case h264
 }
+
+extension CaptureVideoCodec {
+    /// Returns a user-friendly display name for the codec
+    public var displayName: String {
+        switch self {
+        case .h264:
+            return "H.264"
+        }
+    }
+    
+    /// Returns a more detailed description of the codec
+    public var description: String {
+        switch self {
+        case .h264:
+            return "H.264/AVC - High efficiency video compression standard"
+        }
+    }
+    
+    /// Returns technical details about the codec
+    public var technicalDescription: String {
+        switch self {
+        case .h264:
+            return """
+            Name: H.264/MPEG-4 AVC
+            Type: Lossy compression
+            Usage: Standard video compression for streaming and storage
+            Features: High compression efficiency, widely supported
+            """
+        }
+    }
+    
+    /// Returns common alternative names for the codec
+    public var alternativeNames: [String] {
+        switch self {
+        case .h264:
+            return ["AVC", "MPEG-4 Part 10", "Advanced Video Coding"]
+        }
+    }
+}

@@ -50,7 +50,7 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
 
   internal static func description(from error: any Error) -> String {
     guard let error = error as? SnapshotError else {
-      assertionFailure()
+      assertionFailure(error.localizedDescription)
       return error.localizedDescription
     }
     switch error {

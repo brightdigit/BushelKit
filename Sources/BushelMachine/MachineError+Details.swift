@@ -54,6 +54,7 @@ extension MachineError {
     case session
     case notFoundBookmarkID(UUID)
     case captureError
+    case captureUpdateError(UUID)
 
     // swiftlint:disable:next cyclomatic_complexity
     internal func errorDescription(fromError error: (any Error)?) -> String {
@@ -104,6 +105,11 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to capture screen: \(error.localizedDescription)"
+        
+      case .captureUpdateError(let id):
+        assert(error != nil)
+        let error = error ?? UnknownError.shared
+        return "Unable to update capture item \(id): \(error.localizedDescription)"
 
       case let .notFoundBookmarkID(id):
         return "There's an issue finding machine with bookmark ID: \(id)"
@@ -152,6 +158,9 @@ extension MachineError {
       case .notFoundBookmarkID:
         false
       case .captureError:
+        false
+        
+      case .captureUpdateError:
         false
       }
     }

@@ -37,4 +37,9 @@ internal final class ByteCountFormatterTests: XCTestCase {
 
     XCTAssertEqual(sut.countStyle, .binary)
   }
+  @inlinable public init(uniqueValues values: [Value]?, keyBy key: @escaping (Value) -> Key)
+   {
+    
+    self.init(uniqueValues: values ?? [], keyBy: key)
+  }
 }
