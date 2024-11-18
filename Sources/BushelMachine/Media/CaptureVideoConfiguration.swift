@@ -28,23 +28,23 @@
 //
 
 public struct CaptureVideoConfiguration: Sendable, Codable {
+  private enum Defaults {
+    fileprivate static let format: CaptureVideoPixelFormat = .bgra32
+    fileprivate static let fileType: CaptureVideoFileType = .quickTimeMovie
+    fileprivate static let codec: CaptureVideoCodec = .h264
+    fileprivate static let height: Int = 1_080
+  }
+
   public let format: CaptureVideoPixelFormat
   public let fileType: CaptureVideoFileType
   public let codec: CaptureVideoCodec
   public let height: Int
   public let watermark: Watermark?
-  
-  enum Defaults {
-    static let format: CaptureVideoPixelFormat = .bgra32
-    static let fileType: CaptureVideoFileType = .quickTimeMovie
-    static let codec: CaptureVideoCodec = .h264
-    static let height: Int = 1_080
-  }
 
   private init(
-    format: CaptureVideoPixelFormat ,
-    fileType: CaptureVideoFileType ,
-    codec: CaptureVideoCodec ,
+    format: CaptureVideoPixelFormat,
+    fileType: CaptureVideoFileType,
+    codec: CaptureVideoCodec,
     height: Int,
     watermark: Watermark?
   ) {
@@ -57,9 +57,9 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
 
   public init(watermark: Watermark?) {
     self.init(
-      format:  Defaults.format,
-      fileType:  Defaults.fileType,
-      codec:  Defaults.codec,
+      format: Defaults.format,
+      fileType: Defaults.fileType,
+      codec: Defaults.codec,
       height: Defaults.height,
       watermark: watermark
     )
@@ -67,41 +67,41 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
 }
 
 extension CaptureVideoConfiguration {
-    /// Returns a concise, user-friendly summary of the video configuration
-    public var summary: String {
-        "Video: \(codec.displayName), Format: \(format.description), File: \(fileType.displayName)"
-    }
-    
-    /// Returns a detailed, technical description of the configuration
-    public var description: String {
-        """
-        Video Configuration:
-        • Codec: \(codec.description)
-        • Pixel Format: \(format.description)
-        • File Type: \(fileType.description)
-        """
-    }
-    
-    /// Returns comprehensive technical details of the configuration
-    public var technicalDescription: String {
-        """
-        Video Configuration Details
-        -------------------------
-        Codec:
-        \(codec.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
-        
-        Pixel Format:
-        \(format.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
-        
-        File Container:
-        • Type: \(fileType.displayName)
-        • Extension: .\(fileType.fileExtension)
-        • MIME Type: \(fileType.mimeType)
-        """
-    }
-    
-    /// Returns a short description suitable for UI labels
-    public var shortDescription: String {
-        "\(codec.displayName) \(format.rawValue) \(fileType.fileExtension.uppercased())"
-    }
+  /// Returns a concise, user-friendly summary of the video configuration
+  public var summary: String {
+    "Video: \(codec.displayName), Format: \(format.description), File: \(fileType.displayName)"
+  }
+
+  /// Returns a detailed, technical description of the configuration
+  public var description: String {
+    """
+    Video Configuration:
+    • Codec: \(codec.description)
+    • Pixel Format: \(format.description)
+    • File Type: \(fileType.description)
+    """
+  }
+
+  /// Returns comprehensive technical details of the configuration
+  public var technicalDescription: String {
+    """
+    Video Configuration Details
+    -------------------------
+    Codec:
+    \(codec.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
+
+    Pixel Format:
+    \(format.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
+
+    File Container:
+    • Type: \(fileType.displayName)
+    • Extension: .\(fileType.fileExtension)
+    • MIME Type: \(fileType.mimeType)
+    """
+  }
+
+  /// Returns a short description suitable for UI labels
+  public var shortDescription: String {
+    "\(codec.displayName) \(format.rawValue) \(fileType.fileExtension.uppercased())"
+  }
 }

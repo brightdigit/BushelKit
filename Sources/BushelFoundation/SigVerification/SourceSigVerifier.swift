@@ -47,7 +47,10 @@ public protocol SourceSigVerifier: Sendable {
   ///   - timestamp: The timestamp of the signature.
   /// - Returns: The image signature.
   /// - Throws: `SigVerificationError` if there is an error verifying the signature.
-  func imageSignature(from source: SignatureSource, timestamp: Date) async throws(SigVerificationError) -> ImageSignature
+  func imageSignature(
+    from source: SignatureSource,
+    timestamp: Date
+  ) async throws(SigVerificationError) -> ImageSignature
 }
 
 extension SourceSigVerifier {
@@ -56,7 +59,9 @@ extension SourceSigVerifier {
   /// - Parameter source: The signature source.
   /// - Returns: The image signature.
   /// - Throws: `SigVerificationError` if there is an error verifying the signature.
-  public func imageSignature(from source: SignatureSource) async throws(SigVerificationError) -> ImageSignature {
+  public func imageSignature(
+    from source: SignatureSource
+  ) async throws(SigVerificationError) -> ImageSignature {
     try await self.imageSignature(from: source, timestamp: .now)
   }
 }

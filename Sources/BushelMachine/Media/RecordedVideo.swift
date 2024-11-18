@@ -96,9 +96,20 @@ public struct RecordedVideo: Sendable, Codable {
       configuration: configuration
     )
   }
-  
+
   public init(initial: RecordedVideo, name: String, notes: String) {
-    self.init(videoUUID: initial.videoUUID, name: name, createdAt: initial.createdAt, notes: notes, fileSize: initial.fileSize, resolution: initial.resolution,
-              duration: initial.duration, imageTimeInterval: initial.imageTimeInterval, fileExtension: initial.fileExtension, configuration: initial.configuration)
+    self.init(
+      videoUUID: initial.videoUUID,
+      name: name,
+      createdAt: initial.createdAt,
+      notes: notes,
+      fileSize: initial.fileSize,
+      resolution: initial.resolution,
+
+      duration: initial.duration,
+      imageTimeInterval: initial.imageTimeInterval,
+      fileExtension: initial.fileExtension,
+      configuration: initial.configuration
+    )
   }
 }

@@ -29,9 +29,9 @@
 
 public struct CaptureImageConfiguration: Sendable, Codable, CustomStringConvertible {
   public var description: String {
-    return "\(fileType.rawValue.uppercased()) (\(compression.roundToNearest(value: 0.01)))"
+    "\(fileType.rawValue.uppercased()) (\(compression.roundToNearest(value: 0.01)))"
   }
-  
+
   public let fileType: ImageFileType
   public let compression: Double
   public let watermark: Watermark?

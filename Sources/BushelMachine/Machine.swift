@@ -106,11 +106,11 @@ public protocol Machine: Loggable, Sendable {
 
   func saveCaptureImage(with closure: @escaping @Sendable (URL) async throws -> RecordedImage)
     async throws -> RecordedImage
-  
+
   func updatedMetadata(
     forVideo video: RecordedVideo
   ) async
-  
+
   func updatedMetadata(
     forImage image: RecordedImage
   ) async

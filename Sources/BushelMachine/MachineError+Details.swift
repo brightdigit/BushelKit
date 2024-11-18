@@ -105,7 +105,7 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to capture screen: \(error.localizedDescription)"
-        
+
       case .captureUpdateError(let id):
         assert(error != nil)
         let error = error ?? UnknownError.shared
@@ -159,7 +159,7 @@ extension MachineError {
         false
       case .captureError:
         false
-        
+
       case .captureUpdateError:
         false
       }

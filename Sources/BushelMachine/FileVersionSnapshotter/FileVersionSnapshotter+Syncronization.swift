@@ -1,5 +1,5 @@
 //
-//  FileVersionSnapshotter+Synchronization.swift
+//  FileVersionSnapshotter+Syncronization.swift
 //  BushelKit
 //
 //  Created by Leo Dion.

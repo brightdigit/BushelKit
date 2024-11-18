@@ -43,7 +43,7 @@ public struct RecordedImage: Sendable, Codable {
   public let resolution: RecordedResolution
   public let fileSize: UInt64
   public let fileExtension: String
-  
+
   public let configuration: CaptureImageConfiguration
 
   public init(
@@ -89,8 +89,17 @@ extension RecordedImage {
       configuration: configuration
     )
   }
-  
+
   public init(initial: RecordedImage, name: String, notes: String) {
-    self.init(imageUUID: initial.imageUUID, name: name, notes: notes, createdAt: initial.createdAt, resolution: initial.resolution, fileSize: initial.fileSize, fileExtension: initial.fileExtension, configuration: initial.configuration)
+    self.init(
+      imageUUID: initial.imageUUID,
+      name: name,
+      notes: notes,
+      createdAt: initial.createdAt,
+      resolution: initial.resolution,
+      fileSize: initial.fileSize,
+      fileExtension: initial.fileExtension,
+      configuration: initial.configuration
+    )
   }
 }
