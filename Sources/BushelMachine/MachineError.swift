@@ -181,4 +181,12 @@ extension MachineError {
       innerError: ScreenshotExportError(fileNameErrors: errors)
     )
   }
+  
+  public static func deleteCapturedImage(withID id: UUID, isEmpty: Bool = false) -> MachineError {
+    MachineError(details: .missingImage(id))
+  }
+  
+  public static func deleteCapturedVideo(withID id: UUID, isEmpty: Bool = false) -> MachineError {
+    MachineError(details: .missingImage(id))
+  }
 }

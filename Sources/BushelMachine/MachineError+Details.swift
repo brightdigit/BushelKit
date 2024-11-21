@@ -56,6 +56,9 @@ extension MachineError {
     case captureError
     case captureUpdateError(UUID)
     case exportScreenshotsErrorAt(URL)
+    case missingImage(UUID)
+    case missingVideo(UUID)
+    
     
 
     // swiftlint:disable:next cyclomatic_complexity
@@ -117,9 +120,15 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to export screenshots: \(error.localizedDescription)"
+        
+      
 
       case let .notFoundBookmarkID(id):
         return "There's an issue finding machine with bookmark ID: \(id)"
+      case .missingImage(let id):
+        return "Unable to delete image \(id)"
+      case .missingVideo(let id):
+        return "Unable to delete video \(id)"
       }
     }
 
@@ -171,6 +180,10 @@ extension MachineError {
         false
         
       case .exportScreenshotsErrorAt:
+        false
+      case .missingImage:
+        false
+      case .missingVideo(_):
         false
       }
     }
