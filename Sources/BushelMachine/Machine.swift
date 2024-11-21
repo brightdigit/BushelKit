@@ -114,6 +114,10 @@ public protocol Machine: Loggable, Sendable {
   func updatedMetadata(
     forImage image: RecordedImage
   ) async
+  
+  func deleteCapturedVideoWithID(_ id: UUID) async throws
+  
+  func deleteCapturedImageWithID(_ id: UUID) async throws
 }
 
 extension Machine {

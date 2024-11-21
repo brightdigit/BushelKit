@@ -56,6 +56,7 @@ extension MachineError {
     case captureError
     case captureUpdateError(UUID)
     case exportScreenshotsErrorAt(URL)
+    
 
     // swiftlint:disable:next cyclomatic_complexity
     internal func errorDescription(fromError error: (any Error)?) -> String {
