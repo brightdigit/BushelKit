@@ -134,4 +134,14 @@ public struct MachineStub: Machine {
   public func updatedMetadata(forImage image: BushelMachine.RecordedImage) async {
     fatalError("Not implemented")
   }
+
+  // swiftlint:disable:next unavailable_function
+  public func deleteCapturedImageWithID(_ id: UUID) async throws {
+    fatalError("Not implemented")
+  }
+
+  // swiftlint:disable:next unavailable_function
+  public func deleteCapturedVideoWithID(_ id: UUID) async throws {
+    fatalError("Not implemented")
+  }
 }

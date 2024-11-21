@@ -58,10 +58,8 @@ extension MachineError {
     case exportScreenshotsErrorAt(URL)
     case missingImage(UUID)
     case missingVideo(UUID)
-    
-    
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     internal func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:
@@ -115,13 +113,11 @@ extension MachineError {
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to update capture item \(id): \(error.localizedDescription)"
-        
-      case .exportScreenshotsErrorAt(_):
+
+      case .exportScreenshotsErrorAt:
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to export screenshots: \(error.localizedDescription)"
-        
-      
 
       case let .notFoundBookmarkID(id):
         return "There's an issue finding machine with bookmark ID: \(id)"
@@ -178,12 +174,12 @@ extension MachineError {
 
       case .captureUpdateError:
         false
-        
+
       case .exportScreenshotsErrorAt:
         false
       case .missingImage:
         false
-      case .missingVideo(_):
+      case .missingVideo:
         false
       }
     }
