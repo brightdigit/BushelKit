@@ -67,7 +67,7 @@ extension FileManager {
   /// - Returns: A `DirectoryExists` struct indicating the existence and type of the directory.
   public func directoryExists(at url: URL) -> DirectoryExists {
     var isDirectory: ObjCBool = false
-    let fileExists = FileManager.default.fileExists(
+    let fileExists = self.fileExists(
       atPath: url.path,
       isDirectory: &isDirectory
     )
@@ -117,12 +117,12 @@ extension FileManager {
 
     case .fileExists:
       if deleteExistingFile {
-        try FileManager.default.removeItem(at: url)
+        try self.removeItem(at: url)
       }
       fallthrough
 
     case .notExists:
-      try FileManager.default.createDirectory(
+      try self.createDirectory(
         at: url,
         withIntermediateDirectories: createIntermediates,
         attributes: attributes
