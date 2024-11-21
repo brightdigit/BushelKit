@@ -41,6 +41,10 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
     case machine
     case snapshot
   }
+  
+  public struct ScreenshotExportError : Error {
+    let fileNameErrors: [String : Error]
+  }
 
   public static var loggingCategory: BushelLogging.Category {
     .library
@@ -165,5 +169,16 @@ extension MachineError {
 
   public static func captureUpdateError(_ error: any Error, id: UUID) -> MachineError {
     MachineError(details: .captureUpdateError(id), innerError: error)
+  }
+  
+  public static func exportScreenshotsError(_ error: any Error, at url: URL) -> MachineError {
+    MachineError(details: .exportScreenshotsErrorAt(url), innerError: error)
+  }
+  
+  public static func exportScreenshots(errors: [String: any Error], at url: URL) -> MachineError {
+    MachineError(
+      details: .exportScreenshotsErrorAt(url),
+      innerError: ScreenshotExportError(fileNameErrors: errors)
+    )
   }
 }
