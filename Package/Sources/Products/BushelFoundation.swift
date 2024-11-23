@@ -31,5 +31,6 @@ struct BushelFoundation: Product, Target {
   var dependencies: any Dependencies {
     BushelUtilities()
     OperatingSystemVersion()
+    RadiantKit()
   }
 }

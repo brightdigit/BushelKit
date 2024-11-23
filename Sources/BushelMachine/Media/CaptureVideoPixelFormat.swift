@@ -31,15 +31,15 @@ public enum CaptureVideoPixelFormat: String, Sendable, Codable {
   case bgra32 = "32BGRA"
 }
 #if canImport(CoreVideo)
-public import CoreVideo
-extension CaptureVideoPixelFormat {
-  public var osType: OSType {
-    switch self {
-    case .bgra32:
-      kCVPixelFormatType_32BGRA
+  public import CoreVideo
+  extension CaptureVideoPixelFormat {
+    public var osType: OSType {
+      switch self {
+      case .bgra32:
+        kCVPixelFormatType_32BGRA
+      }
     }
   }
-}
 #endif
 
 extension CaptureVideoPixelFormat {
