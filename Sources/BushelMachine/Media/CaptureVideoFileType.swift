@@ -32,16 +32,16 @@ public enum CaptureVideoFileType: String, Sendable, Codable {
 }
 
 #if canImport(UniformTypeIdentifiers)
-public import UniformTypeIdentifiers
+  public import UniformTypeIdentifiers
 
-extension UTType {
-  public init(videoType: CaptureVideoFileType) {
-    switch videoType {
-    case .quickTimeMovie:
-      self = .quickTimeMovie
+  extension UTType {
+    public init(videoType: CaptureVideoFileType) {
+      switch videoType {
+      case .quickTimeMovie:
+        self = .quickTimeMovie
+      }
     }
   }
-}
 #endif
 
 extension CaptureVideoFileType {

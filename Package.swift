@@ -768,12 +768,7 @@ BushelDocs()
 RadiantKit()
 }
 }
-struct BushelUtilities: Product, Target {
-var dependencies: any Dependencies {
-#warning("Remove this")
-RadiantKit()
-}
-}
+struct BushelUtilities: Product, Target {}
 struct BushelTestUtilities: Product, Target {}
 struct BushelHubIPSW: Product, Target {
 var dependencies: any Dependencies {
@@ -817,6 +812,7 @@ BushelLogging()
 struct BushelUT: Product, Target {
 var dependencies: any Dependencies {
 BushelFoundation()
+RadiantDocs()
 }
 }
 struct BushelMachine: Product, Target {
@@ -867,6 +863,7 @@ struct BushelFoundation: Product, Target {
 var dependencies: any Dependencies {
 BushelUtilities()
 OperatingSystemVersion()
+RadiantKit()
 }
 }
 struct BushelLibraryWax: Target {
@@ -950,7 +947,7 @@ var dependency: Package.Dependency {
 }
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.2")
+.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.3")
 }
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {

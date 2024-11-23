@@ -30,5 +30,6 @@
 struct BushelUT: Product, Target {
   var dependencies: any Dependencies {
     BushelFoundation()
+    RadiantDocs()
   }
 }
