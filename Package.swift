@@ -947,7 +947,7 @@ var dependency: Package.Dependency {
 }
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.3")
+.package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-alpha.4")
 }
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {
