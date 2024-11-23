@@ -8,7 +8,7 @@ switch entry.productType {
 case .executable:
 return Self.executable(name: entry.name, targets: targets)
 case .library:
-return Self.library(name: entry.name, targets: targets)
+return Self.library(name: entry.name, type:  entry.libraryType, targets: targets)
 }
 }
 }
@@ -368,6 +368,7 @@ public typealias _PackageDescription_Product = PackageDescription.Product
 public typealias _PackageDescription_Target = PackageDescription.Target
 public typealias _PackageDescription_TargetDependency = PackageDescription.Target.Dependency
 public typealias _PackageDescription_PackageDependency = PackageDescription.Package.Dependency
+public typealias LibraryType = PackageDescription.Product.Library.LibraryType//
 public struct GlobalActorIsolatedTypesUsability: SwiftSettingFeature {
 public var featureState: FeatureState {
 return .experimental
@@ -668,10 +669,14 @@ content()
 public protocol Product: _Named, GroupBuildable {
 var productTargets: [Target] { get }
 var productType: ProductType { get }
+var libraryType: LibraryType? { get }
 }
 extension Product {
 public var productType: ProductType {
 .library
+}
+public var libraryType: LibraryType? {
+nil
 }
 }
 public protocol SwiftSettingsConvertible: GroupBuildable where Output == SwiftSetting {
