@@ -52,7 +52,7 @@ extension Dictionary {
   @inlinable public init(
     uniqueValues values: [Value]?,
     keyBy key: @escaping (Value) -> Key
-  )   {
+  ) {
     self.init(uniqueValues: values ?? [], keyBy: key)
   }
 }

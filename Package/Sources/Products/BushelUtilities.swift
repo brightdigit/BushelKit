@@ -27,9 +27,4 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-struct BushelUtilities: Product, Target {
-  var dependencies: any Dependencies {
-  #warning("Remove this")
-        RadiantKit()
-  }
-}
+struct BushelUtilities: Product, Target {}
