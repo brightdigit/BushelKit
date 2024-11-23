@@ -35,16 +35,15 @@ extension InitializablePackage {
   /// Creates a new instance of the `InitializablePackage` at the specified file URL.
   ///
   /// - Parameter fileURL: The URL where the package should be created.
+  /// - Parameter options: Different options for creating and writing the files nessecary.
   /// - Throws: Any errors that occur during the creation
   /// of the directory or the writing of the metadata JSON file.
   /// - Returns: The newly created instance of the `InitializablePackage`.
   @discardableResult
-  public static func createAt(_ fileURL: URL) throws -> Self {
-    let library = self.init()
-    try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: false)
-    let metadataJSONPath = fileURL.appendingPathComponent(self.configurationFileWrapperKey)
-    let data = try JSON.encoder.encode(library)
-    try data.write(to: metadataJSONPath)
-    return library
+  public static func createAt(
+    _ fileURL: URL,
+    options: Options = .none
+  ) throws -> Self {
+    try self.createAt(fileURL, using: JSON.encoder, options: options)
   }
 }
