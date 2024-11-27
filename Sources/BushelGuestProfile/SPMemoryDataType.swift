@@ -27,19 +27,23 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPMemoryDataType
-
+/// Represents a specific type of memory data.
 public struct SPMemoryDataType: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {
     case dimmType = "dimm_type"
     case spMemoryDataType = "SPMemoryDataType"
   }
 
+  /// The source of the DIMM (Dual Inline Memory Module) type.
   public let dimmType: ObtainedFrom
+
+  /// The specific type of SP (System Performance) memory data.
   public let spMemoryDataType: String
 
+  /// Initializes a new instance of `SPMemoryDataType`.
+  /// - Parameters:
+  ///   - dimmType: The source of the DIMM type.
+  ///   - spMemoryDataType: The specific type of SP memory data.
   public init(
     dimmType: ObtainedFrom,
     spMemoryDataType: String

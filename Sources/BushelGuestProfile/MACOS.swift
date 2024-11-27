@@ -31,13 +31,19 @@ public import Foundation
 
 // MARK: - MACOS
 
+/// A struct representing a macOS version.
 public struct MACOS: Codable, Equatable, Sendable {
+  /// The coding keys for the MACOS struct.
   public enum CodingKeys: String, CodingKey {
     case the123 = "12.3"
   }
 
+  /// The macOS version as a string.
   public let the123: String
 
+  /// Initializes a new instance of the MACOS struct.
+  ///
+  /// - Parameter the123: The macOS version as a string.
   public init(the123: String) {
     self.the123 = the123
   }

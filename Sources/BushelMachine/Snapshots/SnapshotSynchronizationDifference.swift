@@ -29,7 +29,11 @@
 
 public import Foundation
 
+/// Represents the differences between two sets of snapshots during synchronization.
 public struct SnapshotSynchronizationDifference: Sendable {
+  /// The snapshots that were added during the synchronization process.
   public let addedSnapshots: [Snapshot]
+
+  /// The IDs of the snapshots that were synchronized.
   public let snapshotIDs: [UUID]
 }

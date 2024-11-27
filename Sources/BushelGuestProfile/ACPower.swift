@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - ACPower
-
+/// Represents the AC power settings of a device.
 public struct ACPower: Codable, Equatable, Sendable {
+  /// The keys used to encode and decode the `ACPower` struct.
   public enum CodingKeys: String, CodingKey {
     case currentPowerSource = "Current Power Source"
     case diskSleepTimer = "Disk Sleep Timer"
@@ -40,12 +40,24 @@ public struct ACPower: Codable, Equatable, Sendable {
     case systemSleepTimer = "System Sleep Timer"
   }
 
+  /// The current power source of the device.
   public let currentPowerSource: String
+  /// The time (in minutes) before the disk goes to sleep.
   public let diskSleepTimer: Int
+  /// The time (in minutes) before the display goes to sleep.
   public let displaySleepTimer: Int
+  /// Whether the device sleeps when the power button is pressed.
   public let sleepOnPowerButton: String
+  /// The time (in minutes) before the system goes to sleep.
   public let systemSleepTimer: Int
 
+  /// Initializes an `ACPower` instance with the provided values.
+  /// - Parameters:
+  ///   - currentPowerSource: The current power source of the device.
+  ///   - diskSleepTimer: The time (in minutes) before the disk goes to sleep.
+  ///   - displaySleepTimer: The time (in minutes) before the display goes to sleep.
+  ///   - sleepOnPowerButton: Whether the device sleeps when the power button is pressed.
+  ///   - systemSleepTimer: The time (in minutes) before the system goes to sleep.
   public init(
     currentPowerSource: String,
     diskSleepTimer: Int,

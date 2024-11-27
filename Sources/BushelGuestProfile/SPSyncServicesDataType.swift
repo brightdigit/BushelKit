@@ -29,19 +29,28 @@
 
 public import Foundation
 
-// MARK: - SPSyncServicesDataType
-
+/// Represents a data type used in the SPSyncServices.
 public struct SPSyncServicesDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the `SPSyncServicesDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case items = "_items"
     case name = "_name"
     case summaryOSVersion = "summary_os_version"
   }
 
+  /// The items associated with the data type.
   public let items: [SPSyncServicesDataTypeItem]
+  /// The name of the data type.
   public let name: String
+  /// The summary OS version associated with the data type.
   public let summaryOSVersion: String?
 
+  /// Initializes an instance of `SPSyncServicesDataType`.
+  ///
+  /// - Parameters:
+  ///   - items: The items associated with the data type.
+  ///   - name: The name of the data type.
+  ///   - summaryOSVersion: The summary OS version associated with the data type.
   public init(
     items: [SPSyncServicesDataTypeItem],
     name: String,

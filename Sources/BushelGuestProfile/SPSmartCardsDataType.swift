@@ -29,19 +29,27 @@
 
 public import Foundation
 
-// MARK: - SPSmartCardsDataType
-
+/// Represents a data type for smart cards.
 public struct SPSmartCardsDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for encoding and decoding the data.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case the01 = "#01"
     case items = "_items"
   }
 
+  /// The name of the smart card data.
   public let name: String
+  /// The "01" property of the smart card data.
   public let the01: String?
+  /// The items associated with the smart card data.
   public let items: [SPRawCameraDataType]?
 
+  /// Initializes a new instance of `SPSmartCardsDataType`.
+  /// - Parameters:
+  ///   - name: The name of the smart card data.
+  ///   - the01: The "01" property of the smart card data.
+  ///   - items: The items associated with the smart card data.
   public init(
     name: String,
     the01: String?,

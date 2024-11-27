@@ -31,13 +31,20 @@ public import Foundation
 
 // MARK: - DependencyResolutionFailures
 
+/// A struct that represents failures in dependency resolution.
 public struct DependencyResolutionFailures: Codable, Equatable, Sendable {
+  /// The coding keys for the `DependencyResolutionFailures` struct.
   public enum CodingKeys: String, CodingKey {
+    /// The case for no kexts found for the given libraries.
     case noKextsFoundForTheseLibraries = "No kexts found for these libraries"
   }
 
+  /// An array of library names for which no kexts were found.
   public let noKextsFoundForTheseLibraries: [String]
 
+  /// Initializes a `DependencyResolutionFailures` instance with the given `noKextsFoundForTheseLibraries`.
+  ///
+  /// - Parameter noKextsFoundForTheseLibraries: An array of library names for which no kexts were found.
   public init(noKextsFoundForTheseLibraries: [String]) {
     self.noKextsFoundForTheseLibraries = noKextsFoundForTheseLibraries
   }

@@ -28,16 +28,27 @@
 //
 
 #if os(macOS)
+
   public import BushelFoundation
   import Foundation
 
+  /// A factory for creating file version snapshots.
   public struct FileVersionSnapshotterFactory: SnapshotterFactory {
+    /// The unique identifier for the file version snapshotter.
     public static var systemID: SnapshotterID {
       .fileVersion
     }
 
+    /// Initializes a new instance of the `FileVersionSnapshotterFactory`.
     public init() {}
 
+    /// Creates a new snapshot for the given machine, request, and options.
+    ///
+    /// - Parameters:
+    ///   - machine: The machine to create the snapshot for.
+    ///   - request: The snapshot request.
+    ///   - options: The snapshot options.
+    /// - Returns: The created snapshot.
     public func createNewSnapshot(
       of machine: some Machine,
       request: SnapshotRequest,
@@ -54,6 +65,10 @@
       )
     }
 
+    /// Retrieves the snapshotter that supports the given machine type.
+    ///
+    /// - Parameter supports: The machine type to find a snapshotter for.
+    /// - Returns: The snapshotter that supports the given machine type, or `nil` if no such snapshotter is found.
     public func snapshotter<MachineType>(
       supports: MachineType.Type
     ) -> (any Snapshotter<MachineType>)? where MachineType: Machine {

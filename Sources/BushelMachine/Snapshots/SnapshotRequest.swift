@@ -29,9 +29,17 @@
 
 import Foundation
 
+/// A request to create a snapshot.
 public struct SnapshotRequest: Sendable {
+  /// The name of the snapshot.
   public let name: String
+  /// The notes associated with the snapshot.
   public let notes: String
+
+  /// Initializes a new `SnapshotRequest` instance.
+  /// - Parameters:
+  ///   - name: The name of the snapshot. Defaults to an empty string.
+  ///   - notes: The notes associated with the snapshot. Defaults to an empty string.
   public init(name: String = "", notes: String = "") {
     self.name = name
     self.notes = notes

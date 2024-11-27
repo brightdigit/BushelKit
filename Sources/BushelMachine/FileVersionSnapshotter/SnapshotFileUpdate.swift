@@ -28,11 +28,15 @@
 //
 
 #if os(macOS)
+
   import BushelLogging
   import Foundation
 
+  /// Represents a file update for a snapshot.
   internal struct SnapshotFileUpdate {
+    /// The list of files to be deleted.
     internal let filesToDelete: [URL]
+    /// The list of file versions to be added.
     internal let versionsToAdd: [NSFileVersion]
   }
 #endif

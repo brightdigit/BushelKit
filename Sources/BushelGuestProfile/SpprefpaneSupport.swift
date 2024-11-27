@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// An enumeration representing the support for the SpprefPane.
 public enum SpprefpaneSupport: String, Codable, Equatable, Sendable {
+  /// Represents the Apple support for the SpprefPane.
   case spprefpaneSupportApple = "spprefpane_support_apple"
 }

@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// An enumeration representing whether a framework is private or not.
 public enum PrivateFramework: String, Codable, Equatable, Sendable {
+  /// Indicates that the framework is not private.
   case no
+  /// Indicates that the framework is private.
   case yes
 }

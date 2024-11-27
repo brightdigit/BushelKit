@@ -29,9 +29,14 @@
 
 import Foundation
 
+/// Represents the different types of changes that can occur in a snapshot.
 public enum SnapshotDifference: String, Sendable {
+  /// Indicates that an element has been appended to the snapshot.
   case append
+  /// Indicates that an element has been removed from the snapshot.
   case remove
+  /// Indicates that an element has been restored in the snapshot.
   case restored
+  /// Indicates that the snapshot has been exported.
   case export
 }

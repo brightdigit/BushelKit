@@ -29,7 +29,10 @@
 
 import Foundation
 
+/// An enumeration representing different properties of a builder.
 public enum BuilderProperty: String, Equatable, Sendable {
+  /// The hardware model of the builder.
   case hardwareModel
+  /// The machine identifier of the builder.
   case machineIdentifier
 }

@@ -29,15 +29,19 @@
 
 public import Foundation
 
-// MARK: - SpextValidErrors
-
+/// Represents errors related to validation in the Spext system.
 public struct SpextValidErrors: Codable, Equatable, Sendable {
+  /// The coding keys for the `SpextValidErrors` struct.
   public enum CodingKeys: String, CodingKey {
     case validationFailures = "Validation Failures"
   }
 
+  /// The validation failures that occurred.
   public let validationFailures: ValidationFailures
 
+  /// Initializes a new instance of `SpextValidErrors`.
+  ///
+  /// - Parameter validationFailures: The validation failures to include in the instance.
   public init(validationFailures: ValidationFailures) {
     self.validationFailures = validationFailures
   }

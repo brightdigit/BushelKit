@@ -27,7 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents an image file type.
 public enum ImageFileType: String, Sendable, Codable {
+  /// Represents a JPEG image file.
   case jpeg
 }
 
@@ -35,19 +37,22 @@ public enum ImageFileType: String, Sendable, Codable {
   public import UniformTypeIdentifiers
 
   extension UTType {
+    /// Initializes a new `UTType` instance with the provided `ImageFileType`.
+    /// - Parameter imageType: The `ImageFileType` to initialize the `UTType` with.
     public init(imageType: ImageFileType) {
       switch imageType {
       case .jpeg:
-        self = UTType.jpeg
+        self = .jpeg
       }
     }
   }
 #else
   extension ImageFileType {
+    /// The file extension associated with the `ImageFileType`.
     public var fileExtension: String {
       switch self {
       case .jpeg:
-        return "jpg"
+        "jpg"
       }
     }
   }

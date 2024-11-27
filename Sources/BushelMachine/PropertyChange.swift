@@ -27,63 +27,118 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// A struct representing a change in the machine state property.
 public struct StatePropertyChange: PropertyChange {
+  /// The type of the property value.
   public typealias ValueType = MachineState
+
+  /// The associated machine property for this change.
   public nonisolated(unsafe) static let property: MachineProperty = .state
+
+  /// The property values associated with this change.
   public let values: PropertyValues<MachineState>
+
+  /// Initializes a new `StatePropertyChange` instance.
+  /// - Parameter values: The property values associated with this change.
   public init(values: PropertyValues<MachineState>) {
     self.values = values
   }
 }
 
+/// A struct representing a change in the can start property.
 public struct CanStartPropertyChange: PropertyChange {
+  /// The associated machine property for this change.
   public nonisolated(unsafe) static let property: MachineProperty = .canStart
+
+  /// The property values associated with this change.
   public let values: PropertyValues<Bool>
+
+  /// Initializes a new `CanStartPropertyChange` instance.
+  /// - Parameter values: The property values associated with this change.
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
+/// A struct representing a change in the can stop property.
 public struct CanStopPropertyChange: PropertyChange {
+  /// The associated machine property for this change.
   public nonisolated(unsafe) static let property: MachineProperty = .canStop
+
+  /// The property values associated with this change.
   public let values: PropertyValues<Bool>
+
+  /// Initializes a new `CanStopPropertyChange` instance.
+  /// - Parameter values: The property values associated with this change.
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
+/// A struct representing a change in the can pause property.
 public struct CanPausePropertyChange: PropertyChange {
+  /// The associated machine property for this change.
   public nonisolated(unsafe) static let property: MachineProperty = .canPause
+
+  /// The property values associated with this change.
   public let values: PropertyValues<Bool>
+
+  /// Initializes a new `CanPausePropertyChange` instance.
+  /// - Parameter values: The property values associated with this change.
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
+/// A struct representing a change in the can resume property.
 public struct CanResumePropertyChange: PropertyChange {
+  /// The associated machine property for this change.
   public nonisolated(unsafe) static let property: MachineProperty = .canResume
+
+  /// The property values associated with this change.
   public let values: PropertyValues<Bool>
+
+  /// Initializes a new `CanResumePropertyChange` instance.
+  /// - Parameter values: The property values associated with this change.
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
+/// A struct representing a change in the can request stop property.
 public struct CanRequestStopPropertyChange: PropertyChange {
+  /// The associated machine property for this change.
   public nonisolated(unsafe) static let property: MachineProperty = .canRequestStop
+
+  /// The property values associated with this change.
   public let values: PropertyValues<Bool>
+
+  /// Initializes a new `CanRequestStopPropertyChange` instance.
+  /// - Parameter values: The property values associated with this change.
   public init(values: PropertyValues<Bool>) {
     self.values = values
   }
 }
 
+/// A protocol representing a property change in a machine.
 public protocol PropertyChange: PropertyChangeFromValue, Sendable {
+  /// The type of the property value.
   associatedtype ValueType: Sendable = Bool
+
+  /// The associated machine property for this change.
   static var property: MachineProperty { get }
+
+  /// The property values associated with this change.
   var values: PropertyValues<ValueType> { get }
+
+  /// Initializes a new instance of the property change.
+  /// - Parameter values: The property values associated with this change.
   init(values: PropertyValues<ValueType>)
 }
 
 extension PropertyChange {
+  /// Gets the value of the property change.
+  /// - Returns: The value of the property change, or `nil` if the value cannot be cast to the specified type.
   public func getValue<Value: Sendable>() -> Value? {
     let value = self.values.new as? Value
     return value

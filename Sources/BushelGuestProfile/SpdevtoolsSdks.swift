@@ -31,7 +31,9 @@ public import Foundation
 
 // MARK: - SpdevtoolsSdks
 
+/// A struct representing the SDKs for various Apple platforms.
 public struct SpdevtoolsSdks: Codable, Equatable, Sendable {
+  /// The coding keys for the different Apple platforms.
   public enum CodingKeys: String, CodingKey {
     case driverKit = "DriverKit"
     case iOS
@@ -43,15 +45,33 @@ public struct SpdevtoolsSdks: Codable, Equatable, Sendable {
     case watchOSSimulator = "watchOS Simulator"
   }
 
+  /// The DriverKit SDK.
   public let driverKit: DriverKit
+  /// The iOS SDK.
   public let iOS: IOS
+  /// The iOS Simulator SDK.
   public let iOSSimulator: IOS
+  /// The macOS SDK.
   public let macOS: MACOS
+  /// The tvOS SDK.
   public let tvOS: TvOS
+  /// The tvOS Simulator SDK.
   public let tvOSSimulator: TvOS
+  /// The watchOS SDK.
   public let watchOS: WatchOS
+  /// The watchOS Simulator SDK.
   public let watchOSSimulator: WatchOS
 
+  /// Initializes a new instance of `SpdevtoolsSdks`.
+  /// - Parameters:
+  ///   - driverKit: The DriverKit SDK.
+  ///   - iOS: The iOS SDK.
+  ///   - iOSSimulator: The iOS Simulator SDK.
+  ///   - macOS: The macOS SDK.
+  ///   - tvOS: The tvOS SDK.
+  ///   - tvOSSimulator: The tvOS Simulator SDK.
+  ///   - watchOS: The watchOS SDK.
+  ///   - watchOSSimulator: The watchOS Simulator SDK.
   public init(
     driverKit: DriverKit,
     iOS: IOS,

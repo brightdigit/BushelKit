@@ -29,4 +29,5 @@
 
 public import RadiantDocs
 
+/// Represents a machine file, which is a specialized type of document file.
 public typealias MachineFile = DocumentFile<MachineFileTypeSpecification>

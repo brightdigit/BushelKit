@@ -28,19 +28,27 @@
 //
 
 #if !os(Linux)
+
   import Foundation
 
   extension NSFileVersion {
+    /// An internal struct representing a set of version data.
     internal struct VersionDataSet {
+      /// The file version.
       internal let fileVersion: NSFileVersion
+      /// The URL of the file version.
       internal let url: URL
 
+      /// Removes the file version and its associated URL.
+      /// - Parameter fileManager: The file manager to use for removal.
+      /// - Throws: Any errors that occur during the removal process.
       internal func remove(with fileManager: FileManager) throws {
-        try fileVersion.remove()
-        try fileManager.removeItem(at: url)
+        try self.fileVersion.remove()
+        try fileManager.removeItem(at: self.url)
       }
     }
 
+    /// The persistent identifier data for the file version.
     internal var persistentIdentifierData: Data {
       get throws {
         try NSKeyedArchiver.archivedData(
@@ -50,6 +58,13 @@
       }
     }
 
+    /// Adds a new file version at the specified URL with the contents from the provided URL.
+    /// - Parameters:
+    ///   - url: The URL of the file to add the version for.
+    ///   - contentsURL: The URL of the file contents to use for the new version.
+    ///   - options: The snapshot options to use for the new version.
+    /// - Returns: The newly added file version.
+    /// - Throws: Any errors that occur during the file version addition process.
     @available(iOS, unavailable)
     @available(watchOS, unavailable)
     @available(tvOS, unavailable)
@@ -71,6 +86,12 @@
       return version
     }
 
+    /// Retrieves the file version for the item at the specified URL using the provided persistent identifier data.
+    /// - Parameters:
+    ///   - url: The URL of the file to get the version for.
+    ///   - identifierData: The persistent identifier data for the version.
+    /// - Returns: The file version.
+    /// - Throws: Any errors that occur during the version retrieval process.
     internal static func version(
       itemAt url: URL,
       forPersistentIdentifierData identifierData: Data
@@ -84,7 +105,7 @@
       unarchiver.requiresSecureCoding = false
       guard
         let persistentIdentifier =
-          unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey)
+        unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey)
       else {
         throw SnapshotError.unarchiveError(identifierData)
       }
@@ -95,6 +116,12 @@
       return version
     }
 
+    /// Retrieves a version data set for the file version with the specified snapshot ID based on the provided snapshot paths.
+    /// - Parameters:
+    ///   - snapshotID: The UUID of the snapshot to retrieve the version data set for.
+    ///   - paths: The snapshot paths to use for the version data set retrieval.
+    /// - Returns: The version data set.
+    /// - Throws: Any errors that occur during the version data set retrieval process.
     internal static func version(
       withID snapshotID: UUID,
       basedOn paths: SnapshotPaths
@@ -112,12 +139,17 @@
       return .init(fileVersion: version, url: identifierDataFileURL)
     }
 
+    /// Writes the persistent identifier to the specified snapshot file URL.
+    /// - Parameter snapshotFileURL: The URL of the snapshot file to write the persistent identifier to.
+    /// - Throws: Any errors that occur during the write process.
     internal func writePersistentIdentifier(to snapshotFileURL: URL) throws {
-      try persistentIdentifierData.write(to: snapshotFileURL)
+      try self.persistentIdentifierData.write(to: snapshotFileURL)
     }
   }
 
   extension NSFileVersion.AddingOptions {
+    /// Initializes the adding options based on the provided snapshot options.
+    /// - Parameter options: The snapshot options to use for initialization.
     internal init(options: SnapshotOptions) {
       self = options.contains(.byMoving) ? [.byMoving] : []
     }

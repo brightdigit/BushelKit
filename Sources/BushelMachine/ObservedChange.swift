@@ -27,13 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// A protocol that defines an observed change of a value.
 public protocol ObservedChange<ValueType> {
+  /// The type of the value being observed.
   associatedtype ValueType: Sendable
+
+  /// The old value of the observed change.
   var oldValue: ValueType? { get }
+
+  /// The new value of the observed change.
   var newValue: ValueType? { get }
 }
 
 extension PropertyChange {
+  /// Initializes a `PropertyChange` instance with the changes from an `ObservedChange`.
+  ///
+  /// - Parameter changes: The observed change.
   public init(changes: any ObservedChange<ValueType>) {
     let values = PropertyValues(old: changes.oldValue, new: changes.newValue)
     self.init(values: values)

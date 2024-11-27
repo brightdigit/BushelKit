@@ -45,8 +45,8 @@ public final class MachineSystemManager: MachineSystemManaging, Loggable {
     )
   }
 
-  /// Resolve the ``MachineSystem`` based on the ``VMSystemID``
-  /// - Parameter id: id of the system to resolve.
+  /// Resolve the ``MachineSystem`` based on the ``VMSystemID``.
+  /// - Parameter id: The ID of the system to resolve.
   /// - Returns: The resulting ``MachineSystem``
   public func resolve(_ id: VMSystemID) -> any MachineSystem {
     guard let implementation = implementations[id] else {

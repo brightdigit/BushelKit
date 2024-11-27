@@ -29,17 +29,28 @@
 
 import Foundation
 
+/// An error that represents various issues that can occur when working with snapshots.
 internal enum SnapshotError: Error, LocalizedError, Sendable {
+  /// An error that occurred within the snapshot system.
   case innerError(any Error)
+  /// The snapshot version ID is missing.
   case missingSnapshotVersionID(UUID)
+  /// The snapshot version is missing at the specified URL.
   case missingSnapshotVersionAt(URL)
+  /// The snapshot file is missing.
   case missingSnapshotFile(UUID)
+  /// An error occurred while unarchiving the snapshot data.
   case unarchiveError(Data)
 
+  /// The localized description of the error.
   internal var errorDescription: String? {
     Self.description(from: self)
   }
 
+  /// Creates a `SnapshotError` from the given error.
+  ///
+  /// - Parameter error: The error to convert.
+  /// - Returns: A `SnapshotError` instance.
   internal static func inner(error: any Error) -> SnapshotError {
     if let snapshotError = error as? SnapshotError {
       snapshotError
@@ -48,6 +59,10 @@ internal enum SnapshotError: Error, LocalizedError, Sendable {
     }
   }
 
+  /// Provides a description for the given `SnapshotError`.
+  ///
+  /// - Parameter error: The `SnapshotError` to describe.
+  /// - Returns: A string description of the error.
   internal static func description(from error: any Error) -> String {
     guard let error = error as? SnapshotError else {
       assertionFailure(error.localizedDescription)

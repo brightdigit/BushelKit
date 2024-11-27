@@ -29,19 +29,28 @@
 
 public import Foundation
 
-// MARK: - DNS
-
+/// Represents DNS configuration settings.
 public struct DNS: Codable, Equatable, Sendable {
+  /// Coding keys for the `DNS` struct.
   public enum CodingKeys: String, CodingKey {
     case domainName = "DomainName"
     case searchDomains = "SearchDomains"
     case serverAddresses = "ServerAddresses"
   }
 
+  /// The domain name.
   public let domainName: String
+  /// The search domains.
   public let searchDomains: [String]
+  /// The server addresses.
   public let serverAddresses: [String]
 
+  /// Initializes a new instance of the `DNS` struct.
+  ///
+  /// - Parameters:
+  ///   - domainName: The domain name.
+  ///   - searchDomains: The search domains.
+  ///   - serverAddresses: The server addresses.
   public init(
     domainName: String,
     searchDomains: [String],

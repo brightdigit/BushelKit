@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPDeveloperToolsDataType
-
+/// A struct that represents the data type for SP Developer Tools.
 public struct SPDeveloperToolsDataType: Codable, Equatable, Sendable {
+  /// Coding keys for the SPDeveloperToolsDataType struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case spdevtoolsApps = "spdevtools_apps"
@@ -40,12 +40,25 @@ public struct SPDeveloperToolsDataType: Codable, Equatable, Sendable {
     case spdevtoolsVersion = "spdevtools_version"
   }
 
+  /// The name of the SP Developer Tools.
   public let name: String
+  /// The SP Developer Tools apps.
   public let spdevtoolsApps: SpdevtoolsApps
+  /// The path of the SP Developer Tools.
   public let spdevtoolsPath: String
+  /// The SP Developer Tools SDKs.
   public let spdevtoolsSdks: SpdevtoolsSdks
+  /// The version of the SP Developer Tools.
   public let spdevtoolsVersion: String
 
+  /// Initializes a new instance of the SPDeveloperToolsDataType struct.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the SP Developer Tools.
+  ///   - spdevtoolsApps: The SP Developer Tools apps.
+  ///   - spdevtoolsPath: The path of the SP Developer Tools.
+  ///   - spdevtoolsSdks: The SP Developer Tools SDKs.
+  ///   - spdevtoolsVersion: The version of the SP Developer Tools.
   public init(
     name: String,
     spdevtoolsApps: SpdevtoolsApps,

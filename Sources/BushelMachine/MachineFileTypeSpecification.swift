@@ -31,6 +31,8 @@ import BushelDocs
 public import RadiantDocs
 import RadiantKit
 
+/// Represents a specification for a machine file type.
 public enum MachineFileTypeSpecification: FileTypeSpecification {
+  /// The file type for this specification.
   public static let fileType: FileType = .virtualMachine
 }

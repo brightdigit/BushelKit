@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPiBridgeDataType
-
+/// Represents the data type for the SPiBridge.
 public struct SPiBridgeDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the SPiBridgeDataType.
   public enum CodingKeys: String, CodingKey {
     case ibridgeBootUUID = "ibridge_boot_uuid"
     case ibridgeBuild = "ibridge_build"
@@ -47,19 +47,45 @@ public struct SPiBridgeDataType: Codable, Equatable, Sendable {
     case ibridgeSecureBoot = "ibridge_secure_boot"
   }
 
+  /// The UUID of the ibridge boot.
   public let ibridgeBootUUID: String
+  /// The build of the ibridge.
   public let ibridgeBuild: String
+  /// The extra boot policies for the ibridge.
   public let ibridgeExtraBootPolicies: String
+  /// The top model identifier of the ibridge.
   public let ibridgeModelIdentifierTop: String
+  /// The boot arguments for the ibridge secure boot.
   public let ibridgeSbBootArgs: String
+  /// The CTRR (Constrained Temporal Root of Trust) setting for the ibridge secure boot.
   public let ibridgeSbCtrr: String
+  /// The device MDM (Mobile Device Management) setting for the ibridge secure boot.
   public let ibridgeSbDeviceMdm: String
+  /// The manual MDM (Mobile Device Management) setting for the ibridge secure boot.
   public let ibridgeSbManualMdm: String
+  /// The other kernel extensions setting for the ibridge secure boot.
   public let ibridgeSbOtherKext: String
+  /// The System Integrity Protection (SIP) setting for the ibridge secure boot.
   public let ibridgeSbSIP: String
+  /// The Secure System Verification (SSV) setting for the ibridge secure boot.
   public let ibridgeSbSsv: String
+  /// The secure boot setting for the ibridge.
   public let ibridgeSecureBoot: String
 
+  /// Initializes an instance of `SPiBridgeDataType` with the given parameters.
+  /// - Parameters:
+  ///   - ibridgeBootUUID: The UUID of the ibridge boot.
+  ///   - ibridgeBuild: The build of the ibridge.
+  ///   - ibridgeExtraBootPolicies: The extra boot policies for the ibridge.
+  ///   - ibridgeModelIdentifierTop: The top model identifier of the ibridge.
+  ///   - ibridgeSbBootArgs: The boot arguments for the ibridge secure boot.
+  ///   - ibridgeSbCtrr: The CTRR (Constrained Temporal Root of Trust) setting for the ibridge secure boot.
+  ///   - ibridgeSbDeviceMdm: The device MDM (Mobile Device Management) setting for the ibridge secure boot.
+  ///   - ibridgeSbManualMdm: The manual MDM (Mobile Device Management) setting for the ibridge secure boot.
+  ///   - ibridgeSbOtherKext: The other kernel extensions setting for the ibridge secure boot.
+  ///   - ibridgeSbSIP: The System Integrity Protection (SIP) setting for the ibridge secure boot.
+  ///   - ibridgeSbSsv: The Secure System Verification (SSV) setting for the ibridge secure boot.
+  ///   - ibridgeSecureBoot: The secure boot setting for the ibridge.
   public init(
     ibridgeBootUUID: String,
     ibridgeBuild: String,

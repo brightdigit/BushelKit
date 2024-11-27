@@ -29,19 +29,27 @@
 
 public import Foundation
 
-// MARK: - SPNetworkLocationDataType
-
+/// A struct representing a network location data type.
 public struct SPNetworkLocationDataType: Codable, Equatable, Sendable {
+  /// The keys used for encoding and decoding the struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case spnetworklocationIsActive = "spnetworklocation_isActive"
     case spnetworklocationServices = "spnetworklocation_services"
   }
 
+  /// The name of the network location data type.
   public let name: String
+  /// The active status of the network location.
   public let spnetworklocationIsActive: PrivateFramework
+  /// The list of services associated with the network location.
   public let spnetworklocationServices: [SpnetworklocationService]
 
+  /// Initializes a new instance of `SPNetworkLocationDataType`.
+  /// - Parameters:
+  ///   - name: The name of the network location data type.
+  ///   - spnetworklocationIsActive: The active status of the network location.
+  ///   - spnetworklocationServices: The list of services associated with the network location.
   public init(
     name: String,
     spnetworklocationIsActive: PrivateFramework,

@@ -30,19 +30,36 @@
 public import BushelFoundation
 public import Foundation
 
+/// A protocol that defines an image repository for installer images.
 public protocol InstallerImageRepository: Sendable {
+  /// The error type associated with this repository.
   typealias Error = InstallerImageError
 
+  /// Retrieves a list of installer images.
+  ///
+  /// - Parameter labelProvider: A closure that provides metadata labels for the images.
+  /// - Returns: An array of `InstallerImage` objects.
   func images(
     _ labelProvider: @escaping MetadataLabelProvider
   ) async throws -> [any InstallerImage]
 
+  /// Retrieves an installer image with the specified ID.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the image.
+  ///   - library: The library identifier, if applicable.
+  ///   - labelProvider: A closure that provides metadata labels for the image.
+  /// - Returns: The `InstallerImage` object, or `nil` if not found.
   func image(
     withID id: UUID,
     library: LibraryIdentifier?,
     _ labelProvider: @escaping MetadataLabelProvider
   ) async throws -> (any InstallerImage)?
 
+  /// Removes an installer image from the repository.
+  ///
+  /// - Parameter image: The `InstallerImage` object to remove.
+  /// - Returns: A `RemoveImageFailure` value if the removal failed, or `nil` if successful.
   @discardableResult
   func removeImage(_ image: any InstallerImage) async throws -> RemoveImageFailure?
 }

@@ -31,13 +31,19 @@ public import Foundation
 
 // MARK: - TvOS
 
+/// Represents the TvOS version.
 public struct TvOS: Codable, Equatable, Sendable {
+  /// The coding keys for the TvOS struct.
   public enum CodingKeys: String, CodingKey {
     case the154 = "15.4"
   }
 
+  /// The TvOS version.
   public let the154: String
 
+  /// Initializes a new instance of the TvOS struct.
+  ///
+  /// - Parameter the154: The TvOS version.
   public init(the154: String) {
     self.the154 = the154
   }

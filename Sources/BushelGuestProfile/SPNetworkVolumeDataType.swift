@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPNetworkVolumeDataType
-
+/// Represents a data type for a network volume in the SP (Shared Preferences) system.
 public struct SPNetworkVolumeDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for the Codable protocol.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case spnetworkvolumeAutomounted = "spnetworkvolume_automounted"
@@ -40,12 +40,25 @@ public struct SPNetworkVolumeDataType: Codable, Equatable, Sendable {
     case spnetworkvolumeMntfromname = "spnetworkvolume_mntfromname"
   }
 
+  /// The name of the network volume.
   public let name: String
+  /// Indicates whether the network volume is automounted.
   public let spnetworkvolumeAutomounted: String
+  /// The non-name file system type of the network volume.
   public let spnetworkvolumeFsmtnonname: String
+  /// The name of the file system type of the network volume.
   public let spnetworkvolumeFstypename: String
+  /// The name of the mount point for the network volume.
   public let spnetworkvolumeMntfromname: String
 
+  /// Initializes a new instance of `SPNetworkVolumeDataType`.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the network volume.
+  ///   - spnetworkvolumeAutomounted: Indicates whether the network volume is automounted.
+  ///   - spnetworkvolumeFsmtnonname: The non-name file system type of the network volume.
+  ///   - spnetworkvolumeFstypename: The name of the file system type of the network volume.
+  ///   - spnetworkvolumeMntfromname: The name of the mount point for the network volume.
   public init(
     name: String,
     spnetworkvolumeAutomounted: String,

@@ -29,7 +29,11 @@
 
 public import Foundation
 
+/// An enumeration representing the possible values for a SPEXT (Special Extruder) setting.
 public enum Spext: String, Codable, Equatable, Sendable {
+  /// Indicates that the SPEXT setting is "no".
   case spextNo = "spext_no"
+
+  /// Indicates that the SPEXT setting is "yes".
   case spextYes = "spext_yes"
 }

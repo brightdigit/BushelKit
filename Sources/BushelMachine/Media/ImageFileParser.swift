@@ -29,15 +29,31 @@
 
 public import Foundation
 
+/// A struct responsible for parsing information from an image file.
 public struct ImageFileParser: RecordedImageParser {
+  /// A closure that retrieves the size of an image from a given URL.
   private let cgSizeFromURL: (URL) -> CGSize?
+
+  /// The file manager used for file and directory operations.
   private let fileManager: FileManager
 
+  /// Initializes a new instance of `ImageFileParser`.
+  ///
+  /// - Parameters:
+  ///   - fileManager: The file manager to use for file and directory operations.
+  ///   - cgSizeFromURL: A closure that retrieves the size of an image from a given URL.
   public init(fileManager: FileManager, cgSizeFromURL: @escaping (URL) -> CGSize?) {
     self.cgSizeFromURL = cgSizeFromURL
     self.fileManager = fileManager
   }
 
+  /// Retrieves information about an image and moves the image file to a specified directory.
+  ///
+  /// - Parameters:
+  ///   - image: The image to retrieve information about.
+  ///   - directoryURL: The URL of the directory to move the image file to.
+  /// - Returns: A `RecordedImage` instance containing the retrieved information.
+  /// - Throws: `RecordedImageError` if there are any issues retrieving or moving the image file.
   public func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL)
     async throws(RecordedImageError) -> RecordedImage
   {

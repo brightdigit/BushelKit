@@ -29,15 +29,30 @@
 
 public import Foundation
 
+/// A protocol that defines the behavior of a machine builder.
 public protocol MachineBuilder: Sendable {
+  /// The URL of the machine.
   var url: URL { get }
+
+  /// Observes the progress of the machine building process.
+  /// - Parameter onUpdate: A closure that is called with the current progress as a value between 0.0 and 1.0.
+  /// - Returns: A unique identifier for the observer.
   func observePercentCompleted(_ onUpdate: @escaping @Sendable (Double) -> Void) -> UUID
+
+  /// Removes an observer from the machine builder.
+  /// - Parameter id: The unique identifier of the observer to remove.
+  /// - Returns: `true` if the observer was successfully removed, `false` otherwise.
   @discardableResult
   func removeObserver(_ id: UUID) async -> Bool
+
+  /// Builds the machine.
+  /// - Throws: An error that may occur during the build process.
   func build() async throws
 }
 
 extension MachineBuilder {
+  /// Removes an observer from the machine builder.
+  /// - Parameter observer: The observer to remove.
   public func removeObserver(_ observer: any MachineBuilderObserver) {
     Task {
       if let id = await observer.getID() {

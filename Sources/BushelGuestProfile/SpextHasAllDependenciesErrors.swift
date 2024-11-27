@@ -29,15 +29,18 @@
 
 public import Foundation
 
-// MARK: - SpextHasAllDependenciesErrors
-
+/// Represents errors related to ensuring all dependencies are met.
 public struct SpextHasAllDependenciesErrors: Codable, Equatable, Sendable {
+  /// The coding keys for the structure.
   public enum CodingKeys: String, CodingKey {
     case dependencyResolutionFailures = "Dependency Resolution Failures"
   }
 
+  /// The dependency resolution failures.
   public let dependencyResolutionFailures: DependencyResolutionFailures
 
+  /// Initializes a new instance of `SpextHasAllDependenciesErrors`.
+  /// - Parameter dependencyResolutionFailures: The dependency resolution failures.
   public init(dependencyResolutionFailures: DependencyResolutionFailures) {
     self.dependencyResolutionFailures = dependencyResolutionFailures
   }

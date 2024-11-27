@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPUSBDataTypeItem
-
+/// Represents a USB device data type item.
 public struct SPUSBDataTypeItem: Codable, Equatable, Sendable {
+  /// Coding keys for the USB device data type item.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case bcdDevice = "bcd_device"
@@ -45,17 +43,49 @@ public struct SPUSBDataTypeItem: Codable, Equatable, Sendable {
     case vendorID = "vendor_id"
   }
 
+  /// The name of the USB device.
   public let name: String
+
+  /// The USB device code.
   public let bcdDevice: String
+
+  /// The bus power of the USB device.
   public let busPower: String
+
+  /// The bus power used by the USB device.
   public let busPowerUsed: String
+
+  /// The speed of the USB device.
   public let deviceSpeed: String
+
+  /// The extra current used by the USB device.
   public let extraCurrentUsed: String
+
+  /// The location ID of the USB device.
   public let locationID: String
+
+  /// The manufacturer of the USB device.
   public let manufacturer: String
+
+  /// The product ID of the USB device.
   public let productID: String
+
+  /// The vendor ID of the USB device.
   public let vendorID: String
 
+  /// Initializes a new instance of `SPUSBDataTypeItem` with the provided parameters.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the USB device.
+  ///   - bcdDevice: The USB device code.
+  ///   - busPower: The bus power of the USB device.
+  ///   - busPowerUsed: The bus power used by the USB device.
+  ///   - deviceSpeed: The speed of the USB device.
+  ///   - extraCurrentUsed: The extra current used by the USB device.
+  ///   - locationID: The location ID of the USB device.
+  ///   - manufacturer: The manufacturer of the USB device.
+  ///   - productID: The product ID of the USB device.
+  ///   - vendorID: The vendor ID of the USB device.
   public init(
     name: String,
     bcdDevice: String,

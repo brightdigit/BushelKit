@@ -29,10 +29,14 @@
 
 import Foundation
 
+/// Represents a failure when removing an image.
 public enum RemoveImageFailure: CustomStringConvertible {
+  /// Indicates that the image was not found.
   case notFound
+  /// Indicates that the removal of the image is not supported by the database.
   case notSupported
 
+  /// A textual representation of the failure.
   public var description: String {
     switch self {
     case .notFound:

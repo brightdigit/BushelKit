@@ -29,10 +29,18 @@
 
 public import Foundation
 
+/// Represents a captured video with its associated configuration.
 public struct CaptureVideo: Sendable {
+  /// The URL of the captured video.
   public let url: URL
+
+  /// The configuration used to capture the video.
   public let configuration: CaptureVideoConfiguration
 
+  /// Initializes a `CaptureVideo` instance with the given URL and configuration.
+  /// - Parameters:
+  ///   - url: The URL of the captured video.
+  ///   - configuration: The configuration used to capture the video.
   public init(url: URL, configuration: CaptureVideoConfiguration) {
     self.url = url
     self.configuration = configuration

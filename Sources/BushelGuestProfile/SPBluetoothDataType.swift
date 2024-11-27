@@ -29,15 +29,18 @@
 
 public import Foundation
 
-// MARK: - SPBluetoothDataType
-
+/// Represents a Bluetooth data type.
 public struct SPBluetoothDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the Bluetooth data type.
   public enum CodingKeys: String, CodingKey {
     case controllerProperties = "controller_properties"
   }
 
+  /// The controller properties associated with the Bluetooth data type.
   public let controllerProperties: ControllerProperties
 
+  /// Initializes a new instance of `SPBluetoothDataType` with the specified controller properties.
+  /// - Parameter controllerProperties: The controller properties to be associated with the Bluetooth data type.
   public init(controllerProperties: ControllerProperties) {
     self.controllerProperties = controllerProperties
   }

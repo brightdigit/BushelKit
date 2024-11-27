@@ -29,15 +29,19 @@
 
 public import Foundation
 
-// MARK: - SPAirPortDataType
-
+/// A struct that represents an air port data type.
 public struct SPAirPortDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for encoding and decoding the struct.
   public enum CodingKeys: String, CodingKey {
     case spairportSoftwareInformation = "spairport_software_information"
   }
 
+  /// The information about the airport's software.
   public let spairportSoftwareInformation: SpairportSoftwareInformation
 
+  /// Initializes an instance of `SPAirPortDataType`.
+  ///
+  /// - Parameter spairportSoftwareInformation: The information about the airport's software.
   public init(spairportSoftwareInformation: SpairportSoftwareInformation) {
     self.spairportSoftwareInformation = spairportSoftwareInformation
   }

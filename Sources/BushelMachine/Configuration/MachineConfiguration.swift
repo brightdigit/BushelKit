@@ -35,8 +35,6 @@ import RadiantKit
 
 /// Metadata attached to a machine
 public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
-  public let restoreImageFile: InstallerImageIdentifier
-
   /// System ID
   public let vmSystemID: VMSystemID
   public let snapshotSystemID: SnapshotterID
@@ -50,7 +48,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   public let cpuCount: Int
   /// Amount of Memory
   public let memory: Int
-  /// Netwoking Configuration
+  /// Networking Configuration
   public let networkConfigurations: [NetworkConfiguration]
   /// Graphics Configuration
   public let graphicsConfigurations: [GraphicsConfiguration]
@@ -58,8 +56,9 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   public let snapshots: [Snapshot]
 
   public let videos: [RecordedVideo]?
-
   public let images: [RecordedImage]?
+
+  public let restoreImageFile: InstallerImageIdentifier
 
   public init(
     restoreImageFile: InstallerImageIdentifier,
@@ -97,6 +96,11 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
 }
 
 extension MachineConfiguration {
+  /// Initializes a `MachineConfiguration` from a `MachineSetupConfiguration` and a `RestorableInstallerImage`.
+  ///
+  /// - Parameters:
+  ///   - setup: The `MachineSetupConfiguration` to use for initialization.
+  ///   - restoreImageFile: The `InstallerImage` to use for initialization.
   public init(setup: MachineSetupConfiguration, restoreImageFile: any InstallerImage) {
     self.init(
       restoreImageFile: restoreImageFile.identifier,
@@ -112,6 +116,11 @@ extension MachineConfiguration {
     )
   }
 
+  /// Initializes a `MachineConfiguration` from a `Snapshot` and the original `MachineConfiguration`.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The `Snapshot` to use for initialization.
+  ///   - original: The original `MachineConfiguration` to use for initialization.
   public init(snapshot: Snapshot, original: MachineConfiguration) {
     self.init(
       restoreImageFile: original.restoreImageFile,
@@ -169,6 +178,10 @@ extension MachineConfiguration {
     )
   }
 
+  /// Updates the `images` property of the `MachineConfiguration` using the provided closure.
+  ///
+  /// - Parameter closure: A closure that takes the current array of `RecordedImage` values and returns a new array of `RecordedImage` values.
+  /// - Returns: A new `MachineConfiguration` with the updated `images` property.
   public func updatesImage(_ closure: @escaping @Sendable ([RecordedImage]) -> [RecordedImage])
     -> MachineConfiguration
   {
@@ -189,6 +202,10 @@ extension MachineConfiguration {
     )
   }
 
+  /// Updates the `videos` property of the `MachineConfiguration` using the provided closure.
+  ///
+  /// - Parameter closure: A closure that takes the current array of `RecordedVideo` values and returns a new array of `RecordedVideo` values.
+  /// - Returns: A new `MachineConfiguration` with the updated `videos` property.
   public func updatesVideos(_ closure: @escaping @Sendable ([RecordedVideo]) -> [RecordedVideo])
     -> MachineConfiguration
   {

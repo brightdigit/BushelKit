@@ -29,17 +29,24 @@
 
 public import Foundation
 
-// MARK: - AdditionalRoute
-
+/// Represents an additional route in a network configuration.
 public struct AdditionalRoute: Codable, Equatable, Sendable {
+  /// The coding keys for the `AdditionalRoute` struct.
   public enum CodingKeys: String, CodingKey {
     case destinationAddress = "DestinationAddress"
     case subnetMask = "SubnetMask"
   }
 
+  /// The destination address for the additional route.
   public let destinationAddress: String
+
+  /// The subnet mask for the additional route.
   public let subnetMask: String
 
+  /// Initializes an `AdditionalRoute` instance.
+  /// - Parameters:
+  ///   - destinationAddress: The destination address for the additional route.
+  ///   - subnetMask: The subnet mask for the additional route.
   public init(
     destinationAddress: String,
     subnetMask: String

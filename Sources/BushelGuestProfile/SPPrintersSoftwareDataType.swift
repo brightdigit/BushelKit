@@ -29,19 +29,30 @@
 
 public import Foundation
 
-// MARK: - SPPrintersSoftwareDataType
-
+/// Represents a data type for printers' software.
 public struct SPPrintersSoftwareDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the data type.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case imageCaptureSupport = "image capture support"
     case extensions
   }
 
+  /// The name of the data type.
   public let name: String
+
+  /// The image capture support for the data type.
   public let imageCaptureSupport: [Extension]?
+
+  /// The extensions for the data type.
   public let extensions: [Extension]?
 
+  /// Initializes a new instance of `SPPrintersSoftwareDataType`.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the data type.
+  ///   - imageCaptureSupport: The image capture support for the data type.
+  ///   - extensions: The extensions for the data type.
   public init(
     name: String,
     imageCaptureSupport: [Extension]?,

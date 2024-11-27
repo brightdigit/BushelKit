@@ -29,19 +29,28 @@
 
 public import Foundation
 
-// MARK: - SPPowerDataType
-
+/// Represents a power data type.
 public struct SPPowerDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for the `SPPowerDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case acPower = "AC Power"
     case sppowerUPSInstalled = "sppower_ups_installed"
   }
 
+  /// The name of the power data type.
   public let name: String
+  /// The AC power information.
   public let acPower: ACPower?
+  /// The installed sppower UPS information.
   public let sppowerUPSInstalled: String?
 
+  /// Initializes a new `SPPowerDataType` instance.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the power data type.
+  ///   - acPower: The AC power information.
+  ///   - sppowerUPSInstalled: The installed sppower UPS information.
   public init(
     name: String,
     acPower: ACPower?,

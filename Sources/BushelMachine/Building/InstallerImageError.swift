@@ -31,17 +31,31 @@ public import BushelFoundation
 import BushelLogging
 public import Foundation
 
+/// Represents an error that occurred during the installation of an image.
 public struct InstallerImageError: Error, Sendable {
+  /// The different types of errors that can occur during image installation.
   public enum ErrorType: Sendable {
+    /// The bookmark for the image is missing.
     case missingBookmark
+    /// The URL for the image is not accessible.
     case accessDeniedURL(URL)
+    /// The image was not found.
     case imageNotFound
   }
 
+  /// The unique identifier of the image.
   public let imageID: UUID
+  /// The identifier of the library associated with the image.
   public let libraryID: LibraryIdentifier?
+  /// The type of error that occurred.
   public let type: ErrorType
 
+  /// Initializes an `InstallerImageError` with the specified parameters.
+  ///
+  /// - Parameters:
+  ///   - imageID: The unique identifier of the image.
+  ///   - type: The type of error that occurred.
+  ///   - libraryID: The identifier of the library associated with the image (optional).
   public init(
     imageID: UUID, type: InstallerImageError.ErrorType, libraryID: LibraryIdentifier? = nil
   ) {

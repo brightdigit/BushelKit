@@ -29,15 +29,18 @@
 
 public import Foundation
 
-// MARK: - DriverKit
-
+/// A struct representing DriverKit information.
 public struct DriverKit: Codable, Equatable, Sendable {
+  /// The coding keys for the DriverKit struct.
   public enum CodingKeys: String, CodingKey {
     case the214 = "21.4"
   }
 
+  /// The version of DriverKit.
   public let the214: String
 
+  /// Initializes a new instance of the DriverKit struct.
+  /// - Parameter the214: The version of DriverKit.
   public init(the214: String) {
     self.the214 = the214
   }

@@ -30,7 +30,9 @@
 public import BushelFoundation
 import Foundation
 
+/// A struct representing an installation failure.
 public struct InstallFailure: Equatable, Sendable {
+  /// The unknown installation failure case.
   private static let unknown: InstallFailure = .init(
     errorDomain: "Unknown",
     errorCode: 0,
@@ -39,12 +41,25 @@ public struct InstallFailure: Equatable, Sendable {
     isSystem: true
   )
 
+  /// The error domain.
   public let errorDomain: String
+  /// The error code.
   public let errorCode: Int
+  /// The failure code.
   public let failureCode: Int
+  /// The description of the failure.
   public let description: String
+  /// A boolean indicating whether the failure is a system error.
   public let isSystem: Bool
 
+  /// Initializes an `InstallFailure` instance.
+  ///
+  /// - Parameters:
+  ///   - errorDomain: The error domain.
+  ///   - errorCode: The error code.
+  ///   - failureCode: The failure code.
+  ///   - description: The description of the failure.
+  ///   - isSystem: A boolean indicating whether the failure is a system error. Defaults to `true`.
   public init(
     errorDomain: String,
     errorCode: Int,
@@ -59,6 +74,10 @@ public struct InstallFailure: Equatable, Sendable {
     self.isSystem = isSystem
   }
 
+  /// Creates an `InstallFailure` instance from an `Error`.
+  ///
+  /// - Parameter error: The error to create the `InstallFailure` from.
+  /// - Returns: The `InstallFailure` instance.
   internal static func fromError(_ error: any Error) -> InstallFailure {
     guard let error = error as? any InstallFailureError else {
       assertionFailure(error: error)

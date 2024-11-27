@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// An enumeration representing the dependency status of a Spext.
 public enum SpextHasAllDependencies: String, Codable, Equatable, Sendable {
+  /// The Spext is incomplete, as it is missing one or more dependencies.
   case spextIncomplete = "spext_incomplete"
+  /// The Spext has all required dependencies satisfied.
   case spextSatisfied = "spext_satisfied"
 }

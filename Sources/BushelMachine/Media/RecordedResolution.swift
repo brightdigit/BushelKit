@@ -29,10 +29,17 @@
 
 public import Foundation
 
+/// A struct representing a recorded resolution.
 public struct RecordedResolution: Sendable, Codable {
+  /// The width of the recorded resolution.
   public let width: Int
+  /// The height of the recorded resolution.
   public let height: Int
 
+  /// Initializes a `RecordedResolution` with the specified width and height.
+  /// - Parameters:
+  ///   - width: The width of the recorded resolution.
+  ///   - height: The height of the recorded resolution.
   public init(width: Int, height: Int) {
     self.width = width
     self.height = height
@@ -40,6 +47,8 @@ public struct RecordedResolution: Sendable, Codable {
 }
 
 extension RecordedResolution {
+  /// Initializes a `RecordedResolution` from a `CGSize`.
+  /// - Parameter cgSize: The `CGSize` to be converted to a `RecordedResolution`.
   public init(cgSize: CGSize) {
     self.init(width: .init(cgSize.width), height: .init(cgSize.height))
   }

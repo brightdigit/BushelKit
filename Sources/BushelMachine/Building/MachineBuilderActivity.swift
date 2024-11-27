@@ -29,12 +29,19 @@
 
 public import Foundation
 
+/// Represents an activity associated with a machine builder.
 public struct MachineBuilderActivity: Identifiable, Sendable {
+  /// The machine builder associated with this activity.
   public let builder: any MachineBuilder
+
+  /// The unique identifier for this activity, represented as a URL.
   public var id: URL {
-    builder.url
+    self.builder.url
   }
 
+  /// Initializes a new instance of `MachineBuilderActivity` with the specified machine builder.
+  ///
+  /// - Parameter builder: The machine builder associated with this activity.
   public init(builder: any MachineBuilder) {
     self.builder = builder
   }

@@ -35,6 +35,8 @@ public enum CaptureVideoFileType: String, Sendable, Codable {
   public import UniformTypeIdentifiers
 
   extension UTType {
+    /// Initializes a new `UTType` instance with the provided `CaptureVideoFileType`.
+    /// - Parameter videoType: The `CaptureVideoFileType` to use for the initialization.
     public init(videoType: CaptureVideoFileType) {
       switch videoType {
       case .quickTimeMovie:
@@ -45,35 +47,35 @@ public enum CaptureVideoFileType: String, Sendable, Codable {
 #endif
 
 extension CaptureVideoFileType {
-  /// Returns a user-friendly display name for the file type
+  /// Returns a user-friendly display name for the file type.
   public var displayName: String {
     switch self {
     case .quickTimeMovie:
-      return "QuickTime Movie"
+      "QuickTime Movie"
     }
   }
 
-  /// Returns the common file extension for this file type
+  /// Returns the common file extension for this file type.
   public var fileExtension: String {
     switch self {
     case .quickTimeMovie:
-      return "mov"
+      "mov"
     }
   }
 
-  /// Returns a more detailed description of the file type
+  /// Returns a more detailed description of the file type.
   public var description: String {
     switch self {
     case .quickTimeMovie:
-      return "QuickTime Movie (.mov) - A multimedia container file format developed by Apple"
+      "QuickTime Movie (.mov) - A multimedia container file format developed by Apple"
     }
   }
 
-  /// Returns the MIME type for the file format
+  /// Returns the MIME type for the file format.
   public var mimeType: String {
     switch self {
     case .quickTimeMovie:
-      return "video/quicktime"
+      "video/quicktime"
     }
   }
 }

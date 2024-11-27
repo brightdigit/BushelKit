@@ -31,16 +31,26 @@ public import BushelLogging
 public import Foundation
 
 extension Machine {
+  /// The logging category for the `Machine` type.
   public static var loggingCategory: BushelLogging.Category {
     .machine
   }
 
+  /// Removes an observation with the specified identifier.
+  ///
+  /// - Parameter id: The identifier of the observation to remove.
   public func removeObservation(withID id: UUID?) {
     if let id {
       self.removeObservation(withID: id)
     }
   }
 
+  /// Synchronizes the snapshots for the machine using the provided snapshot provider.
+  ///
+  /// - Parameters:
+  ///   - provider: The snapshot provider to use for synchronizing the snapshots.
+  ///   - options: The options to use for the snapshot synchronization.
+  /// - Throws: Any errors that occur during the snapshot synchronization.
   public func synchronizeSnapshots(
     using provider:
       any SnapshotProvider,
@@ -60,6 +70,14 @@ extension Machine {
     try await self.finishedWithSynchronization(snapshots)
   }
 
+  /// Creates a new snapshot for the machine using the provided snapshot request and options.
+  ///
+  /// - Parameters:
+  ///   - request: The snapshot request to use for creating the new snapshot.
+  ///   - options: The options to use for creating the new snapshot.
+  ///   - provider: The snapshot provider to use for creating the new snapshot.
+  /// - Returns: The newly created snapshot.
+  /// - Throws: Any errors that occur during the snapshot creation.
   @discardableResult
   public func createNewSnapshot(
     request: SnapshotRequest,
@@ -80,6 +98,12 @@ extension Machine {
     return try await snapshotter.createNewSnapshot(of: self, request: request, options: options)
   }
 
+  /// Deletes the specified snapshot using the provided snapshot provider.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The snapshot to delete.
+  ///   - provider: The snapshot provider to use for deleting the snapshot.
+  /// - Throws: Any errors that occur during the snapshot deletion.
   public func deleteSnapshot(
     _ snapshot: Snapshot,
     using provider: any SnapshotProvider
@@ -98,6 +122,12 @@ extension Machine {
     return try await snapshotter.deleteSnapshot(snapshot, from: self)
   }
 
+  /// Restores the specified snapshot using the provided snapshot provider.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The snapshot to restore.
+  ///   - provider: The snapshot provider to use for restoring the snapshot.
+  /// - Throws: Any errors that occur during the snapshot restoration.
   public func restoreSnapshot(
     _ snapshot: Snapshot,
     using provider: any SnapshotProvider
@@ -116,6 +146,13 @@ extension Machine {
     return try await snapshotter.restoreSnapshot(snapshot, to: self)
   }
 
+  /// Exports the specified snapshot to the provided URL using the provided snapshot provider.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The snapshot to export.
+  ///   - url: The URL to export the snapshot to.
+  ///   - provider: The snapshot provider to use for exporting the snapshot.
+  /// - Throws: Any errors that occur during the snapshot export.
   public func exportSnapshot(
     _ snapshot: Snapshot,
     to url: URL,

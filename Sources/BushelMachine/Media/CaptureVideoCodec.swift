@@ -36,7 +36,7 @@ extension CaptureVideoCodec {
   public var displayName: String {
     switch self {
     case .h264:
-      return "H.264"
+      "H.264"
     }
   }
 
@@ -44,7 +44,7 @@ extension CaptureVideoCodec {
   public var description: String {
     switch self {
     case .h264:
-      return "H.264/AVC - High efficiency video compression standard"
+      "H.264/AVC - High efficiency video compression standard"
     }
   }
 
@@ -52,12 +52,12 @@ extension CaptureVideoCodec {
   public var technicalDescription: String {
     switch self {
     case .h264:
-      return """
-        Name: H.264/MPEG-4 AVC
-        Type: Lossy compression
-        Usage: Standard video compression for streaming and storage
-        Features: High compression efficiency, widely supported
-        """
+      """
+      Name: H.264/MPEG-4 AVC
+      Type: Lossy compression
+      Usage: Standard video compression for streaming and storage
+      Features: High compression efficiency, widely supported
+      """
     }
   }
 
@@ -65,7 +65,7 @@ extension CaptureVideoCodec {
   public var alternativeNames: [String] {
     switch self {
     case .h264:
-      return ["AVC", "MPEG-4 Part 10", "Advanced Video Coding"]
+      ["AVC", "MPEG-4 Part 10", "Advanced Video Coding"]
     }
   }
 }

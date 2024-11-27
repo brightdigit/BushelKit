@@ -29,11 +29,23 @@
 
 public import Foundation
 
+/// A specification for machine storage.
 public struct MachineStorageSpecification: Codable, Identifiable, Equatable, Sendable {
+  /// The unique identifier for the storage specification.
   public let id: UUID
+
+  /// The size of the storage in bytes.
   public var size: UInt64
+
+  /// The label for the storage.
   public var label: String
 
+  /// Initializes a new `MachineStorageSpecification` instance.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier for the storage specification. Defaults to a new `UUID` if not provided.
+  ///   - label: The label for the storage.
+  ///   - size: The size of the storage in bytes.
   public init(id: UUID = .init(), label: String, size: UInt64) {
     self.id = id
     self.label = label
@@ -47,7 +59,14 @@ extension MachineStorageSpecification {
   internal static let defaultPrimary: MachineStorageSpecification = .init(
     id: Self.defaultPrimaryID, label: "", size: Self.defaultSize
   )
+
+  /// The default size for storage in bytes (64 GB).
   public static let defaultSize = UInt64(64 * 1_024 * 1_024 * 1_024)
+
+  /// Creates a default `MachineStorageSpecification` for the given `MachineSystem`.
+  ///
+  /// - Parameter system: The `MachineSystem` for which to create the default storage specification.
+  /// - Returns: A default `MachineStorageSpecification` for the given `MachineSystem`.
   public static func `default`(forSystem system: any MachineSystem) -> MachineStorageSpecification {
     .init(
       label: system.defaultStorageLabel,

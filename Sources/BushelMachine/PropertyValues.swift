@@ -27,7 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// A struct that holds the old and new values of a property.
+/// - Parameter ValueType: The type of the property values.
 public struct PropertyValues<ValueType: Sendable>: Sendable {
+  /// The old value of the property.
   public let old: ValueType?
+
+  /// The new value of the property.
   public let new: ValueType?
 }

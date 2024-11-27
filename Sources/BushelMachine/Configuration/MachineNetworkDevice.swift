@@ -29,4 +29,5 @@
 
 import Foundation
 
+/// A protocol that defines a machine network device.
 public protocol MachineNetworkDevice {}

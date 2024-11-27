@@ -31,13 +31,19 @@ public import Foundation
 
 // MARK: - WatchOS
 
+/// A struct representing the version of watchOS.
 public struct WatchOS: Codable, Equatable, Sendable {
+  /// The coding keys used to encode and decode the `WatchOS` struct.
   public enum CodingKeys: String, CodingKey {
     case the85 = "8.5"
   }
 
+  /// The version of watchOS.
   public let the85: String
 
+  /// Initializes a new `WatchOS` struct with the given version.
+  ///
+  /// - Parameter the85: The version of watchOS.
   public init(the85: String) {
     self.the85 = the85
   }

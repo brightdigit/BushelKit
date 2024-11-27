@@ -29,9 +29,14 @@
 
 public import Foundation
 
+/// A struct representing a session request.
 public struct SessionRequest: Codable, Hashable {
+  /// The URL of the request.
   public let url: URL
 
+  /// Initializes a `SessionRequest` with the given URL.
+  ///
+  /// - Parameter url: The URL of the request.
   public init(url: URL) {
     self.url = url
   }

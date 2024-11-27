@@ -29,22 +29,39 @@
 
 public import Foundation
 
+/// A default implementation of `RecordedVideoParser`.
 private struct DefaultVideoParser: RecordedVideoParser {
+  /// The default instance of `DefaultVideoParser`.
   static let `default`: DefaultVideoParser = .init()
 
+  /// Retrieves video information from a `CaptureVideo` object and saves it to the specified directory.
+  ///
+  /// - Parameters:
+  ///   - video: The `CaptureVideo` object containing the video information.
+  ///   - directoryURL: The URL of the directory where the video information should be saved.
+  /// - Throws: `RecordedVideoError` if an error occurs during the video information retrieval.
+  /// - Returns: The `RecordedVideo` object containing the video information.
   fileprivate func videoInfo(
-    fromVideo video: CaptureVideo,
-    toDirectory directoryURL: URL
+    fromVideo _: CaptureVideo,
+    toDirectory _: URL
   ) async throws(RecordedVideoError) -> RecordedVideo {
     assertionFailure("Not Implemented.")
     throw .notImplmented
   }
 }
 
+/// A factory for creating `RecordedImageParser` and `RecordedVideoParser` instances.
 public struct MediaParserFactory: Sendable {
+  /// A closure that returns an `any RecordedImageParser` instance.
   public let getImageParser: @Sendable () -> any RecordedImageParser
+  /// A closure that returns an `any RecordedVideoParser` instance.
   public let getVideoParser: @Sendable () -> any RecordedVideoParser
 
+  /// Initializes a `MediaParserFactory` instance with the given image and video parser closures.
+  ///
+  /// - Parameters:
+  ///   - imageParser: A closure that returns an `any RecordedImageParser` instance.
+  ///   - videoParser: A closure that returns an `any RecordedVideoParser` instance.
   public init(
     imageParser: @escaping @Sendable () -> any RecordedImageParser,
     videoParser: @escaping @Sendable () -> any RecordedVideoParser
@@ -55,6 +72,7 @@ public struct MediaParserFactory: Sendable {
 }
 
 extension MediaParserFactory {
+  /// The default `MediaParserFactory` instance.
   public static let `default`: MediaParserFactory = .init {
     ImageFileParser(
       fileManager: .default,
@@ -64,6 +82,12 @@ extension MediaParserFactory {
     DefaultVideoParser.default
   }
 
+  /// Initializes a `MediaParserFactory` instance with the given file manager, CGSize retrieval closure, and video parser closure.
+  ///
+  /// - Parameters:
+  ///   - fileManager: A closure that returns a `FileManager` instance. Defaults to `.default`.
+  ///   - cgSizeFromURL: A closure that retrieves the CGSize for a given URL. Defaults to `defaultCGSizeFromURL(_:)`.
+  ///   - videoParser: A closure that returns an `any RecordedVideoParser` instance.
   public init(
     fileManager: @Sendable @escaping () -> FileManager = { .default },
     cgSizeFromURL: @Sendable @escaping (URL) -> CGSize?,
@@ -77,7 +101,7 @@ extension MediaParserFactory {
     )
   }
 
-  private static func defaultCGSizeFromURL(_ url: URL) -> CGSize? {
+  private static func defaultCGSizeFromURL(_: URL) -> CGSize? {
     assertionFailure("Not Implemented.")
     return nil
   }

@@ -27,7 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// An enumeration representing different types of watermarks.
 public enum Watermark: String, CaseIterable, Codable, Sendable {
+  /// A logo-based watermark.
   case logo
+  /// A wordmark-based watermark.
   case wordmark
 }

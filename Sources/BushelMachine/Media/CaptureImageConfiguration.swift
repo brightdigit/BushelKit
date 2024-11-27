@@ -27,21 +27,38 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a configuration for capturing an image.
+/// Conforms to the `Sendable`, `Codable`, and `CustomStringConvertible` protocols.
 public struct CaptureImageConfiguration: Sendable, Codable, CustomStringConvertible {
+  /// A description of the configuration, including the file type and compression level.
   public var description: String {
-    "\(fileType.rawValue.uppercased()) (\(compression.roundToNearest(value: 0.01)))"
+    "\(self.fileType.rawValue.uppercased()) (\(self.compression.roundToNearest(value: 0.01)))"
   }
 
+  /// The file type of the captured image.
   public let fileType: ImageFileType
+
+  /// The compression level of the captured image, between 0 and 1.
   public let compression: Double
+
+  /// An optional watermark to be applied to the captured image.
   public let watermark: Watermark?
 
+  /// Initializes a new `CaptureImageConfiguration` instance with the specified parameters.
+  ///
+  /// - Parameters:
+  ///   - fileType: The file type of the captured image.
+  ///   - compression: The compression level of the captured image, between 0 and 1.
+  ///   - watermark: An optional watermark to be applied to the captured image.
   private init(fileType: ImageFileType, compression: Double, watermark: Watermark?) {
     self.fileType = fileType
     self.compression = compression
     self.watermark = watermark
   }
 
+  /// Initializes a new `CaptureImageConfiguration` instance with a default file type, compression level, and an optional watermark.
+  ///
+  /// - Parameter watermark: An optional watermark to be applied to the captured image.
   public init(watermark: Watermark?) {
     self.init(fileType: .jpeg, compression: 0.8, watermark: watermark)
   }

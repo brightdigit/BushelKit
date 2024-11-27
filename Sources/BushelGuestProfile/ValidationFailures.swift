@@ -29,19 +29,25 @@
 
 public import Foundation
 
-// MARK: - ValidationFailures
-
-// swiftlint:disable identifier_name
+/// Represents validation failures that can occur during the validation of an info dictionary.
 public struct ValidationFailures: Codable, Equatable, Sendable {
+  /// The coding keys used to encode and decode the `ValidationFailures` struct.
   public enum CodingKeys: String, CodingKey {
-    case infoDictionaryMissingRequiredPropertyValue =
-      "Info dictionary missing required property/value"
+    /// Represents the case where the info dictionary is missing a required property or value.
+    case infoDictionaryMissingRequiredPropertyValue = "Info dictionary missing required property/value"
+    /// Represents the case where the info dictionary property value is illegal.
     case infoDictionaryPropertyValueIsIllegal = "Info dictionary property value is illegal"
   }
 
+  /// An array of strings representing the properties or values that are missing from the info dictionary.
   public let infoDictionaryMissingRequiredPropertyValue: [String]
+  /// An array of strings representing the illegal property values in the info dictionary.
   public let infoDictionaryPropertyValueIsIllegal: [String]
 
+  /// Initializes a `ValidationFailures` instance with the specified missing required properties/values and illegal property values.
+  /// - Parameters:
+  ///   - infoDictionaryMissingRequiredPropertyValue: An array of strings representing the missing required properties or values.
+  ///   - infoDictionaryPropertyValueIsIllegal: An array of strings representing the illegal property values.
   public init(
     infoDictionaryMissingRequiredPropertyValue: [String],
     infoDictionaryPropertyValueIsIllegal: [String]
@@ -50,5 +56,3 @@ public struct ValidationFailures: Codable, Equatable, Sendable {
     self.infoDictionaryPropertyValueIsIllegal = infoDictionaryPropertyValueIsIllegal
   }
 }
-
-// swiftlint:enable identifier_name

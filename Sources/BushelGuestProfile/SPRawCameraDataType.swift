@@ -29,15 +29,18 @@
 
 public import Foundation
 
-// MARK: - SPRawCameraDataType
-
+/// Represents a raw camera data type.
 public struct SPRawCameraDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the raw camera data type.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
   }
 
+  /// The name of the raw camera data type.
   public let name: String
 
+  /// Initializes a new instance of `SPRawCameraDataType`.
+  /// - Parameter name: The name of the raw camera data type.
   public init(name: String) {
     self.name = name
   }

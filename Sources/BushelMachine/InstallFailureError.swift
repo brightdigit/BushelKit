@@ -29,6 +29,9 @@
 
 import Foundation
 
+/// A protocol that represents an error that occurred during an installation process.
 public protocol InstallFailureError: Error {
+  /// Returns the `InstallFailure` associated with the error, if any.
+  /// - Returns: The `InstallFailure` associated with the error, or `nil` if no specific failure is associated.
   func installationFailure() -> InstallFailure?
 }
