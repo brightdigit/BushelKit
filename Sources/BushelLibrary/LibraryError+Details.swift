@@ -63,7 +63,7 @@ extension LibraryError {
         let components: [String?] = [
           "There's an issue getting access to library at \(path)", error?.localizedDescription,
         ]
-        return components.compactMap { $0 }.joined(separator: ": ")
+        return components.compactMap(\.self).joined(separator: ": ")
       case let .imageCorruptedAt(at: importingURL):
         assert(error != nil)
         let error = error ?? UnknownError.shared

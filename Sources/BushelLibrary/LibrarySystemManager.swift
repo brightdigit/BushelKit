@@ -32,16 +32,23 @@ public import BushelLogging
 public import Foundation
 public import RadiantDocs
 
+/// Manages the library systems and their associated file types.
 public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendable {
+  /// A closure that determines the `FileType` for a given `URL`.
   public let fileTypeBasedOnURL: @Sendable (URL) -> FileType?
 
   private let fileTypeMap: [FileType: VMSystemID]
   private let implementations: [VMSystemID: any LibrarySystem]
 
+  /// The list of all allowed file types across all the library systems.
   public var allAllowedFileTypes: [FileType] {
-    implementations.values.flatMap(\.allowedContentTypes)
+    self.implementations.values.flatMap(\.allowedContentTypes)
   }
 
+  /// Initializes the `LibrarySystemManager` with the given library system implementations and a closure to determine the file type for a given URL.
+  /// - Parameters:
+  ///   - implementations: An array of `LibrarySystem` instances.
+  ///   - fileTypeBasedOnURL: A closure that determines the `FileType` for a given `URL`.
   public init(
     _ implementations: [any LibrarySystem],
     fileTypeBasedOnURL: @escaping @Sendable (URL) -> FileType?
@@ -53,7 +60,7 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
         }
     )
 
-    fileTypeMap = self.implementations.mapValues {
+    self.fileTypeMap = self.implementations.mapValues {
       $0.allowedContentTypes
     }
     .reduce(into: [FileType: VMSystemID]()) { partialResult, pair in
@@ -70,15 +77,21 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
     self.fileTypeBasedOnURL = fileTypeBasedOnURL
   }
 
+  /// Resolves the `VMSystemID` for the given URL.
+  /// - Parameter url: The URL to resolve the system ID for.
+  /// - Returns: The `VMSystemID` for the given URL, or `nil` if the file type is unknown.
   public func resolveSystemFor(url: URL) -> VMSystemID? {
     guard let type = self.fileTypeBasedOnURL(url) else {
       Self.logger.error("Unknown path extension: \(url.pathExtension)")
       return nil
     }
 
-    return fileTypeMap[type]
+    return self.fileTypeMap[type]
   }
 
+  /// Resolves the `LibrarySystem` instance for the given `VMSystemID`.
+  /// - Parameter id: The `VMSystemID` of the library system to resolve.
+  /// - Returns: The `LibrarySystem` instance for the given ID.
   public func resolve(_ id: VMSystemID) -> any LibrarySystem {
     guard let implementations = implementations[id] else {
       Self.logger.critical("Unknown system: \(id.rawValue)")

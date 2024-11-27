@@ -29,17 +29,30 @@
 
 public import Foundation
 
+/// A comparator for `LibraryImageFile` objects.
 public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
+  /// The type of object being compared.
   public typealias Compared = LibraryImageFile
+
+  /// The fields that can be used for comparison.
   public enum Field: Equatable, Sendable {
+    /// The operating system build version.
     case operatingSystemBuild
   }
 
+  /// The default `LibraryImageFileComparator` instance.
   public static let `default` = LibraryImageFileComparator()
 
+  /// The sort order.
   public var order: SortOrder
+  /// The field to use for comparison.
   public var field: Field
 
+  /// Initializes a `LibraryImageFileComparator`.
+  ///
+  /// - Parameters:
+  ///   - order: The sort order.
+  ///   - field: The field to use for comparison.
   public init(
     order: SortOrder = .forward,
     field: LibraryImageFileComparator.Field = .operatingSystemBuild
@@ -64,13 +77,19 @@ public struct LibraryImageFileComparator: SortComparator, Hashable, Sendable {
     }
   }
 
+  /// Compares two `LibraryImageFile` objects.
+  ///
+  /// - Parameters:
+  ///   - lhs: The first `LibraryImageFile` object to compare.
+  ///   - rhs: The second `LibraryImageFile` object to compare.
+  /// - Returns: The comparison result.
   public func compare(
     _ lhs: BushelLibrary.LibraryImageFile,
     _ rhs: BushelLibrary.LibraryImageFile
   ) -> ComparisonResult {
     switch self.field {
     case .operatingSystemBuild:
-      Self.compareByOperatingSystemBuild(lhs, rhs, order: order)
+      Self.compareByOperatingSystemBuild(lhs, rhs, order: self.order)
     }
   }
 }

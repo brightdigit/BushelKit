@@ -34,71 +34,36 @@ fi
 # Function to extract header (comments, imports, etc.)
 extract_header() {
     local file="$1"
-    local header
-    # Capture file header (comments, imports, conditional compilation blocks)
-    header=$(awk '
-        BEGIN { in_comment=0; in_imports=1; printed=0 }
-        /^\/\// { print; next }
-        /^\/\*/ { in_comment=1; print; next }
-        in_comment==1 { print; if ($0 ~ /\*\//) in_comment=0; next }
-        /^(public )?import/ { if (in_imports) print; next }
-        /^[[:space:]]*(public )?import/ { if (in_imports) print; next }
-        /^$/ { if (!printed) print; next }
-        { if (in_imports) in_imports=0; if (!printed) printed=1; exit }
-    ' "$file")
-    echo "$header"
-}
-
-# Function to ensure #endif is preserved for each #if
-ensure_conditional_blocks() {
-    local content="$1"
-    local if_count=$(echo "$content" | grep -c '^[[:space:]]*#if')
-    local endif_count=$(echo "$content" | grep -c '^[[:space:]]*#endif')
-    
-    # If #if and #endif counts don't match, get the original file's #if blocks
-    if [ $if_count -ne $endif_count ]; then
-        echo "$2"  # Return original content
-    else
-        echo "$content"
-    fi
-}
-
-# Function to extract implementation blocks
-extract_implementations() {
-    local file="$1"
-    grep -A1 '^\s*{$' "$file" | grep -v '^\s*{$' | grep -v '^--$'
+    perl -0777 -ne '
+        # Match the entire header block including license
+        if (/^(\/\/[^\n]*\n)+/ || /^(\/\*.*?\*\/\s*\n)/s) {
+            print $&;
+        }
+        # Match all imports
+        while (/^(?:public )?import[^\n]+\n/gm) {
+            print $&;
+        }
+    ' "$file"
 }
 
 # Function to ensure implementations are preserved
 ensure_implementations() {
     local new_content="$1"
     local original_content="$2"
-    local tmp_file=$(mktemp)
     
-    echo "$new_content" > "$tmp_file"
-    
-    # Check each implementation block from original
-    while IFS= read -r line; do
-        if [[ $line =~ ^[[:space:]]*[a-zA-Z].* ]]; then
-            local implementation=$(echo "$line" | sed 's/[{}]//g' | tr -d '\n' | sed 's/[\/\*]/./g')
-            # If implementation is missing in new content, add it back
-            if ! grep -q "$implementation" "$tmp_file"; then
-                echo "$line" >> "$tmp_file"
-            fi
-        fi
-    done < <(extract_implementations "$original_content")
-    
-    cat "$tmp_file"
-    rm "$tmp_file"
+    # If the new content is missing parts of the original implementation, return the original
+    if [ ${#new_content} -lt ${#original_content} ]; then
+        echo "$original_content"
+    else
+        echo "$new_content"
+    fi
 }
 
 # Function to clean markdown code blocks
 clean_markdown() {
     local content="$1"
     # Remove ```swift from the start and ``` from the end, if present
-    content=$(echo "$content" | sed -E '1s/^```swift[[:space:]]*//')
-    content=$(echo "$content" | sed -E '$s/```[[:space:]]*$//')
-    echo "$content"
+    echo "$content" | perl -pe 's/^```swift\s*\n//; s/```\s*$//'
 }
 
 # Function to process a single Swift file
@@ -112,15 +77,15 @@ process_swift_file() {
         echo "Created backup: ${SWIFT_FILE}.backup"
     fi
 
-    # Store original content
+    # Read the entire file content
     local original_content
     original_content=$(cat "$SWIFT_FILE")
 
-    # Extract header and main code separately
+    # Get the header section
     local header
     header=$(extract_header "$SWIFT_FILE")
-    
-    # Create the JSON payload
+
+    # Create the JSON payload for Claude
     local JSON_PAYLOAD
     JSON_PAYLOAD=$(jq -n \
         --arg code "$original_content" \
@@ -129,7 +94,7 @@ process_swift_file() {
             max_tokens: 2000,
             messages: [{
                 role: "user",
-                content: "Add Swift documentation comments to this code. Preserve ALL existing functionality, implementations, and structure. Do not remove any code. Keep all imports, conditional compilation blocks (#if, #endif), and implementations intact. Only add documentation comments:\n\n\($code)"
+                content: "Add Swift documentation comments to this code. Preserve ALL existing functionality, implementations, and structure exactly as is. Do not modify or remove any existing code, including imports, implementations, and conditional compilation blocks. Only add documentation comments:\n\n\($code)"
             }]
         }')
 
@@ -161,17 +126,20 @@ process_swift_file() {
     # Clean the markdown formatting from the response
     documented_code=$(clean_markdown "$documented_code")
 
-    # Ensure implementations and conditional blocks are preserved
+    # Ensure all implementations are preserved
     documented_code=$(ensure_implementations "$documented_code" "$original_content")
-    documented_code=$(ensure_conditional_blocks "$documented_code" "$original_content")
 
-    # Save the documented code to the file
-    echo "$documented_code" > "$SWIFT_FILE"
+    # Write to a temporary file first
+    local tmp_file=$(mktemp)
+    echo "$documented_code" > "$tmp_file"
+
+    # Move the temporary file to the target
+    mv "$tmp_file" "$SWIFT_FILE"
 
     # Show diff if available and backup exists
     if [ $SKIP_BACKUP -eq 0 ] && command -v diff &> /dev/null; then
         echo -e "\nChanges made to $SWIFT_FILE:"
-        diff "${SWIFT_FILE}.backup" "$SWIFT_FILE"
+        diff "${SWIFT_FILE}.backup" "$SWIFT_FILE" || true
     fi
 
     echo "✓ Documentation added to $SWIFT_FILE"
