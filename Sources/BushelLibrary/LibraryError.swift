@@ -177,7 +177,8 @@ extension LibraryError {
   ///
   /// - Parameter property: The initialization property that is missing.
   @available(*, deprecated)
-  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError {
+  public static func missingInitializedProperty(_ property: InitializationProperty) -> LibraryError
+  {
     LibraryError(details: .missingInitialization(for: property))
   }
 

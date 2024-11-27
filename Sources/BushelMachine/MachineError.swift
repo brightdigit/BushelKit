@@ -113,8 +113,11 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
   ///   - innerError: The underlying error that caused this error, if any.
   private init(details: MachineError.Details, innerError: (any Error)? = nil) {
     if let innerError = innerError as? MachineError {
-      assertionFailure("Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
-      Self.logger.critical("Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)")
+      assertionFailure(
+        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
+      Self.logger.critical(
+        "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"
+      )
     }
     self.innerError = innerError
     self.details = details

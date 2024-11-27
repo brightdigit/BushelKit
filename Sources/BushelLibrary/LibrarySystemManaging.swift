@@ -92,7 +92,9 @@ extension LibrarySystemManaging {
   ///   - metadata: The `OperatingSystemInstalled` metadata to use for the label.
   /// - Returns: The `MetadataLabel` for the specified library system and metadata.
   @Sendable
-  public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled) -> MetadataLabel {
+  public func labelForSystem(_ id: VMSystemID, metadata: any OperatingSystemInstalled)
+    -> MetadataLabel
+  {
     let system = self.resolve(id)
     return system.label(fromMetadata: metadata)
   }

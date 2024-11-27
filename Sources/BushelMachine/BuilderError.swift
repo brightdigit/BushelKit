@@ -101,7 +101,9 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
   }
 
   /// Creates a `BuilderError` from an error that occurred while restoring an image.
-  public static func restoreImage(_ image: any InstallerImage, withError error: NSError) -> BuilderError? {
+  public static func restoreImage(_ image: any InstallerImage, withError error: NSError)
+    -> BuilderError?
+  {
     #if !os(Linux)
       let reason: NSError? = error.underlyingErrors.first as? NSError
       if reason?.localizedFailureReason?.contains("non-existent path") == true {
@@ -116,7 +118,10 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     switch (lhs, rhs) {
     case let (.corrupted(prop1, url1), .corrupted(prop2, url2)):
       prop1 == prop2 && url1 == url2
-    case let (.noSupportedConfigurationImage(label1, isSupported1), .noSupportedConfigurationImage(label2, isSupported2)):
+    case let (
+      .noSupportedConfigurationImage(label1, isSupported1),
+      .noSupportedConfigurationImage(label2, isSupported2)
+    ):
       label1 == label2 && isSupported1 == isSupported2
     case let (.installationFailure(failure1), .installationFailure(failure2)):
       failure1 == failure2

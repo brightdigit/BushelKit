@@ -91,7 +91,8 @@ private struct LibraryImageFileTaskParameters: Sendable {
   ///
   /// - Returns: The resolved library image file.
   fileprivate func resolve() async throws -> LibraryImageFile {
-    try await self.system.restoreImageLibraryItemFile(fromURL: self.url, verifier: self.verifier, id: self.id)
+    try await self.system.restoreImageLibraryItemFile(
+      fromURL: self.url, verifier: self.verifier, id: self.id)
   }
 }
 

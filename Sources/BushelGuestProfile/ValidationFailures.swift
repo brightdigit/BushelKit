@@ -34,7 +34,8 @@ public struct ValidationFailures: Codable, Equatable, Sendable {
   /// The coding keys used to encode and decode the `ValidationFailures` struct.
   public enum CodingKeys: String, CodingKey {
     /// Represents the case where the info dictionary is missing a required property or value.
-    case infoDictionaryMissingRequiredPropertyValue = "Info dictionary missing required property/value"
+    case infoDictionaryMissingRequiredPropertyValue =
+      "Info dictionary missing required property/value"
     /// Represents the case where the info dictionary property value is illegal.
     case infoDictionaryPropertyValueIsIllegal = "Info dictionary property value is illegal"
   }

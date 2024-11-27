@@ -244,7 +244,7 @@
     /// - Returns: an array of the elements sorted using `comparators`.
     public func sorted<Comparator: SortComparator>(using comparators: some Sequence<Comparator>)
       -> [Element]
-      where
+    where
       Element == Comparator.Compared
     {
       self.sorted {
@@ -279,8 +279,7 @@
     /// - Parameters:
     ///     - comparator: the sort comparator used to compare elements.
     public mutating func sort<Comparator: SortComparator>(using comparator: Comparator)
-      where Comparator.Compared == Element
-    {
+    where Comparator.Compared == Element {
       self.sort {
         comparator.compare($0, $1) == .orderedAscending
       }

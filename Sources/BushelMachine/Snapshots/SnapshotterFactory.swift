@@ -53,7 +53,9 @@ public protocol SnapshotterFactory: Loggable, Sendable {
   ///
   /// - Parameter supports: The type of machine to retrieve a snapshotter for.
   /// - Returns: A snapshotter that supports the specified machine type, or `nil` if no such snapshotter is available.
-  func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (any Snapshotter<MachineType>)?
+  func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (
+    any Snapshotter<MachineType>
+  )?
 }
 
 extension SnapshotterFactory {

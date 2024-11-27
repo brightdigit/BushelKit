@@ -37,5 +37,6 @@ public protocol RecordedImageParser {
   ///   - directoryURL: The URL of the directory where the `RecordedImage` should be stored.
   /// - Throws: `RecordedImageError` if an error occurs during the parsing or storage process.
   /// - Returns: The `RecordedImage` object created from the captured image.
-  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws -> RecordedImage
+  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws
+    -> RecordedImage
 }

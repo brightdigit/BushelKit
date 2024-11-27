@@ -64,7 +64,9 @@
     ///   - machine: The machine from which the snapshot is being exported.
     ///   - url: The URL to export the snapshot to.
     /// - Throws: Any errors that may occur during the export process.
-    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws {
+    public func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL)
+      async throws
+    {
       let paths = try machine.beginSnapshot()
       let fileVersion = try (NSFileVersion.version(withID: snapshot.id, basedOn: paths)).fileVersion
       try fileVersion.replaceItem(at: url)
@@ -157,7 +159,10 @@
     ///   - id: The unique identifier for the snapshot.
     /// - Returns: The created snapshot.
     /// - Throws: Any errors that may occur during the save process.
-    public func saveSnapshot(forVersion version: NSFileVersion, to snapshotCollectionURL: URL, withRequest request: SnapshotRequest = .init(), withID id: UUID = .init()) throws -> Snapshot {
+    public func saveSnapshot(
+      forVersion version: NSFileVersion, to snapshotCollectionURL: URL,
+      withRequest request: SnapshotRequest = .init(), withID id: UUID = .init()
+    ) throws -> Snapshot {
       try self.fileManager.createEmptyDirectory(
         at: snapshotCollectionURL,
         withIntermediateDirectories: false,
@@ -166,8 +171,8 @@
 
       let snapshotFileURL =
         snapshotCollectionURL
-          .appendingPathComponent(id.uuidString)
-          .appendingPathExtension("bshsnapshot")
+        .appendingPathComponent(id.uuidString)
+        .appendingPathExtension("bshsnapshot")
 
       Self.logger.debug("Creating snapshot with id \(id)")
 
@@ -192,7 +197,9 @@
     /// - Returns: The created snapshot.
     /// - Throws: Any errors that may occur during the snapshot creation process.
     @discardableResult
-    public func createNewSnapshot(of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions) async throws -> Snapshot {
+    public func createNewSnapshot(
+      of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions
+    ) async throws -> Snapshot {
       let paths = try machine.beginSnapshot()
 
       let version = try NSFileVersion.addOfItem(

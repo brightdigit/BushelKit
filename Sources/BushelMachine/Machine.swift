@@ -108,13 +108,15 @@ public protocol Machine: Loggable, Sendable {
   ///
   /// - Parameter closure: The closure to be called to save the video.
   /// - Returns: The recorded video.
-  func saveCaptureVideo(with closure: @escaping @Sendable (URL) async throws -> RecordedVideo) async rethrows -> RecordedVideo
+  func saveCaptureVideo(with closure: @escaping @Sendable (URL) async throws -> RecordedVideo)
+    async rethrows -> RecordedVideo
 
   /// Saves a captured image.
   ///
   /// - Parameter closure: The closure to be called to save the image.
   /// - Returns: The recorded image.
-  func saveCaptureImage(with closure: @escaping @Sendable (URL) async throws -> RecordedImage) async throws -> RecordedImage
+  func saveCaptureImage(with closure: @escaping @Sendable (URL) async throws -> RecordedImage)
+    async throws -> RecordedImage
 
   /// Updates the metadata for a captured video.
   ///
