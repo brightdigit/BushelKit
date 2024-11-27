@@ -41,33 +41,55 @@ extract_header() {
         /^\/\// { print; next }
         /^\/\*/ { in_comment=1; print; next }
         in_comment==1 { print; if ($0 ~ /\*\//) in_comment=0; next }
-        /^import/ { if (in_imports) print; next }
-        /^#if/ { print; next }
-        /^#else/ { print; next }
-        /^#endif/ { print; next }
+        /^(public )?import/ { if (in_imports) print; next }
+        /^[[:space:]]*(public )?import/ { if (in_imports) print; next }
         /^$/ { if (!printed) print; next }
         { if (in_imports) in_imports=0; if (!printed) printed=1; exit }
     ' "$file")
     echo "$header"
 }
 
-# Function to extract main code (excluding header)
-extract_main_code() {
+# Function to ensure #endif is preserved for each #if
+ensure_conditional_blocks() {
+    local content="$1"
+    local if_count=$(echo "$content" | grep -c '^[[:space:]]*#if')
+    local endif_count=$(echo "$content" | grep -c '^[[:space:]]*#endif')
+    
+    # If #if and #endif counts don't match, get the original file's #if blocks
+    if [ $if_count -ne $endif_count ]; then
+        echo "$2"  # Return original content
+    else
+        echo "$content"
+    fi
+}
+
+# Function to extract implementation blocks
+extract_implementations() {
     local file="$1"
-    local main_code
-    main_code=$(awk '
-        BEGIN { in_header=1; in_comment=0; buffer="" }
-        in_header && /^\/\// { next }
-        in_header && /^\/\*/ { in_comment=1; next }
-        in_header && in_comment { if ($0 ~ /\*\//) in_comment=0; next }
-        in_header && /^import/ { next }
-        in_header && /^#if/ { next }
-        in_header && /^#else/ { next }
-        in_header && /^#endif/ { next }
-        in_header && /^$/ { next }
-        { in_header=0; print }
-    ' "$file")
-    echo "$main_code"
+    grep -A1 '^\s*{$' "$file" | grep -v '^\s*{$' | grep -v '^--$'
+}
+
+# Function to ensure implementations are preserved
+ensure_implementations() {
+    local new_content="$1"
+    local original_content="$2"
+    local tmp_file=$(mktemp)
+    
+    echo "$new_content" > "$tmp_file"
+    
+    # Check each implementation block from original
+    while IFS= read -r line; do
+        if [[ $line =~ ^[[:space:]]*[a-zA-Z].* ]]; then
+            local implementation=$(echo "$line" | sed 's/[{}]//g' | tr -d '\n' | sed 's/[\/\*]/./g')
+            # If implementation is missing in new content, add it back
+            if ! grep -q "$implementation" "$tmp_file"; then
+                echo "$line" >> "$tmp_file"
+            fi
+        fi
+    done < <(extract_implementations "$original_content")
+    
+    cat "$tmp_file"
+    rm "$tmp_file"
 }
 
 # Function to clean markdown code blocks
@@ -90,27 +112,24 @@ process_swift_file() {
         echo "Created backup: ${SWIFT_FILE}.backup"
     fi
 
+    # Store original content
+    local original_content
+    original_content=$(cat "$SWIFT_FILE")
+
     # Extract header and main code separately
     local header
     header=$(extract_header "$SWIFT_FILE")
     
-    local main_code
-    main_code=$(extract_main_code "$SWIFT_FILE")
-
-    # Read and escape the main code for JSON
-    local SWIFT_CODE
-    SWIFT_CODE=$(echo "$main_code" | jq -Rs .)
-
     # Create the JSON payload
     local JSON_PAYLOAD
     JSON_PAYLOAD=$(jq -n \
-        --arg code "$SWIFT_CODE" \
+        --arg code "$original_content" \
         '{
             model: "claude-3-haiku-20240307",
             max_tokens: 2000,
             messages: [{
                 role: "user",
-                content: "Please add Swift documentation comments to the following code. Use /// style comments. Include parameter descriptions and return value documentation where applicable. Return only the documented code without any markdown formatting or explanation:\n\n\($code)"
+                content: "Add Swift documentation comments to this code. Preserve ALL existing functionality, implementations, and structure. Do not remove any code. Keep all imports, conditional compilation blocks (#if, #endif), and implementations intact. Only add documentation comments:\n\n\($code)"
             }]
         }')
 
@@ -142,12 +161,12 @@ process_swift_file() {
     # Clean the markdown formatting from the response
     documented_code=$(clean_markdown "$documented_code")
 
-    # Combine header and documented code
-    {
-        echo "$header"
-        [ ! -z "$header" ] && echo "" # Add blank line if header exists
-        echo "$documented_code"
-    } > "$SWIFT_FILE"
+    # Ensure implementations and conditional blocks are preserved
+    documented_code=$(ensure_implementations "$documented_code" "$original_content")
+    documented_code=$(ensure_conditional_blocks "$documented_code" "$original_content")
+
+    # Save the documented code to the file
+    echo "$documented_code" > "$SWIFT_FILE"
 
     # Show diff if available and backup exists
     if [ $SKIP_BACKUP -eq 0 ] && command -v diff &> /dev/null; then
