@@ -189,11 +189,11 @@ rebuild_docs() {
     $(xcrun --find docc) process-archive \
         transform-for-static-hosting "$archive_path" \
         --output-path "$OUTPUT_DIR/$scheme" \
-        --hosting-base-path "/$scheme"
+        --hosting-base-path "/Swift"
         
     if [ $? -eq 0 ]; then
         echo "Documentation for $scheme rebuilt successfully at $(date '+%H:%M:%S')"
-        echo "Documentation available at: http://localhost:$PORT/$scheme"
+        # echo "Documentation available at: http://localhost:$PORT/$scheme"
     else
         echo "Error processing documentation archive for $scheme"
     fi
