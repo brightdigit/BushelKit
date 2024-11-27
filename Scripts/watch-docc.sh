@@ -101,11 +101,19 @@ if ! command -v python3 >/dev/null 2>&1; then
     exit 1
 fi
 
-# Function to find the .doccarchive file
+# Function to find the .doccarchive file for a specific scheme
 find_doccarchive() {
-    local archive_path=$(find "$TEMP_DIR" -name "*.doccarchive" -type d | head -n 1)
+    local scheme="$1"
+    # First try to find in a scheme-specific directory
+    local archive_path=$(find "$TEMP_DIR" -path "*/Build/Products/*/$scheme.doccarchive" -type d | head -n 1)
+    
+    # If not found, try finding by scheme name anywhere
     if [ -z "$archive_path" ]; then
-        echo "Error: Could not find .doccarchive file"
+        archive_path=$(find "$TEMP_DIR" -name "$scheme.doccarchive" -type d | head -n 1)
+    fi
+    
+    if [ -z "$archive_path" ]; then
+        echo "Error: Could not find .doccarchive file for scheme $scheme"
         return 1
     fi
     echo "$archive_path"
@@ -157,8 +165,8 @@ rebuild_docs() {
     echo "Changes detected in: $file"
     echo "Rebuilding documentation for scheme: $scheme"
     
-    # Clean temporary directory contents while preserving the directory
-    rm -rf "$TEMP_DIR"/*
+    # Clean temporary directory contents for this scheme
+    rm -rf "$TEMP_DIR/Build/Products"/*/"$scheme.doccarchive"
     
     # Build documentation for the specific scheme
     local build_cmd="xcodebuild docbuild -scheme $scheme -destination generic/platform=macOS -sdk macosx -derivedDataPath $TEMP_DIR"
@@ -168,11 +176,13 @@ rebuild_docs() {
         return 1
     fi
     
-    # Find the .doccarchive file
-    local archive_path=$(find_doccarchive)
+    # Find the .doccarchive file for this scheme
+    local archive_path=$(find_doccarchive "$scheme")
     if [ $? -ne 0 ]; then
         return 1
     fi
+    
+    echo "Found documentation archive at: $archive_path"
     
     # Process the archive for static hosting
     echo "Processing documentation for static hosting..."
