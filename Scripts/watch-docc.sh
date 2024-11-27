@@ -1,23 +1,39 @@
 #!/bin/bash
 
+# Configuration - Add your schemes here
+SCHEMES=(
+    "bushel"
+    "BushelDocs"
+    "BushelFactory"
+    "BushelFoundation"
+    "BushelFoundationWax"
+    "BushelGuestProfile"
+    "BushelHub"
+    "BushelHubIPSW"
+    "BushelHubMacOS"
+    "BushelLibrary"
+    "BushelLogging"
+    "BushelMacOSCore"
+    "BushelMachine"
+    "BushelTestUtilities"
+    "BushelUT"
+    "BushelUtilities"
+    "BushelVirtualBuddy"
+)
+
 # Help message
 show_usage() {
-    echo "Usage: $0 <watch_directory>"
-    echo "Watches the specified directory for changes in Swift and Markdown files"
-    echo "and automatically rebuilds DocC documentation to ./public directory"
+    echo "Usage: $0"
+    echo "Watches the following schemes for changes:"
+    for scheme in "${SCHEMES[@]}"; do
+        echo "  - Sources/$scheme"
+    done
     exit 1
 }
 
-# Check if directory argument is provided
-if [ $# -ne 1 ]; then
-    show_usage
-fi
-
 # Configuration
-WATCH_DIR="$1"  # Use the provided directory
 TEMP_DIR=$(mktemp -d)
 OUTPUT_DIR="./public"
-BUILD_CMD="xcodebuild docbuild -scheme DataThespian -derivedDataPath $TEMP_DIR"
 PORT=8000
 
 # Global variables for process management
@@ -42,7 +58,7 @@ cleanup() {
         wait "$FSWATCH_PID" 2>/dev/null
     fi
     
-    # Kill any remaining Python servers on our port (belt and suspenders)
+    # Kill any remaining Python servers on our port
     local remaining_servers=$(lsof -ti:$PORT)
     if [ ! -z "$remaining_servers" ]; then
         echo "Cleaning up remaining processes on port $PORT..."
@@ -59,11 +75,16 @@ cleanup() {
 # Register cleanup function for multiple signals
 trap cleanup EXIT INT TERM
 
-# Validate watch directory
-if [ ! -d "$WATCH_DIR" ]; then
-    echo "Error: Directory '$WATCH_DIR' does not exist"
-    exit 1
-fi
+# Validate watch directories and create array of directories to watch
+WATCH_DIRS=()
+for scheme in "${SCHEMES[@]}"; do
+    dir="Sources/$scheme"
+    if [ ! -d "$dir" ]; then
+        echo "Error: Directory '$dir' does not exist"
+        exit 1
+    fi
+    WATCH_DIRS+=("$dir")
+done
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
@@ -116,18 +137,34 @@ start_server() {
     echo "Documentation is now available at: http://localhost:$PORT"
 }
 
-# Function to rebuild documentation
+# Function to determine which scheme a file belongs to
+get_scheme_for_file() {
+    local file_path="$1"
+    for scheme in "${SCHEMES[@]}"; do
+        if [[ "$file_path" == *"Sources/$scheme"* ]]; then
+            echo "$scheme"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Function to rebuild documentation for a specific scheme
 rebuild_docs() {
-    echo "Changes detected in: $1"
-    echo "Rebuilding documentation..."
+    local file="$1"
+    local scheme="$2"
+    
+    echo "Changes detected in: $file"
+    echo "Rebuilding documentation for scheme: $scheme"
     
     # Clean temporary directory contents while preserving the directory
     rm -rf "$TEMP_DIR"/*
     
-    # Build documentation
-    eval "$BUILD_CMD"
+    # Build documentation for the specific scheme
+    local build_cmd="xcodebuild docbuild -scheme $scheme -destination generic/platform=macOS -sdk macosx -derivedDataPath $TEMP_DIR"
+    eval "$build_cmd"
     if [ $? -ne 0 ]; then
-        echo "Error building documentation"
+        echo "Error building documentation for $scheme"
         return 1
     fi
     
@@ -141,31 +178,37 @@ rebuild_docs() {
     echo "Processing documentation for static hosting..."
     $(xcrun --find docc) process-archive \
         transform-for-static-hosting "$archive_path" \
-        --output-path "$OUTPUT_DIR" \
-        --hosting-base-path "/"
+        --output-path "$OUTPUT_DIR/$scheme" \
+        --hosting-base-path "/$scheme"
         
     if [ $? -eq 0 ]; then
-        echo "Documentation rebuilt successfully at $(date '+%H:%M:%S')"
-        echo "Documentation available at: http://localhost:$PORT"
+        echo "Documentation for $scheme rebuilt successfully at $(date '+%H:%M:%S')"
+        echo "Documentation available at: http://localhost:$PORT/$scheme"
     else
-        echo "Error processing documentation archive"
+        echo "Error processing documentation archive for $scheme"
     fi
 }
 
-# Initial build
-echo "Performing initial documentation build..."
-echo "Watching directory: $WATCH_DIR"
-echo "Output directory: $OUTPUT_DIR"
-rebuild_docs "initial build"
+# Initial build for all schemes
+echo "Performing initial documentation build for all schemes..."
+for scheme in "${SCHEMES[@]}"; do
+    rebuild_docs "initial build" "$scheme"
+done
 
 # Start the web server after initial build
 start_server
 
 # Watch for changes
 echo "Watching for changes in Swift and Markdown files..."
-fswatch -r "$WATCH_DIR" | while read -r file; do
+echo "Watching directories:"
+printf '%s\n' "${WATCH_DIRS[@]}"
+
+fswatch -r "${WATCH_DIRS[@]}" | while read -r file; do
     if [[ "$file" =~ \.(swift|md)$ ]] || [[ "$file" =~ \.docc/ ]]; then
-        rebuild_docs "$file"
+        scheme=$(get_scheme_for_file "$file")
+        if [ ! -z "$scheme" ]; then
+            rebuild_docs "$file" "$scheme"
+        fi
     fi
 done &
 FSWATCH_PID=$!
