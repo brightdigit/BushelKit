@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -x
 
 # Configuration
 SCHEME="BushelKit-Package"
@@ -38,14 +38,14 @@ fi
 echo "Processing all archives..."
 find "${DERIVED_DATA_DIR}" -path "*/Build/Products/*/*.doccarchive" -type d | while read -r archive_path; do
     echo "Processing archive: ${archive_path}"
-    output_subdir="${OUTPUT_DIR}/Swift/$(basename "${archive_path}" .doccarchive)"
+    output_subdir="${OUTPUT_DIR}/swift-docc/$(basename "${archive_path}" .doccarchive)"
     mkdir -p "${output_subdir}"
     
     echo  "/Swift/$(basename "${archive_path}" .doccarchive)"
     if ! xcrun docc process-archive \
         transform-for-static-hosting "${archive_path}" \
         --output-path "${output_subdir}" \
-        --hosting-base-path "/Swift/$(basename "${archive_path}" .doccarchive)"; then
+        --hosting-base-path "swift-docc/$(basename "${archive_path}" .doccarchive)"; then
         echo "Error: Failed to process archive ${archive_path}"
         exit 1
     fi
