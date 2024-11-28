@@ -1,27 +1,54 @@
-#WORKSPACE_PATH="PSPDFKit.xcworkspace"
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Configuration
 SCHEME="BushelKit-Package"
 DERIVED_DATA_DIR="$HOME/Documents/docc-derived-data"
 SYMBOL_GRAPHS_DIR="$HOME/Documents/combined-symbol-graphs"
 OUTPUT_DIR="./public"
+PLATFORM="generic/platform=macOS"
 
-xcodebuild docbuild -destination 'generic/platform=macOS' \
-	-scheme "${SCHEME}" \
-	-derivedDataPath "${DERIVED_DATA_DIR}"
+mkdir -p "${DERIVED_DATA_DIR}" "${SYMBOL_GRAPHS_DIR}" "${OUTPUT_DIR}"
 
-mkdir -p "${SYMBOL_GRAPHS_DIR}"
-find "$HOME/Documents/docc-derived-data/Build/Intermediates.noindex" -path "*.build/Debug/*.build/symbol-graph" -exec cp -r {} "${SYMBOL_GRAPHS_DIR}" \;
+echo "Building documentation..."
+if ! xcodebuild docbuild -destination "${PLATFORM}" \
+    -scheme "${SCHEME}" \
+    -derivedDataPath "${DERIVED_DATA_DIR}"; then
+    echo "Error: Initial documentation build failed"
+    exit 1
+fi
 
-xcodebuild docbuild -scheme BushelKit-destination generic/platform=macOS -sdk macosx -derivedDataPath "${DERIVED_DATA_DIR}" \
-  # --additional-symbol-graph-dir "${SYMBOL_GRAPHS_DIR}" \
-  --fallback-display-name BushelKit --fallback-bundle-identifier com.brightdigit.BushelKit --fallback-bundle-version 2 
+echo "Copying symbol graphs..."
+if ! find "${DERIVED_DATA_DIR}/Build/Intermediates.noindex" \
+    -path "*.build/Debug/*.build/symbol-graph" \
+    -exec cp -r {} "${SYMBOL_GRAPHS_DIR}" \;; then
+    echo "Error: Failed to copy symbol graphs"
+    exit 1
+fi
 
-archive_path=$(find "$DERIVED_DATA_DIR" -path "*/Build/Products/*/BushelKit.doccarchive" -type d | head -n 1)
-# xcrun docc preview \
-#   --fallback-display-name BushelKit --fallback-bundle-identifier com.brightdigit.BushelKit --fallback-bundle-version 2 \
-#   --output-dir ~/Documents/BushelKit.doccarchive \
-#   --additional-symbol-graph-dir "${SYMBOL_GRAPHS_DIR}"
-  
-xcrun docc  process-archive \
-  transform-for-static-hosting "$archive_path" \
-  --output-path "$OUTPUT_DIR" \
-  --hosting-base-path "/Swift"
+echo "Running final documentation build..."
+if ! xcodebuild docbuild -scheme "${SCHEME}" \
+    -destination "${PLATFORM}" \
+    -sdk macosx \
+    -derivedDataPath "${DERIVED_DATA_DIR}"; then
+    echo "Error: Final documentation build failed"
+    exit 1
+fi
+
+echo "Processing all archives..."
+find "${DERIVED_DATA_DIR}" -path "*/Build/Products/*/*.doccarchive" -type d | while read -r archive_path; do
+    echo "Processing archive: ${archive_path}"
+    output_subdir="${OUTPUT_DIR}/Swift/$(basename "${archive_path}" .doccarchive)"
+    mkdir -p "${output_subdir}"
+    
+    echo  "/Swift/$(basename "${archive_path}" .doccarchive)"
+    if ! xcrun docc process-archive \
+        transform-for-static-hosting "${archive_path}" \
+        --output-path "${output_subdir}" \
+        --hosting-base-path "/Swift/$(basename "${archive_path}" .doccarchive)"; then
+        echo "Error: Failed to process archive ${archive_path}"
+        exit 1
+    fi
+done
+
+echo "Documentation build completed successfully"
