@@ -41,7 +41,7 @@ find "${DERIVED_DATA_DIR}" -path "*/Build/Products/*/*.doccarchive" -type d | wh
     output_subdir="${OUTPUT_DIR}/swift-docc/$(basename "${archive_path}" .doccarchive)"
     mkdir -p "${output_subdir}"
     
-    echo  "/Swift/$(basename "${archive_path}" .doccarchive)"
+    echo  "/swift-docc/$(basename "${archive_path}" .doccarchive)"
     if ! xcrun docc process-archive \
         transform-for-static-hosting "${archive_path}" \
         --output-path "${output_subdir}" \
