@@ -933,7 +933,7 @@ BushelTestUtilities()
 }
 struct DocC: PackageDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+.package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.0")
 }
 }
 struct RadiantPaging: TargetDependency {
