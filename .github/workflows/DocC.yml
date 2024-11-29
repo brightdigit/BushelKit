@@ -1,12 +1,9 @@
 name: DocC
 on:
-  push:
-    branches-ignore:
-      - '*WIP'
-  # workflow_run:
-  #   workflows: ["BushelKit"]
-  #   types: 
-  #     - completed
+  workflow_run:
+    workflows: ["BushelKit"]
+    types: 
+      - completed
          
 jobs:
   build-docc:
@@ -40,3 +37,9 @@ jobs:
           overwrite: true
           path: /workspace/.build/plugins/Swift-DocC/outputs/BushelKit.doccarchive.tar
           retention-days: 1
+      - uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: brightdigit/BushelDocs
+          event-type: trigger-workflow
+          client-payload: '{"run_id": "${{ github.run_id }}"}'          
