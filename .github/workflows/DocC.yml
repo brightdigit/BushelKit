@@ -31,9 +31,11 @@ jobs:
             ${{ runner.os }}-${{ env.cache-name }}-
       - name: Build DocC
         run: swift package generate-documentation --platform "name=macos,version=15.1" --transform-for-static-hosting --hosting-base-path "swift-docc" --disable-indexing --enable-experimental-combined-documentation
+      - name: Package doccarchive
+        run: tar -cf BushelKit.doccarchive.tar .build/plugins/Swift-DocC/outputs/BushelKit.doccarchive
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
           overwrite: true
-          path: /workspace/.build/plugins/Swift-DocC/outputs/BushelKit.doccarchive/
+          path: /workspace/BushelKit.doccarchive.tar
           retention-days: 1
