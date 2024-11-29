@@ -96,8 +96,8 @@ jobs:
           flags: macOS,${{ env.XCODE_NAME }},macos
       - name: Clean up spm build directory
         run: rm -rf .build
-      # - name: Lint
-      #   run: ./scripts/lint.sh     
+      - name: Lint
+        run: ./scripts/lint.sh     
       - name: Run iOS target tests
         run: xcodebuild test -scheme BushelKit-Package -sdk iphonesimulator18.1 -destination "OS=18.1,name=iPhone 16" -enableCodeCoverage YES build test
       - uses: sersoft-gmbh/swift-coverage-action@v4

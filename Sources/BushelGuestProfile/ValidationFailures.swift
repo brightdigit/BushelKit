@@ -34,26 +34,29 @@ public struct ValidationFailures: Codable, Equatable, Sendable {
   /// The coding keys used to encode and decode the `ValidationFailures` struct.
   public enum CodingKeys: String, CodingKey {
     /// Represents the case where the info dictionary is missing a required property or value.
-    case infoDictionaryMissingRequiredPropertyValue =
+    case missingRequiredPropertyValues =
       "Info dictionary missing required property/value"
     /// Represents the case where the info dictionary property value is illegal.
-    case infoDictionaryPropertyValueIsIllegal = "Info dictionary property value is illegal"
+    case illegalPropertyValues = "Info dictionary property value is illegal"
   }
 
   /// An array of strings representing the properties or values that are missing from the info dictionary.
-  public let infoDictionaryMissingRequiredPropertyValue: [String]
+  public let missingRequiredPropertyValues: [String]
   /// An array of strings representing the illegal property values in the info dictionary.
-  public let infoDictionaryPropertyValueIsIllegal: [String]
+  public let illegalPropertyValues: [String]
 
-  /// Initializes a `ValidationFailures` instance with the specified missing required properties/values and illegal property values.
+  /// Initializes a `ValidationFailures` instance with the specified
+  /// missing required properties/values and illegal property values.
   /// - Parameters:
-  ///   - infoDictionaryMissingRequiredPropertyValue: An array of strings representing the missing required properties or values.
-  ///   - infoDictionaryPropertyValueIsIllegal: An array of strings representing the illegal property values.
+  ///   - missingRequiredPropertyValue: An array of strings
+  ///   representing the missing required properties or values.
+  ///   - infoDictionaryPropertyValueIsIllegal: An array of strings
+  ///   representing the illegal property values.
   public init(
-    infoDictionaryMissingRequiredPropertyValue: [String],
-    infoDictionaryPropertyValueIsIllegal: [String]
+    missingRequiredPropertyValues: [String],
+    illegalPropertyValues: [String]
   ) {
-    self.infoDictionaryMissingRequiredPropertyValue = infoDictionaryMissingRequiredPropertyValue
-    self.infoDictionaryPropertyValueIsIllegal = infoDictionaryPropertyValueIsIllegal
+    self.missingRequiredPropertyValues = missingRequiredPropertyValues
+    self.illegalPropertyValues = illegalPropertyValues
   }
 }

@@ -38,7 +38,8 @@
     /// Updates the snapshots at the specified paths.
     ///
     /// - Parameter paths: The `SnapshotPaths` containing the paths to update.
-    /// - Returns: An array of `Snapshot` objects representing the updated snapshots, or `nil` if the update failed.
+    /// - Returns: An array of `Snapshot` objects
+    /// representing the updated snapshots, or `nil` if the update failed.
     private func updateSnapshots(atPaths paths: SnapshotPaths) throws -> [Snapshot]? {
       let versions = NSFileVersion.otherVersionsOfItem(at: paths.snapshottingSourceURL)
       assert(versions != nil)
@@ -85,7 +86,8 @@
     /// - Parameters:
     ///   - machine: The `MachineType` for which to synchronize the snapshots.
     ///   - options: The `SnapshotSynchronizeOptions` to use during synchronization.
-    /// - Returns: A `SnapshotSynchronizationDifference` object representing the changes made during synchronization, or `nil` if the synchronization failed.
+    /// - Returns: A `SnapshotSynchronizationDifference` object
+    /// representing the changes made during synchronization, or `nil` if the synchronization failed.
     public func synchronizeSnapshots(
       for machine: MachineType,
       options _: SnapshotSynchronizeOptions

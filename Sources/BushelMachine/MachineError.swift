@@ -31,6 +31,8 @@ public import BushelFoundation
 public import BushelLogging
 public import Foundation
 
+// swiftlint:disable file_length
+
 #if canImport(FoundationNetworking)
   public import FoundationNetworking
 #endif
@@ -114,8 +116,10 @@ public struct MachineError: LocalizedError, Loggable, Sendable {
   private init(details: MachineError.Details, innerError: (any Error)? = nil) {
     if let innerError = innerError as? MachineError {
       assertionFailure(
-        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)")
+        "Creating RestoreLibraryError \(details) within RestoreLibraryError: \(innerError)"
+      )
       Self.logger.critical(
+        // swiftlint:disable:next line_length
         "Creating RestoreLibraryError \(details.errorDescription(fromError: innerError)) within RestoreLibraryError: \(innerError)"
       )
     }

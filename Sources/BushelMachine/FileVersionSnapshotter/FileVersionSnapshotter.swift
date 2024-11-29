@@ -33,7 +33,10 @@
   import BushelUtilities
   public import Foundation
 
-  /// A structure that provides a `Snapshotter` and `Loggable` implementation for managing file versions as snapshots.
+// swiftlint:disable file_length
+
+  /// A structure that provides a `Snapshotter` and `Loggable` implementation
+/// for managing file versions as snapshots.
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
     /// The logging category for this type.
     public static var loggingCategory: BushelLogging.Category {
@@ -47,12 +50,14 @@
       self.fileManager = fileManager
     }
 
-    /// Initializes a `FileVersionSnapshotter` for the specified `MachineType` with the provided `FileManager`.
+    /// Initializes a `FileVersionSnapshotter`
+    /// for the specified `MachineType` with the provided `FileManager`.
     internal init(for _: MachineType.Type, fileManager: FileManager = .default) {
       self.init(fileManager: fileManager)
     }
 
-    /// Initializes a `FileVersionSnapshotter` for the specified `MachineType` with the provided `FileManager`.
+    /// Initializes a `FileVersionSnapshotter`
+    /// for the specified `MachineType` with the provided `FileManager`.
     internal init(for _: MachineType, fileManager: FileManager = .default) {
       self.init(fileManager: fileManager)
     }
@@ -160,8 +165,10 @@
     /// - Returns: The created snapshot.
     /// - Throws: Any errors that may occur during the save process.
     public func saveSnapshot(
-      forVersion version: NSFileVersion, to snapshotCollectionURL: URL,
-      withRequest request: SnapshotRequest = .init(), withID id: UUID = .init()
+      forVersion version: NSFileVersion,
+      to snapshotCollectionURL: URL,
+      withRequest request: SnapshotRequest = .init(),
+      withID id: UUID = .init()
     ) throws -> Snapshot {
       try self.fileManager.createEmptyDirectory(
         at: snapshotCollectionURL,

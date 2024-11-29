@@ -45,7 +45,8 @@ public final class LibrarySystemManager: LibrarySystemManaging, Loggable, Sendab
     self.implementations.values.flatMap(\.allowedContentTypes)
   }
 
-  /// Initializes the `LibrarySystemManager` with the given library system implementations and a closure to determine the file type for a given URL.
+  /// Initializes the `LibrarySystemManager` with the given library system implementations
+  /// and a closure to determine the file type for a given URL.
   /// - Parameters:
   ///   - implementations: An array of `LibrarySystem` instances.
   ///   - fileTypeBasedOnURL: A closure that determines the `FileType` for a given `URL`.

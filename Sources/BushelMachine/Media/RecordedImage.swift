@@ -120,7 +120,9 @@ extension RecordedImage {
     )
   }
 
-  /// Initializes a `RecordedImage` instance based on an existing `RecordedImage` instance, but with a new name and notes.
+  /// Initializes a `RecordedImage` instance
+  /// based on an existing `RecordedImage` instance,
+  /// but with a new name and notes.
   /// - Parameters:
   ///   - initial: The existing `RecordedImage` instance to base the new instance on.
   ///   - name: The new name for the image.

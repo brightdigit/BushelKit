@@ -69,7 +69,8 @@ private struct LibraryImageFileTaskParameters: Sendable {
   ///   - manager: The library system manager.
   ///   - verifyManager: The signature verification manager.
   ///
-  /// - Returns: An optional `LibraryImageFileTaskParameters` instance, or `nil` if the parameters cannot be initialized.
+  /// - Returns: An optional `LibraryImageFileTaskParameters` instance,
+  /// or `nil` if the parameters cannot be initialized.
   fileprivate init?(
     url: URL, manager: any LibrarySystemManaging, verifyManager: any SigVerificationManaging
   ) {
@@ -92,7 +93,10 @@ private struct LibraryImageFileTaskParameters: Sendable {
   /// - Returns: The resolved library image file.
   fileprivate func resolve() async throws -> LibraryImageFile {
     try await self.system.restoreImageLibraryItemFile(
-      fromURL: self.url, verifier: self.verifier, id: self.id)
+      fromURL: self.url,
+      verifier: self.verifier,
+      id: self.id
+    )
   }
 }
 

@@ -86,7 +86,8 @@
       return version
     }
 
-    /// Retrieves the file version for the item at the specified URL using the provided persistent identifier data.
+    /// Retrieves the file version for the item at the specified URL
+    /// using the provided persistent identifier data.
     /// - Parameters:
     ///   - url: The URL of the file to get the version for.
     ///   - identifierData: The persistent identifier data for the version.
@@ -115,7 +116,8 @@
       return version
     }
 
-    /// Retrieves a version data set for the file version with the specified snapshot ID based on the provided snapshot paths.
+    /// Retrieves a version data set for the file version
+    /// with the specified snapshot ID based on the provided snapshot paths.
     /// - Parameters:
     ///   - snapshotID: The UUID of the snapshot to retrieve the version data set for.
     ///   - paths: The snapshot paths to use for the version data set retrieval.

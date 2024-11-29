@@ -79,6 +79,7 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     case let .installationFailure(error):
       "There was an error during installation: \(error.description)"
     case let .restoreImage(image, _, withError: error):
+      // swiftlint:disable:next line_length
       "Restore Image \"\(image.metadata.shortName)\" could not loaded due to error: \(error.localizedDescription)"
     case .missingInitialization:
       "Missing Installer Initialization"

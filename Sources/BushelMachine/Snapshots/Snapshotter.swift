@@ -29,7 +29,8 @@
 
 public import Foundation
 
-/// A protocol that provides functionality for creating, deleting, restoring, and exporting snapshots of a machine.
+/// A protocol that provides functionality
+/// for creating, deleting, restoring, and exporting snapshots of a machine.
 public protocol Snapshotter<MachineType> {
   /// The type of machine that this Snapshotter can handle.
   associatedtype MachineType: Machine
@@ -78,7 +79,8 @@ public protocol Snapshotter<MachineType> {
   /// - Parameters:
   ///   - machine: The machine for which to synchronize the snapshots.
   ///   - options: The options to use when synchronizing the snapshots.
-  /// - Returns: The difference between the current and synchronized snapshots, or `nil` if no difference was found.
+  /// - Returns: The difference between the current and synchronized snapshots,
+  /// or `nil` if no difference was found.
   /// - Throws: An error that occurs during the snapshot synchronization process.
   func synchronizeSnapshots(
     for machine: MachineType,
@@ -94,7 +96,8 @@ extension Snapshotter {
   /// - Parameters:
   ///   - machine: The machine for which to synchronize the snapshots.
   ///   - options: The options to use when synchronizing the snapshots.
-  /// - Returns: The difference between the current and synchronized snapshots, or `nil` if no difference was found.
+  /// - Returns: The difference between the current and synchronized snapshots,
+  /// or `nil` if no difference was found.
   /// - Throws: An error that occurs during the snapshot synchronization process.
   public func synchronizeSnapshots(
     for _: MachineType,

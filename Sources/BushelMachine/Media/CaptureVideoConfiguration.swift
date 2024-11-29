@@ -81,6 +81,7 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
 extension CaptureVideoConfiguration {
   /// Returns a concise, user-friendly summary of the video configuration.
   public var summary: String {
+    // swiftlint:disable:next line_length
     "Video: \(self.codec.displayName), Format: \(self.format.description), File: \(self.fileType.displayName)"
   }
 

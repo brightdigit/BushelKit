@@ -30,7 +30,7 @@
 public import BushelFoundation
 public import Foundation
 
-/// Represents metadata for an installer image, including its long name, default name, label name, operating system, build version, image resource name, system name, and VM system ID.
+/// Represents metadata for an installer image.
 public struct InstallerImageMetadata: Equatable, Sendable {
   /// The long name of the installer image.
   public let longName: String

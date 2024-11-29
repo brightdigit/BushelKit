@@ -35,7 +35,8 @@ public protocol MachineBuilder: Sendable {
   var url: URL { get }
 
   /// Observes the progress of the machine building process.
-  /// - Parameter onUpdate: A closure that is called with the current progress as a value between 0.0 and 1.0.
+  /// - Parameter onUpdate: A closure that is called with the current progress
+  /// as a value between 0.0 and 1.0.
   /// - Returns: A unique identifier for the observer.
   func observePercentCompleted(_ onUpdate: @escaping @Sendable (Double) -> Void) -> UUID
 

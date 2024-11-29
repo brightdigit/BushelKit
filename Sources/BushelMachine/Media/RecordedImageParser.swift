@@ -31,7 +31,8 @@ public import Foundation
 
 /// A protocol that defines a parser for recorded images.
 public protocol RecordedImageParser {
-  /// Extracts information from a captured image and stores the resulting `RecordedImage` in the specified directory.
+  /// Extracts information from a captured image and
+  /// stores the resulting `RecordedImage` in the specified directory.
   /// - Parameters:
   ///   - image: The captured image to be parsed.
   ///   - directoryURL: The URL of the directory where the `RecordedImage` should be stored.

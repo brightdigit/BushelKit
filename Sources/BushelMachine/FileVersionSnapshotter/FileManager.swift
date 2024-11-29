@@ -91,7 +91,8 @@
     /// Retrieves a list of UUIDs of the files in the snapshot collection directory.
     ///
     /// - Parameter snapshotCollectionURL: The URL of the snapshot collection directory.
-    /// - Returns: An array of `UUID` objects representing the UUIDs of the files in the snapshot collection directory.
+    /// - Returns: An array of `UUID` objects
+    /// representing the UUIDs of the files in the snapshot collection directory.
     internal func filenameUUIDs(atDirectoryURL snapshotCollectionURL: URL) throws -> [UUID] {
       let snapshotCollectionDirectoryExists =
         self.directoryExists(at: snapshotCollectionURL) == .directoryExists

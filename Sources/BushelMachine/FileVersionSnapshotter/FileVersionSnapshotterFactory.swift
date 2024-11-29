@@ -68,7 +68,8 @@
     /// Retrieves the snapshotter that supports the given machine type.
     ///
     /// - Parameter supports: The machine type to find a snapshotter for.
-    /// - Returns: The snapshotter that supports the given machine type, or `nil` if no such snapshotter is found.
+    /// - Returns: The snapshotter that supports the given machine type,
+    ///  or `nil` if no such snapshotter is found.
     public func snapshotter<MachineType>(
       supports: MachineType.Type
     ) -> (any Snapshotter<MachineType>)? where MachineType: Machine {

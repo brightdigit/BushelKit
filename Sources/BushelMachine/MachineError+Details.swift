@@ -75,6 +75,8 @@ extension MachineError {
     /// Represents an error related to a missing video with a specific identifier.
     case missingVideo(UUID)
 
+    // swiftlint:disable cyclomatic_complexity function_body_length
+
     /// Returns an error description based on the specific error case and the provided error, if any.
     ///
     /// - Parameter error: An optional error that occurred.
@@ -148,6 +150,7 @@ extension MachineError {
         return "Unable to delete video \(id)"
       }
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
 
     /// Returns a recovery suggestion for the specific error case, if any.
     ///

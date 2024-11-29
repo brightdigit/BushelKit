@@ -49,7 +49,8 @@ public struct MachineSetupConfiguration: Sendable {
 
   public var snapshotSystemID: SnapshotterID = .fileVersion
 
-  /// Initializes a new `MachineSetupConfiguration` with the default storage specification for the provided `MachineSystem`.
+  /// Initializes a new `MachineSetupConfiguration` with the default storage specification
+  /// for the provided `MachineSystem`.
   /// - Parameter system: The `MachineSystem` to use for the default storage specification.
   public init(system: any MachineSystem) {
     self.init(storage: [.default(forSystem: system)])
@@ -129,7 +130,8 @@ extension MachineSetupConfiguration {
     )
   }
 
-  /// Initializes a new `MachineSetupConfiguration` with the provided `MachineBuildRequest` and `MachineSystem`.
+  /// Initializes a new `MachineSetupConfiguration`
+  /// with the provided `MachineBuildRequest` and `MachineSystem`.
   /// - Parameters:
   ///   - request: The `MachineBuildRequest` to use for initialization.
   ///   - system: The `MachineSystem` to use for the default storage specification.

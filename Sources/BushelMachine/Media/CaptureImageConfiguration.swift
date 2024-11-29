@@ -56,7 +56,8 @@ public struct CaptureImageConfiguration: Sendable, Codable, CustomStringConverti
     self.watermark = watermark
   }
 
-  /// Initializes a new `CaptureImageConfiguration` instance with a default file type, compression level, and an optional watermark.
+  /// Initializes a new `CaptureImageConfiguration` instance
+  /// with a default file type, compression level, and an optional watermark.
   ///
   /// - Parameter watermark: An optional watermark to be applied to the captured image.
   public init(watermark: Watermark?) {

@@ -31,7 +31,8 @@ public import Foundation
 
 /// A protocol that defines a RecordedVideoParser.
 public protocol RecordedVideoParser {
-  /// Parses the video information from the given `CaptureVideo` and stores the `RecordedVideo` in the specified directory.
+  /// Parses the video information from the given `CaptureVideo` and
+  /// stores the `RecordedVideo` in the specified directory.
   ///
   /// - Parameters:
   ///   - video: The `CaptureVideo` to parse.

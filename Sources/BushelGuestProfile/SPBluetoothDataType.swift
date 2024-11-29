@@ -40,7 +40,8 @@ public struct SPBluetoothDataType: Codable, Equatable, Sendable {
   public let controllerProperties: ControllerProperties
 
   /// Initializes a new instance of `SPBluetoothDataType` with the specified controller properties.
-  /// - Parameter controllerProperties: The controller properties to be associated with the Bluetooth data type.
+  /// - Parameter controllerProperties:
+  /// The controller properties to be associated with the Bluetooth data type.
   public init(controllerProperties: ControllerProperties) {
     self.controllerProperties = controllerProperties
   }

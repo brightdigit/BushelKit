@@ -138,7 +138,8 @@ public protocol PropertyChange: PropertyChangeFromValue, Sendable {
 
 extension PropertyChange {
   /// Gets the value of the property change.
-  /// - Returns: The value of the property change, or `nil` if the value cannot be cast to the specified type.
+  /// - Returns: The value of the property change,
+  /// or `nil` if the value cannot be cast to the specified type.
   public func getValue<Value: Sendable>() -> Value? {
     let value = self.values.new as? Value
     return value

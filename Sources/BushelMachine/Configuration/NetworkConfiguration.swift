@@ -39,7 +39,8 @@ public struct NetworkConfiguration: Codable, Identifiable, Sendable {
 
   /// Initializes a new `NetworkConfiguration` with the specified attachment.
   ///
-  /// - Parameter id: A unique identifier for the network configuration. If not provided, a new `UUID` will be generated.
+  /// - Parameter id: A unique identifier for the network configuration.
+  /// If not provided, a new `UUID` will be generated.
   /// - Parameter attachment: The attachment associated with the network configuration.
   public init(id: UUID = .init(), attachment: NetworkingConfigurationAttachment) {
     self.id = id

@@ -33,6 +33,8 @@ public import Foundation
 public import RadiantDocs
 import RadiantKit
 
+// swiftlint:disable file_length
+
 /// Metadata attached to a machine
 public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
   /// System ID
@@ -96,7 +98,8 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
 }
 
 extension MachineConfiguration {
-  /// Initializes a `MachineConfiguration` from a `MachineSetupConfiguration` and a `RestorableInstallerImage`.
+  /// Initializes a `MachineConfiguration`
+  /// rom a `MachineSetupConfiguration` and a `RestorableInstallerImage`.
   ///
   /// - Parameters:
   ///   - setup: The `MachineSetupConfiguration` to use for initialization.
@@ -180,7 +183,8 @@ extension MachineConfiguration {
 
   /// Updates the `images` property of the `MachineConfiguration` using the provided closure.
   ///
-  /// - Parameter closure: A closure that takes the current array of `RecordedImage` values and returns a new array of `RecordedImage` values.
+  /// - Parameter closure: A closure that takes the current array of `RecordedImage` values
+  /// and returns a new array of `RecordedImage` values.
   /// - Returns: A new `MachineConfiguration` with the updated `images` property.
   public func updatesImage(_ closure: @escaping @Sendable ([RecordedImage]) -> [RecordedImage])
     -> MachineConfiguration
@@ -204,7 +208,8 @@ extension MachineConfiguration {
 
   /// Updates the `videos` property of the `MachineConfiguration` using the provided closure.
   ///
-  /// - Parameter closure: A closure that takes the current array of `RecordedVideo` values and returns a new array of `RecordedVideo` values.
+  /// - Parameter closure: A closure that takes the current array of `RecordedVideo` values
+  /// and returns a new array of `RecordedVideo` values.
   /// - Returns: A new `MachineConfiguration` with the updated `videos` property.
   public func updatesVideos(_ closure: @escaping @Sendable ([RecordedVideo]) -> [RecordedVideo])
     -> MachineConfiguration

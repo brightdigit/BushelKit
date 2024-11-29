@@ -45,7 +45,8 @@ public struct SnapshotterRepository: SnapshotProvider {
     self.init(dictionary: .init(uniqueKeysWithValues: uniqueKeysWithValues))
   }
 
-  /// Initializes a `SnapshotterRepository` with the provided dictionary of `SnapshotterID` to `SnapshotterFactory` instances.
+  /// Initializes a `SnapshotterRepository` with the provided dictionary
+  /// of `SnapshotterID` to `SnapshotterFactory` instances.
   ///
   /// - Parameter dictionary: A dictionary that maps `SnapshotterID` to `SnapshotterFactory` instances.
   internal init(dictionary: [SnapshotterID: any SnapshotterFactory]) {
@@ -56,8 +57,10 @@ public struct SnapshotterRepository: SnapshotProvider {
   ///
   /// - Parameters:
   ///   - id: The `SnapshotterID` for the desired `Snapshotter`.
-  ///   - machineType: The `Machine` type for which the `Snapshotter` should be compatible.
-  /// - Returns: A `Snapshotter` instance that supports the provided `Machine` type, or `nil` if no matching `Snapshotter` is found.
+  ///   - machineType: The `Machine` type
+  ///   for which the `Snapshotter` should be compatible.
+  /// - Returns: A `Snapshotter` instance that supports the provided `Machine` type,
+  /// or `nil` if no matching `Snapshotter` is found.
   public func snapshotter<MachineType: Machine>(
     withID id: SnapshotterID,
     for machineType: MachineType.Type

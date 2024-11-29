@@ -30,7 +30,8 @@
 public import BushelFoundation
 public import Foundation
 
-/// Represents a snapshot of a system, containing information about the system's state at a specific point in time.
+/// Represents a snapshot of a system,
+/// containing information about the system's state at a specific point in time.
 public struct Snapshot: Codable, Identifiable, Sendable {
   /// The name of the snapshot.
   public var name: String
@@ -64,8 +65,10 @@ public struct Snapshot: Codable, Identifiable, Sendable {
   ///   - createdAt: The date and time when the snapshot was created.
   ///   - isDiscardable: Indicates whether the snapshot is discardable or not.
   ///   - notes: Any additional notes or comments about the snapshot. Defaults to an empty string.
-  ///   - operatingSystemVersion: The version of the operating system installed at the time of the snapshot. Defaults to `nil`.
-  ///   - buildVersion: The build version of the operating system installed at the time of the snapshot. Defaults to `nil`.
+  ///   - operatingSystemVersion: The version of the operating system
+  ///   installed at the time of the snapshot. Defaults to `nil`.
+  ///   - buildVersion: The build version of the operating system installed at the time of the snapshot.
+  ///   Defaults to `nil`.
   public init(
     name: String,
     id: UUID,
@@ -98,7 +101,8 @@ extension Snapshot {
 
     /// Initializes a new `OperatingSystem` instance.
     /// - Parameters:
-    ///   - operatingSystemVersion: The version of the operating system installed at the time of the snapshot.
+    ///   - operatingSystemVersion: The version of the operating system
+    ///   installed at the time of the snapshot.
     ///   - buildVersion: The build version of the operating system installed at the time of the snapshot.
     internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
       self.operatingSystemVersion = operatingSystemVersion
@@ -107,8 +111,10 @@ extension Snapshot {
 
     /// Initializes a new `OperatingSystem` instance with optional parameters.
     /// - Parameters:
-    ///   - operatingSystemVersion: The version of the operating system installed at the time of the snapshot. May be `nil`.
-    ///   - buildVersion: The build version of the operating system installed at the time of the snapshot. May be `nil`.
+    ///   - operatingSystemVersion: The version of the operating system installed
+    ///   at the time of the snapshot. May be `nil`.
+    ///   - buildVersion: The build version of the operating system
+    ///   installed at the time of the snapshot. May be `nil`.
     internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
       guard let operatingSystemVersion else {
         return nil

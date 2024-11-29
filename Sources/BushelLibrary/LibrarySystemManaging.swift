@@ -99,7 +99,8 @@ extension LibrarySystemManaging {
     return system.label(fromMetadata: metadata)
   }
 
-  /// Retrieves the library image files located in the specified directory, verifying them using the provided verification manager.
+  /// Retrieves the library image files located in the specified directory,
+  /// verifying them using the provided verification manager.
   ///
   /// - Parameters:
   ///   - imagesURL: The URL of the directory containing the library image files.

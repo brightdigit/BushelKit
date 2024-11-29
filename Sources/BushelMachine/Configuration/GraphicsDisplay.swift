@@ -66,7 +66,8 @@ extension GraphicsDisplay {
     CGFloat(self.widthInPixels) / CGFloat(self.heightInPixels)
   }
 
-  /// Returns a default `GraphicsDisplay` instance with a width of 1920 pixels, a height of 1080 pixels, and a pixels per inch of 80.
+  /// Returns a default `GraphicsDisplay` instance
+  /// with a width of 1920 pixels, a height of 1080 pixels, and a pixels per inch of 80.
   /// - Returns: A default `GraphicsDisplay` instance.
   public static func `default`() -> GraphicsDisplay {
     .init(widthInPixels: 1_920, heightInPixels: 1_080, pixelsPerInch: 80)

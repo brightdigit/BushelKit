@@ -27,7 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-/// Represents a USB data type, including its items, name, host controller, PCI device, PCI revision, and PCI vendor.
+/// Represents a USB data type,
+/// including its items, name, host controller, PCI device, PCI revision, and PCI vendor.
 public struct SPUSBDataType: Codable, Equatable, Sendable {
   /// The keys used for encoding and decoding the data type.
   public enum CodingKeys: String, CodingKey {

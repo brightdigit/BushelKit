@@ -82,11 +82,14 @@ extension MediaParserFactory {
     DefaultVideoParser.default
   }
 
-  /// Initializes a `MediaParserFactory` instance with the given file manager, CGSize retrieval closure, and video parser closure.
+  /// Initializes a `MediaParserFactory` instance
+  /// with the given file manager, CGSize retrieval closure, and video parser closure.
   ///
   /// - Parameters:
-  ///   - fileManager: A closure that returns a `FileManager` instance. Defaults to `.default`.
-  ///   - cgSizeFromURL: A closure that retrieves the CGSize for a given URL. Defaults to `defaultCGSizeFromURL(_:)`.
+  ///   - fileManager: A closure that returns a `FileManager` instance.
+  ///   Defaults to `.default`.
+  ///   - cgSizeFromURL: A closure that retrieves the CGSize for a given URL.
+  ///   Defaults to `defaultCGSizeFromURL(_:)`.
   ///   - videoParser: A closure that returns an `any RecordedVideoParser` instance.
   public init(
     fileManager: @Sendable @escaping () -> FileManager = { .default },
