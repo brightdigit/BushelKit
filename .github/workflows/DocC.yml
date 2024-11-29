@@ -1,9 +1,8 @@
 name: DocC
 on:
   workflow_run:
-    workflows: ["BushelKit"]
-    types: 
-      - completed
+    workflows: [BushelKit]
+    types: [completed]
          
 jobs:
   build-docc:
