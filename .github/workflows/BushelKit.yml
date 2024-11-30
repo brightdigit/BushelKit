@@ -154,5 +154,5 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}
           repository: brightdigit/BushelDocs
-          event-type: trigger-workflow
+          event-type: docc-update
           client-payload: '{"run_id": "${{ github.run_id }}"}' 
