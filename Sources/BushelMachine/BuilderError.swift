@@ -30,20 +30,36 @@
 public import BushelFoundation
 public import Foundation
 
+/// Represents an error that occurred during the image building process.
 public enum BuilderError: LocalizedError, Equatable, Sendable {
+  /// Indicates that the property data located at the specified URL is corrupted.
   case corrupted(Property, dataAtURL: URL)
+
+  /// Indicates that the specified image does not contain a valid machine configuration.
   case noSupportedConfigurationImage(MetadataLabel, isSupported: Bool)
+
+  /// Indicates that there was a failure during the installation process.
   case installationFailure(InstallFailure)
+
+  /// Indicates that there was an error while restoring the specified image.
   case restoreImage(any InstallerImage, RestoreImageFailure, withError: any Error)
+
+  /// Indicates that the initialization of the installer was missing.
   case missingInitialization
 
+  /// The type of the property that was corrupted.
   public typealias Property = BuilderProperty
 
+  /// Represents the possible failures that can occur when restoring an image.
   public enum RestoreImageFailure: Sendable {
+    /// Indicates that the image is corrupt.
     case corrupt
+
+    /// Indicates that the image was not found.
     case notFound
   }
 
+  /// Returns a boolean indicating whether the error is related to a system issue.
   public var isSystem: Bool {
     guard case let .installationFailure(installationFailure) = self else {
       return false
@@ -51,6 +67,7 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     return installationFailure.isSystem
   }
 
+  /// Returns a localized description of the error.
   public var errorDescription: String? {
     switch self {
     case let .corrupted(property, dataAtURL: url):
@@ -69,6 +86,7 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     }
   }
 
+  /// Returns a localized suggestion for recovering from the error, if applicable.
   public var recoverySuggestion: String? {
     switch self {
     case .noSupportedConfigurationImage, .restoreImage:
@@ -78,10 +96,12 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     }
   }
 
+  /// Creates a `BuilderError` from an installation error.
   public static func fromInstallation(error: any Error) -> BuilderError {
     .installationFailure(.fromError(error))
   }
 
+  /// Creates a `BuilderError` from an error that occurred while restoring an image.
   public static func restoreImage(_ image: any InstallerImage, withError error: NSError)
     -> BuilderError?
   {
@@ -94,27 +114,24 @@ public enum BuilderError: LocalizedError, Equatable, Sendable {
     return .restoreImage(image, .corrupt, withError: error)
   }
 
+  /// Compares two `BuilderError` instances for equality.
   public static func == (lhs: BuilderError, rhs: BuilderError) -> Bool {
     switch (lhs, rhs) {
     case let (.corrupted(prop1, url1), .corrupted(prop2, url2)):
       prop1 == prop2 && url1 == url2
-
     case let (
       .noSupportedConfigurationImage(label1, isSupported1),
       .noSupportedConfigurationImage(label2, isSupported2)
     ):
       label1 == label2 && isSupported1 == isSupported2
-
     case let (.installationFailure(failure1), .installationFailure(failure2)):
       failure1 == failure2
-
     case let (.restoreImage(image1, failure1, error1), .restoreImage(image2, failure2, error2)):
       image1.metadata == image2.metadata
         && image1.libraryID == image2.libraryID
         && image1.imageID == image2.imageID
         && "\(error1)" == "\(error2)"
         && failure1 == failure2
-
     default:
       false
     }

@@ -30,20 +30,30 @@
 public import BushelFoundation
 public import Foundation
 
+/// A struct representing an image file in a library.
 public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
+  /// The coding keys used for encoding and decoding the `LibraryImageFile` struct.
   public enum CodingKeys: String, CodingKey {
     case id
     case name
     case metadata
   }
 
+  /// The name of the image file.
   public var name: String
+  /// The unique identifier of the image file.
   public let id: UUID
+  /// The metadata associated with the image file.
   public let metadata: ImageMetadata
+  /// The file name of the image file, composed of the ID and file extension.
   public var fileName: String {
-    [id.uuidString, metadata.fileExtension].joined(separator: ".")
+    [self.id.uuidString, self.metadata.fileExtension].joined(separator: ".")
   }
 
+  /// Initializes a `LibraryImageFile` struct from a decoder.
+  ///
+  /// - Parameter decoder: The decoder used to decode the `LibraryImageFile` struct.
+  /// - Throws: An error that may occur during the decoding process.
   public init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: Self.CodingKeys.self)
     let id = try container.decode(UUID.self, forKey: .id)
@@ -53,6 +63,12 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
     self.init(id: id, metadata: metadata, name: name)
   }
 
+  /// Initializes a `LibraryImageFile` struct with the provided parameters.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the image file. Default is a new `UUID`.
+  ///   - metadata: The metadata associated with the image file.
+  ///   - name: The name of the image file.
   public init(
     id: UUID = UUID(),
     metadata: ImageMetadata,
@@ -63,6 +79,12 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
     self.metadata = metadata
   }
 
+  /// Compares two `LibraryImageFile` instances for equality.
+  ///
+  /// - Parameters:
+  ///   - lhs: The left-hand side `LibraryImageFile` instance.
+  ///   - rhs: The right-hand side `LibraryImageFile` instance.
+  /// - Returns: `true` if the two instances have the same ID, `false` otherwise.
   public static func == (
     lhs: LibraryImageFile,
     rhs: LibraryImageFile
@@ -70,13 +92,20 @@ public struct LibraryImageFile: Codable, Identifiable, Hashable, Sendable {
     lhs.id == rhs.id
   }
 
+  /// Hashes the `LibraryImageFile` instance.
+  ///
+  /// - Parameter hasher: The hasher to use for hashing the instance.
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
-    hasher.combine(name)
-    hasher.combine(metadata)
+    hasher.combine(self.id)
+    hasher.combine(self.name)
+    hasher.combine(self.metadata)
   }
 
+  /// Creates a new `LibraryImageFile` instance with updated metadata.
+  ///
+  /// - Parameter metadata: The new metadata to be used for the updated instance.
+  /// - Returns: A new `LibraryImageFile` instance with the updated metadata.
   public func updatingMetadata(_ metadata: ImageMetadata) -> LibraryImageFile {
-    .init(id: self.id, metadata: metadata, name: name)
+    .init(id: self.id, metadata: metadata, name: self.name)
   }
 }

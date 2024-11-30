@@ -49,6 +49,9 @@ let package = Package(
     BushelVirtualBuddy()
     BushelTestUtilities()
   },
+  dependencies: {
+    DocC()
+  },
   testTargets: {
     BushelFoundationTests()
     BushelLibraryTests()

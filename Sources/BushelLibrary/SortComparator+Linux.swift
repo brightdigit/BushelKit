@@ -101,7 +101,7 @@
   // swift-format-ignore
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   package struct AnySortComparator: SortComparator {
-    var _base: Any  // internal for testing
+    var _base: Any // internal for testing
 
     private var hashableBase: AnyHashable
 
@@ -135,19 +135,19 @@
 
     package var order: SortOrder {
       get {
-        getOrder(_base)
+        self.getOrder(self._base)
       }
       set {
-        hashableBase = setOrder(&_base, newValue)
+        self.hashableBase = self.setOrder(&self._base, newValue)
       }
     }
 
     package func compare(_ lhs: Any, _ rhs: Any) -> ComparisonResult {
-      _compare(_base, lhs, rhs)
+      self._compare(self._base, lhs, rhs)
     }
 
     package func hash(into hasher: inout Hasher) {
-      hasher.combine(hashableBase)
+      hasher.combine(self.hashableBase)
     }
 
     package static func == (lhs: Self, rhs: Self) -> Bool {
@@ -172,7 +172,7 @@
     }
 
     public func compare(_ lhs: Compared, _ rhs: Compared) -> ComparisonResult {
-      unorderedCompare(lhs, rhs).withOrder(order)
+      self.unorderedCompare(lhs, rhs).withOrder(self.order)
     }
   }
 
@@ -188,17 +188,17 @@
     }
 
     package var order: SortOrder {
-      get { base.order }
-      set { base.order = newValue }
+      get { self.base.order }
+      set { self.base.order = newValue }
     }
 
     package func compare(_ lhs: Base.Compared?, _ rhs: Base.Compared?) -> ComparisonResult {
       guard let lhs else {
         if rhs == nil { return .orderedSame }
-        return .orderedAscending.withOrder(order)
+        return .orderedAscending.withOrder(self.order)
       }
-      guard let rhs else { return .orderedDescending.withOrder(order) }
-      return base.compare(lhs, rhs)
+      guard let rhs else { return .orderedDescending.withOrder(self.order) }
+      return self.base.compare(lhs, rhs)
     }
   }
 

@@ -31,11 +31,19 @@ public import Foundation
 public import RadiantDocs
 import RadiantKit
 
+/// A specification for a library file type.
 public enum LibraryFileSpecifications: InitializableFileTypeSpecification {
+  /// The type of the library file.
   public typealias WindowValueType = LibraryFile
 
+  /// The file type for the library file.
   public static let fileType: FileType = .restoreImageLibrary
 
+  /// Creates a new library file at the specified URL.
+  ///
+  /// - Parameter url: The URL where the library file should be created.
+  /// - Throws: An error if the library file cannot be created.
+  /// - Returns: A new instance of `LibraryFile`.
   public static func createAt(_ url: URL) throws -> LibraryFile {
     _ = try Library.createAt(url)
     return .init(url: url)

@@ -27,11 +27,17 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// Represents the architecture of a system or device.
 public enum ArchKind: String, Codable, Equatable, Sendable {
+  /// Represents the ARM architecture.
   case archArm = "arch_arm"
+
+  /// Represents the 64-bit ARM architecture.
   case archArmI64 = "arch_arm_i64"
+
+  /// Represents the 64-bit architecture.
   case archI64 = "arch_i64"
+
+  /// Represents any other architecture.
   case archOther = "arch_other"
 }

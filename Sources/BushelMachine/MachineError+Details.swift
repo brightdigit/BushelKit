@@ -36,6 +36,7 @@ public import Foundation
 #endif
 
 extension MachineError {
+  /// A collection of detailed error cases related to a machine.
   public enum Details: Sendable {
     private struct UnknownError: Error {
       private init() {}
@@ -43,23 +44,43 @@ extension MachineError {
       fileprivate static let shared = UnknownError()
     }
 
+    /// Represents an error related to a bookmark.
     case bookmarkError
+    /// Represents an error related to system resolution.
     case systemResolution
+    /// Represents an error related to a missing restore image with a specific identifier.
     case missingRestoreImageWithID(InstallerImageIdentifier)
+    /// Represents an error related to denied access to a library at a specific URL.
     case accessDeniedLibraryAt(URL)
+    /// Represents an error related to a corrupted library at a specific URL.
     case corruptedAt(URL)
+    /// Represents an error related to the database.
     case database
+    /// Represents an error related to a missing object property.
     case missingProperty(ObjectProperty)
+    /// Represents an error related to a snapshot.
     case snapshot
+    /// Represents an error related to a session.
     case session
+    /// Represents an error related to a not found bookmark ID.
     case notFoundBookmarkID(UUID)
+    /// Represents an error related to a capture.
     case captureError
+    /// Represents an error related to a capture update.
     case captureUpdateError(UUID)
+    /// Represents an error related to exporting screenshots at a specific URL.
     case exportScreenshotsErrorAt(URL)
+    /// Represents an error related to a missing image with a specific identifier.
     case missingImage(UUID)
+    /// Represents an error related to a missing video with a specific identifier.
     case missingVideo(UUID)
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    // swiftlint:disable cyclomatic_complexity function_body_length
+
+    /// Returns an error description based on the specific error case and the provided error, if any.
+    ///
+    /// - Parameter error: An optional error that occurred.
+    /// - Returns: A string describing the error.
     internal func errorDescription(fromError error: (any Error)?) -> String {
       switch self {
       case .bookmarkError:
@@ -76,7 +97,7 @@ extension MachineError {
         let components: [String?] = [
           "There's an issue getting access to library at \(path)", error?.localizedDescription,
         ]
-        return components.compactMap { $0 }.joined(separator: ": ")
+        return components.compactMap(\.self).joined(separator: ": ")
 
       case let .corruptedAt(libraryURL):
         assert(error != nil)
@@ -109,7 +130,7 @@ extension MachineError {
         let error = error ?? UnknownError.shared
         return "Unable to capture screen: \(error.localizedDescription)"
 
-      case .captureUpdateError(let id):
+      case let .captureUpdateError(id):
         assert(error != nil)
         let error = error ?? UnknownError.shared
         return "Unable to update capture item \(id): \(error.localizedDescription)"
@@ -121,13 +142,20 @@ extension MachineError {
 
       case let .notFoundBookmarkID(id):
         return "There's an issue finding machine with bookmark ID: \(id)"
-      case .missingImage(let id):
+
+      case let .missingImage(id):
         return "Unable to delete image \(id)"
-      case .missingVideo(let id):
+
+      case let .missingVideo(id):
         return "Unable to delete video \(id)"
       }
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
 
+    /// Returns a recovery suggestion for the specific error case, if any.
+    ///
+    /// - Parameter error: An optional error that occurred.
+    /// - Returns: A string describing the recovery suggestion, or `nil` if no suggestion is available.
     internal func recoverySuggestion(fromError _: (any Error)?) -> String? {
       switch self {
       case .accessDeniedLibraryAt:
@@ -137,7 +165,11 @@ extension MachineError {
       }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity
+    /// Determines whether the specific error case is recoverable based on the provided error, if any.
+    ///
+    /// - Parameter error: An optional error that occurred.
+    /// - Returns: `true` if the error is recoverable, `false` otherwise.
     internal func isRecoverable(fromError _: (any Error)?) -> Bool {
       switch self {
       case .bookmarkError:
@@ -169,6 +201,7 @@ extension MachineError {
 
       case .notFoundBookmarkID:
         false
+
       case .captureError:
         false
 
@@ -177,11 +210,14 @@ extension MachineError {
 
       case .exportScreenshotsErrorAt:
         false
+
       case .missingImage:
         false
+
       case .missingVideo:
         false
       }
     }
+    // swiftlint:enable cyclomatic_complexity
   }
 }

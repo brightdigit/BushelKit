@@ -27,11 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
-// MARK: - SpairportSoftwareInformation
-
+/// Represents the software information for the Spairport system.
 public struct SpairportSoftwareInformation: Codable, Equatable, Sendable {
+  /// The coding keys for the Spairport software information.
   public enum CodingKeys: String, CodingKey {
     case spairportCorewlanVersion = "spairport_corewlan_version"
     case spairportCorewlankitVersion = "spairport_corewlankit_version"
@@ -42,14 +42,30 @@ public struct SpairportSoftwareInformation: Codable, Equatable, Sendable {
     case spairportUtilityVersion = "spairport_utility_version"
   }
 
+  /// The version of the Spairport Corewlan component.
   public let spairportCorewlanVersion: String
+  /// The version of the Spairport Corewlankit component.
   public let spairportCorewlankitVersion: String
+  /// The version of the Spairport Diagnostics component.
   public let spairportDiagnosticsVersion: String
+  /// The version of the Spairport Extra component.
   public let spairportExtraVersion: String
+  /// The version of the Spairport Family component.
   public let spairportFamilyVersion: String
+  /// The version of the Spairport Profiler component.
   public let spairportProfilerVersion: String
+  /// The version of the Spairport Utility component.
   public let spairportUtilityVersion: String
 
+  /// Initializes a new instance of the `SpairportSoftwareInformation` struct.
+  /// - Parameters:
+  ///   - spairportCorewlanVersion: The version of the Spairport Corewlan component.
+  ///   - spairportCorewlankitVersion: The version of the Spairport Corewlankit component.
+  ///   - spairportDiagnosticsVersion: The version of the Spairport Diagnostics component.
+  ///   - spairportExtraVersion: The version of the Spairport Extra component.
+  ///   - spairportFamilyVersion: The version of the Spairport Family component.
+  ///   - spairportProfilerVersion: The version of the Spairport Profiler component.
+  ///   - spairportUtilityVersion: The version of the Spairport Utility component.
   public init(
     spairportCorewlanVersion: String,
     spairportCorewlankitVersion: String,

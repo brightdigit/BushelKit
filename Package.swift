@@ -102,9 +102,10 @@ case .executable:
 }
 }
 extension Package {
-public convenience init(
+convenience init(
 name: String? = nil,
 @ProductsBuilder entries: @escaping () -> [any Product],
+@PackageDependencyBuilder dependencies packageDependencies: @escaping () -> [any PackageDependency] = { [any PackageDependency] () },
 @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [any TestTarget]() },
 @SwiftSettingsBuilder swiftSettings: @escaping () -> [SwiftSetting] = { [SwiftSetting]() }
 ) {
@@ -125,6 +126,7 @@ let allTestTargetsDependencies = allTestTargets.flatMap { $0.allDependencies() }
 let dependencies = allTargetsDependencies + allTestTargetsDependencies
 let targetDependencies = dependencies.compactMap { $0 as? Target }
 let packageTargetDependencies = dependencies.compactMap { $0 as? TargetDependency }
+let allPackageDependencies = packageTargetDependencies.map(\.package) + packageDependencies()
 targets += targetDependencies
 targets += allTestTargets.map { $0 as Target }
 let packgeTargets = Dictionary(
@@ -135,10 +137,10 @@ by: { $0.name }
 .compactMap(\.first)
 .map { _PackageDescription_Target.entry($0, swiftSettings: swiftSettings()) }
 let packageDeps = Dictionary(
-grouping: packageTargetDependencies,
-by: { $0.package.packageName }
+grouping: allPackageDependencies,
+by: { $0.packageName }
 )
-.values.compactMap(\.first).map(\.package.dependency)
+.values.compactMap(\.first).map(\.dependency)
 self.init(
 name: packageName,
 products: products,
@@ -157,6 +159,15 @@ return self
 public func defaultLocalization(_ defaultLocalization: LanguageTag) -> Package {
 self.defaultLocalization = defaultLocalization
 return self
+}
+}
+@resultBuilder
+enum PackageDependencyBuilder {
+internal static func buildPartialBlock(first: PackageDependency) -> [any PackageDependency] {
+[first]
+}
+internal static func buildPartialBlock(accumulated: [any PackageDependency], next: PackageDependency) -> [any PackageDependency]{
+accumulated + [next]
 }
 }
 protocol PackageDependency: _Named {
@@ -920,6 +931,11 @@ BushelMachineWax()
 BushelTestUtilities()
 }
 }
+struct DocC: PackageDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.0")
+}
+}
 struct RadiantPaging: TargetDependency {
 var package: PackageDependency {
 RadiantKit()
@@ -998,6 +1014,9 @@ BushelMacOSCore()
 BushelUT()
 BushelVirtualBuddy()
 BushelTestUtilities()
+},
+dependencies: {
+DocC()
 },
 testTargets: {
 BushelFoundationTests()

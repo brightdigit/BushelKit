@@ -32,7 +32,15 @@
   import BushelLogging
   import Foundation
 
+  /// Provides a set of file-related utilities for managing a snapshot collection directory.
   extension FileManager {
+    /// Processes file updates between a set of versions and the current snapshot collection directory.
+    ///
+    /// - Parameters:
+    ///   - snapshotCollectionURL: The URL of the snapshot collection directory.
+    ///   - versions: An array of `NSFileVersion` objects representing the versions to process.
+    ///   - logger: A `Logger` instance to use for logging any errors.
+    /// - Returns: A `SnapshotFileUpdate` object containing the files to delete and the versions to add.
     internal func fileUpdates(
       atDirectoryURL snapshotCollectionURL: URL,
       fromVersions versions: [NSFileVersion],
@@ -80,6 +88,11 @@
       return SnapshotFileUpdate(filesToDelete: filesToDelete, versionsToAdd: versionsToAdd)
     }
 
+    /// Retrieves a list of UUIDs of the files in the snapshot collection directory.
+    ///
+    /// - Parameter snapshotCollectionURL: The URL of the snapshot collection directory.
+    /// - Returns: An array of `UUID` objects
+    /// representing the UUIDs of the files in the snapshot collection directory.
     internal func filenameUUIDs(atDirectoryURL snapshotCollectionURL: URL) throws -> [UUID] {
       let snapshotCollectionDirectoryExists =
         self.directoryExists(at: snapshotCollectionURL) == .directoryExists

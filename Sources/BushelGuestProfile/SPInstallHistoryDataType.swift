@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPInstallHistoryDataType
-
+/// Represents the data type for the install history of a package.
 public struct SPInstallHistoryDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the `SPInstallHistoryDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case installDate = "install_date"
@@ -39,11 +39,22 @@ public struct SPInstallHistoryDataType: Codable, Equatable, Sendable {
     case packageSource = "package_source"
   }
 
+  /// The name of the installed package.
   public let name: String
+  /// The date the package was installed.
   public let installDate: Date
+  /// The version of the installed package.
   public let installVersion: String
+  /// The source of the installed package.
   public let packageSource: PackageSource
 
+  /// Initializes an `SPInstallHistoryDataType` instance.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the installed package.
+  ///   - installDate: The date the package was installed.
+  ///   - installVersion: The version of the installed package.
+  ///   - packageSource: The source of the installed package.
   public init(
     name: String,
     installDate: Date,

@@ -27,9 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// An enumeration that represents the source of a Spext (Secure Playground Extension).
 public enum SpextObtainedFrom: String, Codable, Equatable, Sendable {
+  /// The Spext was obtained from Apple.
   case spextApple = "spext_apple"
+  /// The Spext was obtained from an identified developer.
   case spextIdentifiedDeveloper = "spext_identified_developer"
 }

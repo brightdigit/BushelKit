@@ -31,7 +31,9 @@ public import Foundation
 
 // MARK: - IPv6
 
+/// Represents an IPv6 configuration.
 public struct IPv6: Codable, Equatable, Sendable {
+  /// The keys used to encode and decode the IPv6 configuration.
   public enum CodingKeys: String, CodingKey {
     case addresses = "Addresses"
     case configMethod = "ConfigMethod"
@@ -40,12 +42,25 @@ public struct IPv6: Codable, Equatable, Sendable {
     case prefixLength = "PrefixLength"
   }
 
+  /// The IPv6 addresses.
   public let addresses: [String]?
+  /// The configuration method.
   public let configMethod: String
+  /// The confirmed interface name.
   public let confirmedInterfaceName: String?
+  /// The interface name.
   public let interfaceName: String?
+  /// The prefix lengths.
   public let prefixLength: [Int]?
 
+  /// Initializes an `IPv6` instance with the given parameters.
+  ///
+  /// - Parameters:
+  ///   - addresses: The IPv6 addresses.
+  ///   - configMethod: The configuration method.
+  ///   - confirmedInterfaceName: The confirmed interface name.
+  ///   - interfaceName: The interface name.
+  ///   - prefixLength: The prefix lengths.
   public init(
     addresses: [String]?,
     configMethod: String,

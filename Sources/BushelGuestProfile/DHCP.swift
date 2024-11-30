@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - DHCP
-
+/// Represents a DHCP (Dynamic Host Configuration Protocol) response.
 public struct DHCP: Codable, Equatable, Sendable {
+  /// Coding keys for DHCP.
   public enum CodingKeys: String, CodingKey {
     case dhcpDomainName = "dhcp_domain_name"
     case dhcpDomainNameServers = "dhcp_domain_name_servers"
@@ -42,14 +42,31 @@ public struct DHCP: Codable, Equatable, Sendable {
     case dhcpSubnetMask = "dhcp_subnet_mask"
   }
 
+  /// The domain name provided by the DHCP server.
   public let dhcpDomainName: String
+  /// The domain name servers provided by the DHCP server.
   public let dhcpDomainNameServers: String
+  /// The lease duration (in seconds) provided by the DHCP server.
   public let dhcpLeaseDuration: Int
+  /// The DHCP message type provided by the DHCP server.
   public let dhcpMessageType: String
+  /// The routers provided by the DHCP server.
   public let dhcpRouters: String
+  /// The DHCP server identifier.
   public let dhcpServerIdentifier: String
+  /// The subnet mask provided by the DHCP server.
   public let dhcpSubnetMask: String
 
+  /// Initializes a `DHCP` instance with the provided parameters.
+  ///
+  /// - Parameters:
+  ///   - dhcpDomainName: The domain name provided by the DHCP server.
+  ///   - dhcpDomainNameServers: The domain name servers provided by the DHCP server.
+  ///   - dhcpLeaseDuration: The lease duration (in seconds) provided by the DHCP server.
+  ///   - dhcpMessageType: The DHCP message type provided by the DHCP server.
+  ///   - dhcpRouters: The routers provided by the DHCP server.
+  ///   - dhcpServerIdentifier: The DHCP server identifier.
+  ///   - dhcpSubnetMask: The subnet mask provided by the DHCP server.
   public init(
     dhcpDomainName: String,
     dhcpDomainNameServers: String,

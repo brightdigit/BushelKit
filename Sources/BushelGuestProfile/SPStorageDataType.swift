@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPStorageDataType
-
+/// Represents a data type used for storage-related information.
 public struct SPStorageDataType: Codable, Equatable, Sendable {
+  /// Enumeration of the coding keys used for the `SPStorageDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case bsdName = "bsd_name"
@@ -45,17 +43,39 @@ public struct SPStorageDataType: Codable, Equatable, Sendable {
     case writable
   }
 
+  /// The name of the storage data type.
   public let name: String
+  /// The BSD (Berkeley Software Distribution) name of the storage data type.
   public let bsdName: String
+  /// The file system of the storage data type.
   public let fileSystem: String
+  /// The free space in bytes of the storage data type.
   public let freeSpaceInBytes: Int
+  /// The ignore ownership setting of the storage data type.
   public let ignoreOwnership: PrivateFramework
+  /// The mount point of the storage data type.
   public let mountPoint: String
+  /// The physical drive of the storage data type.
   public let physicalDrive: PhysicalDrive
+  /// The size in bytes of the storage data type.
   public let sizeInBytes: Int
+  /// The volume UUID of the storage data type.
   public let volumeUUID: String
+  /// The writable setting of the storage data type.
   public let writable: PrivateFramework
 
+  /// Initializes an `SPStorageDataType` instance.
+  /// - Parameters:
+  ///   - name: The name of the storage data type.
+  ///   - bsdName: The BSD (Berkeley Software Distribution) name of the storage data type.
+  ///   - fileSystem: The file system of the storage data type.
+  ///   - freeSpaceInBytes: The free space in bytes of the storage data type.
+  ///   - ignoreOwnership: The ignore ownership setting of the storage data type.
+  ///   - mountPoint: The mount point of the storage data type.
+  ///   - physicalDrive: The physical drive of the storage data type.
+  ///   - sizeInBytes: The size in bytes of the storage data type.
+  ///   - volumeUUID: The volume UUID of the storage data type.
+  ///   - writable: The writable setting of the storage data type.
   public init(
     name: String,
     bsdName: String,

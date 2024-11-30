@@ -30,20 +30,40 @@
 public import BushelFoundation
 public import Foundation
 
+/// Represents metadata for an installer image.
 public struct InstallerImageMetadata: Equatable, Sendable {
+  /// The long name of the installer image.
   public let longName: String
+  /// The default name of the installer image.
   public let defaultName: String
+  /// The label name of the installer image.
   public let labelName: String
+  /// The operating system version of the installer image.
   public let operatingSystem: OperatingSystemVersion
+  /// The build version of the installer image, if available.
   public let buildVersion: String?
+  /// The name of the image resource used for the installer image.
   public let imageResourceName: String
+  /// The system name of the installer image.
   public let systemName: String
+  /// The VM system ID of the installer image.
   public let vmSystemID: VMSystemID
 
+  /// The short name of the installer image, which is a combination of the label name and default name.
   public var shortName: String {
-    "\(labelName) (\(defaultName))"
+    "\(self.labelName) (\(self.defaultName))"
   }
 
+  /// Initializes a new instance of `InstallerImageMetadata`.
+  /// - Parameters:
+  ///   - longName: The long name of the installer image.
+  ///   - defaultName: The default name of the installer image.
+  ///   - labelName: The label name of the installer image.
+  ///   - operatingSystem: The operating system version of the installer image.
+  ///   - buildVersion: The build version of the installer image, if available.
+  ///   - imageResourceName: The name of the image resource used for the installer image.
+  ///   - systemName: The system name of the installer image.
+  ///   - systemID: The VM system ID of the installer image.
   public init(
     longName: String,
     defaultName: String,

@@ -35,10 +35,19 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
     fileprivate static let height: Int = 1_080
   }
 
+  /// The pixel format of the captured video.
   public let format: CaptureVideoPixelFormat
+
+  /// The file type of the captured video.
   public let fileType: CaptureVideoFileType
+
+  /// The video codec used for the captured video.
   public let codec: CaptureVideoCodec
+
+  /// The height of the captured video in pixels.
   public let height: Int
+
+  /// An optional watermark to be applied to the captured video.
   public let watermark: Watermark?
 
   private init(
@@ -55,6 +64,9 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
     self.watermark = watermark
   }
 
+  /// Initializes a `CaptureVideoConfiguration` with the default values and an optional watermark.
+  ///
+  /// - Parameter watermark: An optional watermark to be applied to the captured video.
   public init(watermark: Watermark?) {
     self.init(
       format: Defaults.format,
@@ -67,41 +79,42 @@ public struct CaptureVideoConfiguration: Sendable, Codable {
 }
 
 extension CaptureVideoConfiguration {
-  /// Returns a concise, user-friendly summary of the video configuration
+  /// Returns a concise, user-friendly summary of the video configuration.
   public var summary: String {
-    "Video: \(codec.displayName), Format: \(format.description), File: \(fileType.displayName)"
+    // swiftlint:disable:next line_length
+    "Video: \(self.codec.displayName), Format: \(self.format.description), File: \(self.fileType.displayName)"
   }
 
-  /// Returns a detailed, technical description of the configuration
+  /// Returns a detailed, technical description of the configuration.
   public var description: String {
     """
     Video Configuration:
-    • Codec: \(codec.description)
-    • Pixel Format: \(format.description)
-    • File Type: \(fileType.description)
+    • Codec: \(self.codec.description)
+    • Pixel Format: \(self.format.description)
+    • File Type: \(self.fileType.description)
     """
   }
 
-  /// Returns comprehensive technical details of the configuration
+  /// Returns comprehensive technical details of the configuration.
   public var technicalDescription: String {
     """
     Video Configuration Details
     -------------------------
     Codec:
-    \(codec.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
+    \(self.codec.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
 
     Pixel Format:
-    \(format.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
+    \(self.format.technicalDescription.split(separator: "\n").map { "  \($0)" }.joined(separator: "\n"))
 
     File Container:
-    • Type: \(fileType.displayName)
-    • Extension: .\(fileType.fileExtension)
-    • MIME Type: \(fileType.mimeType)
+    • Type: \(self.fileType.displayName)
+    • Extension: .\(self.fileType.fileExtension)
+    • MIME Type: \(self.fileType.mimeType)
     """
   }
 
-  /// Returns a short description suitable for UI labels
+  /// Returns a short description suitable for UI labels.
   public var shortDescription: String {
-    "\(codec.displayName) \(format.rawValue) \(fileType.fileExtension.uppercased())"
+    "\(self.codec.displayName) \(self.format.rawValue) \(self.fileType.fileExtension.uppercased())"
   }
 }

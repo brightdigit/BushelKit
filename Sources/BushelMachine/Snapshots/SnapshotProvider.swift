@@ -29,7 +29,14 @@
 
 public import BushelFoundation
 
+/// A protocol that defines a provider for snapshots.
 public protocol SnapshotProvider: Sendable {
+  /// Returns a snapshotter for the specified machine type, if available.
+  ///
+  /// - Parameters:
+  ///   - id: The ID of the snapshotter.
+  ///   - machineType: The type of the machine for which the snapshotter is requested.
+  /// - Returns: The snapshotter for the specified machine type, or `nil` if no snapshotter is available.
   func snapshotter<MachineType: Machine>(
     withID id: SnapshotterID,
     for machineType: MachineType.Type

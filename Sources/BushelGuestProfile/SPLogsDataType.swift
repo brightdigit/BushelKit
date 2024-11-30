@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPLogsDataType
-
+/// Represents a data type for storing logs.
 public struct SPLogsDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for encoding and decoding the `SPLogsDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case byteSize
@@ -40,12 +40,24 @@ public struct SPLogsDataType: Codable, Equatable, Sendable {
     case source
   }
 
+  /// The name of the log data.
   public let name: String
+  /// The byte size of the log data.
   public let byteSize: Int
+  /// The contents of the log data.
   public let contents: String
+  /// The last modified date of the log data.
   public let lastModified: Date?
+  /// The source of the log data.
   public let source: String
 
+  /// Initializes a new instance of `SPLogsDataType`.
+  /// - Parameters:
+  ///   - name: The name of the log data.
+  ///   - byteSize: The byte size of the log data.
+  ///   - contents: The contents of the log data.
+  ///   - lastModified: The last modified date of the log data.
+  ///   - source: The source of the log data.
   public init(
     name: String,
     byteSize: Int,

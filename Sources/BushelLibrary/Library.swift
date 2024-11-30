@@ -29,8 +29,14 @@
 
 import Foundation
 
+/// A `Codable`, `Equatable`, and `Sendable` struct representing a library of `LibraryImageFile` items.
 public struct Library: Codable, Equatable, Sendable {
+  /// An array of `LibraryImageFile` items.
   public var items: [LibraryImageFile]
+
+  /// Initializes a `Library` instance with the provided `LibraryImageFile` items.
+  ///
+  /// - Parameter items: An array of `LibraryImageFile` items. Defaults to an empty array.
   public init(items: [LibraryImageFile] = .init()) {
     self.items = items
   }

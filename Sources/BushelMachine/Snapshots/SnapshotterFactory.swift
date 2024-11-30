@@ -30,23 +30,42 @@
 public import BushelFoundation
 public import BushelLogging
 
+/// A factory for creating snapshots of machines.
 public protocol SnapshotterFactory: Loggable, Sendable {
+  /// The unique identifier for the system this `SnapshotterFactory` supports.
   static var systemID: SnapshotterID { get }
+
+  /// Creates a new snapshot of the specified machine.
+  ///
+  /// - Parameters:
+  ///   - machine: The machine to create a snapshot of.
+  ///   - request: The request for the snapshot.
+  ///   - options: The options to use for the snapshot.
+  /// - Returns: The created snapshot.
+  /// - Throws: Any errors that occur during the snapshot creation process.
   func createNewSnapshot(
     of machine: some Machine,
     request: SnapshotRequest,
     options: SnapshotOptions
   ) async throws -> Snapshot
+
+  /// Retrieves a snapshotter that supports the specified machine type.
+  ///
+  /// - Parameter supports: The type of machine to retrieve a snapshotter for.
+  /// - Returns: A snapshotter that supports the specified machine type,
+  /// or `nil` if no such snapshotter is available.
   func snapshotter<MachineType: Machine>(supports: MachineType.Type) -> (
     any Snapshotter<MachineType>
   )?
 }
 
 extension SnapshotterFactory {
+  /// The logging category for this `SnapshotterFactory`.
   public static var loggingCategory: BushelLogging.Category {
     .machine
   }
 
+  /// Internal implementation of `createNewSnapshot(of:request:options:)`.
   internal func createNewSnapshot(
     of machine: some Machine,
     request: SnapshotRequest,

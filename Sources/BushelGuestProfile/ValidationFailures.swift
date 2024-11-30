@@ -29,26 +29,34 @@
 
 public import Foundation
 
-// MARK: - ValidationFailures
-
-// swiftlint:disable identifier_name
+/// Represents validation failures that can occur during the validation of an info dictionary.
 public struct ValidationFailures: Codable, Equatable, Sendable {
+  /// The coding keys used to encode and decode the `ValidationFailures` struct.
   public enum CodingKeys: String, CodingKey {
-    case infoDictionaryMissingRequiredPropertyValue =
+    /// Represents the case where the info dictionary is missing a required property or value.
+    case missingRequiredPropertyValues =
       "Info dictionary missing required property/value"
-    case infoDictionaryPropertyValueIsIllegal = "Info dictionary property value is illegal"
+    /// Represents the case where the info dictionary property value is illegal.
+    case illegalPropertyValues = "Info dictionary property value is illegal"
   }
 
-  public let infoDictionaryMissingRequiredPropertyValue: [String]
-  public let infoDictionaryPropertyValueIsIllegal: [String]
+  /// An array of strings representing the properties or values that are missing from the info dictionary.
+  public let missingRequiredPropertyValues: [String]
+  /// An array of strings representing the illegal property values in the info dictionary.
+  public let illegalPropertyValues: [String]
 
+  /// Initializes a `ValidationFailures` instance with the specified
+  /// missing required properties/values and illegal property values.
+  /// - Parameters:
+  ///   - missingRequiredPropertyValue: An array of strings
+  ///   representing the missing required properties or values.
+  ///   - infoDictionaryPropertyValueIsIllegal: An array of strings
+  ///   representing the illegal property values.
   public init(
-    infoDictionaryMissingRequiredPropertyValue: [String],
-    infoDictionaryPropertyValueIsIllegal: [String]
+    missingRequiredPropertyValues: [String],
+    illegalPropertyValues: [String]
   ) {
-    self.infoDictionaryMissingRequiredPropertyValue = infoDictionaryMissingRequiredPropertyValue
-    self.infoDictionaryPropertyValueIsIllegal = infoDictionaryPropertyValueIsIllegal
+    self.missingRequiredPropertyValues = missingRequiredPropertyValues
+    self.illegalPropertyValues = illegalPropertyValues
   }
 }
-
-// swiftlint:enable identifier_name

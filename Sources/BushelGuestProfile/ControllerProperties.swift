@@ -27,11 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
-// MARK: - ControllerProperties
-
+/// A struct that represents the properties of a controller.
 public struct ControllerProperties: Codable, Equatable, Sendable {
+  /// The coding keys for the properties of the controller.
   public enum CodingKeys: String, CodingKey {
     case controllerAddress = "controller_address"
     case controllerChipset = "controller_chipset"
@@ -44,16 +44,45 @@ public struct ControllerProperties: Codable, Equatable, Sendable {
     case controllerVendorID = "controller_vendorID"
   }
 
+  /// The address of the controller.
   public let controllerAddress: String
+
+  /// The chipset of the controller.
   public let controllerChipset: String
+
+  /// The discoverability state of the controller.
   public let controllerDiscoverable: String
+
+  /// The firmware version of the controller.
   public let controllerFirmwareVersion: String
+
+  /// The product ID of the controller.
   public let controllerProductID: String
+
+  /// The state of the controller.
   public let controllerState: String
+
+  /// The supported services of the controller.
   public let controllerSupportedServices: String
+
+  /// The transport of the controller.
   public let controllerTransport: String
+
+  /// The vendor ID of the controller.
   public let controllerVendorID: String
 
+  /// Initializes a new instance of `ControllerProperties` with the specified properties.
+  ///
+  /// - Parameters:
+  ///   - controllerAddress: The address of the controller.
+  ///   - controllerChipset: The chipset of the controller.
+  ///   - controllerDiscoverable: The discoverability state of the controller.
+  ///   - controllerFirmwareVersion: The firmware version of the controller.
+  ///   - controllerProductID: The product ID of the controller.
+  ///   - controllerState: The state of the controller.
+  ///   - controllerSupportedServices: The supported services of the controller.
+  ///   - controllerTransport: The transport of the controller.
+  ///   - controllerVendorID: The vendor ID of the controller.
   public init(
     controllerAddress: String,
     controllerChipset: String,

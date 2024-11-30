@@ -32,7 +32,9 @@ import BushelMacOSCore
 import Foundation
 
 extension ImageMetadata {
+  /// A namespace for preview models of `ImageMetadata`.
   public enum Previews {
+    /// A preview model of `ImageMetadata` with sample data.
     public static let previewModel: ImageMetadata = .init(
       isImageSupported: true,
       buildVersion: "12312SA",
@@ -46,6 +48,7 @@ extension ImageMetadata {
       vmSystemID: "macOSApple"
     )
 
+    /// A preview model of `ImageMetadata` for macOS Ventura Beta 3.
     public static let venturaBeta3 = ImageMetadata(
       isImageSupported: true,
       buildVersion: "22A5295h",
@@ -59,6 +62,7 @@ extension ImageMetadata {
       vmSystemID: "macOSApple"
     )
 
+    /// A preview model of `ImageMetadata` for macOS Monterey.
     public static let monterey = ImageMetadata(
       isImageSupported: true,
       buildVersion: "21F79",

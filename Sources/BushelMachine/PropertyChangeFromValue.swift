@@ -27,7 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public protocol PropertyChangeFromValue<ValueType> {
+/// A protocol that defines a type that can be initialized from an `ObservedChange<ValueType>`.
+public protocol PropertyChangeFromValue<ValueType> where ValueType: Sendable {
+  /// The type of the value being observed.
   associatedtype ValueType: Sendable
+
+  /// Initializes the type from the given `ObservedChange<ValueType>`.
+  /// - Parameter changes: The `ObservedChange<ValueType>` to initialize the type from.
   init(changes: any ObservedChange<ValueType>)
 }

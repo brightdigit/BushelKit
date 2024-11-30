@@ -46,7 +46,7 @@ extension MachineSystemManaging where Self: Loggable {
 }
 
 extension MachineSystemManaging {
-  /// Resolves the ``MachineSystem`` and ``Machine`` based on the  bundle at the URL.
+  /// Resolves the ``MachineSystem`` and ``Machine`` based on the bundle at the URL.
   /// - Parameter url: Machine bundle URL.
   /// - Returns: The resolved ``Machine``
   public func machine(contentOf url: URL) async throws -> any Machine {

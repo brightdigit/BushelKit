@@ -1,5 +1,5 @@
 //
-//  SpextValidErrors.swift
+//  ArgumentParser.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,22 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-/// Represents errors related to validation in the Spext system.
-public struct SpextValidErrors: Codable, Equatable, Sendable {
-  /// The coding keys for the `SpextValidErrors` struct.
-  public enum CodingKeys: String, CodingKey {
-    case validationFailures = "Validation Failures"
-  }
-
-  /// The validation failures that occurred.
-  public let validationFailures: ValidationFailures
-
-  /// Initializes a new instance of `SpextValidErrors`.
-  ///
-  /// - Parameter validationFailures: The validation failures to include in the instance.
-  public init(validationFailures: ValidationFailures) {
-    self.validationFailures = validationFailures
+struct DocC: PackageDependency {
+  var dependency: Package.Dependency {
+    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.0")
   }
 }

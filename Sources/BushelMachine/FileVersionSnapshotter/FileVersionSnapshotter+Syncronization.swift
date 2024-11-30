@@ -28,11 +28,18 @@
 //
 
 #if os(macOS)
+
   import BushelFoundation
   import BushelLogging
   import Foundation
 
+  /// Extends the `FileVersionSnapshotter` class to handle snapshot management.
   extension FileVersionSnapshotter {
+    /// Updates the snapshots at the specified paths.
+    ///
+    /// - Parameter paths: The `SnapshotPaths` containing the paths to update.
+    /// - Returns: An array of `Snapshot` objects
+    /// representing the updated snapshots, or `nil` if the update failed.
     private func updateSnapshots(atPaths paths: SnapshotPaths) throws -> [Snapshot]? {
       let versions = NSFileVersion.otherVersionsOfItem(at: paths.snapshottingSourceURL)
       assert(versions != nil)
@@ -55,6 +62,12 @@
       return snapshotsAdded
     }
 
+    /// Applies the specified updates to the snapshot collection.
+    ///
+    /// - Parameters:
+    ///   - updates: The `SnapshotFileUpdate` containing the updates to apply.
+    ///   - snapshotCollectionURL: The URL of the snapshot collection directory.
+    /// - Returns: An array of `Snapshot` objects representing the new snapshots that were added.
     private func applyUpdates(
       _ updates: SnapshotFileUpdate,
       to snapshotCollectionURL: URL
@@ -68,6 +81,13 @@
       }
     }
 
+    /// Synchronizes the snapshots for the specified machine.
+    ///
+    /// - Parameters:
+    ///   - machine: The `MachineType` for which to synchronize the snapshots.
+    ///   - options: The `SnapshotSynchronizeOptions` to use during synchronization.
+    /// - Returns: A `SnapshotSynchronizationDifference` object
+    /// representing the changes made during synchronization, or `nil` if the synchronization failed.
     public func synchronizeSnapshots(
       for machine: MachineType,
       options _: SnapshotSynchronizeOptions

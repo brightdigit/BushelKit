@@ -31,9 +31,13 @@ import BushelFoundation
 import Foundation
 
 extension LibraryImageFile {
+  /// A collection of preview `LibraryImageFile` instances.
   public static let preview: [LibraryImageFile] = [
+    /// A `LibraryImageFile` representing macOS Monterey 12.4.0.
     .init(id: .init(), metadata: .Previews.venturaBeta3, name: "macOS Monterey 12.4.0"),
+    /// A `LibraryImageFile` representing macOS Ventura 13.0.0.
     .init(id: .init(), metadata: .Previews.monterey, name: "macOS Ventura 13.0.0"),
+    /// A `LibraryImageFile` representing macOS Ventura 13.4.0.
     .init(id: .init(), metadata: .Previews.monterey, name: "macOS Ventura 13.4.0"),
   ]
 }

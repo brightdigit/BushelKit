@@ -29,6 +29,9 @@
 
 public import Foundation
 
+/// A protocol that defines an observer for a machine builder.
 public protocol MachineBuilderObserver: Sendable {
+  /// Retrieves the unique identifier (UUID) of the observer.
+  /// - Returns: The UUID of the observer, or `nil` if the UUID is not available.
   func getID() async -> UUID?
 }

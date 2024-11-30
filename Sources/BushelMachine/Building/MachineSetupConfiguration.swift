@@ -42,19 +42,29 @@ public struct MachineSetupConfiguration: Sendable {
   public var cpuCount: Float
   /// Amount of Memory
   public var memory: Float
-  /// Netwoking Configuration
+  /// Networking Configuration
   public var networkConfigurations: [NetworkConfiguration]
   /// Graphics Configuration
   public var graphicsConfigurations: [GraphicsConfiguration]
 
   public var snapshotSystemID: SnapshotterID = .fileVersion
 
-  public init(
-    system: any MachineSystem
-  ) {
+  /// Initializes a new `MachineSetupConfiguration` with the default storage specification
+  /// for the provided `MachineSystem`.
+  /// - Parameter system: The `MachineSystem` to use for the default storage specification.
+  public init(system: any MachineSystem) {
     self.init(storage: [.default(forSystem: system)])
   }
 
+  /// Initializes a new `MachineSetupConfiguration`.
+  /// - Parameters:
+  ///   - libraryID: Identifier to access the install image.
+  ///   - restoreImageID: Optional identifier to the restore library.
+  ///   - storage: Storage specifications.
+  ///   - cpuCount: CPU Count.
+  ///   - memory: Amount of Memory.
+  ///   - networkConfigurations: Networking Configuration.
+  ///   - graphicsConfigurations: Graphics Configuration.
   public init(
     libraryID: LibraryIdentifier? = nil,
     restoreImageID: UUID? = nil,
@@ -96,10 +106,10 @@ public struct MachineSetupConfiguration: Sendable {
 extension MachineSetupConfiguration {
   public var primaryStorage: MachineStorageSpecification {
     get {
-      storage.first ?? .defaultPrimary
+      self.storage.first ?? .defaultPrimary
     }
     set {
-      storage[0] = newValue
+      self.storage[0] = newValue
     }
   }
 
@@ -120,6 +130,11 @@ extension MachineSetupConfiguration {
     )
   }
 
+  /// Initializes a new `MachineSetupConfiguration`
+  /// with the provided `MachineBuildRequest` and `MachineSystem`.
+  /// - Parameters:
+  ///   - request: The `MachineBuildRequest` to use for initialization.
+  ///   - system: The `MachineSystem` to use for the default storage specification.
   public init(request: MachineBuildRequest?, system: any MachineSystem) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,
@@ -128,6 +143,8 @@ extension MachineSetupConfiguration {
     )
   }
 
+  /// Updates the `MachineSetupConfiguration` with the provided `MachineBuildRequest`.
+  /// - Parameter request: The `MachineBuildRequest` to use for updating the configuration.
   public mutating func updating(forRequest request: MachineBuildRequest?) {
     self.restoreImageID = request?.restoreImage?.imageID
     self.libraryID = request?.restoreImage?.libraryID

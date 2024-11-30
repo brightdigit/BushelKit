@@ -29,8 +29,12 @@
 
 public import Foundation
 
+/// Represents the runtime environment for a SPEXT (Spatial Expression) processing task.
 public enum SpextRuntimeEnvironment: String, Codable, Equatable, Sendable {
+  /// Indicates that the SPEXT is running on an x86 architecture.
   case spextArchX86 = "spext_arch_x86"
+  /// Indicates that the SPEXT is running on a universal architecture.
   case spextUniversal = "spext_universal"
+  /// Indicates that the runtime environment is unknown.
   case spextUnknown = "spext_unknown"
 }

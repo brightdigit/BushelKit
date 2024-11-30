@@ -29,7 +29,18 @@
 
 public import Foundation
 
+/// A protocol that defines a RecordedVideoParser.
 public protocol RecordedVideoParser {
+  /// Parses the video information from the given `CaptureVideo` and
+  /// stores the `RecordedVideo` in the specified directory.
+  ///
+  /// - Parameters:
+  ///   - video: The `CaptureVideo` to parse.
+  ///   - directoryURL: The URL of the directory to store the `RecordedVideo`.
+  ///
+  /// - Throws: `RecordedVideoError` if an error occurs during the parsing.
+  ///
+  /// - Returns: The parsed `RecordedVideo`.
   func videoInfo(fromVideo video: CaptureVideo, toDirectory directoryURL: URL)
     async throws(RecordedVideoError) -> RecordedVideo
 }

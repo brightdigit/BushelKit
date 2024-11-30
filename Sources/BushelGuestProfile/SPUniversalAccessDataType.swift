@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPUniversalAccessDataType
-
+/// A data type representing universal accessibility settings.
 public struct SPUniversalAccessDataType: Codable, Equatable, Sendable {
+  /// Coding keys for the `SPUniversalAccessDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case contrast
@@ -47,19 +45,46 @@ public struct SPUniversalAccessDataType: Codable, Equatable, Sendable {
     case zoomMode
   }
 
+  /// The name of the universal access data type.
   public let name: String
+  /// The contrast setting.
   public let contrast: String
+  /// The cursor magnification setting.
   public let cursorMag: String
+  /// The display setting.
   public let display: String
+  /// The flash screen setting.
   public let flashScreen: String
+  /// The keyboard zoom setting.
   public let keyboardZoom: String
+  /// The mouse keys setting.
   public let mouseKeys: String
+  /// The scroll zoom setting.
   public let scrollZoom: String
+  /// The slow keys setting.
   public let slowKeys: String
+  /// The sticky keys setting.
   public let stickyKeys: String
+  /// The voiceover setting.
   public let voiceover: String
+  /// The zoom mode setting.
   public let zoomMode: String
 
+  /// Initializes a new `SPUniversalAccessDataType` instance.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the universal access data type.
+  ///   - contrast: The contrast setting.
+  ///   - cursorMag: The cursor magnification setting.
+  ///   - display: The display setting.
+  ///   - flashScreen: The flash screen setting.
+  ///   - keyboardZoom: The keyboard zoom setting.
+  ///   - mouseKeys: The mouse keys setting.
+  ///   - scrollZoom: The scroll zoom setting.
+  ///   - slowKeys: The slow keys setting.
+  ///   - stickyKeys: The sticky keys setting.
+  ///   - voiceover: The voiceover setting.
+  ///   - zoomMode: The zoom mode setting.
   public init(
     name: String,
     contrast: String,

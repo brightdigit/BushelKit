@@ -29,24 +29,51 @@
 
 public import Foundation
 
+/// A struct representing a recorded video.
 public struct RecordedVideo: Sendable, Codable {
+  /// Represents the fields of a `RecordedVideo` instance.
   public enum Field: Sendable {
+    /// The UUID of the video.
     case videoUUID
+    /// The file size of the video.
     case fileSize
+    /// The natural size of the video.
     case naturalSize
   }
 
+  /// The UUID of the video.
   public let videoUUID: UUID
+  /// The name of the video.
   public let name: String
+  /// The date when the video was created.
   public let createdAt: Date
+  /// The notes associated with the video.
   public let notes: String
+  /// The file size of the video.
   public let fileSize: UInt64
+  /// The resolution of the video.
   public let resolution: RecordedResolution
+  /// The time interval between images.
   public let imageTimeInterval: Double
+  /// The duration of the video.
   public let duration: Double
+  /// The file extension of the video.
   public let fileExtension: String
+  /// The configuration used to capture the video.
   public let configuration: CaptureVideoConfiguration
 
+  /// Initializes a `RecordedVideo` instance.
+  /// - Parameters:
+  ///   - videoUUID: The UUID of the video.
+  ///   - name: The name of the video.
+  ///   - createdAt: The date when the video was created.
+  ///   - notes: The notes associated with the video.
+  ///   - fileSize: The file size of the video.
+  ///   - resolution: The resolution of the video.
+  ///   - duration: The duration of the video.
+  ///   - imageTimeInterval: The time interval between images.
+  ///   - fileExtension: The file extension of the video.
+  ///   - configuration: The configuration used to capture the video.
   public init(
     videoUUID: UUID,
     name: String,
@@ -71,6 +98,18 @@ public struct RecordedVideo: Sendable, Codable {
     self.configuration = configuration
   }
 
+  /// Initializes a `RecordedVideo` instance.
+  /// - Parameters:
+  ///   - videoUUID: The UUID of the video.
+  ///   - name: The name of the video.
+  ///   - createdAt: The date when the video was created.
+  ///   - notes: The notes associated with the video.
+  ///   - fileSize: The file size of the video.
+  ///   - size: The size of the video.
+  ///   - duration: The duration of the video.
+  ///   - imageTimeInterval: The time interval between images.
+  ///   - fileExtension: The file extension of the video.
+  ///   - configuration: The configuration used to capture the video.
   public init(
     videoUUID: UUID,
     name: String,
@@ -97,6 +136,11 @@ public struct RecordedVideo: Sendable, Codable {
     )
   }
 
+  /// Initializes a `RecordedVideo` instance with a new name and notes.
+  /// - Parameters:
+  ///   - initial: The initial `RecordedVideo` instance.
+  ///   - name: The new name of the video.
+  ///   - notes: The new notes associated with the video.
   public init(initial: RecordedVideo, name: String, notes: String) {
     self.init(
       videoUUID: initial.videoUUID,
@@ -105,7 +149,6 @@ public struct RecordedVideo: Sendable, Codable {
       notes: notes,
       fileSize: initial.fileSize,
       resolution: initial.resolution,
-
       duration: initial.duration,
       imageTimeInterval: initial.imageTimeInterval,
       fileExtension: initial.fileExtension,

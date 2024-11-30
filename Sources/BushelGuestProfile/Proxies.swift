@@ -29,17 +29,24 @@
 
 public import Foundation
 
-// MARK: - Proxies
-
+/// Represents a collection of proxy settings.
 public struct Proxies: Codable, Equatable, Sendable {
+  /// The coding keys for the `Proxies` struct.
   public enum CodingKeys: String, CodingKey {
     case exceptionsList = "ExceptionsList"
     case ftpPassive = "FTPPassive"
   }
 
+  /// A list of exceptions for the proxy settings.
   public let exceptionsList: [String]
+
+  /// The FTP passive mode setting.
   public let ftpPassive: PrivateFramework
 
+  /// Initializes a new instance of the `Proxies` struct.
+  /// - Parameters:
+  ///   - exceptionsList: The list of exceptions for the proxy settings.
+  ///   - ftpPassive: The FTP passive mode setting.
   public init(exceptionsList: [String], ftpPassive: PrivateFramework) {
     self.exceptionsList = exceptionsList
     self.ftpPassive = ftpPassive

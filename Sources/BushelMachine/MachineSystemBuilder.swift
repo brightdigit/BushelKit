@@ -29,8 +29,12 @@
 
 import Foundation
 
-@resultBuilder
+/// A result builder for creating a collection of `MachineSystem` instances.
 public enum MachineSystemBuilder {
+  /// Builds a collection of `MachineSystem` instances from the provided components.
+  ///
+  /// - Parameter components: An array of `MachineSystem` instances.
+  /// - Returns: The provided array of `MachineSystem` instances.
   public static func buildBlock(_ components: any MachineSystem...) -> [any MachineSystem] {
     components
   }

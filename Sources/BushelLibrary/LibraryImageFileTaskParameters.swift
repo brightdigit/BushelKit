@@ -37,12 +37,24 @@ public import Foundation
   public import Logging
 #endif
 
+/// Represents the parameters needed to perform a task related to a library image file.
 private struct LibraryImageFileTaskParameters: Sendable {
+  /// The library system associated with the image file.
   private let system: any LibrarySystem
+  /// The signature verifier for the library system.
   private let verifier: any SigVerifier
+  /// The unique identifier for the image file.
   fileprivate let id: UUID
+  /// The URL of the image file.
   fileprivate let url: URL
 
+  /// Initializes a `LibraryImageFileTaskParameters` instance.
+  ///
+  /// - Parameters:
+  ///   - system: The library system associated with the image file.
+  ///   - verifier: The signature verifier for the library system.
+  ///   - id: The unique identifier for the image file.
+  ///   - url: The URL of the image file.
   private init(system: any LibrarySystem, verifier: any SigVerifier, id: UUID, url: URL) {
     self.system = system
     self.verifier = verifier
@@ -50,6 +62,15 @@ private struct LibraryImageFileTaskParameters: Sendable {
     self.url = url
   }
 
+  /// Initializes a `LibraryImageFileTaskParameters` instance from a URL.
+  ///
+  /// - Parameters:
+  ///   - url: The URL of the image file.
+  ///   - manager: The library system manager.
+  ///   - verifyManager: The signature verification manager.
+  ///
+  /// - Returns: An optional `LibraryImageFileTaskParameters` instance,
+  /// or `nil` if the parameters cannot be initialized.
   fileprivate init?(
     url: URL, manager: any LibrarySystemManaging, verifyManager: any SigVerificationManaging
   ) {
@@ -65,12 +86,28 @@ private struct LibraryImageFileTaskParameters: Sendable {
     self.init(system: system, verifier: verifier, id: id, url: url)
   }
 
+  /// Resolves the library image file.
+  ///
+  /// - Throws: Any errors that occur during the resolution process.
+  ///
+  /// - Returns: The resolved library image file.
   fileprivate func resolve() async throws -> LibraryImageFile {
-    try await system.restoreImageLibraryItemFile(fromURL: url, verifier: verifier, id: id)
+    try await self.system.restoreImageLibraryItemFile(
+      fromURL: self.url,
+      verifier: self.verifier,
+      id: self.id
+    )
   }
 }
 
 extension TaskGroup<LibraryImageFile?> {
+  /// Adds a library image file task to the task group.
+  ///
+  /// - Parameters:
+  ///   - imageFileURL: The URL of the image file.
+  ///   - librarySystemManager: The library system manager.
+  ///   - verifyManager: The signature verification manager.
+  ///   - logger: The logger to use for logging.
   public mutating func addLibraryImageFileTask(
     forURL imageFileURL: URL,
     librarySystemManager: any LibrarySystemManaging,

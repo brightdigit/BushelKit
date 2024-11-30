@@ -29,10 +29,16 @@
 
 public import Foundation
 
+/// Represents the paths for a snapshotting operation.
 public struct SnapshotPaths {
+  /// The URL of the source to be snapshotted.
   public let snapshottingSourceURL: URL
+  /// The URL of the directory where the snapshots will be collected.
   public let snapshotCollectionURL: URL
 
+  /// Initializes a new `SnapshotPaths` instance using the provided machine path URL.
+  ///
+  /// - Parameter machinePathURL: The URL of the machine path.
   public init(machinePathURL: URL) {
     self.init(
       snapshottingSourceURL: machinePathURL,
@@ -42,6 +48,11 @@ public struct SnapshotPaths {
     )
   }
 
+  /// Initializes a new `SnapshotPaths` instance with the provided URLs.
+  ///
+  /// - Parameters:
+  ///   - snapshottingSourceURL: The URL of the source to be snapshotted.
+  ///   - snapshotCollectionURL: The URL of the directory where the snapshots will be collected.
   public init(snapshottingSourceURL: URL, snapshotCollectionURL: URL) {
     self.snapshottingSourceURL = snapshottingSourceURL
     self.snapshotCollectionURL = snapshotCollectionURL

@@ -29,9 +29,14 @@
 
 public import BushelFoundation
 
+/// A repository for managing `SnapshotterFactory` instances.
 public struct SnapshotterRepository: SnapshotProvider {
+  /// A dictionary that maps `SnapshotterID` to `SnapshotterFactory` instances.
   private let dictionary: [SnapshotterID: any SnapshotterFactory]
 
+  /// Initializes a `SnapshotterRepository` with the provided `SnapshotterFactory` instances.
+  ///
+  /// - Parameter factories: An array of `SnapshotterFactory` instances to be added to the repository.
   public init(factories: [any SnapshotterFactory] = []) {
     let uniqueKeysWithValues = factories.map {
       (type(of: $0).systemID, $0)
@@ -40,10 +45,22 @@ public struct SnapshotterRepository: SnapshotProvider {
     self.init(dictionary: .init(uniqueKeysWithValues: uniqueKeysWithValues))
   }
 
+  /// Initializes a `SnapshotterRepository` with the provided dictionary
+  /// of `SnapshotterID` to `SnapshotterFactory` instances.
+  ///
+  /// - Parameter dictionary: A dictionary that maps `SnapshotterID` to `SnapshotterFactory` instances.
   internal init(dictionary: [SnapshotterID: any SnapshotterFactory]) {
     self.dictionary = dictionary
   }
 
+  /// Retrieves a `Snapshotter` instance for the specified `SnapshotterID` and `Machine` type.
+  ///
+  /// - Parameters:
+  ///   - id: The `SnapshotterID` for the desired `Snapshotter`.
+  ///   - machineType: The `Machine` type
+  ///   for which the `Snapshotter` should be compatible.
+  /// - Returns: A `Snapshotter` instance that supports the provided `Machine` type,
+  /// or `nil` if no matching `Snapshotter` is found.
   public func snapshotter<MachineType: Machine>(
     withID id: SnapshotterID,
     for machineType: MachineType.Type

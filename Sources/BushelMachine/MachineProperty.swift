@@ -27,11 +27,18 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents the different properties of a machine.
 public enum MachineProperty {
+  /// Represents the current state of the machine.
   case state
+  /// Indicates whether the machine can be started.
   case canStart
+  /// Indicates whether the machine can be stopped.
   case canStop
+  /// Indicates whether the machine can be paused.
   case canPause
+  /// Indicates whether the machine can be resumed.
   case canResume
+  /// Indicates whether the machine can request a stop.
   case canRequestStop
 }

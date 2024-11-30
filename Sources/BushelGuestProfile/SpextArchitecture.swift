@@ -27,10 +27,12 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// Represents the architecture of a compiled binary.
 public enum SpextArchitecture: String, Codable, Equatable, Sendable {
+  /// Represents the ARM64 architecture.
   case arm64
+  /// Represents the ARM64E architecture.
   case arm64E = "arm64e"
+  /// Represents the x86_64 architecture.
   case x8664 = "x86_64"
 }

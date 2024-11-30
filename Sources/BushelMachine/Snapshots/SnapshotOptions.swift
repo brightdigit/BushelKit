@@ -27,14 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents options for taking a snapshot of a view or layer.
 public struct SnapshotOptions: OptionSet, Sendable {
+  /// The raw value of the option set.
   public typealias RawValue = Int
 
+  /// An option indicating that the snapshot can be discarded.
   public static let discardable: SnapshotOptions = .init(rawValue: 1)
 
+  /// An option indicating that the snapshot should be taken by moving the view or layer.
   public static let byMoving: SnapshotOptions = .init(rawValue: 2)
 
+  /// The raw value of the option set.
   public let rawValue: Int
+
+  /// Initializes a `SnapshotOptions` instance with the given raw value.
+  /// - Parameter rawValue: The raw value to initialize the option set with.
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }

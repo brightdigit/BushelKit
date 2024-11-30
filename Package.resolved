@@ -1,5 +1,5 @@
 {
-  "originHash" : "e5efd8733cb0e2136059a19c0403dd1e5104aade4cd3aa6b8f6cde8273ab8af6",
+  "originHash" : "d7930ff6269792b6bb007989a1d111f6b6d97ee38480575779f6b30ff3ac3027",
   "pins" : [
     {
       "identity" : "felinepine",
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/RadiantKit.git",
       "state" : {
-        "revision" : "b9ba5324dbf6612081491ede56766100cf9b7704",
-        "version" : "1.0.0-alpha.3"
+        "revision" : "aee29dc229e3107707ea029ddf9e9d5924dafa6d",
+        "version" : "1.0.0-alpha.4"
       }
     },
     {
@@ -62,6 +62,24 @@
       "state" : {
         "revision" : "671108c96644956dddcd89dd59c203dcdb36cec7",
         "version" : "1.1.4"
+      }
+    },
+    {
+      "identity" : "swift-docc-plugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-docc-plugin",
+      "state" : {
+        "revision" : "85e4bb4e1cd62cec64a4b8e769dcefdf0c5b9d64",
+        "version" : "1.4.3"
+      }
+    },
+    {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
+        "version" : "1.0.0"
       }
     },
     {

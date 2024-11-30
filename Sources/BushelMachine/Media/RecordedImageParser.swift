@@ -29,7 +29,15 @@
 
 public import Foundation
 
+/// A protocol that defines a parser for recorded images.
 public protocol RecordedImageParser {
-  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL)
-    async throws(RecordedImageError) -> RecordedImage
+  /// Extracts information from a captured image and
+  /// stores the resulting `RecordedImage` in the specified directory.
+  /// - Parameters:
+  ///   - image: The captured image to be parsed.
+  ///   - directoryURL: The URL of the directory where the `RecordedImage` should be stored.
+  /// - Throws: `RecordedImageError` if an error occurs during the parsing or storage process.
+  /// - Returns: The `RecordedImage` object created from the captured image.
+  func imageInfo(fromImage image: CaptureImage, toDirectory directoryURL: URL) async throws
+    -> RecordedImage
 }

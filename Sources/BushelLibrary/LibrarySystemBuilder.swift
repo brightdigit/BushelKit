@@ -29,8 +29,13 @@
 
 import Foundation
 
+/// A result builder for creating collections of `LibrarySystem` instances.
 @resultBuilder
 public enum LibrarySystemBuilder {
+  /// Constructs a collection of `LibrarySystem` instances from the provided components.
+  ///
+  /// - Parameter components: The `LibrarySystem` instances to include in the collection.
+  /// - Returns: A collection of `LibrarySystem` instances.
   public static func buildBlock(_ components: any LibrarySystem...) -> [any LibrarySystem] {
     components
   }

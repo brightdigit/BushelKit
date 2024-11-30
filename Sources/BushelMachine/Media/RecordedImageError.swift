@@ -27,7 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents errors that can occur when working with `RecordedImage` objects.
 public enum RecordedImageError: Error {
+  /// Indicates that a required field is missing from a `RecordedImage` instance.
+  /// - Parameter field: The missing field.
   case missingField(RecordedImage.Field)
+
+  /// Indicates that an underlying error occurred while processing a `RecordedImage`.
+  /// - Parameter error: The underlying error.
   case innerError(Error)
 }

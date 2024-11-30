@@ -29,10 +29,19 @@
 
 public import Foundation
 
+/// Represents a network configuration with an associated attachment.
 public struct NetworkConfiguration: Codable, Identifiable, Sendable {
+  /// A unique identifier for the network configuration.
   public let id: UUID
+
+  /// The attachment associated with the network configuration.
   public let attachment: NetworkingConfigurationAttachment
 
+  /// Initializes a new `NetworkConfiguration` with the specified attachment.
+  ///
+  /// - Parameter id: A unique identifier for the network configuration.
+  /// If not provided, a new `UUID` will be generated.
+  /// - Parameter attachment: The attachment associated with the network configuration.
   public init(id: UUID = .init(), attachment: NetworkingConfigurationAttachment) {
     self.id = id
     self.attachment = attachment
@@ -40,6 +49,9 @@ public struct NetworkConfiguration: Codable, Identifiable, Sendable {
 }
 
 extension NetworkConfiguration {
+  /// Returns the default `NetworkConfiguration` with a `.nat` attachment.
+  ///
+  /// - Returns: The default `NetworkConfiguration`.
   public static func `default`() -> NetworkConfiguration {
     .init(attachment: .nat)
   }

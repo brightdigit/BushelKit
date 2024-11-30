@@ -29,17 +29,20 @@
 
 import Foundation
 
-#if canImport(SwiftUI)
-  import SwiftUI
-#endif
-
+/// Represents a change to a machine.
 public struct MachineChange: Sendable {
+  /// Represents an event that can occur on a machine.
   public enum Event: Sendable, CustomStringConvertible {
+    /// Represents a change to a property.
     case property(any PropertyChange)
+    /// Represents the guest stopping.
     case guestDidStop
+    /// Represents the machine stopping with an error.
     case stopWithError(any Error)
+    /// Represents the network being detached with an error.
     case networkDetatchedWithError(any Error)
 
+    /// A textual representation of the event.
     public var description: String {
       switch self {
       case .property:
@@ -54,9 +57,16 @@ public struct MachineChange: Sendable {
     }
   }
 
+  /// The event that occurred.
   public let event: Event
+  /// The properties of the machine.
   public let properties: MachineProperties?
 
+  /// Creates a new `MachineChange` instance.
+  ///
+  /// - Parameters:
+  ///   - event: The event that occurred.
+  ///   - properties: The properties of the machine.
   public init(event: MachineChange.Event, properties: MachineProperties?) {
     self.event = event
     self.properties = properties

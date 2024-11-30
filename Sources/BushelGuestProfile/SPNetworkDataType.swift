@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPNetworkDataType
-
+/// Represents a network data type.
 public struct SPNetworkDataType: Codable, Equatable, Sendable {
+  /// The coding keys used to encode and decode the network data type.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case dhcp
@@ -47,19 +45,45 @@ public struct SPNetworkDataType: Codable, Equatable, Sendable {
     case type
   }
 
+  /// The name of the network data type.
   public let name: String
+  /// The DHCP configuration, if any.
   public let dhcp: DHCP?
+  /// The DNS configuration, if any.
   public let dns: DNS?
+  /// The Ethernet configuration, if any.
   public let ethernet: Ethernet?
+  /// The hardware information.
   public let hardware: String
+  /// The interface information.
   public let interface: String
+  /// The IP addresses, if any.
   public let ipAddress: [String]?
+  /// The IPv4 configuration.
   public let iPv4: IPv4
+  /// The IPv6 configuration.
   public let iPv6: IPv6
+  /// The proxy configuration.
   public let proxies: Proxies
+  /// The service order of the network service.
   public let spnetworkServiceOrder: Int
+  /// The type of the network data.
   public let type: String
 
+  /// Initializes a new instance of `SPNetworkDataType`.
+  /// - Parameters:
+  ///   - name: The name of the network data type.
+  ///   - dhcp: The DHCP configuration, if any.
+  ///   - dns: The DNS configuration, if any.
+  ///   - ethernet: The Ethernet configuration.
+  ///   - hardware: The hardware information.
+  ///   - `interface`: The interface information.
+  ///   - ipAddress: The IP addresses, if any.
+  ///   - iPv4: The IPv4 configuration.
+  ///   - iPv6: The IPv6 configuration.
+  ///   - proxies: The proxy configuration.
+  ///   - spnetworkServiceOrder: The service order of the network service.
+  ///   - type: The type of the network data.
   public init(
     name: String,
     dhcp: DHCP?,

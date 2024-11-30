@@ -29,7 +29,9 @@
 
 public import Foundation
 
+/// A struct representing the System Profiler data.
 public struct SystemProfiler: Codable, Equatable, Sendable {
+  /// Coding keys for the System Profiler data.
   public enum CodingKeys: String, CodingKey {
     case spAirPortDataType = "SPAirPortDataType"
     case spApplicationsDataType = "SPApplicationsDataType"
@@ -63,37 +65,98 @@ public struct SystemProfiler: Codable, Equatable, Sendable {
     case spusbDataType = "SPUSBDataType"
   }
 
+  /// The AirPort data.
   public let spAirPortDataType: [SPAirPortDataType]
+  /// The applications data.
   public let spApplicationsDataType: [SPSDataType]
+  /// The Bluetooth data.
   public let spBluetoothDataType: [SPBluetoothDataType]
+  /// The developer tools data.
   public let spDeveloperToolsDataType: [SPDeveloperToolsDataType]
+  /// The Ethernet data.
   public let spEthernetDataType: [SPEthernetDataType]
+  /// The extensions data.
   public let spExtensionsDataType: [SPExtensionsDataType]
+  /// The firewall data.
   public let spFirewallDataType: [SPFirewallDataType]
+  /// The fonts data.
   public let spFontsDataType: [SPFontsDataType]
+  /// The frameworks data.
   public let spFrameworksDataType: [SPSDataType]
+  /// The hardware data.
   public let spHardwareDataType: [SPHardwareDataType]
+  /// The iBridge data.
   public let sPiBridgeDataType: [SPiBridgeDataType]
+  /// The install history data.
   public let spInstallHistoryDataType: [SPInstallHistoryDataType]
+  /// The international data.
   public let spInternationalDataType: [SPInternationalDataType]
+  /// The logs data.
   public let spLogsDataType: [SPLogsDataType]
+  /// The memory data.
   public let spMemoryDataType: [SPMemoryDataType]
+  /// The network data.
   public let spNetworkDataType: [SPNetworkDataType]
+  /// The network location data.
   public let spNetworkLocationDataType: [SPNetworkLocationDataType]
+  /// The network volume data.
   public let spNetworkVolumeDataType: [SPNetworkVolumeDataType]
+  /// The power data.
   public let spPowerDataType: [SPPowerDataType]
+  /// The preference pane data.
   public let spPrefPaneDataType: [SPPrefPaneDataType]
+  /// The printers data.
   public let spPrintersDataType: [SPPrintersDataType]
+  /// The printers software data.
   public let spPrintersSoftwareDataType: [SPPrintersSoftwareDataType]
+  /// The raw camera data.
   public let spRawCameraDataType: [SPRawCameraDataType]
+  /// The smart cards data.
   public let spSmartCardsDataType: [SPSmartCardsDataType]
+  /// The software data.
   public let spSoftwareDataType: [SPSoftwareDataType]
+  /// The storage data.
   public let spStorageDataType: [SPStorageDataType]
+  /// The sync services data.
   public let spSyncServicesDataType: [SPSyncServicesDataType]
+  /// The Thunderbolt data.
   public let spThunderboltDataType: [SPThunderboltDataType]
+  /// The universal access data.
   public let spUniversalAccessDataType: [SPUniversalAccessDataType]
+  /// The USB data.
   public let spusbDataType: [SPUSBDataType]
 
+  /// Initializes a `SystemProfiler` instance with the provided data.
+  /// - Parameters:
+  ///   - spAirPortDataType: The AirPort data.
+  ///   - spApplicationsDataType: The applications data.
+  ///   - spBluetoothDataType: The Bluetooth data.
+  ///   - spDeveloperToolsDataType: The developer tools data.
+  ///   - spEthernetDataType: The Ethernet data.
+  ///   - spExtensionsDataType: The extensions data.
+  ///   - spFirewallDataType: The firewall data.
+  ///   - spFontsDataType: The fonts data.
+  ///   - spFrameworksDataType: The frameworks data.
+  ///   - spHardwareDataType: The hardware data.
+  ///   - sPiBridgeDataType: The iBridge data.
+  ///   - spInstallHistoryDataType: The install history data.
+  ///   - spInternationalDataType: The international data.
+  ///   - spLogsDataType: The logs data.
+  ///   - spMemoryDataType: The memory data.
+  ///   - spNetworkDataType: The network data.
+  ///   - spNetworkLocationDataType: The network location data.
+  ///   - spNetworkVolumeDataType: The network volume data.
+  ///   - spPowerDataType: The power data.
+  ///   - spPrefPaneDataType: The preference pane data.
+  ///   - spPrintersDataType: The printers data.
+  ///   - spPrintersSoftwareDataType: The printers software data.
+  ///   - spRawCameraDataType: The raw camera data.
+  ///   - spSmartCardsDataType: The smart cards data.
+  ///   - spSoftwareDataType: The software data.
+  ///   - spStorageDataType: The storage data.
+  ///   - spSyncServicesDataType: The sync services data.
+  ///   - spThunderboltDataType: The Thunderbolt data.
+  ///   - spUniversalAccessDataType: The universal access data.
   public init(
     spAirPortDataType: [SPAirPortDataType],
     spApplicationsDataType: [SPSDataType],

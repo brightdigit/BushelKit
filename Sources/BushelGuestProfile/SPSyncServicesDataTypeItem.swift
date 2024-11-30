@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPSyncServicesDataTypeItem
-
+/// Represents an item in the SPSyncServicesDataType.
 public struct SPSyncServicesDataTypeItem: Codable, Equatable, Sendable {
+  /// The coding keys for the struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case summaryOfSyncLog = "summary_of_sync_log"
@@ -41,13 +41,28 @@ public struct SPSyncServicesDataTypeItem: Codable, Equatable, Sendable {
     case size
   }
 
+  /// The name of the item.
   public let name: String
+  /// The summary of the sync log for the item.
   public let summaryOfSyncLog: String?
+  /// The contents of the item.
   public let contents: String?
+  /// The description of the item.
   public let description: String?
+  /// The last modified date of the item.
   public let lastModified: Date?
+  /// The size of the item.
   public let size: String?
 
+  /// Initializes a new `SPSyncServicesDataTypeItem` instance.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the item.
+  ///   - summaryOfSyncLog: The summary of the sync log for the item.
+  ///   - contents: The contents of the item.
+  ///   - description: The description of the item.
+  ///   - lastModified: The last modified date of the item.
+  ///   - size: The size of the item.
   public init(
     name: String,
     summaryOfSyncLog: String?,

@@ -27,6 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Imports the `RadiantDocs` module.
 public import RadiantDocs
 
+/// A typealias for `DocumentFile<LibraryFileSpecifications>`.
 public typealias LibraryFile = DocumentFile<LibraryFileSpecifications>

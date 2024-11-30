@@ -29,17 +29,24 @@
 
 public import Foundation
 
-// MARK: - SpdevtoolsApps
-
+/// A struct that represents the Spdevtools apps.
 public struct SpdevtoolsApps: Codable, Equatable, Sendable {
+  /// The coding keys for the Spdevtools apps.
   public enum CodingKeys: String, CodingKey {
     case spinstrumentsApp = "spinstruments_app"
     case spxcodeApp = "spxcode_app"
   }
 
+  /// The URL of the Spinstruments app.
   public let spinstrumentsApp: String
+  /// The URL of the SPXCode app.
   public let spxcodeApp: String
 
+  /// Initializes a new instance of `SpdevtoolsApps`.
+  ///
+  /// - Parameters:
+  ///   - spinstrumentsApp: The URL of the Spinstruments app.
+  ///   - spxcodeApp: The URL of the SPXCode app.
   public init(
     spinstrumentsApp: String,
     spxcodeApp: String

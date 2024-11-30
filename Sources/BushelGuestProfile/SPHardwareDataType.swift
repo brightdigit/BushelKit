@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPHardwareDataType
-
+/// Represents a data type for hardware information.
 public struct SPHardwareDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the hardware data type.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case activationLockStatus = "activation_lock_status"
@@ -47,19 +45,45 @@ public struct SPHardwareDataType: Codable, Equatable, Sendable {
     case serialNumber = "serial_number"
   }
 
+  /// The name of the hardware.
   public let name: String
+  /// The activation lock status of the hardware.
   public let activationLockStatus: String
+  /// The boot ROM version of the hardware.
   public let bootROMVersion: String
+  /// The chip type of the hardware.
   public let chipType: String
+  /// The machine model of the hardware.
   public let machineModel: String
+  /// The machine name of the hardware.
   public let machineName: String
+  /// The number of processors in the hardware.
   public let numberProcessors: String
+  /// The OS loader version of the hardware.
   public let osLoaderVersion: String
+  /// The physical memory of the hardware.
   public let physicalMemory: String
+  /// The platform UUID of the hardware.
   public let platformUUID: String
+  /// The provisioning UDID of the hardware.
   public let provisioningUDID: String
+  /// The serial number of the hardware.
   public let serialNumber: String
 
+  /// Initializes a new instance of `SPHardwareDataType`.
+  /// - Parameters:
+  ///   - name: The name of the hardware.
+  ///   - activationLockStatus: The activation lock status of the hardware.
+  ///   - bootROMVersion: The boot ROM version of the hardware.
+  ///   - chipType: The chip type of the hardware.
+  ///   - machineModel: The machine model of the hardware.
+  ///   - machineName: The machine name of the hardware.
+  ///   - numberProcessors: The number of processors in the hardware.
+  ///   - osLoaderVersion: The OS loader version of the hardware.
+  ///   - physicalMemory: The physical memory of the hardware.
+  ///   - platformUUID: The platform UUID of the hardware.
+  ///   - provisioningUDID: The provisioning UDID of the hardware.
+  ///   - serialNumber: The serial number of the hardware.
   public init(
     name: String,
     activationLockStatus: String,

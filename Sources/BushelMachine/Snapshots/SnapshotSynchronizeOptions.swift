@@ -29,11 +29,13 @@
 
 import Foundation
 
+/// Options for controlling the behavior of a snapshot synchronization operation.
 public struct SnapshotSynchronizeOptions: OptionSet, Sendable {
-  public typealias RawValue = Int
-
+  /// The raw value of the option set.
   public let rawValue: Int
 
+  /// Initializes the option set with the given raw value.
+  /// - Parameter rawValue: The raw value to use for the option set.
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }

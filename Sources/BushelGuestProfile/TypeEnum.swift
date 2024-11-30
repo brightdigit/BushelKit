@@ -27,11 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// Represents the type of a font or image file.
 public enum TypeEnum: String, Codable, Equatable, Sendable {
+  /// Represents a bitmap font or image.
   case bitmap
+  /// Represents an OpenType font.
   case opentype
+  /// Represents a PostScript font.
   case postscript
+  /// Represents a TrueType font.
   case truetype
 }

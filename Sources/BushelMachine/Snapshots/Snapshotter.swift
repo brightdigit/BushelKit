@@ -29,17 +29,59 @@
 
 public import Foundation
 
+/// A protocol that provides functionality
+/// for creating, deleting, restoring, and exporting snapshots of a machine.
 public protocol Snapshotter<MachineType> {
+  /// The type of machine that this Snapshotter can handle.
   associatedtype MachineType: Machine
 
+  /// Creates a new snapshot of the specified machine.
+  ///
+  /// - Parameters:
+  ///   - machine: The machine to create a snapshot of.
+  ///   - request: The request for the snapshot.
+  ///   - options: The options to use when creating the snapshot.
+  /// - Returns: The newly created snapshot.
+  /// - Throws: An error that occurs during the snapshot creation process.
   func createNewSnapshot(
     of machine: MachineType,
     request: SnapshotRequest,
     options: SnapshotOptions
   ) async throws -> Snapshot
+
+  /// Deletes the specified snapshot from the specified machine.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The snapshot to delete.
+  ///   - machine: The machine from which to delete the snapshot.
+  /// - Throws: An error that occurs during the snapshot deletion process.
   func deleteSnapshot(_ snapshot: Snapshot, from machine: MachineType) async throws
+
+  /// Restores the specified snapshot to the specified machine.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The snapshot to restore.
+  ///   - machine: The machine to restore the snapshot to.
+  /// - Throws: An error that occurs during the snapshot restoration process.
   func restoreSnapshot(_ snapshot: Snapshot, to machine: MachineType) async throws
+
+  /// Exports the specified snapshot from the specified machine to the given URL.
+  ///
+  /// - Parameters:
+  ///   - snapshot: The snapshot to export.
+  ///   - machine: The machine from which to export the snapshot.
+  ///   - url: The URL to export the snapshot to.
+  /// - Throws: An error that occurs during the snapshot export process.
   func exportSnapshot(_ snapshot: Snapshot, from machine: MachineType, to url: URL) async throws
+
+  /// Synchronizes the snapshots for the specified machine, using the provided options.
+  ///
+  /// - Parameters:
+  ///   - machine: The machine for which to synchronize the snapshots.
+  ///   - options: The options to use when synchronizing the snapshots.
+  /// - Returns: The difference between the current and synchronized snapshots,
+  /// or `nil` if no difference was found.
+  /// - Throws: An error that occurs during the snapshot synchronization process.
   func synchronizeSnapshots(
     for machine: MachineType,
     options: SnapshotSynchronizeOptions
@@ -47,6 +89,16 @@ public protocol Snapshotter<MachineType> {
 }
 
 extension Snapshotter {
+  /// Synchronizes the snapshots for the specified machine, using the provided options.
+  ///
+  /// This default implementation always returns `nil`, indicating that no difference was found.
+  ///
+  /// - Parameters:
+  ///   - machine: The machine for which to synchronize the snapshots.
+  ///   - options: The options to use when synchronizing the snapshots.
+  /// - Returns: The difference between the current and synchronized snapshots,
+  /// or `nil` if no difference was found.
+  /// - Throws: An error that occurs during the snapshot synchronization process.
   public func synchronizeSnapshots(
     for _: MachineType,
     options _: SnapshotSynchronizeOptions

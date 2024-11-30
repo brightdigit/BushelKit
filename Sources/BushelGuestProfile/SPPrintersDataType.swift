@@ -29,17 +29,18 @@
 
 public import Foundation
 
-// MARK: - SPPrintersDataType
-
+/// A struct representing printer data.
 public struct SPPrintersDataType: Codable, Equatable, Sendable {
-  public enum CodingKeys: String, CodingKey {
-    case cupsversion
-    case status
-  }
-
+  /// The CUPS version.
   public let cupsversion: String
+  /// The status of the printer.
   public let status: String
 
+  /// Initializes an `SPPrintersDataType` instance.
+  ///
+  /// - Parameters:
+  ///   - cupsversion: The CUPS version.
+  ///   - status: The status of the printer.
   public init(
     cupsversion: String,
     status: String

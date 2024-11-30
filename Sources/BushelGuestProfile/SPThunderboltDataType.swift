@@ -29,15 +29,19 @@
 
 public import Foundation
 
-// MARK: - SPThunderboltDataType
-
+/// Represents a Thunderbolt data type.
 public struct SPThunderboltDataType: Codable, Equatable, Sendable {
+  /// The coding keys for the Thunderbolt data type.
   public enum CodingKeys: String, CodingKey {
     case thunderbolt = "Thunderbolt"
   }
 
+  /// The Thunderbolt data.
   public let thunderbolt: String
 
+  /// Initializes a new instance of `SPThunderboltDataType`.
+  ///
+  /// - Parameter thunderbolt: The Thunderbolt data.
   public init(thunderbolt: String) {
     self.thunderbolt = thunderbolt
   }

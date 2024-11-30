@@ -42,12 +42,12 @@ public protocol MachineSystem: Sendable {
   /// Default snapshot system.
   var defaultSnapshotSystem: SnapshotterID { get }
 
-  @MainActor
   /// Creates a builder for creating the machine
   /// - Parameters:
   ///   - configuration: Build configuration for the machine.
   ///   - url: Destination URL for the new machine.
   /// - Returns: The MachineBuilder to use.
+  @MainActor
   func createBuilder(
     for configuration: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
@@ -63,7 +63,7 @@ public protocol MachineSystem: Sendable {
     withConfiguration configuration: MachineConfiguration
   ) async throws -> any Machine
 
-  /// Creates the nessecary restore image based on the installer image info.
+  /// Creates the necessary restore image based on the installer image info.
   /// - Parameter restoreImage: The installer image to use.
   /// - Returns: An image to use for create a machine.
   func restoreImage(from restoreImage: any InstallerImage) async throws -> RestoreImageType
@@ -79,7 +79,7 @@ extension MachineSystem {
   /// - Parameters:
   ///   - configuration: The configured specifications.
   ///   - image: Install Image.
-  ///   - url: Desintation URL.
+  ///   - url: Destination URL.
   /// - Returns: Machine builder to start creating the machine.
   public func createBuilder(
     for configuration: MachineSetupConfiguration,
@@ -114,7 +114,7 @@ extension MachineSystem {
   /// - Parameters:
   ///   - configuration: The configured specifications.
   ///   - image: Install Image.
-  ///   - url: Desintation URL.
+  ///   - url: Destination URL.
   /// - Returns: Machine builder to start creating the machine.
   public func createBuilder(
     for configuration: MachineConfiguration,

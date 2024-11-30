@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SpnetworklocationService
-
+/// Represents a network location service.
 public struct SpnetworklocationService: Codable, Equatable, Sendable {
+  /// The coding keys for the `SpnetworklocationService` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case bsdDeviceName = "bsd_device_name"
@@ -42,14 +42,31 @@ public struct SpnetworklocationService: Codable, Equatable, Sendable {
     case type
   }
 
+  /// The name of the network location service.
   public let name: String
+  /// The BSD device name of the network location service.
   public let bsdDeviceName: String
+  /// The hardware address of the network location service.
   public let hardwareAddress: String
+  /// The IPv4 information of the network location service.
   public let iPv4: IPV
+  /// The IPv6 information of the network location service.
   public let iPv6: IPV
+  /// The proxies of the network location service.
   public let proxies: Proxies
+  /// The type of the network location service.
   public let type: String
 
+  /// Initializes a new instance of `SpnetworklocationService`.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the network location service.
+  ///   - bsdDeviceName: The BSD device name of the network location service.
+  ///   - hardwareAddress: The hardware address of the network location service.
+  ///   - iPv4: The IPv4 information of the network location service.
+  ///   - iPv6: The IPv6 information of the network location service.
+  ///   - proxies: The proxies of the network location service.
+  ///   - type: The type of the network location service.
   public init(
     name: String,
     bsdDeviceName: String,

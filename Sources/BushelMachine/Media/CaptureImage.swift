@@ -29,10 +29,18 @@
 
 public import Foundation
 
+/// Represents an image captured by the system.
 public struct CaptureImage: Sendable {
+  /// The URL of the captured image.
   public let url: URL
+
+  /// The configuration used to capture the image.
   public let configuration: CaptureImageConfiguration
 
+  /// Initializes a new `CaptureImage` instance.
+  /// - Parameters:
+  ///   - url: The URL of the captured image.
+  ///   - configuration: The configuration used to capture the image.
   public init(url: URL, configuration: CaptureImageConfiguration) {
     self.url = url
     self.configuration = configuration

@@ -27,11 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
-// MARK: - SPFontsDataType
-
+/// A data type representing font information.
 public struct SPFontsDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for the Codable conformance.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case enabled
@@ -41,13 +41,27 @@ public struct SPFontsDataType: Codable, Equatable, Sendable {
     case valid
   }
 
+  /// The name of the font.
   public let name: String
+  /// A private framework representing the enabled state of the font.
   public let enabled: PrivateFramework
+  /// The file path of the font.
   public let path: String
+  /// The type of the font.
   public let type: TypeEnum
+  /// The typefaces available for the font.
   public let typefaces: [Typeface]
+  /// A private framework representing the valid state of the font.
   public let valid: PrivateFramework
 
+  /// Initializes a new instance of `SPFontsDataType`.
+  /// - Parameters:
+  ///   - name: The name of the font.
+  ///   - enabled: A private framework representing the enabled state of the font.
+  ///   - path: The file path of the font.
+  ///   - type: The type of the font.
+  ///   - typefaces: The typefaces available for the font.
+  ///   - valid: A private framework representing the valid state of the font.
   public init(
     name: String,
     enabled: PrivateFramework,

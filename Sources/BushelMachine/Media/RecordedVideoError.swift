@@ -27,9 +27,20 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents errors that can occur when working with `RecordedVideo` objects.
 public enum RecordedVideoError: Error {
+  /// Indicates that a required field in a `RecordedVideo` object is missing.
+  /// - Parameter field: The missing field.
   case missingField(RecordedVideo.Field)
+
+  /// Indicates that an error occurred while accessing an asset.
+  /// - Parameter error: The underlying error that occurred.
   case assetError(Error)
+
+  /// Indicates that an error occurred while interacting with the file manager.
+  /// - Parameter error: The underlying error that occurred.
   case fileManagerError(Error)
+
+  /// Indicates that a feature has not been implemented yet.
   case notImplmented
 }

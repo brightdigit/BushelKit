@@ -29,7 +29,10 @@
 
 public import Foundation
 
+/// Represents the source from which an object was obtained.
 public enum ObtainedFrom: String, Codable, Equatable, Sendable {
+  /// Indicates the object was obtained from Apple.
   case apple
+  /// Indicates the source of the object is unknown.
   case unknown
 }

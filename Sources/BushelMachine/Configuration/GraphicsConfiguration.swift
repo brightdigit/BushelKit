@@ -29,10 +29,19 @@
 
 public import Foundation
 
+/// Represents a graphics configuration with a set of displays.
 public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
+  /// The unique identifier for the graphics configuration.
   public let id: UUID
+
+  /// The set of displays associated with the graphics configuration.
   public let displays: [GraphicsDisplay]
 
+  /// Initializes a new `GraphicsConfiguration` instance.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier for the graphics configuration. Defaults to a new UUID.
+  ///   - displays: The set of displays associated with the graphics configuration.
   public init(id: UUID = .init(), displays: [GraphicsDisplay]) {
     self.id = id
     self.displays = displays
@@ -40,6 +49,9 @@ public struct GraphicsConfiguration: Codable, Identifiable, Sendable {
 }
 
 extension GraphicsConfiguration {
+  /// Returns the default `GraphicsConfiguration` with a single default `GraphicsDisplay`.
+  ///
+  /// - Returns: The default `GraphicsConfiguration` instance.
   public static func `default`() -> GraphicsConfiguration {
     .init(displays: [.default()])
   }

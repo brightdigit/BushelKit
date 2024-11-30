@@ -29,15 +29,18 @@
 
 public import Foundation
 
-// MARK: - IPV
-
+/// Represents an IP version (IPV) configuration.
 public struct IPV: Codable, Equatable, Sendable {
+  /// The coding keys used for the IPV struct.
   public enum CodingKeys: String, CodingKey {
     case configMethod = "ConfigMethod"
   }
 
+  /// The method used to configure the IP version.
   public let configMethod: String
 
+  /// Initializes an IPV instance with the specified configuration method.
+  /// - Parameter configMethod: The method used to configure the IP version.
   public init(configMethod: String) {
     self.configMethod = configMethod
   }

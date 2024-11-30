@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPExtensionsDataType
-
+/// Represents the data type for SPExtensions.
 public struct SPExtensionsDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for encoding and decoding the `SPExtensionsDataType` struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case spextArchitectures = "spext_architectures"
@@ -54,26 +54,66 @@ public struct SPExtensionsDataType: Codable, Equatable, Sendable {
     case spextHasAllDependenciesErrors = "spext_hasAllDependencies_errors"
   }
 
+  /// The name of the SPExtension.
   public let name: String
+  /// The architectures of the SPExtension.
   public let spextArchitectures: [SpextArchitecture]?
+  /// The bundle identifier of the SPExtension.
   public let spextBundleid: String
+  /// Indicates if the SPExtension has 64-bit Intel code.
   public let spextHas64BitIntelCode: Spext?
+  /// Indicates if the SPExtension has all dependencies.
   public let spextHasAllDependencies: SpextHasAllDependencies
+  /// The last modification date of the SPExtension.
   public let spextLastModified: Date
+  /// Indicates if the SPExtension is loadable.
   public let spextLoadable: Spext
+  /// Indicates if the SPExtension is loaded.
   public let spextLoaded: Spext
+  /// Indicates if the SPExtension is notarized.
   public let spextNotarized: Spext
+  /// The source from which the SPExtension was obtained.
   public let spextObtainedFrom: SpextObtainedFrom
+  /// The file path of the SPExtension.
   public let spextPath: String
+  /// The runtime environment of the SPExtension.
   public let spextRuntimeEnvironment: SpextRuntimeEnvironment?
+  /// The entity that signed the SPExtension.
   public let spextSignedBy: String
+  /// The version of the SPExtension.
   public let spextVersion: String
+  /// The version of the SPExtension.
   public let version: String
+  /// The valid errors of the SPExtension.
   public let spextValidErrors: SpextValidErrors?
+  /// Additional information about the SPExtension.
   public let spextInfo: String?
+  /// The load address of the SPExtension.
   public let spextLoadAddress: String?
+  /// The errors related to the SPExtension having all dependencies.
   public let spextHasAllDependenciesErrors: SpextHasAllDependenciesErrors?
 
+  /// Initializes an `SPExtensionsDataType` instance with the provided parameters.
+  /// - Parameters:
+  ///   - name: The name of the SPExtension.
+  ///   - spextArchitectures: The architectures of the SPExtension.
+  ///   - spextBundleid: The bundle identifier of the SPExtension.
+  ///   - spextHas64BitIntelCode: Indicates if the SPExtension has 64-bit Intel code.
+  ///   - spextHasAllDependencies: Indicates if the SPExtension has all dependencies.
+  ///   - spextLastModified: The last modification date of the SPExtension.
+  ///   - spextLoadable: Indicates if the SPExtension is loadable.
+  ///   - spextLoaded: Indicates if the SPExtension is loaded.
+  ///   - spextNotarized: Indicates if the SPExtension is notarized.
+  ///   - spextObtainedFrom: The source from which the SPExtension was obtained.
+  ///   - spextPath: The file path of the SPExtension.
+  ///   - spextRuntimeEnvironment: The runtime environment of the SPExtension.
+  ///   - spextSignedBy: The entity that signed the SPExtension.
+  ///   - spextVersion: The version of the SPExtension.
+  ///   - version: The version of the SPExtension.
+  ///   - spextValidErrors: The valid errors of the SPExtension.
+  ///   - spextInfo: Additional information about the SPExtension.
+  ///   - spextLoadAddress: The load address of the SPExtension.
+  ///   - spextHasAllDependenciesErrors: The errors related to the SPExtension having all dependencies.
   public init(
     name: String,
     spextArchitectures: [SpextArchitecture]?,

@@ -32,23 +32,29 @@ public import Foundation
 public import RadiantDocs
 import RadiantKit
 
+/// An extension to the `Library` type that conforms to the `InitializablePackage` protocol.
 extension Library: InitializablePackage {
+  /// The default `JSONDecoder` instance used for decoding `Library` objects.
   public static var decoder: JSONDecoder {
     JSON.decoder
   }
 
+  /// The default `JSONEncoder` instance used for encoding `Library` objects.
   public static var encoder: JSONEncoder {
     JSON.encoder
   }
 
+  /// The key used to identify the configuration file wrapper for the library.
   public static var configurationFileWrapperKey: String {
     URL.bushel.paths.restoreLibraryJSONFileName
   }
 
+  /// The file types that are considered readable content for the library.
   public static var readableContentTypes: [FileType] {
     [.restoreImageLibrary]
   }
 
+  /// Initializes a new `Library` instance with an empty array of items.
   public init() {
     self.init(items: [])
   }

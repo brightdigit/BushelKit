@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPPrefPaneDataType
-
+/// A struct representing the data type for a System Preferences pane.
 public struct SPPrefPaneDataType: Codable, Equatable, Sendable {
+  /// The coding keys used for encoding and decoding the struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case spprefpaneBundlePath = "spprefpane_bundlePath"
@@ -42,14 +40,30 @@ public struct SPPrefPaneDataType: Codable, Equatable, Sendable {
     case spprefpaneVersion = "spprefpane_version"
   }
 
+  /// The name of the System Preferences pane.
   public let name: String
+  /// The bundle path of the System Preferences pane.
   public let spprefpaneBundlePath: String
+  /// The identifier of the System Preferences pane.
   public let spprefpaneIdentifier: String
+  /// The visibility status of the System Preferences pane.
   public let spprefpaneIsVisible: PrivateFramework
+  /// The kind of the System Preferences pane.
   public let spprefpaneKind: SpprefpaneKind
+  /// The support information of the System Preferences pane.
   public let spprefpaneSupport: SpprefpaneSupport
+  /// The version of the System Preferences pane.
   public let spprefpaneVersion: String
 
+  /// Initializes a new instance of `SPPrefPaneDataType` with the given parameters.
+  /// - Parameters:
+  ///   - name: The name of the System Preferences pane.
+  ///   - spprefpaneBundlePath: The bundle path of the System Preferences pane.
+  ///   - spprefpaneIdentifier: The identifier of the System Preferences pane.
+  ///   - spprefpaneIsVisible: The visibility status of the System Preferences pane.
+  ///   - spprefpaneKind: The kind of the System Preferences pane.
+  ///   - spprefpaneSupport: The support information of the System Preferences pane.
+  ///   - spprefpaneVersion: The version of the System Preferences pane.
   public init(
     name: String,
     spprefpaneBundlePath: String,

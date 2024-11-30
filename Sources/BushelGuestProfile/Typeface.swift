@@ -27,10 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
-// MARK: - Typeface
-
+/// Represents a typeface in a font.
 public struct Typeface: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
@@ -52,24 +51,60 @@ public struct Typeface: Codable, Equatable, Sendable {
     case description
   }
 
+  /// The name of the typeface.
   public let name: String
+  /// Indicates whether the typeface is copy-protected.
   public let copyProtected: PrivateFramework
+  /// The copyright information for the typeface.
   public let copyright: String
+  /// The designer of the typeface.
   public let designer: String?
+  /// Indicates whether the typeface is a duplicate.
   public let duplicate: PrivateFramework
+  /// Indicates whether the typeface is embeddable.
   public let embeddable: PrivateFramework
+  /// Indicates whether the typeface is enabled.
   public let enabled: PrivateFramework
+  /// The font family of the typeface.
   public let family: String
+  /// The full name of the typeface.
   public let fullname: String
+  /// Indicates whether the typeface has an outline.
   public let outline: PrivateFramework
+  /// The style of the typeface.
   public let style: String
+  /// The trademark information for the typeface.
   public let trademark: String?
+  /// A unique identifier for the typeface.
   public let unique: String
+  /// Indicates whether the typeface is valid.
   public let valid: PrivateFramework
+  /// The vendor of the typeface.
   public let vendor: String?
+  /// The version of the typeface.
   public let version: String
+  /// A description of the typeface.
   public let description: String?
 
+  /// Initializes a new `Typeface` instance.
+  /// - Parameters:
+  ///   - name: The name of the typeface.
+  ///   - copyProtected: Indicates whether the typeface is copy-protected.
+  ///   - copyright: The copyright information for the typeface.
+  ///   - designer: The designer of the typeface.
+  ///   - duplicate: Indicates whether the typeface is a duplicate.
+  ///   - embeddable: Indicates whether the typeface is embeddable.
+  ///   - enabled: Indicates whether the typeface is enabled.
+  ///   - family: The font family of the typeface.
+  ///   - fullname: The full name of the typeface.
+  ///   - outline: Indicates whether the typeface has an outline.
+  ///   - style: The style of the typeface.
+  ///   - trademark: The trademark information for the typeface.
+  ///   - unique: A unique identifier for the typeface.
+  ///   - valid: Indicates whether the typeface is valid.
+  ///   - vendor: The vendor of the typeface.
+  ///   - version: The version of the typeface.
+  ///   - description: A description of the typeface.
   public init(
     name: String,
     copyProtected: PrivateFramework,

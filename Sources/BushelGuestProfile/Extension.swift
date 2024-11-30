@@ -29,17 +29,24 @@
 
 public import Foundation
 
-// MARK: - Extension
-
+/// A struct representing an extension.
 public struct Extension: Codable, Equatable, Sendable {
+  /// The coding keys for the extension.
   public enum CodingKeys: String, CodingKey {
     case infoPath = "info path"
     case infoVersion = "info version"
   }
 
+  /// The path to the extension information.
   public let infoPath: String
+  /// The version of the extension information.
   public let infoVersion: String
 
+  /// Initializes an `Extension` with the given `infoPath` and `infoVersion`.
+  ///
+  /// - Parameters:
+  ///   - infoPath: The path to the extension information.
+  ///   - infoVersion: The version of the extension information.
   public init(
     infoPath: String,
     infoVersion: String

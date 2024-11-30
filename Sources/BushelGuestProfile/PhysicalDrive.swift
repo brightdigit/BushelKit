@@ -29,8 +29,7 @@
 
 public import Foundation
 
-// MARK: - PhysicalDrive
-
+/// Represents a physical drive on the system.
 public struct PhysicalDrive: Codable, Equatable, Sendable {
   public enum CodingKeys: String, CodingKey {
     case isInternalDisk = "is_internal_disk"
@@ -39,11 +38,21 @@ public struct PhysicalDrive: Codable, Equatable, Sendable {
     case partitionMapType = "partition_map_type"
   }
 
+  /// Indicates whether the drive is an internal disk or not.
   public let isInternalDisk: PrivateFramework
+  /// The name of the media.
   public let mediaName: String
+  /// The type of the media.
   public let mediumType: String
+  /// The type of the partition map.
   public let partitionMapType: String
 
+  /// Initializes a `PhysicalDrive` instance.
+  /// - Parameters:
+  ///   - isInternalDisk: Indicates whether the drive is an internal disk or not.
+  ///   - mediaName: The name of the media.
+  ///   - mediumType: The type of the media.
+  ///   - partitionMapType: The type of the partition map.
   public init(
     isInternalDisk: PrivateFramework,
     mediaName: String,

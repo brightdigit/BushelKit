@@ -27,13 +27,16 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+import Foundation
 
+/// A protocol that defines a type that can be used to retrieve system profile data.
 public protocol SystemProfileType: Decodable {
+  /// The data type that the system profile data represents.
   static var dataType: DataType { get }
 }
 
-// swift-format-ignore: AlwaysUseLowerCamelCase
+/// An enumeration representing the different types of system profile data.
+/// swift-format-ignore: AlwaysUseLowerCamelCase
 public enum DataType: String {
   case SPParallelATADataType
   case SPUniversalAccessDataType
@@ -101,11 +104,17 @@ public enum DataType: String {
 
 #if os(macOS)
   extension SystemProfiler {
+    /// Errors that can occur when retrieving system profile data.
     public enum Error: Swift.Error {
       case missingRoot
       case missingData
     }
 
+    /// Retrieves system profile data of the specified type.
+    ///
+    /// - Returns: An array of system profile data of the specified type.
+    /// - Throws: `Error.missingRoot` if the root object is missing from the JSON data,
+    ///           `Error.missingData` if the data is missing.
     public static func data<T: SystemProfileType>() throws -> [T] {
       let process = Process()
       process.executableURL = .init(filePath: "/usr/sbin/system_profiler")
@@ -125,12 +134,14 @@ public enum DataType: String {
   }
 #endif
 
+/// A system profile data type that represents hardware information.
 extension SPHardwareDataType: SystemProfileType {
   public static var dataType: DataType {
     .SPHardwareDataType
   }
 }
 
+/// A system profile data type that represents network information.
 extension SPNetworkDataType: SystemProfileType {
   public static var dataType: DataType {
     .SPNetworkDataType

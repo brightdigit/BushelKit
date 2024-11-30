@@ -27,6 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// An enum representing the possible networking configuration attachments.
 public enum NetworkingConfigurationAttachment: Codable, Sendable {
+  /// Represents a NAT (Network Address Translation) attachment.
   case nat
 }

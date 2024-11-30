@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPInternationalDataType
-
+/// A struct that represents international data types.
 public struct SPInternationalDataType: Codable, Equatable, Sendable {
+  /// The keys used for coding and decoding the struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case linguisticDataAssetsRequested = "linguistic_data_assets_requested"
@@ -51,23 +49,57 @@ public struct SPInternationalDataType: Codable, Equatable, Sendable {
     case bootLocale = "boot_locale"
   }
 
+  /// The name of the international data type.
   public let name: String
+  /// The linguistic data assets requested.
   public let linguisticDataAssetsRequested: [String]?
+  /// The user's calendar.
   public let userCalendar: String?
+  /// The user's country code.
   public let userCountryCode: String?
+  /// The user's language code.
   public let userLanguageCode: String?
+  /// The user's locale.
   public let userLocale: String?
+  /// The user's preferred interface languages.
   public let userPreferredInterfaceLanguages: [String]?
+  /// Whether the user uses the metric system.
   public let userUsesMetricSystem: String?
+  /// The system's country.
   public let systemCountry: String?
+  /// The system's interface languages.
   public let systemInterfaceLanguages: [String]?
+  /// The system's languages.
   public let systemLanguages: [String]?
+  /// The system's locale.
   public let systemLocale: String?
+  /// The system's text direction.
   public let systemTextDirection: String?
+  /// Whether the system uses the metric system.
   public let systemUsesMetricSystem: String?
+  /// The boot keyboard.
   public let bootKbd: String?
+  /// The boot locale.
   public let bootLocale: String?
 
+  /// Initializes a new `SPInternationalDataType` instance.
+  /// - Parameters:
+  ///   - name: The name of the international data type.
+  ///   - linguisticDataAssetsRequested: The linguistic data assets requested.
+  ///   - userCalendar: The user's calendar.
+  ///   - userCountryCode: The user's country code.
+  ///   - userLanguageCode: The user's language code.
+  ///   - userLocale: The user's locale.
+  ///   - userPreferredInterfaceLanguages: The user's preferred interface languages.
+  ///   - userUsesMetricSystem: Whether the user uses the metric system.
+  ///   - systemCountry: The system's country.
+  ///   - systemInterfaceLanguages: The system's interface languages.
+  ///   - systemLanguages: The system's languages.
+  ///   - systemLocale: The system's locale.
+  ///   - systemTextDirection: The system's text direction.
+  ///   - systemUsesMetricSystem: Whether the system uses the metric system.
+  ///   - bootKbd: The boot keyboard.
+  ///   - bootLocale: The boot locale.
   public init(
     name: String,
     linguisticDataAssetsRequested: [String]?,

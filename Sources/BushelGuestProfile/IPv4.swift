@@ -27,11 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - IPv4
-
+/// A struct representing an IPv4 network interface.
 public struct IPv4: Codable, Equatable, Sendable {
+  /// The keys used for encoding and decoding the IPv4 struct.
   public enum CodingKeys: String, CodingKey {
     case additionalRoutes = "AdditionalRoutes"
     case addresses = "Addresses"
@@ -45,17 +43,39 @@ public struct IPv4: Codable, Equatable, Sendable {
     case subnetMasks = "SubnetMasks"
   }
 
+  /// The additional routes associated with the IPv4 network interface.
   public let additionalRoutes: [AdditionalRoute]?
+  /// The IP addresses associated with the IPv4 network interface.
   public let addresses: [String]?
+  /// The hardware address resolved by ARP for the IPv4 network interface.
   public let arpResolvedHardwareAddress: String?
+  /// The IP address resolved by ARP for the IPv4 network interface.
   public let arpResolvedIPAddress: String?
+  /// The configuration method used for the IPv4 network interface.
   public let configMethod: String
+  /// The confirmed interface name for the IPv4 network interface.
   public let confirmedInterfaceName: String?
+  /// The interface name for the IPv4 network interface.
   public let interfaceName: String?
+  /// The network signature for the IPv4 network interface.
   public let networkSignature: String?
+  /// The router associated with the IPv4 network interface.
   public let router: String?
+  /// The subnet masks associated with the IPv4 network interface.
   public let subnetMasks: [String]?
 
+  /// Initializes an IPv4 struct with the provided parameters.
+  /// - Parameters:
+  ///   - additionalRoutes: The additional routes associated with the IPv4 network interface.
+  ///   - addresses: The IP addresses associated with the IPv4 network interface.
+  ///   - arpResolvedHardwareAddress: The hardware address resolved by ARP for the IPv4 network interface.
+  ///   - arpResolvedIPAddress: The IP address resolved by ARP for the IPv4 network interface.
+  ///   - configMethod: The configuration method used for the IPv4 network interface.
+  ///   - confirmedInterfaceName: The confirmed interface name for the IPv4 network interface.
+  ///   - interfaceName: The interface name for the IPv4 network interface.
+  ///   - networkSignature: The network signature for the IPv4 network interface.
+  ///   - router: The router associated with the IPv4 network interface.
+  ///   - subnetMasks: The subnet masks associated with the IPv4 network interface.
   public init(
     additionalRoutes: [AdditionalRoute]?,
     addresses: [String]?,

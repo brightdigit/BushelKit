@@ -27,11 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - SPUSBDataType
-
+/// Represents a USB data type,
+/// including its items, name, host controller, PCI device, PCI revision, and PCI vendor.
 public struct SPUSBDataType: Codable, Equatable, Sendable {
+  /// The keys used for encoding and decoding the data type.
   public enum CodingKeys: String, CodingKey {
     case items = "_items"
     case name = "_name"
@@ -41,13 +40,28 @@ public struct SPUSBDataType: Codable, Equatable, Sendable {
     case pciVendor = "pci_vendor"
   }
 
+  /// The array of `SPUSBDataTypeItem` objects associated with this data type.
   public let items: [SPUSBDataTypeItem]
+  /// The name of the data type.
   public let name: String
+  /// The host controller for the USB data type.
   public let hostController: String
+  /// The PCI device for the USB data type.
   public let pciDevice: String
+  /// The PCI revision for the USB data type.
   public let pciRevision: String
+  /// The PCI vendor for the USB data type.
   public let pciVendor: String
 
+  /// Initializes a new instance of `SPUSBDataType`.
+  ///
+  /// - Parameters:
+  ///   - items: The array of `SPUSBDataTypeItem` objects associated with this data type.
+  ///   - name: The name of the data type.
+  ///   - hostController: The host controller for the USB data type.
+  ///   - pciDevice: The PCI device for the USB data type.
+  ///   - pciRevision: The PCI revision for the USB data type.
+  ///   - pciVendor: The PCI vendor for the USB data type.
   public init(
     items: [SPUSBDataTypeItem],
     name: String,

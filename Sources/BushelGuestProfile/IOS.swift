@@ -27,17 +27,19 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
-// MARK: - IOS
-
+/// Represents information about the iOS operating system.
 public struct IOS: Codable, Equatable, Sendable {
+  /// The coding keys for the `IOS` struct.
   public enum CodingKeys: String, CodingKey {
     case the155 = "15.5"
   }
 
+  /// The version of the iOS operating system.
   public let the155: String
 
+  /// Initializes an `IOS` instance with the specified version.
+  ///
+  /// - Parameter the155: The version of the iOS operating system.
   public init(the155: String) {
     self.the155 = the155
   }

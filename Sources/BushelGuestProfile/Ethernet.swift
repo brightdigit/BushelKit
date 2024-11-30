@@ -29,19 +29,27 @@
 
 public import Foundation
 
-// MARK: - Ethernet
-
+/// Represents an Ethernet connection.
 public struct Ethernet: Codable, Equatable, Sendable {
+  /// Coding keys for `Ethernet` struct.
   public enum CodingKeys: String, CodingKey {
     case macAddress = "MAC Address"
     case mediaOptions = "MediaOptions"
     case mediaSubType = "MediaSubType"
   }
 
+  /// The MAC address of the Ethernet connection.
   public let macAddress: String
+  /// The media options of the Ethernet connection.
   public let mediaOptions: [String]
+  /// The media sub-type of the Ethernet connection.
   public let mediaSubType: String
 
+  /// Initializes an `Ethernet` instance.
+  /// - Parameters:
+  ///   - macAddress: The MAC address of the Ethernet connection.
+  ///   - mediaOptions: The media options of the Ethernet connection.
+  ///   - mediaSubType: The media sub-type of the Ethernet connection.
   public init(
     macAddress: String,
     mediaOptions: [String],

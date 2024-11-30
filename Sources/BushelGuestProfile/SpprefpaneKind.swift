@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
+/// Represents the kind of a SPPreference pane.
 public enum SpprefpaneKind: String, Codable, Equatable, Sendable {
+  /// Represents a 64-bit integer SPPreference pane.
   case spprefpaneI64 = "spprefpane_i64"
 }

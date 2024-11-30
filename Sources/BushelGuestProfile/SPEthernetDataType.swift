@@ -29,9 +29,9 @@
 
 public import Foundation
 
-// MARK: - SPEthernetDataType
-
+/// Represents a data structure for SPEthernetDataType.
 public struct SPEthernetDataType: Codable, Equatable, Sendable {
+  /// Coding keys for the SPEthernetDataType struct.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case spethernetAvbSupport = "spethernet_avb_support"
@@ -47,19 +47,45 @@ public struct SPEthernetDataType: Codable, Equatable, Sendable {
     case spethernetVendorID = "spethernet_vendor-id"
   }
 
+  /// The name of the SPEthernet device.
   public let name: String
+  /// The AVB support of the SPEthernet device.
   public let spethernetAvbSupport: String
+  /// The BSD device name of the SPEthernet device.
   public let spethernetBSDDeviceName: String
+  /// The bus of the SPEthernet device.
   public let spethernetBus: String
+  /// The device ID of the SPEthernet device.
   public let spethernetDeviceID: String
+  /// The driver of the SPEthernet device.
   public let spethernetDriver: String
+  /// The MAC address of the SPEthernet device.
   public let spethernetMACAddress: String
+  /// The maximum link speed of the SPEthernet device.
   public let spethernetMaxLinkSpeed: String
+  /// The revision ID of the SPEthernet device.
   public let spethernetRevisionID: String
+  /// The subsystem ID of the SPEthernet device.
   public let spethernetSubsystemID: String
+  /// The subsystem vendor ID of the SPEthernet device.
   public let spethernetSubsystemVendorID: String
+  /// The vendor ID of the SPEthernet device.
   public let spethernetVendorID: String
 
+  /// Initializes an SPEthernetDataType instance with the provided parameters.
+  /// - Parameters:
+  ///   - name: The name of the SPEthernet device.
+  ///   - spethernetAvbSupport: The AVB support of the SPEthernet device.
+  ///   - spethernetBSDDeviceName: The BSD device name of the SPEthernet device.
+  ///   - spethernetBus: The bus of the SPEthernet device.
+  ///   - spethernetDeviceID: The device ID of the SPEthernet device.
+  ///   - spethernetDriver: The driver of the SPEthernet device.
+  ///   - spethernetMACAddress: The MAC address of the SPEthernet device.
+  ///   - spethernetMaxLinkSpeed: The maximum link speed of the SPEthernet device.
+  ///   - spethernetRevisionID: The revision ID of the SPEthernet device.
+  ///   - spethernetSubsystemID: The subsystem ID of the SPEthernet device.
+  ///   - spethernetSubsystemVendorID: The subsystem vendor ID of the SPEthernet device.
+  ///   - spethernetVendorID: The vendor ID of the SPEthernet device.
   public init(
     name: String,
     spethernetAvbSupport: String,
