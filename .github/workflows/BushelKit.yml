@@ -150,7 +150,7 @@ jobs:
           overwrite: true
           path: /workspace/.build/plugins/Swift-DocC/outputs/BushelKit.doccarchive.tar
           retention-days: 1
-      - uses: peter-evans/repository-dispatch@v2
+      - uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT_TOKEN }}
           repository: brightdigit/BushelDocs
