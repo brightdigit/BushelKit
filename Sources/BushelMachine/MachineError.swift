@@ -230,4 +230,31 @@ extension MachineError {
   public static func notFound(bookmarkID: UUID) -> MachineError {
     .init(details: .notFoundBookmarkID(bookmarkID))
   }
+
+  public static func captureError(_ error: any Error) -> MachineError {
+    MachineError(details: .captureError, innerError: error)
+  }
+
+  public static func captureUpdateError(_ error: any Error, id: UUID) -> MachineError {
+    MachineError(details: .captureUpdateError(id), innerError: error)
+  }
+
+  public static func exportScreenshotsError(_ error: any Error, at url: URL) -> MachineError {
+    MachineError(details: .exportScreenshotsErrorAt(url), innerError: error)
+  }
+
+  public static func exportScreenshots(errors: [String: any Error], at url: URL) -> MachineError {
+    MachineError(
+      details: .exportScreenshotsErrorAt(url),
+      innerError: ScreenshotExportError(fileNameErrors: errors)
+    )
+  }
+
+  public static func deleteCapturedImage(withID id: UUID, isEmpty: Bool = false) -> MachineError {
+    MachineError(details: .missingImage(id))
+  }
+
+  public static func deleteCapturedVideo(withID id: UUID, isEmpty: Bool = false) -> MachineError {
+    MachineError(details: .missingImage(id))
+  }
 }
