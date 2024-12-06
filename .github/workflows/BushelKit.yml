@@ -149,7 +149,7 @@ jobs:
         with:
           overwrite: true
           path: /workspace/.build/plugins/Swift-DocC/outputs/BushelKit.doccarchive.tar
-          retention-days: 1
+          retention-days: 30
       - uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT_TOKEN }}
