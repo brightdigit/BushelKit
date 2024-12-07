@@ -24,9 +24,8 @@ Open source components of [Bushel](https://getbushel.app) for developers.
 # Table of Contents
 
 * [Introduction](#introduction)
-  * [Requirements](#requirements)
 * [Usage](#usage)
-* [Roadman](#roadman)
+* [Roadmap](#roadmap)
 * [Documentation](#documentation)
 * [License](#license)
 
@@ -71,38 +70,50 @@ let package = Package(
 )
 ```
 
-# Roadman
+# Roadmap
 
-* [#40 - Finish Documentation for bushel DocC](https://github.com/brightdigit/BushelKit/issues/40)                       
-* [#39 - Finish Documentation for BushelVirtualBuddy DocC](https://github.com/brightdigit/BushelKit/issues/39)           
-* [#38 - Finish Documentation for BushelUtilities DocC](https://github.com/brightdigit/BushelKit/issues/38)              
+This library is still under construction. Here are the plans for the future.
+
+## v2.1 
+* [#10 (docs) - Finish Documentation for bushel CLI](https://github.com/brightdigit/BushelDocs/issues/10)
+
+## 2.2
+* [#48 - bushel CLI v.x](https://github.com/brightdigit/BushelKit/issues/48)
+* [#47 - Add Tutorials for Creating a Machine](https://github.com/brightdigit/BushelKit/issues/48) / _[#11 - docs](https://github.com/brightdigit/BushelDocs/issues/11)_
+* [#34 - Finish Documentation for BushelMachine DocC](https://github.com/brightdigit/BushelKit/issues/34)       
+
+## 2.3          
+* [#47 - Add Tutorial for Creating a Library](https://github.com/brightdigit/BushelKit/issues/47) / _[#12 docs](https://github.com/brightdigit/BushelDocs/issues/12)_
+* [#45 - Add Tutorial for Importing/Downloading an Image Into a Library](https://github.com/brightdigit/BushelKit/issues/45) / _[#13 docs](https://github.com/brightdigit/BushelDocs/issues/13)_         
+* [#30 - Finish Documentation for BushelLibrary DocC](https://github.com/brightdigit/BushelKit/issues/30)     
+
+## 2.4        
+* [#38 - Finish Documentation for BushelUtilities DocC](https://github.com/brightdigit/BushelKit/issues/38)           
+* [#27 - Finish Documentation for BushelHub DocC](https://github.com/brightdigit/BushelKit/issues/27)          
+* [#43 - Add Tutorial for Creating A Machine From A Snapshot](https://github.com/brightdigit/BushelKit/issues/43) / _[#15 docs](https://github.com/brightdigit/BushelDocs/issues/15)_
+* [#41 - Add Tutorial for Verifying An Image](https://github.com/brightdigit/BushelKit/issues/41) / _[#17 docs](https://github.com/brightdigit/BushelDocs/issues/17)_
+      
+## 2.5      
+* [#24 - Finish Documentation for BushelFoundation DocC](https://github.com/brightdigit/BushelKit/issues/24)           
+* [#23 - Finish Documentation for BushelFactory DocC](https://github.com/brightdigit/BushelKit/issues/23)   
+* [#42 - Add Tutorial for Booting Up Machine](https://github.com/brightdigit/BushelKit/issues/42) / _[#16 docs](https://github.com/brightdigit/BushelDocs/issues/16)_
+* [#18 (docs) - Finish Documentation for Bushel REST API](https://github.com/brightdigit/BushelDocs/issues/18)
+* [#44 - Add Tutorial for Creating A Snapshot](https://github.com/brightdigit/BushelKit/issues/44) / _[#14 docs](https://github.com/brightdigit/BushelDocs/issues/14)_
+
+## Future Release
+* [#40 - Finish Documentation for bushel DocC](https://github.com/brightdigit/BushelKit/issues/40)                            
 * [#37 - Finish Documentation for BushelUT DocC](https://github.com/brightdigit/BushelKit/issues/37)                     
 * [#36 - Finish Documentation for BushelTestUtilities DocC](https://github.com/brightdigit/BushelKit/issues/36)          
 * [#35 - Finish Documentation for BushelMachineWax DocC](https://github.com/brightdigit/BushelKit/issues/35)             
-* [#34 - Finish Documentation for BushelMachine DocC](https://github.com/brightdigit/BushelKit/issues/34)                
 * [#33 - Finish Documentation for BushelMacOSCore DocC](https://github.com/brightdigit/BushelKit/issues/33)              
 * [#32 - Finish Documentation for BushelLogging DocC](https://github.com/brightdigit/BushelKit/issues/32)                
 * [#31 - Finish Documentation for BushelLibraryWax DocC](https://github.com/brightdigit/BushelKit/issues/31)             
-* [#30 - Finish Documentation for BushelLibrary DocC](https://github.com/brightdigit/BushelKit/issues/30)                
 * [#29 - Finish Documentation for BushelHubMacOS DocC](https://github.com/brightdigit/BushelKit/issues/29)               
-* [#28 - Finish Documentation for BushelHubIPSW DocC](https://github.com/brightdigit/BushelKit/issues/28)                
-* [#27 - Finish Documentation for BushelHub DocC](https://github.com/brightdigit/BushelKit/issues/27)                    
+* [#28 - Finish Documentation for BushelHubIPSW DocC](https://github.com/brightdigit/BushelKit/issues/28)                 
 * [#26 - Finish Documentation for BushelGuestProfile DocC](https://github.com/brightdigit/BushelKit/issues/26)           
-* [#25 - Finish Documentation for BushelFoundationWax DocC](https://github.com/brightdigit/BushelKit/issues/25)          
-* [#24 - Finish Documentation for BushelFoundation DocC](https://github.com/brightdigit/BushelKit/issues/24)             
-* [#23 - Finish Documentation for BushelFactory DocC](https://github.com/brightdigit/BushelKit/issues/23)                
+* [#25 - Finish Documentation for BushelFoundationWax DocC](https://github.com/brightdigit/BushelKit/issues/25)              
 * [#22 - Finish Documentation for BushelDocs DocC](https://github.com/brightdigit/BushelKit/issues/22)                   
 * [#21 - Finish Documentation for BushelArgs DocC](https://github.com/brightdigit/BushelKit/issues/21) 
-* Add Tutorials for Creating a  Machine
-* Finish Documentation for bushel CLI
-* bushel CLI v.x                  
-* Finish Documentation for Bushel REST API
-* Tutorial for creating a machine
-* Tutorial for creating a library
-* Tutorial for importing/downloading an image into a library
-* Tutorial for creating a snapshot
-* Tutorial for creating a machine from a snapshot
-* Tutorial for booting up machine
 
 # Documentation
 
