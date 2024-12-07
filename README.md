@@ -5,9 +5,17 @@
 
 Open source components of [Bushel](https://getbushel.app) for developers.
 
-[![](https://img.shields.io/badge/docc-read_documentation-blue)](https://swiftpackageindex.com/brightdigit/BushelKit/documentation)
-[![SwiftPM](https://img.shields.io/badge/SPM-Linux%20%7C%20iOS%20%7C%20macOS%20%7C%20watchOS%20%7C%20tvOS-success?logo=swift)](https://swift.org)
-[![Twitter](https://img.shields.io/badge/twitter-@brightdigit-blue.svg?style=flat)](http://twitter.com/brightdigit)
+[![](https://img.shields.io/badge/docc-read_documentation-blue?style=for-the-badge)](https://docs.getbushel.app/docc)
+[![SwiftPM](https://img.shields.io/badge/SPM-Linux%20%7C%20iOS%20%7C%20macOS%20%7C%20watchOS%20%7C%20tvOS-success?logo=swift&style=for-the-badge)](https://swiftpackageindex.com/brightdigit/BushelKit)
+
+[![Mastodon Follow](https://img.shields.io/mastodon/follow/109263136930561815?domain=https%3A%2F%2Fc.im&style=for-the-badge&logo=mastodon&color=blueviolet)](https://c.im/@leogdion)
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCnl3jF6GHAvlj1MZyb6Ka9g?style=for-the-badge&logo=YouTube&logoColor=red&label=%40brightdigit&link=https%3A%2F%2Fwww.youtube.com%2F%40brightdigit)](https://www.youtube.com/@brightdigit)
+[![BlueSky](https://img.shields.io/badge/%40leogdion-BlueSky?style=for-the-badge&logo=bluesky&label=BlueSky&color=white)](https://bsky.app/profile/leogdion.bsky.social)
+
+[![X](https://img.shields.io/badge/(twitter)-@brightdigit-whitesmoke.svg?style=for-the-badge&logo=x)](http://twitter.com/brightdigit)
+[![X](https://img.shields.io/badge/(twitter)-@leogdion-whitesmoke.svg?style=for-the-badge&logo=x)](http://twitter.com/leogdion)
+
+<!--
 ![GitHub](https://img.shields.io/github/license/brightdigit/BushelKit)
 ![GitHub issues](https://img.shields.io/github/issues/brightdigit/BushelKit)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/brightdigit/BushelKit/BushelKit.yml?label=actions&logo=github&?branch=main)
@@ -15,10 +23,14 @@ Open source components of [Bushel](https://getbushel.app) for developers.
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbrightdigit%2FBushelKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/brightdigit/BushelKit)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbrightdigit%2FBushelKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/brightdigit/BushelKit)
 
+
 [![Codecov](https://img.shields.io/codecov/c/github/brightdigit/BushelKit)](https://codecov.io/gh/brightdigit/BushelKit)
 [![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/brightdigit/BushelKit)](https://www.codefactor.io/repository/github/brightdigit/BushelKit)
+-->
 [![Maintainability](https://api.codeclimate.com/v1/badges/78ed94c9ce81530d23dc/maintainability)](https://codeclimate.com/repos/675322f20ee99b00b9c28232/maintainability)
-<!--[![codebeat badge](https://codebeat.co/badges/54695d4b-98c8-4f0f-855e-215500163094)](https://codebeat.co/projects/github-com-brightdigit-BushelKit-main)-->
+<!--
+[![codebeat badge](https://codebeat.co/badges/54695d4b-98c8-4f0f-855e-215500163094)](https://codebeat.co/projects/github-com-brightdigit-BushelKit-main)
+-->
 
 
 # Table of Contents
