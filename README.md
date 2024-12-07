@@ -73,26 +73,26 @@ let package = Package(
 
 # Roadman
 
-* #40 - Finish Documentation for bushel DocC                       
-* #39 - Finish Documentation for BushelVirtualBuddy DocC           
-* #38 - Finish Documentation for BushelUtilities DocC              
-* #37 - Finish Documentation for BushelUT DocC                     
-* #36 - Finish Documentation for BushelTestUtilities DocC          
-* #35 - Finish Documentation for BushelMachineWax DocC             
-* #34 - Finish Documentation for BushelMachine DocC                
-* #33 - Finish Documentation for BushelMacOSCore DocC              
-* #32 - Finish Documentation for BushelLogging DocC                
-* #31 - Finish Documentation for BushelLibraryWax DocC             
-* #30 - Finish Documentation for BushelLibrary DocC                
-* #29 - Finish Documentation for BushelHubMacOS DocC               
-* #28 - Finish Documentation for BushelHubIPSW DocC                
-* #27 - Finish Documentation for BushelHub DocC                    
-* #26 - Finish Documentation for BushelGuestProfile DocC           
-* #25 - Finish Documentation for BushelFoundationWax DocC          
-* #24 - Finish Documentation for BushelFoundation DocC             
-* #23 - Finish Documentation for BushelFactory DocC                
-* #22 - Finish Documentation for BushelDocs DocC                   
-* #21 - Finish Documentation for BushelArgs DocC 
+* [#40 - Finish Documentation for bushel DocC](https://github.com/brightdigit/BushelKit/issues/40)                       
+* [#39 - Finish Documentation for BushelVirtualBuddy DocC](https://github.com/brightdigit/BushelKit/issues/39)           
+* [#38 - Finish Documentation for BushelUtilities DocC](https://github.com/brightdigit/BushelKit/issues/38)              
+* [#37 - Finish Documentation for BushelUT DocC](https://github.com/brightdigit/BushelKit/issues/37)                     
+* [#36 - Finish Documentation for BushelTestUtilities DocC](https://github.com/brightdigit/BushelKit/issues/36)          
+* [#35 - Finish Documentation for BushelMachineWax DocC](https://github.com/brightdigit/BushelKit/issues/35)             
+* [#34 - Finish Documentation for BushelMachine DocC](https://github.com/brightdigit/BushelKit/issues/34)                
+* [#33 - Finish Documentation for BushelMacOSCore DocC](https://github.com/brightdigit/BushelKit/issues/33)              
+* [#32 - Finish Documentation for BushelLogging DocC](https://github.com/brightdigit/BushelKit/issues/32)                
+* [#31 - Finish Documentation for BushelLibraryWax DocC](https://github.com/brightdigit/BushelKit/issues/31)             
+* [#30 - Finish Documentation for BushelLibrary DocC](https://github.com/brightdigit/BushelKit/issues/30)                
+* [#29 - Finish Documentation for BushelHubMacOS DocC](https://github.com/brightdigit/BushelKit/issues/29)               
+* [#28 - Finish Documentation for BushelHubIPSW DocC](https://github.com/brightdigit/BushelKit/issues/28)                
+* [#27 - Finish Documentation for BushelHub DocC](https://github.com/brightdigit/BushelKit/issues/27)                    
+* [#26 - Finish Documentation for BushelGuestProfile DocC](https://github.com/brightdigit/BushelKit/issues/26)           
+* [#25 - Finish Documentation for BushelFoundationWax DocC](https://github.com/brightdigit/BushelKit/issues/25)          
+* [#24 - Finish Documentation for BushelFoundation DocC](https://github.com/brightdigit/BushelKit/issues/24)             
+* [#23 - Finish Documentation for BushelFactory DocC](https://github.com/brightdigit/BushelKit/issues/23)                
+* [#22 - Finish Documentation for BushelDocs DocC](https://github.com/brightdigit/BushelKit/issues/22)                   
+* [#21 - Finish Documentation for BushelArgs DocC](https://github.com/brightdigit/BushelKit/issues/21) 
 * Add Tutorials for Creating a  Machine
 * Finish Documentation for bushel CLI
 * bushel CLI v.x                  
