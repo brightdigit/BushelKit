@@ -133,4 +133,4 @@ To learn more, check out the full [documentation](https://docs.getbushel.app/doc
 
 # License 
 
-This code is distributed under the MIT license. See the [LICENSE](https://github.com/brightdigit/BushelKit/LICENSE) file for more info.
+This code is distributed under the MIT license. See the [LICENSE](https://github.com/brightdigit/BushelKit/blob/main/LICENSE) file for more info.
