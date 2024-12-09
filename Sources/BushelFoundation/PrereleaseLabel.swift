@@ -69,9 +69,9 @@ extension PrereleaseLabel {
       return nil
     }
     #if DEBUG
-    if EnvironmentConfiguration.shared.releaseVersion {
-      return nil
-    }
+      if EnvironmentConfiguration.shared.releaseVersion {
+        return nil
+      }
     #endif
     self.init(label: label, baseNumber: base)
   }
