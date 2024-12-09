@@ -33,10 +33,10 @@
   import BushelUtilities
   public import Foundation
 
-// swiftlint:disable file_length
+  // swiftlint:disable file_length
 
   /// A structure that provides a `Snapshotter` and `Loggable` implementation
-/// for managing file versions as snapshots.
+  /// for managing file versions as snapshots.
   public struct FileVersionSnapshotter<MachineType: Machine>: Snapshotter, Loggable {
     /// The logging category for this type.
     public static var loggingCategory: BushelLogging.Category {

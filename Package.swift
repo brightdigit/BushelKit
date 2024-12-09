@@ -996,6 +996,7 @@ var dependency: Package.Dependency {
 }
 }
 let package = Package(
+name: "BushelKit",
 entries: {
 BushelCommand()
 BushelFoundation()
@@ -1043,8 +1044,6 @@ Group("Upcoming") {
 FullTypedThrows()
 InternalImportsByDefault()
 }
-WarnLongFunctionBodies(milliseconds: 50)
-WarnLongExpressionTypeChecking(milliseconds: 50)
 }
 )
 .supportedPlatforms {

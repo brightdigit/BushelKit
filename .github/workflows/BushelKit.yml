@@ -142,15 +142,18 @@ jobs:
       - name: Build DocC
         run: swift package generate-documentation --platform "name=macos,version=15.1" --transform-for-static-hosting --hosting-base-path "swift-docc" --disable-indexing --enable-experimental-combined-documentation
       - name: Package DocArchive
+        if: github.ref == 'refs/heads/main'
         working-directory: .build/plugins/Swift-DocC/outputs
         run: tar -cf BushelKit.doccarchive.tar BushelKit.doccarchive
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
+        if: github.ref == 'refs/heads/main'
         with:
           overwrite: true
           path: /workspace/.build/plugins/Swift-DocC/outputs/BushelKit.doccarchive.tar
           retention-days: 30
       - uses: peter-evans/repository-dispatch@v3
+        if: github.ref == 'refs/heads/main'
         with:
           token: ${{ secrets.PAT_TOKEN }}
           repository: brightdigit/BushelDocs

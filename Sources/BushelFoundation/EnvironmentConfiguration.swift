@@ -43,6 +43,8 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
     case onboardingOveride = "ONBOARDING_OVERRIDE"
     /// Resets the application.
     case resetApplication = "RESET_APPLICATION"
+
+    case releaseVersion = "RELEASE_VERSION"
   }
 
   /// The shared instance of `EnvironmentConfiguration`.
@@ -64,6 +66,10 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   @EnvironmentProperty(Key.resetApplication)
   public var resetApplication: Bool
 
+  /// Indicates whether the application should be reset.
+  @EnvironmentProperty(Key.releaseVersion)
+  public var releaseVersion: Bool
+
   /// Provides a custom mirror for the `EnvironmentConfiguration` instance.
   public var customMirror: Mirror {
     Mirror(
@@ -73,6 +79,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
         "disallowDatabaseRebuild": self.disallowDatabaseRebuild,
         "onboardingOveride": self.onboardingOveride,
         "resetApplication": self.resetApplication,
+        "releaseVersion": self.releaseVersion,
       ]
     )
   }

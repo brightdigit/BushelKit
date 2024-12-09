@@ -30,6 +30,7 @@
 import PackageDescription
 
 let package = Package(
+  name: "BushelKit",
   entries: {
     BushelCommand()
     BushelFoundation()
@@ -84,8 +85,8 @@ let package = Package(
       InternalImportsByDefault()
       // IsolatedDefaultValues()
     }
-    WarnLongFunctionBodies(milliseconds: 50)
-    WarnLongExpressionTypeChecking(milliseconds: 50)
+//    WarnLongFunctionBodies(milliseconds: 50)
+//    WarnLongExpressionTypeChecking(milliseconds: 50)
   }
 )
 .supportedPlatforms {
