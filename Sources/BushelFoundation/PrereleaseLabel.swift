@@ -68,6 +68,11 @@ extension PrereleaseLabel {
       assertionFailure("Bundle InfoDictionary Missing Label and Base for Prerelease Info")
       return nil
     }
+    #if DEBUG
+    if EnvironmentConfiguration.shared.releaseVersion {
+      return nil
+    }
+    #endif
     self.init(label: label, baseNumber: base)
   }
 
