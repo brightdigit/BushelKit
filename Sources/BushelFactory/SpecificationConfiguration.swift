@@ -53,7 +53,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
 
 
   public var template: SpecificationTemplate<Name>? {
-    willSet {
+    didSet {
       if let template {
         self.updatingValues = true
         self.memoryIndex = template.memoryIndex(
