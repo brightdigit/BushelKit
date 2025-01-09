@@ -50,7 +50,7 @@
         Float(
           VZVirtualMachineConfiguration.minimumAllowedMemorySize
         )...Float(
-          VZVirtualMachineConfiguration.maximumAllowedMemorySize
+          8589934592
         )
     )
   }

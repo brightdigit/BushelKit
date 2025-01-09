@@ -47,6 +47,20 @@ public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
   public var description: String {
     "cpuCount: \(self.cpuCount); memory: \(self.memory)"
   }
+  
+  
+  private var requiredMemoryFloat: Float? {
+    guard self.memory.lowerBound < self.memory.upperBound  else {
+      
+      return self.memory.upperBound
+    }
+    
+    return nil
+  }
+  
+  public var requiredMemory: Int64? {
+    return requiredMemoryFloat.map(Int64.init)
+  }
 
   /// Initializes a new `ConfigurationRange` instance.
   ///
