@@ -85,7 +85,7 @@ jobs:
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.2.app"
             deviceName: "Apple Vision Pro"
-            osVersion: "2.1"
+            osVersion: "2.2"
   
     steps:
       - uses: actions/checkout@v4
@@ -129,9 +129,8 @@ jobs:
         if: matrix.type
         run: >
           xcodebuild test
-          -scheme ${{ env.PACKAGE_NAME }}-Package
-          -sdk ${{ matrix.type == 'ios' && 'iphonesimulator' || 'watchsimulator' }}
-          -destination 'platform=${{ matrix.type == 'ios' && 'iOS Simulator' || 'watchOS Simulator' }},name=${{ matrix.deviceName }},OS=${{ matrix.osVersion }}'
+          -scheme ${{ env.PACKAGE_NAME }}-Package        -sdk ${{ matrix.config.type == 'ios' && 'iphonesimulator' || matrix.config.type == 'watchos' && 'watchsimulator' || 'xrsimulator' }}
+          -destination 'platform=${{ matrix.config.type == 'ios' && 'iOS Simulator' || matrix.config.type == 'watchos' && 'watchOS Simulator' || 'visionOS Simulator' }},name=${{ matrix.config.deviceName }},OS=${{ matrix.config.osVersion }}'
           -enableCodeCoverage YES
           build test
   
