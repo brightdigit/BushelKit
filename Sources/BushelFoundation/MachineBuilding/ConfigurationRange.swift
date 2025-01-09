@@ -3,7 +3,7 @@
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -47,19 +47,17 @@ public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
   public var description: String {
     "cpuCount: \(self.cpuCount); memory: \(self.memory)"
   }
-  
-  
+
   private var requiredMemoryFloat: Float? {
-    guard self.memory.lowerBound < self.memory.upperBound  else {
-      
+    guard self.memory.lowerBound < self.memory.upperBound else {
       return self.memory.upperBound
     }
-    
+
     return nil
   }
-  
+
   public var requiredMemory: Int64? {
-    return requiredMemoryFloat.map(Int64.init)
+    requiredMemoryFloat.map(Int64.init)
   }
 
   /// Initializes a new `ConfigurationRange` instance.

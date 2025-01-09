@@ -3,7 +3,7 @@
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -43,14 +43,12 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
         return false
       }
     } else {
-      
       guard self.configurationRange.memory.contains(Float(self.memory)) else {
         return false
       }
     }
     return storage > 0
   }
-
 
   public var template: SpecificationTemplate<Name>? {
     didSet {
@@ -130,7 +128,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     self.memoryIndex = memoryIndex
     self.storage = Self.storageValue(forIndex: storageIndex)
     self.storageIndex = storageIndex
-    let memoryIndexRangeUpper =  Self.binarySearch(
+    let memoryIndexRangeUpper = Self.binarySearch(
       for: configurationRange.memory.upperBound,
       using: { Self.memoryValue(forIndex: $0) },
       within: Specifications.fullMemoryRange,
@@ -149,7 +147,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     within range: ClosedRange<Int>,
     lower: Float
   ) -> Float {
-    max(    self.binarySearch(for: value, using: using, within: range), lower)
+    max(self.binarySearch(for: value, using: using, within: range), lower)
   }
 
   private static func binarySearch(
