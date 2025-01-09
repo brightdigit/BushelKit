@@ -129,11 +129,12 @@ jobs:
         if: matrix.type
         run: >
           xcodebuild test
-          -scheme ${{ env.PACKAGE_NAME }}-Package        -sdk ${{ matrix.config.type == 'ios' && 'iphonesimulator' || matrix.config.type == 'watchos' && 'watchsimulator' || 'xrsimulator' }}
-          -destination 'platform=${{ matrix.config.type == 'ios' && 'iOS Simulator' || matrix.config.type == 'watchos' && 'watchOS Simulator' || 'visionOS Simulator' }},name=${{ matrix.config.deviceName }},OS=${{ matrix.config.osVersion }}'
+          -scheme ${{ env.PACKAGE_NAME }}-Package        
+          -sdk ${{ matrix.type == 'ios' && 'iphonesimulator' || matrix.type == 'watchos' && 'watchsimulator' || 'xrsimulator' }}
+          -destination 'platform=${{ matrix.type == 'ios' && 'iOS Simulator' || matrix.type == 'watchos' && 'watchOS Simulator' || 'visionOS Simulator' }},name=${{ matrix.deviceName }},OS=${{ matrix.osVersion }}'
           -enableCodeCoverage YES
-          build test
-  
+          build test        
+          
       # Common Coverage Steps
       - name: Process Coverage
         uses: sersoft-gmbh/swift-coverage-action@v4
