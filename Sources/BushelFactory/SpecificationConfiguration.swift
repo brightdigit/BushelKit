@@ -3,7 +3,7 @@
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -38,8 +38,14 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     guard self.configurationRange.cpuCount.contains(self.cpuCount) else {
       return false
     }
-    guard self.configurationRange.memory.contains(Float(self.memory)) else {
-      return false
+    if let requiredMemory = configurationRange.requiredMemory {
+      guard self.memory == requiredMemory else {
+        return false
+      }
+    } else {
+      guard self.configurationRange.memory.contains(Float(self.memory)) else {
+        return false
+      }
     }
     return storage > 0
   }
@@ -87,7 +93,10 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
 
   public private(set) var memory: Int64
   public var memoryIndex: Float = 1 {
-    didSet {
+    willSet {
+      if let requiredMemory = configurationRange.requiredMemory {
+        self.memory = requiredMemory
+      }
       self.memory = Self.memoryValue(forIndex: memoryIndex)
       if !updatingValues {
         self.template = nil
@@ -97,7 +106,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
 
   public private(set) var storage: Int64
   public var storageIndex: Float = 36 {
-    didSet {
+    willSet {
       self.storage = Self.storageValue(forIndex: storageIndex)
       if !updatingValues {
         self.template = nil
@@ -115,20 +124,30 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     self.configurationRange = range
     self.template = template
     self.cpuCount = cpuCount
-    self.memory = Self.memoryValue(forIndex: memoryIndex)
+    self.memory = range.requiredMemory ?? Self.memoryValue(forIndex: memoryIndex)
     self.memoryIndex = memoryIndex
     self.storage = Self.storageValue(forIndex: storageIndex)
     self.storageIndex = storageIndex
+    let memoryIndexRangeUpper = Self.binarySearch(
+      for: configurationRange.memory.upperBound,
+      using: { Self.memoryValue(forIndex: $0) },
+      within: Specifications.fullMemoryRange,
+      lower: 1
+    )
     self.memoryIndexRange = .init(
       uncheckedBounds: (
         lower: 1,
-        upper: Self.binarySearch(
-          for: configurationRange.memory.upperBound,
-          using: { Self.memoryValue(forIndex: $0) },
-          within: Specifications.fullMemoryRange
-        )
+        upper: memoryIndexRangeUpper
       )
     )
+  }
+  private static func binarySearch(
+    for value: Float,
+    using: @escaping @Sendable (Int) -> Int,
+    within range: ClosedRange<Int>,
+    lower: Float
+  ) -> Float {
+    max(self.binarySearch(for: value, using: using, within: range), lower)
   }
 
   private static func binarySearch(
