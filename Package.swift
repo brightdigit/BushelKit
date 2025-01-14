@@ -8,7 +8,7 @@ switch entry.productType {
 case .executable:
 return Self.executable(name: entry.name, targets: targets)
 case .library:
-return Self.library(name: entry.name, type:  entry.libraryType, targets: targets)
+return Self.library(name: entry.name, type: entry.libraryType, targets: targets)
 }
 }
 }
@@ -17,14 +17,10 @@ public enum SwiftSettingsBuilder {
 public static func buildPartialBlock(first: SwiftSetting) -> [SwiftSetting] {
 [first]
 }
-public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting)
--> [SwiftSetting]
-{
+public static func buildPartialBlock(accumulated: [SwiftSetting], next: SwiftSetting) -> [SwiftSetting] {
 accumulated + [next]
 }
-public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting])
--> [SwiftSetting]
-{
+public static func buildPartialBlock(accumulated: [SwiftSetting], next: [SwiftSetting]) -> [SwiftSetting] {
 accumulated + next
 }
 public static func buildPartialBlock(first: [SwiftSetting]) -> [SwiftSetting] {
@@ -33,17 +29,12 @@ first
 public static func buildPartialBlock(first: any SwiftSettingsConvertible) -> [SwiftSetting] {
 first.swiftSettings()
 }
-public static func buildPartialBlock(
-accumulated: [SwiftSetting],
-next: any SwiftSettingsConvertible
-) -> [SwiftSetting] {
+public static func buildPartialBlock(accumulated: [SwiftSetting], next: any SwiftSettingsConvertible) -> [SwiftSetting] {
 accumulated + next.swiftSettings()
 }
 }
 extension _PackageDescription_Target {
-static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = [])
--> _PackageDescription_Target
-{
+static func entry(_ entry: Target, swiftSettings: [SwiftSetting] = []) -> _PackageDescription_Target {
 let dependencies = entry.dependencies.map(\.targetDependency)
 switch entry.targetType {
 case .executable:
@@ -95,17 +86,17 @@ var productTargets: [Target] {
 var targetType: TargetType {
 switch productType {
 case .library:
-.regular
+return .regular
 case .executable:
-.executable
+return .executable
 }
 }
 }
 extension Package {
-convenience init(
+public convenience init(
 name: String? = nil,
 @ProductsBuilder entries: @escaping () -> [any Product],
-@PackageDependencyBuilder dependencies packageDependencies: @escaping () -> [any PackageDependency] = { [any PackageDependency] () },
+@PackageDependencyBuilder dependencies packageDependencies: @escaping () -> [any PackageDependency] = { [any PackageDependency]() },
 @TestTargetBuilder testTargets: @escaping () -> any TestTargets = { [any TestTarget]() },
 @SwiftSettingsBuilder swiftSettings: @escaping () -> [SwiftSetting] = { [SwiftSetting]() }
 ) {
@@ -162,15 +153,15 @@ return self
 }
 }
 @resultBuilder
-enum PackageDependencyBuilder {
-internal static func buildPartialBlock(first: PackageDependency) -> [any PackageDependency] {
+public enum PackageDependencyBuilder {
+public static func buildPartialBlock(first: PackageDependency) -> [any PackageDependency] {
 [first]
 }
-internal static func buildPartialBlock(accumulated: [any PackageDependency], next: PackageDependency) -> [any PackageDependency]{
+public static func buildPartialBlock(accumulated: [any PackageDependency], next: PackageDependency) -> [any PackageDependency] {
 accumulated + [next]
 }
 }
-protocol PackageDependency: _Named {
+public protocol PackageDependency: _Named {
 var packageName: String { get }
 var dependency: _PackageDescription_PackageDependency { get }
 }
@@ -242,12 +233,11 @@ public var targetType: TargetType {
 }
 }
 @resultBuilder
-enum DependencyBuilder {
-static func buildPartialBlock(first: Dependency) -> any Dependencies {
+public enum DependencyBuilder {
+public static func buildPartialBlock(first: Dependency) -> any Dependencies {
 [first]
 }
-static func buildPartialBlock(accumulated: any Dependencies, next: Dependency) -> any Dependencies
-{
+public static func buildPartialBlock(accumulated: any Dependencies, next: Dependency) -> any Dependencies {
 accumulated + [next]
 }
 }
@@ -299,35 +289,30 @@ first
 public static func buildPartialBlock(first: any Product) -> [any Product] {
 [first]
 }
-public static func buildPartialBlock(accumulated: [any Product], next: any Product)
--> [any Product]
-{
+public static func buildPartialBlock(accumulated: [any Product], next: any Product) -> [any Product] {
 accumulated + [next]
 }
-public static func buildPartialBlock(accumulated: [any Product], next: [any Product])
--> [any Product]
-{
+public static func buildPartialBlock(accumulated: [any Product], next: [any Product]) -> [any Product] {
 accumulated + next
 }
 }
-@resultBuilder
-enum SupportedPlatformBuilder {
-static func buildPartialBlock(first: SupportedPlatform) -> any SupportedPlatforms {
+@resultBuilder public enum SupportedPlatformBuilder {
+public static func buildPartialBlock(first: SupportedPlatform) -> any SupportedPlatforms {
 [first]
 }
-static func buildPartialBlock(first: PlatformSet) -> any SupportedPlatforms {
+public static func buildPartialBlock(first: PlatformSet) -> any SupportedPlatforms {
 first.body
 }
-static func buildPartialBlock(first: any SupportedPlatforms) -> any SupportedPlatforms {
+public static func buildPartialBlock(first: any SupportedPlatforms) -> any SupportedPlatforms {
 first
 }
-static func buildPartialBlock(
+public static func buildPartialBlock(
 accumulated: any SupportedPlatforms,
 next: any SupportedPlatforms
 ) -> any SupportedPlatforms {
 accumulated.appending(next)
 }
-static func buildPartialBlock(
+public static func buildPartialBlock(
 accumulated: any SupportedPlatforms,
 next: SupportedPlatform
 ) -> any SupportedPlatforms {
@@ -340,11 +325,11 @@ self + dependencies
 }
 }
 @resultBuilder
-enum ResourcesBuilder {
-static func buildPartialBlock(first: Resource) -> [Resource] {
+public enum ResourcesBuilder {
+public static func buildPartialBlock(first: Resource) -> [Resource] {
 [first]
 }
-static func buildPartialBlock(accumulated: [Resource], next: Resource) -> [Resource] {
+public static func buildPartialBlock(accumulated: [Resource], next: Resource) -> [Resource] {
 accumulated + [next]
 }
 }
@@ -365,13 +350,13 @@ extension FeatureState {
 public func swiftSetting(name: String) -> SwiftSetting {
 switch self {
 case .experimental:
-.enableExperimentalFeature(name)
+return .enableExperimentalFeature(name)
 case .upcoming:
-.enableUpcomingFeature(name)
+return .enableUpcomingFeature(name)
 }
 }
 }
-protocol PlatformSet {
+public protocol PlatformSet {
 @SupportedPlatformBuilder
 var body: any SupportedPlatforms { get }
 }
@@ -379,7 +364,7 @@ public typealias _PackageDescription_Product = PackageDescription.Product
 public typealias _PackageDescription_Target = PackageDescription.Target
 public typealias _PackageDescription_TargetDependency = PackageDescription.Target.Dependency
 public typealias _PackageDescription_PackageDependency = PackageDescription.Package.Dependency
-public typealias LibraryType = PackageDescription.Product.Library.LibraryType//
+public typealias LibraryType = PackageDescription.Product.Library.LibraryType
 public struct GlobalActorIsolatedTypesUsability: SwiftSettingFeature {
 public var featureState: FeatureState {
 return .experimental
@@ -432,7 +417,7 @@ return .experimental
 }
 public struct StrictConcurrency: SwiftSettingFeature {
 public let featureState: FeatureState
-public init (featureState: FeatureState = .experimental) {
+public init(featureState: FeatureState = .experimental) {
 self.featureState = featureState
 }
 }
@@ -485,12 +470,12 @@ public struct Ounchecked: UnsafeFlag {}
 public struct ParseableOutput: UnsafeFlag {}
 public struct EmitObjcHeader: UnsafeFlag {}
 public struct EnableLibraryEvolution: UnsafeFlag {}
-struct WarnLongExpressionTypeChecking : UnsafeFlag {
-internal init(milliseconds: Int) {
+public struct WarnLongExpressionTypeChecking : UnsafeFlag {
+public init(milliseconds: Int) {
 self.milliseconds = milliseconds
 }
-let milliseconds : Int
-var unsafeFlagArguments: [String] {
+public let milliseconds : Int
+public var unsafeFlagArguments: [String] {
 [
 "-Xfrontend",
 "-warn-long-expression-type-checking=\(milliseconds)"
@@ -518,12 +503,12 @@ public struct Static: UnsafeFlag {}
 public struct EmitClangHeaderNonmodularIncludes: UnsafeFlag {}
 public struct SaveOptimizationRecord: UnsafeFlag {}
 public struct RcacheCompileJob: UnsafeFlag {}
-struct WarnLongFunctionBodies : UnsafeFlag {
-internal init(milliseconds: Int) {
+public struct WarnLongFunctionBodies: UnsafeFlag {
+public init(milliseconds: Int) {
 self.milliseconds = milliseconds
 }
-let milliseconds : Int
-var unsafeFlagArguments: [String] {
+public let milliseconds: Int
+public var unsafeFlagArguments: [String] {
 [
 "-Xfrontend",
 "-warn-long-function-bodies=\(milliseconds)"
@@ -644,8 +629,7 @@ func appending(_ testTargets: any TestTargets) -> Self
 }
 @resultBuilder
 public enum GroupBuilder<U> {
-public static func buildPartialBlock<T: GroupBuildable>(accumulated: [U], next: T) -> [U]
-where T.Output == U {
+public static func buildPartialBlock<T: GroupBuildable>(accumulated: [U], next: T) -> [U] where T.Output == U {
 accumulated + T.output(from: [next])
 }
 public static func buildPartialBlock<T: GroupBuildable>(first: T) -> [U] where T.Output == U {
@@ -727,19 +711,19 @@ init<S>(_ s: S) where S.Element == SupportedPlatform, S: Sequence
 func appending(_ platforms: any SupportedPlatforms) -> Self
 }
 @resultBuilder
-enum TestTargetBuilder {
-static func buildPartialBlock(first: [any TestTarget]) -> any TestTargets {
+public enum TestTargetBuilder {
+public static func buildPartialBlock(first: [any TestTarget]) -> any TestTargets {
 first
 }
-static func buildPartialBlock(first: any TestTarget) -> any TestTargets {
+public static func buildPartialBlock(first: any TestTarget) -> any TestTargets {
 [first]
 }
-static func buildPartialBlock(accumulated: any TestTargets, next: any TestTarget)
+public static func buildPartialBlock(accumulated: any TestTargets, next: any TestTarget)
 -> any TestTargets
 {
 accumulated + [next]
 }
-static func buildPartialBlock(accumulated: any TestTargets, next: any TestTargets)
+public static func buildPartialBlock(accumulated: any TestTargets, next: any TestTargets)
 -> any TestTargets
 {
 accumulated.appending(next)
@@ -968,12 +952,12 @@ var dependency: Package.Dependency {
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0-beta.4")
+.package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0")
 }
 }
 struct FelinePineSwift: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0-alpha.1")
+.package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0")
 }
 var condition: TargetDependencyCondition? {
 .notApple()

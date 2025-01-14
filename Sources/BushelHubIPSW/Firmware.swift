@@ -41,6 +41,6 @@ extension Firmware: OperatingSystemInstalled {
   }
 
   public var operatingSystemVersion: OperatingSystemVersion {
-    self.version
+    .init(majorVersion: self.version.major, minorVersion: self.version.minor, patchVersion: self.version.patch)
   }
 }

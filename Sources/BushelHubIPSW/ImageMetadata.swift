@@ -36,7 +36,7 @@ extension ImageMetadata {
     self.init(
       isImageSupported: true,
       buildVersion: firmware.buildid,
-      operatingSystemVersion: firmware.version,
+      operatingSystemVersion: .init(majorVersion: firmware.version.major, minorVersion: firmware.version.minor, patchVersion: firmware.version.patch),
       contentLength: Int(firmware.filesize),
       lastModified: firmware.releasedate,
       fileExtension: FileType.ipswFileExtension,
