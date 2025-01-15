@@ -30,6 +30,7 @@
 public import BushelFoundation
 import BushelUtilities
 public import Foundation
+public import OSVer
 public import RadiantDocs
 import RadiantKit
 

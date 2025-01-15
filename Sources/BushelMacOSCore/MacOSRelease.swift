@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 import Foundation
+import OSVer
 
 public struct MacOSRelease: InstallerRelease {
   public let majorVersion: Int

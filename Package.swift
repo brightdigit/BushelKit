@@ -763,7 +763,11 @@ BushelDocs()
 RadiantKit()
 }
 }
-struct BushelUtilities: Product, Target {}
+struct BushelUtilities: Product, Target {
+var dependencies: any Dependencies {
+OSVer()
+}
+}
 struct BushelTestUtilities: Product, Target {}
 struct BushelHubIPSW: Product, Target {
 var dependencies: any Dependencies {

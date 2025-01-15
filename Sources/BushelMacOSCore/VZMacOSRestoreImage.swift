@@ -30,6 +30,7 @@
 #if canImport(Virtualization) && arch(arm64)
   public import BushelFoundation
   import BushelUtilities
+  import OSVer
 
   public import Virtualization
 
@@ -54,7 +55,7 @@
 
     public var operatingSystem: any OperatingSystemInstalled {
       OperatingSystem(
-        operatingSystemVersion: self.operatingSystemVersion,
+        operatingSystemVersion: .init(self.operatingSystemVersion),
         buildVersion: self.buildVersion
       )
     }

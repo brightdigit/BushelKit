@@ -65,7 +65,7 @@ public struct ReleaseCollection {
 
   public init(releaseCollection: any ReleaseCollectionMetadata, images: [any InstallerImage]) {
     let imageDictionary = Dictionary(grouping: images) { image in
-      image.operatingSystemVersion.majorVersion
+      image.operatingSystemVersion.major
     }
     let sourceReleases = releaseCollection.releases.sorted {
       $0.majorVersion < $1.majorVersion

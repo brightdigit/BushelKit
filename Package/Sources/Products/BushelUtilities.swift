@@ -27,4 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-struct BushelUtilities: Product, Target {}
+struct BushelUtilities: Product, Target {
+  var dependencies: any Dependencies {    
+    OSVer()
+  }
+}

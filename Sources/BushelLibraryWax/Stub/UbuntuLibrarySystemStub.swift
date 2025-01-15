@@ -30,6 +30,7 @@
 public import BushelFoundation
 public import BushelLibrary
 public import Foundation
+import OSVer
 public import RadiantDocs
 
 public struct UbuntuLibrarySystemStub: LibrarySystem {

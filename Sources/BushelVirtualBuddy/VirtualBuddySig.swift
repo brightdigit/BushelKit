@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+public import OSVer
 
 public struct VirtualBuddySig: Codable {
   public let uuid: UUID

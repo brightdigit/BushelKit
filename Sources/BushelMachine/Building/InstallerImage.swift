@@ -30,6 +30,7 @@
 public import BushelFoundation
 public import BushelLogging
 public import Foundation
+public import OSVer
 
 /// A protocol that represents an installer image for an operating system.
 public protocol InstallerImage: OperatingSystemInstalled, Sendable {

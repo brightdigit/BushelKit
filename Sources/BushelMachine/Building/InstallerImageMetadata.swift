@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 public import Foundation
+public import OSVer
 
 /// Represents metadata for an installer image.
 public struct InstallerImageMetadata: Equatable, Sendable {

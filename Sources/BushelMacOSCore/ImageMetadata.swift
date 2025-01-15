@@ -71,7 +71,7 @@
       self.init(
         isImageSupported: vzRestoreImage.isSupported,
         buildVersion: vzRestoreImage.buildVersion,
-        operatingSystemVersion: vzRestoreImage.operatingSystemVersion,
+        operatingSystemVersion: .init(vzRestoreImage.operatingSystemVersion),
         contentLength: contentLength,
         lastModified: lastModified,
         fileExtension: MacOSVirtualization.ipswFileExtension,

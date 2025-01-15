@@ -30,6 +30,7 @@
 public import BushelFoundation
 public import Foundation
 public import IPSWDownloads
+public import OSVer
 
 extension Firmware: OperatingSystemInstalled {
   private struct InvalidURLError: Error {
@@ -41,6 +42,8 @@ extension Firmware: OperatingSystemInstalled {
   }
 
   public var operatingSystemVersion: OSVer {
-    .init(majorVersion: self.version.major, minorVersion: self.version.minor, patchVersion: self.version.patch)
+    .init(
+      majorVersion: self.version.major, minorVersion: self.version.minor,
+      patchVersion: self.version.patch)
   }
 }

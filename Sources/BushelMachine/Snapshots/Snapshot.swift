@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 public import Foundation
+public import OSVer
 
 /// Represents a snapshot of a system,
 /// containing information about the system's state at a specific point in time.
@@ -104,7 +105,7 @@ extension Snapshot {
     ///   - operatingSystemVersion: The version of the operating system
     ///   installed at the time of the snapshot.
     ///   - buildVersion: The build version of the operating system installed at the time of the snapshot.
-    internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
+    internal init(operatingSystemVersion: OSVer, buildVersion: String?) {
       self.operatingSystemVersion = operatingSystemVersion
       self.buildVersion = buildVersion
     }

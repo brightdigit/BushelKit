@@ -30,6 +30,7 @@
 import BushelDocs
 public import BushelFoundation
 import Foundation
+import OSVer
 public import RadiantDocs
 
 public enum MacOSVirtualization: Sendable {
@@ -67,7 +68,7 @@ public enum MacOSVirtualization: Sendable {
   }
 
   public static func imageName(for metadata: any OperatingSystemInstalled) -> String {
-    let majorVersion = metadata.operatingSystemVersion.majorVersion
+    let majorVersion = metadata.operatingSystemVersion.major
     return imageNameWithDefault(forMajorVersion: majorVersion)
   }
 
@@ -86,7 +87,7 @@ public enum MacOSVirtualization: Sendable {
   public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String
   {
     // swiftlint:disable:next line_length
-    "macOS \(codeNameWithDefaultFor(majorVersion: metadata.operatingSystemVersion.majorVersion)) \(metadata.operatingSystemVersion)"
+    "macOS \(codeNameWithDefaultFor(majorVersion: metadata.operatingSystemVersion.major)) \(metadata.operatingSystemVersion)"
   }
 
   public static func defaultName(fromMetadata metadata: any OperatingSystemInstalled) -> String {
@@ -100,7 +101,7 @@ public enum MacOSVirtualization: Sendable {
       imageName: self.imageName(for: metadata),
       systemName: self.shortName,
       versionName: MacOSVirtualization.codeNameWithDefaultFor(
-        majorVersion: metadata.operatingSystemVersion.majorVersion
+        majorVersion: metadata.operatingSystemVersion.major
       )
     )
   }

@@ -31,6 +31,7 @@ import BushelFoundation
 import BushelMachine
 import BushelMachineWax
 import Foundation
+import OSVer
 
 internal struct MockInstallerImage: InstallerImage, Equatable {
   internal let libraryID: LibraryIdentifier?

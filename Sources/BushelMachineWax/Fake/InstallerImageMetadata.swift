@@ -29,6 +29,7 @@
 
 public import BushelMachine
 public import Foundation
+public import OSVer
 
 extension InstallerImageMetadata {
   public init(operatingSystem: OSVer) {
