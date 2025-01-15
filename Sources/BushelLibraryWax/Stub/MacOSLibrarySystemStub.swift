@@ -84,8 +84,8 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
   }
 
   private func codeNameFor(operatingSystemVersion: OSVer) -> String {
-    Self.codeNames[operatingSystemVersion.major]
-      ?? operatingSystemVersion.major.description
+    Self.codeNames[operatingSystemVersion.majorVersion]
+      ?? operatingSystemVersion.majorVersion.description
   }
 
   private func imageName(forOSMetadata metadata: any OperatingSystemInstalled) -> String {
