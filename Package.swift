@@ -951,12 +951,12 @@ var dependency: Package.Dependency {
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/IPSWDownloads.git", .branch("v1.0.1"))
+.package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.1-beta.1")
 }
 }
 struct OSVer: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0-beta.2"))
+.package(url: "https://github.com/brightdigit/OSVer.git", from: "1.0.0-beta.2")
 }
 }
 struct FelinePineSwift: PackageDependency, TargetDependency {
