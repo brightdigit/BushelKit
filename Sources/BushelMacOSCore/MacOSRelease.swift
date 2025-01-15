@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 import Foundation
+import OSVer
 
 public struct MacOSRelease: InstallerRelease {
   public let majorVersion: Int
@@ -40,7 +41,7 @@ public struct MacOSRelease: InstallerRelease {
   }
 
   public init?(majorVersion: Int) {
-    guard let releaseName = OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion)
+    guard let releaseName = OSVer.macOSReleaseName(majorVersion: majorVersion)
     else {
       assertionFailure("Missing Metadata for macOS \(majorVersion).")
       return nil

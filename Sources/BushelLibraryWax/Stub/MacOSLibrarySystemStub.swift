@@ -30,6 +30,7 @@
 public import BushelFoundation
 public import BushelLibrary
 public import Foundation
+import OSVer
 public import RadiantDocs
 
 public struct MacOSLibrarySystemStub: LibrarySystem {
@@ -82,7 +83,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
-  private func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
+  private func codeNameFor(operatingSystemVersion: OSVer) -> String {
     Self.codeNames[operatingSystemVersion.majorVersion]
       ?? operatingSystemVersion.majorVersion.description
   }

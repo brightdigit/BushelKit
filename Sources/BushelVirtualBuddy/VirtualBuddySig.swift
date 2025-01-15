@@ -28,10 +28,11 @@
 //
 
 public import Foundation
+public import OSVer
 
 public struct VirtualBuddySig: Codable {
   public let uuid: UUID
-  public let version: OperatingSystemVersion
+  public let version: OSVer
   public let build: String
   public let code: Int
   public let message: String

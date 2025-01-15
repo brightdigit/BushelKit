@@ -30,6 +30,7 @@
 public import BushelFoundation
 import BushelUtilities
 public import Foundation
+public import OSVer
 public import RadiantDocs
 import RadiantKit
 
@@ -40,7 +41,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   /// System ID
   public let vmSystemID: VMSystemID
   public let snapshotSystemID: SnapshotterID
-  public let operatingSystemVersion: OperatingSystemVersion
+  public let operatingSystemVersion: OSVer
   public let buildVersion: String?
 
   /// Storage specifications
@@ -66,7 +67,7 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
     restoreImageFile: InstallerImageIdentifier,
     vmSystemID: VMSystemID,
     snapshotSystemID: SnapshotterID,
-    operatingSystemVersion: OperatingSystemVersion,
+    operatingSystemVersion: OSVer,
     buildVersion: String? = nil,
     storage: [MachineStorageSpecification],
     cpuCount: Int = 1,

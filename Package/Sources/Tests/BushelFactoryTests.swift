@@ -29,7 +29,6 @@
 
 struct BushelFactoryTests: TestTarget {
   var dependencies: any Dependencies {
-    // BushelLocalization()
     BushelFactory()
     BushelTestUtilities()
     BushelFoundationWax()

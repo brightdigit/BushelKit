@@ -31,7 +31,7 @@ import PackageDescription
 
 struct FelinePineSwift: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0-alpha.1")
+    .package(url: "https://github.com/brightdigit/FelinePineSwift.git", from: "1.0.0")
   }
   
   var condition: TargetDependencyCondition? {

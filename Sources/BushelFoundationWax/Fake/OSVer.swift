@@ -1,9 +1,9 @@
 //
-//  OperatingSystemVersion.swift
+//  OSVer.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,10 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+package import Foundation
+package import OSVer
 
-struct OperatingSystemVersion: PackageDependency, TargetDependency {
-  var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/OperatingSystemVersion.git", from: "1.0.0-beta.1")
+extension OSVer {
+  package static func random() -> OSVer {
+    .init(
+      majorVersion: .random(in: 12...15),
+      minorVersion: .random(in: 0...6),
+      patchVersion: .random(in: 0...7)
+    )
   }
 }

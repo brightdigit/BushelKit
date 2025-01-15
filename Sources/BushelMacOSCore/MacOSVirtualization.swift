@@ -30,6 +30,7 @@
 import BushelDocs
 public import BushelFoundation
 import Foundation
+import OSVer
 public import RadiantDocs
 
 public enum MacOSVirtualization: Sendable {
@@ -72,7 +73,7 @@ public enum MacOSVirtualization: Sendable {
   }
 
   public static func codeNameFor(majorVersion: Int) -> String? {
-    OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion)
+    OSVer.macOSReleaseName(majorVersion: majorVersion)
   }
 
   public static func codeNameWithDefaultFor(majorVersion: Int) -> String {
@@ -80,7 +81,7 @@ public enum MacOSVirtualization: Sendable {
   }
 
   public static func codeNameFor(majorVersion: Int, withDefault defaultName: String) -> String {
-    OperatingSystemVersion.macOSReleaseName(majorVersion: majorVersion) ?? defaultName
+    OSVer.macOSReleaseName(majorVersion: majorVersion) ?? defaultName
   }
 
   public static func operatingSystemShortName(for metadata: any OperatingSystemInstalled) -> String

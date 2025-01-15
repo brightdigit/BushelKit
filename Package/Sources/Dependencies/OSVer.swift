@@ -3,7 +3,7 @@
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2025 BrightDigit.
+//  Copyright © 2024 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,14 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-package import Foundation
+import Foundation
 
-extension OperatingSystemVersion {
-  package static func random() -> OperatingSystemVersion {
-    .init(
-      majorVersion: .random(in: 12...15),
-      minorVersion: .random(in: 0...6),
-      patchVersion: .random(in: 0...7)
-    )
+struct OSVer: PackageDependency, TargetDependency {
+  var dependency: Package.Dependency {
+    .package(url: "https://github.com/brightdigit/OSVer.git", from: "1.0.0-beta.2")
   }
 }
