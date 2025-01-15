@@ -1,5 +1,5 @@
 {
-  "originHash" : "291aa31d257c8ebc7a33773ca74442778bf1f09d410b692f16909600bf6216fe",
+  "originHash" : "5b07d8a2c3f953e87cbe85b7e498e0cdd0627e901a7178470d30dda5b371ebcb",
   "pins" : [
     {
       "identity" : "felinepine",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/IPSWDownloads.git",
       "state" : {
-        "revision" : "48652b14ecfb832cc07481077657b165e4732dcb",
-        "version" : "1.0.1-beta.2"
+        "revision" : "23c21e7159af77445d0af2f75d095a48a8169133",
+        "version" : "1.0.1"
       }
     },
     {
@@ -34,7 +34,7 @@
       "location" : "https://github.com/brightdigit/OSVer.git",
       "state" : {
         "revision" : "448f170babc2f6c9897194a4b42719994639325d",
-        "version" : "1.0.0-beta.2"
+        "version" : "1.0.0"
       }
     },
     {
