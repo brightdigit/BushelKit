@@ -87,7 +87,7 @@ extension Version {
 
     return
       // swiftlint:disable:next line_length
-      "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1, factorOf: 2))"
+      "\(self.marketingSemVer) \(prereleaseLabel.label) \(prereleaseLabel.offset(fromBuildNumber: self.buildNumber, additionalOffset: 1))"
   }
 
   /// Creates a new `Version` instance by parsing a marketing version string, build number string,
