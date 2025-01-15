@@ -31,6 +31,6 @@ import Foundation
 
 struct OSVer: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0"))
+    .package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0-beta.2"))
   }
 }

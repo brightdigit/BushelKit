@@ -76,9 +76,9 @@ package struct MockDataSet: VirtualizationDataSet {
     let hardwareModelString = String(
       format: hardwareModelFormatString,
       hardwareModel.dataRepresentationVersion,
-      hardwareModel.minimumSupportedOS.major,
-      hardwareModel.minimumSupportedOS.minor,
-      hardwareModel.minimumSupportedOS.patch,
+      hardwareModel.minimumSupportedOS.majorVersion,
+      hardwareModel.minimumSupportedOS.minorVersion,
+      hardwareModel.minimumSupportedOS.patchVersion,
       hardwareModel.platformVersion
     )
 

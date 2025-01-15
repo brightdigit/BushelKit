@@ -944,11 +944,6 @@ var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/FelinePine.git", from: "1.0.0-beta.2")
 }
 }
-struct OSVer: PackageDependency, TargetDependency {
-var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0"))
-}
-}
 struct RadiantKit: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.1")
@@ -957,6 +952,11 @@ var dependency: Package.Dependency {
 struct IPSWDownloads: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/IPSWDownloads.git", .branch("v1.0.1"))
+}
+}
+struct OSVer: PackageDependency, TargetDependency {
+var dependency: Package.Dependency {
+.package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0-beta.2"))
 }
 }
 struct FelinePineSwift: PackageDependency, TargetDependency {

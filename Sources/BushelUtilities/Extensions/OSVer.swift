@@ -45,7 +45,7 @@ extension OSVer {
 
   /// The release name of the current macOS version, if available.
   public var macOSReleaseName: String? {
-    Self.macOSReleaseName(majorVersion: self.major)
+    Self.macOSReleaseName(majorVersion: self.majorVersion)
   }
 
   /// Returns the release name for the specified macOS major version, if available.
@@ -82,9 +82,9 @@ extension OSVer {
   public func id(buildVersion: String?) -> String {
     [
       [
-        major,
-        minor,
-        patch,
+        majorVersion,
+        minorVersion,
+        patchVersion,
       ].map(String.init).joined(separator: "."),
       buildVersion ?? "",
     ]
