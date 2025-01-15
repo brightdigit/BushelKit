@@ -1,5 +1,5 @@
 //
-//  OperatingSystemVersion.swift
+//  SystemConfiguration.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,14 +27,21 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-package import Foundation
+public struct SystemConfiguration: Sendable, Codable, Equatable {
+  public let operatingSystemVersionString: String
+  public let physicalMemory: Int
+  public let processorCount: Int
+  public let activeProcessorCount: Int
 
-extension OperatingSystemVersion {
-  package static func random() -> OperatingSystemVersion {
-    .init(
-      majorVersion: .random(in: 12...15),
-      minorVersion: .random(in: 0...6),
-      patchVersion: .random(in: 0...7)
-    )
+  public init(
+    operatingSystemVersionString: String,
+    physicalMemory: Int,
+    processorCount: Int,
+    activeProcessorCount: Int
+  ) {
+    self.operatingSystemVersionString = operatingSystemVersionString
+    self.physicalMemory = physicalMemory
+    self.processorCount = processorCount
+    self.activeProcessorCount = activeProcessorCount
   }
 }

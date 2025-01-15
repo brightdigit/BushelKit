@@ -30,6 +30,7 @@
 public import BushelFoundation
 public import BushelLibrary
 public import Foundation
+import OSVer
 public import RadiantDocs
 
 public struct UbuntuLibrarySystemStub: LibrarySystem {
@@ -75,7 +76,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
     "\(self.shortName) \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
-  private func codeNameFor(operatingSystemVersion _: OperatingSystemVersion) -> String {
+  private func codeNameFor(operatingSystemVersion _: OSVer) -> String {
     "Kinetic Kudu"
   }
 

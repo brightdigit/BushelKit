@@ -30,6 +30,7 @@
 public import BushelFoundation
 import BushelMacOSCore
 import Foundation
+import OSVer
 
 extension ImageMetadata {
   /// A namespace for preview models of `ImageMetadata`.
@@ -52,7 +53,7 @@ extension ImageMetadata {
     public static let venturaBeta3 = ImageMetadata(
       isImageSupported: true,
       buildVersion: "22A5295h",
-      operatingSystemVersion: OperatingSystemVersion(
+      operatingSystemVersion: OSVer(
         majorVersion: 13, minorVersion: 0, patchVersion: 0
       ),
       contentLength: 679_094_144,
@@ -66,7 +67,7 @@ extension ImageMetadata {
     public static let monterey = ImageMetadata(
       isImageSupported: true,
       buildVersion: "21F79",
-      operatingSystemVersion: OperatingSystemVersion(
+      operatingSystemVersion: OSVer(
         majorVersion: 12,
         minorVersion: 4,
         patchVersion: 0

@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+public import OSVer
 
 /// Represents the version components of an operating system.
 public struct OperatingSystemVersionComponents: Sendable {
@@ -35,5 +36,5 @@ public struct OperatingSystemVersionComponents: Sendable {
   public let buildVersion: String?
 
   /// The version of the operating system.
-  public let operatingSystemVersion: OperatingSystemVersion
+  public let operatingSystemVersion: OSVer
 }

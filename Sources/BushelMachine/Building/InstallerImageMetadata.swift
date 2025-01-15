@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 public import Foundation
+public import OSVer
 
 /// Represents metadata for an installer image.
 public struct InstallerImageMetadata: Equatable, Sendable {
@@ -39,7 +40,7 @@ public struct InstallerImageMetadata: Equatable, Sendable {
   /// The label name of the installer image.
   public let labelName: String
   /// The operating system version of the installer image.
-  public let operatingSystem: OperatingSystemVersion
+  public let operatingSystem: OSVer
   /// The build version of the installer image, if available.
   public let buildVersion: String?
   /// The name of the image resource used for the installer image.
@@ -68,7 +69,7 @@ public struct InstallerImageMetadata: Equatable, Sendable {
     longName: String,
     defaultName: String,
     labelName: String,
-    operatingSystem: OperatingSystemVersion,
+    operatingSystem: OSVer,
     buildVersion: String?,
     imageResourceName: String,
     systemName: String,

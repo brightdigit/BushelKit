@@ -34,15 +34,17 @@ public struct PrereleaseLabel: Sendable {
   /// The prerelease label.
   public let label: String
   private let baseNumber: Int
+  private let factor: Int
 
   /// Initializes a new instance of `PrereleaseLabel`.
   ///
   /// - Parameters:
   ///   - label: The prerelease label.
   ///   - baseNumber: The base number for the prerelease label.
-  public init(label: String, baseNumber: Int) {
+  public init(label: String, baseNumber: Int, factor: Int) {
     self.label = label
     self.baseNumber = baseNumber
+    self.factor = factor
   }
 }
 
@@ -53,6 +55,8 @@ extension PrereleaseLabel {
     case label = "Label"
     /// The key for the base number.
     case base = "Base"
+    /// The key for the factor of the offset
+    case factor = "Factor"
   }
 
   /// Initializes a new instance of `PrereleaseLabel` from a dictionary.
@@ -73,7 +77,8 @@ extension PrereleaseLabel {
         return nil
       }
     #endif
-    self.init(label: label, baseNumber: base)
+    let factor = dictionary[Keys.factor.rawValue] as? Int ?? 1
+    self.init(label: label, baseNumber: base, factor: factor)
   }
 
   /// Calculates the offset from the build number based on the prerelease label.
@@ -85,9 +90,8 @@ extension PrereleaseLabel {
   /// - Returns: The calculated offset.
   public func offset(
     fromBuildNumber buildNumber: Int,
-    additionalOffset: Int,
-    factorOf factor: Int
+    additionalOffset: Int
   ) -> Int {
-    (buildNumber - self.baseNumber + additionalOffset) / factor
+    (buildNumber - self.baseNumber + additionalOffset) / self.factor
   }
 }

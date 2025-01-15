@@ -1,13 +1,13 @@
 {
-  "originHash" : "f809a2c32ad5fa24ea844247b659272c2028e4a1b91ec708e451b3852ce74f9e",
+  "originHash" : "5b07d8a2c3f953e87cbe85b7e498e0cdd0627e901a7178470d30dda5b371ebcb",
   "pins" : [
     {
       "identity" : "felinepine",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/FelinePine.git",
       "state" : {
-        "revision" : "b89389fcf3f1100d0765a6a21244df02b00fbc9e",
-        "version" : "1.0.0-beta.5"
+        "revision" : "7abf84e0cded44bc99fae106030e8e25e270dae0",
+        "version" : "1.0.0"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/FelinePineSwift.git",
       "state" : {
-        "revision" : "60bef82f6a8e57475020a1a1fadcc6ed36088769",
-        "version" : "1.0.0-alpha.1"
+        "revision" : "e0a414b8ee7ba1290e9d3b32f4c6cceff95af508",
+        "version" : "1.0.0"
       }
     },
     {
@@ -24,17 +24,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/IPSWDownloads.git",
       "state" : {
-        "revision" : "f49b4c9a356ee031ec3874354f4d273174e5c570",
-        "version" : "1.0.0-beta.5"
+        "revision" : "23c21e7159af77445d0af2f75d095a48a8169133",
+        "version" : "1.0.1"
       }
     },
     {
-      "identity" : "operatingsystemversion",
+      "identity" : "osver",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/brightdigit/OperatingSystemVersion.git",
+      "location" : "https://github.com/brightdigit/OSVer.git",
       "state" : {
-        "revision" : "bd3c70eb38da109ec6be9958e80ee495125d3232",
-        "version" : "1.0.0-beta.1"
+        "revision" : "448f170babc2f6c9897194a4b42719994639325d",
+        "version" : "1.0.0"
       }
     },
     {
@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-http-types",
       "state" : {
-        "revision" : "ae67c8178eb46944fd85e4dc6dd970e1f3ed6ccd",
-        "version" : "1.3.0"
+        "revision" : "ef18d829e8b92d731ad27bb81583edd2094d1ce3",
+        "version" : "1.3.1"
       }
     },
     {
@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "9cb486020ebf03bfa5b5df985387a14a98744537",
-        "version" : "1.6.1"
+        "revision" : "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+        "version" : "1.6.2"
       }
     },
     {
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "daa2fb54fe4a7f5187d7286047d5144c8cb97477",
-        "version" : "1.6.0"
+        "revision" : "23146bc8710ac5e57abb693113f02dc274cf39b6",
+        "version" : "1.8.0"
       }
     },
     {

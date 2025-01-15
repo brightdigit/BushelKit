@@ -31,6 +31,7 @@ import BushelFoundation
 import BushelMachine
 import BushelMachineWax
 import Foundation
+import OSVer
 
 internal struct MockInstallerImage: InstallerImage, Equatable {
   internal let libraryID: LibraryIdentifier?
@@ -51,7 +52,7 @@ internal struct MockInstallerImage: InstallerImage, Equatable {
     var dictionary: [Int: [MockInstallerImage]] = .init()
     for majorVersion in majorVersionRange {
       let osVersionsAll = (0..<upperBoundReleaseCount).map { _ in
-        OperatingSystemVersion(
+        OSVer(
           majorVersion: majorVersion,
           minorVersion: .random(in: 0...9),
           patchVersion: .random(in: 0...9)
