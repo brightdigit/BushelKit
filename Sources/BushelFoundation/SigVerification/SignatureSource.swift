@@ -28,6 +28,7 @@
 //
 
 import BushelUtilities
+public import OSVer
 public import Foundation
 
 /// Represents the source of a signature, either an operating system version or a signature ID.
@@ -36,7 +37,7 @@ public enum SignatureSource: Sendable, CustomDebugStringConvertible {
   case signatureID(String)
 
   /// Represents an operating system version, optionally with a build version.
-  case operatingSystemVersion(OperatingSystemVersion, String?)
+  case operatingSystemVersion(OSVer, String?)
 }
 
 extension SignatureSource {

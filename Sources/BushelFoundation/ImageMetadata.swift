@@ -28,7 +28,7 @@
 //
 
 public import Foundation
-import OperatingSystemVersion
+public import OSVer
 
 /// Represents metadata associated with an image file.
 public struct ImageMetadata: Codable,
@@ -42,7 +42,7 @@ public struct ImageMetadata: Codable,
   /// The build version associated with the image, if available.
   public let buildVersion: String?
   /// The operating system version the image is intended for.
-  public let operatingSystemVersion: OperatingSystemVersion
+  public let operatingSystemVersion: OSVer
   /// The size of the image file in bytes.
   public let contentLength: Int
   /// The last modification date of the image file.
@@ -57,7 +57,7 @@ public struct ImageMetadata: Codable,
   /// A custom debug description string providing details about the image metadata.
   public var debugDescription: String {
     // swiftlint:disable:next line_length
-    "\(Self.self)(isImageSupported: \(self.isImageSupported), buildVersion: \"\(self.buildVersion ?? "")\", operatingSystemVersion: \(self.operatingSystemVersion.debugDescription), contentLength: \(self.contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(self.lastModified.timeIntervalSinceReferenceDate))"
+    "\(Self.self)(isImageSupported: \(self.isImageSupported), buildVersion: \"\(self.buildVersion ?? "")\", operatingSystemVersion: \(self.operatingSystemVersion.description), contentLength: \(self.contentLength), lastModified: Date(timeIntervalSinceReferenceDate: \(self.lastModified.timeIntervalSinceReferenceDate))"
   }
 
   /// Creates a new `ImageMetadata` instance.
@@ -74,7 +74,7 @@ public struct ImageMetadata: Codable,
   public init(
     isImageSupported: Bool,
     buildVersion: String?,
-    operatingSystemVersion: OperatingSystemVersion,
+    operatingSystemVersion: OSVer,
     contentLength: Int,
     lastModified: Date,
     fileExtension: String,

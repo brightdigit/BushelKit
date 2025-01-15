@@ -82,7 +82,7 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     "macOS \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
-  private func codeNameFor(operatingSystemVersion: OperatingSystemVersion) -> String {
+  private func codeNameFor(operatingSystemVersion: OSVer) -> String {
     Self.codeNames[operatingSystemVersion.majorVersion]
       ?? operatingSystemVersion.majorVersion.description
   }

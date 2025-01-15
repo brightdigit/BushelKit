@@ -37,14 +37,14 @@
   #warning("Remove @unchecked Sendable")
   extension VZMacOSRestoreImage: @unchecked @retroactive Sendable {
     internal struct OperatingSystem: OperatingSystemInstalled {
-      internal let operatingSystemVersion: OperatingSystemVersion
+      internal let operatingSystemVersion: OSVer
       internal let buildVersion: String?
-      internal init(operatingSystemVersion: OperatingSystemVersion, buildVersion: String?) {
+      internal init(operatingSystemVersion: OSVer, buildVersion: String?) {
         self.operatingSystemVersion = operatingSystemVersion
         self.buildVersion = buildVersion
       }
 
-      internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
+      internal init?(operatingSystemVersion: OSVer?, buildVersion: String?) {
         guard let operatingSystemVersion else {
           return nil
         }

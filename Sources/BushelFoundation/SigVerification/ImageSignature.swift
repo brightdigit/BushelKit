@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+public import OSVer
 
 /// Represents an image signature,
 /// containing information about the source, system, and verification details.
@@ -42,7 +43,7 @@ public struct ImageSignature: Sendable {
   public let vmSystemID: VMSystemID
 
   /// The version of the operating system.
-  public let operatingSystemVersion: OperatingSystemVersion
+  public let operatingSystemVersion: OSVer
 
   /// The build version of the operating system, if available.
   public let buildVersion: String?
@@ -76,7 +77,7 @@ public struct ImageSignature: Sendable {
     sourceID: String,
     signatureID: String,
     vmSystemID: VMSystemID,
-    operatingSystemVersion: OperatingSystemVersion,
+    operatingSystemVersion: OSVer,
     buildVersion: String?,
     verification: SigVerification,
     priority: SignaturePriority,

@@ -28,12 +28,9 @@
 //
 
 public import Foundation
+public import OSVer
 
-#if canImport(FoundationNetworking)
-  extension OperatingSystemVersion: @unchecked Sendable {}
-#endif
-
-extension OperatingSystemVersion {
+extension OSVer {
   /// A private dictionary mapping macOS major version numbers to their corresponding release names.
   private static let codeNames: [Int: String] = [
     11: "Big Sur",
@@ -48,7 +45,7 @@ extension OperatingSystemVersion {
 
   /// The release name of the current macOS version, if available.
   public var macOSReleaseName: String? {
-    Self.macOSReleaseName(majorVersion: majorVersion)
+    Self.macOSReleaseName(majorVersion: self.major)
   }
 
   /// Returns the release name for the specified macOS major version, if available.
@@ -85,9 +82,9 @@ extension OperatingSystemVersion {
   public func id(buildVersion: String?) -> String {
     [
       [
-        majorVersion,
-        minorVersion,
-        patchVersion,
+        major,
+        minor,
+        patch,
       ].map(String.init).joined(separator: "."),
       buildVersion ?? "",
     ]

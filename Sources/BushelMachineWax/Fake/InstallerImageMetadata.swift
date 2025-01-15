@@ -31,7 +31,7 @@ public import BushelMachine
 public import Foundation
 
 extension InstallerImageMetadata {
-  public init(operatingSystem: OperatingSystemVersion) {
+  public init(operatingSystem: OSVer) {
     self.init(
       longName: .randomLowerCaseAlphaNumberic(),
       defaultName: .randomLowerCaseAlphaNumberic(),

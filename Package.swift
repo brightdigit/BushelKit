@@ -857,7 +857,7 @@ RadiantDocs()
 struct BushelFoundation: Product, Target {
 var dependencies: any Dependencies {
 BushelUtilities()
-OperatingSystemVersion()
+OSVer()
 RadiantKit()
 }
 }
@@ -940,9 +940,9 @@ var dependency: Package.Dependency {
 .package(url: "https://github.com/brightdigit/FelinePine.git", from: "1.0.0-beta.2")
 }
 }
-struct OperatingSystemVersion: PackageDependency, TargetDependency {
+struct OSVer: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/OperatingSystemVersion.git", from: "1.0.0-beta.1")
+.package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0"))
 }
 }
 struct RadiantKit: PackageDependency, TargetDependency {
@@ -952,7 +952,7 @@ var dependency: Package.Dependency {
 }
 struct IPSWDownloads: PackageDependency, TargetDependency {
 var dependency: Package.Dependency {
-.package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.0")
+.package(url: "https://github.com/brightdigit/IPSWDownloads.git", .branch("v1.0.1"))
 }
 }
 struct FelinePineSwift: PackageDependency, TargetDependency {

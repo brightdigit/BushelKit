@@ -49,7 +49,7 @@ public struct Snapshot: Codable, Identifiable, Sendable {
   public var notes: String
 
   /// The version of the operating system installed at the time of the snapshot.
-  public var operatingSystemVersion: OperatingSystemVersion?
+  public var operatingSystemVersion: OSVer?
 
   /// The build version of the operating system installed at the time of the snapshot.
   public var buildVersion: String?
@@ -76,7 +76,7 @@ public struct Snapshot: Codable, Identifiable, Sendable {
     createdAt: Date,
     isDiscardable: Bool,
     notes: String = "",
-    operatingSystemVersion: OperatingSystemVersion? = nil,
+    operatingSystemVersion: OSVer? = nil,
     buildVersion: String? = nil
   ) {
     self.name = name
@@ -94,7 +94,7 @@ extension Snapshot {
   /// Represents the operating system information installed at the time of the snapshot.
   internal struct OperatingSystem: OperatingSystemInstalled {
     /// The version of the operating system installed at the time of the snapshot.
-    internal let operatingSystemVersion: OperatingSystemVersion
+    internal let operatingSystemVersion: OSVer
 
     /// The build version of the operating system installed at the time of the snapshot.
     internal let buildVersion: String?
@@ -115,7 +115,7 @@ extension Snapshot {
     ///   at the time of the snapshot. May be `nil`.
     ///   - buildVersion: The build version of the operating system
     ///   installed at the time of the snapshot. May be `nil`.
-    internal init?(operatingSystemVersion: OperatingSystemVersion?, buildVersion: String?) {
+    internal init?(operatingSystemVersion: OSVer?, buildVersion: String?) {
       guard let operatingSystemVersion else {
         return nil
       }

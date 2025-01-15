@@ -40,7 +40,7 @@ extension Firmware: OperatingSystemInstalled {
     self.buildid
   }
 
-  public var operatingSystemVersion: OperatingSystemVersion {
+  public var operatingSystemVersion: OSVer {
     .init(majorVersion: self.version.major, minorVersion: self.version.minor, patchVersion: self.version.patch)
   }
 }

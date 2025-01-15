@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+public import OSVer
 
 /// A struct representing a hardware model.
 public struct HardwareModel: Codable, Equatable, Sendable {
@@ -42,7 +43,7 @@ public struct HardwareModel: Codable, Equatable, Sendable {
   public let dataRepresentationVersion: Int
 
   /// The minimum supported operating system version for the hardware model.
-  public let minimumSupportedOS: OperatingSystemVersion
+  public let minimumSupportedOS: OSVer
 
   /// The platform version of the hardware model.
   public let platformVersion: Int

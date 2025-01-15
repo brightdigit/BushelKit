@@ -29,8 +29,8 @@
 
 import Foundation
 
-struct OperatingSystemVersion: PackageDependency, TargetDependency {
+struct OSVer: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/OperatingSystemVersion.git", from: "1.0.0-beta.1")
+    .package(url: "https://github.com/brightdigit/OSVer.git", .branch("v1.0.0"))
   }
 }

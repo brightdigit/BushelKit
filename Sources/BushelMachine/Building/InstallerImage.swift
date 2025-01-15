@@ -54,7 +54,7 @@ public protocol InstallerImage: OperatingSystemInstalled, Sendable {
 
 extension InstallerImage {
   /// The operating system version associated with the installer image.
-  public var operatingSystemVersion: OperatingSystemVersion {
+  public var operatingSystemVersion: OSVer {
     metadata.operatingSystem
   }
 

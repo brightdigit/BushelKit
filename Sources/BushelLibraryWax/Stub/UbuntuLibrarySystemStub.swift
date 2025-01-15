@@ -75,7 +75,7 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
     "\(self.shortName) \(codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)) \(metadata.operatingSystemVersion)"
   }
 
-  private func codeNameFor(operatingSystemVersion _: OperatingSystemVersion) -> String {
+  private func codeNameFor(operatingSystemVersion _: OSVer) -> String {
     "Kinetic Kudu"
   }
 

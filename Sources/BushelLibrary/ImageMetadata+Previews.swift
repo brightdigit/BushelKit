@@ -52,7 +52,7 @@ extension ImageMetadata {
     public static let venturaBeta3 = ImageMetadata(
       isImageSupported: true,
       buildVersion: "22A5295h",
-      operatingSystemVersion: OperatingSystemVersion(
+      operatingSystemVersion: OSVer(
         majorVersion: 13, minorVersion: 0, patchVersion: 0
       ),
       contentLength: 679_094_144,

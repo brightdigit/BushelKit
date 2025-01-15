@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+public import OSVer
 
 /// A protocol that represents an operating system that is installed on a device.
 public protocol OperatingSystemInstalled {
@@ -35,7 +36,7 @@ public protocol OperatingSystemInstalled {
   var buildVersion: String? { get }
 
   /// The version of the operating system.
-  var operatingSystemVersion: OperatingSystemVersion { get }
+  var operatingSystemVersion: OSVer { get }
 }
 
 extension OperatingSystemInstalled {

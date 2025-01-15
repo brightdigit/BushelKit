@@ -28,9 +28,10 @@
 //
 
 package import Foundation
+package import OSVer
 
-extension OperatingSystemVersion {
-  package static func random() -> OperatingSystemVersion {
+extension OSVer {
+  package static func random() -> OSVer {
     .init(
       majorVersion: .random(in: 12...15),
       minorVersion: .random(in: 0...6),
