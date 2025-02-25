@@ -50,14 +50,14 @@ extension SystemConfiguration {
   public init(
     operatingSystemVersionString: String,
     physicalMemory: UInt64,
-    processorCount: UInt64,
-    activeProcessorCount: UInt64
+    processorCount: Int,
+    activeProcessorCount: Int
   ) {
     self.init(
       operatingSystemVersionString: operatingSystemVersionString,
       physicalMemory: Int(physicalMemory),
-      processorCount: Int(processorCount),
-      activeProcessorCount: Int(activeProcessorCount)
+      processorCount: processorCount,
+      activeProcessorCount: activeProcessorCount
     )
   }
 }
