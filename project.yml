@@ -1,6 +1,6 @@
 name: BushelKit
 options:
-  preGenCommand: ./Scripts/package.sh
+  preGenCommand: ./Scripts/package.sh .
 settings:
   LINT_MODE: ${LINT_MODE}
 packages:

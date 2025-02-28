@@ -45,3 +45,19 @@ public struct SystemConfiguration: Sendable, Codable, Equatable {
     self.activeProcessorCount = activeProcessorCount
   }
 }
+
+extension SystemConfiguration {
+  public init(
+    operatingSystemVersionString: String,
+    physicalMemory: UInt64,
+    processorCount: Int,
+    activeProcessorCount: Int
+  ) {
+    self.init(
+      operatingSystemVersionString: operatingSystemVersionString,
+      physicalMemory: Int(physicalMemory),
+      processorCount: processorCount,
+      activeProcessorCount: activeProcessorCount
+    )
+  }
+}
