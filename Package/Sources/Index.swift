@@ -61,32 +61,11 @@ let package = Package(
     BushelUtlitiesTests()
   },
   swiftSettings: {
-    StrictConcurrency()
-    Group("Experimental") {
-      AccessLevelOnImport()
-      BitwiseCopyable()
-      GlobalActorIsolatedTypesUsability()
-      IsolatedAny()
-      MoveOnlyPartialConsumption()
-      NestedProtocols()
-      NoncopyableGenerics()
-      RegionBasedIsolation()
-      TransferringArgsAndResults()
-      VariadicGenerics()
-    }
-    Group("Upcoming") {
-//      DeprecateApplicationMain()
-//      DisableOutwardActorInference()
-//      DynamicActorIsolation()
-      FullTypedThrows()
-//      GlobalConcurrency()
-//      ImportObjcForwardDeclarations()
-//      InferSendableFromCaptures()
-      InternalImportsByDefault()
-      // IsolatedDefaultValues()
-    }
-//    WarnLongFunctionBodies(milliseconds: 50)
-//    WarnLongExpressionTypeChecking(milliseconds: 50)
+    AccessLevelOnImport()
+    NestedProtocols()
+    NoncopyableGenerics()
+    VariadicGenerics()
+    InternalImportsByDefault()
   }
 )
 .supportedPlatforms {
