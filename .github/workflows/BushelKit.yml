@@ -55,7 +55,7 @@ jobs:
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.2.0.app"
             deviceName: "iPhone 16 Pro"
-            osVersion: "18.2"
+            osVersion: "18.3"
   
           # watchOS Build Matrix
           - type: watchos
@@ -69,11 +69,11 @@ jobs:
             deviceName: "Apple Watch Ultra 2 (49mm)"
             osVersion: "11.2"
 
-          - type: visionos
-            runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.0.app"
-            deviceName: "Apple Vision Pro"
-            osVersion: "2.2"
+          # - type: visionos
+          #   runs-on: macos-15
+          #   xcode: "/Applications/Xcode_16.2.0.app"
+          #   deviceName: "Apple Vision Pro"
+          #   osVersion: "2.2"
   
     steps:
       - uses: actions/checkout@v4
