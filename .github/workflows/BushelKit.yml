@@ -16,19 +16,7 @@ jobs:
       image: swift:6.0-noble
     steps:
       - uses: actions/checkout@v4
-      - name: Cache swift package modules
-        id: cache-spm-linux
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-spm
-        with:
-          path: .build
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.swift-version }}-${{ hashFiles('Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.swift-version }}-
-            ${{ runner.os }}-${{ env.cache-name }}-
-      - name: Test
-        run: swift test --enable-code-coverage 
+      - uses: brightdigit/swift-build@v1
       - uses: sersoft-gmbh/swift-coverage-action@v4
         id: coverage-files
         with:          
