@@ -41,37 +41,37 @@ jobs:
         include:
           # SPM Build Matrix
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
+            xcode: "/Applications/Xcode_16.1.0.app"
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.2.0.app"
           
           # iOS Build Matrix
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
+            xcode: "/Applications/Xcode_16.1.0.app"
             deviceName: "iPhone 16"
             osVersion: "18.1"
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.2.0.app"
             deviceName: "iPhone 16 Pro"
             osVersion: "18.2"
   
           # watchOS Build Matrix
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
+            xcode: "/Applications/Xcode_16.1.0.app"
             deviceName: "Apple Watch Ultra 2 (49mm)"
             osVersion: "11.1"
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.2.0.app"
             deviceName: "Apple Watch Ultra 2 (49mm)"
             osVersion: "11.2"
 
           - type: visionos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.2.0.app"
             deviceName: "Apple Vision Pro"
             osVersion: "2.2"
   
