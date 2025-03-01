@@ -77,51 +77,15 @@ jobs:
   
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Set Xcode Name
-        run: echo "XCODE_NAME=$(basename -- ${{ matrix.xcode }} | sed 's/\.[^.]*$//' | cut -d'_' -f2)" >> $GITHUB_ENV
-      
-      - name: Setup Xcode
-        run: sudo xcode-select -s ${{ matrix.xcode }}/Contents/Developer
-  
-      # SPM Cache Step
-      - name: Cache swift package modules
-        id: cache-spm-macos
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-spm
-        with:
-          path: .build
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-  
-      - name: Build SPM
-        if: "!matrix.type"
-        run: swift build
-  
-      - name: Run Swift Package tests
-        if: "!matrix.type"
-        run: swift test -v --enable-code-coverage
 
-      - name: Enable Swift Testing
-        if: matrix.type
-        run: |
-          mkdir -p ~/Library/org.swift.swiftpm/security/        
-          cp macros.json ~/Library/org.swift.swiftpm/security/    
-  
-      # Common iOS/watchOS Test Steps
-      - name: Run Device Tests
-        if: matrix.type
-        run: >
-          xcodebuild test
-          -scheme ${{ env.PACKAGE_NAME }}-Package        
-          -sdk ${{ matrix.type == 'ios' && 'iphonesimulator' || matrix.type == 'watchos' && 'watchsimulator' || 'xrsimulator' }}
-          -destination 'platform=${{ matrix.type == 'ios' && 'iOS Simulator' || matrix.type == 'watchos' && 'watchOS Simulator' || 'visionOS Simulator' }},name=${{ matrix.deviceName }},OS=${{ matrix.osVersion }}'
-          -enableCodeCoverage YES
-          build test        
+      - name: Build and Test
+        uses: brightdigit/swift-build@v1
+        with:
+          scheme: ${{ env.PACKAGE_NAME }}-Package
+          type: ${{ matrix.type }}
+          xcode: ${{ matrix.xcode }}
+          deviceName: ${{ matrix.deviceName }}
+          osVersion: ${{ matrix.osVersion }}
           
       # Common Coverage Steps
       - name: Process Coverage
