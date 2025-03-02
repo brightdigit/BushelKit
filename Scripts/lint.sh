@@ -4,6 +4,18 @@ set -e  # Exit on any error
 
 ERRORS=0
 
+# Detect OS and set paths accordingly
+if [ "$(uname)" = "Darwin" ]; then
+    DEFAULT_MINT_PATH="/opt/homebrew/bin/mint"
+elif [ "$(uname)" = "Linux" ] && [ -n "$GITHUB_ACTIONS" ]; then
+    DEFAULT_MINT_PATH="$GITHUB_WORKSPACE/Mint/.mint/bin/mint"
+elif [ "$(uname)" = "Linux" ]; then
+    DEFAULT_MINT_PATH="/usr/local/bin/mint"
+else
+    echo "Unsupported operating system"
+    exit 1
+fi
+
 run_command() {
 		if [ "$LINT_MODE" == "STRICT" ]; then
 				"$@" || ERRORS=$((ERRORS + 1))
