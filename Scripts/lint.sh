@@ -18,6 +18,9 @@ if [ "$ACTION" == "install" ]; then
 	fi
 fi
 
+# Use environment MINT_CMD if set, otherwise use default path
+MINT_CMD=${MINT_CMD:-$DEFAULT_MINT_PATH}
+
 export MINT_PATH="$PWD/.mint"
 MINT_ARGS="-n -m ../../Mintfile --silent"
 MINT_RUN="$MINT_CMD run $MINT_ARGS"
