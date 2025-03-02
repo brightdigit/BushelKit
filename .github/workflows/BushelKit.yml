@@ -125,6 +125,11 @@ jobs:
           git clone https://github.com/yonaskolb/Mint.git
           cd Mint
           swift run mint install yonaskolb/mint
+      - name: Check Shell
+        run: |
+          echo "Shell being used:"
+          echo $SHELL
+          bash --version
       - name: Lint
         run: ./Scripts/lint.sh
 
