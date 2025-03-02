@@ -76,7 +76,7 @@ else
 	set -e
 fi
 
-$PACKAGE_DIR/scripts/header.sh -d  $PACKAGE_DIR/Sources -c "Leo Dion" -o "BrightDigit" -p "BushelKit"
+$PACKAGE_DIR/Scripts/header.sh -d  $PACKAGE_DIR/Sources -c "Leo Dion" -o "BrightDigit" -p "BushelKit"
 
 run_command $MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
 run_command $MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
