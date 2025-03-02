@@ -19,8 +19,8 @@ if [ "$ACTION" == "install" ]; then
 fi
 
 export MINT_PATH="$PWD/.mint"
-MINT_ARGS="-n -m Mintfile --silent"
-MINT_RUN="/opt/homebrew/bin/mint run $MINT_ARGS"
+MINT_ARGS="-n -m ../../Mintfile --silent"
+MINT_RUN="$MINT_CMD run $MINT_ARGS"
 
 if [ -z "$SRCROOT" ]; then
 	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -44,9 +44,9 @@ else
 	STRINGSLINT_OPTIONS="--config .stringslint.yml"
 fi
 
-/opt/homebrew/bin/mint bootstrap
+run_command $MINT_CMD bootstrap -m Mintfile
 
-echo "LINT Mode is $LINT_MODE"
+echo "LintMode: $LINT_MODE"
 
 if [ "$LINT_MODE" == "INSTALL" ]; then
 	exit
