@@ -78,10 +78,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: List Simulators
-        shell: bash
-        run: xcrun simctl list devices
-
       - name: Build and Test
         uses: brightdigit/swift-build@v1
         with:
@@ -91,17 +87,18 @@ jobs:
           deviceName: ${{ matrix.deviceName }}
           osVersion: ${{ matrix.osVersion }}
           
-      # # Common Coverage Steps
-      # - name: Process Coverage
-      #   uses: sersoft-gmbh/swift-coverage-action@v4
-      #   with:
-      #     fail-on-empty-output: true
+      # Common Coverage Steps
+      - name: Process Coverage
+        uses: sersoft-gmbh/swift-coverage-action@v4
+        with:
+          fail-on-empty-output: true
   
-      # - name: Upload Coverage
-      #   uses: codecov/codecov-action@v4
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     flags: ${{ matrix.type && format('{0}{1}', matrix.type, matrix.osVersion) || 'spm' }}
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ${{ matrix.type && format('{0}{1}', matrix.type, matrix.osVersion) || 'spm' }}
+          
   build-docc:
     name: Build DocC
     needs: [build-macos, build-ubuntu]
