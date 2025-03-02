@@ -55,7 +55,7 @@ jobs:
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.2.app"
             deviceName: "iPhone 16 Pro"
-            osVersion: "18.3"
+            osVersion: "18.2"
   
           # watchOS Build Matrix
           - type: watchos
@@ -73,7 +73,7 @@ jobs:
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.2.app"
             deviceName: "Apple Vision Pro"
-            osVersion: "2.3"
+            osVersion: "2.2"
   
     steps:
       - uses: actions/checkout@v4
