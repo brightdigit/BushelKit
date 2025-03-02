@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -o pipefail
+set -e  # Exit on any error
 
 ERRORS=0
 
