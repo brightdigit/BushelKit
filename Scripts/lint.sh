@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e  # Exit on any error
 
@@ -17,21 +17,17 @@ else
 fi
 
 run_command() {
-		if [ "$LINT_MODE" == "STRICT" ]; then
+		if [ "$LINT_MODE" = "STRICT" ]; then
 				"$@" || ERRORS=$((ERRORS + 1))
 		else
 				"$@"
 		fi
 }
 
-# More portable way to get script directory
-if [ -z "$SRCROOT" ]; then
-    SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
-    PACKAGE_DIR="${SCRIPT_DIR}/.."
-	PERIPHERY_OPTIONS=""
-else
-    PACKAGE_DIR="${SRCROOT}"     
-	PERIPHERY_OPTIONS=""
+if [ "$ACTION" = "install" ]; then 
+	if [ -n "$SRCROOT" ]; then
+		exit
+	fi
 fi
 
 # Use environment MINT_CMD if set, otherwise use default path
@@ -41,10 +37,19 @@ export MINT_PATH="$PWD/.mint"
 MINT_ARGS="-n -m ../../Mintfile --silent"
 MINT_RUN="$MINT_CMD run $MINT_ARGS"
 
+if [ -z "$SRCROOT" ]; then
+	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+	PACKAGE_DIR="${SCRIPT_DIR}/.."
+	PERIPHERY_OPTIONS=""
+else
+	PACKAGE_DIR="${SRCROOT}" 
+	PERIPHERY_OPTIONS=""
+fi
 
-if [ "$LINT_MODE" == "NONE" ]; then
+
+if [ "$LINT_MODE" = "NONE" ]; then
 	exit
-elif [ "$LINT_MODE" == "STRICT" ]; then
+elif [ "$LINT_MODE" = "STRICT" ]; then
 	SWIFTFORMAT_OPTIONS="--strict --configuration .swift-format"
 	SWIFTLINT_OPTIONS="--strict"
 	STRINGSLINT_OPTIONS="--config .strict.stringslint.yml"
@@ -58,7 +63,7 @@ run_command $MINT_CMD bootstrap -m Mintfile
 
 echo "LintMode: $LINT_MODE"
 
-if [ "$LINT_MODE" == "INSTALL" ]; then
+if [ "$LINT_MODE" = "INSTALL" ]; then
 	exit
 fi
 
