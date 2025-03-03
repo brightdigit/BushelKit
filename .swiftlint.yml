@@ -116,6 +116,7 @@ excluded:
   - .build
   - Package.swift
   - Package
+  - Mint
 indentation_width:
   indentation_width: 2
 file_name:
