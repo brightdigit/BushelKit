@@ -24,10 +24,14 @@ run_command() {
 		fi
 }
 
-if [ "$ACTION" == "install" ]; then 
-	if [ -n "$SRCROOT" ]; then
-		exit
-	fi
+# More portable way to get script directory
+if [ -z "$SRCROOT" ]; then
+    SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+    PACKAGE_DIR="${SCRIPT_DIR}/.."
+	PERIPHERY_OPTIONS=""
+else
+    PACKAGE_DIR="${SRCROOT}"     
+	PERIPHERY_OPTIONS=""
 fi
 
 # Use environment MINT_CMD if set, otherwise use default path
@@ -36,15 +40,6 @@ MINT_CMD=${MINT_CMD:-$DEFAULT_MINT_PATH}
 export MINT_PATH="$PWD/.mint"
 MINT_ARGS="-n -m ../../Mintfile --silent"
 MINT_RUN="$MINT_CMD run $MINT_ARGS"
-
-if [ -z "$SRCROOT" ]; then
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-	PACKAGE_DIR="${SCRIPT_DIR}/.."
-	PERIPHERY_OPTIONS=""
-else
-	PACKAGE_DIR="${SRCROOT}" 
-	PERIPHERY_OPTIONS=""
-fi
 
 
 if [ "$LINT_MODE" == "NONE" ]; then
