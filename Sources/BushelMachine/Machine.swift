@@ -97,11 +97,13 @@ public protocol Machine: Loggable, Sendable {
   ///
   /// - Parameter update: The closure to be called when a change occurs.
   /// - Returns: The UUID of the observation.
+  @available(*, deprecated)
   func beginObservation(_ update: @escaping @Sendable (MachineChange) -> Void) -> UUID
 
   /// Removes an observation from the machine.
   ///
   /// - Parameter id: The UUID of the observation to remove.
+  @available(*, deprecated)
   func removeObservation(withID id: UUID)
 
   /// Saves a captured video.
