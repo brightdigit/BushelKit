@@ -9,11 +9,11 @@ jobs:
   build-ubuntu:
     name: Build on Ubuntu
     env:
-      SWIFT_VER: 6.0
+      SWIFT_VER: 6.1
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     runs-on: ubuntu-latest
     container:
-      image: swift:6.0-noble
+      image: "swift:6.1"
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1
@@ -43,7 +43,7 @@ jobs:
           - runs-on: macos-15
             xcode: "/Applications/Xcode_16.1.app"
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.3.app"
           
           # iOS Build Matrix
           - type: ios
@@ -53,9 +53,9 @@ jobs:
             osVersion: "18.1"
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.3.app"
             deviceName: "iPhone 16 Pro"
-            osVersion: "18.2"
+            osVersion: "18.4"
   
           # watchOS Build Matrix
           - type: watchos
@@ -65,15 +65,15 @@ jobs:
             osVersion: "11.1"
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.3.app"
             deviceName: "Apple Watch Ultra 2 (49mm)"
-            osVersion: "11.2"
+            osVersion: "11.4"
 
           - type: visionos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.2.app"
+            xcode: "/Applications/Xcode_16.3.app"
             deviceName: "Apple Vision Pro"
-            osVersion: "2.2"
+            osVersion: "2.4"
   
     steps:
       - uses: actions/checkout@v4
