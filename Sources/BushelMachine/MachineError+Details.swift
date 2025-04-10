@@ -38,12 +38,6 @@ public import Foundation
 extension MachineError {
   /// A collection of detailed error cases related to a machine.
   public enum Details: Sendable {
-    private struct UnknownError: Error {
-      private init() {}
-
-      fileprivate static let shared = UnknownError()
-    }
-
     /// Represents an error related to a bookmark.
     case bookmarkError
     /// Represents an error related to system resolution.
@@ -74,6 +68,12 @@ extension MachineError {
     case missingImage(UUID)
     /// Represents an error related to a missing video with a specific identifier.
     case missingVideo(UUID)
+
+    private struct UnknownError: Error {
+      fileprivate static let shared = UnknownError()
+
+      private init() {}
+    }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
 
