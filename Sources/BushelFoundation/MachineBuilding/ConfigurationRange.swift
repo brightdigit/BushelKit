@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A struct that represents a range of configuration values for CPU count and memory.
 public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {

@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import BushelLogging
+internal import BushelLogging
 public import Foundation
 
 /// Represents an error that occurred during the installation of an image.

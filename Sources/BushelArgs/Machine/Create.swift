@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import ArgumentParser
-import Foundation
+internal import ArgumentParser
+internal import Foundation
 
 extension Machine {
   internal struct Create: ParsableCommand {}

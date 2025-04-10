@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Options for controlling the behavior of a snapshot synchronization operation.
 public struct SnapshotSynchronizeOptions: OptionSet, Sendable {

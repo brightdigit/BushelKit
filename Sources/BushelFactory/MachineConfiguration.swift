@@ -28,7 +28,7 @@
 //
 
 public import BushelMachine
-import Foundation
+internal import Foundation
 
 extension MachineConfiguration {
   public init(

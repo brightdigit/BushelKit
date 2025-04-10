@@ -28,11 +28,11 @@
 //
 
 public import BushelFoundation
-import BushelUtilities
+internal import BushelUtilities
 public import Foundation
 public import OSVer
 public import RadiantDocs
-import RadiantKit
+internal import RadiantKit
 
 // swiftlint:disable file_length
 

@@ -28,7 +28,7 @@
 //
 
 public import ArgumentParser
-import Foundation
+internal import Foundation
 
 public struct Machine: ParsableCommand {
   public static let configuration = CommandConfiguration(

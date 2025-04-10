@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import Foundation
+internal import Foundation
 
 /// A struct representing an installation failure.
 public struct InstallFailure: Equatable, Sendable {

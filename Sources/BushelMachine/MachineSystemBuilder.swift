@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A result builder for creating a collection of `MachineSystem` instances.
 public enum MachineSystemBuilder {

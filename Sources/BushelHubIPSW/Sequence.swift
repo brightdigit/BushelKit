@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import BushelLogging
+public import BushelLogging
 
 #if canImport(FoundationNetworking)
   public import Logging

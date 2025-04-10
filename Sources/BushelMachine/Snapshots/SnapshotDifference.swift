@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Represents the different types of changes that can occur in a snapshot.
 public enum SnapshotDifference: String, Sendable {

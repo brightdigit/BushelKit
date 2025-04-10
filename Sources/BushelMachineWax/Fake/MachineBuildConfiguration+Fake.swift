@@ -29,7 +29,7 @@
 
 public import BushelFoundationWax
 public import BushelMachine
-import Foundation
+internal import Foundation
 
 extension MachineBuildConfiguration where RestoreImageType == RestoreImageStub {
   public static let sample: Self = .init(

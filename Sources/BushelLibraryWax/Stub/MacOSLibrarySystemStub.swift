@@ -30,7 +30,7 @@
 public import BushelFoundation
 public import BushelLibrary
 public import Foundation
-import OSVer
+internal import OSVer
 public import RadiantDocs
 
 public struct MacOSLibrarySystemStub: LibrarySystem {

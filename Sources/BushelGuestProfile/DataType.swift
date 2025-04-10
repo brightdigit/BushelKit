@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A protocol that defines a type that can be used to retrieve system profile data.
 public protocol SystemProfileType: Decodable {

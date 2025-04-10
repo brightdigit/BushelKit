@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Represents the software information for the Spairport system.
 public struct SpairportSoftwareInformation: Codable, Equatable, Sendable {

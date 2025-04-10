@@ -28,9 +28,9 @@
 //
 
 #if os(macOS)
-  import BushelFoundation
+  internal import BushelFoundation
   public import BushelLogging
-  import BushelUtilities
+  internal import BushelUtilities
   public import Foundation
 
   // swiftlint:disable file_length

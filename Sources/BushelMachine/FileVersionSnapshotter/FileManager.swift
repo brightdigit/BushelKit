@@ -28,9 +28,9 @@
 //
 
 #if os(macOS)
-  import BushelFoundation
-  import BushelLogging
-  import Foundation
+  internal import BushelFoundation
+  internal import BushelLogging
+  internal import Foundation
 
   /// Provides a set of file-related utilities for managing a snapshot collection directory.
   extension FileManager {

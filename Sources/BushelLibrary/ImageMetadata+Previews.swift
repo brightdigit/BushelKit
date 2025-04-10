@@ -28,9 +28,9 @@
 //
 
 public import BushelFoundation
-import BushelMacOSCore
-import Foundation
-import OSVer
+internal import BushelMacOSCore
+internal import Foundation
+internal import OSVer
 
 extension ImageMetadata {
   /// A namespace for preview models of `ImageMetadata`.

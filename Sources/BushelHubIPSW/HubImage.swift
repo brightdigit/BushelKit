@@ -28,8 +28,8 @@
 //
 
 public import BushelHub
-import BushelMacOSCore
-import Foundation
+internal import BushelMacOSCore
+internal import Foundation
 public import IPSWDownloads
 
 extension HubImage {

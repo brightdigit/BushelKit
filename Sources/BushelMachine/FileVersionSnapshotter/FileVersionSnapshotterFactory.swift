@@ -30,7 +30,7 @@
 #if os(macOS)
 
   public import BushelFoundation
-  import Foundation
+  internal import Foundation
 
   /// A factory for creating file version snapshots.
   public struct FileVersionSnapshotterFactory: SnapshotterFactory {

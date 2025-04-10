@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelFoundation
-import BushelMacOSCore
-import Foundation
+internal import BushelFoundation
+internal import BushelMacOSCore
+internal import Foundation
 
 // swift-format-ignore: AlwaysUseLowerCamelCase
 extension ImageMetadata {

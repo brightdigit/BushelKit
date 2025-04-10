@@ -28,7 +28,7 @@
 //
 
 public import BushelUtilities
-import Foundation
+internal import Foundation
 
 /// An enumeration representing different options for filtering documents by type.
 public enum DocumentTypeFilterOption: Int, CaseIterable, Identifiable, Localizable, Sendable {

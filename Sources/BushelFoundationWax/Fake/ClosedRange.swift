@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 extension ClosedRange where Bound: Randomizable & AdditiveArithmetic {
   public static func random(

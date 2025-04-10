@@ -31,7 +31,7 @@ public import BushelLogging
 public import Foundation
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  internal import SwiftUI
 #endif
 
 /// A protocol that defines the behavior of a machine.

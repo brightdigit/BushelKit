@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// An error that represents various issues that can occur when working with snapshots.
 internal enum SnapshotError: Error, LocalizedError, Sendable {

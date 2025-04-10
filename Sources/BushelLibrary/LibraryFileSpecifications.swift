@@ -29,7 +29,7 @@
 
 public import Foundation
 public import RadiantDocs
-import RadiantKit
+internal import RadiantKit
 
 /// A specification for a library file type.
 public enum LibraryFileSpecifications: InitializableFileTypeSpecification {

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 extension EnvironmentProperty {
   internal enum ValueAccessor: Sendable {

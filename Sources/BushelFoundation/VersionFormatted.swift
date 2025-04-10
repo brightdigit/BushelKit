@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 public struct VersionFormatted: Sendable {
   /// The marketing version of the app.
