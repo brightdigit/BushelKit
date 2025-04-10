@@ -76,3 +76,4 @@ public struct MachineProperties: Sendable {
     self.canRequestStop = canRequestStop
   }
 }
+
