@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import BushelMacOSCore
+internal import BushelMacOSCore
 public import Foundation
 
 #if canImport(FoundationNetworking)

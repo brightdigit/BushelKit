@@ -28,7 +28,7 @@
 //
 
 public import BushelMachine
-import Foundation
+internal import Foundation
 
 public protocol MachineConfigurable {
   associatedtype Name: Hashable & Sendable

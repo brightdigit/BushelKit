@@ -27,9 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelDocs
+internal import BushelDocs
 public import RadiantDocs
-import RadiantKit
+internal import RadiantKit
 
 /// Represents a specification for a machine file type.
 public enum MachineFileTypeSpecification: FileTypeSpecification {

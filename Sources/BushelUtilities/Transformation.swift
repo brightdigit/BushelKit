@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A struct that applies a transformation to a value of type `T` and returns a value of type `U`.
 public struct Transformation<T, U>: Sendable {

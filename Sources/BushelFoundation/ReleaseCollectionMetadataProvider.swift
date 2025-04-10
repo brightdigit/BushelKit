@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A type alias for a closure that provides `ReleaseCollectionMetadata` for a given `VMSystemID`.
 ///

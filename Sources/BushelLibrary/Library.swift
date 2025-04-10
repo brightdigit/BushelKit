@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A `Codable`, `Equatable`, and `Sendable` struct representing a library of `LibraryImageFile` items.
 public struct Library: Codable, Equatable, Sendable {

@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A struct representing a Lagrange polynomial.
 /// Conforms to `Codable`, `RawRepresentable`, and `Sendable`.

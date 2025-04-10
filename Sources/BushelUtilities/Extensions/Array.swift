@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 #if canImport(SwiftUI)
-  import SwiftUI
+  internal import SwiftUI
 #endif
 
 extension Array {

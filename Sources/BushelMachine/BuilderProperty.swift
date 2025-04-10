@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// An enumeration representing different properties of a builder.
 public enum BuilderProperty: String, Equatable, Sendable {

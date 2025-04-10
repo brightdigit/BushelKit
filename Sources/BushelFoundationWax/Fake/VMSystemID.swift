@@ -28,6 +28,6 @@
 //
 
 public import BushelFoundation
-import Foundation
+internal import Foundation
 
 extension VMSystemID { public static let sample: Self = .init(stringLiteral: "sample") }

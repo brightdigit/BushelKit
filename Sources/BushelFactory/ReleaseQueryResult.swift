@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 public struct ReleaseQueryResult {
   public let release: ReleaseSelected

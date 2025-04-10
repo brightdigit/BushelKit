@@ -29,9 +29,9 @@
 
 #if canImport(Virtualization)
   public import BushelFoundation
-  import Foundation
+  internal import Foundation
 
-  import Virtualization
+  internal import Virtualization
 
   extension MacOSVirtualization {
     public static let maximumMachineCPUCount = max(ProcessInfo.processInfo.processorCount, 1)

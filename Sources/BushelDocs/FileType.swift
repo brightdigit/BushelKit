@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelFoundation
+internal import BushelFoundation
 public import RadiantDocs
 
 extension FileType {

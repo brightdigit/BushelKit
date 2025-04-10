@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelUtilities
+internal import BushelUtilities
 public import Foundation
 public import RadiantDocs
-import RadiantKit
+internal import RadiantKit
 
 /// An extension to the `Library` type that conforms to the `InitializablePackage` protocol.
 extension Library: InitializablePackage {

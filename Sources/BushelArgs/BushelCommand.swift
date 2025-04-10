@@ -28,7 +28,7 @@
 //
 
 public import ArgumentParser
-import Foundation
+internal import Foundation
 
 public protocol BushelCommand: ParsableCommand {}
 

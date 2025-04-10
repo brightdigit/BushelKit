@@ -29,8 +29,8 @@
 
 #if os(macOS)
 
-  import BushelLogging
-  import Foundation
+  internal import BushelLogging
+  internal import Foundation
 
   /// Represents a file update for a snapshot.
   internal struct SnapshotFileUpdate {

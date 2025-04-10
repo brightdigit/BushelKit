@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Represents a prerelease label with a base number.
 public struct PrereleaseLabel: Sendable {

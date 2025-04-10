@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelUtilities
+internal import BushelUtilities
 public import Foundation
 public import RadiantDocs
 

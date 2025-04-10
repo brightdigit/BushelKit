@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import Foundation
+internal import Foundation
 
 public struct Hub: Hashable, Identifiable, Sendable {
   public let title: String

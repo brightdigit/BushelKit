@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A type-safe wrapper around a string that represents a virtual machine system ID.
 public struct VMSystemID:

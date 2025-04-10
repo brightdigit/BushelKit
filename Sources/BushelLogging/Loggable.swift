@@ -30,7 +30,7 @@
 @_exported public import FelinePine
 
 #if !canImport(os)
-  import FelinePineSwift
+  internal import FelinePineSwift
 #else
   @_exported import os
 #endif

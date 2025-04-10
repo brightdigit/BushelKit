@@ -29,8 +29,8 @@
 
 #if canImport(Virtualization) && arch(arm64)
   public import BushelFoundation
-  import BushelUtilities
-  import OSVer
+  internal import BushelUtilities
+  internal import OSVer
 
   public import Virtualization
 

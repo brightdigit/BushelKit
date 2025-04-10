@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 extension Double {
   /// Transforms the current `Double` value using the provided `LagrangePolynomial`.

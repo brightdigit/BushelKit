@@ -29,8 +29,8 @@
 
 public import BushelHub
 public import BushelLogging
-import Foundation
-import OpenAPIURLSession
+internal import Foundation
+internal import OpenAPIURLSession
 
 @_exported public import struct IPSWDownloads.IPSWDownloads
 

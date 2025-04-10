@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import BushelLibrary
+internal import BushelLibrary
 public import BushelLogging
 public import BushelMachine
 public import Foundation

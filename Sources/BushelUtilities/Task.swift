@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Extends the `Task` type where the `Success` type is `Never` and the `Failure` type is also `Never`.
 extension Task where Success == Never, Failure == Never {

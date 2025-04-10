@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A protocol that represents an error that occurred during an installation process.
 public protocol InstallFailureError: Error {
