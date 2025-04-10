@@ -8,12 +8,13 @@ env:
 jobs:
   build-ubuntu:
     name: Build on Ubuntu
-    env:
-      SWIFT_VER: 6.1
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
     runs-on: ubuntu-latest
-    container:
-      image: "swift:6.1"
+    container: swift:${{ matrix.swift-version }}-${{ matrix.os }}
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    strategy:
+      matrix:
+        os: ["noble", "jammy"]
+        swift-version: ["6.0", "6.1"]
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1
