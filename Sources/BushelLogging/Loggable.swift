@@ -35,6 +35,4 @@
   @_exported import os
 #endif
 
-
-
 public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}
