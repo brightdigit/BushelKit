@@ -1,5 +1,5 @@
 {
-  "originHash" : "5b07d8a2c3f953e87cbe85b7e498e0cdd0627e901a7178470d30dda5b371ebcb",
+  "originHash" : "104555c84cfe8e54d874bdad2e04ac971f1b1ebf63ac244a7530ce77ced8dd00",
   "pins" : [
     {
       "identity" : "felinepine",
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/RadiantKit.git",
       "state" : {
-        "revision" : "65b8a9ad7499372d2289ad53135adaafb24ee92c",
-        "version" : "1.0.0-beta.1"
+        "revision" : "86cde0fc9f9259e56a4965cdfc5de987b06a8608",
+        "version" : "1.0.0-beta.2"
       }
     },
     {
