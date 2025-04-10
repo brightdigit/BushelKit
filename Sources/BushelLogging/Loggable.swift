@@ -31,6 +31,8 @@
 
 #if !canImport(os)
   import FelinePineSwift
+#else
+  @_exported import os
 #endif
 
 
