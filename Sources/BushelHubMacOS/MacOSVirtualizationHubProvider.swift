@@ -28,12 +28,12 @@
 //
 
 #if canImport(Virtualization) && arch(arm64)
-  import BushelFoundation
+  internal import BushelFoundation
 
   public import BushelHub
-  import BushelMacOSCore
-  import Foundation
-  import Virtualization
+  internal import BushelMacOSCore
+  internal import Foundation
+  internal import Virtualization
 
   public protocol MacOSVirtualizationHubProvider: Sendable {}
 

@@ -29,7 +29,7 @@
 
 public import ArgumentParser
 public import BushelArgs
-import Foundation
+internal import Foundation
 
 @main
 public struct Bushel: BushelCommand {

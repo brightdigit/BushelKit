@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A struct that represents the properties of a controller.
 public struct ControllerProperties: Codable, Equatable, Sendable {

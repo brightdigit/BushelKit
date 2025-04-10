@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 extension UInt64 {
   public static func makeGigaByte(_ num: Int) -> Self {

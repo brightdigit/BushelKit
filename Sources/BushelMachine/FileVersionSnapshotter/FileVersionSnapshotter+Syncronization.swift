@@ -29,9 +29,9 @@
 
 #if os(macOS)
 
-  import BushelFoundation
-  import BushelLogging
-  import Foundation
+  internal import BushelFoundation
+  internal import BushelLogging
+  internal import Foundation
 
   /// Extends the `FileVersionSnapshotter` class to handle snapshot management.
   extension FileVersionSnapshotter {

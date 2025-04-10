@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Represents a request to build a machine.
 public struct MachineBuildRequest: Codable, Hashable, Sendable {

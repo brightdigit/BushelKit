@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Represents a set of user audience types for a particular purpose.
 public struct UserAudience: OptionSet, Sendable {

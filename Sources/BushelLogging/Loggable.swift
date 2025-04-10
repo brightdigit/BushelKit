@@ -27,10 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import FelinePine
+@_exported public import FelinePine
 
 #if !canImport(os)
-  import FelinePineSwift
+  internal import FelinePineSwift
+#else
+  @_exported import os
 #endif
+
+
 
 public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}

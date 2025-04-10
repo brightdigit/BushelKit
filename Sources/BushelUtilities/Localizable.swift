@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A protocol that defines the requirements for a type to be localizable.
 public protocol Localizable: Hashable {

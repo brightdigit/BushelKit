@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 extension Result {
   /// Initializes a `Result` by catching any errors thrown by the provided asynchronous closure.

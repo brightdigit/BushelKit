@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A type alias for a function that provides a `MetadataLabel`
 /// given a `VMSystemID` and an `OperatingSystemInstalled` instance.

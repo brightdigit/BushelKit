@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A protocol that represents an installer release.
 public protocol InstallerRelease: Sendable, Identifiable, Equatable {

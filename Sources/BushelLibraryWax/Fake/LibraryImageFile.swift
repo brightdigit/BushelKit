@@ -28,7 +28,7 @@
 //
 
 public import BushelLibrary
-import Foundation
+internal import Foundation
 
 // swift-format-ignore: AlwaysUseLowerCamelCase
 extension LibraryImageFile {

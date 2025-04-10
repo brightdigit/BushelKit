@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelFoundation
-import Foundation
+internal import BushelFoundation
+internal import Foundation
 
 extension LibraryImageFile {
   /// A collection of preview `LibraryImageFile` instances.

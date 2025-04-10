@@ -29,7 +29,7 @@
 
 #if canImport(ObjectiveC)
 
-  import Foundation
+  internal import Foundation
 
   /// Represents an observation of key-value changes on an `NSObject`.
   @available(*, deprecated)

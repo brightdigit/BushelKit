@@ -29,7 +29,7 @@
 
 #if !os(Linux)
 
-  import Foundation
+  internal import Foundation
 
   extension NSFileVersion {
     /// An internal struct representing a set of version data.

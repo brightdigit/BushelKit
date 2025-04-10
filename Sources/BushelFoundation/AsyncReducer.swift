@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// An actor that asynchronously reduces an `AsyncSequence` to an array of its elements.
 public actor AsyncReducer<

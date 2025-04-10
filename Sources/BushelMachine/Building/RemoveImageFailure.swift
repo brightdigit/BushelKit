@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// Represents a failure when removing an image.
 public enum RemoveImageFailure: CustomStringConvertible {

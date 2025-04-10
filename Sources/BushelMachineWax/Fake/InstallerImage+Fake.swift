@@ -28,7 +28,7 @@
 //
 
 public import BushelMachine
-import Foundation
+internal import Foundation
 
 extension InstallerImage where Self == InstallerImageSub {
   public static var sample: Self { InstallerImageSub() }

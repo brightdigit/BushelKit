@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A data type representing font information.
 public struct SPFontsDataType: Codable, Equatable, Sendable {

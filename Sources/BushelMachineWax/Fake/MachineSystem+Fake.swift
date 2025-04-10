@@ -28,7 +28,7 @@
 //
 
 public import BushelMachine
-import Foundation
+internal import Foundation
 
 extension MachineSystem where Self == MachineSystemStub {
   public static var stubOS1: Self { MachineSystemStub(id: .init(stringLiteral: "stubOS1")) }

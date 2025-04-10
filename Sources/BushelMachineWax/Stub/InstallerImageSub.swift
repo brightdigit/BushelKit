@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import BushelFoundationWax
+internal import BushelFoundationWax
 public import BushelMachine
 public import Foundation
 

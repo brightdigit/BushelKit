@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 public struct MetadataLabel: Equatable, Sendable {
   /// The long name of the operating system.

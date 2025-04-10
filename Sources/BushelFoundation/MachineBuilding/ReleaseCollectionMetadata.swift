@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 /// A protocol that represents metadata for a collection of releases.
 public protocol ReleaseCollectionMetadata: Sendable {

@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import ArgumentParser
-import Foundation
+internal import ArgumentParser
+internal import Foundation
 
 internal enum Bushel {
   internal static let configuration = CommandConfiguration(

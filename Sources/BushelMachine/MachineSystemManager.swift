@@ -29,7 +29,7 @@
 
 public import BushelFoundation
 public import BushelLogging
-import Foundation
+internal import Foundation
 
 /// Implementation of a ``MachineSystemManaging``
 public final class MachineSystemManager: MachineSystemManaging, Loggable {

@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import BushelMachine
+internal import BushelMachine
 
 public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, Sendable {
   public let configurationRange: ConfigurationRange

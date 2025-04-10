@@ -29,7 +29,7 @@
 
 public import BushelFoundation
 public import IPSWDownloads
-import RadiantDocs
+internal import RadiantDocs
 
 extension ImageMetadata {
   public init(firmware: Firmware) throws {

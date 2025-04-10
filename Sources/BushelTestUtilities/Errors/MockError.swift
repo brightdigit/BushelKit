@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+internal import Foundation
 
 public protocol MockError: Error, Equatable {
   associatedtype ErrorType: Equatable

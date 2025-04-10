@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelDocs
+internal import BushelDocs
 public import BushelFoundation
-import Foundation
-import OSVer
+internal import Foundation
+internal import OSVer
 public import RadiantDocs
 
 public enum MacOSVirtualization: Sendable {

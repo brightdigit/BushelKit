@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import Foundation
+internal import Foundation
 
 extension InstallerImageIdentifier {
   // swiftlint:disable:next force_unwrapping

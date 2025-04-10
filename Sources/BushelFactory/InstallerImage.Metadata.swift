@@ -28,9 +28,9 @@
 //
 
 public import BushelFoundation
-import BushelLibrary
+internal import BushelLibrary
 public import BushelMachine
-import Foundation
+internal import Foundation
 
 extension InstallerImage.Metadata {
   public init(

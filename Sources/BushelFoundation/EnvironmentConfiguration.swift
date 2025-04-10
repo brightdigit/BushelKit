@@ -28,7 +28,7 @@
 //
 
 public import BushelUtilities
-import Foundation
+internal import Foundation
 
 /// Represents the environment configuration for the application.
 /// This type conforms to `CustomReflectable` and `Sendable` protocols.

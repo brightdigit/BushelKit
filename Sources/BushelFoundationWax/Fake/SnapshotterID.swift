@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-import Foundation
+internal import Foundation
 
 extension SnapshotterID {
   public static let sampleSnapshotSystemID: Self = .init(stringLiteral: "sample")

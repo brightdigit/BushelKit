@@ -28,8 +28,8 @@
 //
 
 public import BushelFoundation
-import Foundation
-import OSVer
+internal import Foundation
+internal import OSVer
 
 public struct MacOSRelease: InstallerRelease {
   public let majorVersion: Int
