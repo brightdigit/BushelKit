@@ -30,7 +30,7 @@
 public import Foundation
 
 /// A type that represents a unique identifier for a library item.
-public enum LibraryIdentifier: CustomStringConvertible, Hashable, Sendable {
+public enum LibraryIdentifier: CustomStringConvertible, Hashable, Sendable, Codable {
   /// A URL-based identifier.
   case url(URL)
   /// A UUID-based identifier.
