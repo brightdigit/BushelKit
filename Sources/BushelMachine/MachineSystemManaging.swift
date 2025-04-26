@@ -33,6 +33,10 @@ public import Foundation
 
 /// A collection of machine systems for managing virtual machines
 public protocol MachineSystemManaging: Sendable {
+  
+  #warning("Remove?")
+  associatedtype SystemCollection : Sequence where SystemCollection.Element == VMSystemID
+  var systemsAvailable : SystemCollection { get }
   /// Resolve the ``MachineSystem`` based on the ``VMSystemID``
   /// - Parameter id: id of the system to resolve.
   /// - Returns: The resulting ``MachineSystem``
@@ -49,7 +53,7 @@ extension MachineSystemManaging {
   /// Resolves the ``MachineSystem`` and ``Machine`` based on the bundle at the URL.
   /// - Parameter url: Machine bundle URL.
   /// - Returns: The resolved ``Machine``
-  public func machine(contentOf url: URL) async throws -> any Machine {
+  public func machine(contentOf url: URL) async throws -> MachineRegistration {
     let configuration: MachineConfiguration
     configuration = try MachineConfiguration(contentsOf: url)
     let system = self.resolve(configuration.vmSystemID)

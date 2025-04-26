@@ -33,7 +33,15 @@ internal import Foundation
 
 /// Implementation of a ``MachineSystemManaging``
 public final class MachineSystemManager: MachineSystemManaging, Loggable {
+  
+  public typealias SystemCollection = [VMSystemID: any MachineSystem].Keys
+  
   private let implementations: [VMSystemID: any MachineSystem]
+  
+  
+  public var systemsAvailable: Dictionary<BushelFoundation.VMSystemID, any MachineSystem>.Keys {
+    self.implementations.keys
+  }
 
   /// Creates a ``MachineSystemManager`` based on the list of implementations.
   /// - Parameter implementations: Array of ``MachineSystem``

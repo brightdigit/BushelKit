@@ -6,7 +6,9 @@
 //
 
 public import Observation
-import Foundation
+public import Foundation
+import BushelViewsCore
+public import BushelLogging
 
 extension MachineProperties {
   init (original: MachineProperties, propertyChange: any PropertyChange) {
@@ -48,18 +50,18 @@ extension MachineProperties {
 }
 
 @Observable
-public final class MachineInventory : Sendable  {
+public final class MachineInventory : Sendable, Loggable  {
   
-  struct MachineInfo {
+  public struct MachineInfo : Sendable {
     internal init(machine: any Machine, observationID: UUID, properties: MachineProperties? = nil) {
       self.machine = machine
       self.observationID = observationID
       self.properties = properties ?? .init(state: .stopped, canStart: false, canStop: false, canPause: false, canResume: false, canRequestStop: false)
     }
     
-    let machine : any Machine
+    public let machine : any Machine
     let observationID : UUID
-    var properties : MachineProperties
+    public private(set) var properties : MachineProperties
     
     mutating func updatedProperties(from changes: MachineChange) {
       if let properties = changes.properties {
@@ -79,9 +81,10 @@ public final class MachineInventory : Sendable  {
   }
   
   @MainActor
-  var registeredMachines : [UUID : MachineInfo] = [:]
+  public private(set) var registeredMachines : [UUID : MachineInfo] = [:]
   
   nonisolated func registerMachine(_ machine: any Machine, withID id: UUID) {
+    Self.logger.debug("Registering machine \(machine.initialConfiguration.operatingSystemVersion.description) with ID \(id)")
     let observationID = machine.beginObservation { [self] machineChange in
       self.machineWithID(id, updatedTo: machineChange)
     }
@@ -98,6 +101,7 @@ public final class MachineInventory : Sendable  {
   
   @MainActor
   func onMachine(withID id: UUID, updatedTo changes: MachineChange) {
+    Self.logger.debug("Updating machine with ID \(id) from \(changes.event.description)")
     assert(self.registeredMachines[id] != nil)
     self.registeredMachines[id]?.updatedProperties(from: changes)
   }

@@ -74,11 +74,11 @@ public protocol MachineSystem: Sendable {
   ///   - url: URL of the machine bundle.
   ///   - configuration: The machine configuration.
   /// - Returns: A usable machine.
-  @available(*, deprecated)
-  func machine(
-    at url: URL,
-    withConfiguration configuration: MachineConfiguration
-  ) async throws -> any Machine
+//  @available(*, deprecated)
+//  func machine(
+//    at url: URL,
+//    withConfiguration configuration: MachineConfiguration
+//  ) async throws -> any Machine
   
   
   func machine(
