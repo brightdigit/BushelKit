@@ -7,7 +7,6 @@
 
 public import Observation
 public import Foundation
-import BushelViewsCore
 public import BushelLogging
 
 extension MachineProperties {
@@ -51,6 +50,10 @@ extension MachineProperties {
 
 @Observable
 public final class MachineInventory : Sendable, Loggable  {
+  public static let shared = MachineInventory()
+  public static var loggingCategory: BushelLogging.Category {
+    .observation
+  }
   
   public struct MachineInfo : Sendable {
     internal init(machine: any Machine, observationID: UUID, properties: MachineProperties? = nil) {
@@ -76,7 +79,7 @@ public final class MachineInventory : Sendable, Loggable  {
   
 
   
-  public init() {
+  private init() {
     
   }
   
