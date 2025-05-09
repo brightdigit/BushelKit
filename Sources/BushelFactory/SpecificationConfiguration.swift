@@ -97,7 +97,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
       if let requiredMemory = configurationRange.requiredMemory {
         self.memory = requiredMemory
       }
-      self.memory = Self.memoryValue(forIndex: memoryIndex)
+      self.memory = Self.memoryValue(forIndex: newValue)
       if !updatingValues {
         self.template = nil
       }
@@ -107,7 +107,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
   public private(set) var storage: Int64
   public var storageIndex: Float = 36 {
     willSet {
-      self.storage = Self.storageValue(forIndex: storageIndex)
+      self.storage = Self.storageValue(forIndex: newValue)
       if !updatingValues {
         self.template = nil
       }
