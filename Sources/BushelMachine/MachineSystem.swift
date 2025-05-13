@@ -30,22 +30,6 @@
 public import BushelFoundation
 public import Foundation
 
-
-public struct MachineRegistrationObject : Sendable {
-  public init(machine: any Machine) {
-    self.machine = machine
-  }
-  
-  private let machine : any Machine
-  public func register(_ inventory: MachineInventory, _ id: UUID) -> any Machine {
-    inventory.registerMachine(machine, withID: id)
-    return machine
-  }
-}
-
-
-public typealias MachineRegistration = @Sendable (MachineInventory, UUID) -> any Machine
-
 /// Manages a set of machines for a system
 public protocol MachineSystem: Sendable {
   associatedtype RestoreImageType: Sendable
@@ -69,18 +53,6 @@ public protocol MachineSystem: Sendable {
     at url: URL
   ) async throws -> any MachineBuilder
 
-  /// Creates a machine based on the url and configuration.
-  /// - Parameters:
-  ///   - url: URL of the machine bundle.
-  ///   - configuration: The machine configuration.
-  /// - Returns: A usable machine.
-//  @available(*, deprecated)
-//  func machine(
-//    at url: URL,
-//    withConfiguration configuration: MachineConfiguration
-//  ) async throws -> any Machine
-  
-  
   func machine(
     at url: URL,
     withConfiguration configuration: MachineConfiguration

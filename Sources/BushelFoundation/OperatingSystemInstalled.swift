@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+internal import Foundation
 public import OSVer
 
 /// A protocol that represents an operating system that is installed on a device.
