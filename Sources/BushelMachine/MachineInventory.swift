@@ -44,19 +44,33 @@ public final class MachineInventory: Sendable, Loggable {
     /// Machine State
     public private(set) var properties: MachineProperties
 
-    internal init(machine: any Machine, observationID: UUID, properties: MachineProperties? = nil) {
+    public private(set) var updatedAt: Date
+
+    internal init(
+      machine: any Machine,
+      observationID: UUID,
+      properties: MachineProperties? = nil,
+      updatedAt: Date = Date()
+    ) {
       self.machine = machine
       self.observationID = observationID
       self.properties = properties ?? .initial
+      self.updatedAt = updatedAt
     }
 
     fileprivate mutating func updatedProperties(from changes: MachineChange) {
+      let currentState = self.properties.state
+
       if let properties = changes.properties {
         self.properties = properties
       }
 
       if case let .property(property) = changes.event {
         self.properties = self.properties.updateProperty(property)
+      }
+
+      if currentState != self.properties.state {
+        self.updatedAt = Date()
       }
     }
   }

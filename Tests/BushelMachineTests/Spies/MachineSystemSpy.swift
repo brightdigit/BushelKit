@@ -78,7 +78,10 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     return MachineStub(configuration: configuration, state: .starting)
   }
 
-  func machine(at url: URL, withConfiguration configuration: MachineConfiguration) async throws
+  internal func machine(
+    at url: URL,
+    withConfiguration configuration: MachineConfiguration
+  ) async throws
     -> MachineRegistration
   {
     isMachineAtURLCalled = true
