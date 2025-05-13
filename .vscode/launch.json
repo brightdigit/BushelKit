@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:BushelKit}",
@@ -10,7 +10,7 @@
             "preLaunchTask": "swift: Build Debug bushel"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:BushelKit}",

@@ -86,7 +86,7 @@ extension MachineProperties {
     canResume: false,
     canRequestStop: false
   )
-  private init (original: MachineProperties, propertyChange: any PropertyChange) {
+  private init(original: MachineProperties, propertyChange: any PropertyChange) {
     let type = type(of: propertyChange)
 
     var state: MachineState = original.state

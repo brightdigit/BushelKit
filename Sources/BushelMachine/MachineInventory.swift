@@ -33,7 +33,7 @@ public import Observation
 
 /// Inventory of machines that are running or have run previously.
 @Observable
-public final class MachineInventory: Sendable, Loggable  {
+public final class MachineInventory: Sendable, Loggable {
   /// Object to keep track of the machine and it's state.
   public struct Observer: Sendable {
     private let observationID: UUID
@@ -50,7 +50,7 @@ public final class MachineInventory: Sendable, Loggable  {
       self.properties = properties ?? .initial
     }
 
-    fileprivate mutating  func updatedProperties(from changes: MachineChange) {
+    fileprivate mutating func updatedProperties(from changes: MachineChange) {
       if let properties = changes.properties {
         self.properties = properties
       }

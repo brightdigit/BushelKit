@@ -48,11 +48,12 @@ public struct MachineSystemStub: MachineSystem, Equatable {
     MachineBuilderStub(url: url)
   }
 
-  public func machine(
-    at _: URL,
-    withConfiguration configuration: MachineConfiguration
-  ) throws -> any Machine {
-    MachineStub(configuration: configuration, state: .starting)
+  public func machine(at url: URL, withConfiguration configuration: MachineConfiguration)
+    async throws -> MachineRegistration
+  {
+    MachineRegistrationObject(
+      machine: MachineStub(configuration: configuration, state: .starting)
+    ).register(_:_:)
   }
 
   public func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {

@@ -78,6 +78,18 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     return MachineStub(configuration: configuration, state: .starting)
   }
 
+  func machine(at url: URL, withConfiguration configuration: MachineConfiguration) async throws
+    -> MachineRegistration
+  {
+    isMachineAtURLCalled = true
+
+    try handleResult()
+
+    return MachineRegistrationObject(
+      machine: MachineStub(configuration: configuration, state: .starting)
+    ).register(_:_:)
+  }
+
   internal func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
     isRestoreImageFromCalled = true
 
