@@ -83,16 +83,10 @@ extension BookmarkError {
   /// - Returns: A `BookmarkError` with the appropriate details.
   public static func accessDeniedError(_ error: any Error, at url: URL) -> BookmarkError {
     let nsError = error as NSError
-    if self.isFileNotFound(nsError) {
+    if nsError.code == NSFileReadNoSuchFileError {
       return BookmarkError(innerError: error, details: .fileDoesNotExistAt(url))
     } else {
       return BookmarkError(innerError: error, details: .accessDeniedAt(url))
     }
-  }
-  
-  
-  
-  public static func isFileNotFound(_ nsError: NSError) -> Bool {
-    nsError.code == NSFileReadNoSuchFileError
   }
 }
