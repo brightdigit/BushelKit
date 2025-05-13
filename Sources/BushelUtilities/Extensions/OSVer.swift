@@ -41,7 +41,7 @@ extension OSVer {
   ]
 
   /// The minimum macOS major version number that is supported for virtualization.
-  private static let minimumVirtualizationMajorVersion = 12
+  private static let minimumVirtualizationMajor = 12
 
   /// The release name of the current macOS version, if available.
   public var macOSReleaseName: String? {
@@ -71,7 +71,7 @@ extension OSVer {
     guard onlyVirtualizationSupported else {
       return self.codeNames.keys
     }
-    return self.codeNames.keys.filter { $0 >= self.minimumVirtualizationMajorVersion }
+    return self.codeNames.keys.filter { $0 >= self.minimumVirtualizationMajor }
   }
 
   /// Returns a unique identifier for the current macOS version,

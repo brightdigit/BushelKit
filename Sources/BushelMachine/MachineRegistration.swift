@@ -29,4 +29,5 @@
 
 public import Foundation
 
+/// Returns the machine after registering the object.
 public typealias MachineRegistration = @Sendable (MachineInventory, UUID) -> any Machine

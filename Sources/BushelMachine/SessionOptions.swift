@@ -29,7 +29,9 @@
 
 import Foundation
 
+/// Set of options to pass to the `SessionView`.
 public struct SessionOptions: OptionSet, Codable, Hashable, Sendable {
+  /// If the session is not started by a `DocumentView`.
   public static let orphan = SessionOptions(rawValue: 1 << 0)
 
   public var rawValue: Int

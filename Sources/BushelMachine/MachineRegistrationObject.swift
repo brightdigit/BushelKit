@@ -29,12 +29,18 @@
 
 public import Foundation
 
+/// Object which registers the machine into the inventory.
 public struct MachineRegistrationObject: Sendable {
   private let machine: any Machine
   public init(machine: any Machine) {
     self.machine = machine
   }
 
+  /// Adds the machine to the inventory.
+  /// - Parameters:
+  ///   - inventory: ``MachineInventory`` to add the machine to.
+  ///   - id: The id to use.
+  /// - Returns: The actual ``Machine``
   public func register(_ inventory: MachineInventory, _ id: UUID) -> any Machine {
     inventory.registerMachine(machine, withID: id)
     return machine
