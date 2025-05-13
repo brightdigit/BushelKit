@@ -41,7 +41,7 @@ public final class MachineInventory: Sendable, Loggable  {
     internal init(machine: any Machine, observationID: UUID, properties: MachineProperties? = nil) {
       self.machine = machine
       self.observationID = observationID
-      self.properties = properties ?? .init(state: .stopped, canStart: false, canStop: false, canPause: false, canResume: false, canRequestStop: false)
+      self.properties = properties ?? .initial
     }
 
     fileprivate mutating  func updatedProperties(from changes: MachineChange) {
@@ -67,7 +67,9 @@ public final class MachineInventory: Sendable, Loggable  {
   }
 
   internal nonisolated func registerMachine(_ machine: any Machine, withID id: UUID) {
-    Self.logger.debug("Registering machine \(machine.initialConfiguration.operatingSystemVersion.description) with ID \(id)")
+    Self.logger.debug(
+      "Registering machine \(machine.initialConfiguration.operatingSystemVersion.description) with ID \(id)"
+    )
     let observationID = machine.beginObservation { [self] machineChange in
       self.machineWithID(id, updatedTo: machineChange)
     }

@@ -30,11 +30,11 @@
 import Foundation
 
 public struct SessionOptions: OptionSet, Codable, Hashable, Sendable {
+  public static let orphan = SessionOptions(rawValue: 1 << 0)
+
   public var rawValue: Int
 
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }
-
-  public static let orphan = SessionOptions(rawValue: 1 << 0)
 }

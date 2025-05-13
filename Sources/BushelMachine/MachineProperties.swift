@@ -78,7 +78,15 @@ public struct MachineProperties: Sendable {
 }
 
 extension MachineProperties {
-  init (original: MachineProperties, propertyChange: any PropertyChange) {
+  internal static let initial: Self = .init(
+    state: .stopped,
+    canStart: false,
+    canStop: false,
+    canPause: false,
+    canResume: false,
+    canRequestStop: false
+  )
+  private init (original: MachineProperties, propertyChange: any PropertyChange) {
     let type = type(of: propertyChange)
 
     var state: MachineState = original.state
@@ -111,7 +119,7 @@ extension MachineProperties {
       canRequestStop: canRequestStop
     )
   }
-  func updateProperty(_ property: any PropertyChange) -> MachineProperties {
+  internal func updateProperty(_ property: any PropertyChange) -> MachineProperties {
     .init(original: self, propertyChange: property)
   }
 }

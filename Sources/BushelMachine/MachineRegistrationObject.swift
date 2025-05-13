@@ -30,11 +30,11 @@
 public import Foundation
 
 public struct MachineRegistrationObject: Sendable {
+  private let machine: any Machine
   public init(machine: any Machine) {
     self.machine = machine
   }
 
-  private let machine: any Machine
   public func register(_ inventory: MachineInventory, _ id: UUID) -> any Machine {
     inventory.registerMachine(machine, withID: id)
     return machine
