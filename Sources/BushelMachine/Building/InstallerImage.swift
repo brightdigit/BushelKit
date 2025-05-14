@@ -86,4 +86,8 @@ extension InstallerImage {
   public var identifier: InstallerImageIdentifier {
     InstallerImageIdentifier(imageID: imageID, libraryID: libraryID)
   }
+
+  public var buildIdentifier: String {
+    self.operatingSystemVersion.id(buildVersion: self.buildVersion)
+  }
 }
