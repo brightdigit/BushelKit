@@ -96,8 +96,11 @@ public final class MachineInventory: Sendable, Loggable {
       self.machineWithID(id, updatedTo: machineChange)
     }
     Task { @MainActor in
-      assert(self.observers[id] == nil, "Duplicate machine ID \(id)")
-      self.observers[id] = .init(machine: machine, observationID: observationID)
+      if self.observers[id] == nil {
+        self.observers[id] = .init(machine: machine, observationID: observationID)
+      } else {
+        machine.removeObservation(withID: observationID)
+      }
     }
   }
 
