@@ -89,8 +89,9 @@ public final class MachineInventory: Sendable, Loggable {
   }
 
   internal nonisolated func registerMachine(_ machine: any Machine, withID id: UUID) {
+    let osDescription = machine.initialConfiguration.operatingSystemVersion.description
     Self.logger.debug(
-      "Registering machine \(machine.initialConfiguration.operatingSystemVersion.description) with ID \(id)"
+      "Registering machine \(osDescription) with ID \(id)"
     )
     let observationID = machine.beginObservation { [self] machineChange in
       self.machineWithID(id, updatedTo: machineChange)
@@ -100,6 +101,9 @@ public final class MachineInventory: Sendable, Loggable {
         self.observers[id] = .init(machine: machine, observationID: observationID)
       } else {
         machine.removeObservation(withID: observationID)
+        Self.logger.info(
+          "Machine \(osDescription) with ID \(id) already registered."
+        )
       }
     }
   }
