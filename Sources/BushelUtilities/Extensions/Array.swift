@@ -84,6 +84,26 @@ extension Array {
   /// - Parameter removeAtOffsets:
   /// A closure that takes the array and a list of indices to remove elements at.
   /// Defaults to `Self.remove(from:atOffsets:)`.
+  public func removingDuplicates(
+    groupingBy: @Sendable @escaping (Element) -> some Hashable,
+    indiciesToRemove: @Sendable @escaping ([Element]) -> [Int] = indiciesExpectFirst,
+    removeAtOffsets: @Sendable @escaping (inout Self, [Int]) -> Void = Self.remove(from:atOffsets:)
+  ) -> Self {
+    var other = self
+    other.removeDuplicates(
+      groupingBy: groupingBy, indiciesToRemove: indiciesToRemove, removeAtOffsets: removeAtOffsets)
+    return other
+  }
+
+  /// Removes duplicate elements from the array based on a provided grouping function.
+  /// - Parameter groupingBy: A closure that takes an element and returns a hashable value
+  /// to group the elements by.
+  /// - Parameter indiciesToRemove: A closure that takes an array of grouped elements and
+  /// returns the indices of the elements to remove.
+  /// Defaults to `indiciesExpectFirst`.
+  /// - Parameter removeAtOffsets:
+  /// A closure that takes the array and a list of indices to remove elements at.
+  /// Defaults to `Self.remove(from:atOffsets:)`.
   public mutating func removeDuplicates(
     groupingBy: @Sendable @escaping (Element) -> some Hashable,
     indiciesToRemove: @Sendable @escaping ([Element]) -> [Int] = indiciesExpectFirst,
