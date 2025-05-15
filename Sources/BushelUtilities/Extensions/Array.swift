@@ -63,14 +63,12 @@ extension Array {
       self.remove(atOffsets: IndexSet(offsets))
     }
   #else
-    private mutating func remove(atOffsets _: [Int]) {
-      let sortedIndices = indices.sorted(by: >)
+    private mutating func remove(atOffsets offsets: [Int]) {
+      // Sort indices in descending order to avoid index shifting issues
+      let sortedIndices = offsets.sorted(by: >)
       for index in sortedIndices {
-        assert(index >= 0 && index < self.count)
-        guard index >= 0, index < self.count else {
-          continue  // Skip invalid indices
-        }
-        self.remove(at: index)
+        guard index >= 0, index < count else { continue }
+        remove(at: index)
       }
     }
   #endif
@@ -114,13 +112,14 @@ extension Array {
       by: { groupingBy($0.element) }
     )
     .flatMap { pair -> [Int] in
-      indiciesToRemove(
-        pair.value.map(\.element)
-      )
-      .map { index in
+      let elements = pair.value.map(\.element)
+      let indicesToRemove = indiciesToRemove(elements)
+      return indicesToRemove.map { index in
         pair.value[index].offset
       }
     }
+    .sorted(by: >)  // Sort in descending order to avoid index shifting issues
+
     removeAtOffsets(&self, duplicateIndicies)
   }
 }
