@@ -55,4 +55,15 @@ extension Dictionary {
   ) {
     self.init(uniqueValues: values ?? [], keyBy: key)
   }
+
+  /// Runs an assert if the key is missing.
+  /// - Parameters:
+  ///   - key: key
+  ///   - defaultValue: Default value if not found in production.
+  /// - Returns: Dictionary value.
+  @inlinable public func requires(_ key: Key, `default` defaultValue: Value) -> Value {
+    let value = self[key]
+    assert(value != nil)
+    return value ?? defaultValue
+  }
 }
