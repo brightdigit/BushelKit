@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 public import Foundation
+public import OSVer
 
 /// Manages a set of machines for a system
 public protocol MachineSystem: Sendable {
@@ -67,6 +68,8 @@ public protocol MachineSystem: Sendable {
   /// - Parameter restoreImage: The installer image to use.
   /// - Returns: ``ConfigurationRange`` giving the cpu count range and memory range.
   func configurationRange(for restoreImage: any InstallerImage) -> ConfigurationRange
+
+  func operatingSystemShortName(for osVer: OSVer) -> String
 }
 
 extension MachineSystem {

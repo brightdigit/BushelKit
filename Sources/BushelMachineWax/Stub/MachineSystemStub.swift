@@ -31,6 +31,7 @@ public import BushelFoundation
 public import BushelFoundationWax
 public import BushelMachine
 public import Foundation
+public import OSVer
 
 public struct MachineSystemStub: MachineSystem, Equatable {
   public typealias RestoreImageType = RestoreImageStub
@@ -62,5 +63,9 @@ public struct MachineSystemStub: MachineSystem, Equatable {
 
   public func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
+  }
+
+  public func operatingSystemShortName(for osVer: OSVer) -> String {
+    osVer.description
   }
 }

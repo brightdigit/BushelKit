@@ -32,6 +32,7 @@ import BushelFoundationWax
 import BushelMachine
 import BushelMachineWax
 import Foundation
+import OSVer
 
 internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
   internal typealias RestoreImageType = RestoreImageStub
@@ -103,6 +104,10 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
 
   internal func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
+  }
+
+  func operatingSystemShortName(for osVer: OSVer) -> String {
+    osVer.description
   }
 
   private func handleResult() throws {
