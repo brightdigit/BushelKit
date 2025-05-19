@@ -1,5 +1,5 @@
 //
-//  KVNSObservation.swift
+//  MachineRegistration.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,41 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if canImport(ObjectiveC)
+public import Foundation
 
-  internal import Foundation
-
-  /// Represents an observation of key-value changes on an `NSObject`.
-  @available(*, deprecated)
-  @MainActor
-  internal final class KVNSObservation: KVObservation {
-    /// The object being observed.
-    internal let observed: NSObject
-
-    /// The observer of the key-value changes.
-    internal let observer: NSObject
-
-    /// The key paths being observed.
-    internal let keyPaths: [String]
-
-    /// Initializes a new `KVNSObservation` instance.
-    ///
-    /// - Parameters:
-    ///   - observed: The object being observed.
-    ///   - observer: The observer of the key-value changes.
-    ///   - keyPaths: The key paths being observed.
-    internal init(observed: NSObject, observer: NSObject, keyPaths: [String]) {
-      self.observed = observed
-      self.observer = observer
-      self.keyPaths = keyPaths
-    }
-
-    deinit {
-      MainActor.assumeIsolated {
-        for keyPath in keyPaths {
-          observed.removeObserver(observer, forKeyPath: keyPath)
-        }
-      }
-    }
-  }
-#endif
+/// Returns the machine after registering the object.
+public typealias MachineRegistration = @Sendable (MachineInventory, UUID) -> any Machine

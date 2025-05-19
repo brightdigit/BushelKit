@@ -30,14 +30,17 @@
 public import Foundation
 
 /// A struct representing a session request.
-public struct SessionRequest: Codable, Hashable {
+public struct SessionRequest: Codable, Hashable, Sendable {
   /// The URL of the request.
   public let url: URL
+
+  public let options: SessionOptions
 
   /// Initializes a `SessionRequest` with the given URL.
   ///
   /// - Parameter url: The URL of the request.
-  public init(url: URL) {
+  public init(url: URL, options: SessionOptions = []) {
     self.url = url
+    self.options = options
   }
 }

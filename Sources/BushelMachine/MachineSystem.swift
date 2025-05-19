@@ -29,6 +29,7 @@
 
 public import BushelFoundation
 public import Foundation
+public import OSVer
 
 /// Manages a set of machines for a system
 public protocol MachineSystem: Sendable {
@@ -53,15 +54,10 @@ public protocol MachineSystem: Sendable {
     at url: URL
   ) async throws -> any MachineBuilder
 
-  /// Creates a machine based on the url and configuration.
-  /// - Parameters:
-  ///   - url: URL of the machine bundle.
-  ///   - configuration: The machine configuration.
-  /// - Returns: A usable machine.
   func machine(
     at url: URL,
     withConfiguration configuration: MachineConfiguration
-  ) async throws -> any Machine
+  ) async throws -> MachineRegistration
 
   /// Creates the necessary restore image based on the installer image info.
   /// - Parameter restoreImage: The installer image to use.
@@ -72,6 +68,8 @@ public protocol MachineSystem: Sendable {
   /// - Parameter restoreImage: The installer image to use.
   /// - Returns: ``ConfigurationRange`` giving the cpu count range and memory range.
   func configurationRange(for restoreImage: any InstallerImage) -> ConfigurationRange
+
+  func operatingSystemShortName(for osVer: OSVer) -> String
 }
 
 extension MachineSystem {

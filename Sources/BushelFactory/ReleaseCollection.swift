@@ -31,6 +31,84 @@ public import BushelFoundation
 public import BushelMachine
 
 public struct ReleaseCollection {
+  fileprivate typealias ImageDictionary = [Int: [any InstallerImage]]
+
+  private struct ReleaseVersions {
+    let firstMajorVersion: Int
+    let lastMajorVersion: Int
+    let releases: [ReleaseMetadata]
+
+    private init(
+      firstMajorVersion: Int = 0, lastMajorVersion: Int = .max, releases: [ReleaseMetadata] = []
+    ) {
+      self.releases = releases
+      self.lastMajorVersion = lastMajorVersion
+      self.firstMajorVersion = firstMajorVersion
+    }
+
+    fileprivate init(
+      releaseCollection: any ReleaseCollectionMetadata,
+      imageDictionary: ImageDictionary,
+      customVersionsAllowed: Bool
+    ) {
+      let sortedReleases = releaseCollection.releases.sorted {
+        $0.majorVersion < $1.majorVersion
+      }
+
+      assert(
+        Set(sortedReleases.map(\.majorVersion)).isSuperset(of: imageDictionary.keys)
+          || releaseCollection.customVersionsAllowed
+      )
+
+      assert(sortedReleases.first != nil)
+
+      let firstMajorVersion = sortedReleases.first?.majorVersion ?? 0
+      var releases = [ReleaseMetadata]()
+      var lastMajorVersion: Int = .max
+      for release in sortedReleases {
+        let images = imageDictionary[release.majorVersion, default: []]
+        releases.append(
+          .init(metadata: release, images: images)
+        )
+        assert(
+          lastMajorVersion == .max && firstMajorVersion == release.majorVersion
+            || lastMajorVersion + 1 == release.majorVersion
+        )
+        lastMajorVersion = release.majorVersion
+      }
+
+      if customVersionsAllowed {
+        let customReleaseKeys = Set(imageDictionary.keys).subtracting(
+          sortedReleases.map(\.majorVersion)
+        )
+        let customImages: [any InstallerImage] =
+          imageDictionary.flatMap {
+            (key: Int, value: [any InstallerImage]) -> [any InstallerImage] in
+            guard customReleaseKeys.contains(key) else {
+              return []
+            }
+            return value
+          }
+        releases.append(
+          ReleaseMetadata(metadata: CustomRelease.instance, images: customImages)
+        )
+      }
+
+      self.init(
+        firstMajorVersion: firstMajorVersion, lastMajorVersion: lastMajorVersion, releases: releases
+      )
+    }
+  }
+  public struct Options: OptionSet, Codable, Hashable, Sendable {
+    public var rawValue: Int
+
+    public init(rawValue: Int) {
+      self.rawValue = rawValue
+    }
+
+    public static let noDuplicates: Self = .init(rawValue: 1)
+  }
+
   public let firstMajorVersion: Int
   public let releases: [ReleaseMetadata]
   public let customVersionsAllowed: Bool
@@ -63,53 +141,25 @@ public struct ReleaseCollection {
     self.releases = releases
   }
 
-  public init(releaseCollection: any ReleaseCollectionMetadata, images: [any InstallerImage]) {
-    let imageDictionary = Dictionary(grouping: images) { image in
-      image.operatingSystemVersion.majorVersion
-    }
-    let sourceReleases = releaseCollection.releases.sorted {
-      $0.majorVersion < $1.majorVersion
-    }
-    var releases = [ReleaseMetadata]()
-
-    assert(
-      Set(sourceReleases.map(\.majorVersion)).isSuperset(of: imageDictionary.keys)
-        || releaseCollection.customVersionsAllowed
+  public init(
+    releaseCollection: any ReleaseCollectionMetadata,
+    images: [any InstallerImage],
+    options: Options = .init()
+  ) {
+    let imageDictionary: ImageDictionary = .init(
+      images: images,
+      uniqueOnly: options.contains(.noDuplicates)
     )
 
-    assert(sourceReleases.first != nil)
+    let versions = ReleaseVersions(
+      releaseCollection: releaseCollection,
+      imageDictionary: imageDictionary,
+      customVersionsAllowed: releaseCollection.customVersionsAllowed
+    )
 
-    let firstMajorVersion = sourceReleases.first?.majorVersion ?? 0
-    var lastMajorVersion: Int = .max
-    for release in sourceReleases {
-      let images = imageDictionary[release.majorVersion, default: []]
-      releases.append(
-        .init(metadata: release, images: images)
-      )
-      assert(
-        lastMajorVersion == .max && firstMajorVersion == release.majorVersion
-          || lastMajorVersion + 1 == release.majorVersion
-      )
-      lastMajorVersion = release.majorVersion
-    }
-    if releaseCollection.customVersionsAllowed {
-      let customReleaseKeys = Set(imageDictionary.keys).subtracting(
-        sourceReleases.map(\.majorVersion)
-      )
-      let customImages: [any InstallerImage] =
-        imageDictionary.flatMap { (key: Int, value: [any InstallerImage]) -> [any InstallerImage] in
-          guard customReleaseKeys.contains(key) else {
-            return []
-          }
-          return value
-        }
-      releases.append(
-        ReleaseMetadata(metadata: CustomRelease.instance, images: customImages)
-      )
-    }
     self.init(
-      firstMajorVersion: firstMajorVersion,
-      releases: releases,
+      firstMajorVersion: versions.firstMajorVersion,
+      releases: versions.releases,
       prefix: releaseCollection.prefix,
       customVersionsAllowed: releaseCollection.customVersionsAllowed
     )
@@ -139,5 +189,21 @@ public struct ReleaseCollection {
 extension ReleaseCollection {
   public var isEmpty: Bool {
     self.releases.allSatisfy(\.images.isEmpty)
+  }
+}
+
+extension ReleaseCollection.ImageDictionary {
+  fileprivate init(images: [any InstallerImage], uniqueOnly: Bool) {
+    let newImages: [any InstallerImage]
+
+    if uniqueOnly {
+      newImages = images.removingDuplicates(groupingBy: { $0.buildIdentifier })
+    } else {
+      newImages = images
+    }
+
+    self.init(grouping: newImages) { image in
+      image.operatingSystemVersion.majorVersion
+    }
   }
 }

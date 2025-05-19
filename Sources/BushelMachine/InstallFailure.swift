@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelFoundation
+internal import BushelFoundation
 internal import Foundation
 
 /// A struct representing an installation failure.
