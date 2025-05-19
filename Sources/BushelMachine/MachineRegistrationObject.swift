@@ -1,5 +1,5 @@
 //
-//  MachineSystemStub.swift
+//  MachineRegistrationObject.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,45 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelFoundation
-public import BushelFoundationWax
-public import BushelMachine
 public import Foundation
-public import OSVer
 
-public struct MachineSystemStub: MachineSystem, Equatable {
-  public typealias RestoreImageType = RestoreImageStub
-
-  public let defaultStorageLabel: String = "stub"
-
-  public let defaultSnapshotSystem: SnapshotterID = "testing"
-
-  public var id: VMSystemID
-
-  public func createBuilder(
-    for _: MachineBuildConfiguration<RestoreImageType>,
-    at url: URL
-  ) throws -> any MachineBuilder {
-    MachineBuilderStub(url: url)
+/// Object which registers the machine into the inventory.
+public struct MachineRegistrationObject: Sendable {
+  private let machine: any Machine
+  public init(machine: any Machine) {
+    self.machine = machine
   }
 
-  public func machine(at url: URL, withConfiguration configuration: MachineConfiguration)
-    async throws -> MachineRegistration
-  {
-    MachineRegistrationObject(
-      machine: MachineStub(configuration: configuration, state: .starting)
-    ).register(_:_:)
-  }
-
-  public func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
-    .init()
-  }
-
-  public func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
-    .default
-  }
-
-  public func operatingSystemShortName(for osVer: OSVer) -> String {
-    osVer.description
+  /// Adds the machine to the inventory.
+  /// - Parameters:
+  ///   - inventory: ``MachineInventory`` to add the machine to.
+  ///   - id: The id to use.
+  /// - Returns: The actual ``Machine``
+  public func register(_ inventory: MachineInventory, _ id: UUID) -> any Machine {
+    inventory.registerMachine(machine, withID: id)
+    return machine
   }
 }

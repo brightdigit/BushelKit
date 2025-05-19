@@ -31,9 +31,11 @@ import BushelFactory
 import BushelFoundation
 import BushelFoundationWax
 import BushelMachine
-import XCTest
+import Foundation
+import Testing
 
-internal final class ReleaseCollectionTests: XCTestCase {
+@Suite("Release Collection Tests")
+struct ReleaseCollectionTests {
   private struct TestParameters {
     let customReleaseCount: Int
     let expectedFirstMajorVersion: Int
@@ -79,13 +81,13 @@ internal final class ReleaseCollectionTests: XCTestCase {
     let actualImages = actualRelease.images.compactMap { image in
       image as? MockInstallerImage
     }
-    XCTAssertEqual(actualRelease.id.hashValue, release.id.hashValue)
-    XCTAssertFalse(actualRelease.isCustom)
-    XCTAssertEqual(actualImages, imageSample[release.majorVersion])
-    XCTAssertEqual(actualRelease.metadata.majorVersion, release.majorVersion)
-    XCTAssertEqual(actualRelease.metadata.imageName, release.imageName)
-    XCTAssertEqual(actualRelease.metadata.releaseName, release.releaseName)
-    XCTAssertEqual(actualRelease.metadata.versionName, release.versionName)
+    #expect(actualRelease.id.hashValue == release.id.hashValue)
+    #expect(!actualRelease.isCustom)
+    #expect(actualImages == imageSample[release.majorVersion])
+    #expect(actualRelease.metadata.majorVersion == release.majorVersion)
+    #expect(actualRelease.metadata.imageName == release.imageName)
+    #expect(actualRelease.metadata.releaseName == release.releaseName)
+    #expect(actualRelease.metadata.versionName == release.versionName)
   }
 
   private func customVersions(
@@ -145,26 +147,20 @@ internal final class ReleaseCollectionTests: XCTestCase {
       fromCollection: actualReleaseCollection
     )
 
-    XCTAssertEqual(
-      actualReleaseCollection.containsCustomVersions,
-      parameters.customReleaseCount > 0
-    )
-    XCTAssertEqual(actualReleaseCollection.customVersionsAllowed, expectedCustomVersionsAllowed)
-
-    XCTAssertEqual(
-      actualReleaseCollection.customVersionsAllowed,
-      releaseCollection.customVersionsAllowed
-    )
-    XCTAssertEqual(actualReleaseCollection.prefix, releaseCollection.prefix)
-    XCTAssertEqual(actualReleaseCollection.firstMajorVersion, parameters.expectedFirstMajorVersion)
-    XCTAssertEqual(actualCustomVersions, expectedCustomVersions)
+    #expect(actualReleaseCollection.containsCustomVersions == (parameters.customReleaseCount > 0))
+    #expect(actualReleaseCollection.customVersionsAllowed == expectedCustomVersionsAllowed)
+    #expect(
+      actualReleaseCollection.customVersionsAllowed == releaseCollection.customVersionsAllowed)
+    #expect(actualReleaseCollection.prefix == releaseCollection.prefix)
+    #expect(actualReleaseCollection.firstMajorVersion == parameters.expectedFirstMajorVersion)
+    #expect(actualCustomVersions == expectedCustomVersions)
 
     let sortedReleases = releaseCollection.releases.sorted(
       by: { $0.majorVersion < $1.majorVersion }
     )
     for expectedRelease in sortedReleases {
       guard let actualRelease = actualReleaseCollection[expectedRelease.majorVersion] else {
-        XCTAssertNotNil(actualReleaseCollection[expectedRelease.majorVersion])
+        #expect(actualReleaseCollection[expectedRelease.majorVersion] != nil)
         continue
       }
 
@@ -176,7 +172,8 @@ internal final class ReleaseCollectionTests: XCTestCase {
     }
   }
 
-  internal func testInit() {
+  @Test("Initialize Release Collection")
+  func testInit() {
     let testCount: Int = .random(in: 10...20)
     for _ in 0..<testCount {
       doTestReleaseCollectionWhere(
@@ -188,11 +185,63 @@ internal final class ReleaseCollectionTests: XCTestCase {
         customVersionsAllowed: true
       )
     }
-    //    for _ in 0..<testCount {
-    //      doTestReleaseCollectionWhere(
-    //        customVersionsAllowed: false,
-    //        withCustomReleaseCount: .random(in: 1...3)
-    //      )
-    //    }
+  }
+
+  @Test("Initialize Release Collection with No Duplicates")
+  func testInitWithNoDuplicates() {
+    let parameters = TestParameters.random(
+      expectedCustomVersionsAllowed: false,
+      releaseCount: 3,
+      averageImageCountPerRelease: 2
+    )
+
+    let releaseCollection = MockReleaseCollectionMetadata.random(
+      startingAt: parameters.expectedFirstMajorVersion,
+      count: parameters.releaseCount,
+      customVersionsAllowed: false
+    )
+
+    // Create a dictionary with duplicate images
+    var imageDictionary = MockInstallerImage.random(
+      withReleaseCount: parameters.releaseCount,
+      startingAt: parameters.expectedFirstMajorVersion,
+      withAverageImageCount: parameters.averageImageCountPerRelease,
+      includingCustomReleaseCount: 0
+    )
+
+    // Add duplicates to each release
+    for (majorVersion, images) in imageDictionary {
+      let duplicates = images.map { image in
+        MockInstallerImage(
+          libraryID: image.libraryID,
+          imageID: UUID(),  // New UUID to make it a different instance
+          metadata: image.metadata
+        )
+      }
+      imageDictionary[majorVersion]?.append(contentsOf: duplicates)
+    }
+
+    // Create collection with noDuplicates option
+    let actualReleaseCollection = ReleaseCollection(
+      releaseCollection: releaseCollection,
+      images: imageDictionary.values.flatMap { $0 },
+      options: .noDuplicates
+    )
+
+    // Verify that duplicates were removed
+    for (majorVersion, expectedImages) in imageDictionary {
+      guard let actualRelease = actualReleaseCollection[majorVersion] else {
+        #expect(actualReleaseCollection[majorVersion] != nil)
+        continue
+      }
+
+      let actualImages = actualRelease.images.compactMap { $0 as? MockInstallerImage }
+      // Verify that the number of images is half of the original (duplicates removed)
+      #expect(actualImages.count == expectedImages.count / 2)
+
+      // Verify that all images have unique build identifiers
+      let buildIdentifiers = Set(actualImages.map { $0.buildIdentifier })
+      #expect(buildIdentifiers.count == actualImages.count)
+    }
   }
 }

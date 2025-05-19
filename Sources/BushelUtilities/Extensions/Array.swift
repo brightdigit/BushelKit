@@ -63,17 +63,35 @@ extension Array {
       self.remove(atOffsets: IndexSet(offsets))
     }
   #else
-    private mutating func remove(atOffsets _: [Int]) {
-      let sortedIndices = indices.sorted(by: >)
+    private mutating func remove(atOffsets offsets: [Int]) {
+      // Sort indices in descending order to avoid index shifting issues
+      let sortedIndices = offsets.sorted(by: >)
       for index in sortedIndices {
-        assert(index >= 0 && index < self.count)
-        guard index >= 0, index < self.count else {
-          continue  // Skip invalid indices
-        }
-        self.remove(at: index)
+        guard index >= 0, index < count else { continue }
+        remove(at: index)
       }
     }
   #endif
+
+  /// Removes duplicate elements from the array based on a provided grouping function.
+  /// - Parameter groupingBy: A closure that takes an element and returns a hashable value
+  /// to group the elements by.
+  /// - Parameter indiciesToRemove: A closure that takes an array of grouped elements and
+  /// returns the indices of the elements to remove.
+  /// Defaults to `indiciesExpectFirst`.
+  /// - Parameter removeAtOffsets:
+  /// A closure that takes the array and a list of indices to remove elements at.
+  /// Defaults to `Self.remove(from:atOffsets:)`.
+  public func removingDuplicates(
+    groupingBy: @Sendable @escaping (Element) -> some Hashable,
+    indiciesToRemove: @Sendable @escaping ([Element]) -> [Int] = indiciesExpectFirst,
+    removeAtOffsets: @Sendable @escaping (inout Self, [Int]) -> Void = Self.remove(from:atOffsets:)
+  ) -> Self {
+    var other = self
+    other.removeDuplicates(
+      groupingBy: groupingBy, indiciesToRemove: indiciesToRemove, removeAtOffsets: removeAtOffsets)
+    return other
+  }
 
   /// Removes duplicate elements from the array based on a provided grouping function.
   /// - Parameter groupingBy: A closure that takes an element and returns a hashable value
@@ -94,13 +112,14 @@ extension Array {
       by: { groupingBy($0.element) }
     )
     .flatMap { pair -> [Int] in
-      indiciesToRemove(
-        pair.value.map(\.element)
-      )
-      .map { index in
+      let elements = pair.value.map(\.element)
+      let indicesToRemove = indiciesToRemove(elements)
+      return indicesToRemove.map { index in
         pair.value[index].offset
       }
     }
+    .sorted(by: >)  // Sort in descending order to avoid index shifting issues
+
     removeAtOffsets(&self, duplicateIndicies)
   }
 }

@@ -28,7 +28,7 @@
 //
 
 public import BushelFoundation
-public import Foundation
+internal import Foundation
 public import OSVer
 
 /// Represents metadata for an installer image.

@@ -1,5 +1,5 @@
 //
-//  MachineSystemStub.swift
+//  SessionOptions.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,45 +27,16 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelFoundation
-public import BushelFoundationWax
-public import BushelMachine
-public import Foundation
-public import OSVer
+import Foundation
 
-public struct MachineSystemStub: MachineSystem, Equatable {
-  public typealias RestoreImageType = RestoreImageStub
+/// Set of options to pass to the `SessionView`.
+public struct SessionOptions: OptionSet, Codable, Hashable, Sendable {
+  /// If the session is not started by a `DocumentView`.
+  public static let orphan = SessionOptions(rawValue: 1 << 0)
 
-  public let defaultStorageLabel: String = "stub"
+  public var rawValue: Int
 
-  public let defaultSnapshotSystem: SnapshotterID = "testing"
-
-  public var id: VMSystemID
-
-  public func createBuilder(
-    for _: MachineBuildConfiguration<RestoreImageType>,
-    at url: URL
-  ) throws -> any MachineBuilder {
-    MachineBuilderStub(url: url)
-  }
-
-  public func machine(at url: URL, withConfiguration configuration: MachineConfiguration)
-    async throws -> MachineRegistration
-  {
-    MachineRegistrationObject(
-      machine: MachineStub(configuration: configuration, state: .starting)
-    ).register(_:_:)
-  }
-
-  public func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
-    .init()
-  }
-
-  public func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
-    .default
-  }
-
-  public func operatingSystemShortName(for osVer: OSVer) -> String {
-    osVer.description
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
   }
 }
