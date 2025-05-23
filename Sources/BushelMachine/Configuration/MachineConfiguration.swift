@@ -62,6 +62,10 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   public let images: [RecordedImage]?
 
   public let restoreImageFile: InstallerImageIdentifier
+  
+  public var operatingSystemVersionComponents: OperatingSystemVersionComponents {
+    .init(buildVersion: buildVersion, operatingSystemVersion: operatingSystemVersion)
+  }
 
   public init(
     restoreImageFile: InstallerImageIdentifier,
