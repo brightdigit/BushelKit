@@ -32,14 +32,12 @@ public import OSVer
 
 /// Represents the version components of an operating system.
 public struct OperatingSystemVersionComponents: Sendable {
-  
   /// The build version of the operating system.
   public let buildVersion: String?
 
   /// The version of the operating system.
   public let operatingSystemVersion: OSVer
-  
-  
+
   /// Represents the version components of an operating system.
   /// - Parameters:
   ///   - buildVersion: The build version of the operating system.
