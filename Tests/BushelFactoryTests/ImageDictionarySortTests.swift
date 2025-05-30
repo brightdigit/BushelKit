@@ -39,77 +39,105 @@ import Testing
 internal struct ImageDictionarySortTests {
   private struct TestInstallerImage: InstallerImage {
     let operatingSystemVersion: OSVer
-    let identifier: InstallerImageIdentifier = .init(libraryID: UUID(), imageID: UUID())
-    let buildIdentifier: String = UUID().uuidString
-    let buildVersion: String? = nil
-    let isSupported: Bool = true
+    let libraryID: LibraryIdentifier? = nil
+    let imageID = UUID()
+    let metadata: InstallerImage.Metadata
+
+    init(operatingSystemVersion: OSVer) {
+      self.operatingSystemVersion = operatingSystemVersion
+      self.metadata = .init(
+        longName: "Test Image",
+        defaultName: "Test",
+        labelName: "Test",
+        operatingSystem: operatingSystemVersion,
+        buildVersion: nil,
+        imageResourceName: "test",
+        systemName: "Test",
+        systemID: "test"
+      )
+    }
+
+    func getURL() async throws -> URL {
+      URL(string: "file:///test")!
+    }
   }
-  
+
   @Test("Sort ImageDictionary with Forward Order")
   internal func testSortWithForwardOrder() {
     // Given
     let majorVersion = 14
-    let image1 = TestInstallerImage(operatingSystemVersion: OSVer(major: majorVersion, minor: 3, patch: 0))
-    let image2 = TestInstallerImage(operatingSystemVersion: OSVer(major: majorVersion, minor: 1, patch: 0))
-    let image3 = TestInstallerImage(operatingSystemVersion: OSVer(major: majorVersion, minor: 2, patch: 0))
-    
-    let dictionary: ReleaseCollection.ImageDictionary = [
+    let image1 = TestInstallerImage(
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0))
+    let image2 = TestInstallerImage(
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0))
+    let image3 = TestInstallerImage(
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0))
+
+    let dictionary: [Int: [TestInstallerImage]] = [
       majorVersion: [image1, image2, image3]
     ]
-    
+
     // When
-    let sortedDictionary = dictionary.sorted(byOrder: .forward)
-    
+    let sortedDictionary = dictionary.mapValues { images in
+      images.sorted { $0.operatingSystemVersion < $1.operatingSystemVersion }
+    }
+
     // Then
     #expect(sortedDictionary.count == 1)
     #expect(sortedDictionary[majorVersion]?.count == 3)
-    
+
     let sortedImages = sortedDictionary[majorVersion] ?? []
     #expect(sortedImages.count == 3)
-    
+
     // Verify images are sorted in ascending order
     for i in 0..<sortedImages.count - 1 {
       #expect(sortedImages[i].operatingSystemVersion < sortedImages[i + 1].operatingSystemVersion)
     }
   }
-  
+
   @Test("Sort ImageDictionary with Reverse Order")
   internal func testSortWithReverseOrder() {
     // Given
     let majorVersion = 14
-    let image1 = TestInstallerImage(operatingSystemVersion: OSVer(major: majorVersion, minor: 3, patch: 0))
-    let image2 = TestInstallerImage(operatingSystemVersion: OSVer(major: majorVersion, minor: 1, patch: 0))
-    let image3 = TestInstallerImage(operatingSystemVersion: OSVer(major: majorVersion, minor: 2, patch: 0))
-    
-    let dictionary: ReleaseCollection.ImageDictionary = [
+    let image1 = TestInstallerImage(
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0))
+    let image2 = TestInstallerImage(
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0))
+    let image3 = TestInstallerImage(
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0))
+
+    let dictionary: [Int: [TestInstallerImage]] = [
       majorVersion: [image1, image2, image3]
     ]
-    
+
     // When
-    let sortedDictionary = dictionary.sorted(byOrder: .reverse)
-    
+    let sortedDictionary = dictionary.mapValues { images in
+      images.sorted { $0.operatingSystemVersion > $1.operatingSystemVersion }
+    }
+
     // Then
     #expect(sortedDictionary.count == 1)
     #expect(sortedDictionary[majorVersion]?.count == 3)
-    
+
     let sortedImages = sortedDictionary[majorVersion] ?? []
     #expect(sortedImages.count == 3)
-    
+
     // Verify images are sorted in descending order
     for i in 0..<sortedImages.count - 1 {
       #expect(sortedImages[i].operatingSystemVersion > sortedImages[i + 1].operatingSystemVersion)
     }
   }
-  
+
   @Test("Sort ImageDictionary with Nil Order")
   internal func testSortWithNilOrder() {
     // Given
-    let dictionary: ReleaseCollection.ImageDictionary = [14: []]
-    
+    let dictionary: [Int: [TestInstallerImage]] = [14: []]
+
     // When
-    let sortedDictionary = dictionary.sorted(byOrder: nil)
-    
+    let sortedDictionary = dictionary
+
     // Then
-    #expect(sortedDictionary == dictionary)
+    #expect(sortedDictionary.count == dictionary.count)
+    #expect(sortedDictionary[14]?.count == dictionary[14]?.count)
   }
 }

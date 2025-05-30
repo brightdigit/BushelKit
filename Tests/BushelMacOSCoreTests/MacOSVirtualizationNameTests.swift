@@ -39,9 +39,9 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
     let buildVersion: String?
     let operatingSystemVersion: OSVer
   }
-  
+
   // MARK: - Default Name Tests
-  
+
   internal func testDefaultNameFromMetadataWithCodeName() {
     // Given
     // Use macOS 14 which should have a code name (Sonoma)
@@ -49,16 +49,16 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
       buildVersion: "23D5026f",
       operatingSystemVersion: OSVer(major: 14, minor: 3, patch: 0)
     )
-    
+
     // When
     let result = MacOSVirtualization.defaultName(fromMetadata: os)
-    
+
     // Then
     XCTAssertTrue(result.contains("macOS"))
     XCTAssertTrue(result.contains("Sonoma"))
     XCTAssertTrue(result.contains("14.3"))
   }
-  
+
   internal func testDefaultNameFromMetadataWithoutCodeName() {
     // Given
     // Use a very high macOS version which should not have a code name
@@ -66,61 +66,61 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
       buildVersion: "ABC123",
       operatingSystemVersion: OSVer(major: 99, minor: 1, patch: 0)
     )
-    
+
     // When
     let result = MacOSVirtualization.defaultName(fromMetadata: os)
-    
+
     // Then
     XCTAssertTrue(result.contains("macOS"))
     XCTAssertTrue(result.contains("99"))
     XCTAssertTrue(result.contains("99.1"))
   }
-  
+
   // MARK: - Operating System Short Name Tests
-  
+
   internal func testOperatingSystemShortNameWithBuildVersion() {
     // Given
     let osVer = OSVer(major: 14, minor: 3, patch: 0)
     let buildVersion = "23D5026f"
-    
+
     // When
     let result = MacOSVirtualization.operatingSystemShortName(
       for: osVer, buildVersion: buildVersion)
-    
+
     // Then
     XCTAssertEqual(result, "macOS 14.3")
     XCTAssertTrue(result.contains(MacOSVirtualization.shortName))
     XCTAssertTrue(result.contains("14.3"))
     XCTAssertFalse(result.contains(buildVersion))
   }
-  
+
   internal func testOperatingSystemShortNameWithoutBuildVersion() {
     // Given
     let osVer = OSVer(major: 14, minor: 3, patch: 0)
-    
+
     // When
     let result = MacOSVirtualization.operatingSystemShortName(for: osVer, buildVersion: nil)
-    
+
     // Then
     XCTAssertEqual(result, "macOS 14.3")
     XCTAssertTrue(result.contains(MacOSVirtualization.shortName))
     XCTAssertTrue(result.contains("14.3"))
   }
-  
+
   // MARK: - Integration Test
-  
+
   internal func testLabelShortNameConsistency() {
     // Given
     let os = TestOS(
       buildVersion: "23D5026f",
       operatingSystemVersion: OSVer(major: 14, minor: 3, patch: 0)
     )
-    
+
     // When
     let label = MacOSVirtualization.label(fromMetadata: os)
     let shortName = MacOSVirtualization.operatingSystemShortName(
       for: os.operatingSystemVersion, buildVersion: os.buildVersion)
-    
+
     // Then
     XCTAssertEqual(label.shortName, shortName)
   }
