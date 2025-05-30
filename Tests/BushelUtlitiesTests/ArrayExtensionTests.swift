@@ -17,7 +17,7 @@ internal struct ArrayExtensionTests {
   }
 
   @Test("Removing duplicates")
-  internal  func testRemovingDuplicates() {
+  internal func testRemovingDuplicates() {
     // Test with simple integers
     let numbers = [1, 2, 2, 3, 3, 4]
     let uniqueNumbers = numbers.removingDuplicates(groupingBy: { $0 })
