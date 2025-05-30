@@ -85,34 +85,6 @@ internal final class MacOSVirtualizationTests: XCTestCase {
     XCTAssertTrue(result.contains("14.3"))
   }
 
-  internal func testOperatingSystemShortNameWithBuildVersion() {
-    // Given
-    let osVer = OSVer(major: 14, minor: 3, patch: 0)
-    let buildVersion = "23D5026f"
-
-    // When
-    let result = MacOSVirtualization.operatingSystemShortName(
-      for: osVer,
-      buildVersion: buildVersion
-    )
-
-    // Then
-    XCTAssertTrue(result.contains(MacOSVirtualization.shortName))
-    XCTAssertTrue(result.contains("14.3"))
-  }
-
-  internal func testOperatingSystemShortNameWithoutBuildVersion() {
-    // Given
-    let osVer = OSVer(major: 14, minor: 3, patch: 0)
-
-    // When
-    let result = MacOSVirtualization.operatingSystemShortName(for: osVer, buildVersion: nil)
-
-    // Then
-    XCTAssertTrue(result.contains(MacOSVirtualization.shortName))
-    XCTAssertTrue(result.contains("14.3"))
-  }
-
   internal func testLabelFromMetadata() {
     // Given
     let mockOS = MockOperatingSystem.create(major: 14, minor: 3, buildVersion: "23D5026f")
@@ -124,5 +96,30 @@ internal final class MacOSVirtualizationTests: XCTestCase {
     XCTAssertNotNil(label.shortName)
     XCTAssertTrue(label.shortName.contains(MacOSVirtualization.shortName))
     XCTAssertTrue(label.shortName.contains("14.3"))
+  }
+  
+  func testOperatingSystemShortNameWithBuildVersion() {
+    // Given
+    let osVer = OSVer(majorVersion: 14, minorVersion: 1, patchVersion: 2)
+    let buildVersion = "23B92"
+
+    // When
+    let shortName = MacOSVirtualization.operatingSystemShortName(
+      for: osVer, buildVersion: buildVersion)
+
+    // Then
+    XCTAssertTrue(shortName.contains("\(osVer)"))
+    XCTAssertTrue(shortName.contains("[\(buildVersion)]"))
+  }
+
+  func testOperatingSystemShortNameWithoutBuildVersion() {
+    // Given
+    let osVer = OSVer(majorVersion: 14, minorVersion: 1, patchVersion: 2)
+
+    // When
+    let shortName = MacOSVirtualization.operatingSystemShortName(for: osVer, buildVersion: nil)
+
+    // Then
+    XCTAssertTrue(shortName == "\(MacOSVirtualization.shortName) \(osVer)")
   }
 }
