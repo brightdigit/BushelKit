@@ -27,36 +27,36 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import BushelMachineWax
 import OSVer
 import XCTest
 
 @testable import BushelMachine
+@testable import BushelMachineWax
 
 internal final class MachineSystemOperatingSystemTests: XCTestCase {
   internal func testMachineSystemStubOperatingSystemShortName() {
     // Given
     let sut = MachineSystemStub(id: "test")
-    let osVer = OSVer(major: 14, minor: 3, patch: 0)
+    let osVer = OSVer(majorVersion: 14, minorVersion: 3, patchVersion: 0)
     let buildVersion = "23D5026f"
-    
+
     // When
     let result = sut.operatingSystemShortName(for: osVer, buildVersion: buildVersion)
-    
+
     // Then
     XCTAssertTrue(result.contains("14.3"))
     XCTAssertTrue(result.contains(buildVersion))
   }
-  
+
   internal func testMachineSystemSpyOperatingSystemShortName() {
     // Given
     let sut = MachineSystemSpy(result: .success(()))
-    let osVer = OSVer(major: 14, minor: 3, patch: 0)
+    let osVer = OSVer(majorVersion: 14, minorVersion: 3, patchVersion: 0)
     let buildVersion = "23D5026f"
-    
+
     // When
     let result = sut.operatingSystemShortName(for: osVer, buildVersion: buildVersion)
-    
+
     // Then
     XCTAssertTrue(result.contains("14.3"))
     XCTAssertTrue(result.contains(buildVersion))

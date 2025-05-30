@@ -40,7 +40,7 @@ internal final class MetadataLabelTests: XCTestCase {
     let systemName = "macOS"
     let versionName = "Sonoma"
     let shortName = "macOS 14.3"
-    
+
     // When
     let sut = MetadataLabel(
       operatingSystemLongName: operatingSystemLongName,
@@ -50,7 +50,7 @@ internal final class MetadataLabelTests: XCTestCase {
       versionName: versionName,
       shortName: shortName
     )
-    
+
     // Then
     XCTAssertEqual(sut.operatingSystemLongName, operatingSystemLongName)
     XCTAssertEqual(sut.defaultName, defaultName)
