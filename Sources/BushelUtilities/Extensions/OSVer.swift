@@ -37,8 +37,7 @@ extension OSVer {
     12: "Monterey",
     13: "Ventura",
     14: "Sonoma",
-    15: "Sequoia",
-    26: "WWDC 25"
+    15: "Sequoia"
   ]
 
   /// The minimum macOS major version number that is supported for virtualization.
