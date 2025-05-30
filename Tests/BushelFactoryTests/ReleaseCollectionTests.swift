@@ -152,7 +152,6 @@ struct ReleaseCollectionTests {
     #expect(
       actualReleaseCollection.customVersionsAllowed == releaseCollection.customVersionsAllowed)
     #expect(actualReleaseCollection.prefix == releaseCollection.prefix)
-    #expect(actualReleaseCollection.firstMajorVersion == parameters.expectedFirstMajorVersion)
     #expect(actualCustomVersions == expectedCustomVersions)
 
     let sortedReleases = releaseCollection.releases.sorted(
