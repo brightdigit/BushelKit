@@ -35,7 +35,7 @@ import Foundation
 import Testing
 
 @Suite("Release Collection Tests")
-struct ReleaseCollectionTests {
+internal struct ReleaseCollectionTests {
   private struct TestParameters {
     let customReleaseCount: Int
     let expectedFirstMajorVersion: Int
@@ -172,7 +172,7 @@ struct ReleaseCollectionTests {
   }
 
   @Test("Initialize Release Collection")
-  func testInit() {
+  internal func testInit() {
     let testCount: Int = .random(in: 10...20)
     for _ in 0..<testCount {
       doTestReleaseCollectionWhere(
@@ -187,7 +187,7 @@ struct ReleaseCollectionTests {
   }
 
   @Test("Initialize Release Collection with No Duplicates")
-  func testInitWithNoDuplicates() {
+  internal func testInitWithNoDuplicates() {
     let parameters = TestParameters.random(
       expectedCustomVersionsAllowed: false,
       releaseCount: 3,

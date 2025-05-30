@@ -62,7 +62,8 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
       defaultName: self.defaultName(fromOSMetadata: metadata),
       imageName: self.imageName(forOSMetadata: metadata),
       systemName: "macOS",
-      versionName: self.codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)
+      versionName: self.codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion),
+      shortName: self.operatingSystemLongName(forOSMetadata: metadata)
     )
   }
 

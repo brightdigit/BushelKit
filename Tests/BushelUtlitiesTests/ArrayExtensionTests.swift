@@ -3,21 +3,21 @@ import Testing
 @testable import BushelUtilities
 
 @Suite("Array Extension Tests")
-struct ArrayExtensionTests {
+internal struct ArrayExtensionTests {
   @Test("Indices expect first")
-  func testIndiciesExpectFirst() {
+  internal func testIndiciesExpectFirst() {
     let array1 = [1, 2, 3, 4, 5]
     #expect(Array.indiciesExpectFirst(array1) == [1, 2, 3, 4])
 
     let array2: [Int] = []
-    #expect(Array.indiciesExpectFirst(array2) == [])
+    #expect(Array.indiciesExpectFirst(array2).isEmpty)
 
     let array3 = [1]
-    #expect(Array.indiciesExpectFirst(array3) == [])
+    #expect(Array.indiciesExpectFirst(array3).isEmpty)
   }
 
   @Test("Removing duplicates")
-  func testRemovingDuplicates() {
+  internal  func testRemovingDuplicates() {
     // Test with simple integers
     let numbers = [1, 2, 2, 3, 3, 4]
     let uniqueNumbers = numbers.removingDuplicates(groupingBy: { $0 })
@@ -43,7 +43,7 @@ struct ArrayExtensionTests {
   }
 
   @Test("Remove duplicates")
-  func testRemoveDuplicates() {
+  internal func testRemoveDuplicates() {
     var numbers = [1, 2, 2, 3, 3, 4]
     numbers.removeDuplicates(groupingBy: { $0 })
     #expect(numbers == [1, 2, 3, 4])

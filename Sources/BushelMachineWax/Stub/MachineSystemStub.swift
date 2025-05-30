@@ -34,7 +34,6 @@ public import Foundation
 public import OSVer
 
 public struct MachineSystemStub: MachineSystem, Equatable {
-  
   public typealias RestoreImageType = RestoreImageStub
 
   public let defaultStorageLabel: String = "stub"
@@ -66,7 +65,6 @@ public struct MachineSystemStub: MachineSystem, Equatable {
     .default
   }
 
-  
   public func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String {
     [osVer.description, buildVersion].compactMap { $0 }.joined(separator: " ")
   }

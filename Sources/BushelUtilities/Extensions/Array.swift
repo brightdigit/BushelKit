@@ -89,7 +89,10 @@ extension Array {
   ) -> Self {
     var other = self
     other.removeDuplicates(
-      groupingBy: groupingBy, indiciesToRemove: indiciesToRemove, removeAtOffsets: removeAtOffsets)
+      groupingBy: groupingBy,
+      indiciesToRemove: indiciesToRemove,
+      removeAtOffsets: removeAtOffsets
+    )
     return other
   }
 
