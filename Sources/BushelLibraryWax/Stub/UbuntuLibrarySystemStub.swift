@@ -55,7 +55,8 @@ public struct UbuntuLibrarySystemStub: LibrarySystem {
       defaultName: self.defaultName(fromOSMetadata: metadata),
       imageName: self.imageName(forOSMetadata: metadata),
       systemName: self.shortName,
-      versionName: self.codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion)
+      versionName: self.codeNameFor(operatingSystemVersion: metadata.operatingSystemVersion),
+      shortName: self.operatingSystemLongName(forOSMetadata: metadata)
     )
   }
 

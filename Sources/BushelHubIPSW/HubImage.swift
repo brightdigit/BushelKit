@@ -35,7 +35,7 @@ public import IPSWDownloads
 extension HubImage {
   public init(firmware: Firmware) throws {
     try self.init(
-      title: MacOSVirtualization.operatingSystemShortName(for: firmware),
+      title: MacOSVirtualization.defaultName(fromMetadata: firmware),
       metadata: .init(firmware: firmware),
       verification: .init(isSigned: firmware.signed),
       url: firmware.url

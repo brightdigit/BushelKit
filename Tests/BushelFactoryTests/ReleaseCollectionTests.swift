@@ -32,10 +32,11 @@ import BushelFoundation
 import BushelFoundationWax
 import BushelMachine
 import Foundation
+import OSVer
 import Testing
 
 @Suite("Release Collection Tests")
-struct ReleaseCollectionTests {
+internal struct ReleaseCollectionTests {
   private struct TestParameters {
     let customReleaseCount: Int
     let expectedFirstMajorVersion: Int
@@ -152,7 +153,6 @@ struct ReleaseCollectionTests {
     #expect(
       actualReleaseCollection.customVersionsAllowed == releaseCollection.customVersionsAllowed)
     #expect(actualReleaseCollection.prefix == releaseCollection.prefix)
-    #expect(actualReleaseCollection.firstMajorVersion == parameters.expectedFirstMajorVersion)
     #expect(actualCustomVersions == expectedCustomVersions)
 
     let sortedReleases = releaseCollection.releases.sorted(
@@ -173,7 +173,7 @@ struct ReleaseCollectionTests {
   }
 
   @Test("Initialize Release Collection")
-  func testInit() {
+  internal func testInit() {
     let testCount: Int = .random(in: 10...20)
     for _ in 0..<testCount {
       doTestReleaseCollectionWhere(
@@ -188,7 +188,7 @@ struct ReleaseCollectionTests {
   }
 
   @Test("Initialize Release Collection with No Duplicates")
-  func testInitWithNoDuplicates() {
+  internal func testInitWithNoDuplicates() {
     let parameters = TestParameters.random(
       expectedCustomVersionsAllowed: false,
       releaseCount: 3,
@@ -243,5 +243,56 @@ struct ReleaseCollectionTests {
       let buildIdentifiers = Set(actualImages.map { $0.buildIdentifier })
       #expect(buildIdentifiers.count == actualImages.count)
     }
+  }
+
+  @Test("Initialize Release Collection with Sort Order")
+  internal func testInitWithSortOrder() {
+    // Create a release collection with specific images to test sorting
+    let releaseCollection = MockReleaseCollectionMetadata.random(
+      startingAt: 10,
+      count: 3,
+      customVersionsAllowed: false
+    )
+
+    // Create images with different versions for testing sorting
+    let majorVersion = 10
+    let image1 = MockInstallerImage(
+      libraryID: .bookmarkID(UUID()),
+      imageID: UUID(),
+      metadata: .init(
+        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0)
+      )
+    )
+    let image2 = MockInstallerImage(
+      libraryID: .bookmarkID(UUID()),
+      imageID: UUID(),
+      metadata: .init(
+        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0)
+      )
+    )
+    let image3 = MockInstallerImage(
+      libraryID: .bookmarkID(UUID()),
+      imageID: UUID(),
+      metadata: .init(
+        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0)
+      )
+    )
+
+    // Test forward sorting
+    let forwardSorted = ReleaseCollection(
+      releaseCollection: releaseCollection,
+      images: [image3, image1, image2],
+      sortOrder: .forward
+    )
+
+    // Test reverse sorting
+    let reverseSorted = ReleaseCollection(
+      releaseCollection: releaseCollection,
+      images: [image1, image2, image3],
+      sortOrder: .reverse
+    )
+
+    #expect(forwardSorted.versionNumbers.keys.count == releaseCollection.releases.count)
+    #expect(reverseSorted.versionNumbers.keys.count == releaseCollection.releases.count)
   }
 }

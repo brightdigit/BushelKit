@@ -60,7 +60,7 @@
 
       return [
         .init(
-          title: self.operatingSystemShortName(for: imageMetadata),
+          title: self.defaultName(fromMetadata: imageMetadata),
           metadata: imageMetadata,
           verification: .signed,
           url: restoreImage.url

@@ -29,21 +29,18 @@
 
 public import BushelFoundation
 public import BushelMachine
+public import Foundation
 
 public struct ReleaseCollection {
   fileprivate typealias ImageDictionary = [Int: [any InstallerImage]]
 
   private struct ReleaseVersions {
-    let firstMajorVersion: Int
-    let lastMajorVersion: Int
+    let versionNumbers: [Int: Int]
     let releases: [ReleaseMetadata]
 
-    private init(
-      firstMajorVersion: Int = 0, lastMajorVersion: Int = .max, releases: [ReleaseMetadata] = []
-    ) {
+    private init(versionNumbers: [Int: Int], releases: [ReleaseMetadata]) {
+      self.versionNumbers = versionNumbers
       self.releases = releases
-      self.lastMajorVersion = lastMajorVersion
-      self.firstMajorVersion = firstMajorVersion
     }
 
     fileprivate init(
@@ -62,19 +59,15 @@ public struct ReleaseCollection {
 
       assert(sortedReleases.first != nil)
 
-      let firstMajorVersion = sortedReleases.first?.majorVersion ?? 0
       var releases = [ReleaseMetadata]()
-      var lastMajorVersion: Int = .max
-      for release in sortedReleases {
+      var versionNumbers = [Int: Int]()
+
+      for (offset, release) in sortedReleases.enumerated() {
         let images = imageDictionary[release.majorVersion, default: []]
         releases.append(
           .init(metadata: release, images: images)
         )
-        assert(
-          lastMajorVersion == .max && firstMajorVersion == release.majorVersion
-            || lastMajorVersion + 1 == release.majorVersion
-        )
-        lastMajorVersion = release.majorVersion
+        versionNumbers[release.majorVersion] = offset
       }
 
       if customVersionsAllowed {
@@ -95,7 +88,8 @@ public struct ReleaseCollection {
       }
 
       self.init(
-        firstMajorVersion: firstMajorVersion, lastMajorVersion: lastMajorVersion, releases: releases
+        versionNumbers: versionNumbers,
+        releases: releases
       )
     }
   }
@@ -109,7 +103,7 @@ public struct ReleaseCollection {
     public static let noDuplicates: Self = .init(rawValue: 1)
   }
 
-  public let firstMajorVersion: Int
+  public let versionNumbers: [Int: Int]
   public let releases: [ReleaseMetadata]
   public let customVersionsAllowed: Bool
   public let prefix: String
@@ -130,25 +124,29 @@ public struct ReleaseCollection {
   }
 
   private init(
-    firstMajorVersion: Int,
+    versionNumbers: [Int: Int],
     releases: [ReleaseMetadata],
-    prefix: String,
-    customVersionsAllowed: Bool
+    customVersionsAllowed: Bool,
+    prefix: String
   ) {
-    self.prefix = prefix
-    self.customVersionsAllowed = customVersionsAllowed
-    self.firstMajorVersion = firstMajorVersion
+    self.versionNumbers = versionNumbers
     self.releases = releases
+    self.customVersionsAllowed = customVersionsAllowed
+    self.prefix = prefix
   }
 
   public init(
     releaseCollection: any ReleaseCollectionMetadata,
     images: [any InstallerImage],
+    sortOrder: SortOrder? = nil,
     options: Options = .init()
   ) {
     let imageDictionary: ImageDictionary = .init(
       images: images,
       uniqueOnly: options.contains(.noDuplicates)
+    )
+    .sorted(
+      byOrder: sortOrder
     )
 
     let versions = ReleaseVersions(
@@ -158,10 +156,10 @@ public struct ReleaseCollection {
     )
 
     self.init(
-      firstMajorVersion: versions.firstMajorVersion,
+      versionNumbers: versions.versionNumbers,
       releases: versions.releases,
-      prefix: releaseCollection.prefix,
-      customVersionsAllowed: releaseCollection.customVersionsAllowed
+      customVersionsAllowed: releaseCollection.customVersionsAllowed,
+      prefix: releaseCollection.prefix
     )
   }
 
@@ -178,7 +176,9 @@ public struct ReleaseCollection {
   }
 
   public subscript(majorVersion: Int) -> ReleaseMetadata? {
-    let index = majorVersion - firstMajorVersion
+    guard let index = versionNumbers[majorVersion] else {
+      return nil
+    }
     guard index >= 0, index < releases.count - (self.customVersionsAllowed ? 1 : 0) else {
       return nil
     }
@@ -204,6 +204,23 @@ extension ReleaseCollection.ImageDictionary {
 
     self.init(grouping: newImages) { image in
       image.operatingSystemVersion.majorVersion
+    }
+  }
+
+  fileprivate func sorted(byOrder order: SortOrder?) -> Self {
+    guard let order else {
+      return self
+    }
+
+    return self.mapValues { images in
+      images.sorted { lhs, rhs in
+        switch order {
+        case .forward:
+          lhs.operatingSystemVersion < rhs.operatingSystemVersion
+        case .reverse:
+          lhs.operatingSystemVersion > rhs.operatingSystemVersion
+        }
+      }
     }
   }
 }

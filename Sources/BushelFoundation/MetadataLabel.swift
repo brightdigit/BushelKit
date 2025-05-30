@@ -45,6 +45,9 @@ public struct MetadataLabel: Equatable, Sendable {
   /// The version name of the metadata label.
   public let versionName: String
 
+  /// The short version name of the metadata label.
+  public let shortName: String
+
   /// Initializes a new instance of `MetadataLabel`.
   ///
   /// - Parameters:
@@ -59,12 +62,14 @@ public struct MetadataLabel: Equatable, Sendable {
     defaultName: String,
     imageName: String,
     systemName: String,
-    versionName: String
+    versionName: String,
+    shortName: String
   ) {
     self.operatingSystemLongName = operatingSystemLongName
     self.defaultName = defaultName
     self.imageName = imageName
     self.systemName = systemName
     self.versionName = versionName
+    self.shortName = shortName
   }
 }
