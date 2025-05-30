@@ -105,9 +105,9 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
   internal func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
   }
-
-  func operatingSystemShortName(for osVer: OSVer) -> String {
-    osVer.description
+  
+  public func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String {
+    [osVer.description, buildVersion].compactMap { $0 }.joined(separator: " ")
   }
 
   private func handleResult() throws {

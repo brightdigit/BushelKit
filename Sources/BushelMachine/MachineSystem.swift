@@ -69,7 +69,7 @@ public protocol MachineSystem: Sendable {
   /// - Returns: ``ConfigurationRange`` giving the cpu count range and memory range.
   func configurationRange(for restoreImage: any InstallerImage) -> ConfigurationRange
 
-  func operatingSystemShortName(for osVer: OSVer) -> String
+  func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String
 }
 
 extension MachineSystem {
