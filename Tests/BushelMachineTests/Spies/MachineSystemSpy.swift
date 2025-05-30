@@ -106,8 +106,8 @@ internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
     .default
   }
 
-  func operatingSystemShortName(for osVer: OSVer) -> String {
-    osVer.description
+  internal func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String {
+    [osVer.description, buildVersion].compactMap { $0 }.joined(separator: " ")
   }
 
   private func handleResult() throws {
