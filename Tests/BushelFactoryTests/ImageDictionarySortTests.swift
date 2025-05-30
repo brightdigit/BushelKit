@@ -58,6 +58,7 @@ internal struct ImageDictionarySortTests {
     }
 
     func getURL() async throws -> URL {
+      // swiftlint:disable:next force_unwrapping
       URL(string: "file:///test")!
     }
   }
@@ -67,11 +68,14 @@ internal struct ImageDictionarySortTests {
     // Given
     let majorVersion = 14
     let image1 = TestInstallerImage(
-      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0))
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0)
+    )
     let image2 = TestInstallerImage(
-      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0))
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0)
+    )
     let image3 = TestInstallerImage(
-      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0))
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0)
+    )
 
     let dictionary: [Int: [TestInstallerImage]] = [
       majorVersion: [image1, image2, image3]
@@ -90,8 +94,8 @@ internal struct ImageDictionarySortTests {
     #expect(sortedImages.count == 3)
 
     // Verify images are sorted in ascending order
-    for i in 0..<sortedImages.count - 1 {
-      #expect(sortedImages[i].operatingSystemVersion < sortedImages[i + 1].operatingSystemVersion)
+    for index in 0..<sortedImages.count - 1 {
+      #expect(sortedImages[index].operatingSystemVersion < sortedImages[index + 1].operatingSystemVersion)
     }
   }
 
@@ -100,11 +104,14 @@ internal struct ImageDictionarySortTests {
     // Given
     let majorVersion = 14
     let image1 = TestInstallerImage(
-      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0))
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0)
+    )
     let image2 = TestInstallerImage(
-      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0))
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0)
+    )
     let image3 = TestInstallerImage(
-      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0))
+      operatingSystemVersion: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0)
+    )
 
     let dictionary: [Int: [TestInstallerImage]] = [
       majorVersion: [image1, image2, image3]
@@ -123,8 +130,8 @@ internal struct ImageDictionarySortTests {
     #expect(sortedImages.count == 3)
 
     // Verify images are sorted in descending order
-    for i in 0..<sortedImages.count - 1 {
-      #expect(sortedImages[i].operatingSystemVersion > sortedImages[i + 1].operatingSystemVersion)
+    for index in 0..<sortedImages.count - 1 {
+      #expect(sortedImages[index].operatingSystemVersion > sortedImages[index + 1].operatingSystemVersion)
     }
   }
 

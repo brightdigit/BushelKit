@@ -260,19 +260,22 @@ internal struct ReleaseCollectionTests {
       libraryID: .bookmarkID(UUID()),
       imageID: UUID(),
       metadata: .init(
-        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0))
+        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0)
+      )
     )
     let image2 = MockInstallerImage(
       libraryID: .bookmarkID(UUID()),
       imageID: UUID(),
       metadata: .init(
-        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0))
+        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0)
+      )
     )
     let image3 = MockInstallerImage(
       libraryID: .bookmarkID(UUID()),
       imageID: UUID(),
       metadata: .init(
-        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0))
+        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0)
+      )
     )
 
     // Test forward sorting

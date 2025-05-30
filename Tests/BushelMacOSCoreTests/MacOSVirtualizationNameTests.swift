@@ -45,13 +45,13 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
   internal func testDefaultNameFromMetadataWithCodeName() {
     // Given
     // Use macOS 14 which should have a code name (Sonoma)
-    let os = TestOS(
+    let testOS = TestOS(
       buildVersion: "23D5026f",
       operatingSystemVersion: OSVer(major: 14, minor: 3, patch: 0)
     )
 
     // When
-    let result = MacOSVirtualization.defaultName(fromMetadata: os)
+    let result = MacOSVirtualization.defaultName(fromMetadata: testOS)
 
     // Then
     XCTAssertTrue(result.contains("macOS"))
@@ -62,13 +62,13 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
   internal func testDefaultNameFromMetadataWithoutCodeName() {
     // Given
     // Use a very high macOS version which should not have a code name
-    let os = TestOS(
+    let testOS = TestOS(
       buildVersion: "ABC123",
       operatingSystemVersion: OSVer(major: 99, minor: 1, patch: 0)
     )
 
     // When
-    let result = MacOSVirtualization.defaultName(fromMetadata: os)
+    let result = MacOSVirtualization.defaultName(fromMetadata: testOS)
 
     // Then
     XCTAssertTrue(result.contains("macOS"))
@@ -85,7 +85,9 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
 
     // When
     let result = MacOSVirtualization.operatingSystemShortName(
-      for: osVer, buildVersion: buildVersion)
+      for: osVer,
+      buildVersion: buildVersion
+    )
 
     // Then
     XCTAssertEqual(result, "macOS 14.3")
@@ -111,7 +113,7 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
 
   internal func testLabelShortNameConsistency() {
     // Given
-    let os = TestOS(
+    let testOS = TestOS(
       buildVersion: "23D5026f",
       operatingSystemVersion: OSVer(major: 14, minor: 3, patch: 0)
     )
@@ -119,7 +121,9 @@ internal final class MacOSVirtualizationNameTests: XCTestCase {
     // When
     let label = MacOSVirtualization.label(fromMetadata: os)
     let shortName = MacOSVirtualization.operatingSystemShortName(
-      for: os.operatingSystemVersion, buildVersion: os.buildVersion)
+      for: testOS.operatingSystemVersion,
+      buildVersion: testOS.buildVersion
+    )
 
     // Then
     XCTAssertEqual(label.shortName, shortName)

@@ -92,7 +92,9 @@ internal final class MacOSVirtualizationTests: XCTestCase {
 
     // When
     let result = MacOSVirtualization.operatingSystemShortName(
-      for: osVer, buildVersion: buildVersion)
+      for: osVer,
+      buildVersion: buildVersion
+    )
 
     // Then
     XCTAssertTrue(result.contains(MacOSVirtualization.shortName))
