@@ -243,4 +243,55 @@ internal struct ReleaseCollectionTests {
       #expect(buildIdentifiers.count == actualImages.count)
     }
   }
+  
+  @Test("Initialize Release Collection with Sort Order")
+  internal func testInitWithSortOrder() {
+    // Create a release collection with specific images to test sorting
+    let releaseCollection = MockReleaseCollectionMetadata.random(
+      startingAt: 10,
+      count: 3,
+      customVersionsAllowed: false
+    )
+    
+    // Create images with different versions for testing sorting
+    let majorVersion = 10
+    let image1 = MockInstallerImage(
+      libraryID: UUID(),
+      imageID: UUID(),
+      metadata: MockOperatingSystemInstalled(
+        osVersion: .init(major: majorVersion, minor: 1, patch: 0)
+      )
+    )
+    let image2 = MockInstallerImage(
+      libraryID: UUID(),
+      imageID: UUID(),
+      metadata: MockOperatingSystemInstalled(
+        osVersion: .init(major: majorVersion, minor: 2, patch: 0)
+      )
+    )
+    let image3 = MockInstallerImage(
+      libraryID: UUID(),
+      imageID: UUID(),
+      metadata: MockOperatingSystemInstalled(
+        osVersion: .init(major: majorVersion, minor: 3, patch: 0)
+      )
+    )
+    
+    // Test forward sorting
+    let forwardSorted = ReleaseCollection(
+      releaseCollection: releaseCollection,
+      images: [image3, image1, image2],
+      sortOrder: .forward
+    )
+    
+    // Test reverse sorting
+    let reverseSorted = ReleaseCollection(
+      releaseCollection: releaseCollection,
+      images: [image1, image2, image3],
+      sortOrder: .reverse
+    )
+    
+    #expect(forwardSorted.versionNumbers.keys.count == releaseCollection.releases.count)
+    #expect(reverseSorted.versionNumbers.keys.count == releaseCollection.releases.count)
+  }
 }

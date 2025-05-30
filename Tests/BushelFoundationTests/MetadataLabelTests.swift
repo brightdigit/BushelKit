@@ -59,4 +59,30 @@ internal final class MetadataLabelTests: XCTestCase {
     XCTAssertEqual(sut.versionName, versionName)
     XCTAssertEqual(sut.shortName, shortName)
   }
+  
+  internal func testEquatable() {
+    // Given
+    let label1 = MetadataLabel(
+      operatingSystemLongName: "macOS Sonoma 14.3 (23D5026f)",
+      defaultName: "macOS Sonoma 14.3",
+      imageName: "OSVersions/Sonoma",
+      systemName: "macOS",
+      versionName: "Sonoma",
+      shortName: "macOS 14.3"
+    )
+    
+    let label2 = label1
+    let label3 = MetadataLabel(
+      operatingSystemLongName: "macOS Sonoma 14.3 (23D5026f)",
+      defaultName: "macOS Sonoma 14.3",
+      imageName: "OSVersions/Sonoma",
+      systemName: "macOS",
+      versionName: "Sonoma",
+      shortName: "macOS 14.4"  // Different shortName
+    )
+    
+    // Then
+    XCTAssertEqual(label1, label2)
+    XCTAssertNotEqual(label1, label3)
+  }
 }

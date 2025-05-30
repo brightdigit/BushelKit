@@ -62,4 +62,47 @@ internal final class MachineSystemOperatingSystemTests: XCTestCase {
     XCTAssertTrue(result.contains(buildVersion))
     XCTAssertEqual(result, "\(osVer.description) \(buildVersion)")
   }
+  
+  internal func testMachineSystemStubOperatingSystemShortNameWithoutBuildVersion() {
+    // Given
+    let sut = MachineSystemStub(id: "test")
+    let osVer = OSVer(majorVersion: 14, minorVersion: 3, patchVersion: 0)
+    let buildVersion: String? = nil
+
+    // When
+    let result = sut.operatingSystemShortName(for: osVer, buildVersion: buildVersion)
+
+    // Then
+    XCTAssertTrue(result.contains("14.3"))
+    XCTAssertFalse(result.contains("nil"))
+    XCTAssertEqual(result, osVer.description)
+  }
+  
+  internal func testMachineSystemSpyOperatingSystemShortNameWithoutBuildVersion() {
+    // Given
+    let sut = MachineSystemSpy(result: .success(()))
+    let osVer = OSVer(majorVersion: 14, minorVersion: 3, patchVersion: 0)
+    let buildVersion: String? = nil
+
+    // When
+    let result = sut.operatingSystemShortName(for: osVer, buildVersion: buildVersion)
+
+    // Then
+    XCTAssertTrue(result.contains("14.3"))
+    XCTAssertEqual(result, osVer.description)
+  }
+  
+  internal func testOperatingSystemShortNameWithPatchVersion() {
+    // Given
+    let sut = MachineSystemStub(id: "test")
+    let osVer = OSVer(majorVersion: 14, minorVersion: 3, patchVersion: 2)
+    let buildVersion = "23D5026f"
+
+    // When
+    let result = sut.operatingSystemShortName(for: osVer, buildVersion: buildVersion)
+
+    // Then
+    XCTAssertTrue(result.contains("14.3.2"))
+    XCTAssertTrue(result.contains(buildVersion))
+  }
 }
