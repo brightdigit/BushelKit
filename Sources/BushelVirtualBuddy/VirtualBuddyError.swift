@@ -27,3 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+public import Foundation
+
+public enum VirtualBuddyError: Error {
+  case unsupportedURL(URL)
+  case networkError(URLError)
+  case decodingError(DecodingError)
+  case unknownError(Error)
+}
