@@ -97,7 +97,7 @@ internal final class MacOSVirtualizationTests: XCTestCase {
     XCTAssertTrue(label.shortName.contains(MacOSVirtualization.shortName))
     XCTAssertTrue(label.shortName.contains("14.3"))
   }
-  
+
   func testOperatingSystemShortNameWithBuildVersion() {
     // Given
     let osVer = OSVer(majorVersion: 14, minorVersion: 1, patchVersion: 2)
