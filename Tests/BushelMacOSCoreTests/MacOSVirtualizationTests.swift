@@ -105,14 +105,16 @@ internal final class MacOSVirtualizationTests: XCTestCase {
 
     // When
     let shortName = MacOSVirtualization.operatingSystemShortName(
-      for: osVer, buildVersion: buildVersion)
+      for: osVer, 
+      buildVersion: buildVersion
+    )
 
     // Then
     XCTAssertTrue(shortName.contains("\(osVer)"))
     XCTAssertTrue(shortName.contains("[\(buildVersion)]"))
   }
 
-  func testOperatingSystemShortNameWithoutBuildVersion() {
+  internal func testOperatingSystemShortNameWithoutBuildVersion() {
     // Given
     let osVer = OSVer(majorVersion: 14, minorVersion: 1, patchVersion: 2)
 
@@ -120,6 +122,6 @@ internal final class MacOSVirtualizationTests: XCTestCase {
     let shortName = MacOSVirtualization.operatingSystemShortName(for: osVer, buildVersion: nil)
 
     // Then
-    XCTAssertTrue(shortName == "\(MacOSVirtualization.shortName) \(osVer)")
+    XCTAssertEqual(shortName, "\(MacOSVirtualization.shortName) \(osVer)")
   }
 }
