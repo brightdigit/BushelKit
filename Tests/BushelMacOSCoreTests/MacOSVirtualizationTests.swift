@@ -105,7 +105,7 @@ internal final class MacOSVirtualizationTests: XCTestCase {
 
     // When
     let shortName = MacOSVirtualization.operatingSystemShortName(
-      for: osVer, 
+      for: osVer,
       buildVersion: buildVersion
     )
 
