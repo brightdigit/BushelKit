@@ -95,7 +95,8 @@ internal struct ImageDictionarySortTests {
 
     // Verify images are sorted in ascending order
     for index in 0..<sortedImages.count - 1 {
-      #expect(sortedImages[index].operatingSystemVersion < sortedImages[index + 1].operatingSystemVersion)
+      #expect(
+        sortedImages[index].operatingSystemVersion < sortedImages[index + 1].operatingSystemVersion)
     }
   }
 
@@ -131,7 +132,8 @@ internal struct ImageDictionarySortTests {
 
     // Verify images are sorted in descending order
     for index in 0..<sortedImages.count - 1 {
-      #expect(sortedImages[index].operatingSystemVersion > sortedImages[index + 1].operatingSystemVersion)
+      #expect(
+        sortedImages[index].operatingSystemVersion > sortedImages[index + 1].operatingSystemVersion)
     }
   }
 
