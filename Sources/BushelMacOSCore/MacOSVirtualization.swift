@@ -90,7 +90,13 @@ public enum MacOSVirtualization: Sendable {
   }
 
   public static func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String {
-    "\(shortName) \(osVer)"
+    let shortNameWithoutName = "\(shortName) \(osVer)"
+
+    guard let buildVersion else {
+      return shortNameWithoutName
+    }
+
+    return "\(shortNameWithoutName) [\(buildVersion)]"
   }
 
   public static func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
