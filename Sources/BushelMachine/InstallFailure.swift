@@ -103,17 +103,4 @@ public struct InstallFailure: Equatable, Sendable {
 
     return error.installationFailure() ?? .unknown
   }
-  
-  public struct Link: Equatable, Sendable {
-    public let localizedTitle: String
-    public let url: URL
-    
-    public init(
-      localizedTitle: String,
-      url: URL
-    ) {
-      self.localizedTitle = localizedTitle
-      self.url = url
-    }
-  }
 }
