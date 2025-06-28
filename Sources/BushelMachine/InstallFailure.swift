@@ -32,6 +32,19 @@ public import Foundation
 
 /// A struct representing an installation failure.
 public struct InstallFailure: Equatable, Sendable {
+  public struct Link: Equatable, Sendable {
+    public let localizedTitle: String
+    public let url: URL
+
+    public init(
+      localizedTitle: String,
+      url: URL
+    ) {
+      self.localizedTitle = localizedTitle
+      self.url = url
+    }
+  }
+
   /// The unknown installation failure case.
   private static let unknown: InstallFailure = .init(
     errorDomain: "Unknown",
@@ -89,18 +102,5 @@ public struct InstallFailure: Equatable, Sendable {
     }
 
     return error.installationFailure() ?? .unknown
-  }
-  
-  public struct Link: Equatable, Sendable {
-    public let localizedTitle: String
-    public let url: URL
-    
-    public init(
-      localizedTitle: String,
-      url: URL
-    ) {
-      self.localizedTitle = localizedTitle
-      self.url = url
-    }
   }
 }
