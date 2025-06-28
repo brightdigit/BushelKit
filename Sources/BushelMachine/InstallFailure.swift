@@ -28,10 +28,23 @@
 //
 
 internal import BushelFoundation
-internal import Foundation
+public import Foundation
 
 /// A struct representing an installation failure.
 public struct InstallFailure: Equatable, Sendable {
+  public struct Link: Equatable, Sendable {
+    public let localizedTitle: String
+    public let url: URL
+
+    public init(
+      localizedTitle: String,
+      url: URL
+    ) {
+      self.localizedTitle = localizedTitle
+      self.url = url
+    }
+  }
+
   /// The unknown installation failure case.
   private static let unknown: InstallFailure = .init(
     errorDomain: "Unknown",
@@ -51,6 +64,8 @@ public struct InstallFailure: Equatable, Sendable {
   public let description: String
   /// A boolean indicating whether the failure is a system error.
   public let isSystem: Bool
+  /// An optional link associated with the failure.
+  public let link: Link?
 
   /// Initializes an `InstallFailure` instance.
   ///
@@ -65,13 +80,15 @@ public struct InstallFailure: Equatable, Sendable {
     errorCode: Int,
     failureCode: Int,
     description: String,
-    isSystem: Bool = true
+    isSystem: Bool = true,
+    link: Link? = nil
   ) {
     self.errorDomain = errorDomain
     self.errorCode = errorCode
     self.failureCode = failureCode
     self.description = description
     self.isSystem = isSystem
+    self.link = link
   }
 
   /// Creates an `InstallFailure` instance from an `Error`.
