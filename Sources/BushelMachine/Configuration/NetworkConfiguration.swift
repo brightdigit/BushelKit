@@ -28,6 +28,7 @@
 //
 
 public import Foundation
+internal import Virtualization
 
 /// Represents a network configuration with an associated attachment.
 public struct NetworkConfiguration: Codable, Identifiable, Sendable {
@@ -36,7 +37,9 @@ public struct NetworkConfiguration: Codable, Identifiable, Sendable {
 
   /// The attachment associated with the network configuration.
   public let attachment: NetworkingConfigurationAttachment
-
+  
+  public let macAddress: String?
+  
   /// Initializes a new `NetworkConfiguration` with the specified attachment.
   ///
   /// - Parameter id: A unique identifier for the network configuration.
@@ -45,6 +48,7 @@ public struct NetworkConfiguration: Codable, Identifiable, Sendable {
   public init(id: UUID = .init(), attachment: NetworkingConfigurationAttachment) {
     self.id = id
     self.attachment = attachment
+    self.macAddress = VZMACAddress.randomLocallyAdministered().string
   }
 }
 

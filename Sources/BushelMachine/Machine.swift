@@ -137,4 +137,14 @@ public protocol Machine: Loggable, Sendable {
   ///
   /// - Parameter id: The UUID of the image to delete.
   func deleteCapturedImageWithID(_ id: UUID) async throws
+  
+  /// Saves the machine state to a specified URL.
+  ///
+  /// - Parameter saveFileURL: The URL where the machine state will be saved.
+  func saveMachineStateTo(url saveFileURL: URL) async throws
+  
+  /// Restores the machine state from a specified URL.
+  ///
+  /// - Parameter restoreFileURL: The URL from which the machine state will be restored.
+  func restoreMachineStateFrom(url restoreFileURL: URL) async throws
 }
