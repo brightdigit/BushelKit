@@ -45,6 +45,8 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
     case resetApplication = "RESET_APPLICATION"
 
     case releaseVersion = "RELEASE_VERSION"
+    
+    case reviewEngagementThreshold = "REVIEW_ENGAGEMENT_THRESHOLD"
   }
 
   /// The shared instance of `EnvironmentConfiguration`.
@@ -70,6 +72,10 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   @EnvironmentProperty(Key.releaseVersion)
   public var releaseVersion: Bool
 
+  /// The threshold of user engagement to trigger a review request.
+  @EnvironmentProperty(Key.reviewEngagementThreshold)
+  public var reviewEngagementThreshold: Int
+  
   /// Provides a custom mirror for the `EnvironmentConfiguration` instance.
   public var customMirror: Mirror {
     Mirror(
@@ -80,6 +86,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
         "onboardingOveride": self.onboardingOveride,
         "resetApplication": self.resetApplication,
         "releaseVersion": self.releaseVersion,
+        "reviewEngagementThreshold": self.reviewEngagementThreshold
       ]
     )
   }
