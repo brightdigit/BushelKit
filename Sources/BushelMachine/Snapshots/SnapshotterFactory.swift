@@ -46,7 +46,8 @@ public protocol SnapshotterFactory: Loggable, Sendable {
   func createNewSnapshot(
     of machine: some Machine,
     request: SnapshotRequest,
-    options: SnapshotOptions
+    options: SnapshotOptions,
+    image: RecordedImage?
   ) async throws -> Snapshot
 
   /// Retrieves a snapshotter that supports the specified machine type.
@@ -69,13 +70,14 @@ extension SnapshotterFactory {
   internal func createNewSnapshot(
     of machine: some Machine,
     request: SnapshotRequest,
-    options: SnapshotOptions
+    options: SnapshotOptions,
+    image: RecordedImage?
   ) async throws -> Snapshot {
     guard let snapshotter = self.snapshotter(supports: type(of: machine).self) else {
       Self.logger.critical("Unknown system: \(type(of: machine).self)")
       preconditionFailure("Unknown system: \(type(of: machine).self)")
     }
 
-    return try await snapshotter.createNewSnapshot(of: machine, request: request, options: options)
+    return try await snapshotter.createNewSnapshot(of: machine, request: request, options: options, image: image)
   }
 }

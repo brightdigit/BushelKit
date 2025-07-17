@@ -52,7 +52,8 @@
     public func createNewSnapshot(
       of machine: some Machine,
       request: SnapshotRequest,
-      options: SnapshotOptions
+      options: SnapshotOptions,
+      image: RecordedImage?
     ) async throws -> Snapshot {
       guard let snapshotter = self.snapshotter(supports: type(of: machine).self) else {
         fatalError("Not implmented error")
@@ -61,7 +62,8 @@
       return try await snapshotter.createNewSnapshot(
         of: machine,
         request: request,
-        options: options
+        options: options,
+        image: image
       )
     }
 

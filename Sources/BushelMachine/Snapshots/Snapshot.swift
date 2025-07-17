@@ -57,6 +57,9 @@ public struct Snapshot: Codable, Identifiable, Sendable {
 
   /// Indicates whether the snapshot is discardable or not.
   public var isDiscardable: Bool
+  
+  /// An optional screenshot associated with this snapshot.
+  public var image: RecordedImage?
 
   /// Initializes a new `Snapshot` instance.
   /// - Parameters:
@@ -70,6 +73,7 @@ public struct Snapshot: Codable, Identifiable, Sendable {
   ///   installed at the time of the snapshot. Defaults to `nil`.
   ///   - buildVersion: The build version of the operating system installed at the time of the snapshot.
   ///   Defaults to `nil`.
+  ///   - image: An optional screenshot associated with this snapshot. Defaults to `nil`.
   public init(
     name: String,
     id: UUID,
@@ -78,7 +82,8 @@ public struct Snapshot: Codable, Identifiable, Sendable {
     isDiscardable: Bool,
     notes: String = "",
     operatingSystemVersion: OSVer? = nil,
-    buildVersion: String? = nil
+    buildVersion: String? = nil,
+    image: RecordedImage? = nil
   ) {
     self.name = name
     self.id = id
@@ -88,6 +93,7 @@ public struct Snapshot: Codable, Identifiable, Sendable {
     self.notes = notes
     self.operatingSystemVersion = operatingSystemVersion
     self.buildVersion = buildVersion
+    self.image = image
   }
 }
 
@@ -146,7 +152,8 @@ extension Snapshot {
       isDiscardable: self.isDiscardable,
       notes: newNotes,
       operatingSystemVersion: self.operatingSystemVersion,
-      buildVersion: self.buildVersion
+      buildVersion: self.buildVersion,
+      image: self.image
     )
   }
 }
