@@ -15,8 +15,8 @@ jobs:
         image:
           - swift:6.0
           - swift:6.1
-          - swiftlang/swift:nightly-6.1
-          - swiftlang/swift:nightly-6.2
+          - swiftlang/swift:nightly-6.1-noble
+          - swiftlang/swift:nightly-6.2-noble
     container: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
@@ -48,17 +48,26 @@ jobs:
             xcode: "/Applications/Xcode_26_beta.app"
           - runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
+
+          # macOS Build Matrix
+          - type: macos
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_26_beta.app"
+
+          - type: macos
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_16.4.app"
           
           # iOS Build Matrix
           - type: ios
             runs-on: macos-15
             xcode: "/Applications/Xcode_26_beta.app"
-            deviceName: "iPhone 15"
+            deviceName: "iPhone 16"
             osVersion: "26.0"
           - type: ios
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
-            deviceName: "iPhone 15"
+            deviceName: "iPhone 16"
             osVersion: "18.5"
   
           # watchOS Build Matrix
@@ -66,7 +75,7 @@ jobs:
             runs-on: macos-15
             xcode: "/Applications/Xcode_26_beta.app"
             deviceName: "Apple Watch Series 9 (45mm)"
-            osVersion: "12.0"
+            osVersion: "26.0"
           - type: watchos
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
