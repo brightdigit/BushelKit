@@ -9,12 +9,15 @@ jobs:
   build-ubuntu:
     name: Build on Ubuntu
     runs-on: ubuntu-latest
-    container: swift:${{ matrix.swift-version }}-${{ matrix.os }}
     if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
     strategy:
       matrix:
-        os: ["noble", "jammy"]
-        swift-version: ["6.0", "6.1"]
+        image:
+          - swift:6.0
+          - swift:6.1
+          - swiftlang/swift:nightly-6.1
+          - swiftlang/swift:nightly-6.2
+    container: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1
@@ -26,7 +29,7 @@ jobs:
         uses: codecov/codecov-action@v4       
         with:
           fail_ci_if_error: true
-          flags: swift-${{ matrix.swift-version }},ubuntu
+          flags: ${{ matrix.image }}
           verbose: true        
           token: ${{ secrets.CODECOV_TOKEN }}  
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}    
@@ -42,39 +45,39 @@ jobs:
         include:
           # SPM Build Matrix
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
+            xcode: "/Applications/Xcode_26_beta.app"
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
+            xcode: "/Applications/Xcode_16.4.app"
           
           # iOS Build Matrix
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
-            deviceName: "iPhone 16"
-            osVersion: "18.1"
+            xcode: "/Applications/Xcode_26_beta.app"
+            deviceName: "iPhone 15"
+            osVersion: "26.0"
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
-            deviceName: "iPhone 16 Pro"
-            osVersion: "18.4"
+            xcode: "/Applications/Xcode_16.4.app"
+            deviceName: "iPhone 15"
+            osVersion: "18.5"
   
           # watchOS Build Matrix
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
-            deviceName: "Apple Watch Ultra 2 (49mm)"
-            osVersion: "11.1"
+            xcode: "/Applications/Xcode_26_beta.app"
+            deviceName: "Apple Watch Series 9 (45mm)"
+            osVersion: "12.0"
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
-            deviceName: "Apple Watch Ultra 2 (49mm)"
-            osVersion: "11.4"
+            xcode: "/Applications/Xcode_16.4.app"
+            deviceName: "Apple Watch Series 9 (45mm)"
+            osVersion: "11.5"
 
           - type: visionos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
+            xcode: "/Applications/Xcode_16.4.app"
             deviceName: "Apple Vision Pro"
-            osVersion: "2.4"
+            osVersion: "2.5"
   
     steps:
       - uses: actions/checkout@v4
@@ -169,4 +172,4 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           repository: brightdigit/BushelDocs
           event-type: docc-update
-          client-payload: '{"run_id": "${{ github.run_id }}"}' 
+          client-payload: '{"run_id": "${{ github.run_id }}"}'
