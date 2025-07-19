@@ -74,7 +74,7 @@ jobs:
           - type: watchos
             runs-on: macos-15-arm64
             xcode: "/Applications/Xcode_26_beta.app"
-            deviceName: "Apple Watch Series 9 (45mm)"
+            deviceName: "Apple Watch Series 10 (45mm)"
             osVersion: "26.0"
           - type: watchos
             runs-on: macos-15
