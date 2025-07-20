@@ -64,6 +64,8 @@ jobs:
             xcode: "/Applications/Xcode_26_beta.app"
             deviceName: "iPhone 16"
             osVersion: "26.0"
+            download-platform: "true"
+            
           - type: ios
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
@@ -76,6 +78,8 @@ jobs:
             xcode: "/Applications/Xcode_26_beta.app"
             deviceName: "Apple Watch Series 10 (45mm)"
             osVersion: "26.0"
+            download-platform: "true"
+            
           - type: watchos
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
@@ -90,15 +94,15 @@ jobs:
   
     steps:
       - uses: actions/checkout@v4
-      - run: xcodebuild -downloadPlatform ${{ matrix.type }}
       - name: Build and Test
-        uses: brightdigit/swift-build@v1.1.1
+        uses: brightdigit/swift-build@download-platforms
         with:
           scheme: ${{ env.PACKAGE_NAME }}-Package
           type: ${{ matrix.type }}
           xcode: ${{ matrix.xcode }}
           deviceName: ${{ matrix.deviceName }}
           osVersion: ${{ matrix.osVersion }}
+          download-platform: ${{ matrix.download-platform }}
           
       # Common Coverage Steps
       - name: Process Coverage
