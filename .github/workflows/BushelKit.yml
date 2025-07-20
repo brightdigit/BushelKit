@@ -60,7 +60,7 @@ jobs:
           
           # iOS Build Matrix
           - type: ios
-            runs-on: macos-15-arm64
+            runs-on: macos-15
             xcode: "/Applications/Xcode_26_beta.app"
             deviceName: "iPhone 16"
             osVersion: "26.0"
@@ -72,14 +72,14 @@ jobs:
   
           # watchOS Build Matrix
           - type: watchos
-            runs-on: macos-15-arm64
+            runs-on: macos-15
             xcode: "/Applications/Xcode_26_beta.app"
             deviceName: "Apple Watch Series 10 (45mm)"
             osVersion: "26.0"
           - type: watchos
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
-            deviceName: "Apple Watch Series 9 (45mm)"
+            deviceName: "Apple Watch Series 10 (45mm)"
             osVersion: "11.5"
 
           - type: visionos
