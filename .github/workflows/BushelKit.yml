@@ -90,7 +90,7 @@ jobs:
   
     steps:
       - uses: actions/checkout@v4
-
+      - run: xcodebuild -downloadPlatform ${{ matrix.type }}
       - name: Build and Test
         uses: brightdigit/swift-build@v1.1.1
         with:
