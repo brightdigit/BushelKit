@@ -75,3 +75,9 @@ extension Bool: EnvironmentValue {
     false
   }
 }
+
+extension Int: EnvironmentValue {
+  public static var `default`: Int {
+    0
+  }
+}

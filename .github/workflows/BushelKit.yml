@@ -9,24 +9,32 @@ jobs:
   build-ubuntu:
     name: Build on Ubuntu
     runs-on: ubuntu-latest
-    container: swift:${{ matrix.swift-version }}-${{ matrix.os }}
     if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
     strategy:
       matrix:
-        os: ["noble", "jammy"]
-        swift-version: ["6.0", "6.1"]
+        image:
+          - swift:6.0
+          - swift:6.1
+          - swiftlang/swift:nightly-6.1-noble
+          - swiftlang/swift:nightly-6.2-noble
+    container: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
-      - uses: brightdigit/swift-build@v1
+      - uses: brightdigit/swift-build@v1.2.0
       - uses: sersoft-gmbh/swift-coverage-action@v4
         id: coverage-files
         with:          
           fail-on-empty-output: true
+      - name: Set coverage flag
+        id: set-flag
+        run: echo "CODECOV_FLAGS=${MATRIX_IMAGE//\//-}" | sed 's/:/-/g' >> $GITHUB_ENV
+        env:
+          MATRIX_IMAGE: ${{ matrix.image }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4       
         with:
           fail_ci_if_error: true
-          flags: swift-${{ matrix.swift-version }},ubuntu
+          flags: ${{ env.CODECOV_FLAGS }}
           verbose: true        
           token: ${{ secrets.CODECOV_TOKEN }}  
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}    
@@ -35,58 +43,72 @@ jobs:
     env:
       PACKAGE_NAME: BushelKit
     runs-on: ${{ matrix.runs-on }}
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
     strategy:
       fail-fast: false
       matrix:
         include:
           # SPM Build Matrix
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
+            xcode: "/Applications/Xcode_26_beta.app"
           - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
+            xcode: "/Applications/Xcode_16.4.app"
+
+          # macOS Build Matrix
+          - type: macos
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_26_beta.app"
+            download-platform: true
+
+          - type: macos
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_16.4.app"
           
           # iOS Build Matrix
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
+            xcode: "/Applications/Xcode_26_beta.app"
             deviceName: "iPhone 16"
-            osVersion: "18.1"
+            osVersion: "26.0"
+            download-platform: true
+
           - type: ios
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
-            deviceName: "iPhone 16 Pro"
-            osVersion: "18.4"
+            xcode: "/Applications/Xcode_16.4.app"
+            deviceName: "iPhone 16"
+            osVersion: "18.5"
   
           # watchOS Build Matrix
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.1.app"
-            deviceName: "Apple Watch Ultra 2 (49mm)"
-            osVersion: "11.1"
+            xcode: "/Applications/Xcode_26_beta.app"
+            deviceName: "Apple Watch Series 10 (46mm)"
+            osVersion: "26.0"
+            download-platform: true
+
           - type: watchos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
-            deviceName: "Apple Watch Ultra 2 (49mm)"
-            osVersion: "11.4"
+            xcode: "/Applications/Xcode_16.4.app"
+            deviceName: "Apple Watch Series 10 (42mm)"
+            osVersion: "11.5"
 
           - type: visionos
             runs-on: macos-15
-            xcode: "/Applications/Xcode_16.3.app"
+            xcode: "/Applications/Xcode_16.4.app"
             deviceName: "Apple Vision Pro"
-            osVersion: "2.4"
+            osVersion: "2.5"
   
     steps:
       - uses: actions/checkout@v4
-
       - name: Build and Test
-        uses: brightdigit/swift-build@v1
+        uses: brightdigit/swift-build@v1.2.0
         with:
           scheme: ${{ env.PACKAGE_NAME }}-Package
           type: ${{ matrix.type }}
           xcode: ${{ matrix.xcode }}
           deviceName: ${{ matrix.deviceName }}
           osVersion: ${{ matrix.osVersion }}
+          download-platform: ${{ matrix.download-platform || false }}
           
       # Common Coverage Steps
       - name: Process Coverage
@@ -100,7 +122,7 @@ jobs:
 
   lint:
     name: Linting
-    if: "!contains(github.event.head_commit.message, 'ci skip')"  
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}  
     runs-on: ubuntu-latest
     needs: [build-ubuntu, build-macos]
     env:
@@ -134,7 +156,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     container:
-      image: swift:6.0-noble
+      image: swift:6.1-noble
       volumes:
         - ${{ github.workspace }}:/workspace
     steps:
@@ -146,9 +168,9 @@ jobs:
           cache-name: cache-spm
         with:
           path: .build
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.swift-version }}-${{ hashFiles('Package.resolved') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-6.1-${{ hashFiles('Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.swift-version }}-
+            ${{ runner.os }}-${{ env.cache-name }}-6.1-
             ${{ runner.os }}-${{ env.cache-name }}-
       - name: Build DocC
         run: swift package generate-documentation --platform "name=macos,version=15.1" --transform-for-static-hosting --hosting-base-path "swift-docc" --disable-indexing --enable-experimental-combined-documentation
@@ -169,4 +191,4 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           repository: brightdigit/BushelDocs
           event-type: docc-update
-          client-payload: '{"run_id": "${{ github.run_id }}"}' 
+          client-payload: '{"run_id": "${{ github.run_id }}"}'
