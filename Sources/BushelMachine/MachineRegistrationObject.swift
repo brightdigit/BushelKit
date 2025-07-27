@@ -30,6 +30,7 @@
 public import Foundation
 
 /// Object which registers the machine into the inventory.
+@available(macOS 14.0, *)
 public struct MachineRegistrationObject: Sendable {
   private let machine: any Machine
   public init(machine: any Machine) {

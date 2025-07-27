@@ -81,7 +81,13 @@
       )
       let data = try JSON.encoder.encode(exportedConfiguration)
       let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
-      let newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
+      let newSnapshotsDirURL : URL
+      
+      if #available(macOS 13.0, *) {
+        newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
+      } else {
+        newSnapshotsDirURL = url.appendingPathComponent(URL.bushel.paths.snapshotsDirectoryName, conformingTo: .directory)
+      }
       if self.fileManager.directoryExists(at: newSnapshotsDirURL) == .directoryExists {
         try self.fileManager.removeItem(at: newSnapshotsDirURL)
       }

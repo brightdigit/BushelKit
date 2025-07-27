@@ -63,7 +63,13 @@ public struct ImageFileParser: RecordedImageParser {
     }
     let fileSize: UInt64?
     do {
-      let fileAttributes = try fileManager.attributesOfItem(atPath: url.path())
+      let path : String
+      if #available(macOS 13.0, *) {
+        path = url.path()
+      } else {
+        path = url.path
+      }
+      let fileAttributes = try fileManager.attributesOfItem(atPath: path)
       fileSize = fileAttributes[.size] as? UInt64
     } catch {
       throw .innerError(error)
