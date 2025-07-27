@@ -31,6 +31,7 @@ public import BushelMachine
 internal import Foundation
 
 extension MachineConfiguration {
+  @available(macOS 14.0, *)
   public init(
     configurable: some MachineConfigurable
   ) async throws {
@@ -53,6 +54,7 @@ extension MachineConfiguration {
     )
   }
 
+  @available(macOS 14.0, *)
   public init(
     restoreImage: any InstallerImage,
     machineSystem: any MachineSystem,

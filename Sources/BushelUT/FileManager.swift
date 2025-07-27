@@ -35,10 +35,17 @@ public import Foundation
   extension FileManager {
     public func createTemporaryFile(for source: UTType) -> URL {
       let tempFile: URL
-      tempFile =
+      if #available(macOS 13.0, *) {
+        tempFile =
         temporaryDirectory
-        .appending(path: UUID().uuidString)
-        .appendingPathExtension(for: source)
+          .appending(path: UUID().uuidString)
+          .appendingPathExtension(for: source)
+      } else {
+        // Fallback on earlier versions
+        tempFile = temporaryDirectory
+          .appendingPathComponent(UUID().uuidString, conformingTo: source)
+          
+      }
       return tempFile
     }
   }

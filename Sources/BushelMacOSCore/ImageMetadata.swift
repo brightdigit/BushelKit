@@ -34,6 +34,7 @@
   public import Virtualization
 
   extension ImageMetadata {
+    @available(macOS 13.0, *)
     internal init(
       vzRestoreImage: VZMacOSRestoreImage,
       headers: [AnyHashable: Any],
@@ -62,6 +63,7 @@
       )
     }
 
+    @available(macOS 13.0, *)
     private init(
       contentLength: Int,
       lastModified: Date,
@@ -80,6 +82,7 @@
       )
     }
 
+    @available(macOS 13.0, *)
     public init(
       vzRestoreImage: VZMacOSRestoreImage,
       sigVerification: SigVerification?,
