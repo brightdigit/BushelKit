@@ -86,8 +86,7 @@ jobs:
           - type: macos
             runs-on: macos-15
             xcode: "/Applications/Xcode_26.0.app"
-            download-platform: true
-
+            
           - type: macos
             runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
@@ -124,7 +123,8 @@ jobs:
             runs-on: macos-15
             xcode: "/Applications/Xcode_26.0.app"
             deviceName: "Apple Vision Pro"
-            osVersion: "26.0"
+            osVersion: "26.0"            
+            download-platform: true
   
     steps:
       - uses: actions/checkout@v4
