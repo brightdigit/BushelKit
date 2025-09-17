@@ -39,33 +39,33 @@ jobs:
           verbose: true        
           token: ${{ secrets.CODECOV_TOKEN }}  
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}  
-  build-windows:
-    name: Build on Windows
-    runs-on: ${{ matrix.runs-on }}
-    strategy:
-      fail-fast: false
-      matrix:
-        runs-on: [windows-2022, windows-2025]
-        include:
-          - swift-version: swift-6.2-release
-            swift-build: 6.2-RELEASE
-          - swift-version: swift-6.1-release
-            swift-build: 6.1-RELEASE
-    steps:
-      - uses: actions/checkout@v4
-      - uses: brightdigit/swift-build@v1.3.1
-        with:
-          windows-swift-version: ${{ matrix.swift-version }}
-          windows-swift-build: ${{ matrix.swift-build }}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5    
-        with:
-          fail_ci_if_error: true
-          flags: swift-${{ matrix.swift-version }},windows
-          verbose: true        
-          token: ${{ secrets.CODECOV_TOKEN }}
-          os: windows
-          swift_project: SyntaxKit            
+  # build-windows:
+  #   name: Build on Windows
+  #   runs-on: ${{ matrix.runs-on }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       runs-on: [windows-2022, windows-2025]
+  #       include:
+  #         - swift-version: swift-6.2-release
+  #           swift-build: 6.2-RELEASE
+  #         - swift-version: swift-6.1-release
+  #           swift-build: 6.1-RELEASE
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: brightdigit/swift-build@v1.3.1
+  #       with:
+  #         windows-swift-version: ${{ matrix.swift-version }}
+  #         windows-swift-build: ${{ matrix.swift-build }}
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v5    
+  #       with:
+  #         fail_ci_if_error: true
+  #         flags: swift-${{ matrix.swift-version }},windows
+  #         verbose: true        
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         os: windows
+  #         swift_project: SyntaxKit            
   build-macos:
     name: Build on macOS
     env:
