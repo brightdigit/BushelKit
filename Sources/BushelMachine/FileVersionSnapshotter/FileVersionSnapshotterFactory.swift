@@ -56,7 +56,7 @@
       image: RecordedImage?
     ) async throws -> Snapshot {
       guard let snapshotter = self.snapshotter(supports: type(of: machine).self) else {
-        fatalError("Not implmented error")
+        fatalError("Not implemented error")
       }
 
       return try await snapshotter.createNewSnapshot(

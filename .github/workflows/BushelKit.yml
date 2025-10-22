@@ -62,10 +62,10 @@ jobs:
   #       with:
   #         fail_ci_if_error: true
   #         flags: swift-${{ matrix.swift-version }},windows
-  #         verbose: true        
+  #         verbose: true
   #         token: ${{ secrets.CODECOV_TOKEN }}
   #         os: windows
-  #         swift_project: SyntaxKit            
+  #         swift_project: BushelKit            
   build-macos:
     name: Build on macOS
     env:
