@@ -82,7 +82,7 @@ jobs:
           - runs-on: macos-15
             xcode: "/Applications/Xcode_16.4.app"
           - runs-on: macos-26
-            xcode: "/Applications/Xcode_26.app"
+            xcode: "/Applications/Xcode_26.0.app"
 
           # macOS Build Matrix
           - type: macos
@@ -95,7 +95,7 @@ jobs:
 
           - type: macos
             runs-on: macos-26
-            xcode: "/Applications/Xcode_26.app"
+            xcode: "/Applications/Xcode_26.0.app"
           
           # iOS Build Matrix
           - type: ios
@@ -113,7 +113,7 @@ jobs:
 
           - type: ios
             runs-on: macos-26
-            xcode: "/Applications/Xcode_26.app"
+            xcode: "/Applications/Xcode_26.0.app"
             deviceName: "iPhone Air"
             osVersion: "26.0"
             download-platform: true
@@ -134,7 +134,7 @@ jobs:
 
           - type: watchos
             runs-on: macos-26
-            xcode: "/Applications/Xcode_26.app"
+            xcode: "/Applications/Xcode_26.0.app"
             deviceName: "Apple Watch Series 11 (46mm)"
             osVersion: "26.0"
             download-platform: true
@@ -148,7 +148,7 @@ jobs:
 
           - type: visionos
             runs-on: macos-26
-            xcode: "/Applications/Xcode_26.app"
+            xcode: "/Applications/Xcode_26.0.app"
             deviceName: "Apple Vision Pro"
             osVersion: "26.0"            
             download-platform: true
