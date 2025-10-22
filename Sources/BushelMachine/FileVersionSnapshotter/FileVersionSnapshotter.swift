@@ -168,7 +168,8 @@
       forVersion version: NSFileVersion,
       to snapshotCollectionURL: URL,
       withRequest request: SnapshotRequest = .init(),
-      withID id: UUID = .init()
+      withID id: UUID = .init(),
+      image: RecordedImage? = nil
     ) throws -> Snapshot {
       try self.fileManager.createEmptyDirectory(
         at: snapshotCollectionURL,
@@ -191,7 +192,8 @@
         snapshotterID: FileVersionSnapshotterFactory.systemID,
         createdAt: .init(),
         isDiscardable: version.isDiscardable,
-        notes: request.notes
+        notes: request.notes,
+        image: image
       )
     }
 
@@ -205,7 +207,7 @@
     /// - Throws: Any errors that may occur during the snapshot creation process.
     @discardableResult
     public func createNewSnapshot(
-      of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions
+      of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions, image: RecordedImage?
     ) async throws -> Snapshot {
       let paths = try machine.beginSnapshot()
 
@@ -218,7 +220,8 @@
       let snapshot = try self.saveSnapshot(
         forVersion: version,
         to: paths.snapshotCollectionURL,
-        withRequest: request
+        withRequest: request,
+        image: image
       )
 
       await machine.finishedWithSnapshot(snapshot, by: .append)

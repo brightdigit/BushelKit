@@ -82,7 +82,8 @@ extension Machine {
   public func createNewSnapshot(
     request: SnapshotRequest,
     options: SnapshotOptions,
-    using provider: any SnapshotProvider
+    using provider: any SnapshotProvider,
+    image: RecordedImage?
   ) async throws -> Snapshot {
     let configuration = await self.updatedConfiguration
     guard
@@ -95,7 +96,7 @@ extension Machine {
       preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
 
-    return try await snapshotter.createNewSnapshot(of: self, request: request, options: options)
+    return try await snapshotter.createNewSnapshot(of: self, request: request, options: options, image: image)
   }
 
   /// Deletes the specified snapshot using the provided snapshot provider.

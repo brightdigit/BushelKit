@@ -46,7 +46,8 @@ public protocol Snapshotter<MachineType> {
   func createNewSnapshot(
     of machine: MachineType,
     request: SnapshotRequest,
-    options: SnapshotOptions
+    options: SnapshotOptions,
+    image: RecordedImage?
   ) async throws -> Snapshot
 
   /// Deletes the specified snapshot from the specified machine.
