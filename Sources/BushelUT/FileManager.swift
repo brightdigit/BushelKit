@@ -44,7 +44,6 @@ public import Foundation
         // Fallback on earlier versions
         tempFile = temporaryDirectory
           .appendingPathComponent(UUID().uuidString, conformingTo: source)
-          
       }
       return tempFile
     }

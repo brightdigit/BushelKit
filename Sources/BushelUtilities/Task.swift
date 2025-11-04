@@ -44,7 +44,6 @@ extension Task where Success == Never, Failure == Never {
     and otherValue: Int,
     _ onError: @escaping @Sendable (any Error) -> Void
   ) async {
-
     let minimumSeconds = min(value, otherValue)
     let maximumSeconds = max(value, otherValue)
 
@@ -62,9 +61,9 @@ extension Task where Success == Never, Failure == Never {
           tolerance: .seconds(toleranceSeconds)
         )
       } else {
-        let nanoSecondsInSeconds : UInt64 = 1_000_000_000
-        let minimumNanoSeconds : UInt64 = UInt64(minimumSeconds) * nanoSecondsInSeconds
-        let maximumNanoSeconds : UInt64 = UInt64(maximumSeconds) * nanoSecondsInSeconds
+        let nanoSecondsInSeconds: UInt64 = 1_000_000_000
+        let minimumNanoSeconds: UInt64 = UInt64(minimumSeconds) * nanoSecondsInSeconds
+        let maximumNanoSeconds: UInt64 = UInt64(maximumSeconds) * nanoSecondsInSeconds
         await Self.sleep(.random(in: minimumNanoSeconds...maximumNanoSeconds))
       }
     } catch {

@@ -42,8 +42,8 @@ internal final class LibraryIdentifierTests: XCTestCase {
   }
 
   internal func testURLFromString() {
-    let homeDirectoryURL : URL
-    
+    let homeDirectoryURL: URL
+
     if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
       homeDirectoryURL = URL.homeDirectory
     } else {

@@ -63,7 +63,7 @@ public struct ImageFileParser: RecordedImageParser {
     }
     let fileSize: UInt64?
     do {
-      let path : String
+      let path: String
       if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
         path = url.path()
       } else {
