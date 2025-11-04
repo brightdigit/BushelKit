@@ -83,7 +83,7 @@
       let configurationFileURL = url.appendingPathComponent(URL.bushel.paths.machineJSONFileName)
       let newSnapshotsDirURL : URL
       
-      if #available(macOS 13.0, *) {
+      if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
         newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
       } else {
         newSnapshotsDirURL = url.appendingPathComponent(URL.bushel.paths.snapshotsDirectoryName, conformingTo: .directory)

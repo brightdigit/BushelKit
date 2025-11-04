@@ -33,6 +33,7 @@ public import BushelMachine
 public import Foundation
 public import OSVer
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public struct MachineSystemStub: MachineSystem, Equatable {
   public typealias RestoreImageType = RestoreImageStub
 

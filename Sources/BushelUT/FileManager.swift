@@ -35,7 +35,7 @@ public import Foundation
   extension FileManager {
     public func createTemporaryFile(for source: UTType) -> URL {
       let tempFile: URL
-      if #available(macOS 13.0, *) {
+      if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
         tempFile =
         temporaryDirectory
           .appending(path: UUID().uuidString)

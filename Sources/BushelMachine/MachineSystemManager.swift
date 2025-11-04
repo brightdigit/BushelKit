@@ -32,7 +32,7 @@ public import BushelLogging
 internal import Foundation
 
 /// Implementation of a ``MachineSystemManaging``
-@available(macOS 14.0, *)
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public final class MachineSystemManager: MachineSystemManaging, Loggable {
   private let implementations: [VMSystemID: any MachineSystem]
 

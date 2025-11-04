@@ -115,7 +115,7 @@ public enum DataType: String {
     /// - Returns: An array of system profile data of the specified type.
     /// - Throws: `Error.missingRoot` if the root object is missing from the JSON data,
     ///           `Error.missingData` if the data is missing.
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
     public static func data<T: SystemProfileType>() throws -> [T] {
       let process = Process()
       process.executableURL = .init(filePath: "/usr/sbin/system_profiler")

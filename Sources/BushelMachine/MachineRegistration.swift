@@ -30,5 +30,5 @@
 public import Foundation
 
 /// Returns the machine after registering the object.
-@available(macOS 14.0, *)
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public typealias MachineRegistration = @Sendable (MachineInventory, UUID) -> any Machine

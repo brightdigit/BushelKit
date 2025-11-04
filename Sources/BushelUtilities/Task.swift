@@ -51,7 +51,7 @@ extension Task where Success == Never, Failure == Never {
     let range = maximumSeconds - minimumSeconds
 
     do {
-      if #available(macOS 13.0, *) {
+      if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
         let toleranceSeconds: Int
         let durationSeconds: Int
         toleranceSeconds = Int.random(in: 1...(range / 2))

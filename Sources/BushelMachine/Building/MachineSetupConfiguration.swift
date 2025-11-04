@@ -52,7 +52,7 @@ public struct MachineSetupConfiguration: Sendable {
   /// Initializes a new `MachineSetupConfiguration` with the default storage specification
   /// for the provided `MachineSystem`.
   /// - Parameter system: The `MachineSystem` to use for the default storage specification.
-  @available(macOS 14.0, *)
+  @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
   public init(system: any MachineSystem) {
     self.init(storage: [.default(forSystem: system)])
   }
@@ -136,7 +136,7 @@ extension MachineSetupConfiguration {
   /// - Parameters:
   ///   - request: The `MachineBuildRequest` to use for initialization.
   ///   - system: The `MachineSystem` to use for the default storage specification.
-  @available(macOS 14.0, *)
+  @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
   public init(request: MachineBuildRequest?, system: any MachineSystem) {
     self.init(
       libraryID: request?.restoreImage?.libraryID,

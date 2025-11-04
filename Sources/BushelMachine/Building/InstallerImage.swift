@@ -68,7 +68,7 @@ extension InstallerImage {
   ///
   /// - Parameter manager: The machine system manager to use for retrieving the configuration range.
   /// - Returns: The configuration range for the installer image.
-  @available(macOS 14.0, *)
+  @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
   public func getConfigurationRange(from manager: any MachineSystemManaging) -> ConfigurationRange {
     let manager = manager.resolve(self.metadata.vmSystemID)
     return manager.configurationRange(for: self)

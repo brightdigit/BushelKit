@@ -4346,7 +4346,7 @@ struct FelinePine: PackageDependency, TargetDependency {
 
 struct RadiantKit: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/RadiantKit.git", branch: "support-macos12")
+    .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.4")
   }
 }
 //
@@ -4382,7 +4382,7 @@ import Foundation
 
 struct IPSWDownloads: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.1")
+    .package(url: "https://github.com/brightdigit/IPSWDownloads.git", from: "1.0.2")
   }
 }
 //

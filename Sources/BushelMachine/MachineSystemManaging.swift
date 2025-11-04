@@ -32,7 +32,7 @@ public import BushelLogging
 public import Foundation
 
 /// A collection of machine systems for managing virtual machines
-@available(macOS 14.0, *)
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public protocol MachineSystemManaging: Sendable {
   /// Resolve the ``MachineSystem`` based on the ``VMSystemID``
   /// - Parameter id: id of the system to resolve.
@@ -40,14 +40,14 @@ public protocol MachineSystemManaging: Sendable {
   func resolve(_ id: VMSystemID) -> any MachineSystem
 }
 
-@available(macOS 14.0, *)
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 extension MachineSystemManaging where Self: Loggable {
   public static var loggingCategory: BushelLogging.Category {
     .library
   }
 }
 
-@available(macOS 14.0, *)
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 extension MachineSystemManaging {
   /// Resolves the ``MachineSystem`` and ``Machine`` based on the bundle at the URL.
   /// - Parameter url: Machine bundle URL.

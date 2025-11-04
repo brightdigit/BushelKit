@@ -37,7 +37,7 @@
 
   public protocol MacOSVirtualizationHubProvider: Sendable {}
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 extension MacOSVirtualization {
     fileprivate static let hubs: [Hub] = [
       Hub(
@@ -71,7 +71,7 @@ extension MacOSVirtualization {
   }
 
   extension MacOSVirtualizationHubProvider {
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
     public var macOSHubs: [Hub] {
       MacOSVirtualization.hubs
     }

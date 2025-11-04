@@ -30,7 +30,7 @@
 internal import Foundation
 
 /// A result builder for creating a collection of `MachineSystem` instances.
-@available(macOS 14.0, *)
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public enum MachineSystemBuilder {
   /// Builds a collection of `MachineSystem` instances from the provided components.
   ///

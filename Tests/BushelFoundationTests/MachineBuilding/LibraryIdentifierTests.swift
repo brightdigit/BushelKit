@@ -42,7 +42,14 @@ internal final class LibraryIdentifierTests: XCTestCase {
   }
 
   internal func testURLFromString() {
-    let fileURL = URL.homeDirectory.appendingPathComponent("file.txt")
+    let homeDirectoryURL : URL
+    
+    if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
+      homeDirectoryURL = URL.homeDirectory
+    } else {
+      homeDirectoryURL = URL(string: NSHomeDirectory())!
+    }
+    let fileURL = homeDirectoryURL.appendingPathComponent("file.txt")
     let url = LibraryIdentifier.url(fileURL)
 
     let sut = LibraryIdentifier(string: fileURL.path)
