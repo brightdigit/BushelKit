@@ -32,6 +32,7 @@ import XCTest
 
 @testable import BushelMachine
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 internal final class MachineSystemManagerTests: XCTestCase {
   internal func testResolveById() {
     let stubOS1: MachineSystemStub = .stubOS1

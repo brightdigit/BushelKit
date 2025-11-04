@@ -47,6 +47,33 @@ public struct ImageFileParser: RecordedImageParser {
     self.fileManager = fileManager
   }
 
+  private static func imageDestinationURL(
+    withID imageUUID: UUID, withFileType fileType: ImageFileType, atDirectory directoryURL: URL
+  ) -> URL {
+    #if canImport(UniformTypeIdentifiers)
+      return
+        directoryURL
+        .appendingPathComponent(imageUUID.uuidString)
+        .appendingPathExtension(for: .init(imageType: fileType))
+    #else
+      return
+        directoryURL
+        .appendingPathComponent(imageUUID.uuidString)
+        .appendingPathExtension(fileType.fileExtension)
+    #endif
+  }
+
+  private func fileSizeOfURL(_ url: URL) throws -> UInt64? {
+    let path: String
+    if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
+      path = url.path()
+    } else {
+      path = url.path
+    }
+    let fileAttributes = try fileManager.attributesOfItem(atPath: path)
+    return fileAttributes[.size] as? UInt64
+  }
+
   /// Retrieves information about an image and moves the image file to a specified directory.
   ///
   /// - Parameters:
@@ -63,8 +90,7 @@ public struct ImageFileParser: RecordedImageParser {
     }
     let fileSize: UInt64?
     do {
-      let fileAttributes = try fileManager.attributesOfItem(atPath: url.path())
-      fileSize = fileAttributes[.size] as? UInt64
+      fileSize = try self.fileSizeOfURL(url)
     } catch {
       throw .innerError(error)
     }
@@ -77,17 +103,11 @@ public struct ImageFileParser: RecordedImageParser {
       throw .missingField(.size)
     }
 
-    #if canImport(UniformTypeIdentifiers)
-      let captureDestinationURL =
-        directoryURL
-        .appendingPathComponent(imageUUID.uuidString)
-        .appendingPathExtension(for: .init(imageType: image.configuration.fileType))
-    #else
-      let captureDestinationURL =
-        directoryURL
-        .appendingPathComponent(imageUUID.uuidString)
-        .appendingPathExtension(image.configuration.fileType.fileExtension)
-    #endif
+    let destinationURL = Self.imageDestinationURL(
+      withID: imageUUID,
+      withFileType: image.configuration.fileType,
+      atDirectory: directoryURL
+    )
 
     do {
       try self.fileManager.createEmptyDirectory(
@@ -95,7 +115,7 @@ public struct ImageFileParser: RecordedImageParser {
         withIntermediateDirectories: false,
         deleteExistingFile: false
       )
-      try self.fileManager.moveItem(at: image.url, to: captureDestinationURL)
+      try self.fileManager.moveItem(at: image.url, to: destinationURL)
     } catch {
       throw .innerError(error)
     }

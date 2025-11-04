@@ -37,6 +37,7 @@ public import Foundation
   public struct SwiftDataError: LocalizedError {}
 #endif
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public enum ConfigurationError: LocalizedError {
   case missingRestoreImageID
   case missingSystemManager

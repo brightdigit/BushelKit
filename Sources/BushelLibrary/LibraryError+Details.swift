@@ -31,12 +31,6 @@ public import Foundation
 
 extension LibraryError {
   public enum Details: Sendable {
-    private struct UnknownError: Error {
-      private init() {}
-
-      fileprivate static let shared = UnknownError()
-    }
-
     case bookmarkError
     case systemResolution
     case accessDeniedLibraryAt(URL)
@@ -47,6 +41,12 @@ extension LibraryError {
     case missingInitialization(for: InitializationProperty)
     case database
     case copyImage(source: URL, destination: URL)
+
+    private struct UnknownError: Error {
+      fileprivate static let shared = UnknownError()
+
+      private init() {}
+    }
 
     // swiftlint:disable:next cyclomatic_complexity
     internal func errorDescription(fromError error: (any Error)?) -> String {

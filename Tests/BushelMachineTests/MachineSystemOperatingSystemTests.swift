@@ -33,6 +33,7 @@ import XCTest
 @testable import BushelMachine
 @testable import BushelMachineWax
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 internal final class MachineSystemOperatingSystemTests: XCTestCase {
   internal func testMachineSystemStubOperatingSystemShortName() {
     // Given

@@ -32,8 +32,6 @@ public import BushelMachine
 public import Foundation
 
 public struct ReleaseCollection {
-  fileprivate typealias ImageDictionary = [Int: [any InstallerImage]]
-
   private struct ReleaseVersions {
     let versionNumbers: [Int: Int]
     let releases: [ReleaseMetadata]
@@ -94,13 +92,13 @@ public struct ReleaseCollection {
     }
   }
   public struct Options: OptionSet, Codable, Hashable, Sendable {
+    public static let noDuplicates: Self = .init(rawValue: 1)
+
     public var rawValue: Int
 
     public init(rawValue: Int) {
       self.rawValue = rawValue
     }
-
-    public static let noDuplicates: Self = .init(rawValue: 1)
   }
 
   public let versionNumbers: [Int: Int]
@@ -189,38 +187,5 @@ public struct ReleaseCollection {
 extension ReleaseCollection {
   public var isEmpty: Bool {
     self.releases.allSatisfy(\.images.isEmpty)
-  }
-}
-
-extension ReleaseCollection.ImageDictionary {
-  fileprivate init(images: [any InstallerImage], uniqueOnly: Bool) {
-    let newImages: [any InstallerImage]
-
-    if uniqueOnly {
-      newImages = images.removingDuplicates(groupingBy: { $0.buildIdentifier })
-    } else {
-      newImages = images
-    }
-
-    self.init(grouping: newImages) { image in
-      image.operatingSystemVersion.majorVersion
-    }
-  }
-
-  fileprivate func sorted(byOrder order: SortOrder?) -> Self {
-    guard let order else {
-      return self
-    }
-
-    return self.mapValues { images in
-      images.sorted { lhs, rhs in
-        switch order {
-        case .forward:
-          lhs.operatingSystemVersion < rhs.operatingSystemVersion
-        case .reverse:
-          lhs.operatingSystemVersion > rhs.operatingSystemVersion
-        }
-      }
-    }
   }
 }

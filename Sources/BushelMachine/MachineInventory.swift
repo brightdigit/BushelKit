@@ -32,6 +32,7 @@ public import Foundation
 public import Observation
 
 /// Inventory of machines that are running or have run previously.
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 @Observable
 public final class MachineInventory: Sendable, Loggable {
   /// Object to keep track of the machine and it's state.

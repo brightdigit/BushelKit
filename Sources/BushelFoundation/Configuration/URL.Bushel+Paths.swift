@@ -35,6 +35,16 @@ extension URL.Bushel {
     /// A type alias for the `VZMacPaths` protocol.
     public typealias VZMac = VZMacPaths
 
+    private enum Defaults {
+      fileprivate static let restoreImagesDirectoryName = "Restore Images"
+      fileprivate static let machineDataDirectoryName = "data"
+      fileprivate static let snapshotsDirectoryName = "snapshots"
+      fileprivate static let captureImageDirectoryName = "images"
+      fileprivate static let captureVideoDirectoryName = "videos"
+      fileprivate static let machineJSONFileName = "machine.json"
+      fileprivate static let restoreLibraryJSONFileName = "metadata.json"
+    }
+
     /// The name of the directory for restore images.
     public let restoreImagesDirectoryName = Defaults.restoreImagesDirectoryName
     /// The name of the directory for machine data.
@@ -49,15 +59,5 @@ extension URL.Bushel {
     public let machineJSONFileName = Defaults.machineJSONFileName
     /// The name of the file for the restore library JSON data.
     public let restoreLibraryJSONFileName = Defaults.restoreLibraryJSONFileName
-
-    private enum Defaults {
-      fileprivate static let restoreImagesDirectoryName = "Restore Images"
-      fileprivate static let machineDataDirectoryName = "data"
-      fileprivate static let snapshotsDirectoryName = "snapshots"
-      fileprivate static let captureImageDirectoryName = "images"
-      fileprivate static let captureVideoDirectoryName = "videos"
-      fileprivate static let machineJSONFileName = "machine.json"
-      fileprivate static let restoreLibraryJSONFileName = "metadata.json"
-    }
   }
 }

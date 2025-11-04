@@ -96,7 +96,12 @@ extension Machine {
       preconditionFailure("Unknown system: \(configuration.snapshotSystemID)")
     }
 
-    return try await snapshotter.createNewSnapshot(of: self, request: request, options: options, image: image)
+    return try await snapshotter.createNewSnapshot(
+      of: self,
+      request: request,
+      options: options,
+      image: image
+    )
   }
 
   /// Deletes the specified snapshot using the provided snapshot provider.

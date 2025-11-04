@@ -44,22 +44,28 @@ extension Task where Success == Never, Failure == Never {
     and otherValue: Int,
     _ onError: @escaping @Sendable (any Error) -> Void
   ) async {
-    let toleranceSeconds: Int
-    let durationSeconds: Int
-
     let minimumSeconds = min(value, otherValue)
     let maximumSeconds = max(value, otherValue)
 
     let range = maximumSeconds - minimumSeconds
-    toleranceSeconds = Int.random(in: 1...(range / 2))
-
-    durationSeconds = .random(in: minimumSeconds...(maximumSeconds - toleranceSeconds))
 
     do {
-      try await Self.sleep(
-        for: .seconds(durationSeconds),
-        tolerance: .seconds(toleranceSeconds)
-      )
+      if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
+        let toleranceSeconds: Int
+        let durationSeconds: Int
+        toleranceSeconds = Int.random(in: 1...(range / 2))
+
+        durationSeconds = .random(in: minimumSeconds...(maximumSeconds - toleranceSeconds))
+        try await Self.sleep(
+          for: .seconds(durationSeconds),
+          tolerance: .seconds(toleranceSeconds)
+        )
+      } else {
+        let nanoSecondsInSeconds: UInt64 = 1_000_000_000
+        let minimumNanoSeconds: UInt64 = UInt64(minimumSeconds) * nanoSecondsInSeconds
+        let maximumNanoSeconds: UInt64 = UInt64(maximumSeconds) * nanoSecondsInSeconds
+        await Self.sleep(.random(in: minimumNanoSeconds...maximumNanoSeconds))
+      }
     } catch {
       assertionFailure(error: error, disableAssertionFailureForError: false)
       onError(error)

@@ -32,6 +32,7 @@ public import Foundation
 public import OSVer
 
 /// Manages a set of machines for a system
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public protocol MachineSystem: Sendable {
   associatedtype RestoreImageType: Sendable
   /// Supported system id
@@ -72,6 +73,7 @@ public protocol MachineSystem: Sendable {
   func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String
 }
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 extension MachineSystem {
   /// Create a builder based on the specification.
   /// - Parameters:

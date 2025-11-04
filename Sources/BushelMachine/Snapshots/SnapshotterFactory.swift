@@ -78,6 +78,11 @@ extension SnapshotterFactory {
       preconditionFailure("Unknown system: \(type(of: machine).self)")
     }
 
-    return try await snapshotter.createNewSnapshot(of: machine, request: request, options: options, image: image)
+    return try await snapshotter.createNewSnapshot(
+      of: machine,
+      request: request,
+      options: options,
+      image: image
+    )
   }
 }

@@ -1,9 +1,9 @@
 //
-//  WWDC2023.swift
+//  ReleaseCollection.ImageDictionary.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,15 +27,43 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import PackageDescription
+import BushelFoundation
+import BushelMachine
+import Foundation
 
-struct WWDC2023: PlatformSet {
-  var body: any SupportedPlatforms {
-    SupportedPlatform.macOS(.v12)
-    SupportedPlatform.iOS(.v15)
-    SupportedPlatform.watchOS(.v8)
-    SupportedPlatform.tvOS(.v15)
-    SupportedPlatform.visionOS(.v1)
-    SupportedPlatform.macCatalyst(.v15)
+extension ReleaseCollection.ImageDictionary {
+  internal init(images: [any InstallerImage], uniqueOnly: Bool) {
+    let newImages: [any InstallerImage]
+
+    if uniqueOnly {
+      newImages = images.removingDuplicates(groupingBy: { $0.buildIdentifier })
+    } else {
+      newImages = images
+    }
+
+    self.init(grouping: newImages) { image in
+      image.operatingSystemVersion.majorVersion
+    }
   }
+
+  internal func sorted(byOrder order: SortOrder?) -> Self {
+    guard let order else {
+      return self
+    }
+
+    return self.mapValues { images in
+      images.sorted { lhs, rhs in
+        switch order {
+        case .forward:
+          lhs.operatingSystemVersion < rhs.operatingSystemVersion
+        case .reverse:
+          lhs.operatingSystemVersion > rhs.operatingSystemVersion
+        }
+      }
+    }
+  }
+}
+
+extension ReleaseCollection {
+  internal typealias ImageDictionary = [Int: [any InstallerImage]]
 }

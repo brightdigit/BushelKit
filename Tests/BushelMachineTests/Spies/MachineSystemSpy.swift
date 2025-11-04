@@ -34,6 +34,7 @@ import BushelMachineWax
 import Foundation
 import OSVer
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 internal final class MachineSystemSpy: MachineSystem, @unchecked Sendable {
   internal typealias RestoreImageType = RestoreImageStub
 
