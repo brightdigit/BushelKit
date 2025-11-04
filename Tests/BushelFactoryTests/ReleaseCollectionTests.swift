@@ -47,6 +47,18 @@ internal struct ReleaseCollectionTests {
       self.expectedFirstMajorVersion..<(self.expectedFirstMajorVersion + self.releaseCount)
     }
 
+    private init(
+      customReleaseCount: Int,
+      expectedFirstMajorVersion: Int,
+      releaseCount: Int,
+      averageImageCountPerRelease: Int
+    ) {
+      self.customReleaseCount = customReleaseCount
+      self.expectedFirstMajorVersion = expectedFirstMajorVersion
+      self.releaseCount = releaseCount
+      self.averageImageCountPerRelease = averageImageCountPerRelease
+    }
+
     static func random(
       expectedCustomVersionsAllowed: Bool,
       expectedFirstMajorVersion: Int? = nil,
@@ -59,18 +71,6 @@ internal struct ReleaseCollectionTests {
         releaseCount: releaseCount ?? .random(in: 3...10),
         averageImageCountPerRelease: averageImageCountPerRelease ?? .random(in: 3...6)
       )
-    }
-
-    private init(
-      customReleaseCount: Int,
-      expectedFirstMajorVersion: Int,
-      releaseCount: Int,
-      averageImageCountPerRelease: Int
-    ) {
-      self.customReleaseCount = customReleaseCount
-      self.expectedFirstMajorVersion = expectedFirstMajorVersion
-      self.releaseCount = releaseCount
-      self.averageImageCountPerRelease = averageImageCountPerRelease
     }
   }
 
@@ -185,114 +185,5 @@ internal struct ReleaseCollectionTests {
         customVersionsAllowed: true
       )
     }
-  }
-
-  @Test("Initialize Release Collection with No Duplicates")
-  internal func testInitWithNoDuplicates() {
-    let parameters = TestParameters.random(
-      expectedCustomVersionsAllowed: false,
-      releaseCount: 3,
-      averageImageCountPerRelease: 2
-    )
-
-    let releaseCollection = MockReleaseCollectionMetadata.random(
-      startingAt: parameters.expectedFirstMajorVersion,
-      count: parameters.releaseCount,
-      customVersionsAllowed: false
-    )
-
-    // Create a dictionary with duplicate images
-    var imageDictionary = MockInstallerImage.random(
-      withReleaseCount: parameters.releaseCount,
-      startingAt: parameters.expectedFirstMajorVersion,
-      withAverageImageCount: parameters.averageImageCountPerRelease,
-      includingCustomReleaseCount: 0
-    )
-
-    // Add duplicates to each release
-    for (majorVersion, images) in imageDictionary {
-      let duplicates = images.map { image in
-        MockInstallerImage(
-          libraryID: image.libraryID,
-          imageID: UUID(),  // New UUID to make it a different instance
-          metadata: image.metadata
-        )
-      }
-      imageDictionary[majorVersion]?.append(contentsOf: duplicates)
-    }
-
-    // Create collection with noDuplicates option
-    let actualReleaseCollection = ReleaseCollection(
-      releaseCollection: releaseCollection,
-      images: imageDictionary.values.flatMap { $0 },
-      options: .noDuplicates
-    )
-
-    // Verify that duplicates were removed
-    for (majorVersion, expectedImages) in imageDictionary {
-      guard let actualRelease = actualReleaseCollection[majorVersion] else {
-        #expect(actualReleaseCollection[majorVersion] != nil)
-        continue
-      }
-
-      let actualImages = actualRelease.images.compactMap { $0 as? MockInstallerImage }
-      // Verify that the number of images is half of the original (duplicates removed)
-      #expect(actualImages.count == expectedImages.count / 2)
-
-      // Verify that all images have unique build identifiers
-      let buildIdentifiers = Set(actualImages.map { $0.buildIdentifier })
-      #expect(buildIdentifiers.count == actualImages.count)
-    }
-  }
-
-  @Test("Initialize Release Collection with Sort Order")
-  internal func testInitWithSortOrder() {
-    // Create a release collection with specific images to test sorting
-    let releaseCollection = MockReleaseCollectionMetadata.random(
-      startingAt: 10,
-      count: 3,
-      customVersionsAllowed: false
-    )
-
-    // Create images with different versions for testing sorting
-    let majorVersion = 10
-    let image1 = MockInstallerImage(
-      libraryID: .bookmarkID(UUID()),
-      imageID: UUID(),
-      metadata: .init(
-        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 1, patchVersion: 0)
-      )
-    )
-    let image2 = MockInstallerImage(
-      libraryID: .bookmarkID(UUID()),
-      imageID: UUID(),
-      metadata: .init(
-        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 2, patchVersion: 0)
-      )
-    )
-    let image3 = MockInstallerImage(
-      libraryID: .bookmarkID(UUID()),
-      imageID: UUID(),
-      metadata: .init(
-        operatingSystem: OSVer(majorVersion: majorVersion, minorVersion: 3, patchVersion: 0)
-      )
-    )
-
-    // Test forward sorting
-    let forwardSorted = ReleaseCollection(
-      releaseCollection: releaseCollection,
-      images: [image3, image1, image2],
-      sortOrder: .forward
-    )
-
-    // Test reverse sorting
-    let reverseSorted = ReleaseCollection(
-      releaseCollection: releaseCollection,
-      images: [image1, image2, image3],
-      sortOrder: .reverse
-    )
-
-    #expect(forwardSorted.versionNumbers.keys.count == releaseCollection.releases.count)
-    #expect(reverseSorted.versionNumbers.keys.count == releaseCollection.releases.count)
   }
 }

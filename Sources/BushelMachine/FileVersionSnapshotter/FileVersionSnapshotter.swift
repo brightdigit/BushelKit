@@ -216,7 +216,9 @@
     /// - Throws: Any errors that may occur during the snapshot creation process.
     @discardableResult
     public func createNewSnapshot(
-      of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions,
+      of machine: MachineType,
+      request: SnapshotRequest,
+      options: SnapshotOptions,
       image: RecordedImage?
     ) async throws -> Snapshot {
       let paths = try machine.beginSnapshot()

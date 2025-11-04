@@ -79,6 +79,10 @@ extension SnapshotterFactory {
     }
 
     return try await snapshotter.createNewSnapshot(
-      of: machine, request: request, options: options, image: image)
+      of: machine,
+      request: request,
+      options: options,
+      image: image
+    )
   }
 }

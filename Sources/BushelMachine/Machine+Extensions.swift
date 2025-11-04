@@ -97,7 +97,11 @@ extension Machine {
     }
 
     return try await snapshotter.createNewSnapshot(
-      of: self, request: request, options: options, image: image)
+      of: self,
+      request: request,
+      options: options,
+      image: image
+    )
   }
 
   /// Deletes the specified snapshot using the provided snapshot provider.

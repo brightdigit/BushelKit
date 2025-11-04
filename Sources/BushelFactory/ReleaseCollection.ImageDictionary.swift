@@ -1,9 +1,9 @@
 //
-//  LibraryIdentifierTests.swift
+//  ReleaseCollection.ImageDictionary.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,33 +27,43 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import BushelFoundation
+import BushelMachine
 import Foundation
-import XCTest
 
-@testable import BushelFoundation
+extension ReleaseCollection.ImageDictionary {
+  internal init(images: [any InstallerImage], uniqueOnly: Bool) {
+    let newImages: [any InstallerImage]
 
-internal final class LibraryIdentifierTests: XCTestCase {
-  internal func testBookmarkIDFromString() {
-    let expectedID = LibraryIdentifier.bookmarkID(.bookmarkIDSample)
-
-    let sut = LibraryIdentifier(string: .libraryBookmarkIDSample)
-
-    XCTAssertEqual(sut.description, expectedID.description)
-  }
-
-  internal func testURLFromString() {
-    let homeDirectoryURL: URL
-
-    if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
-      homeDirectoryURL = URL.homeDirectory
+    if uniqueOnly {
+      newImages = images.removingDuplicates(groupingBy: { $0.buildIdentifier })
     } else {
-      homeDirectoryURL = URL(fileURLWithPath: NSHomeDirectory())
+      newImages = images
     }
-    let fileURL = homeDirectoryURL.appendingPathComponent("file.txt")
-    let url = LibraryIdentifier.url(fileURL)
 
-    let sut = LibraryIdentifier(string: fileURL.path)
-
-    XCTAssertEqual(sut.description, url.description)
+    self.init(grouping: newImages) { image in
+      image.operatingSystemVersion.majorVersion
+    }
   }
+
+  internal func sorted(byOrder order: SortOrder?) -> Self {
+    guard let order else {
+      return self
+    }
+
+    return self.mapValues { images in
+      images.sorted { lhs, rhs in
+        switch order {
+        case .forward:
+          lhs.operatingSystemVersion < rhs.operatingSystemVersion
+        case .reverse:
+          lhs.operatingSystemVersion > rhs.operatingSystemVersion
+        }
+      }
+    }
+  }
+}
+
+extension ReleaseCollection {
+  internal typealias ImageDictionary = [Int: [any InstallerImage]]
 }

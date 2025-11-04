@@ -32,7 +32,9 @@ public import Foundation
 extension URL.Bushel {
   /// A struct that contains various file and directory paths used by the app.
   public struct Paths: Sendable {
-    
+    /// A type alias for the `VZMacPaths` protocol.
+    public typealias VZMac = VZMacPaths
+
     private enum Defaults {
       fileprivate static let restoreImagesDirectoryName = "Restore Images"
       fileprivate static let machineDataDirectoryName = "data"
@@ -42,9 +44,6 @@ extension URL.Bushel {
       fileprivate static let machineJSONFileName = "machine.json"
       fileprivate static let restoreLibraryJSONFileName = "metadata.json"
     }
-    
-    /// A type alias for the `VZMacPaths` protocol.
-    public typealias VZMac = VZMacPaths
 
     /// The name of the directory for restore images.
     public let restoreImagesDirectoryName = Defaults.restoreImagesDirectoryName
