@@ -57,7 +57,7 @@ public struct Snapshot: Codable, Identifiable, Sendable {
 
   /// Indicates whether the snapshot is discardable or not.
   public var isDiscardable: Bool
-  
+
   /// An optional screenshot associated with this snapshot.
   public var image: RecordedImage?
 

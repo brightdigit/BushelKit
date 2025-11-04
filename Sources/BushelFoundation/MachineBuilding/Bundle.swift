@@ -32,9 +32,9 @@ public import Foundation
 extension Bundle {
   /// An error that occurs when a bundle identifier is missing.
   public struct MissingIdentifierError: Error {
-    private init() {}
-
     fileprivate static let shared: any Error = MissingIdentifierError()
+
+    private init() {}
   }
 
   /// The suite name for the application group.

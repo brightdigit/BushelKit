@@ -33,21 +33,12 @@ extension URL {
   /// A struct that encapsulates various URLs related to
   /// an app's privacy policy, terms of use, support, company, and contact information.
   public struct Bushel: Sendable {
-    /// Initializes a new `Bushel` instance with the provided parameters.
-    internal init(
-      scheme: String,
-      privacyPolicy: URL,
-      termsOfUse: URL,
-      support: URL,
-      company: URL,
-      contactMailTo: URL
-    ) {
-      self.scheme = scheme
-      self.privacyPolicy = privacyPolicy
-      self.termsOfUse = termsOfUse
-      self.support = support
-      self.company = company
-      self.contactMailTo = contactMailTo
+    private enum Key: String {
+      case privacyPolicy
+      case termsOfUse
+      case support
+      case company
+      case contactMailTo
     }
 
     /// The URL scheme associated with the app.
@@ -66,13 +57,21 @@ extension URL {
 
     /// A struct that contains various file and directory paths used by the app.
     public let paths = Paths()
-
-    private enum Key: String {
-      case privacyPolicy
-      case termsOfUse
-      case support
-      case company
-      case contactMailTo
+    /// Initializes a new `Bushel` instance with the provided parameters.
+    internal init(
+      scheme: String,
+      privacyPolicy: URL,
+      termsOfUse: URL,
+      support: URL,
+      company: URL,
+      contactMailTo: URL
+    ) {
+      self.scheme = scheme
+      self.privacyPolicy = privacyPolicy
+      self.termsOfUse = termsOfUse
+      self.support = support
+      self.company = company
+      self.contactMailTo = contactMailTo
     }
   }
 

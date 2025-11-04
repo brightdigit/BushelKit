@@ -47,6 +47,7 @@ internal final class LibraryIdentifierTests: XCTestCase {
     if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
       homeDirectoryURL = URL.homeDirectory
     } else {
+      // swiftlint:disable:next force_unwrapping
       homeDirectoryURL = URL(string: NSHomeDirectory())!
     }
     let fileURL = homeDirectoryURL.appendingPathComponent("file.txt")

@@ -86,7 +86,10 @@
       if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
         newSnapshotsDirURL = url.appending(component: URL.bushel.paths.snapshotsDirectoryName)
       } else {
-        newSnapshotsDirURL = url.appendingPathComponent(URL.bushel.paths.snapshotsDirectoryName, conformingTo: .directory)
+        newSnapshotsDirURL = url.appendingPathComponent(
+          URL.bushel.paths.snapshotsDirectoryName,
+          conformingTo: .directory
+        )
       }
       if self.fileManager.directoryExists(at: newSnapshotsDirURL) == .directoryExists {
         try self.fileManager.removeItem(at: newSnapshotsDirURL)
@@ -213,7 +216,8 @@
     /// - Throws: Any errors that may occur during the snapshot creation process.
     @discardableResult
     public func createNewSnapshot(
-      of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions, image: RecordedImage?
+      of machine: MachineType, request: SnapshotRequest, options: SnapshotOptions,
+      image: RecordedImage?
     ) async throws -> Snapshot {
       let paths = try machine.beginSnapshot()
 

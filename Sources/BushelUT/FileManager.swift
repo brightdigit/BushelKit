@@ -37,12 +37,13 @@ public import Foundation
       let tempFile: URL
       if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
         tempFile =
-        temporaryDirectory
+          temporaryDirectory
           .appending(path: UUID().uuidString)
           .appendingPathExtension(for: source)
       } else {
         // Fallback on earlier versions
-        tempFile = temporaryDirectory
+        tempFile =
+          temporaryDirectory
           .appendingPathComponent(UUID().uuidString, conformingTo: source)
       }
       return tempFile
