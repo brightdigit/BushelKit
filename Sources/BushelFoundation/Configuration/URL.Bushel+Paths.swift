@@ -43,6 +43,7 @@ extension URL.Bushel {
       fileprivate static let captureVideoDirectoryName = "videos"
       fileprivate static let machineJSONFileName = "machine.json"
       fileprivate static let restoreLibraryJSONFileName = "metadata.json"
+      fileprivate static let machineStateOnQuitFileName = "machine-state-on-quit"
     }
 
     /// The name of the directory for restore images.
@@ -59,5 +60,7 @@ extension URL.Bushel {
     public let machineJSONFileName = Defaults.machineJSONFileName
     /// The name of the file for the restore library JSON data.
     public let restoreLibraryJSONFileName = Defaults.restoreLibraryJSONFileName
+    /// The name of the file for storing machine state on quit.
+    public let machineStateOnQuitFileName = Defaults.machineStateOnQuitFileName
   }
 }
