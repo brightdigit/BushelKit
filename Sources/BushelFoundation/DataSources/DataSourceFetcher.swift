@@ -27,12 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelLogging
 public import Foundation
-
-#if canImport(FelinePineSwift)
-  import FelinePineSwift
-#endif
 
 #if canImport(FoundationNetworking)
   import FoundationNetworking
@@ -46,21 +41,16 @@ public import Foundation
 ///
 /// ## Implementation Requirements
 /// - Must be `Sendable` to support concurrent fetching
-/// - Should conform to `Loggable` protocol with `.hub` category for data source logging
 /// - Should use `HTTPHeaderHelpers.fetchLastModified()` when available to track source freshness
-/// - Should log warnings for missing or malformed data using `Self.logger`
 /// - Should handle network errors gracefully and provide meaningful error messages
 ///
 /// ## Example Implementation
 /// ```swift
-/// struct MyFetcher: DataSourceFetcher, Loggable {
-///     static let loggingCategory: BushelLogging.Category = .hub
-///
+/// struct MyFetcher: DataSourceFetcher {
 ///     func fetch() async throws -> [MyRecord] {
 ///         let url = URL(string: "https://api.example.com/data")!
 ///         let (data, _) = try await URLSession.shared.data(from: url)
 ///         let items = try JSONDecoder().decode([Item].self, from: data)
-///         Self.logger.debug("Fetched \(items.count) items from API")
 ///         return items.map { MyRecord(from: $0) }
 ///     }
 /// }
@@ -98,12 +88,12 @@ public enum DataSourceUtilities {
     return (data, lastModified)
   }
 
-  /// Decode JSON data with helpful error logging
+  /// Decode JSON data
   ///
   /// - Parameters:
   ///   - type: The type to decode to
   ///   - data: The JSON data to decode
-  ///   - source: Source name for error logging
+  ///   - source: Source name (unused, kept for API compatibility)
   /// - Returns: Decoded object
   /// - Throws: DecodingError with context
   public static func decodeJSON<T: Decodable>(
@@ -111,18 +101,6 @@ public enum DataSourceUtilities {
     from data: Data,
     source: String
   ) throws -> T {
-    do {
-      return try JSONDecoder().decode(type, from: data)
-    } catch {
-      Self.logger.warning(
-        "Failed to decode \(T.self) from \(source): \(error)"
-      )
-      throw error
-    }
+    try JSONDecoder().decode(type, from: data)
   }
-}
-
-// MARK: - Loggable Conformance
-extension DataSourceUtilities: Loggable {
-  public static let loggingCategory: BushelLogging.Category = .hub
 }

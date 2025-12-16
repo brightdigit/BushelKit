@@ -27,12 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelLogging
 public import Foundation
-
-#if canImport(FelinePineSwift)
-  import FelinePineSwift
-#endif
 
 #if canImport(FoundationNetworking)
   import FoundationNetworking
@@ -42,7 +37,7 @@ public import Foundation
 public enum HTTPHeaderHelpers {
   /// Fetches the Last-Modified header from a URL
   /// - Parameter url: The URL to fetch the header from
-  /// - Returns: The Last-Modified date, or nil if not available
+  /// - Returns: The Last-Modified date, or nil if not available or on error
   public static func fetchLastModified(from url: URL) async -> Date? {
     do {
       var request = URLRequest(url: url)
@@ -58,9 +53,6 @@ public enum HTTPHeaderHelpers {
 
       return parseLastModifiedDate(from: lastModifiedString)
     } catch {
-      Self.logger.warning(
-        "Failed to fetch Last-Modified header from \(url): \(error)"
-      )
       return nil
     }
   }
@@ -75,9 +67,4 @@ public enum HTTPHeaderHelpers {
     formatter.timeZone = TimeZone(secondsFromGMT: 0)
     return formatter.date(from: dateString)
   }
-}
-
-// MARK: - Loggable Conformance
-extension HTTPHeaderHelpers: Loggable {
-  public static let loggingCategory: BushelLogging.Category = .hub
 }
