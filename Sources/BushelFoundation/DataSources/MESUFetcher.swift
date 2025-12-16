@@ -35,8 +35,8 @@ import Foundation
 
 /// Fetcher for Apple MESU (Mobile Equipment Software Update) manifest
 /// Used for freshness detection of the latest signed restore image
-struct MESUFetcher: DataSourceFetcher, Sendable {
-  typealias Record = RestoreImageRecord?
+public struct MESUFetcher: DataSourceFetcher, Sendable {
+  public typealias Record = RestoreImageRecord?
   // MARK: - Internal Models
 
   fileprivate struct RestoreInfo: Codable {
@@ -46,10 +46,12 @@ struct MESUFetcher: DataSourceFetcher, Sendable {
     let FirmwareSHA1: String?
   }
 
+  public init() {}
+
   // MARK: - Public API
 
   /// Fetch the latest signed restore image from Apple's MESU service
-  func fetch() async throws -> RestoreImageRecord? {
+  public func fetch() async throws -> RestoreImageRecord? {
     let urlString =
       "https://mesu.apple.com/assets/macos/com_apple_macOSIPSW/com_apple_macOSIPSW.xml"
     guard let url = URL(string: urlString) else {

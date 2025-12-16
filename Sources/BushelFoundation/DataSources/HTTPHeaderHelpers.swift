@@ -28,7 +28,7 @@
 //
 
 public import BushelLogging
-import Foundation
+public import Foundation
 
 #if canImport(FelinePineSwift)
   import FelinePineSwift
@@ -39,11 +39,11 @@ import Foundation
 #endif
 
 /// Utilities for fetching HTTP headers from data sources
-enum HTTPHeaderHelpers {
+public enum HTTPHeaderHelpers {
   /// Fetches the Last-Modified header from a URL
   /// - Parameter url: The URL to fetch the header from
   /// - Returns: The Last-Modified date, or nil if not available
-  static func fetchLastModified(from url: URL) async -> Date? {
+  public static func fetchLastModified(from url: URL) async -> Date? {
     do {
       var request = URLRequest(url: url)
       request.httpMethod = "HEAD"
@@ -79,5 +79,5 @@ enum HTTPHeaderHelpers {
 
 // MARK: - Loggable Conformance
 extension HTTPHeaderHelpers: Loggable {
-  static let loggingCategory: BushelLogging.Category = .hub
+  public static let loggingCategory: BushelLogging.Category = .hub
 }

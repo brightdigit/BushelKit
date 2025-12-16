@@ -39,12 +39,14 @@ import Foundation
 #endif
 
 /// Fetcher for macOS restore images using AppleDB API
-struct AppleDBFetcher: DataSourceFetcher, Sendable {
-  typealias Record = [RestoreImageRecord]
+public struct AppleDBFetcher: DataSourceFetcher, Sendable {
+  public typealias Record = [RestoreImageRecord]
   private let deviceIdentifier = "VirtualMac2,1"
 
+  public init() {}
+
   /// Fetch all VirtualMac2,1 restore images from AppleDB
-  func fetch() async throws -> [RestoreImageRecord] {
+  public func fetch() async throws -> [RestoreImageRecord] {
     // Fetch when macOS data was last updated using GitHub API
     let sourceUpdatedAt = await Self.fetchGitHubLastCommitDate()
 
@@ -185,7 +187,7 @@ struct AppleDBFetcher: DataSourceFetcher, Sendable {
 
 // MARK: - Loggable Conformance
 extension AppleDBFetcher: Loggable {
-  static let loggingCategory: BushelLogging.Category = .hub
+  public static let loggingCategory: BushelLogging.Category = .hub
 }
 
 // MARK: - Error Types
