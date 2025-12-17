@@ -1,5 +1,5 @@
 //
-//  ByteCountFormatter.swift
+//  JSONDecoder.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,28 +29,33 @@
 
 public import Foundation
 
-/// Provides extensions to the `ByteCountFormatter` type.
-extension ByteCountFormatter {
-  /// A static `ByteCountFormatter` instance with the `memory` count style.
-  nonisolated(unsafe) public static let memory: ByteCountFormatter = .init(countStyle: .memory)
-
-  /// A static `ByteCountFormatter` instance with the `file` count style.
-  nonisolated(unsafe) public static let file: ByteCountFormatter = .init(countStyle: .file)
-
-  /// Initializes a `ByteCountFormatter` instance and applies the specified modifications.
+extension JSONDecoder {
+  /// Decode JSON data with enhanced error context
   ///
-  /// - Parameter modifications: A closure that modifies the `ByteCountFormatter` instance.
-  public convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
-    self.init()
-    modifications(self)
-  }
-
-  /// Initializes a `ByteCountFormatter` instance with the specified count style.
+  /// This method wraps the standard decode method to provide additional context
+  /// about the data source in error messages, making debugging easier.
   ///
-  /// - Parameter countStyle: The count style to be used by the `ByteCountFormatter` instance.
-  public convenience init(countStyle: CountStyle) {
-    self.init {
-      $0.countStyle = countStyle
+  /// - Parameters:
+  ///   - type: The type to decode to
+  ///   - data: The JSON data to decode
+  ///   - source: Source name for error context (e.g., "appledb.dev", "ipsw.me")
+  /// - Returns: Decoded object
+  /// - Throws: DecodingError with enhanced context including source name
+  public func decode<T: Decodable>(
+    _ type: T.Type,
+    from data: Data,
+    source: String
+  ) throws -> T {
+    do {
+      return try decode(type, from: data)
+    } catch let decodingError as DecodingError {
+      // Re-throw with source context for better debugging
+      throw DecodingError.dataCorrupted(
+        DecodingError.Context(
+          codingPath: [],
+          debugDescription: "Failed to decode \(type) from \(source): \(decodingError)"
+        )
+      )
     }
   }
 }

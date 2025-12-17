@@ -1,13 +1,13 @@
 //
 //  ConsoleOutput.swift
-//  BushelCloud
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without
+//  files (the “Software”), to deal in the Software without
 //  restriction, including without limitation the rights to use,
 //  copy, modify, merge, publish, distribute, sublicense, and/or
 //  sell copies of the Software, and to permit persons to whom the
@@ -17,7 +17,7 @@
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 //  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 //  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -33,16 +33,26 @@ import Foundation
 ///
 /// Provides user-facing console output with verbose mode support.
 /// This is separate from logging, which is used for debugging and monitoring.
+///
+/// ## Thread Safety
+/// The `isVerbose` flag uses `nonisolated(unsafe)` because:
+/// - It's set exactly once at application startup before any concurrent access
+/// - It's only read thereafter (no writes during concurrent execution)
+/// - This pattern is safe for CLI tools with single initialization phase
+///
+/// **Important**: Do not modify `isVerbose` after concurrent operations begin.
 public enum ConsoleOutput {
   /// Global verbose mode flag
   ///
-  /// Note: This is marked with `nonisolated(unsafe)` because it's set once at startup
-  /// before any concurrent access and then only read. This pattern is safe for CLI tools.
+  /// Set this flag during application initialization, before any async operations.
+  /// Once set, it should only be read, never written.
   nonisolated(unsafe) public static var isVerbose = false
 
   /// Print verbose message only when verbose mode is enabled
   public static func verbose(_ message: String) {
-    guard isVerbose else { return }
+    guard isVerbose else {
+      return
+    }
     print("  \(message)")
   }
 

@@ -1,13 +1,13 @@
 //
 //  FetchConfiguration.swift
-//  BushelCloud
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without
+//  files (the “Software”), to deal in the Software without
 //  restriction, including without limitation the rights to use,
 //  copy, modify, merge, publish, distribute, sublicense, and/or
 //  sell copies of the Software, and to permit persons to whom the
@@ -17,7 +17,7 @@
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 //  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 //  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -82,66 +82,53 @@ public struct FetchConfiguration: Codable, Sendable {
   ///   - source: The source name
   ///   - lastFetchedAt: When the source was last fetched (nil means never fetched)
   ///   - force: Whether to ignore intervals and fetch anyway
+  ///   - currentDate: Current date/time for comparison (defaults to Date())
   /// - Returns: True if the source should be fetched
   public func shouldFetch(
     source: String,
     lastFetchedAt: Date?,
-    force: Bool = false
+    force: Bool = false,
+    currentDate: Date = Date()
   ) -> Bool {
     // Always fetch if force flag is set
-    if force { return true }
+    if force {
+      return true
+    }
 
     // Always fetch if never fetched before
-    guard let lastFetch = lastFetchedAt else { return true }
+    guard let lastFetch = lastFetchedAt else {
+      return true
+    }
 
     // Check if enough time has passed since last fetch
-    guard let minInterval = minimumInterval(for: source) else { return true }
+    guard let minInterval = minimumInterval(for: source) else {
+      return true
+    }
 
-    let timeSinceLastFetch = Date().timeIntervalSince(lastFetch)
+    let timeSinceLastFetch = currentDate.timeIntervalSince(lastFetch)
     return timeSinceLastFetch >= minInterval
   }
 
   // MARK: - Default Intervals
 
   /// Default minimum intervals for known sources (in seconds)
-  public static let defaultIntervals: [String: TimeInterval] = [
-    // Restore Image Sources
-    "appledb.dev": 6 * 3_600,  // 6 hours - frequently updated
-    "ipsw.me": 12 * 3_600,  // 12 hours - less frequent updates
-    "mesu.apple.com": 1 * 3_600,  // 1 hour - signing status changes frequently
-    "mrmacintosh.com": 12 * 3_600,  // 12 hours - manual updates
-    "theapplewiki.com": 24 * 3_600,  // 24 hours - deprecated, rarely updated
-
-    // Version Sources
-    "xcodereleases.com": 12 * 3_600,  // 12 hours - Xcode releases
-    "swiftversion.net": 12 * 3_600,  // 12 hours - Swift releases
-  ]
+  ///
+  /// Generated from DataSource enum to ensure type safety and consistency.
+  public static let defaultIntervals: [String: TimeInterval] =
+    Dictionary(
+      uniqueKeysWithValues: DataSource.allCases.map { ($0.rawValue, $0.defaultInterval) }
+    )
 
   // MARK: - Factory Methods
 
   /// Load configuration from environment variables
   /// - Returns: Configuration with values from environment, or defaults
   public static func loadFromEnvironment() -> FetchConfiguration {
-    var perSourceIntervals: [String: TimeInterval] = [:]
-
-    // Check for per-source environment variables (e.g., BUSHEL_FETCH_INTERVAL_APPLEDB)
-    for (source, _) in defaultIntervals {
-      let envKey =
-        "BUSHEL_FETCH_INTERVAL_\(source.uppercased().replacingOccurrences(of: ".", with: "_"))"
-      if let intervalString = ProcessInfo.processInfo.environment[envKey],
-        let interval = TimeInterval(intervalString)
-      {
-        perSourceIntervals[source] = interval
-      }
-    }
-
-    // Check for global interval
-    let globalInterval = ProcessInfo.processInfo.environment["BUSHEL_FETCH_INTERVAL_GLOBAL"]
-      .flatMap { TimeInterval($0) }
+    let processInfo = ProcessInfo.processInfo
 
     return FetchConfiguration(
-      globalMinimumFetchInterval: globalInterval,
-      perSourceIntervals: perSourceIntervals,
+      globalMinimumFetchInterval: processInfo.globalFetchInterval(),
+      perSourceIntervals: processInfo.fetchIntervals(),
       useDefaults: true
     )
   }
