@@ -38,7 +38,7 @@ public struct SwiftVersionRecord: Codable, Sendable {
   public var releaseDate: Date
 
   /// Optional swift.org toolchain download
-  public var downloadURL: String?
+  public var downloadURL: URL?
 
   /// Beta/snapshot indicator
   public var isPrerelease: Bool
@@ -49,7 +49,7 @@ public struct SwiftVersionRecord: Codable, Sendable {
   public init(
     version: String,
     releaseDate: Date,
-    downloadURL: String? = nil,
+    downloadURL: URL? = nil,
     isPrerelease: Bool,
     notes: String? = nil
   ) {

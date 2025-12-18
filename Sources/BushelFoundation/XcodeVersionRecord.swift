@@ -41,7 +41,7 @@ public struct XcodeVersionRecord: Codable, Sendable {
   public var releaseDate: Date
 
   /// Optional developer.apple.com download link
-  public var downloadURL: String?
+  public var downloadURL: URL?
 
   /// Download size in bytes
   public var fileSize: Int?
@@ -65,7 +65,7 @@ public struct XcodeVersionRecord: Codable, Sendable {
     version: String,
     buildNumber: String,
     releaseDate: Date,
-    downloadURL: String? = nil,
+    downloadURL: URL? = nil,
     fileSize: Int? = nil,
     isPrerelease: Bool,
     minimumMacOS: String? = nil,

@@ -41,7 +41,7 @@ public struct RestoreImageRecord: Codable, Sendable {
   public var releaseDate: Date
 
   /// Direct IPSW download link
-  public var downloadURL: String
+  public var downloadURL: URL
 
   /// File size in bytes
   public var fileSize: Int
@@ -71,7 +71,7 @@ public struct RestoreImageRecord: Codable, Sendable {
     version: String,
     buildNumber: String,
     releaseDate: Date,
-    downloadURL: String,
+    downloadURL: URL,
     fileSize: Int,
     sha256Hash: String,
     sha1Hash: String,
