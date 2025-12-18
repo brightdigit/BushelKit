@@ -97,4 +97,18 @@ public enum Formatters {
       return dateFormatter
     }()
   #endif
+
+  // MARK: - Modern FormatStyle Properties
+
+  /// A date format style for displaying dates (e.g., "Jan 15, 2025")
+  /// Equivalent to FormattingHelpers.formatDate()
+  public static let dateFormat: Date.FormatStyle = .init(date: .abbreviated, time: .omitted)
+
+  /// A date format style for displaying dates with time (e.g., "Jan 15, 2025 at 3:45 PM")
+  /// Equivalent to FormattingHelpers.formatDateTime()
+  public static let dateTimeFormat: Date.FormatStyle = .init(date: .abbreviated, time: .shortened)
+
+  /// A byte count format style for displaying file sizes (e.g., "1.23 GB")
+  /// Equivalent to FormattingHelpers.formatFileSize()
+  public static let fileSizeFormat: ByteCountFormatStyle = .init(style: .file)
 }

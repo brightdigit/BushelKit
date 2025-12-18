@@ -1,5 +1,5 @@
 //
-//  FormattingHelpersTests.swift
+//  FormattersTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,12 +29,12 @@
 
 import XCTest
 
-@testable import BushelUtilities
+@testable import BushelFoundation
 
-internal final class FormattingHelpersTests: XCTestCase {
+internal final class FormattersTests: XCTestCase {
   internal func testFormatDate() {
     let date = Date(timeIntervalSince1970: 1_700_000_000)
-    let formatted = FormattingHelpers.formatDate(date)
+    let formatted = date.formatted(Formatters.dateFormat)
 
     // Should return medium date format
     XCTAssertFalse(formatted.isEmpty)
@@ -43,7 +43,7 @@ internal final class FormattingHelpersTests: XCTestCase {
 
   internal func testFormatDateTime() {
     let date = Date(timeIntervalSince1970: 1_700_000_000)
-    let formatted = FormattingHelpers.formatDateTime(date)
+    let formatted = date.formatted(Formatters.dateTimeFormat)
 
     // Should include both date and time
     XCTAssertFalse(formatted.isEmpty)
@@ -53,28 +53,28 @@ internal final class FormattingHelpersTests: XCTestCase {
 
   internal func testFormatFileSizeGB() {
     let bytes = 2_500_000_000  // 2.5 GB
-    let formatted = FormattingHelpers.formatFileSize(bytes)
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
 
     XCTAssertEqual(formatted, "2.50 GB")
   }
 
   internal func testFormatFileSizeMB() {
     let bytes = 500_000_000  // 500 MB
-    let formatted = FormattingHelpers.formatFileSize(bytes)
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
 
     XCTAssertEqual(formatted, "500 MB")
   }
 
   internal func testFormatFileSizeSmallMB() {
     let bytes = 50_000_000  // 50 MB
-    let formatted = FormattingHelpers.formatFileSize(bytes)
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
 
     XCTAssertEqual(formatted, "50 MB")
   }
 
   internal func testFormatFileSizeLargeGB() {
     let bytes = 15_000_000_000  // 15 GB
-    let formatted = FormattingHelpers.formatFileSize(bytes)
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
 
     XCTAssertEqual(formatted, "15.00 GB")
   }
@@ -82,7 +82,7 @@ internal final class FormattingHelpersTests: XCTestCase {
   internal func testFormatFileSizeBoundary() {
     // Exactly 1 GB
     let bytes = 1_000_000_000
-    let formatted = FormattingHelpers.formatFileSize(bytes)
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
 
     XCTAssertEqual(formatted, "1.00 GB")
   }
