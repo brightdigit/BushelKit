@@ -38,7 +38,9 @@ internal final class RestoreImageRecordTests: XCTestCase {
       buildNumber: "23C71",
       releaseDate: Date(timeIntervalSince1970: 1_700_000_000),
       downloadURL:
-        URL(string: "https://updates.cdn-apple.com/2023/macos/23C71/UniversalMac_14.2.1_23C71_Restore.ipsw")!,
+        URL(
+          string:
+            "https://updates.cdn-apple.com/2023/macos/23C71/UniversalMac_14.2.1_23C71_Restore.ipsw")!,
       fileSize: 14_500_000_000,
       sha256Hash: "abc123",
       sha1Hash: "def456",
