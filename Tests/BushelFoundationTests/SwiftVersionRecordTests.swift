@@ -36,7 +36,7 @@ internal final class SwiftVersionRecordTests: XCTestCase {
     SwiftVersionRecord(
       version: "5.9.2",
       releaseDate: Date(timeIntervalSince1970: 1_700_000_000),
-      downloadURL: "https://swift.org/download",
+      downloadURL: URL(string: "https://swift.org/download")!,
       isPrerelease: false,
       notes: "Bug fixes and improvements"
     )
@@ -46,7 +46,7 @@ internal final class SwiftVersionRecordTests: XCTestCase {
     let record = makeSampleRecord()
 
     XCTAssertEqual(record.version, "5.9.2")
-    XCTAssertEqual(record.downloadURL, "https://swift.org/download")
+    XCTAssertEqual(record.downloadURL, URL(string: "https://swift.org/download")!)
     XCTAssertFalse(record.isPrerelease)
     XCTAssertEqual(record.notes, "Bug fixes and improvements")
   }

@@ -3,7 +3,7 @@
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -48,5 +48,60 @@ internal final class FormattersTests: XCTestCase {
     let actualFormattedNow = sut.string(from: now)
 
     XCTAssertEqual(actualFormattedNow, expectedFormattedNow)
+  }
+
+  internal func testFormatDate() {
+    let date = Date(timeIntervalSince1970: 1_700_000_000)
+    let formatted = date.formatted(Formatters.dateFormat)
+
+    // Should return medium date format
+    XCTAssertFalse(formatted.isEmpty)
+    XCTAssertTrue(formatted.contains("2023") || formatted.contains("Nov"))
+  }
+
+  internal func testFormatDateTime() {
+    let date = Date(timeIntervalSince1970: 1_700_000_000)
+    let formatted = date.formatted(Formatters.dateTimeFormat)
+
+    // Should include both date and time
+    XCTAssertFalse(formatted.isEmpty)
+    XCTAssertTrue(formatted.contains("2023") || formatted.contains("Nov"))
+    // Time component varies by timezone
+  }
+
+  internal func testFormatFileSizeGB() {
+    let bytes = 2_500_000_000  // 2.5 GB
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
+
+    XCTAssertEqual(formatted, "2.5 GB")
+  }
+
+  internal func testFormatFileSizeMB() {
+    let bytes = 500_000_000  // 500 MB
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
+
+    XCTAssertEqual(formatted, "500 MB")
+  }
+
+  internal func testFormatFileSizeSmallMB() {
+    let bytes = 50_000_000  // 50 MB
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
+
+    XCTAssertEqual(formatted, "50 MB")
+  }
+
+  internal func testFormatFileSizeLargeGB() {
+    let bytes = 15_000_000_000  // 15 GB
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
+
+    XCTAssertEqual(formatted, "15 GB")
+  }
+
+  internal func testFormatFileSizeBoundary() {
+    // Exactly 1 GB
+    let bytes = 1_000_000_000
+    let formatted = bytes.formatted(Formatters.fileSizeFormat)
+
+    XCTAssertEqual(formatted, "1 GB")
   }
 }
