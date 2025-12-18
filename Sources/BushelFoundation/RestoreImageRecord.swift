@@ -43,7 +43,10 @@ public struct RestoreImageRecord: Codable, Sendable {
   /// Direct IPSW download link
   public var downloadURL: URL
 
-  /// File size in bytes
+  /// File size in bytes.
+  ///
+  /// Uses `Int` (equivalent to `Int64` on all supported 64-bit platforms).
+  /// CloudKit stores this as `INT64` via automatic conversion.
   public var fileSize: Int
 
   /// SHA-256 checksum for integrity verification

@@ -43,7 +43,10 @@ public struct XcodeVersionRecord: Codable, Sendable {
   /// Optional developer.apple.com download link
   public var downloadURL: URL?
 
-  /// Download size in bytes
+  /// Download size in bytes.
+  ///
+  /// Uses `Int` (equivalent to `Int64` on all supported 64-bit platforms).
+  /// CloudKit stores this as `INT64` via automatic conversion.
   public var fileSize: Int?
 
   /// Beta/RC indicator
