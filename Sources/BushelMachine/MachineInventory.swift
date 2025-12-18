@@ -89,7 +89,7 @@ public final class MachineInventory: Sendable, Loggable {
   private init() {
   }
 
-  internal nonisolated func registerMachine(_ machine: any Machine, withID id: UUID) {
+  nonisolated internal func registerMachine(_ machine: any Machine, withID id: UUID) {
     let osDescription = machine.initialConfiguration.operatingSystemVersion.description
     Self.logger.debug(
       "Registering machine \(osDescription) with ID \(id)"

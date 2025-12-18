@@ -48,7 +48,7 @@ public enum Formatters {
     ///
     /// - Parameter dateFormat: The date format string to use.
     /// - Returns: A date formatter configured with the provided date format.
-    public nonisolated(unsafe) static let lastModifiedDateFormatter: DateFormatter = {
+    nonisolated(unsafe) public static let lastModifiedDateFormatter: DateFormatter = {
       let formatter = DateFormatter()
       formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
       return formatter
@@ -56,7 +56,7 @@ public enum Formatters {
 
     /// A date formatter that displays dates and times
     /// in a medium-length format (e.g. "Jan 1, 2023, 12:00:00 AM").
-    public nonisolated(unsafe) static let snapshotDateFormatter = {
+    nonisolated(unsafe) public static let snapshotDateFormatter = {
       var formatter = DateFormatter()
       formatter.dateStyle = .medium
       formatter.timeStyle = .medium
@@ -64,7 +64,7 @@ public enum Formatters {
     }()
 
     /// A date formatter that displays dates in a long format (e.g. "January 1, 2023").
-    public nonisolated(unsafe) static let longDate: DateFormatter = {
+    nonisolated(unsafe) public static let longDate: DateFormatter = {
       let dateFormatter = DateFormatter()
       dateFormatter.dateStyle = .long
       dateFormatter.timeStyle = .none

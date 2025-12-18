@@ -1,13 +1,13 @@
 //
 //  DataSourceFetcher.swift
-//  BushelCloud
+//  BushelKit
 //
 //  Created by Leo Dion.
 //  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without
+//  files (the “Software”), to deal in the Software without
 //  restriction, including without limitation the rights to use,
 //  copy, modify, merge, publish, distribute, sublicense, and/or
 //  sell copies of the Software, and to permit persons to whom the
@@ -17,7 +17,7 @@
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 //  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 //  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -41,7 +41,7 @@ public import Foundation
 ///
 /// ## Implementation Requirements
 /// - Must be `Sendable` to support concurrent fetching
-/// - Should use `HTTPHeaderHelpers.fetchLastModified()` when available to track source freshness
+/// - Should use `URLSession.fetchData()` or `URLSession.fetchLastModified()` to track source freshness
 /// - Should handle network errors gracefully and provide meaningful error messages
 ///
 /// ## Example Implementation
@@ -49,9 +49,9 @@ public import Foundation
 /// struct MyFetcher: DataSourceFetcher {
 ///     func fetch() async throws -> [MyRecord] {
 ///         let url = URL(string: "https://api.example.com/data")!
-///         let (data, _) = try await URLSession.shared.data(from: url)
-///         let items = try JSONDecoder().decode([Item].self, from: data)
-///         return items.map { MyRecord(from: $0) }
+///         let (data, lastModified) = try await URLSession.shared.fetchData(from: url)
+///         let items = try JSONDecoder().decode([Item].self, from: data, source: "api.example.com")
+///         return items.map { MyRecord(from: $0, lastModified: lastModified) }
 ///     }
 /// }
 /// ```
@@ -64,43 +64,4 @@ public protocol DataSourceFetcher: Sendable {
   /// - Returns: Collection of records fetched from the source
   /// - Throws: Errors related to network requests, parsing, or data validation
   func fetch() async throws -> Record
-}
-
-/// Common utilities for data source fetchers
-public enum DataSourceUtilities {
-  /// Fetch data from a URL with optional Last-Modified header tracking
-  ///
-  /// This helper combines data fetching with Last-Modified header extraction,
-  /// allowing fetchers to track when their source data was last updated.
-  ///
-  /// - Parameters:
-  ///   - url: The URL to fetch from
-  ///   - trackLastModified: Whether to make a HEAD request to get Last-Modified (default: true)
-  /// - Returns: Tuple of (data, lastModified date or nil)
-  /// - Throws: Errors from URLSession or network issues
-  public static func fetchData(
-    from url: URL,
-    trackLastModified: Bool = true
-  ) async throws -> (Data, Date?) {
-    let lastModified =
-      trackLastModified ? await HTTPHeaderHelpers.fetchLastModified(from: url) : nil
-    let (data, _) = try await URLSession.shared.data(from: url)
-    return (data, lastModified)
-  }
-
-  /// Decode JSON data
-  ///
-  /// - Parameters:
-  ///   - type: The type to decode to
-  ///   - data: The JSON data to decode
-  ///   - source: Source name (unused, kept for API compatibility)
-  /// - Returns: Decoded object
-  /// - Throws: DecodingError with context
-  public static func decodeJSON<T: Decodable>(
-    _ type: T.Type,
-    from data: Data,
-    source: String
-  ) throws -> T {
-    try JSONDecoder().decode(type, from: data)
-  }
 }
