@@ -30,7 +30,7 @@
 public import Foundation
 
 #if canImport(FoundationNetworking)
-  public import FoundationNetworking
+  import FoundationNetworking
 #endif
 
 /// A struct that provides a wrapper around FileManager for file-related operations.

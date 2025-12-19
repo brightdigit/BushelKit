@@ -35,7 +35,7 @@ public enum JSON {
     /// A thread-safe, shared instance of `JSONEncoder` with the following configuration:
     /// - `outputFormatting: .prettyPrinted`
     /// - `dateEncodingStrategy: .iso8601`
-    nonisolated(unsafe) public static let encoder: JSONEncoder = {
+    public static let encoder: JSONEncoder = {
       let value = JSONEncoder()
       value.outputFormatting = .prettyPrinted
       value.dateEncodingStrategy = .iso8601
@@ -44,7 +44,7 @@ public enum JSON {
 
     /// A thread-safe, shared instance of `JSONDecoder` with the following configuration:
     /// - `dateDecodingStrategy: .iso8601`
-    nonisolated(unsafe) public static let decoder: JSONDecoder = {
+    public static let decoder: JSONDecoder = {
       let value = JSONDecoder()
       value.dateDecodingStrategy = .iso8601
       return value
