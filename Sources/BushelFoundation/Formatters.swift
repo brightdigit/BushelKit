@@ -44,13 +44,20 @@ public enum Formatters {
   #endif
 
   #if canImport(FoundationNetworking)
-    /// A date formatter that parses and formats dates in the "E, d MMM yyyy HH:mm:ss Z" format.
+    /// A date formatter that parses and formats dates in RFC 2822 format.
     ///
-    /// - Parameter dateFormat: The date format string to use.
-    /// - Returns: A date formatter configured with the provided date format.
+    /// This formatter is designed for HTTP Last-Modified headers and similar RFC 2822 date formats.
+    /// It uses:
+    /// - Format: "EEE, dd MMM yyyy HH:mm:ss zzz" (e.g., "Fri, 19 Dec 2025 10:30:45 GMT")
+    /// - Locale: en_US_POSIX (prevents locale-specific day/month names)
+    /// - Timezone: UTC/GMT (HTTP headers use GMT)
+    ///
+    /// Example: "Fri, 19 Dec 2025 10:30:45 GMT"
     nonisolated(unsafe) public static let lastModifiedDateFormatter: DateFormatter = {
       let formatter = DateFormatter()
-      formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+      formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+      formatter.locale = Locale(identifier: "en_US_POSIX")
+      formatter.timeZone = TimeZone(secondsFromGMT: 0)
       return formatter
     }()
 
@@ -71,18 +78,25 @@ public enum Formatters {
       return dateFormatter
     }()
   #else
-    /// A date formatter that parses and formats dates in the "E, d MMM yyyy HH:mm:ss Z" format.
+    /// A date formatter that parses and formats dates in RFC 2822 format.
     ///
-    /// - Parameter dateFormat: The date format string to use.
-    /// - Returns: A date formatter configured with the provided date format.
-    public static let lastModifiedDateFormatter: DateFormatter = {
+    /// This formatter is designed for HTTP Last-Modified headers and similar RFC 2822 date formats.
+    /// It uses:
+    /// - Format: "EEE, dd MMM yyyy HH:mm:ss zzz" (e.g., "Fri, 19 Dec 2025 10:30:45 GMT")
+    /// - Locale: en_US_POSIX (prevents locale-specific day/month names)
+    /// - Timezone: UTC/GMT (HTTP headers use GMT)
+    ///
+    /// Example: "Fri, 19 Dec 2025 10:30:45 GMT"
+    nonisolated(unsafe) public static let lastModifiedDateFormatter: DateFormatter = {
       let formatter = DateFormatter()
-      formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+      formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+      formatter.locale = Locale(identifier: "en_US_POSIX")
+      formatter.timeZone = TimeZone(secondsFromGMT: 0)
       return formatter
     }()
 
     /// A date formatter that displays dates and times in a medium-length format.
-    public static let snapshotDateFormatter = {
+    nonisolated(unsafe) public static let snapshotDateFormatter = {
       var formatter = DateFormatter()
       formatter.dateStyle = .medium
       formatter.timeStyle = .medium
@@ -90,7 +104,7 @@ public enum Formatters {
     }()
 
     /// A date formatter that displays dates in a long format (e.g. "January 1, 2023").
-    public static let longDate: DateFormatter = {
+    nonisolated(unsafe) public static let longDate: DateFormatter = {
       let dateFormatter = DateFormatter()
       dateFormatter.dateStyle = .long
       dateFormatter.timeStyle = .none

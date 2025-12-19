@@ -29,11 +29,11 @@
 
 import XCTest
 
+@testable import BushelUtilities
+
 #if canImport(FoundationNetworking)
   import FoundationNetworking
 #endif
-
-@testable import BushelUtilities
 
 internal final class URLSessionTests: XCTestCase {
   // Note: These are integration tests that require network access

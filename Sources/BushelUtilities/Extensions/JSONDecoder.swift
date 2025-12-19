@@ -48,14 +48,56 @@ extension JSONDecoder {
   ) throws -> T {
     do {
       return try decode(type, from: data)
-    } catch let decodingError as DecodingError {
-      // Re-throw with source context for better debugging
+    } catch let error as DecodingError {
+      // Recreate error with source context while preserving coding path
+      let enhancedError: DecodingError
+      switch error {
+      case .typeMismatch(let type, let context):
+        enhancedError = .typeMismatch(
+          type,
+          DecodingError.Context(
+            codingPath: context.codingPath,
+            debugDescription: "[\(source)] \(context.debugDescription)",
+            underlyingError: context.underlyingError
+          ))
+      case .valueNotFound(let type, let context):
+        enhancedError = .valueNotFound(
+          type,
+          DecodingError.Context(
+            codingPath: context.codingPath,
+            debugDescription: "[\(source)] \(context.debugDescription)",
+            underlyingError: context.underlyingError
+          ))
+      case .keyNotFound(let key, let context):
+        enhancedError = .keyNotFound(
+          key,
+          DecodingError.Context(
+            codingPath: context.codingPath,
+            debugDescription: "[\(source)] \(context.debugDescription)",
+            underlyingError: context.underlyingError
+          ))
+      case .dataCorrupted(let context):
+        enhancedError = .dataCorrupted(
+          DecodingError.Context(
+            codingPath: context.codingPath,
+            debugDescription: "[\(source)] \(context.debugDescription)",
+            underlyingError: context.underlyingError
+          ))
+      @unknown default:
+        enhancedError = .dataCorrupted(
+          DecodingError.Context(
+            codingPath: [],
+            debugDescription: "[\(source)] Unknown decoding error: \(error)"
+          ))
+      }
+      throw enhancedError
+    } catch {
+      // Wrap non-DecodingError types
       throw DecodingError.dataCorrupted(
         DecodingError.Context(
           codingPath: [],
-          debugDescription: "Failed to decode \(type) from \(source): \(decodingError)"
-        )
-      )
+          debugDescription: "[\(source)] Failed to decode \(type): \(error)"
+        ))
     }
   }
 }

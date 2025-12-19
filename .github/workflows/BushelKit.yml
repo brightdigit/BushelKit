@@ -183,7 +183,7 @@ jobs:
           cd Mint
           swift run mint install yonaskolb/mint
       - name: Save mint cache
-        if: steps.cache-mint.outputs.cache-matched-key == ''
+        if: steps.cache-mint.outputs.cache-matched-key == '' && success()
         uses: actions/cache/save@v4
         with:
           path: |
