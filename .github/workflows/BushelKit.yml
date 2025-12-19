@@ -166,24 +166,30 @@ jobs:
       MINT_LINK_PATH: .mint/bin
     steps:
       - uses: actions/checkout@v4    
-      - name: Cache mint
+      - name: Restore mint cache
         id: cache-mint
-        uses: actions/cache@v4  
-        env:
-          cache-name: cache
+        uses: actions/cache/restore@v4
         with:
           path: |
             .mint
-            Mint         
+            Mint
           key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
           restore-keys: |
             ${{ runner.os }}-mint-  
       - name: Install mint
-        if: steps.cache-mint.outputs.cache-hit != 'true'
+        if: steps.cache-mint.outputs.cache-matched-key == ''
         run: |
           git clone https://github.com/yonaskolb/Mint.git
           cd Mint
           swift run mint install yonaskolb/mint
+      - name: Save mint cache
+        if: steps.cache-mint.outputs.cache-matched-key == ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .mint
+            Mint
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
       - name: Lint
         run: ./Scripts/lint.sh
 
