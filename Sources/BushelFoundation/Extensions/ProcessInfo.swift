@@ -1,5 +1,5 @@
 //
-//  ByteCountFormatter.swift
+//  ProcessInfo.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,28 +29,33 @@
 
 public import Foundation
 
-/// Provides extensions to the `ByteCountFormatter` type.
-extension ByteCountFormatter {
-  /// A static `ByteCountFormatter` instance with the `memory` count style.
-  nonisolated(unsafe) public static let memory: ByteCountFormatter = .init(countStyle: .memory)
-
-  /// A static `ByteCountFormatter` instance with the `file` count style.
-  nonisolated(unsafe) public static let file: ByteCountFormatter = .init(countStyle: .file)
-
-  /// Initializes a `ByteCountFormatter` instance and applies the specified modifications.
+extension ProcessInfo {
+  /// Load per-source fetch intervals from environment variables
   ///
-  /// - Parameter modifications: A closure that modifies the `ByteCountFormatter` instance.
-  public convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
-    self.init()
-    modifications(self)
+  /// Checks for environment variables in the format:
+  /// `BUSHEL_FETCH_INTERVAL_<SOURCE>` where SOURCE is the uppercased
+  /// source identifier with dots replaced by underscores.
+  ///
+  /// - Returns: Dictionary mapping source identifiers to intervals
+  public func fetchIntervals() -> [String: TimeInterval] {
+    var intervals: [String: TimeInterval] = [:]
+
+    // Check for per-source environment variables
+    for source in DataSource.allCases {
+      if let intervalString = environment[source.environmentKey],
+        let interval = TimeInterval(intervalString)
+      {
+        intervals[source.rawValue] = interval
+      }
+    }
+
+    return intervals
   }
 
-  /// Initializes a `ByteCountFormatter` instance with the specified count style.
+  /// Load global fetch interval from environment
   ///
-  /// - Parameter countStyle: The count style to be used by the `ByteCountFormatter` instance.
-  public convenience init(countStyle: CountStyle) {
-    self.init {
-      $0.countStyle = countStyle
-    }
+  /// - Returns: Global interval if BUSHEL_FETCH_INTERVAL_GLOBAL is set
+  public func globalFetchInterval() -> TimeInterval? {
+    environment["BUSHEL_FETCH_INTERVAL_GLOBAL"].flatMap { TimeInterval($0) }
   }
 }

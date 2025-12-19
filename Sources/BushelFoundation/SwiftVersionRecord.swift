@@ -1,5 +1,5 @@
 //
-//  ByteCountFormatter.swift
+//  SwiftVersionRecord.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,28 +29,39 @@
 
 public import Foundation
 
-/// Provides extensions to the `ByteCountFormatter` type.
-extension ByteCountFormatter {
-  /// A static `ByteCountFormatter` instance with the `memory` count style.
-  nonisolated(unsafe) public static let memory: ByteCountFormatter = .init(countStyle: .memory)
+/// Represents a Swift compiler release bundled with Xcode
+public struct SwiftVersionRecord: Codable, Sendable {
+  /// Swift version (e.g., "5.9", "5.10", "6.0")
+  public var version: String
 
-  /// A static `ByteCountFormatter` instance with the `file` count style.
-  nonisolated(unsafe) public static let file: ByteCountFormatter = .init(countStyle: .file)
+  /// Release date
+  public var releaseDate: Date
 
-  /// Initializes a `ByteCountFormatter` instance and applies the specified modifications.
-  ///
-  /// - Parameter modifications: A closure that modifies the `ByteCountFormatter` instance.
-  public convenience init(_ modifications: @escaping (ByteCountFormatter) -> Void) {
-    self.init()
-    modifications(self)
+  /// Optional swift.org toolchain download
+  public var downloadURL: URL?
+
+  /// Beta/snapshot indicator
+  public var isPrerelease: Bool
+
+  /// Release notes
+  public var notes: String?
+
+  public init(
+    version: String,
+    releaseDate: Date,
+    downloadURL: URL? = nil,
+    isPrerelease: Bool,
+    notes: String? = nil
+  ) {
+    self.version = version
+    self.releaseDate = releaseDate
+    self.downloadURL = downloadURL
+    self.isPrerelease = isPrerelease
+    self.notes = notes
   }
 
-  /// Initializes a `ByteCountFormatter` instance with the specified count style.
-  ///
-  /// - Parameter countStyle: The count style to be used by the `ByteCountFormatter` instance.
-  public convenience init(countStyle: CountStyle) {
-    self.init {
-      $0.countStyle = countStyle
-    }
+  /// CloudKit record name based on version (e.g., "SwiftVersion-5.9.2")
+  public var recordName: String {
+    "SwiftVersion-\(version)"
   }
 }
