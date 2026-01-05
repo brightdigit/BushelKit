@@ -31,7 +31,17 @@ public import Foundation
 
 /// Configuration for data source fetch throttling
 public struct FetchConfiguration: Codable, Sendable {
-  // MARK: - Properties
+  // MARK: - Type Properties
+
+  /// Default minimum intervals for known sources (in seconds)
+  ///
+  /// Generated from DataSource enum to ensure type safety and consistency.
+  public static let defaultIntervals: [String: TimeInterval] =
+    Dictionary(
+      uniqueKeysWithValues: DataSource.allCases.map { ($0.rawValue, $0.defaultInterval) }
+    )
+
+  // MARK: - Instance Properties
 
   /// Global minimum interval between fetches (applies to all sources unless overridden)
   public let globalMinimumFetchInterval: TimeInterval?
@@ -108,16 +118,6 @@ public struct FetchConfiguration: Codable, Sendable {
     let timeSinceLastFetch = currentDate.timeIntervalSince(lastFetch)
     return timeSinceLastFetch >= minInterval
   }
-
-  // MARK: - Default Intervals
-
-  /// Default minimum intervals for known sources (in seconds)
-  ///
-  /// Generated from DataSource enum to ensure type safety and consistency.
-  public static let defaultIntervals: [String: TimeInterval] =
-    Dictionary(
-      uniqueKeysWithValues: DataSource.allCases.map { ($0.rawValue, $0.defaultInterval) }
-    )
 
   // MARK: - Factory Methods
 

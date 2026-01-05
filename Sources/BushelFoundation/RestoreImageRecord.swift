@@ -70,6 +70,11 @@ public struct RestoreImageRecord: Codable, Sendable {
   /// When the source last updated this record (nil if unknown)
   public var sourceUpdatedAt: Date?
 
+  /// CloudKit record name based on build number (e.g., "RestoreImage-23C71")
+  public var recordName: String {
+    "RestoreImage-\(buildNumber)"
+  }
+
   public init(
     version: String,
     buildNumber: String,
@@ -96,10 +101,5 @@ public struct RestoreImageRecord: Codable, Sendable {
     self.source = source
     self.notes = notes
     self.sourceUpdatedAt = sourceUpdatedAt
-  }
-
-  /// CloudKit record name based on build number (e.g., "RestoreImage-23C71")
-  public var recordName: String {
-    "RestoreImage-\(buildNumber)"
   }
 }
