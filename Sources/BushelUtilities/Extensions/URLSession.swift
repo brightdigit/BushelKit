@@ -41,14 +41,13 @@ extension URLSession {
   ///
   /// - Parameters:
   ///   - url: The URL to fetch from
-  ///   - trackLastModified: Whether to make a HEAD request to get Last-Modified (default: true)
-  /// - Returns: Tuple of (data, lastModified date or nil)
+  ///   - trackLastModified: Whether to extract Last-Modified from response headers (default: true)
+  /// - Returns: HTTPFetchResult containing the data and optional last modified date
   /// - Throws: URLError if request fails, response is invalid, or HTTP status is not 200-299
   public func fetchData(
     from url: URL,
     trackLastModified: Bool = true
-  ) async throws -> (Data, Date?) {
-    let lastModified = trackLastModified ? await fetchLastModified(from: url) : nil
+  ) async throws -> HTTPFetchResult {
     let (data, response) = try await data(from: url)
 
     // Validate HTTP response
@@ -65,7 +64,10 @@ extension URLSession {
       )
     }
 
-    return (data, lastModified)
+    // Extract Last-Modified header if requested
+    let lastModified = trackLastModified ? httpResponse.lastModified : nil
+
+    return HTTPFetchResult(data: data, lastModified: lastModified)
   }
 
   /// Fetches the Last-Modified header from a URL using a HEAD request
@@ -91,23 +93,11 @@ extension URLSession {
     }
   }
 
-  /// HTTP Last-Modified date formatter (RFC 2822)
-  ///
-  /// Shared static formatter for thread-safe, efficient date parsing.
-  /// Format: "EEE, dd MMM yyyy HH:mm:ss zzz"
-  private static let lastModifiedFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    return formatter
-  }()
-
   /// Parses a Last-Modified header value in RFC 2822 format
   ///
   /// - Parameter dateString: The date string from the header
   /// - Returns: The parsed date, or nil if parsing fails
   private static func parseLastModifiedDate(from dateString: String) -> Date? {
-    lastModifiedFormatter.date(from: dateString)
+    Date(rfc2822String: dateString)
   }
 }

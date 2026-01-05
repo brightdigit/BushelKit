@@ -75,22 +75,22 @@ internal final class URLSessionTests: XCTestCase {
     // Use a known stable API
     let url = try XCTUnwrap(URL(string: "https://httpbin.org/json"))
 
-    let (data, _) = try await URLSession.shared.fetchData(from: url)
+    let result = try await URLSession.shared.fetchData(from: url)
 
     // Should return non-empty data
-    XCTAssertFalse(data.isEmpty)
+    XCTAssertFalse(result.data.isEmpty)
   }
 
   internal func testFetchDataWithoutLastModifiedTracking() async throws {
     let url = try XCTUnwrap(URL(string: "https://httpbin.org/json"))
 
-    let (data, lastModified) = try await URLSession.shared.fetchData(
+    let result = try await URLSession.shared.fetchData(
       from: url,
       trackLastModified: false
     )
 
-    XCTAssertFalse(data.isEmpty)
-    XCTAssertNil(lastModified)
+    XCTAssertFalse(result.data.isEmpty)
+    XCTAssertNil(result.lastModified)
   }
 
   internal func testFetchDataWithInvalidURLThrows() async throws {

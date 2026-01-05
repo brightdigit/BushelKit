@@ -49,9 +49,9 @@ public import Foundation
 /// struct MyFetcher: DataSourceFetcher {
 ///     func fetch() async throws -> [MyRecord] {
 ///         let url = URL(string: "https://api.example.com/data")!
-///         let (data, lastModified) = try await URLSession.shared.fetchData(from: url)
-///         let items = try JSONDecoder().decode([Item].self, from: data, source: "api.example.com")
-///         return items.map { MyRecord(from: $0, lastModified: lastModified) }
+///         let result = try await URLSession.shared.fetchData(from: url)
+///         let items = try JSONDecoder().decode([Item].self, from: result.data, source: "api.example.com")
+///         return items.map { MyRecord(from: $0, lastModified: result.lastModified) }
 ///     }
 /// }
 /// ```

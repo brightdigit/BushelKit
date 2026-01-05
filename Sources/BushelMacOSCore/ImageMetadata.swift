@@ -50,7 +50,7 @@
       guard
         let lastModified =
           (headers["Last-Modified"] as? String)
-          .flatMap(Formatters.lastModifiedDateFormatter.date(from:))
+          .flatMap(Date.init(rfc2822String:))
       else {
         throw MissingAttributeError(.lastModified, from: url, headers: headers)
       }
