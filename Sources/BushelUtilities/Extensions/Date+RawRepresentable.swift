@@ -29,26 +29,21 @@
 
 public import Foundation
 
-extension Date: @retroactive RawRepresentable {
-  /// The raw value type for the Date extension.
-  public typealias RawValue = Int
-
+extension Date {
   /// The number of milliseconds in one second.
   private static let millisecondsInSeconds: TimeInterval = 1_000
 
-  /// The raw value representation of the Date.
+  /// The number of milliseconds since 1970.
   ///
-  /// - Returns: The raw value of the Date as an Int.
-  public var rawValue: Int {
+  /// - Returns: The number of milliseconds since 1970 as an Int.
+  public var millisecondsSince1970: Int {
     Int(self.timeIntervalSince1970 * Self.millisecondsInSeconds)
   }
 
-  /// Initializes a Date from a raw value.
+  /// Initializes a Date from milliseconds since 1970.
   ///
-  /// - Parameter rawValue: The raw value to initialize the Date from.
-  /// - Returns: An optional Date instance initialized from the raw value,
-  /// or nil if the raw value is invalid.
-  public init?(rawValue: Int) {
-    self.init(timeIntervalSince1970: TimeInterval(rawValue) / Self.millisecondsInSeconds)
+  /// - Parameter milliseconds: The number of milliseconds since 1970.
+  public init(millisecondsSince1970 milliseconds: Int) {
+    self.init(timeIntervalSince1970: TimeInterval(milliseconds) / Self.millisecondsInSeconds)
   }
 }

@@ -32,11 +32,15 @@ import XCTest
 @testable import BushelFoundation
 
 internal final class SwiftVersionRecordTests: XCTestCase {
+  // swiftlint:disable force_unwrapping
+  private static let swiftDownloadURL = URL(string: "https://swift.org/download")!
+  // swiftlint:enable force_unwrapping
+
   private func makeSampleRecord() -> SwiftVersionRecord {
     SwiftVersionRecord(
       version: "5.9.2",
       releaseDate: Date(timeIntervalSince1970: 1_700_000_000),
-      downloadURL: URL(string: "https://swift.org/download")!,
+      downloadURL: Self.swiftDownloadURL,
       isPrerelease: false,
       notes: "Bug fixes and improvements"
     )
@@ -46,7 +50,7 @@ internal final class SwiftVersionRecordTests: XCTestCase {
     let record = makeSampleRecord()
 
     XCTAssertEqual(record.version, "5.9.2")
-    XCTAssertEqual(record.downloadURL, URL(string: "https://swift.org/download")!)
+    XCTAssertEqual(record.downloadURL, Self.swiftDownloadURL)
     XCTAssertFalse(record.isPrerelease)
     XCTAssertEqual(record.notes, "Bug fixes and improvements")
   }

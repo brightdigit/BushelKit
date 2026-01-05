@@ -48,11 +48,13 @@ MINT_RUN="$MINT_CMD run $MINT_ARGS"
 if [ "$LINT_MODE" = "NONE" ]; then
 	exit
 elif [ "$LINT_MODE" = "STRICT" ]; then
-	SWIFTFORMAT_OPTIONS="--strict --configuration .swift-format"
+	SWIFTFORMAT_FORMAT_OPTIONS="--configuration .swift-format"
+	SWIFTFORMAT_LINT_OPTIONS="--strict --configuration .swift-format"
 	SWIFTLINT_OPTIONS="--strict"
 	STRINGSLINT_OPTIONS="--config .strict.stringslint.yml"
-else 
-	SWIFTFORMAT_OPTIONS="--configuration .swift-format"
+else
+	SWIFTFORMAT_FORMAT_OPTIONS="--configuration .swift-format"
+	SWIFTFORMAT_LINT_OPTIONS="--configuration .swift-format"
 	SWIFTLINT_OPTIONS=""
 	STRINGSLINT_OPTIONS="--config .stringslint.yml"
 fi
@@ -61,12 +63,12 @@ pushd $PACKAGE_DIR
 run_command $MINT_CMD bootstrap -m Mintfile
 
 if [ -z "$CI" ]; then
-	run_command $MINT_RUN swift-format format $SWIFTFORMAT_OPTIONS  --recursive --parallel --in-place Sources Tests
+	run_command $MINT_RUN swift-format format $SWIFTFORMAT_FORMAT_OPTIONS  --recursive --parallel --in-place Sources Tests
 	run_command $MINT_RUN swiftlint --fix
 fi
 
 if [ -z "$FORMAT_ONLY" ]; then
-    run_command $MINT_RUN swift-format lint --configuration .swift-format --recursive --parallel $SWIFTFORMAT_OPTIONS Sources Tests || exit 1
+    run_command $MINT_RUN swift-format lint --recursive --parallel $SWIFTFORMAT_LINT_OPTIONS Sources Tests || exit 1
     run_command $MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS || exit 1
 fi
 
@@ -76,7 +78,7 @@ $PACKAGE_DIR/Scripts/header.sh -d $PACKAGE_DIR/Sources -c "Leo Dion" -o "BrightD
 run_command $MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
 run_command $MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
 
-run_command $MINT_RUN swift-format lint --recursive --parallel $SWIFTFORMAT_OPTIONS Sources Tests
+run_command $MINT_RUN swift-format lint --recursive --parallel $SWIFTFORMAT_LINT_OPTIONS Sources Tests
 #$MINT_RUN periphery scan $PERIPHERY_OPTIONS --disable-update-check
 
 popd

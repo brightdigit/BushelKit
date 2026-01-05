@@ -31,26 +31,6 @@ public import Foundation
 
 /// Metadata about when a data source was last fetched and updated
 public struct DataSourceMetadata: Codable, Sendable {
-  // MARK: Lifecycle
-
-  public init(
-    sourceName: String,
-    recordTypeName: String,
-    lastFetchedAt: Date,
-    sourceUpdatedAt: Date? = nil,
-    recordCount: Int = 0,
-    fetchDurationSeconds: Double = 0,
-    lastError: String? = nil
-  ) {
-    self.sourceName = sourceName
-    self.recordTypeName = recordTypeName
-    self.lastFetchedAt = lastFetchedAt
-    self.sourceUpdatedAt = sourceUpdatedAt
-    self.recordCount = recordCount
-    self.fetchDurationSeconds = fetchDurationSeconds
-    self.lastError = lastError
-  }
-
   // MARK: Public
 
   /// The name of the data source (e.g., "appledb.dev", "ipsw.me")
@@ -77,5 +57,25 @@ public struct DataSourceMetadata: Codable, Sendable {
   /// CloudKit record name for this metadata entry
   public var recordName: String {
     "metadata-\(sourceName)-\(recordTypeName)"
+  }
+
+  // MARK: Lifecycle
+
+  public init(
+    sourceName: String,
+    recordTypeName: String,
+    lastFetchedAt: Date,
+    sourceUpdatedAt: Date? = nil,
+    recordCount: Int = 0,
+    fetchDurationSeconds: Double = 0,
+    lastError: String? = nil
+  ) {
+    self.sourceName = sourceName
+    self.recordTypeName = recordTypeName
+    self.lastFetchedAt = lastFetchedAt
+    self.sourceUpdatedAt = sourceUpdatedAt
+    self.recordCount = recordCount
+    self.fetchDurationSeconds = fetchDurationSeconds
+    self.lastError = lastError
   }
 }

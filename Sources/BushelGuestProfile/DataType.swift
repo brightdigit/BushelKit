@@ -35,8 +35,8 @@ public protocol SystemProfileType: Decodable {
   static var dataType: DataType { get }
 }
 
+// swift-format-ignore: AlwaysUseLowerCamelCase
 /// An enumeration representing the different types of system profile data.
-/// swift-format-ignore: AlwaysUseLowerCamelCase
 public enum DataType: String {
   case SPParallelATADataType
   case SPUniversalAccessDataType

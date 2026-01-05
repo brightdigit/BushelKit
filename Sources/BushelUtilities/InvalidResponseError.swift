@@ -30,9 +30,7 @@
 public import Foundation
 
 #if canImport(FoundationNetworking)
-  // swiftlint:disable file_types_order
   public import FoundationNetworking
-// swiftlint:enable file_types_order
 #endif
 
 /// Error representing an invalid response from a URL request.

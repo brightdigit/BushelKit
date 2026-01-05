@@ -31,10 +31,36 @@ import XCTest
 
 @testable import BushelUtilities
 
+// swiftlint:disable file_length
+
 internal final class JSONDecoderTests: XCTestCase {
   internal struct TestModel: Codable, Equatable {
     internal let name: String
     internal let value: Int
+  }
+
+  internal struct NestedModel: Codable {
+    internal let nested: TestModel
+  }
+
+  internal struct OptionalModel: Codable {
+    internal let required: String
+    internal let optional: String?
+  }
+
+  internal struct CustomError: Error {
+    internal let message: String
+  }
+
+  internal struct FailingDecodable: Codable {
+    internal init(from decoder: Decoder) throws {
+      // Throw a non-DecodingError
+      throw CustomError(message: "Custom error")
+    }
+
+    internal func encode(to encoder: Encoder) throws {
+      // Not used in tests
+    }
   }
 
   internal func testDecodeSuccessful() throws {
@@ -101,10 +127,6 @@ internal final class JSONDecoderTests: XCTestCase {
 
   // MARK: - Coding Path Preservation Tests
 
-  internal struct NestedModel: Codable {
-    internal let nested: TestModel
-  }
-
   internal func testPreservesCodingPathForTypeMismatch() throws {
     let json = #"{"nested": {"name": "test", "value": "not-a-number"}}"#
     let data = try XCTUnwrap(json.data(using: .utf8))
@@ -163,11 +185,6 @@ internal final class JSONDecoderTests: XCTestCase {
     }
   }
 
-  internal struct OptionalModel: Codable {
-    internal let required: String
-    internal let optional: String?
-  }
-
   internal func testPreservesCodingPathForValueNotFound() throws {
     // Create JSON with explicit null for a non-optional field
     let json = #"{"required": null}"#
@@ -220,21 +237,6 @@ internal final class JSONDecoderTests: XCTestCase {
   }
 
   // MARK: - Non-DecodingError Handling
-
-  internal struct CustomError: Error {
-    internal let message: String
-  }
-
-  internal struct FailingDecodable: Codable {
-    internal init(from decoder: Decoder) throws {
-      // Throw a non-DecodingError
-      throw CustomError(message: "Custom error")
-    }
-
-    internal func encode(to encoder: Encoder) throws {
-      // Not used in tests
-    }
-  }
 
   internal func testHandlesNonDecodingError() throws {
     let json = #"{}"#

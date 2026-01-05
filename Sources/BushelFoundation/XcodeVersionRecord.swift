@@ -64,6 +64,11 @@ public struct XcodeVersionRecord: Codable, Sendable {
   /// Release notes or additional info
   public var notes: String?
 
+  /// CloudKit record name based on build number (e.g., "XcodeVersion-15C65")
+  public var recordName: String {
+    "XcodeVersion-\(buildNumber)"
+  }
+
   public init(
     version: String,
     buildNumber: String,
@@ -86,10 +91,5 @@ public struct XcodeVersionRecord: Codable, Sendable {
     self.includedSwiftVersion = includedSwiftVersion
     self.sdkVersions = sdkVersions
     self.notes = notes
-  }
-
-  /// CloudKit record name based on build number (e.g., "XcodeVersion-15C65")
-  public var recordName: String {
-    "XcodeVersion-\(buildNumber)"
   }
 }

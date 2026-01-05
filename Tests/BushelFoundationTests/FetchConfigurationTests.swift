@@ -31,6 +31,8 @@ import XCTest
 
 @testable import BushelFoundation
 
+// swiftlint:disable file_length
+
 internal final class FetchConfigurationTests: XCTestCase {
   // MARK: - Initialization Tests
 

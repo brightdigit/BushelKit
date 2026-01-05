@@ -46,6 +46,11 @@ public struct SwiftVersionRecord: Codable, Sendable {
   /// Release notes
   public var notes: String?
 
+  /// CloudKit record name based on version (e.g., "SwiftVersion-5.9.2")
+  public var recordName: String {
+    "SwiftVersion-\(version)"
+  }
+
   public init(
     version: String,
     releaseDate: Date,
@@ -58,10 +63,5 @@ public struct SwiftVersionRecord: Codable, Sendable {
     self.downloadURL = downloadURL
     self.isPrerelease = isPrerelease
     self.notes = notes
-  }
-
-  /// CloudKit record name based on version (e.g., "SwiftVersion-5.9.2")
-  public var recordName: String {
-    "SwiftVersion-\(version)"
   }
 }

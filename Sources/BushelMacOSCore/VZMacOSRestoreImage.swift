@@ -36,6 +36,7 @@
 
   #warning("Temporary Fix")
   #warning("Remove @unchecked Sendable")
+  // swift-format-ignore: AvoidRetroactiveConformances
   extension VZMacOSRestoreImage: @unchecked @retroactive Sendable {
     internal struct OperatingSystem: OperatingSystemInstalled {
       internal let operatingSystemVersion: OSVer
