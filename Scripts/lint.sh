@@ -70,7 +70,8 @@ if [ -z "$FORMAT_ONLY" ]; then
     run_command $MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS || exit 1
 fi
 
-$PACKAGE_DIR/Scripts/header.sh -d  $PACKAGE_DIR/Sources -c "Leo Dion" -o "BrightDigit" -p "BushelKit"
+# Temporary until next release
+$PACKAGE_DIR/Scripts/header.sh -d $PACKAGE_DIR/Sources -c "Leo Dion" -o "BrightDigit" -p "BushelKit" -y 2025
 
 run_command $MINT_RUN stringslint lint $STRINGSLINT_OPTIONS
 run_command $MINT_RUN swiftlint lint $SWIFTLINT_OPTIONS
