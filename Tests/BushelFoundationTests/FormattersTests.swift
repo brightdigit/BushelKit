@@ -32,6 +32,10 @@ import XCTest
 @testable import BushelFoundation
 
 internal final class FormattersTests: XCTestCase {
+  // swiftlint:disable force_unwrapping
+  private static let utcTimeZone = TimeZone(secondsFromGMT: 0)!
+  // swiftlint:enable force_unwrapping
+
   // MARK: - RFC 2822 Date Formatter Tests
 
   internal func testLastModifiedDateFormatterFormat() {
@@ -95,7 +99,7 @@ internal final class FormattersTests: XCTestCase {
     // Verify the parsed date
     let calendar = Calendar(identifier: .gregorian)
     let components = calendar.dateComponents(
-      in: TimeZone(secondsFromGMT: 0)!,
+      in: Self.utcTimeZone,
       from: parsedDate
     )
     XCTAssertEqual(components.year, 2_025)

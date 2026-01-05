@@ -87,17 +87,9 @@ extension URLSession {
         return nil
       }
 
-      return Self.parseLastModifiedDate(from: lastModifiedString)
+      return Date(rfc2822String: lastModifiedString)
     } catch {
       return nil
     }
-  }
-
-  /// Parses a Last-Modified header value in RFC 2822 format
-  ///
-  /// - Parameter dateString: The date string from the header
-  /// - Returns: The parsed date, or nil if parsing fails
-  private static func parseLastModifiedDate(from dateString: String) -> Date? {
-    Date(rfc2822String: dateString)
   }
 }

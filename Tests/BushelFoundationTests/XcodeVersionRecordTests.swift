@@ -32,12 +32,16 @@ import XCTest
 @testable import BushelFoundation
 
 internal final class XcodeVersionRecordTests: XCTestCase {
+  // swiftlint:disable force_unwrapping
+  private static let xcodeDownloadURL = URL(string: "https://developer.apple.com/xcode/download")!
+  // swiftlint:enable force_unwrapping
+
   private func makeSampleRecord() -> XcodeVersionRecord {
     XcodeVersionRecord(
       version: "15.1",
       buildNumber: "15C65",
       releaseDate: Date(timeIntervalSince1970: 1_700_000_000),
-      downloadURL: URL(string: "https://developer.apple.com/xcode/download")!,
+      downloadURL: Self.xcodeDownloadURL,
       fileSize: 8_000_000_000,
       isPrerelease: false,
       minimumMacOS: "RestoreImage-23A344",
@@ -52,7 +56,7 @@ internal final class XcodeVersionRecordTests: XCTestCase {
 
     XCTAssertEqual(record.version, "15.1")
     XCTAssertEqual(record.buildNumber, "15C65")
-    XCTAssertEqual(record.downloadURL, URL(string: "https://developer.apple.com/xcode/download")!)
+    XCTAssertEqual(record.downloadURL, Self.xcodeDownloadURL)
     XCTAssertEqual(record.fileSize, 8_000_000_000)
     XCTAssertFalse(record.isPrerelease)
     XCTAssertEqual(record.minimumMacOS, "RestoreImage-23A344")

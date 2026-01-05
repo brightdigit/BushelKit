@@ -65,6 +65,20 @@ public struct FetchConfiguration: Codable, Sendable {
     self.useDefaults = useDefaults
   }
 
+  // MARK: - Factory Methods
+
+  /// Load configuration from environment variables
+  /// - Returns: Configuration with values from environment, or defaults
+  public static func loadFromEnvironment() -> FetchConfiguration {
+    let processInfo = ProcessInfo.processInfo
+
+    return FetchConfiguration(
+      globalMinimumFetchInterval: processInfo.globalFetchInterval(),
+      perSourceIntervals: processInfo.fetchIntervals(),
+      useDefaults: true
+    )
+  }
+
   // MARK: - Methods
 
   /// Get the minimum fetch interval for a specific source
@@ -117,19 +131,5 @@ public struct FetchConfiguration: Codable, Sendable {
 
     let timeSinceLastFetch = currentDate.timeIntervalSince(lastFetch)
     return timeSinceLastFetch >= minInterval
-  }
-
-  // MARK: - Factory Methods
-
-  /// Load configuration from environment variables
-  /// - Returns: Configuration with values from environment, or defaults
-  public static func loadFromEnvironment() -> FetchConfiguration {
-    let processInfo = ProcessInfo.processInfo
-
-    return FetchConfiguration(
-      globalMinimumFetchInterval: processInfo.globalFetchInterval(),
-      perSourceIntervals: processInfo.fetchIntervals(),
-      useDefaults: true
-    )
   }
 }

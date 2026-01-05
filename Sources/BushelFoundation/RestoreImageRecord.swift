@@ -55,8 +55,10 @@ public struct RestoreImageRecord: Codable, Sendable {
   /// SHA-1 hash (from MESU/ipsw.me for compatibility)
   public var sha1Hash: String
 
+  // swiftlint:disable discouraged_optional_boolean
   /// Whether Apple still signs this restore image (nil if unknown)
   public var isSigned: Bool?
+  // swiftlint:enable discouraged_optional_boolean
 
   /// Beta/RC release indicator
   public var isPrerelease: Bool
@@ -83,6 +85,7 @@ public struct RestoreImageRecord: Codable, Sendable {
     fileSize: Int,
     sha256Hash: String,
     sha1Hash: String,
+    // swiftlint:disable:next discouraged_optional_boolean
     isSigned: Bool? = nil,
     isPrerelease: Bool,
     source: String,

@@ -32,15 +32,20 @@ import XCTest
 @testable import BushelFoundation
 
 internal final class RestoreImageRecordTests: XCTestCase {
+  // swiftlint:disable force_unwrapping
+  private static let sampleDownloadURL = URL(
+    string: "https://updates.cdn-apple.com/2023/macos/23C71/UniversalMac_14.2.1_23C71_Restore.ipsw"
+  )!
+  private static let betaDownloadURL = URL(string: "https://example.com/beta.ipsw")!
+  private static let minimalDownloadURL = URL(string: "https://example.com/restore.ipsw")!
+  // swiftlint:enable force_unwrapping
+
   private func makeSampleRecord() -> RestoreImageRecord {
     RestoreImageRecord(
       version: "14.2.1",
       buildNumber: "23C71",
       releaseDate: Date(timeIntervalSince1970: 1_700_000_000),
-      downloadURL:
-        URL(
-          string:
-            "https://updates.cdn-apple.com/2023/macos/23C71/UniversalMac_14.2.1_23C71_Restore.ipsw")!,
+      downloadURL: Self.sampleDownloadURL,
       fileSize: 14_500_000_000,
       sha256Hash: "abc123",
       sha1Hash: "def456",
@@ -80,7 +85,7 @@ internal final class RestoreImageRecordTests: XCTestCase {
       version: "15.0 Beta 3",
       buildNumber: "24A5264n",
       releaseDate: Date(),
-      downloadURL: URL(string: "https://example.com/beta.ipsw")!,
+      downloadURL: Self.betaDownloadURL,
       fileSize: 15_000_000_000,
       sha256Hash: "beta123",
       sha1Hash: "beta456",
@@ -119,7 +124,7 @@ internal final class RestoreImageRecordTests: XCTestCase {
       version: "14.0",
       buildNumber: "23A344",
       releaseDate: Date(),
-      downloadURL: URL(string: "https://example.com/restore.ipsw")!,
+      downloadURL: Self.minimalDownloadURL,
       fileSize: 14_000_000_000,
       sha256Hash: "hash256",
       sha1Hash: "hash1",
