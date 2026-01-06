@@ -1,5 +1,5 @@
 //
-//  Date+RawRepresentable.swift
+//  Date+Milliseconds.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
