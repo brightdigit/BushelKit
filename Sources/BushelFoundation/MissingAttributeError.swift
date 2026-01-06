@@ -86,5 +86,6 @@ extension FileAttributeKey {
 }
 
 #if canImport(FoundationNetworking)
+  // swiftlint:disable:next no_unchecked_sendable
   extension FileAttributeKey: @unchecked Sendable {}
 #endif

@@ -130,3 +130,9 @@ disabled_rules:
     - closure_parameter_position
     - trailing_comma
     - opening_brace
+custom_rules:
+  no_unchecked_sendable:
+    name: "No Unchecked Sendable"
+    regex: '@unchecked\s+Sendable'
+    message: "Use proper Sendable conformance instead of @unchecked Sendable to maintain strict concurrency safety"
+    severity: error
