@@ -33,9 +33,10 @@
   internal import OSVer
 
   public import Virtualization
-
+  // swiftlint:disable no_unchecked_sendable
   #warning("Temporary Fix")
   #warning("Remove @unchecked Sendable")
+  // swift-format-ignore: AvoidRetroactiveConformances
   extension VZMacOSRestoreImage: @unchecked @retroactive Sendable {
     internal struct OperatingSystem: OperatingSystemInstalled {
       internal let operatingSystemVersion: OSVer
@@ -92,5 +93,5 @@
       return response.allHeaderFields
     }
   }
-
+// swiftlint:enable no_unchecked_sendable
 #endif

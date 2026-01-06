@@ -1,5 +1,5 @@
 //
-//  InvalidResponseError.swift
+//  SwiftVersionRecord.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,23 +29,39 @@
 
 public import Foundation
 
-#if canImport(FoundationNetworking)
-  public import FoundationNetworking
-#endif
+/// Represents a Swift compiler release bundled with Xcode
+public struct SwiftVersionRecord: Codable, Sendable {
+  /// Swift version (e.g., "5.9", "5.10", "6.0")
+  public var version: String
 
-/// Error representing an invalid response from a URL request.
-public struct InvalidResponseError: LocalizedError {
-  /// The URL response that was considered invalid.
-  public let response: URLResponse
-  /// The URL the response was received from.
-  public let url: URL
+  /// Release date
+  public var releaseDate: Date
 
-  /// Initializes a new `InvalidResponseError` instance.
-  /// - Parameters:
-  ///   - response: The `URLResponse` that was considered invalid.
-  ///   - url: The `URL` the response was received from.
-  public init(_ response: URLResponse, from url: URL) {
-    self.response = response
-    self.url = url
+  /// Optional swift.org toolchain download
+  public var downloadURL: URL?
+
+  /// Beta/snapshot indicator
+  public var isPrerelease: Bool
+
+  /// Release notes
+  public var notes: String?
+
+  /// CloudKit record name based on version (e.g., "SwiftVersion-5.9.2")
+  public var recordName: String {
+    "SwiftVersion-\(version)"
+  }
+
+  public init(
+    version: String,
+    releaseDate: Date,
+    downloadURL: URL? = nil,
+    isPrerelease: Bool,
+    notes: String? = nil
+  ) {
+    self.version = version
+    self.releaseDate = releaseDate
+    self.downloadURL = downloadURL
+    self.isPrerelease = isPrerelease
+    self.notes = notes
   }
 }

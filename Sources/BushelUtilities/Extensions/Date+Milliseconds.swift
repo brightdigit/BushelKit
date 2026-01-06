@@ -1,5 +1,5 @@
 //
-//  InvalidResponseError.swift
+//  Date+Milliseconds.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,23 +29,21 @@
 
 public import Foundation
 
-#if canImport(FoundationNetworking)
-  public import FoundationNetworking
-#endif
+extension Date {
+  /// The number of milliseconds in one second.
+  private static let millisecondsInSeconds: TimeInterval = 1_000
 
-/// Error representing an invalid response from a URL request.
-public struct InvalidResponseError: LocalizedError {
-  /// The URL response that was considered invalid.
-  public let response: URLResponse
-  /// The URL the response was received from.
-  public let url: URL
+  /// The number of milliseconds since 1970.
+  ///
+  /// - Returns: The number of milliseconds since 1970 as an Int.
+  public var millisecondsSince1970: Int {
+    Int(self.timeIntervalSince1970 * Self.millisecondsInSeconds)
+  }
 
-  /// Initializes a new `InvalidResponseError` instance.
-  /// - Parameters:
-  ///   - response: The `URLResponse` that was considered invalid.
-  ///   - url: The `URL` the response was received from.
-  public init(_ response: URLResponse, from url: URL) {
-    self.response = response
-    self.url = url
+  /// Initializes a Date from milliseconds since 1970.
+  ///
+  /// - Parameter milliseconds: The number of milliseconds since 1970.
+  public init(millisecondsSince1970 milliseconds: Int) {
+    self.init(timeIntervalSince1970: TimeInterval(milliseconds) / Self.millisecondsInSeconds)
   }
 }

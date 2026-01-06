@@ -33,7 +33,7 @@ public struct StatePropertyChange: PropertyChange {
   public typealias ValueType = MachineState
 
   /// The associated machine property for this change.
-  public nonisolated(unsafe) static let property: MachineProperty = .state
+  nonisolated(unsafe) public static let property: MachineProperty = .state
 
   /// The property values associated with this change.
   public let values: PropertyValues<MachineState>
@@ -48,7 +48,7 @@ public struct StatePropertyChange: PropertyChange {
 /// A struct representing a change in the can start property.
 public struct CanStartPropertyChange: PropertyChange {
   /// The associated machine property for this change.
-  public nonisolated(unsafe) static let property: MachineProperty = .canStart
+  nonisolated(unsafe) public static let property: MachineProperty = .canStart
 
   /// The property values associated with this change.
   public let values: PropertyValues<Bool>
@@ -63,7 +63,7 @@ public struct CanStartPropertyChange: PropertyChange {
 /// A struct representing a change in the can stop property.
 public struct CanStopPropertyChange: PropertyChange {
   /// The associated machine property for this change.
-  public nonisolated(unsafe) static let property: MachineProperty = .canStop
+  nonisolated(unsafe) public static let property: MachineProperty = .canStop
 
   /// The property values associated with this change.
   public let values: PropertyValues<Bool>
@@ -78,7 +78,7 @@ public struct CanStopPropertyChange: PropertyChange {
 /// A struct representing a change in the can pause property.
 public struct CanPausePropertyChange: PropertyChange {
   /// The associated machine property for this change.
-  public nonisolated(unsafe) static let property: MachineProperty = .canPause
+  nonisolated(unsafe) public static let property: MachineProperty = .canPause
 
   /// The property values associated with this change.
   public let values: PropertyValues<Bool>
@@ -93,7 +93,7 @@ public struct CanPausePropertyChange: PropertyChange {
 /// A struct representing a change in the can resume property.
 public struct CanResumePropertyChange: PropertyChange {
   /// The associated machine property for this change.
-  public nonisolated(unsafe) static let property: MachineProperty = .canResume
+  nonisolated(unsafe) public static let property: MachineProperty = .canResume
 
   /// The property values associated with this change.
   public let values: PropertyValues<Bool>
@@ -108,7 +108,7 @@ public struct CanResumePropertyChange: PropertyChange {
 /// A struct representing a change in the can request stop property.
 public struct CanRequestStopPropertyChange: PropertyChange {
   /// The associated machine property for this change.
-  public nonisolated(unsafe) static let property: MachineProperty = .canRequestStop
+  nonisolated(unsafe) public static let property: MachineProperty = .canRequestStop
 
   /// The property values associated with this change.
   public let values: PropertyValues<Bool>

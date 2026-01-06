@@ -1,5 +1,5 @@
 //
-//  InvalidResponseError.swift
+//  Date+RFC2822.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,23 +29,31 @@
 
 public import Foundation
 
-#if canImport(FoundationNetworking)
-  public import FoundationNetworking
-#endif
+extension Date {
+  /// RFC 2822 date formatter for HTTP Last-Modified headers
+  ///
+  /// Shared static formatter for thread-safe, efficient date parsing.
+  /// Format: "EEE, dd MMM yyyy HH:mm:ss zzz"
+  private static let rfc2822Formatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    return formatter
+  }()
 
-/// Error representing an invalid response from a URL request.
-public struct InvalidResponseError: LocalizedError {
-  /// The URL response that was considered invalid.
-  public let response: URLResponse
-  /// The URL the response was received from.
-  public let url: URL
-
-  /// Initializes a new `InvalidResponseError` instance.
-  /// - Parameters:
-  ///   - response: The `URLResponse` that was considered invalid.
-  ///   - url: The `URL` the response was received from.
-  public init(_ response: URLResponse, from url: URL) {
-    self.response = response
-    self.url = url
+  /// Creates a date from an RFC 2822 formatted string
+  ///
+  /// This initializer is designed for HTTP Last-Modified headers and similar RFC 2822 date formats.
+  ///
+  /// Example: "Fri, 19 Dec 2025 10:30:45 GMT"
+  ///
+  /// - Parameter rfc2822String: The RFC 2822 formatted date string
+  /// - Returns: A date if parsing succeeds, nil otherwise
+  public init?(rfc2822String: String) {
+    guard let date = Self.rfc2822Formatter.date(from: rfc2822String) else {
+      return nil
+    }
+    self = date
   }
 }

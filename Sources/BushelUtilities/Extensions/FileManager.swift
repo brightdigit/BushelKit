@@ -43,7 +43,7 @@ extension FileManager {
   ///   - size: The size of the file to create.
   /// - Throws: `CreationError` if an error occurs during file creation.
   public func createFile(atPath path: String, withSize size: FileSize) throws {
-    self.createFile(atPath: path, contents: nil)
+    _ = self.createFile(atPath: path, contents: nil)
     let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
     guard diskFd > 0 else {
       throw CreationError(code: Int(errno), source: .open)

@@ -63,7 +63,7 @@
     }
 
     /// Asynchronously clears the `ObservationCollection` by removing all `NSKeyValueObservation` instances.
-    public nonisolated func clear() {
+    nonisolated public func clear() {
       Task {
         await self.removeAll()
       }

@@ -1,5 +1,5 @@
 //
-//  InvalidResponseError.swift
+//  ProcessInfo.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,23 +29,33 @@
 
 public import Foundation
 
-#if canImport(FoundationNetworking)
-  public import FoundationNetworking
-#endif
+extension ProcessInfo {
+  /// Load per-source fetch intervals from environment variables
+  ///
+  /// Checks for environment variables in the format:
+  /// `BUSHEL_FETCH_INTERVAL_<SOURCE>` where SOURCE is the uppercased
+  /// source identifier with dots replaced by underscores.
+  ///
+  /// - Returns: Dictionary mapping source identifiers to intervals
+  public func fetchIntervals() -> [String: TimeInterval] {
+    var intervals: [String: TimeInterval] = [:]
 
-/// Error representing an invalid response from a URL request.
-public struct InvalidResponseError: LocalizedError {
-  /// The URL response that was considered invalid.
-  public let response: URLResponse
-  /// The URL the response was received from.
-  public let url: URL
+    // Check for per-source environment variables
+    for source in DataSource.allCases {
+      if let intervalString = environment[source.environmentKey],
+        let interval = TimeInterval(intervalString)
+      {
+        intervals[source.rawValue] = interval
+      }
+    }
 
-  /// Initializes a new `InvalidResponseError` instance.
-  /// - Parameters:
-  ///   - response: The `URLResponse` that was considered invalid.
-  ///   - url: The `URL` the response was received from.
-  public init(_ response: URLResponse, from url: URL) {
-    self.response = response
-    self.url = url
+    return intervals
+  }
+
+  /// Load global fetch interval from environment
+  ///
+  /// - Returns: Global interval if BUSHEL_FETCH_INTERVAL_GLOBAL is set
+  public func globalFetchInterval() -> TimeInterval? {
+    environment["BUSHEL_FETCH_INTERVAL_GLOBAL"].flatMap { TimeInterval($0) }
   }
 }

@@ -32,10 +32,10 @@ public import Foundation
 /// Provides extensions to the `ByteCountFormatter` type.
 extension ByteCountFormatter {
   /// A static `ByteCountFormatter` instance with the `memory` count style.
-  public nonisolated(unsafe) static let memory: ByteCountFormatter = .init(countStyle: .memory)
+  nonisolated(unsafe) public static let memory: ByteCountFormatter = .init(countStyle: .memory)
 
   /// A static `ByteCountFormatter` instance with the `file` count style.
-  public nonisolated(unsafe) static let file: ByteCountFormatter = .init(countStyle: .file)
+  nonisolated(unsafe) public static let file: ByteCountFormatter = .init(countStyle: .file)
 
   /// Initializes a `ByteCountFormatter` instance and applies the specified modifications.
   ///

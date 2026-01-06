@@ -43,7 +43,7 @@ public final class Initialization {
   /// Executes the provided closure asynchronously on the main actor.
   ///
   /// - Parameter closure: The closure to be executed on the main actor.
-  public nonisolated func callAsFunction(_ closure: @MainActor @Sendable @escaping () -> Void) {
+  nonisolated public func callAsFunction(_ closure: @MainActor @Sendable @escaping () -> Void) {
     Task {
       await self.execute(closure)
     }

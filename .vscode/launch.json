@@ -6,8 +6,9 @@
             "args": [],
             "cwd": "${workspaceFolder:BushelKit}",
             "name": "Debug bushel",
-            "program": "${workspaceFolder:BushelKit}/.build/debug/bushel",
-            "preLaunchTask": "swift: Build Debug bushel"
+            "preLaunchTask": "swift: Build Debug bushel",
+            "target": "bushel",
+            "configuration": "debug"
         },
         {
             "type": "swift",
@@ -15,8 +16,9 @@
             "args": [],
             "cwd": "${workspaceFolder:BushelKit}",
             "name": "Release bushel",
-            "program": "${workspaceFolder:BushelKit}/.build/release/bushel",
-            "preLaunchTask": "swift: Build Release bushel"
+            "preLaunchTask": "swift: Build Release bushel",
+            "target": "bushel",
+            "configuration": "release"
         }
     ]
 }

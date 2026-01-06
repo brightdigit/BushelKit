@@ -1,5 +1,5 @@
 //
-//  InvalidResponseError.swift
+//  HTTPURLResponse+LastModified.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -33,19 +33,14 @@ public import Foundation
   public import FoundationNetworking
 #endif
 
-/// Error representing an invalid response from a URL request.
-public struct InvalidResponseError: LocalizedError {
-  /// The URL response that was considered invalid.
-  public let response: URLResponse
-  /// The URL the response was received from.
-  public let url: URL
-
-  /// Initializes a new `InvalidResponseError` instance.
-  /// - Parameters:
-  ///   - response: The `URLResponse` that was considered invalid.
-  ///   - url: The `URL` the response was received from.
-  public init(_ response: URLResponse, from url: URL) {
-    self.response = response
-    self.url = url
+extension HTTPURLResponse {
+  /// Extracts and parses the Last-Modified header from the HTTP response
+  ///
+  /// - Returns: The parsed Last-Modified date, or nil if not present or invalid
+  public var lastModified: Date? {
+    guard let lastModifiedString = value(forHTTPHeaderField: "Last-Modified") else {
+      return nil
+    }
+    return Date(rfc2822String: lastModifiedString)
   }
 }

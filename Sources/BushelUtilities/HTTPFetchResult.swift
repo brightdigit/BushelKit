@@ -1,5 +1,5 @@
 //
-//  Date+RawRepresentable.swift
+//  HTTPFetchResult.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,26 +29,21 @@
 
 public import Foundation
 
-extension Date: @retroactive RawRepresentable {
-  /// The raw value type for the Date extension.
-  public typealias RawValue = Int
+/// Result of fetching data from a URL with optional metadata
+public struct HTTPFetchResult: Sendable {
+  /// The fetched data
+  public let data: Data
 
-  /// The number of milliseconds in one second.
-  private static let millisecondsInSeconds: TimeInterval = 1_000
+  /// The Last-Modified date from the HTTP response headers, if available
+  public let lastModified: Date?
 
-  /// The raw value representation of the Date.
+  /// Creates a new HTTP fetch result
   ///
-  /// - Returns: The raw value of the Date as an Int.
-  public var rawValue: Int {
-    Int(self.timeIntervalSince1970 * Self.millisecondsInSeconds)
-  }
-
-  /// Initializes a Date from a raw value.
-  ///
-  /// - Parameter rawValue: The raw value to initialize the Date from.
-  /// - Returns: An optional Date instance initialized from the raw value,
-  /// or nil if the raw value is invalid.
-  public init?(rawValue: Int) {
-    self.init(timeIntervalSince1970: TimeInterval(rawValue) / Self.millisecondsInSeconds)
+  /// - Parameters:
+  ///   - data: The fetched data
+  ///   - lastModified: The Last-Modified date, if available
+  public init(data: Data, lastModified: Date?) {
+    self.data = data
+    self.lastModified = lastModified
   }
 }
