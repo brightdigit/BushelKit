@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Modern Swift features: noncopyable generics, variadic generics
 
 **Requirements:**
-- **macOS:** Xcode 16.0+, Swift 6.0+, macOS 14+ deployment target
+- **macOS:** Xcode 16.0+, Swift 6.0+, macOS 15+ deployment target
 - **Linux:** Ubuntu 20.04+, Swift 6.0+
 
 ## Common Development Commands

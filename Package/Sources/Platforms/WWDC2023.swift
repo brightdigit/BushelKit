@@ -31,11 +31,11 @@ import PackageDescription
 
 struct WWDC2023: PlatformSet {
   var body: any SupportedPlatforms {
-    SupportedPlatform.macOS(.v12)
-    SupportedPlatform.iOS(.v15)
-    SupportedPlatform.watchOS(.v8)
-    SupportedPlatform.tvOS(.v15)
-    SupportedPlatform.visionOS(.v1)
-    SupportedPlatform.macCatalyst(.v15)
+    SupportedPlatform.macOS(.v15)
+    SupportedPlatform.iOS(.v18)
+    SupportedPlatform.watchOS(.v11)
+    SupportedPlatform.tvOS(.v18)
+    SupportedPlatform.visionOS(.v2)
+    SupportedPlatform.macCatalyst(.v18)
   }
 }
