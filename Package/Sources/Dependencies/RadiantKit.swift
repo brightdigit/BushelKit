@@ -29,6 +29,6 @@
 
 struct RadiantKit: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/RadiantKit.git", branch: "34-appstorage-optional-date")
+    .package(url: "https://github.com/brightdigit/RadiantKit.git", branch: "main")
   }
 }
