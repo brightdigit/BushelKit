@@ -53,7 +53,7 @@ This is an open-source component for [Bushel, a macOS virtual machine app](https
 
 - Xcode 16.0 or later
 - Swift 6.0 or later
-- iOS 17 / watchOS 10.0 / tvOS 17 / macOS 14 or later deployment targets
+- iOS 18 / watchOS 11 / tvOS 18 / macOS 15 or later deployment targets
 
 **Linux**
 
