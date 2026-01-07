@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/brightdigit/RadiantKit.git",
       "state" : {
-        "revision" : "c18df553d5eec6230fc8bf91b260a0a30dca5f79",
-        "version" : "1.0.0-beta.4"
+        "revision" : "a65d6721b6b396f0503a3876ddab3f2399b21d4e",
+        "version" : "1.0.0-beta.5"
       }
     },
     {
