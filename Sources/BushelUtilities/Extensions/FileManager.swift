@@ -57,11 +57,11 @@ extension FileManager {
       let handle = path.withCString(encodedAs: UTF16.self) { pathPtr in
         CreateFileW(
           pathPtr,
-          GENERIC_READ | GENERIC_WRITE,
+          DWORD(GENERIC_READ | GENERIC_WRITE),
           0,
           nil,
-          CREATE_ALWAYS,
-          FILE_ATTRIBUTE_NORMAL,
+          DWORD(CREATE_ALWAYS),
+          DWORD(FILE_ATTRIBUTE_NORMAL),
           nil
         )
       }
@@ -73,7 +73,7 @@ extension FileManager {
       var distanceToMove = LARGE_INTEGER()
       distanceToMove.QuadPart = LONGLONG(size)
 
-      guard SetFilePointerEx(handle, distanceToMove, nil, FILE_BEGIN) else {
+      guard SetFilePointerEx(handle, distanceToMove, nil, DWORD(FILE_BEGIN)) else {
         CloseHandle(handle)
         throw CreationError(code: Int(GetLastError()), source: .ftruncate)
       }
