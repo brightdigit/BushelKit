@@ -4346,7 +4346,7 @@ struct FelinePine: PackageDependency, TargetDependency {
 
 struct RadiantKit: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.4")
+    .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.5")
   }
 }
 //

@@ -44,9 +44,14 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
     /// Resets the application.
     case resetApplication = "RESET_APPLICATION"
 
+    /// Indicates whether this is a release version.
     case releaseVersion = "RELEASE_VERSION"
 
+    /// The threshold of user engagement to trigger a review request.
     case reviewEngagementThreshold = "REVIEW_ENGAGEMENT_THRESHOLD"
+
+    /// Indicates whether to trigger tracking permissions request.
+    case triggerTrackingPermissionsRequest = "TRIGGER_TRACKING_PERMISSIONS_REQUEST"
   }
 
   /// The shared instance of `EnvironmentConfiguration`.
@@ -76,6 +81,10 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
   @EnvironmentProperty(Key.reviewEngagementThreshold)
   public var reviewEngagementThreshold: Int
 
+  /// Indicates whether to trigger tracking permissions request.
+  @EnvironmentProperty(Key.triggerTrackingPermissionsRequest)
+  public var triggerTrackingPermissionsRequest: Bool
+
   /// Provides a custom mirror for the `EnvironmentConfiguration` instance.
   public var customMirror: Mirror {
     Mirror(
@@ -87,6 +96,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
         "resetApplication": self.resetApplication,
         "releaseVersion": self.releaseVersion,
         "reviewEngagementThreshold": self.reviewEngagementThreshold,
+        "triggerTrackingPermissionsRequest": self.triggerTrackingPermissionsRequest,
       ]
     )
   }
