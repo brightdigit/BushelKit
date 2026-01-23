@@ -9,7 +9,7 @@ jobs:
   build-ubuntu:
     name: Build on Ubuntu
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    if: false  # Temporarily disabled for Windows/Android troubleshooting
     strategy:
       matrix:
         image:
@@ -95,7 +95,7 @@ jobs:
     name: Build on WASM
     runs-on: ubuntu-latest
     container: swift:6.2-jammy
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    if: false  # Temporarily disabled for Windows/Android troubleshooting
     strategy:
       fail-fast: false
       matrix:
@@ -118,7 +118,7 @@ jobs:
     env:
       PACKAGE_NAME: BushelKit
     runs-on: ${{ matrix.runs-on }}
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    if: false  # Temporarily disabled for Windows/Android troubleshooting
     strategy:
       fail-fast: false
       matrix:
