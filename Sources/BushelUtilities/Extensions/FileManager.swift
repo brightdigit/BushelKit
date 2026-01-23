@@ -37,12 +37,11 @@ public import Foundation
 
 #if os(Windows)
   import WinSDK
-#elseif os(Android)
-  import Glibc
 #endif
 
-/// The file manager extension that provides additional functionality.
-extension FileManager {
+#if !os(Android)
+  /// The file manager extension that provides additional functionality.
+  extension FileManager {
   /// Creates a file with the specified size at the given path.
   ///
   /// - Parameters:
@@ -57,7 +56,7 @@ extension FileManager {
       let handle = path.withCString(encodedAs: UTF16.self) { pathPtr in
         CreateFileW(
           pathPtr,
-          DWORD(GENERIC_READ | GENERIC_WRITE),
+          DWORD(GENERIC_READ) | DWORD(GENERIC_WRITE),
           0,
           nil,
           DWORD(CREATE_ALWAYS),
@@ -247,3 +246,4 @@ extension FileManager {
     try savedApplicationStates.forEach(self.removeItem(at:))
   }
 }
+#endif
