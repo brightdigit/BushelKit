@@ -34,6 +34,13 @@ public import Foundation
 #else
   public typealias FileSize = Int64
 #endif
+
+#if os(Windows)
+  import WinSDK
+#elseif os(Android)
+  import Glibc
+#endif
+
 /// The file manager extension that provides additional functionality.
 extension FileManager {
   /// Creates a file with the specified size at the given path.
@@ -44,21 +51,58 @@ extension FileManager {
   /// - Throws: `CreationError` if an error occurs during file creation.
   public func createFile(atPath path: String, withSize size: FileSize) throws {
     _ = self.createFile(atPath: path, contents: nil)
-    let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
-    guard diskFd > 0 else {
-      throw CreationError(code: Int(errno), source: .open)
-    }
 
-    // 64GB disk space.
-    var result = ftruncate(diskFd, size)
-    guard result == 0 else {
-      throw CreationError(code: Int(result), source: .ftruncate)
-    }
+    #if os(Windows)
+      // Windows-specific implementation using WinSDK
+      let handle = path.withCString(encodedAs: UTF16.self) { pathPtr in
+        CreateFileW(
+          pathPtr,
+          GENERIC_READ | GENERIC_WRITE,
+          0,
+          nil,
+          CREATE_ALWAYS,
+          FILE_ATTRIBUTE_NORMAL,
+          nil
+        )
+      }
 
-    result = close(diskFd)
-    guard result == 0 else {
-      throw CreationError(code: Int(result), source: .close)
-    }
+      guard handle != INVALID_HANDLE_VALUE else {
+        throw CreationError(code: Int(GetLastError()), source: .open)
+      }
+
+      var distanceToMove = LARGE_INTEGER()
+      distanceToMove.QuadPart = LONGLONG(size)
+
+      guard SetFilePointerEx(handle, distanceToMove, nil, FILE_BEGIN) else {
+        CloseHandle(handle)
+        throw CreationError(code: Int(GetLastError()), source: .ftruncate)
+      }
+
+      guard SetEndOfFile(handle) else {
+        CloseHandle(handle)
+        throw CreationError(code: Int(GetLastError()), source: .ftruncate)
+      }
+
+      CloseHandle(handle)
+
+    #else
+      // POSIX implementation for macOS, Linux, iOS, etc.
+      let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
+      guard diskFd > 0 else {
+        throw CreationError(code: Int(errno), source: .open)
+      }
+
+      // 64GB disk space.
+      var result = ftruncate(diskFd, size)
+      guard result == 0 else {
+        throw CreationError(code: Int(result), source: .ftruncate)
+      }
+
+      result = close(diskFd)
+      guard result == 0 else {
+        throw CreationError(code: Int(result), source: .close)
+      }
+    #endif
   }
 
   /// Checks the existence and type of a directory at the given URL.
