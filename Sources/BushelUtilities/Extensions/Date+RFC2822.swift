@@ -36,6 +36,7 @@ extension Date {
   /// Format: "EEE, dd MMM yyyy HH:mm:ss zzz"
   private static let rfc2822ParseStrategy = Date.ParseStrategy(
     format:
+      // swiftlint:disable:next line_length
       "\(weekday: .abbreviated), \(day: .twoDigits) \(month: .abbreviated) \(year: .padded(4)) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits):\(second: .twoDigits) GMT",
     locale: Locale(identifier: "en_US_POSIX"),
     timeZone: TimeZone(secondsFromGMT: 0) ?? .gmt
