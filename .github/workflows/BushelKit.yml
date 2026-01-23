@@ -81,7 +81,7 @@ jobs:
       - uses: brightdigit/swift-build@v1.5.0-beta.2
         with:
           type: android
-          swift-version: ${{ matrix.swift-version }}
+          android-swift-version: ${{ matrix.swift-version }}
           android-api-level: ${{ matrix.api-level }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
