@@ -34,7 +34,7 @@ public import Foundation
 #endif
 
 /// A struct that provides a wrapper around FileManager for file-related operations.
-public struct FileManagerHandler: FileHandler {
+public struct FileManagerHandler: FileHandler, Sendable {
   /// A closure that provides a `FileManager` instance.
   private let fileManager: @Sendable () -> FileManager
 
