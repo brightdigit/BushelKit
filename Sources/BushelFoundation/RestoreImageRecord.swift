@@ -105,4 +105,60 @@ public struct RestoreImageRecord: Codable, Sendable {
     self.notes = notes
     self.sourceUpdatedAt = sourceUpdatedAt
   }
+
+  /// Validates all fields of the restore image record.
+  ///
+  /// - Throws: `RestoreImageRecordValidationError` if any field is invalid.
+  public func validate() throws {
+    try Self.validateSHA256Hash(sha256Hash)
+    try Self.validateSHA1Hash(sha1Hash)
+    try Self.validateFileSize(fileSize)
+    try Self.validateDownloadURL(downloadURL)
+  }
+
+  /// Returns true if all fields pass validation.
+  public var isValid: Bool {
+    do {
+      try validate()
+      return true
+    } catch {
+      return false
+    }
+  }
+}
+
+extension RestoreImageRecord {
+  fileprivate static func isValidHexadecimal(_ string: String) -> Bool {
+    string.allSatisfy { $0.isHexDigit }
+  }
+
+  fileprivate static func validateSHA256Hash(_ hash: String) throws {
+    guard hash.count == 64 else {
+      throw RestoreImageRecordValidationError.invalidSHA256Hash(hash, expectedLength: 64)
+    }
+    guard isValidHexadecimal(hash) else {
+      throw RestoreImageRecordValidationError.nonHexadecimalSHA256(hash)
+    }
+  }
+
+  fileprivate static func validateSHA1Hash(_ hash: String) throws {
+    guard hash.count == 40 else {
+      throw RestoreImageRecordValidationError.invalidSHA1Hash(hash, expectedLength: 40)
+    }
+    guard isValidHexadecimal(hash) else {
+      throw RestoreImageRecordValidationError.nonHexadecimalSHA1(hash)
+    }
+  }
+
+  fileprivate static func validateFileSize(_ size: Int) throws {
+    guard size > 0 else {
+      throw RestoreImageRecordValidationError.nonPositiveFileSize(size)
+    }
+  }
+
+  fileprivate static func validateDownloadURL(_ url: URL) throws {
+    guard url.scheme?.lowercased() == "https" else {
+      throw RestoreImageRecordValidationError.insecureDownloadURL(url)
+    }
+  }
 }

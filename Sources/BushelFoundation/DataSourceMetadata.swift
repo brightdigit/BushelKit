@@ -70,6 +70,30 @@ public struct DataSourceMetadata: Codable, Sendable {
     fetchDurationSeconds: Double = 0,
     lastError: String? = nil
   ) {
+    // Validation using precondition (fail-fast approach)
+    precondition(!sourceName.isEmpty, "sourceName cannot be empty")
+    precondition(!recordTypeName.isEmpty, "recordTypeName cannot be empty")
+    precondition(
+      sourceName.unicodeScalars.allSatisfy { $0.isASCII },
+      "sourceName must contain only ASCII characters: \(sourceName)"
+    )
+    precondition(
+      recordTypeName.unicodeScalars.allSatisfy { $0.isASCII },
+      "recordTypeName must contain only ASCII characters: \(recordTypeName)"
+    )
+
+    let recordName = "metadata-\(sourceName)-\(recordTypeName)"
+    precondition(
+      recordName.count <= 255,
+      "CloudKit record name exceeds 255 characters: \(recordName.count)"
+    )
+
+    precondition(recordCount >= 0, "recordCount cannot be negative: \(recordCount)")
+    precondition(
+      fetchDurationSeconds >= 0,
+      "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)"
+    )
+
     self.sourceName = sourceName
     self.recordTypeName = recordTypeName
     self.lastFetchedAt = lastFetchedAt
@@ -77,5 +101,55 @@ public struct DataSourceMetadata: Codable, Sendable {
     self.recordCount = recordCount
     self.fetchDurationSeconds = fetchDurationSeconds
     self.lastError = lastError
+  }
+
+  /// Validates DataSourceMetadata parameters without creating an instance.
+  ///
+  /// - Parameters:
+  ///   - sourceName: The data source name
+  ///   - recordTypeName: The record type name
+  ///   - recordCount: Number of records
+  ///   - fetchDurationSeconds: Fetch duration in seconds
+  /// - Throws: `DataSourceMetadataValidationError` if validation fails
+  public static func validate(
+    sourceName: String,
+    recordTypeName: String,
+    recordCount: Int,
+    fetchDurationSeconds: Double
+  ) throws {
+    try validateNames(sourceName: sourceName, recordTypeName: recordTypeName)
+    try validateNumericFields(recordCount: recordCount, fetchDurationSeconds: fetchDurationSeconds)
+  }
+
+  private static func validateNames(sourceName: String, recordTypeName: String) throws {
+    if sourceName.isEmpty {
+      throw DataSourceMetadataValidationError(details: .emptySourceName)
+    }
+    if recordTypeName.isEmpty {
+      throw DataSourceMetadataValidationError(details: .emptyRecordTypeName)
+    }
+    if !sourceName.unicodeScalars.allSatisfy({ $0.isASCII }) {
+      throw DataSourceMetadataValidationError(details: .nonASCIISourceName(sourceName))
+    }
+    if !recordTypeName.unicodeScalars.allSatisfy({ $0.isASCII }) {
+      throw DataSourceMetadataValidationError(details: .nonASCIIRecordTypeName(recordTypeName))
+    }
+
+    let recordName = "metadata-\(sourceName)-\(recordTypeName)"
+    if recordName.count > 255 {
+      throw DataSourceMetadataValidationError(details: .recordNameTooLong(recordName.count))
+    }
+  }
+
+  private static func validateNumericFields(
+    recordCount: Int,
+    fetchDurationSeconds: Double
+  ) throws {
+    if recordCount < 0 {
+      throw DataSourceMetadataValidationError(details: .negativeRecordCount(recordCount))
+    }
+    if fetchDurationSeconds < 0 {
+      throw DataSourceMetadataValidationError(details: .negativeFetchDuration(fetchDurationSeconds))
+    }
   }
 }

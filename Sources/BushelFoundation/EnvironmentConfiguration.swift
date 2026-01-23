@@ -79,7 +79,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
 
   /// The threshold of user engagement to trigger a review request.
   @EnvironmentProperty(Key.reviewEngagementThreshold)
-  public var reviewEngagementThreshold: Int
+  public var reviewEngagementThreshold: ReviewEngagementThreshold
 
   /// Indicates whether to trigger tracking permissions request.
   @EnvironmentProperty(Key.triggerTrackingPermissionsRequest)
@@ -95,7 +95,7 @@ public struct EnvironmentConfiguration: CustomReflectable, Sendable {
         "onboardingOveride": self.onboardingOveride,
         "resetApplication": self.resetApplication,
         "releaseVersion": self.releaseVersion,
-        "reviewEngagementThreshold": self.reviewEngagementThreshold,
+        "reviewEngagementThreshold": self.reviewEngagementThreshold.rawValue,
         "triggerTrackingPermissionsRequest": self.triggerTrackingPermissionsRequest,
       ]
     )
