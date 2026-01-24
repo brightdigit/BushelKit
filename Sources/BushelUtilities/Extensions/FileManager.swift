@@ -109,9 +109,16 @@ public import Foundation
   /// - Parameter url: The URL of the directory to check.
   /// - Returns: A `DirectoryExists` struct indicating the existence and type of the directory.
   public func directoryExists(at url: URL) -> DirectoryExists {
+    let path: String
+    if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
+      path = url.path()
+    } else {
+      path = url.path
+    }
+
     var isDirectory: ObjCBool = false
     let fileExists = self.fileExists(
-      atPath: url.path,
+      atPath: path,
       isDirectory: &isDirectory
     )
 
