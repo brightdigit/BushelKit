@@ -216,6 +216,56 @@ internal final class RestoreImageRecordValidationTests: XCTestCase {
     }
   }
 
+  internal func testValidateMissingURLScheme() {
+    // Create a URL without a scheme (relative URL)
+    // swiftlint:disable:next force_unwrapping
+    let urlWithoutScheme = URL(string: "//example.com/file.ipsw")!
+    let record = RestoreImageRecord(
+      version: "14.2.1",
+      buildNumber: "23C71",
+      releaseDate: Date(),
+      downloadURL: urlWithoutScheme,
+      fileSize: 14_500_000_000,
+      sha256Hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      sha1Hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      isPrerelease: false,
+      source: "test"
+    )
+
+    XCTAssertThrowsError(try record.validate()) { error in
+      guard
+        let validationError = error as? RestoreImageRecordValidationError,
+        case .missingURLScheme(let url) = validationError
+      else {
+        XCTFail("Expected missingURLScheme error, got \(error)")
+        return
+      }
+      XCTAssertEqual(url, urlWithoutScheme)
+    }
+  }
+
+  internal func testValidateUppercaseHashesAreNormalized() {
+    // Test that uppercase hashes are accepted and normalized
+    let uppercaseSHA256 = "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    let uppercaseSHA1 = "DA39A3EE5E6B4B0D3255BFEF95601890AFD80709"
+    
+    let record = RestoreImageRecord(
+      version: "14.2.1",
+      buildNumber: "23C71",
+      releaseDate: Date(),
+      // swiftlint:disable:next force_unwrapping
+      downloadURL: URL(string: "https://example.com/file.ipsw")!,
+      fileSize: 14_500_000_000,
+      sha256Hash: uppercaseSHA256,
+      sha1Hash: uppercaseSHA1,
+      isPrerelease: false,
+      source: "test"
+    )
+    
+    // Should pass validation because uppercase hashes are normalized to lowercase
+    XCTAssertNoThrow(try record.validate())
+  }
+
   internal func testIsValidProperty() {
     let validRecord = makeSampleRecord()
     XCTAssertTrue(validRecord.isValid)

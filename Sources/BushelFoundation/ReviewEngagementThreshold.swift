@@ -53,24 +53,27 @@ public struct ReviewEngagementThreshold:
   }
 
   /// Creates a threshold from a raw integer value.
-  /// - Parameter rawValue: The threshold count.
+  /// - Parameter rawValue: The threshold count. Must be non-negative.
   public init(rawValue: Int) {
+    assert(rawValue >= 0, "ReviewEngagementThreshold must be non-negative")
     self.rawValue = rawValue
   }
 
   /// Creates a threshold from an environment variable string.
   /// - Parameter environmentStringValue: The string value from the environment.
-  /// - Returns: A threshold instance, or nil if the string is not a valid integer.
+  /// - Returns: A threshold instance, or nil if the string is not a valid integer or is negative.
   public init?(environmentStringValue: String) {
     guard let value = Int(environmentStringValue) else {
       return nil
     }
+    assert(value >= 0, "ReviewEngagementThreshold must be non-negative")
     self.rawValue = value
   }
 
   /// Creates a threshold from an integer literal.
-  /// - Parameter value: The literal integer value.
+  /// - Parameter value: The literal integer value. Must be non-negative.
   public init(integerLiteral value: IntegerLiteralType) {
+    assert(value >= 0, "ReviewEngagementThreshold must be non-negative")
     self.rawValue = value
   }
 }

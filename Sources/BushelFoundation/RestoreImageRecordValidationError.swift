@@ -41,6 +41,8 @@ public enum RestoreImageRecordValidationError: Error, Sendable, Equatable {
   case nonHexadecimalSHA1(String)
   /// File size is not positive.
   case nonPositiveFileSize(Int)
+  /// Download URL is missing a scheme.
+  case missingURLScheme(URL)
   /// Download URL does not use HTTPS.
   case insecureDownloadURL(URL)
 }

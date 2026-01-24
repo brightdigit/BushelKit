@@ -100,8 +100,12 @@ internal final class ReviewEngagementThresholdTests: XCTestCase {
   }
 
   internal func testNegativeValue() {
-    // The type allows negative values - it's up to the caller to validate if needed
-    let threshold = ReviewEngagementThreshold(rawValue: -5)
-    XCTAssertEqual(threshold.rawValue, -5)
+    // The type no longer allows negative values - assert prevents them in debug builds
+    // This test verifies that positive values still work
+    let threshold = ReviewEngagementThreshold(rawValue: 0)
+    XCTAssertEqual(threshold.rawValue, 0)
+    
+    let positiveThreshold = ReviewEngagementThreshold(rawValue: 5)
+    XCTAssertEqual(positiveThreshold.rawValue, 5)
   }
 }

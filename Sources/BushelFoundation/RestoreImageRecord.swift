@@ -129,23 +129,25 @@ public struct RestoreImageRecord: Codable, Sendable {
 
 extension RestoreImageRecord {
   fileprivate static func isValidHexadecimal(_ string: String) -> Bool {
-    string.allSatisfy { $0.isHexDigit }
+    string.allSatisfy { $0.isHexDigit && ($0.isLowercase || $0.isNumber) }
   }
 
   fileprivate static func validateSHA256Hash(_ hash: String) throws {
-    guard hash.count == 64 else {
+    let normalizedHash = hash.lowercased()
+    guard normalizedHash.count == 64 else {
       throw RestoreImageRecordValidationError.invalidSHA256Hash(hash, expectedLength: 64)
     }
-    guard isValidHexadecimal(hash) else {
+    guard isValidHexadecimal(normalizedHash) else {
       throw RestoreImageRecordValidationError.nonHexadecimalSHA256(hash)
     }
   }
 
   fileprivate static func validateSHA1Hash(_ hash: String) throws {
-    guard hash.count == 40 else {
+    let normalizedHash = hash.lowercased()
+    guard normalizedHash.count == 40 else {
       throw RestoreImageRecordValidationError.invalidSHA1Hash(hash, expectedLength: 40)
     }
-    guard isValidHexadecimal(hash) else {
+    guard isValidHexadecimal(normalizedHash) else {
       throw RestoreImageRecordValidationError.nonHexadecimalSHA1(hash)
     }
   }
@@ -157,7 +159,10 @@ extension RestoreImageRecord {
   }
 
   fileprivate static func validateDownloadURL(_ url: URL) throws {
-    guard url.scheme?.lowercased() == "https" else {
+    guard let scheme = url.scheme?.lowercased() else {
+      throw RestoreImageRecordValidationError.missingURLScheme(url)
+    }
+    guard scheme == "https" else {
       throw RestoreImageRecordValidationError.insecureDownloadURL(url)
     }
   }

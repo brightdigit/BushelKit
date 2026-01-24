@@ -71,28 +71,14 @@ public struct DataSourceMetadata: Codable, Sendable {
     lastError: String? = nil
   ) {
     // Validation using precondition (fail-fast approach)
-    precondition(!sourceName.isEmpty, "sourceName cannot be empty")
-    precondition(!recordTypeName.isEmpty, "recordTypeName cannot be empty")
-    precondition(
-      sourceName.unicodeScalars.allSatisfy { $0.isASCII },
-      "sourceName must contain only ASCII characters: \(sourceName)"
-    )
-    precondition(
-      recordTypeName.unicodeScalars.allSatisfy { $0.isASCII },
-      "recordTypeName must contain only ASCII characters: \(recordTypeName)"
-    )
-
+    precondition(Self.isValidSourceName(sourceName), "sourceName must be non-empty and contain only ASCII characters")
+    precondition(Self.isValidRecordTypeName(recordTypeName), "recordTypeName must be non-empty and contain only ASCII characters")
+    
     let recordName = "metadata-\(sourceName)-\(recordTypeName)"
-    precondition(
-      recordName.count <= 255,
-      "CloudKit record name exceeds 255 characters: \(recordName.count)"
-    )
-
-    precondition(recordCount >= 0, "recordCount cannot be negative: \(recordCount)")
-    precondition(
-      fetchDurationSeconds >= 0,
-      "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)"
-    )
+    precondition(Self.isValidRecordName(recordName), "CloudKit record name exceeds 255 characters: \(recordName.count)")
+    
+    precondition(Self.isValidRecordCount(recordCount), "recordCount cannot be negative: \(recordCount)")
+    precondition(Self.isValidFetchDuration(fetchDurationSeconds), "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)")
 
     self.sourceName = sourceName
     self.recordTypeName = recordTypeName
@@ -121,6 +107,28 @@ public struct DataSourceMetadata: Codable, Sendable {
     try validateNumericFields(recordCount: recordCount, fetchDurationSeconds: fetchDurationSeconds)
   }
 
+  // MARK: Private Validation Helpers
+  
+  private static func isValidSourceName(_ name: String) -> Bool {
+    !name.isEmpty && name.unicodeScalars.allSatisfy { $0.isASCII }
+  }
+  
+  private static func isValidRecordTypeName(_ name: String) -> Bool {
+    !name.isEmpty && name.unicodeScalars.allSatisfy { $0.isASCII }
+  }
+  
+  private static func isValidRecordName(_ name: String) -> Bool {
+    name.count <= 255
+  }
+  
+  private static func isValidRecordCount(_ count: Int) -> Bool {
+    count >= 0
+  }
+  
+  private static func isValidFetchDuration(_ duration: Double) -> Bool {
+    duration >= 0
+  }
+
   private static func validateNames(sourceName: String, recordTypeName: String) throws {
     if sourceName.isEmpty {
       throw DataSourceMetadataValidationError(details: .emptySourceName)
@@ -128,15 +136,15 @@ public struct DataSourceMetadata: Codable, Sendable {
     if recordTypeName.isEmpty {
       throw DataSourceMetadataValidationError(details: .emptyRecordTypeName)
     }
-    if !sourceName.unicodeScalars.allSatisfy({ $0.isASCII }) {
+    if !isValidSourceName(sourceName) {
       throw DataSourceMetadataValidationError(details: .nonASCIISourceName(sourceName))
     }
-    if !recordTypeName.unicodeScalars.allSatisfy({ $0.isASCII }) {
+    if !isValidRecordTypeName(recordTypeName) {
       throw DataSourceMetadataValidationError(details: .nonASCIIRecordTypeName(recordTypeName))
     }
 
     let recordName = "metadata-\(sourceName)-\(recordTypeName)"
-    if recordName.count > 255 {
+    if !isValidRecordName(recordName) {
       throw DataSourceMetadataValidationError(details: .recordNameTooLong(recordName.count))
     }
   }
@@ -145,10 +153,10 @@ public struct DataSourceMetadata: Codable, Sendable {
     recordCount: Int,
     fetchDurationSeconds: Double
   ) throws {
-    if recordCount < 0 {
+    if !isValidRecordCount(recordCount) {
       throw DataSourceMetadataValidationError(details: .negativeRecordCount(recordCount))
     }
-    if fetchDurationSeconds < 0 {
+    if !isValidFetchDuration(fetchDurationSeconds) {
       throw DataSourceMetadataValidationError(details: .negativeFetchDuration(fetchDurationSeconds))
     }
   }
