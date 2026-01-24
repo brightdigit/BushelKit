@@ -47,6 +47,8 @@ public enum ConsoleOutput {
   /// This is a drop-in replacement for Swift's `print()` that writes to stderr instead of stdout.
   /// Use this throughout the codebase to ensure JSON output on stdout remains clean.
   public static func print(_ message: String) {
+    // UTF-8 encoding of Swift String values cannot fail in practice since Swift Strings 
+    // are always valid Unicode. The if-let is defensive programming for theoretical edge cases.
     if let data = (message + "\n").data(using: .utf8) {
       FileHandle.standardError.write(data)
     }
