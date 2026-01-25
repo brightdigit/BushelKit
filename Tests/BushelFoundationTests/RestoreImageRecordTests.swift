@@ -47,8 +47,8 @@ internal final class RestoreImageRecordTests: XCTestCase {
       releaseDate: Date(timeIntervalSince1970: 1_700_000_000),
       downloadURL: Self.sampleDownloadURL,
       fileSize: 14_500_000_000,
-      sha256Hash: "abc123",
-      sha1Hash: "def456",
+      sha256Hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      sha1Hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
       isSigned: true,
       isPrerelease: false,
       source: "appledb.dev",
@@ -63,8 +63,11 @@ internal final class RestoreImageRecordTests: XCTestCase {
     XCTAssertEqual(record.version, "14.2.1")
     XCTAssertEqual(record.buildNumber, "23C71")
     XCTAssertEqual(record.fileSize, 14_500_000_000)
-    XCTAssertEqual(record.sha256Hash, "abc123")
-    XCTAssertEqual(record.sha1Hash, "def456")
+    XCTAssertEqual(
+      record.sha256Hash,
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    )
+    XCTAssertEqual(record.sha1Hash, "da39a3ee5e6b4b0d3255bfef95601890afd80709")
     if let isSigned = record.isSigned {
       XCTAssertTrue(isSigned)
     } else {
@@ -87,8 +90,8 @@ internal final class RestoreImageRecordTests: XCTestCase {
       releaseDate: Date(),
       downloadURL: Self.betaDownloadURL,
       fileSize: 15_000_000_000,
-      sha256Hash: "beta123",
-      sha1Hash: "beta456",
+      sha256Hash: "a" + String(repeating: "0", count: 63),
+      sha1Hash: "b" + String(repeating: "0", count: 39),
       isSigned: true,
       isPrerelease: true,
       source: "appledb.dev"
@@ -126,8 +129,8 @@ internal final class RestoreImageRecordTests: XCTestCase {
       releaseDate: Date(),
       downloadURL: Self.minimalDownloadURL,
       fileSize: 14_000_000_000,
-      sha256Hash: "hash256",
-      sha1Hash: "hash1",
+      sha256Hash: "c" + String(repeating: "0", count: 63),
+      sha1Hash: "d" + String(repeating: "0", count: 39),
       isSigned: nil,
       isPrerelease: false,
       source: "ipsw.me",

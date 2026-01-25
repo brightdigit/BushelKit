@@ -56,7 +56,7 @@ public struct DataSourceMetadata: Codable, Sendable {
 
   /// CloudKit record name for this metadata entry
   public var recordName: String {
-    "metadata-\(sourceName)-\(recordTypeName)"
+    Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
   }
 
   // MARK: Lifecycle
@@ -70,6 +70,25 @@ public struct DataSourceMetadata: Codable, Sendable {
     fetchDurationSeconds: Double = 0,
     lastError: String? = nil
   ) {
+    // Validation using precondition (fail-fast approach)
+    precondition(
+      Self.isValidSourceName(sourceName),
+      "sourceName must be non-empty and contain only ASCII characters")
+    precondition(
+      Self.isValidRecordTypeName(recordTypeName),
+      "recordTypeName must be non-empty and contain only ASCII characters")
+
+    let recordName = Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
+    precondition(
+      Self.isValidRecordName(recordName),
+      "CloudKit record name exceeds 255 characters: \(recordName.count)")
+
+    precondition(
+      Self.isValidRecordCount(recordCount), "recordCount cannot be negative: \(recordCount)")
+    precondition(
+      Self.isValidFetchDuration(fetchDurationSeconds),
+      "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)")
+
     self.sourceName = sourceName
     self.recordTypeName = recordTypeName
     self.lastFetchedAt = lastFetchedAt
@@ -77,5 +96,87 @@ public struct DataSourceMetadata: Codable, Sendable {
     self.recordCount = recordCount
     self.fetchDurationSeconds = fetchDurationSeconds
     self.lastError = lastError
+  }
+
+  /// Validates DataSourceMetadata parameters without creating an instance.
+  ///
+  /// - Parameters:
+  ///   - sourceName: The data source name
+  ///   - recordTypeName: The record type name
+  ///   - recordCount: Number of records
+  ///   - fetchDurationSeconds: Fetch duration in seconds
+  /// - Throws: `DataSourceMetadataValidationError` if validation fails
+  public static func validate(
+    sourceName: String,
+    recordTypeName: String,
+    recordCount: Int,
+    fetchDurationSeconds: Double
+  ) throws {
+    try validateNames(sourceName: sourceName, recordTypeName: recordTypeName)
+    try validateNumericFields(recordCount: recordCount, fetchDurationSeconds: fetchDurationSeconds)
+  }
+
+  // MARK: Private Validation Helpers
+
+  private static func isValidSourceName(_ name: String) -> Bool {
+    !name.isEmpty && name.unicodeScalars.allSatisfy { $0.isASCII }
+  }
+
+  private static func isValidRecordTypeName(_ name: String) -> Bool {
+    !name.isEmpty && name.unicodeScalars.allSatisfy { $0.isASCII }
+  }
+
+  private static func isValidRecordName(_ name: String) -> Bool {
+    name.count <= 255
+  }
+
+  private static func isValidRecordCount(_ count: Int) -> Bool {
+    count >= 0
+  }
+
+  private static func isValidFetchDuration(_ duration: Double) -> Bool {
+    duration >= 0
+  }
+
+  /// Constructs a CloudKit record name from source and record type names.
+  ///
+  /// - Parameters:
+  ///   - sourceName: The data source name
+  ///   - recordTypeName: The record type name
+  /// - Returns: A CloudKit record name in the format "metadata-{sourceName}-{recordTypeName}"
+  private static func makeRecordName(sourceName: String, recordTypeName: String) -> String {
+    "metadata-\(sourceName)-\(recordTypeName)"
+  }
+
+  private static func validateNames(sourceName: String, recordTypeName: String) throws {
+    if sourceName.isEmpty {
+      throw DataSourceMetadataValidationError(details: .emptySourceName)
+    }
+    if recordTypeName.isEmpty {
+      throw DataSourceMetadataValidationError(details: .emptyRecordTypeName)
+    }
+    if !isValidSourceName(sourceName) {
+      throw DataSourceMetadataValidationError(details: .nonASCIISourceName(sourceName))
+    }
+    if !isValidRecordTypeName(recordTypeName) {
+      throw DataSourceMetadataValidationError(details: .nonASCIIRecordTypeName(recordTypeName))
+    }
+
+    let recordName = Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
+    if !isValidRecordName(recordName) {
+      throw DataSourceMetadataValidationError(details: .recordNameTooLong(recordName.count))
+    }
+  }
+
+  private static func validateNumericFields(
+    recordCount: Int,
+    fetchDurationSeconds: Double
+  ) throws {
+    if !isValidRecordCount(recordCount) {
+      throw DataSourceMetadataValidationError(details: .negativeRecordCount(recordCount))
+    }
+    if !isValidFetchDuration(fetchDurationSeconds) {
+      throw DataSourceMetadataValidationError(details: .negativeFetchDuration(fetchDurationSeconds))
+    }
   }
 }
