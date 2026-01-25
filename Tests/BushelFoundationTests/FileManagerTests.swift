@@ -27,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if !os(Android)
 import BushelFoundationWax
 import XCTest
 
@@ -70,3 +71,4 @@ internal final class FileManagerTests: XCTestCase {
   //    XCTAssertEqual(sut.directoryExists(at: fileURL), .fileExists)
   //  }
 }
+#endif
