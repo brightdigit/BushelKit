@@ -4346,8 +4346,6 @@ struct FelinePine: PackageDependency, TargetDependency {
 
 struct RadiantKit: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    // Updated from 1.0.0-beta.4 to 1.0.0-beta.5 for compatibility with latest BushelFoundation changes
-    // and to incorporate bug fixes in RadiantKit's file handling
     .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.5")
   }
 }
