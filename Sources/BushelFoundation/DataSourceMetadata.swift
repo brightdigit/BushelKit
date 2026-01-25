@@ -56,7 +56,7 @@ public struct DataSourceMetadata: Codable, Sendable {
 
   /// CloudKit record name for this metadata entry
   public var recordName: String {
-    "metadata-\(sourceName)-\(recordTypeName)"
+    Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
   }
 
   // MARK: Lifecycle
@@ -71,14 +71,23 @@ public struct DataSourceMetadata: Codable, Sendable {
     lastError: String? = nil
   ) {
     // Validation using precondition (fail-fast approach)
-    precondition(Self.isValidSourceName(sourceName), "sourceName must be non-empty and contain only ASCII characters")
-    precondition(Self.isValidRecordTypeName(recordTypeName), "recordTypeName must be non-empty and contain only ASCII characters")
-    
-    let recordName = "metadata-\(sourceName)-\(recordTypeName)"
-    precondition(Self.isValidRecordName(recordName), "CloudKit record name exceeds 255 characters: \(recordName.count)")
-    
-    precondition(Self.isValidRecordCount(recordCount), "recordCount cannot be negative: \(recordCount)")
-    precondition(Self.isValidFetchDuration(fetchDurationSeconds), "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)")
+    precondition(
+      Self.isValidSourceName(sourceName),
+      "sourceName must be non-empty and contain only ASCII characters")
+    precondition(
+      Self.isValidRecordTypeName(recordTypeName),
+      "recordTypeName must be non-empty and contain only ASCII characters")
+
+    let recordName = Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
+    precondition(
+      Self.isValidRecordName(recordName),
+      "CloudKit record name exceeds 255 characters: \(recordName.count)")
+
+    precondition(
+      Self.isValidRecordCount(recordCount), "recordCount cannot be negative: \(recordCount)")
+    precondition(
+      Self.isValidFetchDuration(fetchDurationSeconds),
+      "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)")
 
     self.sourceName = sourceName
     self.recordTypeName = recordTypeName
@@ -108,25 +117,35 @@ public struct DataSourceMetadata: Codable, Sendable {
   }
 
   // MARK: Private Validation Helpers
-  
+
   private static func isValidSourceName(_ name: String) -> Bool {
     !name.isEmpty && name.unicodeScalars.allSatisfy { $0.isASCII }
   }
-  
+
   private static func isValidRecordTypeName(_ name: String) -> Bool {
     !name.isEmpty && name.unicodeScalars.allSatisfy { $0.isASCII }
   }
-  
+
   private static func isValidRecordName(_ name: String) -> Bool {
     name.count <= 255
   }
-  
+
   private static func isValidRecordCount(_ count: Int) -> Bool {
     count >= 0
   }
-  
+
   private static func isValidFetchDuration(_ duration: Double) -> Bool {
     duration >= 0
+  }
+
+  /// Constructs a CloudKit record name from source and record type names.
+  ///
+  /// - Parameters:
+  ///   - sourceName: The data source name
+  ///   - recordTypeName: The record type name
+  /// - Returns: A CloudKit record name in the format "metadata-{sourceName}-{recordTypeName}"
+  private static func makeRecordName(sourceName: String, recordTypeName: String) -> String {
+    "metadata-\(sourceName)-\(recordTypeName)"
   }
 
   private static func validateNames(sourceName: String, recordTypeName: String) throws {
@@ -143,7 +162,7 @@ public struct DataSourceMetadata: Codable, Sendable {
       throw DataSourceMetadataValidationError(details: .nonASCIIRecordTypeName(recordTypeName))
     }
 
-    let recordName = "metadata-\(sourceName)-\(recordTypeName)"
+    let recordName = Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
     if !isValidRecordName(recordName) {
       throw DataSourceMetadataValidationError(details: .recordNameTooLong(recordName.count))
     }

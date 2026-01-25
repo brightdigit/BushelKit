@@ -104,7 +104,7 @@ internal final class ReviewEngagementThresholdTests: XCTestCase {
     // This test verifies that positive values still work
     let threshold = ReviewEngagementThreshold(rawValue: 0)
     XCTAssertEqual(threshold.rawValue, 0)
-    
+
     let positiveThreshold = ReviewEngagementThreshold(rawValue: 5)
     XCTAssertEqual(positiveThreshold.rawValue, 5)
   }

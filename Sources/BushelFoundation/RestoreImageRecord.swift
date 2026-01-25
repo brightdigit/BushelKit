@@ -128,28 +128,56 @@ public struct RestoreImageRecord: Codable, Sendable {
 }
 
 extension RestoreImageRecord {
+  /// Validates that a string contains only lowercase hexadecimal characters.
+  ///
+  /// - Parameter string: The string to validate. Must be already normalized to lowercase.
+  /// - Returns: `true` if the string contains only lowercase hex digits (0-9, a-f), `false` otherwise.
+  ///
+  /// - Note: This method expects the input to be pre-normalized to lowercase.
+  ///   Use `string.lowercased()` before calling this method if the input may contain uppercase characters.
   fileprivate static func isValidHexadecimal(_ string: String) -> Bool {
     string.allSatisfy { $0.isHexDigit && ($0.isLowercase || $0.isNumber) }
   }
 
-  fileprivate static func validateSHA256Hash(_ hash: String) throws {
+  /// Validates a cryptographic hash string.
+  ///
+  /// - Parameters:
+  ///   - hash: The hash string to validate
+  ///   - expectedLength: Expected character length (64 for SHA-256, 40 for SHA-1)
+  ///   - invalidLengthError: Error to throw if length is incorrect
+  ///   - nonHexError: Error to throw if non-hexadecimal characters present
+  /// - Throws: Provided error if validation fails
+  private static func validateHash(
+    _ hash: String,
+    expectedLength: Int,
+    invalidLengthError: @autoclosure () -> RestoreImageRecordValidationError,
+    nonHexError: @autoclosure () -> RestoreImageRecordValidationError
+  ) throws {
     let normalizedHash = hash.lowercased()
-    guard normalizedHash.count == 64 else {
-      throw RestoreImageRecordValidationError.invalidSHA256Hash(hash, expectedLength: 64)
+    guard normalizedHash.count == expectedLength else {
+      throw invalidLengthError()
     }
     guard isValidHexadecimal(normalizedHash) else {
-      throw RestoreImageRecordValidationError.nonHexadecimalSHA256(hash)
+      throw nonHexError()
     }
   }
 
+  fileprivate static func validateSHA256Hash(_ hash: String) throws {
+    try validateHash(
+      hash,
+      expectedLength: 64,
+      invalidLengthError: .invalidSHA256Hash(hash, expectedLength: 64),
+      nonHexError: .nonHexadecimalSHA256(hash)
+    )
+  }
+
   fileprivate static func validateSHA1Hash(_ hash: String) throws {
-    let normalizedHash = hash.lowercased()
-    guard normalizedHash.count == 40 else {
-      throw RestoreImageRecordValidationError.invalidSHA1Hash(hash, expectedLength: 40)
-    }
-    guard isValidHexadecimal(normalizedHash) else {
-      throw RestoreImageRecordValidationError.nonHexadecimalSHA1(hash)
-    }
+    try validateHash(
+      hash,
+      expectedLength: 40,
+      invalidLengthError: .invalidSHA1Hash(hash, expectedLength: 40),
+      nonHexError: .nonHexadecimalSHA1(hash)
+    )
   }
 
   fileprivate static func validateFileSize(_ size: Int) throws {

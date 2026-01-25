@@ -31,6 +31,7 @@ import XCTest
 
 @testable import BushelFoundation
 
+// swiftlint:disable file_length
 internal final class RestoreImageRecordValidationTests: XCTestCase {
   // swiftlint:disable force_unwrapping
   private static let sampleDownloadURL = URL(
@@ -189,6 +190,31 @@ internal final class RestoreImageRecordValidationTests: XCTestCase {
     }
   }
 
+  internal func testValidateNegativeFileSize() {
+    let record = RestoreImageRecord(
+      version: "14.2.1",
+      buildNumber: "23C71",
+      releaseDate: Date(),
+      downloadURL: Self.sampleDownloadURL,
+      fileSize: -1_000,
+      sha256Hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      sha1Hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      isPrerelease: false,
+      source: "test"
+    )
+
+    XCTAssertThrowsError(try record.validate()) { error in
+      guard
+        let validationError = error as? RestoreImageRecordValidationError,
+        case .nonPositiveFileSize(let size) = validationError
+      else {
+        XCTFail("Expected nonPositiveFileSize error, got \(error)")
+        return
+      }
+      XCTAssertEqual(size, -1_000)
+    }
+  }
+
   internal func testValidateInsecureDownloadURL() {
     // swiftlint:disable:next force_unwrapping
     let httpURL = URL(string: "http://example.com/insecure.ipsw")!
@@ -248,7 +274,7 @@ internal final class RestoreImageRecordValidationTests: XCTestCase {
     // Test that uppercase hashes are accepted and normalized
     let uppercaseSHA256 = "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
     let uppercaseSHA1 = "DA39A3EE5E6B4B0D3255BFEF95601890AFD80709"
-    
+
     let record = RestoreImageRecord(
       version: "14.2.1",
       buildNumber: "23C71",
@@ -261,7 +287,7 @@ internal final class RestoreImageRecordValidationTests: XCTestCase {
       isPrerelease: false,
       source: "test"
     )
-    
+
     // Should pass validation because uppercase hashes are normalized to lowercase
     XCTAssertNoThrow(try record.validate())
   }
