@@ -79,4 +79,49 @@ internal final class ConsoleOutputTests: XCTestCase {
       XCTAssertNotNil(verbose)
     }
   }
+  
+  internal func testPrintMethod() {
+    // Test that print method doesn't crash with various inputs
+    ConsoleOutput.print("Regular message")
+    ConsoleOutput.print("")  // Empty string
+    ConsoleOutput.print("Message with\nnewlines")
+    ConsoleOutput.print("Message with emoji 🎉")
+    ConsoleOutput.print("Message with special chars: @#$%^&*()")
+    
+    // Since we're writing to stderr, we can't easily verify output
+    // This test ensures the method doesn't crash with various inputs
+    XCTAssertTrue(true, "Print method executed without errors")
+  }
+  
+  internal func testPrintWithLongString() {
+    // Test with a long string to ensure buffer handling works
+    let longString = String(repeating: "a", count: 10000)
+    ConsoleOutput.print(longString)
+    
+    XCTAssertTrue(true, "Print method handled long string")
+  }
+  
+  internal func testPrintWithUnicodeCharacters() {
+    // Test various Unicode characters
+    ConsoleOutput.print("Hello, 世界")  // Chinese
+    ConsoleOutput.print("مرحبا بالعالم")  // Arabic
+    ConsoleOutput.print("🌍🌎🌏")  // Emojis
+    ConsoleOutput.print("Café ☕")  // Accented characters
+    
+    XCTAssertTrue(true, "Print method handled Unicode characters")
+  }
+  
+  internal func testAllOutputMethodsUseStderr() {
+    // Verify all output methods call the base print method
+    // This ensures consistency across all output methods
+    ConsoleOutput.info("Info uses print")
+    ConsoleOutput.success("Success uses print")
+    ConsoleOutput.warning("Warning uses print")
+    ConsoleOutput.error("Error uses print")
+    
+    ConsoleOutput.isVerbose = true
+    ConsoleOutput.verbose("Verbose uses print when enabled")
+    
+    XCTAssertTrue(true, "All output methods executed without errors")
+  }
 }

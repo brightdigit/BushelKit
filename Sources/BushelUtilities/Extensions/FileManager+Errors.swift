@@ -59,3 +59,20 @@ extension Error where Self == NSError {
     )
   }
 }
+
+extension NSError {
+  /// Indicates whether the error is a file not found error.
+  public var isFileNotFound: Bool {
+    domain == NSCocoaErrorDomain && code == NSFileNoSuchFileError
+  }
+
+  /// Indicates whether the error is a corrupt file error.
+  public var isCorruptFile: Bool {
+    domain == NSCocoaErrorDomain && code == NSFileReadCorruptFileError
+  }
+
+  /// Indicates whether the error is a file not found or corrupt file error.
+  public var isFileNotFoundOrCorrupt: Bool {
+    isFileNotFound || isCorruptFile
+  }
+}
