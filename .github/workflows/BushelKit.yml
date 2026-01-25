@@ -63,7 +63,7 @@ jobs:
           windows-swift-version: ${{ matrix.swift-version }}
           windows-swift-build: ${{ matrix.swift-build }}
       - name: Upload coverage to Codecov
-        if: steps.swift-build.outputs.contains-code-coverage == 'true'
+        if: false
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
