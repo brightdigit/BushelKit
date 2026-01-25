@@ -21,22 +21,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1.5.0-beta.2
+        id: swift-build
       - uses: sersoft-gmbh/swift-coverage-action@v4
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
         id: coverage-files
-        with:          
+        with:
           fail-on-empty-output: true
       - name: Set coverage flag
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
         id: set-flag
         run: echo "CODECOV_FLAGS=${MATRIX_IMAGE//\//-}" | sed 's/:/-/g' >> $GITHUB_ENV
         env:
           MATRIX_IMAGE: ${{ matrix.image }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4       
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
           flags: ${{ env.CODECOV_FLAGS }}
-          verbose: true        
-          token: ${{ secrets.CODECOV_TOKEN }}  
+          verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}  
   build-windows:
     name: Build on Windows
@@ -54,18 +58,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1.5.0-beta.2
+        id: swift-build
         with:
           windows-swift-version: ${{ matrix.swift-version }}
           windows-swift-build: ${{ matrix.swift-build }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4    
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
           flags: swift-${{ matrix.swift-version }},windows
           verbose: true
           token: ${{ secrets.CODECOV_TOKEN }}
-          os: windows
-          swift_project: BushelKit            
+          os: windows            
   
   build-android:
     name: Build on Android
@@ -79,11 +84,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1.5.0-beta.2
+        id: swift-build
         with:
           type: android
           android-swift-version: ${{ matrix.swift-version }}
           android-api-level: ${{ matrix.api-level }}
       - name: Upload coverage to Codecov
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
@@ -103,9 +110,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: brightdigit/swift-build@v1.5.0-beta.2
+        id: swift-build
         with:
           type: ${{ matrix.wasm-type }}
       - name: Upload coverage to Codecov
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
@@ -184,6 +193,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build and Test
+        id: swift-build
         uses: brightdigit/swift-build@v1.5.0-beta.2
         with:
           scheme: ${{ env.PACKAGE_NAME }}-Package
@@ -192,12 +202,14 @@ jobs:
           deviceName: ${{ matrix.deviceName }}
           osVersion: ${{ matrix.osVersion }}
           download-platform: ${{ matrix.download-platform || false }}
-          
+
       # Common Coverage Steps
       - name: Process Coverage
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
         uses: sersoft-gmbh/swift-coverage-action@v4
-  
+
       - name: Upload Coverage
+        if: steps.swift-build.outputs.contains-code-coverage == 'true'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
