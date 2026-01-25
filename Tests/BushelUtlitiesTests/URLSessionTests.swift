@@ -27,6 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// Skip network tests on Android due to SSL certificate issues in emulator
+#if !os(Android)
 import XCTest
 
 @testable import BushelUtilities
@@ -105,3 +107,4 @@ internal final class URLSessionTests: XCTestCase {
     }
   }
 }
+#endif

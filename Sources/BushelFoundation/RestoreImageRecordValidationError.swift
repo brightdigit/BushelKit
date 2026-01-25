@@ -1,5 +1,5 @@
 //
-//  Date+RFC2822.swift
+//  RestoreImageRecordValidationError.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,33 +29,20 @@
 
 public import Foundation
 
-extension Date {
-  /// RFC 2822 parse strategy for HTTP Last-Modified headers
-  ///
-  /// Thread-safe parse strategy using modern Swift FormatStyle API.
-  /// Format: "EEE, dd MMM yyyy HH:mm:ss zzz"
-  private static let rfc2822ParseStrategy = Date.ParseStrategy(
-    format:
-      // swiftlint:disable:next line_length
-      "\(weekday: .abbreviated), \(day: .twoDigits) \(month: .abbreviated) \(year: .padded(4)) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits):\(second: .twoDigits) GMT",
-    locale: Locale(identifier: "en_US_POSIX"),
-    timeZone: TimeZone(secondsFromGMT: 0) ?? .gmt
-  )
-
-  /// Creates a date from an RFC 2822 formatted string
-  ///
-  /// This initializer is designed for HTTP Last-Modified headers and similar RFC 2822 date formats.
-  /// Uses modern thread-safe ParseStrategy API for parsing.
-  ///
-  /// Example: "Fri, 19 Dec 2025 10:30:45 GMT"
-  ///
-  /// - Parameter rfc2822String: The RFC 2822 formatted date string
-  /// - Returns: A date if parsing succeeds, nil otherwise
-  public init?(rfc2822String: String) {
-    do {
-      self = try Self.rfc2822ParseStrategy.parse(rfc2822String)
-    } catch {
-      return nil
-    }
-  }
+/// Validation errors for RestoreImageRecord.
+public enum RestoreImageRecordValidationError: Error, Sendable, Equatable {
+  /// SHA-256 hash has invalid length.
+  case invalidSHA256Hash(String, expectedLength: Int)
+  /// SHA-1 hash has invalid length.
+  case invalidSHA1Hash(String, expectedLength: Int)
+  /// SHA-256 hash contains non-hexadecimal characters.
+  case nonHexadecimalSHA256(String)
+  /// SHA-1 hash contains non-hexadecimal characters.
+  case nonHexadecimalSHA1(String)
+  /// File size is not positive.
+  case nonPositiveFileSize(Int)
+  /// Download URL is missing a scheme.
+  case missingURLScheme(URL)
+  /// Download URL does not use HTTPS.
+  case insecureDownloadURL(URL)
 }

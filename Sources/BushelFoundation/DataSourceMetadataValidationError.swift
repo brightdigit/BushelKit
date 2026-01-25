@@ -1,5 +1,5 @@
 //
-//  URL.swift
+//  DataSourceMetadataValidationError.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,11 +27,32 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
+/// Validation errors for DataSourceMetadata.
+public struct DataSourceMetadataValidationError: Error, Sendable {
+  /// Specific validation error details.
+  public enum Details: Equatable, Sendable {
+    /// The source name is empty.
+    case emptySourceName
+    /// The record type name is empty.
+    case emptyRecordTypeName
+    /// The source name contains non-ASCII characters.
+    case nonASCIISourceName(String)
+    /// The record type name contains non-ASCII characters.
+    case nonASCIIRecordTypeName(String)
+    /// The generated CloudKit record name exceeds 255 characters.
+    case recordNameTooLong(Int)
+    /// The record count is negative.
+    case negativeRecordCount(Int)
+    /// The fetch duration is negative.
+    case negativeFetchDuration(Double)
+  }
 
-extension URL {
-  // swiftlint:disable:next force_unwrapping
-  public static let bushelWebSite = URL(string: "https://getbushel.app")!
-  public static let homeDirectory = URL(fileURLWithPath: NSHomeDirectory())
-  public static let temporaryDir = URL(fileURLWithPath: NSTemporaryDirectory())
+  /// The specific validation error.
+  public let details: Details
+
+  /// Creates a new validation error.
+  /// - Parameter details: The specific validation error details.
+  public init(details: Details) {
+    self.details = details
+  }
 }
