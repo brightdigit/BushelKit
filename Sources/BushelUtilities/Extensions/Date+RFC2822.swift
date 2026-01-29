@@ -39,7 +39,8 @@ extension Date {
       // swiftlint:disable:next line_length
       "\(weekday: .abbreviated), \(day: .twoDigits) \(month: .abbreviated) \(year: .padded(4)) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits):\(second: .twoDigits) GMT",
     locale: Locale(identifier: "en_US_POSIX"),
-    timeZone: TimeZone(secondsFromGMT: 0) ?? .gmt
+    // TimeZone(identifier: "GMT") should never fail for GMT, but provide fallback
+    timeZone: TimeZone(identifier: "GMT") ?? TimeZone(secondsFromGMT: 0) ?? TimeZone(identifier: "UTC")!
   )
 
   /// Creates a date from an RFC 2822 formatted string

@@ -1,5 +1,5 @@
 //
-//  Index.swift
+//  MinimumPlatforms.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -29,47 +29,13 @@
 
 import PackageDescription
 
-let package = Package(
-  name: "BushelKit",
-  entries: {
-    BushelCommand()
-    BushelFoundation()
-    BushelDocs()
-    BushelUtilities()
-    BushelFoundationWax()
-    BushelFactory()
-    BushelGuestProfile()
-    BushelHarvestCore()
-    BushelHub()
-    BushelHubIPSW()
-    BushelHubMacOS()
-    BushelLibrary()
-    BushelLogging()
-    BushelMachine()
-    BushelMacOSCore()
-    BushelUT()
-    BushelVirtualBuddy()
-    BushelTestUtilities()
-  },
-  dependencies: {
-    DocC()
-  },
-  testTargets: {
-    BushelFoundationTests()
-    BushelLibraryTests()
-    BushelMachineTests()
-    BushelFactoryTests()
-    BushelUtlitiesTests()
-  },
-  swiftSettings: {
-    AccessLevelOnImport()
-    NestedProtocols()
-    NoncopyableGenerics()
-    VariadicGenerics()
-    InternalImportsByDefault()
+struct MinimumPlatforms: PlatformSet {
+  var body: any SupportedPlatforms {
+    SupportedPlatform.macOS(.v12)
+    SupportedPlatform.iOS(.v18)
+    SupportedPlatform.watchOS(.v11)
+    SupportedPlatform.tvOS(.v18)
+    SupportedPlatform.visionOS(.v2)
+    SupportedPlatform.macCatalyst(.v18)
   }
-)
-.supportedPlatforms {
-  MinimumPlatforms()
 }
-.defaultLocalization(.english)
