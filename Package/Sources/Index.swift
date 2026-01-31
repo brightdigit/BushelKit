@@ -39,6 +39,7 @@ let package = Package(
     BushelFoundationWax()
     BushelFactory()
     BushelGuestProfile()
+    BushelHarvestCore()
     BushelHub()
     BushelHubIPSW()
     BushelHubMacOS()
@@ -69,6 +70,6 @@ let package = Package(
   }
 )
 .supportedPlatforms {
-  WWDC2023()
+  MinimumPlatforms()
 }
 .defaultLocalization(.english)

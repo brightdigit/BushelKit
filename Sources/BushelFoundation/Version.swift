@@ -43,7 +43,7 @@ public struct Version: CustomStringConvertible, Sendable {
     case prelease = "BrightDigitPrereleaseInfo"
 
     var value: String {
-      #if !os(Linux)
+      #if canImport(Darwin)
         if self == .bundleVersion {
           return kCFBundleVersionKey as String
         }

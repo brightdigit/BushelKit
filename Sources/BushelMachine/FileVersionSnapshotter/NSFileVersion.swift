@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !os(Linux)
+#if canImport(Darwin)
 
   internal import Foundation
 

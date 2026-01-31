@@ -1,9 +1,9 @@
 //
-//  Loggable.swift
+//  MinimumPlatforms.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2025 BrightDigit.
+//  Copyright © 2024 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,12 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@_exported public import FelinePine
+import PackageDescription
 
-#if !canImport(os)
-  @_exported import FelinePineSwift
-#else
-  @_exported import os
-#endif
-
-public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}
+struct MinimumPlatforms: PlatformSet {
+  var body: any SupportedPlatforms {
+    SupportedPlatform.macOS(.v12)
+    SupportedPlatform.iOS(.v18)
+    SupportedPlatform.watchOS(.v11)
+    SupportedPlatform.tvOS(.v18)
+    SupportedPlatform.visionOS(.v2)
+    SupportedPlatform.macCatalyst(.v18)
+  }
+}

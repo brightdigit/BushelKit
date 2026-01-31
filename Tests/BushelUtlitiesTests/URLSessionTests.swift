@@ -27,13 +27,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
+// Skip network tests on Android due to SSL certificate issues in emulator
+#if !os(Android)
+  import XCTest
 
-@testable import BushelUtilities
+  @testable import BushelUtilities
 
-#if canImport(FoundationNetworking)
-  import FoundationNetworking
-#endif
+  #if canImport(FoundationNetworking)
+    import FoundationNetworking
+  #endif
 
 /// Tests for URLSession extensions that provide data fetching capabilities.
 /// These tests validate the core functionality without requiring network access.
@@ -43,21 +45,22 @@ internal final class URLSessionTests: XCTestCase {
       URL(string: "https://this-domain-definitely-does-not-exist-12345.com")
     )
 
-    let lastModified = await URLSession.shared.fetchLastModified(from: url)
+      let lastModified = await URLSession.shared.fetchLastModified(from: url)
 
-    // Should return nil on error
-    XCTAssertNil(lastModified)
-  }
+      // Should return nil on error
+      XCTAssertNil(lastModified)
+    }
 
   internal func testFetchDataWithInvalidURLThrows() async throws {
     let url = try XCTUnwrap(URL(string: "https://this-definitely-does-not-exist-12345.com"))
 
-    do {
-      _ = try await URLSession.shared.fetchData(from: url)
-      XCTFail("Should have thrown an error")
-    } catch {
-      // Expected
-      XCTAssertTrue(error is URLError)
+      do {
+        _ = try await URLSession.shared.fetchData(from: url)
+        XCTFail("Should have thrown an error")
+      } catch {
+        // Expected
+        XCTAssertTrue(error is URLError)
+      }
     }
   }
-}
+#endif

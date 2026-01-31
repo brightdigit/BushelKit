@@ -103,4 +103,154 @@ internal final class DataSourceMetadataTests: XCTestCase {
       XCTAssertEqual(metadata.sourceName, "test")
     }
   }
+
+  // MARK: - Validation Tests
+
+  internal func testStaticValidationSuccess() throws {
+    try DataSourceMetadata.validate(
+      sourceName: "appledb.dev",
+      recordTypeName: "RestoreImage",
+      recordCount: 42,
+      fetchDurationSeconds: 1.5
+    )
+  }
+
+  internal func testStaticValidationEmptySourceName() {
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: "",
+        recordTypeName: "RestoreImage",
+        recordCount: 0,
+        fetchDurationSeconds: 0
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .emptySourceName = validationError.details
+      else {
+        XCTFail("Expected emptySourceName error, got \(error)")
+        return
+      }
+    }
+  }
+
+  internal func testStaticValidationEmptyRecordTypeName() {
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: "appledb.dev",
+        recordTypeName: "",
+        recordCount: 0,
+        fetchDurationSeconds: 0
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .emptyRecordTypeName = validationError.details
+      else {
+        XCTFail("Expected emptyRecordTypeName error, got \(error)")
+        return
+      }
+    }
+  }
+
+  internal func testStaticValidationNonASCIISourceName() {
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: "apple🍎db",
+        recordTypeName: "RestoreImage",
+        recordCount: 0,
+        fetchDurationSeconds: 0
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .nonASCIISourceName = validationError.details
+      else {
+        XCTFail("Expected nonASCIISourceName error, got \(error)")
+        return
+      }
+    }
+  }
+
+  internal func testStaticValidationNonASCIIRecordTypeName() {
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: "appledb.dev",
+        recordTypeName: "RestoreImage™",
+        recordCount: 0,
+        fetchDurationSeconds: 0
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .nonASCIIRecordTypeName = validationError.details
+      else {
+        XCTFail("Expected nonASCIIRecordTypeName error, got \(error)")
+        return
+      }
+    }
+  }
+
+  internal func testStaticValidationRecordNameTooLong() {
+    // Create a sourceName that will result in a record name > 255 characters
+    // "metadata-" (9 chars) + sourceName + "-" (1 char) + recordTypeName
+    // So we need sourceName + recordTypeName > 245 characters
+    let longSourceName = String(repeating: "a", count: 200)
+    let longRecordTypeName = String(repeating: "b", count: 50)
+
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: longSourceName,
+        recordTypeName: longRecordTypeName,
+        recordCount: 0,
+        fetchDurationSeconds: 0
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .recordNameTooLong = validationError.details
+      else {
+        XCTFail("Expected recordNameTooLong error, got \(error)")
+        return
+      }
+    }
+  }
+
+  internal func testStaticValidationNegativeRecordCount() {
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: "appledb.dev",
+        recordTypeName: "RestoreImage",
+        recordCount: -1,
+        fetchDurationSeconds: 0
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .negativeRecordCount = validationError.details
+      else {
+        XCTFail("Expected negativeRecordCount error, got \(error)")
+        return
+      }
+    }
+  }
+
+  internal func testStaticValidationNegativeFetchDuration() {
+    XCTAssertThrowsError(
+      try DataSourceMetadata.validate(
+        sourceName: "appledb.dev",
+        recordTypeName: "RestoreImage",
+        recordCount: 0,
+        fetchDurationSeconds: -0.5
+      )
+    ) { error in
+      guard
+        let validationError = error as? DataSourceMetadataValidationError,
+        case .negativeFetchDuration = validationError.details
+      else {
+        XCTFail("Expected negativeFetchDuration error, got \(error)")
+        return
+      }
+    }
+  }
 }

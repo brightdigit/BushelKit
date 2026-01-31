@@ -82,11 +82,11 @@ internal final class DataSourceTests: XCTestCase {
     }
   }
 
-  internal func testSendable() {
+  internal func testSendable() async {
     // Compile-time check that DataSource is Sendable
-    Task {
+    await Task {
       let source = DataSource.appleDB
       XCTAssertEqual(source.rawValue, "appledb.dev")
-    }
+    }.value
   }
 }

@@ -40,7 +40,7 @@ extension URL {
     self = url
   }
 
-  #if !os(Linux)
+  #if canImport(Darwin)
     /// Initializes a `URL` instance by resolving a security-scoped bookmark data.
     ///
     /// - Parameters:

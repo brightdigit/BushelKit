@@ -1,5 +1,5 @@
 //
-//  Loggable.swift
+//  RestoreImageRecordValidationError.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@_exported public import FelinePine
+public import Foundation
 
-#if !canImport(os)
-  @_exported import FelinePineSwift
-#else
-  @_exported import os
-#endif
-
-public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}
+/// Validation errors for RestoreImageRecord.
+public enum RestoreImageRecordValidationError: Error, Sendable, Equatable {
+  /// SHA-256 hash has invalid length.
+  case invalidSHA256Hash(String, expectedLength: Int)
+  /// SHA-1 hash has invalid length.
+  case invalidSHA1Hash(String, expectedLength: Int)
+  /// SHA-256 hash contains non-hexadecimal characters.
+  case nonHexadecimalSHA256(String)
+  /// SHA-1 hash contains non-hexadecimal characters.
+  case nonHexadecimalSHA1(String)
+  /// File size is not positive.
+  case nonPositiveFileSize(Int)
+  /// Download URL is missing a scheme.
+  case missingURLScheme(URL)
+  /// Download URL does not use HTTPS.
+  case insecureDownloadURL(URL)
+}
