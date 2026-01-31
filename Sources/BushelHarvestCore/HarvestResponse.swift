@@ -78,15 +78,20 @@ public struct HarvestResponse: Codable, Sendable {
   /// structure with additional error fields in future iterations.
   public let success: Bool
 
+  /// Response payload containing the result data
+  public let payload: ResponsePayload?
+
   /// Creates a new Harvest response
   ///
   /// - Parameters:
   ///   - requestId: The ID of the request this response corresponds to
   ///   - timestamp: When the response was created. Defaults to current time.
   ///   - success: Whether the request processing was successful
-  public init(requestId: UUID, timestamp: Date = Date(), success: Bool) {
+  ///   - payload: Optional response payload data
+  public init(requestId: UUID, timestamp: Date = Date(), success: Bool, payload: ResponsePayload? = nil) {
     self.requestId = requestId
     self.timestamp = timestamp
     self.success = success
+    self.payload = payload
   }
 }

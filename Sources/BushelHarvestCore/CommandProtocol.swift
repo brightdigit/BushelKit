@@ -88,6 +88,7 @@ public protocol HarvestCommandProtocol: Codable, Sendable {
 /// - `.network` - Network operations like connection management and data transfer
 /// - `.clipboard` - Clipboard operations for copy/paste functionality between host and guest
 /// - `.remote` - Remote debugging and development tools operations
+/// - `.security` - Security operations like authentication, authorization, and access control
 public enum CommandCategory: String, Codable, Sendable {
   /// System-level operations (shutdown, status, configuration, etc.)
   case system
@@ -103,4 +104,7 @@ public enum CommandCategory: String, Codable, Sendable {
   
   /// Remote debugging and development operations (SSH, debugging tools, etc.)
   case remote
+  
+  /// Security operations (authentication, authorization, access control, etc.)
+  case security
 }

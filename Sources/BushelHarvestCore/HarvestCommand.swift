@@ -33,18 +33,15 @@ public import Foundation
 ///
 /// Represents a concrete command that can be executed as part of the Harvest
 /// protocol. This is the standard implementation of `HarvestCommandProtocol`
-/// that provides basic command functionality with an ID and category.
+/// that provides complete command functionality with ID, category, payload, and metadata.
 ///
 /// ## Usage
 /// ```swift
-/// // Create a system command
-/// let systemCommand = HarvestCommand(category: .system)
+/// // Create a system ping command
+/// let pingCommand = HarvestCommand.system(.ping)
 ///
-/// // Create a file command with custom ID
-/// let fileCommand = HarvestCommand(
-///   id: UUID(),
-///   category: .file
-/// )
+/// // Create an SSH enable command  
+/// let sshCommand = HarvestCommand.remote(.ssh(.enable))
 /// ```
 ///
 /// ## Command Categories
@@ -54,6 +51,7 @@ public import Foundation
 /// - `.network` - Network operations (connect, transfer, etc.)
 /// - `.clipboard` - Clipboard operations (copy, paste, etc.)
 /// - `.remote` - Remote debugging and development operations
+/// - `.security` - Security operations (authentication, authorization, etc.)
 ///
 /// For custom command implementations, consider extending `HarvestCommandProtocol`
 /// directly rather than subclassing this struct.
@@ -66,17 +64,144 @@ public struct HarvestCommand: HarvestCommandProtocol {
   
   /// Category that this command belongs to
   ///
-  /// Used for organizing commands and potentially implementing
+  /// Used for organizing commands and implementing
   /// category-specific authorization or routing logic.
   public let category: CommandCategory
+  
+  /// Command payload containing the specific command data
+  public let payload: CommandPayload
+  
+  /// Target machine identifier (optional)
+  public let machineID: UInt64?
+  
+  /// Timestamp when the command was created
+  public let timestamp: Date
+  
+  /// Command version for compatibility checking
+  public let version: Int
+  
+  /// Additional metadata for command processing
+  public var metadata: [String: String]?
+  
+  /// Human-readable name of the command
+  public var name: String {
+    switch payload {
+    case .system(let systemCmd):
+      switch systemCmd {
+      case .ping: return "system.ping"
+      case .status: return "system.status" 
+      case .shutdown: return "system.shutdown"
+      case .restart: return "system.restart"
+      }
+    case .remote(let remoteCmd):
+      switch remoteCmd {
+      case .ssh(let sshCmd):
+        switch sshCmd {
+        case .enable: return "remote.ssh.enable"
+        case .disable: return "remote.ssh.disable"
+        case .status: return "remote.ssh.status"
+        }
+      case .status: return "remote.status"
+      }
+    case .security(let securityCmd):
+      switch securityCmd {
+      case .authenticate: return "security.authenticate"
+      case .authorize: return "security.authorize"
+      case .status: return "security.status"
+      }
+    case .file: return "file.operation"
+    case .network: return "network.operation"
+    case .clipboard: return "clipboard.operation"
+    }
+  }
 
   /// Creates a new Harvest command
   ///
   /// - Parameters:
   ///   - id: Unique identifier for the command. Defaults to a new UUID.
   ///   - category: The category this command belongs to
-  public init(id: UUID = UUID(), category: CommandCategory) {
+  ///   - payload: The command payload data
+  ///   - machineID: Optional target machine identifier
+  ///   - timestamp: Creation timestamp. Defaults to current time.
+  ///   - version: Command version for compatibility checking. Defaults to 1.
+  ///   - metadata: Additional metadata for command processing. Defaults to nil.
+  public init(
+    id: UUID = UUID(),
+    category: CommandCategory,
+    payload: CommandPayload,
+    machineID: UInt64? = nil,
+    timestamp: Date = Date(),
+    version: Int = 1,
+    metadata: [String: String]? = nil
+  ) {
     self.id = id
     self.category = category
+    self.payload = payload
+    self.machineID = machineID
+    self.timestamp = timestamp
+    self.version = version
+    self.metadata = metadata
+  }
+  
+  // MARK: - Static Factory Methods
+  
+  /// Creates a system command
+  /// - Parameter command: The system command to create
+  /// - Returns: A new HarvestCommand with system category
+  public static func system(_ command: SystemCommand) -> HarvestCommand {
+    return HarvestCommand(
+      category: .system,
+      payload: .system(command)
+    )
+  }
+  
+  /// Creates a remote access command
+  /// - Parameter command: The remote access command to create
+  /// - Returns: A new HarvestCommand with remote category
+  public static func remote(_ command: RemoteAccessCommand) -> HarvestCommand {
+    return HarvestCommand(
+      category: .remote,
+      payload: .remote(command)
+    )
+  }
+  
+  /// Creates a security command
+  /// - Parameter command: The security command to create
+  /// - Returns: A new HarvestCommand with security category
+  public static func security(_ command: SecurityCommand) -> HarvestCommand {
+    return HarvestCommand(
+      category: .security,
+      payload: .security(command)
+    )
+  }
+  
+  /// Creates a file operation command
+  /// - Parameter operation: The file operation description
+  /// - Returns: A new HarvestCommand with file category
+  public static func file(_ operation: String) -> HarvestCommand {
+    return HarvestCommand(
+      category: .file,
+      payload: .file(operation)
+    )
+  }
+  
+  /// Creates a network operation command
+  /// - Parameter operation: The network operation description
+  /// - Returns: A new HarvestCommand with network category
+  public static func network(_ operation: String) -> HarvestCommand {
+    return HarvestCommand(
+      category: .network,
+      payload: .network(operation)
+    )
+  }
+  
+  /// Creates a clipboard operation command
+  /// - Parameter operation: The clipboard operation description
+  /// - Returns: A new HarvestCommand with clipboard category
+  public static func clipboard(_ operation: String) -> HarvestCommand {
+    return HarvestCommand(
+      category: .clipboard,
+      payload: .clipboard(operation)
+    )
   }
 }
