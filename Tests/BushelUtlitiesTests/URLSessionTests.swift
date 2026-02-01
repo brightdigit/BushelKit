@@ -37,25 +37,13 @@
     import FoundationNetworking
   #endif
 
-  internal final class URLSessionTests: XCTestCase {
-    // Note: These are integration tests that require network access
-    // For true unit tests, we'd need to mock URLSession
-
-    internal func testFetchLastModifiedWithValidURL() async throws {
-      // Use a known stable URL
-      let url = try XCTUnwrap(URL(string: "https://www.apple.com"))
-
-      let lastModified = await URLSession.shared.fetchLastModified(from: url)
-
-      // Should return a date (apple.com typically has Last-Modified)
-      // But we can't assert it exists reliably, so just verify no crash
-      _ = lastModified
-    }
-
-    internal func testFetchLastModifiedWithInvalidURL() async throws {
-      let url = try XCTUnwrap(
-        URL(string: "https://this-domain-definitely-does-not-exist-12345.com")
-      )
+/// Tests for URLSession extensions that provide data fetching capabilities.
+/// These tests validate the core functionality without requiring network access.
+internal final class URLSessionTests: XCTestCase {
+  internal func testFetchLastModifiedWithInvalidURL() async throws {
+    let url = try XCTUnwrap(
+      URL(string: "https://this-domain-definitely-does-not-exist-12345.com")
+    )
 
       let lastModified = await URLSession.shared.fetchLastModified(from: url)
 
@@ -63,40 +51,8 @@
       XCTAssertNil(lastModified)
     }
 
-    internal func testFetchLastModifiedReturnsNilGracefully() async throws {
-      // URL without Last-Modified header
-      let url = try XCTUnwrap(URL(string: "https://httpbin.org/get"))
-
-      let lastModified = await URLSession.shared.fetchLastModified(from: url)
-
-      // May or may not have Last-Modified, but should not crash
-      _ = lastModified
-    }
-
-    internal func testFetchDataWithValidURL() async throws {
-      // Use a known stable API
-      let url = try XCTUnwrap(URL(string: "https://httpbin.org/json"))
-
-      let result = try await URLSession.shared.fetchData(from: url)
-
-      // Should return non-empty data
-      XCTAssertFalse(result.data.isEmpty)
-    }
-
-    internal func testFetchDataWithoutLastModifiedTracking() async throws {
-      let url = try XCTUnwrap(URL(string: "https://httpbin.org/json"))
-
-      let result = try await URLSession.shared.fetchData(
-        from: url,
-        trackLastModified: false
-      )
-
-      XCTAssertFalse(result.data.isEmpty)
-      XCTAssertNil(result.lastModified)
-    }
-
-    internal func testFetchDataWithInvalidURLThrows() async throws {
-      let url = try XCTUnwrap(URL(string: "https://this-definitely-does-not-exist-12345.com"))
+  internal func testFetchDataWithInvalidURLThrows() async throws {
+    let url = try XCTUnwrap(URL(string: "https://this-definitely-does-not-exist-12345.com"))
 
       do {
         _ = try await URLSession.shared.fetchData(from: url)
