@@ -1,5 +1,5 @@
 //
-//  SecurityCommand.swift
+//  HarvestCommandTestHelpers.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,12 +27,33 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-/// Security command operations
-public enum SecurityCommand: Codable, Sendable {
-  /// Authentication request
-  case authenticate(token: String)
-  /// Authorization check
-  case authorize(resource: String)
-  /// Security status request
-  case status
+import Foundation
+
+@testable import BushelHarvestCore
+
+extension HarvestCommand {
+  /// Test convenience: builds a command whose payload matches `category`.
+  ///
+  /// The production API intentionally requires an explicit ``CommandPayload``
+  /// (the factory methods such as ``HarvestCommand/system(_:)`` keep category
+  /// and payload consistent). Tests that only care about the category use this
+  /// helper to pair each category with a representative payload.
+  init(id: UUID = UUID(), category: CommandCategory) {
+    let payload: CommandPayload
+    switch category {
+    case .system:
+      payload = .system(.ping)
+    case .file:
+      payload = .file("test")
+    case .network:
+      payload = .network("test")
+    case .clipboard:
+      payload = .clipboard("test")
+    case .remote:
+      payload = .remote(.status)
+    case .security:
+      payload = .security(.status)
+    }
+    self.init(id: id, category: category, payload: payload)
+  }
 }

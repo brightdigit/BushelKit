@@ -1,5 +1,5 @@
 //
-//  Index.swift
+//  BushelHarvestCoreTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,50 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import PackageDescription
-
-let package = Package(
-  name: "BushelKit",
-  entries: {
-    BushelCommand()
-    BushelFoundation()
-    BushelDocs()
-    BushelUtilities()
-    BushelFoundationWax()
-    BushelFactory()
-    BushelGuestProfile()
+struct BushelHarvestCoreTests: TestTarget {
+  var dependencies: any Dependencies {
     BushelHarvestCore()
-    BushelHub()
-    BushelHubIPSW()
-    BushelHubMacOS()
-    BushelLibrary()
-    BushelLogging()
-    BushelMachine()
-    BushelMacOSCore()
-    BushelUT()
-    BushelVirtualBuddy()
-    BushelTestUtilities()
-  },
-  dependencies: {
-    DocC()
-  },
-  testTargets: {
-    BushelFoundationTests()
-    BushelLibraryTests()
-    BushelMachineTests()
-    BushelFactoryTests()
-    BushelUtlitiesTests()
-    BushelHarvestCoreTests()
-  },
-  swiftSettings: {
-    AccessLevelOnImport()
-    NestedProtocols()
-    NoncopyableGenerics()
-    VariadicGenerics()
-    InternalImportsByDefault()
   }
-)
-.supportedPlatforms {
-  MinimumPlatforms()
 }
-.defaultLocalization(.english)

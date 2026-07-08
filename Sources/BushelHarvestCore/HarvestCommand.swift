@@ -40,7 +40,7 @@ public import Foundation
 /// // Create a system ping command
 /// let pingCommand = HarvestCommand.system(.ping)
 ///
-/// // Create an SSH enable command  
+/// // Create an SSH enable command
 /// let sshCommand = HarvestCommand.remote(.ssh(.enable))
 /// ```
 ///
@@ -61,35 +61,35 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// Each command instance gets a unique ID for tracking and correlation.
   /// Automatically generated if not provided.
   public let id: UUID
-  
+
   /// Category that this command belongs to
   ///
   /// Used for organizing commands and implementing
   /// category-specific authorization or routing logic.
   public let category: CommandCategory
-  
+
   /// Command payload containing the specific command data
   public let payload: CommandPayload
-  
+
   /// Target machine identifier (optional)
   public let machineID: UInt64?
-  
+
   /// Timestamp when the command was created
   public let timestamp: Date
-  
+
   /// Command version for compatibility checking
   public let version: Int
-  
+
   /// Additional metadata for command processing
   public var metadata: [String: String]?
-  
+
   /// Human-readable name of the command
   public var name: String {
     switch payload {
     case .system(let systemCmd):
       switch systemCmd {
       case .ping: return "system.ping"
-      case .status: return "system.status" 
+      case .status: return "system.status"
       case .shutdown: return "system.shutdown"
       case .restart: return "system.restart"
       }
@@ -142,9 +142,9 @@ public struct HarvestCommand: HarvestCommandProtocol {
     self.version = version
     self.metadata = metadata
   }
-  
+
   // MARK: - Static Factory Methods
-  
+
   /// Creates a system command
   /// - Parameter command: The system command to create
   /// - Returns: A new HarvestCommand with system category
@@ -154,7 +154,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
       payload: .system(command)
     )
   }
-  
+
   /// Creates a remote access command
   /// - Parameter command: The remote access command to create
   /// - Returns: A new HarvestCommand with remote category
@@ -164,7 +164,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
       payload: .remote(command)
     )
   }
-  
+
   /// Creates a security command
   /// - Parameter command: The security command to create
   /// - Returns: A new HarvestCommand with security category
@@ -174,7 +174,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
       payload: .security(command)
     )
   }
-  
+
   /// Creates a file operation command
   /// - Parameter operation: The file operation description
   /// - Returns: A new HarvestCommand with file category
@@ -184,7 +184,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
       payload: .file(operation)
     )
   }
-  
+
   /// Creates a network operation command
   /// - Parameter operation: The network operation description
   /// - Returns: A new HarvestCommand with network category
@@ -194,7 +194,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
       payload: .network(operation)
     )
   }
-  
+
   /// Creates a clipboard operation command
   /// - Parameter operation: The clipboard operation description
   /// - Returns: A new HarvestCommand with clipboard category

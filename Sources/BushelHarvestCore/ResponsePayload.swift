@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// Response payload types
 public enum ResponsePayload: Codable, Sendable {
   /// System status response

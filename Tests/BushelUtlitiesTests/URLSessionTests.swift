@@ -37,13 +37,13 @@
     import FoundationNetworking
   #endif
 
-/// Tests for URLSession extensions that provide data fetching capabilities.
-/// These tests validate the core functionality without requiring network access.
-internal final class URLSessionTests: XCTestCase {
-  internal func testFetchLastModifiedWithInvalidURL() async throws {
-    let url = try XCTUnwrap(
-      URL(string: "https://this-domain-definitely-does-not-exist-12345.com")
-    )
+  /// Tests for URLSession extensions that provide data fetching capabilities.
+  /// These tests validate the core functionality without requiring network access.
+  internal final class URLSessionTests: XCTestCase {
+    internal func testFetchLastModifiedWithInvalidURL() async throws {
+      let url = try XCTUnwrap(
+        URL(string: "https://this-domain-definitely-does-not-exist-12345.com")
+      )
 
       let lastModified = await URLSession.shared.fetchLastModified(from: url)
 
@@ -51,8 +51,8 @@ internal final class URLSessionTests: XCTestCase {
       XCTAssertNil(lastModified)
     }
 
-  internal func testFetchDataWithInvalidURLThrows() async throws {
-    let url = try XCTUnwrap(URL(string: "https://this-definitely-does-not-exist-12345.com"))
+    internal func testFetchDataWithInvalidURLThrows() async throws {
+      let url = try XCTUnwrap(URL(string: "https://this-definitely-does-not-exist-12345.com"))
 
       do {
         _ = try await URLSession.shared.fetchData(from: url)

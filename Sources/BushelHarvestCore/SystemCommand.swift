@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// System-level command operations
 public enum SystemCommand: Codable, Sendable {
   /// Ping command for connectivity testing

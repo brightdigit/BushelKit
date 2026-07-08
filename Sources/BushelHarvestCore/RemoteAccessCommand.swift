@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// Remote access command operations
 public enum RemoteAccessCommand: Codable, Sendable {
   /// SSH-related commands

@@ -88,7 +88,9 @@ public struct HarvestResponse: Codable, Sendable {
   ///   - timestamp: When the response was created. Defaults to current time.
   ///   - success: Whether the request processing was successful
   ///   - payload: Optional response payload data
-  public init(requestId: UUID, timestamp: Date = Date(), success: Bool, payload: ResponsePayload? = nil) {
+  public init(
+    requestId: UUID, timestamp: Date = Date(), success: Bool, payload: ResponsePayload? = nil
+  ) {
     self.requestId = requestId
     self.timestamp = timestamp
     self.success = success

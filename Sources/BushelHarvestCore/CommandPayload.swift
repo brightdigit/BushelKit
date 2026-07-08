@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// Command payload types
 public enum CommandPayload: Codable, Sendable {
   /// System command payload

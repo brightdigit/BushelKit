@@ -27,12 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// Remote access information
 public struct RemoteAccess: Codable, Sendable {
+  /// The SSH access status for the guest.
   public let ssh: SSHStatus
 
+  /// Creates new remote access information.
+  ///
+  /// - Parameter ssh: The SSH access status.
   public init(ssh: SSHStatus) {
     self.ssh = ssh
   }

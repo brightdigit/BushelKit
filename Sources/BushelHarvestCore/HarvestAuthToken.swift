@@ -70,4 +70,15 @@ public struct HarvestAuthToken: Codable, Sendable {
     self.token = token
     self.expiresAt = expiresAt
   }
+
+  /// Whether this token has expired as of the given date.
+  ///
+  /// Callers on the receiving side should reject tokens for which this
+  /// returns `true` before honoring the associated request.
+  ///
+  /// - Parameter date: The reference date to compare against. Defaults to now.
+  /// - Returns: `true` if the token's expiration is at or before `date`.
+  public func isExpired(asOf date: Date = Date()) -> Bool {
+    expiresAt <= date
+  }
 }

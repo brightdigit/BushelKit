@@ -27,12 +27,14 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// Remote status response data
 public struct RemoteStatusData: Codable, Sendable {
+  /// The remote access information reported by the guest.
   public let access: RemoteAccess
 
+  /// Creates new remote status data.
+  ///
+  /// - Parameter access: The remote access information.
   public init(access: RemoteAccess) {
     self.access = access
   }

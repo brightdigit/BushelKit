@@ -27,14 +27,21 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// SSH access status information
 public struct SSHStatus: Codable, Sendable {
+  /// Whether SSH access is currently enabled on the guest.
   public let isEnabled: Bool
+  /// The port SSH is listening on, if known.
   public let port: Int?
+  /// The users permitted to connect over SSH, if known.
   public let users: [String]?
 
+  /// Creates a new SSH status.
+  ///
+  /// - Parameters:
+  ///   - isEnabled: Whether SSH access is enabled.
+  ///   - port: The SSH listening port, if known.
+  ///   - users: The permitted SSH users, if known.
   public init(isEnabled: Bool, port: Int? = nil, users: [String]? = nil) {
     self.isEnabled = isEnabled
     self.port = port

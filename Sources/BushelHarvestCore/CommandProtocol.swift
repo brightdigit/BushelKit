@@ -48,7 +48,7 @@ public import Foundation
 ///   let id: UUID
 ///   let category: CommandCategory
 ///   let customData: String
-///   
+///
 ///   init(customData: String) {
 ///     self.id = UUID()
 ///     self.category = .system
@@ -84,7 +84,7 @@ public protocol HarvestCommandProtocol: Codable, Sendable {
 ///
 /// ## Categories
 /// - `.system` - System-level operations like shutdown, status checks, and configuration
-/// - `.file` - File system operations like reading, writing, copying, and directory traversal  
+/// - `.file` - File system operations like reading, writing, copying, and directory traversal
 /// - `.network` - Network operations like connection management and data transfer
 /// - `.clipboard` - Clipboard operations for copy/paste functionality between host and guest
 /// - `.remote` - Remote debugging and development tools operations
@@ -92,19 +92,19 @@ public protocol HarvestCommandProtocol: Codable, Sendable {
 public enum CommandCategory: String, Codable, Sendable {
   /// System-level operations (shutdown, status, configuration, etc.)
   case system
-  
+
   /// File system operations (read, write, copy, directory operations, etc.)
   case file
-  
+
   /// Network operations (connection management, data transfer, etc.)
   case network
-  
+
   /// Clipboard operations (copy, paste, clipboard sharing, etc.)
   case clipboard
-  
+
   /// Remote debugging and development operations (SSH, debugging tools, etc.)
   case remote
-  
+
   /// Security operations (authentication, authorization, access control, etc.)
   case security
 }

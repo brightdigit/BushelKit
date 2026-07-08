@@ -27,8 +27,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import Foundation
-
 /// SSH command operations
 public enum SSHCommand: Codable, Sendable {
   /// Enable SSH access
