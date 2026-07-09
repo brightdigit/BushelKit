@@ -42,215 +42,215 @@ public import Foundation
 #if !os(Android)
   /// The file manager extension that provides additional functionality.
   extension FileManager {
-  /// Creates a file with the specified size at the given path.
-  ///
-  /// - Parameters:
-  ///   - path: The path of the file to create.
-  ///   - size: The size of the file to create.
-  /// - Throws: `CreationError` if an error occurs during file creation.
-  public func createFile(atPath path: String, withSize size: FileSize) throws {
-    _ = self.createFile(atPath: path, contents: nil)
+    /// Creates a file with the specified size at the given path.
+    ///
+    /// - Parameters:
+    ///   - path: The path of the file to create.
+    ///   - size: The size of the file to create.
+    /// - Throws: `CreationError` if an error occurs during file creation.
+    public func createFile(atPath path: String, withSize size: FileSize) throws {
+      _ = self.createFile(atPath: path, contents: nil)
 
-    #if os(Windows)
-      // Windows-specific implementation using WinSDK
-      let handle = path.withCString(encodedAs: UTF16.self) { pathPtr in
-        CreateFileW(
-          pathPtr,
-          DWORD(GENERIC_READ) | DWORD(GENERIC_WRITE),
-          0,
-          nil,
-          DWORD(CREATE_ALWAYS),
-          DWORD(FILE_ATTRIBUTE_NORMAL),
-          nil
+      #if os(Windows)
+        // Windows-specific implementation using WinSDK
+        let handle = path.withCString(encodedAs: UTF16.self) { pathPtr in
+          CreateFileW(
+            pathPtr,
+            DWORD(GENERIC_READ) | DWORD(GENERIC_WRITE),
+            0,
+            nil,
+            DWORD(CREATE_ALWAYS),
+            DWORD(FILE_ATTRIBUTE_NORMAL),
+            nil
+          )
+        }
+
+        guard handle != INVALID_HANDLE_VALUE else {
+          throw CreationError(code: Int(GetLastError()), source: .open)
+        }
+
+        var distanceToMove = LARGE_INTEGER()
+        distanceToMove.QuadPart = LONGLONG(size)
+
+        guard SetFilePointerEx(handle, distanceToMove, nil, DWORD(FILE_BEGIN)) else {
+          CloseHandle(handle)
+          throw CreationError(code: Int(GetLastError()), source: .ftruncate)
+        }
+
+        guard SetEndOfFile(handle) else {
+          CloseHandle(handle)
+          throw CreationError(code: Int(GetLastError()), source: .ftruncate)
+        }
+
+        CloseHandle(handle)
+
+      #else
+        // POSIX implementation for macOS, Linux, iOS, etc.
+        let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
+        guard diskFd > 0 else {
+          throw CreationError(code: Int(errno), source: .open)
+        }
+
+        // 64GB disk space.
+        var result = ftruncate(diskFd, size)
+        guard result == 0 else {
+          throw CreationError(code: Int(result), source: .ftruncate)
+        }
+
+        result = close(diskFd)
+        guard result == 0 else {
+          throw CreationError(code: Int(result), source: .close)
+        }
+      #endif
+    }
+
+    /// Checks the existence and type of a directory at the given URL.
+    ///
+    /// - Parameter url: The URL of the directory to check.
+    /// - Returns: A `DirectoryExists` struct indicating the existence and type of the directory.
+    public func directoryExists(at url: URL) -> DirectoryExists {
+      let path: String
+      if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
+        path = url.path()
+      } else {
+        path = url.path
+      }
+
+      var isDirectory: ObjCBool = false
+      let fileExists = self.fileExists(
+        atPath: path,
+        isDirectory: &isDirectory
+      )
+
+      return .init(fileExists: fileExists, isDirectory: isDirectory.boolValue)
+    }
+
+    /// Determines the relationship of a directory to an item at the given URL.
+    ///
+    /// - Parameters:
+    ///   - directory: The directory to check the relationship for.
+    ///   - url: The URL of the item to check the relationship to.
+    ///   - domainMask: The search path domain mask to use.
+    /// - Returns: The `URLRelationship` of the directory to the item.
+    /// - Throws: An error if the relationship cannot be determined.
+    public func relationship(
+      of directory: FileManager.SearchPathDirectory,
+      toItemAt url: URL,
+      in domainMask: FileManager.SearchPathDomainMask = .allDomainsMask
+    ) throws -> URLRelationship {
+      var relationship: URLRelationship = .other
+      try self.getRelationship(&relationship, of: directory, in: domainMask, toItemAt: url)
+      return relationship
+    }
+
+    /// Creates an empty directory at the specified URL.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the directory to create.
+    ///   - createIntermediates: Whether to create intermediate directories if necessary.
+    ///   - deleteExistingFile: Whether to delete an existing file at the URL.
+    ///   - attributes: The file attributes to apply to the created directory.
+    /// - Returns: A `DirectoryExists` struct indicating the existence and type of the directory.
+    /// - Throws: An error if the directory cannot be created.
+    @discardableResult
+    public func createEmptyDirectory(
+      at url: URL,
+      withIntermediateDirectories createIntermediates: Bool,
+      deleteExistingFile: Bool,
+      attributes: [FileAttributeKey: Any]? = nil
+    ) throws -> DirectoryExists {
+      let directoryExistsStatus = self.directoryExists(at: url)
+
+      switch directoryExistsStatus {
+      case .directoryExists:
+        break
+
+      case .fileExists:
+        if deleteExistingFile {
+          try self.removeItem(at: url)
+        }
+        fallthrough
+
+      case .notExists:
+        try self.createDirectory(
+          at: url,
+          withIntermediateDirectories: createIntermediates,
+          attributes: attributes
         )
       }
 
-      guard handle != INVALID_HANDLE_VALUE else {
-        throw CreationError(code: Int(GetLastError()), source: .open)
-      }
-
-      var distanceToMove = LARGE_INTEGER()
-      distanceToMove.QuadPart = LONGLONG(size)
-
-      guard SetFilePointerEx(handle, distanceToMove, nil, DWORD(FILE_BEGIN)) else {
-        CloseHandle(handle)
-        throw CreationError(code: Int(GetLastError()), source: .ftruncate)
-      }
-
-      guard SetEndOfFile(handle) else {
-        CloseHandle(handle)
-        throw CreationError(code: Int(GetLastError()), source: .ftruncate)
-      }
-
-      CloseHandle(handle)
-
-    #else
-      // POSIX implementation for macOS, Linux, iOS, etc.
-      let diskFd = open(path, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)
-      guard diskFd > 0 else {
-        throw CreationError(code: Int(errno), source: .open)
-      }
-
-      // 64GB disk space.
-      var result = ftruncate(diskFd, size)
-      guard result == 0 else {
-        throw CreationError(code: Int(result), source: .ftruncate)
-      }
-
-      result = close(diskFd)
-      guard result == 0 else {
-        throw CreationError(code: Int(result), source: .close)
-      }
-    #endif
-  }
-
-  /// Checks the existence and type of a directory at the given URL.
-  ///
-  /// - Parameter url: The URL of the directory to check.
-  /// - Returns: A `DirectoryExists` struct indicating the existence and type of the directory.
-  public func directoryExists(at url: URL) -> DirectoryExists {
-    let path: String
-    if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
-      path = url.path()
-    } else {
-      path = url.path
+      return directoryExistsStatus
     }
 
-    var isDirectory: ObjCBool = false
-    let fileExists = self.fileExists(
-      atPath: path,
-      isDirectory: &isDirectory
-    )
-
-    return .init(fileExists: fileExists, isDirectory: isDirectory.boolValue)
-  }
-
-  /// Determines the relationship of a directory to an item at the given URL.
-  ///
-  /// - Parameters:
-  ///   - directory: The directory to check the relationship for.
-  ///   - url: The URL of the item to check the relationship to.
-  ///   - domainMask: The search path domain mask to use.
-  /// - Returns: The `URLRelationship` of the directory to the item.
-  /// - Throws: An error if the relationship cannot be determined.
-  public func relationship(
-    of directory: FileManager.SearchPathDirectory,
-    toItemAt url: URL,
-    in domainMask: FileManager.SearchPathDomainMask = .allDomainsMask
-  ) throws -> URLRelationship {
-    var relationship: URLRelationship = .other
-    try self.getRelationship(&relationship, of: directory, in: domainMask, toItemAt: url)
-    return relationship
-  }
-
-  /// Creates an empty directory at the specified URL.
-  ///
-  /// - Parameters:
-  ///   - url: The URL of the directory to create.
-  ///   - createIntermediates: Whether to create intermediate directories if necessary.
-  ///   - deleteExistingFile: Whether to delete an existing file at the URL.
-  ///   - attributes: The file attributes to apply to the created directory.
-  /// - Returns: A `DirectoryExists` struct indicating the existence and type of the directory.
-  /// - Throws: An error if the directory cannot be created.
-  @discardableResult
-  public func createEmptyDirectory(
-    at url: URL,
-    withIntermediateDirectories createIntermediates: Bool,
-    deleteExistingFile: Bool,
-    attributes: [FileAttributeKey: Any]? = nil
-  ) throws -> DirectoryExists {
-    let directoryExistsStatus = self.directoryExists(at: url)
-
-    switch directoryExistsStatus {
-    case .directoryExists:
-      break
-
-    case .fileExists:
-      if deleteExistingFile {
-        try self.removeItem(at: url)
+    /// Writes a dictionary of data to a directory.
+    ///
+    /// - Parameters:
+    ///   - dataDictionary: A dictionary of relative paths and data to write.
+    ///   - directoryURL: The URL of the directory to write the data to.
+    /// - Throws: An error if the data cannot be written.
+    public func write(
+      _ dataDictionary: [String: Data],
+      to directoryURL: URL
+    ) throws {
+      for (relativePath, data) in dataDictionary {
+        let fullURL = directoryURL.appendingPathComponent(relativePath)
+        let parentURL = fullURL.deletingLastPathComponent()
+        if self.directoryExists(at: parentURL) == .notExists {
+          try self.createEmptyDirectory(
+            at: parentURL,
+            withIntermediateDirectories: true,
+            deleteExistingFile: true
+          )
+        }
+        try data.write(to: fullURL)
       }
-      fallthrough
-
-    case .notExists:
-      try self.createDirectory(
-        at: url,
-        withIntermediateDirectories: createIntermediates,
-        attributes: attributes
-      )
     }
 
-    return directoryExistsStatus
-  }
-
-  /// Writes a dictionary of data to a directory.
-  ///
-  /// - Parameters:
-  ///   - dataDictionary: A dictionary of relative paths and data to write.
-  ///   - directoryURL: The URL of the directory to write the data to.
-  /// - Throws: An error if the data cannot be written.
-  public func write(
-    _ dataDictionary: [String: Data],
-    to directoryURL: URL
-  ) throws {
-    for (relativePath, data) in dataDictionary {
-      let fullURL = directoryURL.appendingPathComponent(relativePath)
-      let parentURL = fullURL.deletingLastPathComponent()
-      if self.directoryExists(at: parentURL) == .notExists {
-        try self.createEmptyDirectory(
-          at: parentURL,
-          withIntermediateDirectories: true,
-          deleteExistingFile: true
+    /// Retrieves a dictionary of data from a directory.
+    ///
+    /// - Parameter directoryURL: The URL of the directory to retrieve data from.
+    /// - Returns: A dictionary of relative paths and data.
+    /// - Throws: An error if the data cannot be retrieved.
+    public func dataDictionary(
+      directoryAt directoryURL: URL
+    ) throws -> [String: Data] {
+      let keys: Set<URLResourceKey> = Set([.isDirectoryKey, .isRegularFileKey])
+      guard
+        let enumerator = self.enumerator(
+          at: directoryURL,
+          includingPropertiesForKeys: Array(keys)
         )
+      else {
+        throw .fileNotFound(at: directoryURL)
       }
-      try data.write(to: fullURL)
-    }
-  }
 
-  /// Retrieves a dictionary of data from a directory.
-  ///
-  /// - Parameter directoryURL: The URL of the directory to retrieve data from.
-  /// - Returns: A dictionary of relative paths and data.
-  /// - Throws: An error if the data cannot be retrieved.
-  public func dataDictionary(
-    directoryAt directoryURL: URL
-  ) throws -> [String: Data] {
-    let keys: Set<URLResourceKey> = Set([.isDirectoryKey, .isRegularFileKey])
-    guard
-      let enumerator = self.enumerator(
-        at: directoryURL,
-        includingPropertiesForKeys: Array(keys)
-      )
-    else {
-      throw .fileNotFound(at: directoryURL)
+      return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
+        guard let url = item as? URL else {
+          return
+        }
+        guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else {
+          return
+        }
+        assert(dictionary[url.lastPathComponent] == nil)
+        dictionary[url.lastPathComponent] = try Data(contentsOf: url)
+      }
     }
 
-    return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
-      guard let url = item as? URL else {
-        return
-      }
-      guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else {
-        return
-      }
-      assert(dictionary[url.lastPathComponent] == nil)
-      dictionary[url.lastPathComponent] = try Data(contentsOf: url)
+    /// Clears the saved application state.
+    ///
+    /// This method removes all directories with the name "Saved Application State"
+    /// within the user's library directory.
+    /// - Throws: An error if the saved application state directories cannot be removed.
+    public func clearSavedApplicationState() throws {
+      let savedApplicationStates = self.urls(for: .libraryDirectory, in: .userDomainMask)
+        .map {
+          $0.appendingPathComponent("Saved Application State")
+        }
+        .filter {
+          self.directoryExists(at: $0) == .directoryExists
+        }
+
+      try savedApplicationStates.forEach(self.removeItem(at:))
     }
   }
-
-  /// Clears the saved application state.
-  ///
-  /// This method removes all directories with the name "Saved Application State"
-  /// within the user's library directory.
-  /// - Throws: An error if the saved application state directories cannot be removed.
-  public func clearSavedApplicationState() throws {
-    let savedApplicationStates = self.urls(for: .libraryDirectory, in: .userDomainMask)
-      .map {
-        $0.appendingPathComponent("Saved Application State")
-      }
-      .filter {
-        self.directoryExists(at: $0) == .directoryExists
-      }
-
-    try savedApplicationStates.forEach(self.removeItem(at:))
-  }
-}
 #endif

@@ -3195,7 +3195,7 @@ self + .init(platforms)
 }
 }
 //
-//  WWDC2023.swift
+//  MinimumPlatforms.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -3225,9 +3225,9 @@ self + .init(platforms)
 
 import PackageDescription
 
-struct WWDC2023: PlatformSet {
+struct MinimumPlatforms: PlatformSet {
   var body: any SupportedPlatforms {
-    SupportedPlatform.macOS(.v15)
+    SupportedPlatform.macOS(.v12)
     SupportedPlatform.iOS(.v18)
     SupportedPlatform.watchOS(.v11)
     SupportedPlatform.tvOS(.v18)
@@ -3338,6 +3338,39 @@ struct BushelUtilities: Product, Target {
 import Foundation
 
 struct BushelTestUtilities: Product, Target {}
+//
+//  BushelHarvestCore.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the "Software"), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
+//
+
+struct BushelHarvestCore: Product, Target {
+  // No dependencies - just basic Foundation types
+  // This allows HarvestBinKit (guest-side) to use it on older macOS versions
+}
 //
 //  BushelHubIPSW.swift
 //  BushelKit
@@ -4037,6 +4070,40 @@ struct BushelLibraryTests: TestTarget {
   }
 }
 //
+//  BushelHarvestCoreTests.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
+//
+
+struct BushelHarvestCoreTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelHarvestCore()
+  }
+}
+//
 //  BushelCoreTests.swift
 //  BushelKit
 //
@@ -4548,6 +4615,7 @@ let package = Package(
     BushelFoundationWax()
     BushelFactory()
     BushelGuestProfile()
+    BushelHarvestCore()
     BushelHub()
     BushelHubIPSW()
     BushelHubMacOS()
@@ -4568,6 +4636,7 @@ let package = Package(
     BushelMachineTests()
     BushelFactoryTests()
     BushelUtlitiesTests()
+    BushelHarvestCoreTests()
   },
   swiftSettings: {
     AccessLevelOnImport()
@@ -4578,6 +4647,6 @@ let package = Package(
   }
 )
 .supportedPlatforms {
-  WWDC2023()
+  MinimumPlatforms()
 }
 .defaultLocalization(.english)

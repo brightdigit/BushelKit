@@ -1,5 +1,5 @@
 //
-//  Index.swift
+//  HarvestConfigurationTests.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -7,7 +7,7 @@
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
-//  files (the “Software”), to deal in the Software without
+//  files (the "Software"), to deal in the Software without
 //  restriction, including without limitation the rights to use,
 //  copy, modify, merge, publish, distribute, sublicense, and/or
 //  sell copies of the Software, and to permit persons to whom the
@@ -17,7 +17,7 @@
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 //  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 //  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -27,50 +27,25 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import PackageDescription
+import Testing
 
-let package = Package(
-  name: "BushelKit",
-  entries: {
-    BushelCommand()
-    BushelFoundation()
-    BushelDocs()
-    BushelUtilities()
-    BushelFoundationWax()
-    BushelFactory()
-    BushelGuestProfile()
-    BushelHarvestCore()
-    BushelHub()
-    BushelHubIPSW()
-    BushelHubMacOS()
-    BushelLibrary()
-    BushelLogging()
-    BushelMachine()
-    BushelMacOSCore()
-    BushelUT()
-    BushelVirtualBuddy()
-    BushelTestUtilities()
-  },
-  dependencies: {
-    DocC()
-  },
-  testTargets: {
-    BushelFoundationTests()
-    BushelLibraryTests()
-    BushelMachineTests()
-    BushelFactoryTests()
-    BushelUtlitiesTests()
-    BushelHarvestCoreTests()
-  },
-  swiftSettings: {
-    AccessLevelOnImport()
-    NestedProtocols()
-    NoncopyableGenerics()
-    VariadicGenerics()
-    InternalImportsByDefault()
+@testable import BushelHarvestCore
+
+@Suite("Harvest Configuration Tests")
+internal struct HarvestConfigurationTests {
+  @Test("Default port matches the documented value")
+  internal func defaultPort() {
+    #expect(HarvestConfiguration.defaultPort == 8080)
   }
-)
-.supportedPlatforms {
-  MinimumPlatforms()
+
+  @Test("Maximum message length is 16 MiB")
+  internal func maxMessageLength() {
+    #expect(HarvestConfiguration.maxMessageLength == 16 * 1024 * 1024)
+  }
+
+  @Test("I/O timeout is a positive number of seconds")
+  internal func ioTimeout() {
+    #expect(HarvestConfiguration.ioTimeoutSeconds == 30)
+    #expect(HarvestConfiguration.ioTimeoutSeconds > 0)
+  }
 }
-.defaultLocalization(.english)

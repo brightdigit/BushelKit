@@ -28,47 +28,47 @@
 //
 
 import Testing
+
 @testable import BushelFoundation
 
 struct SigVerifierFindVerificationTests {
-  
   @Test("findVerification returns successful verification result when signed")
   func testFindVerificationReturnsSignedResult() async throws {
     let verifier = MockSigVerifierReturning(verification: .signed)
-    let source = SignatureSource.dummy // This will be whatever mock source we have
-    
+    let source = SignatureSource.dummy  // This will be whatever mock source we have
+
     let result = try await verifier.findVerification(for: source)
-    
+
     #expect(result == .signed)
   }
-  
+
   @Test("findVerification returns successful verification result when unsigned")
   func testFindVerificationReturnsUnsignedResult() async throws {
     let verifier = MockSigVerifierReturning(verification: .unsigned)
     let source = SignatureSource.dummy
-    
+
     let result = try await verifier.findVerification(for: source)
-    
+
     #expect(result == .unsigned)
   }
-  
+
   @Test("findVerification returns nil when notFound error occurs")
   func testFindVerificationReturnsNilForNotFound() async throws {
     let verifier = MockSigVerifierWithError(error: .notFound)
     let source = SignatureSource.dummy
-    
+
     let result = try await verifier.findVerification(for: source)
-    
+
     #expect(result == nil)
   }
-  
+
   @Test("findVerification propagates unsupportedSource error")
   func testFindVerificationPropagatesUnsupportedSourceError() async throws {
     let verifier = MockSigVerifierWithError(error: .unsupportedSource)
     let source = SignatureSource.dummy
-    
-    await #expect { 
-      _ = try await verifier.findVerification(for: source) 
+
+    await #expect {
+      _ = try await verifier.findVerification(for: source)
     } throws: { error in
       if case SigVerificationError.unsupportedSource = error {
         return true
@@ -76,14 +76,14 @@ struct SigVerifierFindVerificationTests {
       return false
     }
   }
-  
+
   @Test("findVerification propagates internalError")
   func testFindVerificationPropagatesInternalError() async throws {
     struct TestError: Error {}
     let internalError = TestError()
     let verifier = MockSigVerifierWithError(error: .internalError(internalError))
     let source = SignatureSource.dummy
-    
+
     await #expect {
       _ = try await verifier.findVerification(for: source)
     } throws: { error in
@@ -93,14 +93,14 @@ struct SigVerifierFindVerificationTests {
       return false
     }
   }
-  
+
   @Test("findVerification propagates unknownError")
   func testFindVerificationPropagatesUnknownError() async throws {
     struct TestError: Error {}
     let unknownError = TestError()
     let verifier = MockSigVerifierWithError(error: .unknownError(unknownError))
     let source = SignatureSource.dummy
-    
+
     await #expect {
       _ = try await verifier.findVerification(for: source)
     } throws: { error in
@@ -116,12 +116,14 @@ struct SigVerifierFindVerificationTests {
 actor MockSigVerifierReturning: SigVerifier {
   let id: VMSystemID = "test-system"
   let verification: SigVerification
-  
+
   init(verification: SigVerification) {
     self.verification = verification
   }
-  
-  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError) -> SigVerification {
+
+  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
+    -> SigVerification
+  {
     verification
   }
 }
@@ -130,12 +132,14 @@ actor MockSigVerifierReturning: SigVerifier {
 actor MockSigVerifierWithError: SigVerifier {
   let id: VMSystemID = "test-system"
   let error: SigVerificationError
-  
+
   init(error: SigVerificationError) {
     self.error = error
   }
-  
-  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError) -> SigVerification {
+
+  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
+    -> SigVerification
+  {
     throw error
   }
 }

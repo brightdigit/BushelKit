@@ -42,5 +42,6 @@ public enum BushelLogging: LoggingSystem, Sendable {
     case hub
     case analytics
     case notifications
+    case harvest
   }
 }

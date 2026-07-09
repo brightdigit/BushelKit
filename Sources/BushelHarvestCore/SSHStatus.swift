@@ -1,5 +1,5 @@
 //
-//  Index.swift
+//  SSHStatus.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -7,7 +7,7 @@
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
-//  files (the “Software”), to deal in the Software without
+//  files (the "Software"), to deal in the Software without
 //  restriction, including without limitation the rights to use,
 //  copy, modify, merge, publish, distribute, sublicense, and/or
 //  sell copies of the Software, and to permit persons to whom the
@@ -17,7 +17,7 @@
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 //  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 //  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -27,50 +27,24 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import PackageDescription
+/// SSH access status information
+public struct SSHStatus: Codable, Sendable {
+  /// Whether SSH access is currently enabled on the guest.
+  public let isEnabled: Bool
+  /// The port SSH is listening on, if known.
+  public let port: Int?
+  /// The users permitted to connect over SSH, if known.
+  public let users: [String]?
 
-let package = Package(
-  name: "BushelKit",
-  entries: {
-    BushelCommand()
-    BushelFoundation()
-    BushelDocs()
-    BushelUtilities()
-    BushelFoundationWax()
-    BushelFactory()
-    BushelGuestProfile()
-    BushelHarvestCore()
-    BushelHub()
-    BushelHubIPSW()
-    BushelHubMacOS()
-    BushelLibrary()
-    BushelLogging()
-    BushelMachine()
-    BushelMacOSCore()
-    BushelUT()
-    BushelVirtualBuddy()
-    BushelTestUtilities()
-  },
-  dependencies: {
-    DocC()
-  },
-  testTargets: {
-    BushelFoundationTests()
-    BushelLibraryTests()
-    BushelMachineTests()
-    BushelFactoryTests()
-    BushelUtlitiesTests()
-    BushelHarvestCoreTests()
-  },
-  swiftSettings: {
-    AccessLevelOnImport()
-    NestedProtocols()
-    NoncopyableGenerics()
-    VariadicGenerics()
-    InternalImportsByDefault()
+  /// Creates a new SSH status.
+  ///
+  /// - Parameters:
+  ///   - isEnabled: Whether SSH access is enabled.
+  ///   - port: The SSH listening port, if known.
+  ///   - users: The permitted SSH users, if known.
+  public init(isEnabled: Bool, port: Int? = nil, users: [String]? = nil) {
+    self.isEnabled = isEnabled
+    self.port = port
+    self.users = users
   }
-)
-.supportedPlatforms {
-  MinimumPlatforms()
 }
-.defaultLocalization(.english)
