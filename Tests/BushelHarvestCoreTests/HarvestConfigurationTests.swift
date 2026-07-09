@@ -35,12 +35,12 @@ import Testing
 internal struct HarvestConfigurationTests {
   @Test("Default port matches the documented value")
   internal func defaultPort() {
-    #expect(HarvestConfiguration.defaultPort == 8080)
+    #expect(HarvestConfiguration.defaultPort == 8_080)
   }
 
   @Test("Maximum message length is 16 MiB")
   internal func maxMessageLength() {
-    #expect(HarvestConfiguration.maxMessageLength == 16 * 1024 * 1024)
+    #expect(HarvestConfiguration.maxMessageLength == 16 * 1_024 * 1_024)
   }
 
   @Test("I/O timeout is a positive number of seconds")

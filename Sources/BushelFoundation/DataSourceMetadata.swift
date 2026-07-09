@@ -30,6 +30,13 @@
 public import Foundation
 
 /// Metadata about when a data source was last fetched and updated
+///
+/// - Important: `Codable` decoding does **not** run validation. The synthesized
+///   `Decodable` conformance builds instances directly from the decoded fields,
+///   bypassing the memberwise initializer's checks. When ingesting data from an
+///   external source (e.g. appledb.dev, ipsw.me, CloudKit), callers must call
+///   ``validate(sourceName:recordTypeName:recordCount:fetchDurationSeconds:)``
+///   on the decoded values to reject malformed input.
 public struct DataSourceMetadata: Codable, Sendable {
   // MARK: Public
 
@@ -99,6 +106,9 @@ public struct DataSourceMetadata: Codable, Sendable {
   }
 
   /// Validates DataSourceMetadata parameters without creating an instance.
+  ///
+  /// Use this after decoding data from an external source, since `Codable`
+  /// decoding does not enforce validation (see the type-level note).
   ///
   /// - Parameters:
   ///   - sourceName: The data source name

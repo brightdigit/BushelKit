@@ -30,6 +30,13 @@
 public import Foundation
 
 /// Represents a macOS IPSW restore image for Apple Virtualization framework
+///
+/// - Important: `Codable` decoding does **not** run validation. The synthesized
+///   `Decodable` conformance builds instances directly from the decoded fields,
+///   so ``validate()`` is not invoked. When ingesting data from an external
+///   source (e.g. ipsw.me, mrmacintosh.com, mesu.apple.com, CloudKit), callers
+///   must call ``validate()`` (or check ``isValid``) on the decoded value to
+///   reject malformed input.
 public struct RestoreImageRecord: Codable, Sendable {
   /// macOS version (e.g., "14.2.1", "15.0 Beta 3")
   public var version: String
@@ -107,6 +114,9 @@ public struct RestoreImageRecord: Codable, Sendable {
   }
 
   /// Validates all fields of the restore image record.
+  ///
+  /// Call this after decoding a record from an external source, since `Codable`
+  /// decoding does not enforce validation (see the type-level note).
   ///
   /// - Throws: `RestoreImageRecordValidationError` if any field is invalid.
   public func validate() throws {

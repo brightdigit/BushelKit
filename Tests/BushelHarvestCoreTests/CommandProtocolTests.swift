@@ -211,7 +211,7 @@ internal struct CommandProtocolTests {
   @Test("Protocol as type erasure")
   internal func protocolAsTypeErasure() {
     func processCommand(_ command: any HarvestCommandProtocol) -> String {
-      return "Processing \(command.category.rawValue) command with ID \(command.id)"
+      "Processing \(command.category.rawValue) command with ID \(command.id)"
     }
 
     let harvestCommand = HarvestCommand(category: .system)

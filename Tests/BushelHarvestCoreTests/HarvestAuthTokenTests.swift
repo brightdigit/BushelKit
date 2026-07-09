@@ -37,7 +37,7 @@ internal struct HarvestAuthTokenTests {
   @Test("Token initialization")
   internal func tokenInitialization() {
     let token = "test-token-123"
-    let expirationDate = Date().addingTimeInterval(3600)  // 1 hour from now
+    let expirationDate = Date().addingTimeInterval(3_600)  // 1 hour from now
 
     let authToken = HarvestAuthToken(token: token, expiresAt: expirationDate)
 
@@ -81,8 +81,8 @@ internal struct HarvestAuthTokenTests {
 
   @Test("Token expiration validation")
   internal func tokenExpirationValidation() {
-    let pastDate = Date().addingTimeInterval(-3600)  // 1 hour ago
-    let futureDate = Date().addingTimeInterval(3600)  // 1 hour from now
+    let pastDate = Date().addingTimeInterval(-3_600)  // 1 hour ago
+    let futureDate = Date().addingTimeInterval(3_600)  // 1 hour from now
 
     let expiredToken = HarvestAuthToken(token: "expired", expiresAt: pastDate)
     let validToken = HarvestAuthToken(token: "valid", expiresAt: futureDate)

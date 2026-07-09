@@ -39,7 +39,7 @@
 public enum HarvestConfiguration {
   /// Default port for Harvest communication.
   /// Used for VirtioSocket (UInt32) and TCP network connections (UInt16).
-  public static let defaultPort: Int = 8080
+  public static let defaultPort: Int = 8_080
 
   /// Maximum allowed size, in bytes, for a single framed message body.
   ///

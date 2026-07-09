@@ -149,7 +149,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// - Parameter command: The system command to create
   /// - Returns: A new HarvestCommand with system category
   public static func system(_ command: SystemCommand) -> HarvestCommand {
-    return HarvestCommand(
+    HarvestCommand(
       category: .system,
       payload: .system(command)
     )
@@ -159,7 +159,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// - Parameter command: The remote access command to create
   /// - Returns: A new HarvestCommand with remote category
   public static func remote(_ command: RemoteAccessCommand) -> HarvestCommand {
-    return HarvestCommand(
+    HarvestCommand(
       category: .remote,
       payload: .remote(command)
     )
@@ -169,7 +169,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// - Parameter command: The security command to create
   /// - Returns: A new HarvestCommand with security category
   public static func security(_ command: SecurityCommand) -> HarvestCommand {
-    return HarvestCommand(
+    HarvestCommand(
       category: .security,
       payload: .security(command)
     )
@@ -179,7 +179,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// - Parameter operation: The file operation description
   /// - Returns: A new HarvestCommand with file category
   public static func file(_ operation: String) -> HarvestCommand {
-    return HarvestCommand(
+    HarvestCommand(
       category: .file,
       payload: .file(operation)
     )
@@ -189,7 +189,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// - Parameter operation: The network operation description
   /// - Returns: A new HarvestCommand with network category
   public static func network(_ operation: String) -> HarvestCommand {
-    return HarvestCommand(
+    HarvestCommand(
       category: .network,
       payload: .network(operation)
     )
@@ -199,7 +199,7 @@ public struct HarvestCommand: HarvestCommandProtocol {
   /// - Parameter operation: The clipboard operation description
   /// - Returns: A new HarvestCommand with clipboard category
   public static func clipboard(_ operation: String) -> HarvestCommand {
-    return HarvestCommand(
+    HarvestCommand(
       category: .clipboard,
       payload: .clipboard(operation)
     )

@@ -161,14 +161,20 @@ struct EnvironmentConfigurationTests {
     #expect(mirror.children.count == expectedProperties.count)
   }
 
-  @Test("EnvironmentConfiguration.shared is a singleton")
+  @Test("EnvironmentConfiguration.shared returns a stable value")
   func testSharedSingleton() {
     let instance1 = EnvironmentConfiguration.shared
     let instance2 = EnvironmentConfiguration.shared
 
-    // Since EnvironmentConfiguration is a struct, we can't compare identity,
-    // but we can verify that .shared always returns a value
-    #expect(EnvironmentConfiguration.shared != nil)
+    // EnvironmentConfiguration is a value type and is not Equatable, so we
+    // cannot compare identity. Instead verify that repeated accesses of .shared
+    // yield the same underlying configuration by comparing their fields.
+    #expect(instance1.disableAssertionFailureForError == instance2.disableAssertionFailureForError)
+    #expect(instance1.disallowDatabaseRebuild == instance2.disallowDatabaseRebuild)
+    #expect(instance1.resetApplication == instance2.resetApplication)
+    #expect(instance1.releaseVersion == instance2.releaseVersion)
+    #expect(
+      instance1.triggerTrackingPermissionsRequest == instance2.triggerTrackingPermissionsRequest)
   }
 
   @Test("EnvironmentProperty with Key enum")
