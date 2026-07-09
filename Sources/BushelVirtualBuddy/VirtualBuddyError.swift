@@ -29,9 +29,14 @@
 
 public import Foundation
 
+/// Errors that can occur while communicating with the VirtualBuddy service.
 public enum VirtualBuddyError: Error {
+  /// The provided URL is not supported by the service.
   case unsupportedURL(URL)
+  /// A networking error occurred during the request.
   case networkError(URLError)
+  /// The service response could not be decoded.
   case decodingError(DecodingError)
+  /// An unexpected error occurred.
   case unknownError(Error)
 }

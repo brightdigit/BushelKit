@@ -31,6 +31,7 @@ public import Foundation
 
 // swiftlint:disable line_length
 extension URL {
+  /// A newline-separated string of sample URLs used for testing and fixtures.
   public static let urlsString = """
     http://parallels.com/interdum.jpg?sed=primis&ante=in&vivamus=faucibus&tortor=orci&duis=luctus&mattis=et&egestas=ultrices&metus=posuere&aenean=cubilia&fermentum=curae&donec=donec&ut=pharetra&mauris=magna&eget=vestibulum&massa=aliquet&tempor=ultrices&convallis=erat&nulla=tortor&neque=sollicitudin&libero=mi&convallis=sit&eget=amet&eleifend=lobortis&luctus=sapien&ultricies=sapien&eu=non&nibh=mi&quisque=integer&id=ac&justo=neque&sit=duis
     https://mac.com/mattis/odio/donec/vitae.jpg?mi=nulla&pede=nunc&malesuada=purus&in=phasellus&imperdiet=in&et=felis&commodo=donec&vulputate=semper&justo=sapien&in=a&blandit=libero&ultrices=nam&enim=dui&lorem=proin&ipsum=leo&dolor=odio&sit=porttitor&amet=id&consectetuer=consequat&adipiscing=in&elit=consequat&proin=ut&interdum=nulla&mauris=sed&non=accumsan&ligula=felis&pellentesque=ut&ultrices=at&phasellus=dolor&id=quis&sapien=odio&in=consequat&sapien=varius&iaculis=integer
@@ -159,15 +160,23 @@ extension URL {
     https://tamu.edu/potenti/in/eleifend/quam/a/odio.json?sed=cursus&accumsan=urna&felis=ut&ut=tellus&at=nulla&dolor=ut&quis=erat&odio=id&consequat=mauris&varius=vulputate&integer=elementum&ac=nullam&leo=varius&pellentesque=nulla&ultrices=facilisi&mattis=cras&odio=non&donec=velit&vitae=nec&nisi=nisi&nam=vulputate&ultrices=nonummy&libero=maecenas&non=tincidunt&mattis=lacus&pulvinar=at&nulla=velit&pede=vivamus&ullamcorper=vel&augue=nulla&a=eget&suscipit=eros&nulla=elementum&elit=pellentesque&ac=quisque&nulla=porta&sed=volutpat&vel=erat&enim=quisque&sit=erat&amet=eros&nunc=viverra&viverra=eget&dapibus=congue&nulla=eget&suscipit=semper&ligula=rutrum&in=nulla&lacus=nunc&curabitur=purus&at=phasellus&ipsum=in&ac=felis&tellus=donec&semper=semper&interdum=sapien
     """
 
+  /// The sample URLs parsed from ``urlsString``.
   public static let urls = urlsString.components(separatedBy: .whitespacesAndNewlines).compactMap(
     URL.init(string:)
   )
 
+  /// Returns a randomly selected HTTP URL from the sample ``urls``.
+  ///
+  /// - Returns: A random URL drawn from the sample collection.
   public static func randomHTTP() -> URL {
     // swiftlint:disable:next force_unwrapping
     self.urls.randomElement()!
   }
 
+  /// Returns a unique file URL within the temporary directory.
+  ///
+  /// - Parameter fileManager: The file manager whose temporary directory is used.
+  /// - Returns: A file URL with a random UUID-based path component.
   public static func randomFile(usingFileManager fileManager: FileManager = .default) -> URL {
     fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
   }

@@ -29,7 +29,11 @@
 
 internal import Foundation
 
+/// A type that can produce a random value within a closed range, used to generate test fixtures.
 public protocol Randomizable: Comparable {
+  /// Returns a random value within the given range.
+  /// - Parameter range: The inclusive range to draw a value from.
+  /// - Returns: A random value within `range`.
   static func random(in range: ClosedRange<Self>) -> Self
 }
 

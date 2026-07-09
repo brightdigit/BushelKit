@@ -30,6 +30,9 @@
 internal import Foundation
 
 extension UInt64 {
+  /// Creates a byte count from a number of gigabytes, for use in test fixtures.
+  /// - Parameter num: The number of gigabytes.
+  /// - Returns: The equivalent value in bytes.
   public static func makeGigaByte(_ num: Int) -> Self {
     .init(num * 1_024 * 1_024 * 1_024)
   }

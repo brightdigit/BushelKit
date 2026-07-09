@@ -30,6 +30,13 @@
 public import XCTest
 
 extension XCTestCase {
+  /// Decodes a value of the given type from a string, failing the test if the data cannot be produced.
+  /// - Parameters:
+  ///   - type: The type to decode.
+  ///   - string: The source string to decode from.
+  ///   - decoder: The decoder to use.
+  /// - Returns: The decoded value.
+  /// - Throws: ``TestDecodingError/dataEncoding`` if the string cannot be encoded, or any decoding error.
   public func decode<T: Decodable>(
     _: T.Type,
     from string: String,

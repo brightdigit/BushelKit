@@ -29,17 +29,22 @@
 
 public import Foundation
 
+/// Configuration values used to access the VirtualBuddy signing service.
 public struct VirtualBuddyConfiguration: Sendable {
   internal enum Keys: String {
     case virtualBuddy = "VirtualBuddy"
     case apiKey = "APIKey"
   }
 
+  /// The default configuration loaded from the main bundle, if available.
   public static let main: VirtualBuddyConfiguration? = .init()
+  /// The API key used to authenticate with the VirtualBuddy service.
   public let apiKey: String
 }
 
 extension VirtualBuddyConfiguration {
+  /// Creates a configuration by reading values from an app bundle's Info dictionary.
+  /// - Parameter bundle: The bundle to read the configuration from. Defaults to the main bundle.
   public init?(bundle: Bundle = .main) {
     guard
       let dictionary = bundle.object(

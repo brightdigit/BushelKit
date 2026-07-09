@@ -29,8 +29,11 @@
 
 internal import Foundation
 
+/// An error thrown by decoding test helpers when input data cannot be produced.
 public enum TestDecodingError: String, MockError {
+  /// The input string could not be encoded into data for decoding.
   case dataEncoding
 
+  /// The raw string value identifying this error.
   public var value: String { self.rawValue }
 }

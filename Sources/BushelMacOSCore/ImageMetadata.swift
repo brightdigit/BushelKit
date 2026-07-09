@@ -82,6 +82,16 @@
       )
     }
 
+    /// Creates image metadata from a Virtualization framework restore image.
+    ///
+    /// For local file URLs the file's size and modification date are read directly; for
+    /// remote URLs the values are resolved from the response headers of a HEAD request.
+    ///
+    /// - Parameters:
+    ///   - vzRestoreImage: The restore image to derive metadata from.
+    ///   - sigVerification: The signature verification state for the image, if known.
+    ///   - url: The URL locating the restore image.
+    /// - Throws: An error if required file attributes or response headers are missing.
     @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
     public init(
       vzRestoreImage: VZMacOSRestoreImage,

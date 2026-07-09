@@ -30,11 +30,18 @@
 public import Foundation
 public import OSVer
 
+/// The signature status of an IPSW image as reported by the VirtualBuddy service.
 public struct VirtualBuddySig: Codable {
+  /// The unique identifier of the queried image.
   public let uuid: UUID
+  /// The operating system version of the image.
   public let version: OSVer
+  /// The operating system build identifier of the image.
   public let build: String
+  /// The status code returned by the service.
   public let code: Int
+  /// The status message returned by the service.
   public let message: String
+  /// A Boolean value indicating whether the image is currently signed.
   public let isSigned: Bool
 }

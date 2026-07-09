@@ -77,6 +77,7 @@ extension Bool: EnvironmentValue {
 }
 
 extension Int: EnvironmentValue {
+  /// The default value for the environment value.
   public static var `default`: Int {
     0
   }

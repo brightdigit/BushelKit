@@ -37,10 +37,12 @@ extension Firmware: OperatingSystemInstalled {
     let string: String
   }
 
+  /// The operating system build identifier for this firmware.
   public var buildVersion: String? {
     self.buildid
   }
 
+  /// The operating system version installed by this firmware.
   public var operatingSystemVersion: OSVer {
     self.version
   }

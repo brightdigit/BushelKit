@@ -69,6 +69,19 @@ public struct XcodeVersionRecord: Codable, Sendable {
     "XcodeVersion-\(buildNumber)"
   }
 
+  /// Creates a new Xcode version record.
+  ///
+  /// - Parameters:
+  ///   - version: The Xcode version.
+  ///   - buildNumber: The build identifier.
+  ///   - releaseDate: The release date.
+  ///   - downloadURL: The optional developer.apple.com download link.
+  ///   - fileSize: The download size in bytes, if known.
+  ///   - isPrerelease: Whether this is a beta or RC release.
+  ///   - minimumMacOS: The record name of the minimum required restore image.
+  ///   - includedSwiftVersion: The record name of the bundled Swift compiler.
+  ///   - sdkVersions: A JSON string of bundled SDK versions.
+  ///   - notes: Release notes or additional info.
   public init(
     version: String,
     buildNumber: String,

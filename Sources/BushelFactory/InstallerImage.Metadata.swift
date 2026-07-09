@@ -33,6 +33,11 @@ public import BushelMachine
 internal import Foundation
 
 extension InstallerImage.Metadata {
+  /// Creates installer image metadata by resolving display labels from the provided image metadata.
+  /// - Parameters:
+  ///   - labelName: The name to display for the image.
+  ///   - imageMetadata: The underlying image metadata describing the operating system.
+  ///   - labelProvider: A closure that produces user-facing labels for the given system and metadata.
   public init(
     labelName: String,
     imageMetadata: ImageMetadata,

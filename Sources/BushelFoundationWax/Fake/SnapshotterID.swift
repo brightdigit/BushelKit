@@ -31,5 +31,6 @@ public import BushelFoundation
 internal import Foundation
 
 extension SnapshotterID {
+  /// A fixed sample snapshotter identifier for use in tests.
   public static let sampleSnapshotSystemID: Self = .init(stringLiteral: "sample")
 }

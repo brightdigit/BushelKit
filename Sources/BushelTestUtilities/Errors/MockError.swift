@@ -29,8 +29,11 @@
 
 internal import Foundation
 
+/// An equatable error used in tests to assert that a specific error was thrown.
 public protocol MockError: Error, Equatable {
+  /// The type of the underlying value that distinguishes this error.
   associatedtype ErrorType: Equatable
 
+  /// The underlying value identifying this error.
   var value: ErrorType { get }
 }

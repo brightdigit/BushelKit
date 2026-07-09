@@ -56,6 +56,7 @@ public struct ConfigurationRange: CustomStringConvertible, Sendable, Equatable {
     return nil
   }
 
+  /// The fixed memory value required when the range collapses to a single value, if any.
   public var requiredMemory: Int64? {
     requiredMemoryFloat.map(Int64.init)
   }

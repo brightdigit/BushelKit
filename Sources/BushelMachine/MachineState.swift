@@ -29,6 +29,7 @@
 
 internal import Foundation
 
+/// The lifecycle states of a virtual machine.
 public enum MachineState: Int, Sendable {
   /// Initial state before the virtual machine is started.
   case stopped = 0
@@ -69,6 +70,7 @@ public enum MachineState: Int, Sendable {
 }
 
 extension MachineState {
+  /// The SF Symbols system image name representing this state.
   public var sfSystemName: String {
     switch self {
     case .stopped:

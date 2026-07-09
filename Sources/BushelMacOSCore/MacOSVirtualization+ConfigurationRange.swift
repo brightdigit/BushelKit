@@ -34,13 +34,17 @@
   internal import Virtualization
 
   extension MacOSVirtualization {
+    /// The maximum number of CPUs available on the host machine.
     public static let maximumMachineCPUCount = max(ProcessInfo.processInfo.processorCount, 1)
 
+    /// The maximum CPU count allowed for a virtual machine, clamped to what the host and
+    /// the Virtualization framework support.
     public static let maximumAllowedCPUCount = min(
       maximumMachineCPUCount,
       VZVirtualMachineConfiguration.maximumAllowedCPUCount
     )
 
+    /// The allowed range of CPU counts and memory sizes for a macOS virtual machine configuration.
     public static let configurationRange = ConfigurationRange(
       cpuCount:
         Float(

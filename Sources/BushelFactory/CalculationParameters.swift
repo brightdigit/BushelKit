@@ -59,6 +59,7 @@ internal struct SpecificationCalculationParameters: CalculationParameters {
   }
 }
 
+/// Describes the index and value ranges used to map between slider positions and specification values.
 public protocol CalculationParameters: Sendable {
   var indexRange: ClosedRange<Int> { get }
   var valueRange: ClosedRange<Int> { get }
@@ -66,6 +67,9 @@ public protocol CalculationParameters: Sendable {
 }
 
 extension CalculationParameters {
+  /// Computes a value from the index range's bounds using the given combining closure.
+  /// - Parameter closure: A closure combining the lower and upper index bounds into a value.
+  /// - Returns: The value produced by applying the closure to the index range bounds.
   public func value(using closure: @escaping @Sendable (Int, Int) -> Int) -> Int {
     closure(indexRange.lowerBound, indexRange.upperBound)
   }

@@ -30,9 +30,10 @@
 @_exported public import FelinePine
 
 #if !canImport(os)
-  internal import FelinePineSwift
+  @_exported import FelinePineSwift
 #else
   @_exported import os
 #endif
 
+/// A type that supports logging through BushelKit's ``BushelLogging`` logging system.
 public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}

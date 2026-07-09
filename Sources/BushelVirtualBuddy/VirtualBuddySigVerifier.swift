@@ -35,11 +35,15 @@ public import Foundation
   public import FoundationNetworking
 #endif
 
+/// A signature verifier that determines image signing status using the VirtualBuddy service.
 public struct VirtualBuddySigVerifier: SourceSigVerifier {
+  /// The identifier of this signature source.
   public let sourceID: String = "virtualbuddy"
+  /// The priority applied to signatures produced by this verifier.
   public let priority: SignaturePriority = .always
   private let service: VirtualBuddyService
   private let urlFromSource: @Sendable (SignatureSource) async -> URL?
+  /// The virtual machine system this verifier applies to.
   public var id: VMSystemID { .macOS }
 
   private init(
@@ -49,6 +53,12 @@ public struct VirtualBuddySigVerifier: SourceSigVerifier {
     self.urlFromSource = urlFromSource
   }
 
+  /// Creates a verifier using an explicit API key.
+  /// - Parameters:
+  ///   - apiKey: The API key used to authenticate with the VirtualBuddy service.
+  ///   - decoder: The JSON decoder used to decode service responses.
+  ///   - urlSession: The URL session used for network requests. Defaults to the shared session.
+  ///   - urlFromSource: A closure resolving a signature source to its image URL.
   public init(
     apiKey: String,
     decoder: JSONDecoder,
@@ -61,6 +71,13 @@ public struct VirtualBuddySigVerifier: SourceSigVerifier {
     )
   }
 
+  /// Creates a verifier from a configuration, returning `nil` if no configuration is available.
+  /// - Parameters:
+  ///   - configuration: The configuration providing the API key.
+  ///     Defaults to ``VirtualBuddyConfiguration/main``.
+  ///   - decoder: The JSON decoder used to decode service responses.
+  ///   - urlSession: The URL session used for network requests. Defaults to the shared session.
+  ///   - urlFromSource: A closure resolving a signature source to its image URL.
   public init?(
     configuration: VirtualBuddyConfiguration? = .main,
     decoder: JSONDecoder,
@@ -79,6 +96,12 @@ public struct VirtualBuddySigVerifier: SourceSigVerifier {
     )
   }
 
+  /// Retrieves the signature for the image associated with a signature source.
+  /// - Parameters:
+  ///   - source: The signature source identifying the image to verify.
+  ///   - timestamp: The timestamp to associate with the verification request.
+  /// - Returns: The image signature reported by the VirtualBuddy service.
+  /// - Throws: A ``SigVerificationError`` if the source is unsupported or verification fails.
   public func imageSignature(
     from source: SignatureSource,
     timestamp: Date

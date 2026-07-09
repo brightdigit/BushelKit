@@ -3195,7 +3195,7 @@ self + .init(platforms)
 }
 }
 //
-//  WWDC2023.swift
+//  MinimumPlatforms.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -3225,9 +3225,9 @@ self + .init(platforms)
 
 import PackageDescription
 
-struct WWDC2023: PlatformSet {
+struct MinimumPlatforms: PlatformSet {
   var body: any SupportedPlatforms {
-    SupportedPlatform.macOS(.v15)
+    SupportedPlatform.macOS(.v12)
     SupportedPlatform.iOS(.v18)
     SupportedPlatform.watchOS(.v11)
     SupportedPlatform.tvOS(.v18)
@@ -3338,6 +3338,39 @@ struct BushelUtilities: Product, Target {
 import Foundation
 
 struct BushelTestUtilities: Product, Target {}
+//
+//  BushelHarvestCore.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the "Software"), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
+//
+
+struct BushelHarvestCore: Product, Target {
+  // No dependencies - just basic Foundation types
+  // This allows HarvestBinKit (guest-side) to use it on older macOS versions
+}
 //
 //  BushelHubIPSW.swift
 //  BushelKit
@@ -4037,6 +4070,40 @@ struct BushelLibraryTests: TestTarget {
   }
 }
 //
+//  BushelHarvestCoreTests.swift
+//  BushelKit
+//
+//  Created by Leo Dion.
+//  Copyright © 2024 BrightDigit.
+//
+//  Permission is hereby granted, free of charge, to any person
+//  obtaining a copy of this software and associated documentation
+//  files (the “Software”), to deal in the Software without
+//  restriction, including without limitation the rights to use,
+//  copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following
+//  conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
+//
+
+struct BushelHarvestCoreTests: TestTarget {
+  var dependencies: any Dependencies {
+    BushelHarvestCore()
+  }
+}
+//
 //  BushelCoreTests.swift
 //  BushelKit
 //
@@ -4346,7 +4413,7 @@ struct FelinePine: PackageDependency, TargetDependency {
 
 struct RadiantKit: PackageDependency, TargetDependency {
   var dependency: Package.Dependency {
-    .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.4")
+    .package(url: "https://github.com/brightdigit/RadiantKit.git", from: "1.0.0-beta.5")
   }
 }
 //
@@ -4538,46 +4605,74 @@ struct ArgumentParser: PackageDependency, TargetDependency {
 
 import PackageDescription
 
-let package = Package(
-  name: "BushelKit",
-  entries: {
-    BushelCommand()
-    BushelFoundation()
-    BushelDocs()
-    BushelUtilities()
-    BushelFoundationWax()
-    BushelFactory()
-    BushelGuestProfile()
-    BushelHub()
-    BushelHubIPSW()
-    BushelHubMacOS()
-    BushelLibrary()
-    BushelLogging()
-    BushelMachine()
-    BushelMacOSCore()
-    BushelUT()
-    BushelVirtualBuddy()
-    BushelTestUtilities()
-  },
-  dependencies: {
-    DocC()
-  },
-  testTargets: {
-    BushelFoundationTests()
-    BushelLibraryTests()
-    BushelMachineTests()
-    BushelFactoryTests()
-    BushelUtlitiesTests()
-  },
-  swiftSettings: {
-    AccessLevelOnImport()
-    NestedProtocols()
-    NoncopyableGenerics()
-    VariadicGenerics()
-    InternalImportsByDefault()
-  }
-)
+// swift-docc-plugin ships its shared plugin sources via symbolic links that do
+// not survive checkout on Windows, so building its plugins fails there (cannot
+// find 'Lock'/'SnippetExtractor' in scope). The manifest is compiled per host,
+// so gate the dependency off Windows via the closure below; docc generation is
+// not run on Windows anyway and no target depends on the plugin, so omitting it
+// there is safe.
+let package = {
+  #if os(Windows)
+    Package(
+      name: "BushelKit",
+      entries: PackageEntries,
+      testTargets: PackageTestTargets,
+      swiftSettings: PackageSwiftSettings
+    )
+  #else
+    Package(
+      name: "BushelKit",
+      entries: PackageEntries,
+      dependencies: {
+        DocC()
+      },
+      testTargets: PackageTestTargets,
+      swiftSettings: PackageSwiftSettings
+    )
+  #endif
+}()
 .supportedPlatforms {
-  WWDC2023()
+  MinimumPlatforms()
 }
 .defaultLocalization(.english)
+
+@ProductsBuilder
+private func PackageEntries() -> [any Product] {
+  BushelCommand()
+  BushelFoundation()
+  BushelDocs()
+  BushelUtilities()
+  BushelFoundationWax()
+  BushelFactory()
+  BushelGuestProfile()
+  BushelHarvestCore()
+  BushelHub()
+  BushelHubIPSW()
+  BushelHubMacOS()
+  BushelLibrary()
+  BushelLogging()
+  BushelMachine()
+  BushelMacOSCore()
+  BushelUT()
+  BushelVirtualBuddy()
+  BushelTestUtilities()
+}
+
+@TestTargetBuilder
+private func PackageTestTargets() -> any TestTargets {
+  BushelFoundationTests()
+  BushelLibraryTests()
+  BushelMachineTests()
+  BushelFactoryTests()
+  BushelUtlitiesTests()
+  BushelHarvestCoreTests()
+}
+
+@SwiftSettingsBuilder
+private func PackageSwiftSettings() -> [SwiftSetting] {
+  AccessLevelOnImport()
+  NestedProtocols()
+  NoncopyableGenerics()
+  VariadicGenerics()
+  InternalImportsByDefault()
+}

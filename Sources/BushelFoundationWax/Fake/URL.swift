@@ -30,10 +30,12 @@
 public import Foundation
 
 extension URL {
-  // swiftlint:disable:next force_unwrapping
-  public static let bushelWebSite = URL(string: "https://getbushel.app")!
-  // swiftlint:disable:next force_unwrapping
-  public static let homeDirectory = URL(string: NSHomeDirectory())!
-  // swiftlint:disable:next force_unwrapping
-  public static let temporaryDir = URL(string: NSTemporaryDirectory())!
+  /// The Bushel marketing website URL, used as a sample value in tests.
+  public static let bushelWebSite =
+    // swiftlint:disable:next force_unwrapping
+    URL(string: "https://getbushel.app")!
+  /// The current user's home directory, used as a sample file URL in tests.
+  public static let homeDirectory = URL(fileURLWithPath: NSHomeDirectory())
+  /// The system temporary directory, used as a sample file URL in tests.
+  public static let temporaryDir = URL(fileURLWithPath: NSTemporaryDirectory())
 }

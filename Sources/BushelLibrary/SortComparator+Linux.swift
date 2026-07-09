@@ -68,6 +68,10 @@
     /// a is placed after b.
     case reverse
 
+    /// Creates a sort order by decoding a boolean where `true` means `forward`.
+    ///
+    /// - Parameter decoder: The decoder to read the value from.
+    /// - Throws: An error if the value cannot be decoded.
     public init(from decoder: any Decoder) throws {
       let container = try decoder.singleValueContainer()
       let isForward = try container.decode(Bool.self)
@@ -78,6 +82,10 @@
       }
     }
 
+    /// Encodes the sort order as a boolean where `forward` is `true`.
+    ///
+    /// - Parameter encoder: The encoder to write the value to.
+    /// - Throws: An error if the value cannot be encoded.
     public func encode(to encoder: any Encoder) throws {
       var container = encoder.singleValueContainer()
       switch self {
@@ -158,9 +166,13 @@
   /// Compares `Comparable` types using their comparable implementation.
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   public struct ComparableComparator<Compared: Comparable>: SortComparator, Sendable {
+    /// The ordering (forward or reverse) applied when comparing values.
     public var order: SortOrder
 
     // No need for availability on this initializer in the package.
+    /// Creates a comparator with the given ordering.
+    ///
+    /// - Parameter order: The ordering to use; defaults to `.forward`.
     public init(order: SortOrder = .forward) {
       self.order = order
     }
@@ -171,6 +183,12 @@
       return .orderedSame
     }
 
+    /// Compares two values using their `Comparable` conformance and the current order.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first value to compare.
+    ///   - rhs: The second value to compare.
+    /// - Returns: The comparison result adjusted for the comparator's `order`.
     public func compare(_ lhs: Compared, _ rhs: Compared) -> ComparisonResult {
       self.unorderedCompare(lhs, rhs).withOrder(self.order)
     }
@@ -204,10 +222,18 @@
 
   @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
   extension Never: SortComparator {
+    /// The type of value this comparator compares (`Never`).
     public typealias Compared = Never
 
+    /// Compares two `Never` values; unreachable since `Never` has no instances.
+    ///
+    /// - Parameters:
+    ///   - lhs: A `Never` value (unreachable).
+    ///   - rhs: A `Never` value (unreachable).
+    /// - Returns: A comparison result (unreachable).
     public func compare(_: Never, _: Never) -> ComparisonResult {}
 
+    /// The ordering; unreachable since `Never` has no instances.
     public var order: SortOrder {
       get {
         switch self {}

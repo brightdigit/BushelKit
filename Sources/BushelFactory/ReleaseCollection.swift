@@ -31,6 +31,7 @@ public import BushelFoundation
 public import BushelMachine
 public import Foundation
 
+/// An ordered collection of releases and their installer images, grouped by major version.
 public struct ReleaseCollection {
   private struct ReleaseVersions {
     let versionNumbers: [Int: Int]
@@ -91,21 +92,31 @@ public struct ReleaseCollection {
       )
     }
   }
+  /// Options controlling how a release collection is built.
   public struct Options: OptionSet, Codable, Hashable, Sendable {
+    /// Excludes duplicate images when building the collection.
     public static let noDuplicates: Self = .init(rawValue: 1)
 
+    /// The underlying bitmask value of the option set.
     public var rawValue: Int
 
+    /// Creates an option set from its raw bitmask value.
+    /// - Parameter rawValue: The raw bitmask value.
     public init(rawValue: Int) {
       self.rawValue = rawValue
     }
   }
 
+  /// A mapping from each major version to its index within ``releases``.
   public let versionNumbers: [Int: Int]
+  /// The releases contained in this collection, ordered by major version.
   public let releases: [ReleaseMetadata]
+  /// A Boolean value indicating whether custom (user-supplied) versions are permitted.
   public let customVersionsAllowed: Bool
+  /// The display prefix used for releases in this collection.
   public let prefix: String
 
+  /// A Boolean value indicating whether the collection contains any custom versions.
   public var containsCustomVersions: Bool {
     guard self.customVersionsAllowed else {
       return false
@@ -113,6 +124,7 @@ public struct ReleaseCollection {
     return !customVersions.isEmpty
   }
 
+  /// The installer images belonging to the custom release, if custom versions are allowed.
   public var customVersions: [any InstallerImage] {
     assert(self.customVersionsAllowed)
     guard self.customVersionsAllowed else {
@@ -133,6 +145,12 @@ public struct ReleaseCollection {
     self.prefix = prefix
   }
 
+  /// Creates a release collection by pairing release metadata with the provided installer images.
+  /// - Parameters:
+  ///   - releaseCollection: The metadata describing the available releases.
+  ///   - images: The installer images to distribute across the releases.
+  ///   - sortOrder: The order in which images within a release are sorted.
+  ///   - options: Options controlling how the collection is built.
   public init(
     releaseCollection: any ReleaseCollectionMetadata,
     images: [any InstallerImage],
@@ -161,6 +179,9 @@ public struct ReleaseCollection {
     )
   }
 
+  /// Finds the release and image matching the given image identifier.
+  /// - Parameter identifier: The identifier of the image to locate.
+  /// - Returns: The matching release and version, or `nil` if no image matches.
   public func findSelection(byID identifier: InstallerImageIdentifier) -> ReleaseQueryResult? {
     for release in releases {
       if let image = release.images.first(where: { $0.identifier.imageID == identifier.imageID }) {
@@ -173,6 +194,9 @@ public struct ReleaseCollection {
     return nil
   }
 
+  /// Returns the release metadata for the given major version, excluding the custom release.
+  /// - Parameter majorVersion: The major version to look up.
+  /// - Returns: The matching release metadata, or `nil` if no non-custom release exists for the version.
   public subscript(majorVersion: Int) -> ReleaseMetadata? {
     guard let index = versionNumbers[majorVersion] else {
       return nil
@@ -185,6 +209,7 @@ public struct ReleaseCollection {
 }
 
 extension ReleaseCollection {
+  /// A Boolean value indicating whether every release in the collection has no images.
   public var isEmpty: Bool {
     self.releases.allSatisfy(\.images.isEmpty)
   }

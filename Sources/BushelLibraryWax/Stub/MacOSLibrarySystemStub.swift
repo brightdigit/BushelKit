@@ -33,6 +33,7 @@ public import Foundation
 internal import OSVer
 public import RadiantDocs
 
+/// A stub `LibrarySystem` implementation for macOS images, used for testing.
 public struct MacOSLibrarySystemStub: LibrarySystem {
   private static let codeNames: [Int: String] = [
     11: "Big Sur",
@@ -41,21 +42,38 @@ public struct MacOSLibrarySystemStub: LibrarySystem {
     14: "Sonoma",
   ]
 
+  /// The identifier of the VM system this library system represents.
   public var id: VMSystemID
+  /// The short, human-readable name of the system.
   public var shortName: String = "macOS"
+  /// The content types this library system accepts.
   public var allowedContentTypes: Set<FileType> = .init()
+  /// The release collection metadata (not implemented in this stub).
   public var releaseCollectionMetadata: any ReleaseCollectionMetadata {
     fatalError("Not Implemented")
   }
 
+  /// Creates a stub macOS library system with the given system identifier.
+  ///
+  /// - Parameter id: The identifier of the VM system this library system represents.
   public init(id: VMSystemID) {
     self.id = id
   }
 
+  /// Returns fixed stub metadata for an image at the given URL.
+  ///
+  /// - Parameters:
+  ///   - url: The URL of the image (ignored by this stub).
+  ///   - verifier: The signature verifier (ignored by this stub).
+  /// - Returns: Fixed metadata for macOS 12.6.0.
   public func metadata(fromURL url: URL, verifier: any SigVerifier) async throws -> ImageMetadata {
     .macOS_12_6_0_21G115
   }
 
+  /// Builds a display label from the given operating system metadata.
+  ///
+  /// - Parameter metadata: The installed operating system metadata to describe.
+  /// - Returns: A `MetadataLabel` derived from the metadata.
   public func label(fromMetadata metadata: any OperatingSystemInstalled) -> MetadataLabel {
     .init(
       operatingSystemLongName: self.operatingSystemLongName(forOSMetadata: metadata),

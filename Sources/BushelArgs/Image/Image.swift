@@ -30,12 +30,15 @@
 public import ArgumentParser
 internal import Foundation
 
+/// The `image` command group for managing restore image libraries.
 public struct Image: ParsableCommand {
+  /// The command-line configuration describing the command and its subcommands.
   public static let configuration = CommandConfiguration(
     abstract: "A utility for performing maths.",
     subcommands: [Image.List.self],
     defaultSubcommand: Image.List.self
   )
 
+  /// Creates a new `Image` command.
   public init() {}
 }

@@ -30,9 +30,11 @@
 public import ArgumentParser
 internal import Foundation
 
+/// A parsable command that shares the root `bushel` command configuration.
 public protocol BushelCommand: ParsableCommand {}
 
 extension BushelCommand {
+  /// The command-line configuration, inherited from the root `bushel` command.
   public static var configuration: CommandConfiguration {
     Bushel.configuration
   }

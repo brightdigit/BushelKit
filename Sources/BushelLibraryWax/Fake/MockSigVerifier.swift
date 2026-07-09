@@ -29,15 +29,27 @@
 
 public import BushelFoundation
 
+/// A mock signature verifier that always returns a preconfigured verification result, for testing.
 public actor MockSigVerifier: SigVerifier {
+  /// The identifier of the VM system this verifier is associated with.
   public let id: VMSystemID
+  /// The fixed verification result returned for every signature check.
   public var verification: SigVerification
 
+  /// Creates a mock verifier with the given system identifier and verification result.
+  ///
+  /// - Parameters:
+  ///   - id: The identifier of the VM system this verifier is associated with.
+  ///   - verification: The verification result to always return.
   public init(id: VMSystemID, verification: SigVerification) {
     self.id = id
     self.verification = verification
   }
 
+  /// Returns the preconfigured verification result for the given signature source.
+  ///
+  /// - Parameter source: The signature source to check (ignored by this mock).
+  /// - Returns: The fixed `verification` result.
   public func isSignatureSigned(
     from source: SignatureSource
   ) async throws(SigVerificationError) -> SigVerification {

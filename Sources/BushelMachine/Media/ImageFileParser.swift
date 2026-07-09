@@ -110,11 +110,18 @@ public struct ImageFileParser: RecordedImageParser {
     )
 
     do {
-      try self.fileManager.createEmptyDirectory(
-        at: directoryURL,
-        withIntermediateDirectories: false,
-        deleteExistingFile: false
-      )
+      #if !os(Android)
+        try self.fileManager.createEmptyDirectory(
+          at: directoryURL,
+          withIntermediateDirectories: false,
+          deleteExistingFile: false
+        )
+      #else
+        try self.fileManager.createDirectory(
+          at: directoryURL,
+          withIntermediateDirectories: false
+        )
+      #endif
       try self.fileManager.moveItem(at: image.url, to: destinationURL)
     } catch {
       throw .innerError(error)

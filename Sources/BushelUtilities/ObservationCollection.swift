@@ -31,6 +31,7 @@
 
   public import Foundation
 
+  /// A thread-safe collection that retains key-value observations keyed by identifier.
   public actor ObservationCollection {
     /// A dictionary of `NSKeyValueObservation` instances, keyed by `UUID`.
     private var observations = [UUID: NSKeyValueObservation]()

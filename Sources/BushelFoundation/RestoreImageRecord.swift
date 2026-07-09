@@ -30,6 +30,13 @@
 public import Foundation
 
 /// Represents a macOS IPSW restore image for Apple Virtualization framework
+///
+/// - Important: `Codable` decoding does **not** run validation. The synthesized
+///   `Decodable` conformance builds instances directly from the decoded fields,
+///   so ``validate()`` is not invoked. When ingesting data from an external
+///   source (e.g. ipsw.me, mrmacintosh.com, mesu.apple.com, CloudKit), callers
+///   must call ``validate()`` (or check ``isValid``) on the decoded value to
+///   reject malformed input.
 public struct RestoreImageRecord: Codable, Sendable {
   /// macOS version (e.g., "14.2.1", "15.0 Beta 3")
   public var version: String
@@ -77,6 +84,31 @@ public struct RestoreImageRecord: Codable, Sendable {
     "RestoreImage-\(buildNumber)"
   }
 
+  /// Returns true if all fields pass validation.
+  public var isValid: Bool {
+    do {
+      try validate()
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  /// Creates a new restore image record.
+  ///
+  /// - Parameters:
+  ///   - version: The macOS version.
+  ///   - buildNumber: The build identifier.
+  ///   - releaseDate: The official release date.
+  ///   - downloadURL: The direct IPSW download link.
+  ///   - fileSize: The file size in bytes.
+  ///   - sha256Hash: The SHA-256 checksum for integrity verification.
+  ///   - sha1Hash: The SHA-1 hash for compatibility.
+  ///   - isSigned: Whether Apple still signs this image, or `nil` if unknown.
+  ///   - isPrerelease: Whether this is a beta or RC release.
+  ///   - source: The data source of the record.
+  ///   - notes: Additional metadata or release notes.
+  ///   - sourceUpdatedAt: When the source last updated this record, if known.
   public init(
     version: String,
     buildNumber: String,
@@ -104,5 +136,87 @@ public struct RestoreImageRecord: Codable, Sendable {
     self.source = source
     self.notes = notes
     self.sourceUpdatedAt = sourceUpdatedAt
+  }
+
+  /// Validates all fields of the restore image record.
+  ///
+  /// Call this after decoding a record from an external source, since `Codable`
+  /// decoding does not enforce validation (see the type-level note).
+  ///
+  /// - Throws: `RestoreImageRecordValidationError` if any field is invalid.
+  public func validate() throws {
+    try Self.validateSHA256Hash(sha256Hash)
+    try Self.validateSHA1Hash(sha1Hash)
+    try Self.validateFileSize(fileSize)
+    try Self.validateDownloadURL(downloadURL)
+  }
+}
+
+extension RestoreImageRecord {
+  /// Validates that a string contains only lowercase hexadecimal characters.
+  ///
+  /// - Parameter string: The string to validate. Must be already normalized to lowercase.
+  /// - Returns: `true` if the string contains only lowercase hex digits (0-9, a-f), `false` otherwise.
+  ///
+  /// - Note: This method expects the input to be pre-normalized to lowercase.
+  ///   Use `string.lowercased()` before calling this method if the input may contain uppercase characters.
+  fileprivate static func isValidHexadecimal(_ string: String) -> Bool {
+    string.allSatisfy { $0.isHexDigit && ($0.isLowercase || $0.isNumber) }
+  }
+
+  /// Validates a cryptographic hash string.
+  ///
+  /// - Parameters:
+  ///   - hash: The hash string to validate
+  ///   - expectedLength: Expected character length (64 for SHA-256, 40 for SHA-1)
+  ///   - invalidLengthError: Error to throw if length is incorrect
+  ///   - nonHexError: Error to throw if non-hexadecimal characters present
+  /// - Throws: Provided error if validation fails
+  private static func validateHash(
+    _ hash: String,
+    expectedLength: Int,
+    invalidLengthError: @autoclosure () -> RestoreImageRecordValidationError,
+    nonHexError: @autoclosure () -> RestoreImageRecordValidationError
+  ) throws {
+    let normalizedHash = hash.lowercased()
+    guard normalizedHash.count == expectedLength else {
+      throw invalidLengthError()
+    }
+    guard isValidHexadecimal(normalizedHash) else {
+      throw nonHexError()
+    }
+  }
+
+  fileprivate static func validateSHA256Hash(_ hash: String) throws {
+    try validateHash(
+      hash,
+      expectedLength: 64,
+      invalidLengthError: .invalidSHA256Hash(hash, expectedLength: 64),
+      nonHexError: .nonHexadecimalSHA256(hash)
+    )
+  }
+
+  fileprivate static func validateSHA1Hash(_ hash: String) throws {
+    try validateHash(
+      hash,
+      expectedLength: 40,
+      invalidLengthError: .invalidSHA1Hash(hash, expectedLength: 40),
+      nonHexError: .nonHexadecimalSHA1(hash)
+    )
+  }
+
+  fileprivate static func validateFileSize(_ size: Int) throws {
+    guard size > 0 else {
+      throw RestoreImageRecordValidationError.nonPositiveFileSize(size)
+    }
+  }
+
+  fileprivate static func validateDownloadURL(_ url: URL) throws {
+    guard let scheme = url.scheme?.lowercased() else {
+      throw RestoreImageRecordValidationError.missingURLScheme(url)
+    }
+    guard scheme == "https" else {
+      throw RestoreImageRecordValidationError.insecureDownloadURL(url)
+    }
   }
 }

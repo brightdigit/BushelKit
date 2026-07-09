@@ -30,26 +30,15 @@
 public import BushelFoundation
 internal import BushelMachine
 
+/// A mutable configuration of CPU, memory, and storage values constrained by a range and optional template.
 public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, Sendable {
+  /// The allowed ranges for CPU, memory, and storage values.
   public let configurationRange: ConfigurationRange
+  /// The range of valid memory slider indices.
   public let memoryIndexRange: ClosedRange<Float>
   private var updatingValues = false
-  public var isValid: Bool {
-    guard self.configurationRange.cpuCount.contains(self.cpuCount) else {
-      return false
-    }
-    if let requiredMemory = configurationRange.requiredMemory {
-      guard self.memory == requiredMemory else {
-        return false
-      }
-    } else {
-      guard self.configurationRange.memory.contains(Float(self.memory)) else {
-        return false
-      }
-    }
-    return storage > 0
-  }
 
+  /// The applied template, which populates CPU, memory, and storage values when set.
   public var template: SpecificationTemplate<Name>? {
     didSet {
       if let template {
@@ -83,6 +72,7 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     }
   }
 
+  /// The number of CPU cores to assign to the machine.
   public var cpuCount: Float = 1 {
     didSet {
       if !updatingValues {
@@ -91,7 +81,9 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     }
   }
 
+  /// The amount of memory to assign to the machine, in bytes.
   public private(set) var memory: Int64
+  /// The memory slider index, which drives the computed ``memory`` value.
   public var memoryIndex: Float = 1 {
     willSet {
       if let requiredMemory = configurationRange.requiredMemory {
@@ -104,7 +96,9 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     }
   }
 
+  /// The amount of storage to assign to the machine, in bytes.
   public private(set) var storage: Int64
+  /// The storage slider index, which drives the computed ``storage`` value.
   public var storageIndex: Float = 36 {
     willSet {
       self.storage = Self.storageValue(forIndex: newValue)
@@ -114,6 +108,13 @@ public struct SpecificationConfiguration<Name: Hashable & Sendable>: Equatable, 
     }
   }
 
+  /// Creates a specification configuration, deriving initial memory and storage from the given indices.
+  /// - Parameters:
+  ///   - range: The allowed ranges for CPU, memory, and storage values.
+  ///   - template: An optional template to apply on creation.
+  ///   - cpuCount: The initial CPU core count.
+  ///   - memoryIndex: The initial memory slider index.
+  ///   - storageIndex: The initial storage slider index.
   public init(
     range: ConfigurationRange = .default,
     template: SpecificationTemplate<Name>? = nil,

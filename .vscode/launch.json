@@ -3,22 +3,24 @@
         {
             "type": "swift",
             "request": "launch",
-            "args": [],
-            "cwd": "${workspaceFolder:BushelKit}",
             "name": "Debug bushel",
+            "program": "${workspaceFolder}/.build/debug/bushel",
+            "args": [],
+            "cwd": "${workspaceFolder}",
             "preLaunchTask": "swift: Build Debug bushel",
-            "target": "bushel",
-            "configuration": "debug"
+            "stopOnEntry": false,
+            "terminal": "console"
         },
         {
             "type": "swift",
             "request": "launch",
-            "args": [],
-            "cwd": "${workspaceFolder:BushelKit}",
             "name": "Release bushel",
+            "program": "${workspaceFolder}/.build/release/bushel",
+            "args": [],
+            "cwd": "${workspaceFolder}",
             "preLaunchTask": "swift: Build Release bushel",
-            "target": "bushel",
-            "configuration": "release"
+            "stopOnEntry": false,
+            "terminal": "console"
         }
     ]
 }

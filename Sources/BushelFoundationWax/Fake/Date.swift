@@ -30,10 +30,16 @@
 public import Foundation
 
 extension Date {
+  /// Returns a random date somewhere in the recent past, for use in tests.
+  /// - Parameter timeInterval: The furthest back in time, in seconds, the date may fall.
+  /// - Returns: A random date between now and `timeInterval` seconds ago.
   public static func randomPast(asFarBackAs timeInterval: TimeInterval) -> Date {
     Date(timeIntervalSinceNow: .random(in: -timeInterval...0))
   }
 
+  /// Returns random bytes of the given length, for use as test data.
+  /// - Parameter length: The number of random bytes to generate.
+  /// - Returns: A `Data` value containing `length` random bytes.
   public static func random(ofLength length: Int = 16) -> Data {
     let bytes = (0..<length).map { _ in
       UInt8.random(in: 0 ... .max)

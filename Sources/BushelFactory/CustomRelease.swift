@@ -29,24 +29,31 @@
 
 public import BushelFoundation
 
+/// A placeholder release representing user-supplied custom installer versions.
 public struct CustomRelease: InstallerRelease {
+  /// The shared singleton instance representing the custom release.
   public static let instance = CustomRelease()
+  /// The version name for the custom release.
   public var versionName: String {
     "custom"
   }
 
+  /// The release name for the custom release.
   public var releaseName: String {
     "custom"
   }
 
+  /// The image resource name for the custom release.
   public var imageName: String {
     "custom"
   }
 
+  /// The major version, using a sentinel value to indicate a custom release.
   public var majorVersion: Int {
     -1
   }
 
+  /// The identifier, using a sentinel value to indicate a custom release.
   public var id: Int {
     -1
   }

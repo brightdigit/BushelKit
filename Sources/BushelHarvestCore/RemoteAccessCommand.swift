@@ -1,9 +1,9 @@
 //
-//  WWDC2023.swift
+//  RemoteAccessCommand.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,15 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import PackageDescription
-
-struct WWDC2023: PlatformSet {
-  var body: any SupportedPlatforms {
-    SupportedPlatform.macOS(.v15)
-    SupportedPlatform.iOS(.v18)
-    SupportedPlatform.watchOS(.v11)
-    SupportedPlatform.tvOS(.v18)
-    SupportedPlatform.visionOS(.v2)
-    SupportedPlatform.macCatalyst(.v18)
-  }
+/// Remote access command operations
+public enum RemoteAccessCommand: Codable, Sendable {
+  /// SSH-related commands
+  case ssh(SSHCommand)
+  /// Remote access status request
+  case status
 }

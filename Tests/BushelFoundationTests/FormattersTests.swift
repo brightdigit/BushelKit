@@ -128,6 +128,36 @@ internal final class FormattersTests: XCTestCase {
     )
   }
 
+  internal func testLastModifiedDateFormatterInvalidInputs() {
+    let sut = Formatters.lastModifiedDateFormatter
+
+    let invalidInputs = [
+      "",  // Empty string
+      "Not a date",  // Completely invalid
+      "32 Dec 2025 10:30:45 GMT",  // Invalid day
+      "Fri, 19 Foo 2025 10:30:45 GMT",  // Invalid month
+      "Fri, 19 Dec 2025 25:00:00 GMT",  // Invalid hour
+      "19 Dec 2025 10:30:45 GMT",  // Missing day name
+      "Fri, 19 Dec 2025 10:30:45",  // Missing timezone
+      "Fri, 00 Dec 2025 10:30:45 GMT",  // Invalid day (0)
+      "Fri, 19 Dec 2025 24:30:45 GMT",  // Invalid hour (24)
+      "Fri, 19 Dec 2025 10:60:45 GMT",  // Invalid minute
+      "Fri, 19 Dec 2025 10:30:60 GMT",  // Invalid second
+      "Fri, 19 Dec abcd 10:30:45 GMT",  // Invalid year
+      "Xyz, 19 Dec 2025 10:30:45 GMT",  // Invalid day name
+      "Fri, 19 Dec 2025 xx:30:45 GMT",  // Invalid hour format
+      "Fri, 19 Dec 2025 10:xx:45 GMT",  // Invalid minute format
+      "Fri, 19 Dec 2025 10:30:xx GMT",  // Invalid second format
+    ]
+
+    for input in invalidInputs {
+      XCTAssertNil(
+        sut.date(from: input),
+        "Should return nil for invalid input: \(input)"
+      )
+    }
+  }
+
   // MARK: - FormatStyle Tests
 
   internal func testFormatDate() {

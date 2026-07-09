@@ -29,6 +29,8 @@
 
 internal import Foundation
 
+/// A minimal stand-in restore image used as a placeholder in tests.
 public struct RestoreImageStub: Sendable {
+  /// Creates an empty restore image stub.
   public init() {}
 }

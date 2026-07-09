@@ -34,9 +34,11 @@ public import Foundation
 #if canImport(SwiftData)
   public import SwiftData
 #else
+  /// A stand-in error used on platforms where SwiftData is unavailable.
   public struct SwiftDataError: LocalizedError {}
 #endif
 
+/// An error describing why a machine configuration could not be created or resolved.
 @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public enum ConfigurationError: LocalizedError {
   case missingRestoreImageID
@@ -49,6 +51,7 @@ public enum ConfigurationError: LocalizedError {
   case missingSpecifications
   case fileDialogError(any Error)
 
+  /// A Boolean value indicating whether the user should be offered a way to submit feedback for this error.
   public var isFeedbackEnabled: Bool {
     switch self {
     case .imageNotSupported:
@@ -59,6 +62,7 @@ public enum ConfigurationError: LocalizedError {
     }
   }
 
+  /// A Boolean value indicating whether the error originates from the system rather than user input.
   public var isSystem: Bool {
     guard case let .machineBuilderError(builderError) = self else {
       return true
@@ -67,6 +71,7 @@ public enum ConfigurationError: LocalizedError {
     return builderError.isSystem
   }
 
+  /// A localized description of what went wrong.
   public var errorDescription: String? {
     switch self {
     case .missingRestoreImageID:
@@ -90,6 +95,7 @@ public enum ConfigurationError: LocalizedError {
     }
   }
 
+  /// A localized suggestion describing how the user might recover from the error.
   public var recoverySuggestion: String? {
     switch self {
     case .imageNotSupported, .machineBuilderError:
@@ -99,6 +105,7 @@ public enum ConfigurationError: LocalizedError {
     }
   }
 
+  /// The message text to present in an alert for this error.
   public var alertMessageText: String {
     switch self {
     default:

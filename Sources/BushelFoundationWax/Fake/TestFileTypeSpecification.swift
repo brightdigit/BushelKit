@@ -30,7 +30,9 @@
 internal import Foundation
 public import RadiantDocs
 
+/// A sample file type specification used to exercise document handling in tests.
 public enum TestFileTypeSpecification: FileTypeSpecification {
+  /// The exported file type describing the test document format.
   public static let fileType: FileType = .exportedAs(
     "com.brightdigit.test",
     "test"

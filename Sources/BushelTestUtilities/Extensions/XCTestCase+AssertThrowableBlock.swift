@@ -30,6 +30,10 @@
 public import XCTest
 
 extension XCTestCase {
+  /// Asserts that an asynchronous block throws the expected error.
+  /// - Parameters:
+  ///   - expectedError: The error the block is expected to throw.
+  ///   - throwableBlock: The asynchronous block under test.
   public func assertAsyncThrowableBlock<T: MockError>(
     expectedError: T,
     _ throwableBlock: () async throws -> Any
@@ -47,6 +51,10 @@ extension XCTestCase {
     }
   }
 
+  /// Asserts that a synchronous block throws the expected error.
+  /// - Parameters:
+  ///   - expectedError: The error the block is expected to throw.
+  ///   - throwableBlock: The synchronous block under test.
   public func assertThrowableBlock<T: MockError>(
     expectedError: T,
     _ throwableBlock: () throws -> Any
