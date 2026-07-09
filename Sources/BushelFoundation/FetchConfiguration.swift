@@ -55,6 +55,13 @@ public struct FetchConfiguration: Codable, Sendable {
 
   // MARK: - Initialization
 
+  /// Creates a new fetch throttling configuration.
+  ///
+  /// - Parameters:
+  ///   - globalMinimumFetchInterval: The minimum interval between fetches applied
+  ///     to all sources unless overridden.
+  ///   - perSourceIntervals: Per-source minimum intervals that override the global and default intervals.
+  ///   - useDefaults: Whether to use the built-in default intervals for known sources.
   public init(
     globalMinimumFetchInterval: TimeInterval? = nil,
     perSourceIntervals: [String: TimeInterval] = [:],

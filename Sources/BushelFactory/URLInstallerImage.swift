@@ -33,15 +33,19 @@ public import BushelLogging
 public import BushelMachine
 public import Foundation
 
+/// An installer image backed by a library located at a file URL.
 public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
+  /// The identifier of the library, derived from the image's file URL.
   public var libraryID: LibraryIdentifier? {
     .url(url)
   }
 
+  /// The unique identifier of the image within its library.
   public let imageID: UUID
 
   private let url: URL
 
+  /// The resolved metadata describing this installer image.
   public let metadata: Metadata
 
   private init(imageID: UUID, url: URL, metadata: URLInstallerImage.Metadata) {
@@ -50,6 +54,12 @@ public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
     self.metadata = metadata
   }
 
+  /// Creates an installer image by loading the library at the given URL and locating the specified image.
+  /// - Parameters:
+  ///   - imageID: The identifier of the image to load.
+  ///   - url: The file URL of the library containing the image.
+  ///   - labelProvider: A closure that produces user-facing labels for the resolved image.
+  /// - Throws: An error if the library cannot be loaded or the image cannot be found.
   public init(imageID: UUID, url: URL, _ labelProvider: @escaping MetadataLabelProvider) throws {
     let library = try Library(contentsOf: url)
 
@@ -69,6 +79,8 @@ public struct URLInstallerImage: InstallerImage, Loggable, Sendable {
     self.init(imageID: imageID, url: url, metadata: metadata)
   }
 
+  /// Returns the file URL of the image's library.
+  /// - Returns: The file URL backing this installer image.
   public func getURL() throws -> URL {
     url
   }

@@ -1,5 +1,5 @@
 //
-//  CustomRelease.swift
+//  SpecificationConfiguration+Validation.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -27,42 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public import BushelFoundation
-
-/// A placeholder release representing user-supplied custom installer versions.
-public struct CustomRelease: InstallerRelease {
-  /// The shared singleton instance representing the custom release.
-  public static let instance = CustomRelease()
-  /// The version name for the custom release.
-  public var versionName: String {
-    "custom"
-  }
-
-  /// The release name for the custom release.
-  public var releaseName: String {
-    "custom"
-  }
-
-  /// The image resource name for the custom release.
-  public var imageName: String {
-    "custom"
-  }
-
-  /// The major version, using a sentinel value to indicate a custom release.
-  public var majorVersion: Int {
-    -1
-  }
-
-  /// The identifier, using a sentinel value to indicate a custom release.
-  public var id: Int {
-    -1
-  }
-
-  private init() {}
-}
-
-extension InstallerRelease {
-  internal var isCustom: Bool {
-    self is CustomRelease
+extension SpecificationConfiguration {
+  /// A Boolean value indicating whether the current CPU, memory, and storage
+  /// values satisfy the configured range.
+  public var isValid: Bool {
+    guard self.configurationRange.cpuCount.contains(self.cpuCount) else {
+      return false
+    }
+    if let requiredMemory = configurationRange.requiredMemory {
+      guard self.memory == requiredMemory else {
+        return false
+      }
+    } else {
+      guard self.configurationRange.memory.contains(Float(self.memory)) else {
+        return false
+      }
+    }
+    return storage > 0
   }
 }

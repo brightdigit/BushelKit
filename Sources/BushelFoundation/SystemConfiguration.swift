@@ -27,12 +27,24 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// A snapshot of the host system's hardware and operating system characteristics.
 public struct SystemConfiguration: Sendable, Codable, Equatable {
+  /// The operating system version, expressed as a string.
   public let operatingSystemVersionString: String
+  /// The total physical memory available on the system, in bytes.
   public let physicalMemory: Int
+  /// The total number of processors on the system.
   public let processorCount: Int
+  /// The number of currently active processors on the system.
   public let activeProcessorCount: Int
 
+  /// Creates a new system configuration.
+  ///
+  /// - Parameters:
+  ///   - operatingSystemVersionString: The operating system version string.
+  ///   - physicalMemory: The total physical memory in bytes.
+  ///   - processorCount: The total number of processors.
+  ///   - activeProcessorCount: The number of active processors.
   public init(
     operatingSystemVersionString: String,
     physicalMemory: Int,
@@ -47,6 +59,13 @@ public struct SystemConfiguration: Sendable, Codable, Equatable {
 }
 
 extension SystemConfiguration {
+  /// Creates a new system configuration using an unsigned physical memory value.
+  ///
+  /// - Parameters:
+  ///   - operatingSystemVersionString: The operating system version string.
+  ///   - physicalMemory: The total physical memory in bytes.
+  ///   - processorCount: The total number of processors.
+  ///   - activeProcessorCount: The number of active processors.
   public init(
     operatingSystemVersionString: String,
     physicalMemory: UInt64,

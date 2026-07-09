@@ -56,7 +56,9 @@ public enum ConsoleOutput {
 
   /// Print verbose message only when verbose mode is enabled
   public static func verbose(_ message: String) {
-    guard isVerbose else { return }
+    guard isVerbose else {
+      return
+    }
     ConsoleOutput.print("  \(message)")
   }
 

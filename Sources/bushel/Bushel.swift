@@ -31,7 +31,9 @@ public import ArgumentParser
 public import BushelArgs
 internal import Foundation
 
+/// The command-line entry point for the Bushel tool.
 @main
 public struct Bushel: BushelCommand {
+  /// Creates the root command.
   public init() {}
 }

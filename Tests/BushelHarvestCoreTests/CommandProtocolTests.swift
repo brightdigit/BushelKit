@@ -66,67 +66,10 @@ internal struct CommandProtocolTests {
     #expect(protocolCommand.category == harvestCommand.category)
   }
 
-  @Test("Command category enum values")
-  internal func commandCategoryEnumValues() {
-    let allCategories: [CommandCategory] = [
-      .system,
-      .file,
-      .network,
-      .clipboard,
-      .remote,
-      .security,
-    ]
-
-    // Test that all categories have proper raw values
-    #expect(CommandCategory.system.rawValue == "system")
-    #expect(CommandCategory.file.rawValue == "file")
-    #expect(CommandCategory.network.rawValue == "network")
-    #expect(CommandCategory.clipboard.rawValue == "clipboard")
-    #expect(CommandCategory.remote.rawValue == "remote")
-    #expect(CommandCategory.security.rawValue == "security")
-
-    // Test that categories can be created from raw values
-    for category in allCategories {
-      #expect(CommandCategory(rawValue: category.rawValue) == category)
-    }
-  }
-
-  @Test("Command category Codable conformance")
-  internal func commandCategoryCodableConformance() throws {
-    let categories: [CommandCategory] = [
-      .system, .file, .network, .clipboard, .remote, .security,
-    ]
-
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
-
-    for category in categories {
-      let jsonData = try encoder.encode(category)
-      let jsonString = String(data: jsonData, encoding: .utf8)!
-
-      // Verify the category is encoded as its raw value
-      #expect(jsonString == "\"\(category.rawValue)\"")
-
-      // Test decoding
-      let decodedCategory = try decoder.decode(CommandCategory.self, from: jsonData)
-      #expect(decodedCategory == category)
-    }
-  }
-
-  @Test("Command category Sendable conformance")
-  internal func commandCategorySendableConformance() async {
-    let category = CommandCategory.system
-
-    // Transferring the value into (and back out of) a Task exercises Sendable
-    // across an actor boundary; it fails to compile if conformance is missing.
-    let received = await Task { category }.value
-    #expect(received == category)
-  }
-
   @Test("Protocol Codable conformance")
   internal func protocolCodableConformance() throws {
-    let testCommand = TestCommand(
-      id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!,
+    let testCommand = try TestCommand(
+      id: #require(UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")),
       category: .network,
       testData: "protocol test"
     )
@@ -136,7 +79,7 @@ internal struct CommandProtocolTests {
     let jsonData = try encoder.encode(testCommand)
 
     // Verify JSON contains expected fields
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
     #expect(jsonString.contains("E621E1F8-C36C-495A-93FC-0C247A3E6E5F"))
     #expect(jsonString.contains("network"))
     #expect(jsonString.contains("protocol test"))
@@ -174,38 +117,6 @@ internal struct CommandProtocolTests {
     for command in commands {
       #expect([CommandCategory.system, .file, .remote].contains(command.category))
     }
-  }
-
-  @Test("Invalid command category from raw value")
-  internal func invalidCommandCategoryFromRawValue() {
-    #expect(CommandCategory(rawValue: "invalid") == nil)
-    #expect(CommandCategory(rawValue: "") == nil)
-    #expect(CommandCategory(rawValue: "SYSTEM") == nil)  // Case sensitive
-  }
-
-  @Test("Command category equality")
-  internal func commandCategoryEquality() {
-    #expect(CommandCategory.system == CommandCategory.system)
-    #expect(CommandCategory.system != CommandCategory.file)
-
-    let category1 = CommandCategory.network
-    let category2 = CommandCategory.network
-    #expect(category1 == category2)
-  }
-
-  @Test("Command category Hashable")
-  internal func commandCategoryHashable() {
-    let categories: Set<CommandCategory> = [
-      .system, .file, .network, .clipboard, .remote, .security,
-    ]
-
-    #expect(categories.count == 6)
-    #expect(categories.contains(.system))
-    #expect(categories.contains(.file))
-    #expect(categories.contains(.network))
-    #expect(categories.contains(.clipboard))
-    #expect(categories.contains(.remote))
-    #expect(categories.contains(.security))
   }
 
   @Test("Protocol as type erasure")

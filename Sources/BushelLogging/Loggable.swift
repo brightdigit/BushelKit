@@ -35,4 +35,5 @@
   @_exported import os
 #endif
 
+/// A type that supports logging through BushelKit's ``BushelLogging`` logging system.
 public protocol Loggable: FelinePine.Loggable where Self.LoggingSystemType == BushelLogging {}

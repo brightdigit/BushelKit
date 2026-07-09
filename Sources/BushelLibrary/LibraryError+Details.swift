@@ -30,6 +30,7 @@
 public import Foundation
 
 extension LibraryError {
+  /// The specific detail describing what kind of library error occurred.
   public enum Details: Sendable {
     case bookmarkError
     case systemResolution

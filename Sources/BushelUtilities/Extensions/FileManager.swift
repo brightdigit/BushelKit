@@ -30,8 +30,10 @@
 public import Foundation
 
 #if os(Linux)
+  /// The integer type used to represent a file size in bytes.
   public typealias FileSize = Int
 #else
+  /// The integer type used to represent a file size in bytes.
   public typealias FileSize = Int64
 #endif
 
@@ -180,60 +182,6 @@ public import Foundation
       }
 
       return directoryExistsStatus
-    }
-
-    /// Writes a dictionary of data to a directory.
-    ///
-    /// - Parameters:
-    ///   - dataDictionary: A dictionary of relative paths and data to write.
-    ///   - directoryURL: The URL of the directory to write the data to.
-    /// - Throws: An error if the data cannot be written.
-    public func write(
-      _ dataDictionary: [String: Data],
-      to directoryURL: URL
-    ) throws {
-      for (relativePath, data) in dataDictionary {
-        let fullURL = directoryURL.appendingPathComponent(relativePath)
-        let parentURL = fullURL.deletingLastPathComponent()
-        if self.directoryExists(at: parentURL) == .notExists {
-          try self.createEmptyDirectory(
-            at: parentURL,
-            withIntermediateDirectories: true,
-            deleteExistingFile: true
-          )
-        }
-        try data.write(to: fullURL)
-      }
-    }
-
-    /// Retrieves a dictionary of data from a directory.
-    ///
-    /// - Parameter directoryURL: The URL of the directory to retrieve data from.
-    /// - Returns: A dictionary of relative paths and data.
-    /// - Throws: An error if the data cannot be retrieved.
-    public func dataDictionary(
-      directoryAt directoryURL: URL
-    ) throws -> [String: Data] {
-      let keys: Set<URLResourceKey> = Set([.isDirectoryKey, .isRegularFileKey])
-      guard
-        let enumerator = self.enumerator(
-          at: directoryURL,
-          includingPropertiesForKeys: Array(keys)
-        )
-      else {
-        throw .fileNotFound(at: directoryURL)
-      }
-
-      return try enumerator.reduce(into: [String: Data]()) { dictionary, item in
-        guard let url = item as? URL else {
-          return
-        }
-        guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else {
-          return
-        }
-        assert(dictionary[url.lastPathComponent] == nil)
-        dictionary[url.lastPathComponent] = try Data(contentsOf: url)
-      }
     }
 
     /// Clears the saved application state.

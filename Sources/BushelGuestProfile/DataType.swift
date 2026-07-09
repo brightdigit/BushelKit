@@ -137,6 +137,7 @@ public enum DataType: String {
 
 /// A system profile data type that represents hardware information.
 extension SPHardwareDataType: SystemProfileType {
+  /// The system profiler data type identifier for hardware information.
   public static var dataType: DataType {
     .SPHardwareDataType
   }
@@ -144,6 +145,7 @@ extension SPHardwareDataType: SystemProfileType {
 
 /// A system profile data type that represents network information.
 extension SPNetworkDataType: SystemProfileType {
+  /// The system profiler data type identifier for network information.
   public static var dataType: DataType {
     .SPNetworkDataType
   }

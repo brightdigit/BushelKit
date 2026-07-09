@@ -29,6 +29,7 @@
 
 internal import Foundation
 
+/// Coordinates one-time, main-actor initialization work for the framework.
 @MainActor
 public final class Initialization {
   /// A static instance of the `Initialization` class.

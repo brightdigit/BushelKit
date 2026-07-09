@@ -27,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Namespace of file extensions used by Bushel document types.
 public enum FileNameExtensions {
   /// The file extension for a virtual machine file.
   public static let virtualMachineFileExtension = "bshvm"

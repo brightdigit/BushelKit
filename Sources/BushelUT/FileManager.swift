@@ -33,6 +33,10 @@ public import Foundation
   public import UniformTypeIdentifiers
 
   extension FileManager {
+    /// Builds a unique temporary file URL with an extension matching the given content type.
+    ///
+    /// - Parameter source: The uniform type identifier whose file extension is applied.
+    /// - Returns: A file URL in the temporary directory with a random name and matching extension.
     public func createTemporaryFile(for source: UTType) -> URL {
       let tempFile: URL
       if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {

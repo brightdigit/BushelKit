@@ -31,16 +31,22 @@ public import BushelFoundation
 public import BushelMachine
 internal import Foundation
 
+/// A selection representing a specific installer image, or the absence of one.
 public struct SelectedVersion: Hashable, Identifiable, Sendable {
   // swiftlint:disable:next force_unwrapping
   private static let noneID: UUID = .init(uuidString: "d4147e4c-d038-48ad-8410-d077e45d301a")!
+  /// The selection representing no chosen image.
   public static let none: SelectedVersion = .init()
 
+  /// The selected installer image, or `nil` when nothing is selected.
   public let image: (any InstallerImage)?
+  /// The identifier of the selected image, or a sentinel identifier when none is selected.
   public var id: InstallerImageIdentifier {
     image?.identifier ?? .init(imageID: Self.noneID)
   }
 
+  /// Creates a selection wrapping the given installer image.
+  /// - Parameter image: The installer image to select.
   public init(image: any InstallerImage) {
     self.init(optionalImage: image)
   }
@@ -49,6 +55,11 @@ public struct SelectedVersion: Hashable, Identifiable, Sendable {
     self.image = optionalImage
   }
 
+  /// Compares two selections by their underlying image and library identifiers.
+  /// - Parameters:
+  ///   - lhs: The first selection to compare.
+  ///   - rhs: The second selection to compare.
+  /// - Returns: `true` if both selections reference the same image, or both are empty.
   public static func == (lhs: SelectedVersion, rhs: SelectedVersion) -> Bool {
     guard let lhsImage = lhs.image, let rhsImage = rhs.image else {
       return (lhs.image == nil) == (rhs.image == nil)
@@ -57,6 +68,8 @@ public struct SelectedVersion: Hashable, Identifiable, Sendable {
     return lhsImage.imageID == rhsImage.imageID && lhsImage.libraryID == rhsImage.libraryID
   }
 
+  /// Feeds the selection's image and library identifiers into the given hasher.
+  /// - Parameter hasher: The hasher to combine the selection's components into.
   public func hash(into hasher: inout Hasher) {
     guard let image else {
       return

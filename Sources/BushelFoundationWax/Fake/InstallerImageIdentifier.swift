@@ -31,6 +31,8 @@ public import BushelFoundation
 internal import Foundation
 
 extension InstallerImageIdentifier {
-  // swiftlint:disable:next force_unwrapping
-  public static let sampleInstallerIdentifier: Self = .init(string: .restoreImageIdentiferSample)!
+  /// A fixed sample installer image identifier for use in tests.
+  public static let sampleInstallerIdentifier: Self =
+    // swiftlint:disable:next force_unwrapping
+    .init(string: .restoreImageIdentiferSample)!
 }

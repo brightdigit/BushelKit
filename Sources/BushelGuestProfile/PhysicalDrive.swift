@@ -31,6 +31,7 @@ public import Foundation
 
 /// Represents a physical drive on the system.
 public struct PhysicalDrive: Codable, Equatable, Sendable {
+  /// Maps property names to their serialized keys.
   public enum CodingKeys: String, CodingKey {
     case isInternalDisk = "is_internal_disk"
     case mediaName = "media_name"

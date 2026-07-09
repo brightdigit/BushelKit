@@ -29,6 +29,8 @@
 
 internal import Foundation
 
+/// A display-ready representation of an app version, pairing its marketing
+/// version string with a hexadecimal build number.
 public struct VersionFormatted: Sendable {
   /// The marketing version of the app.
   public let marketingVersion: String

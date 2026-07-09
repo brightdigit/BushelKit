@@ -32,11 +32,15 @@ internal import BushelFoundationWax
 public import BushelMachine
 public import Foundation
 
+/// A stub `InstallerImage` implementation for tests, backed by fixed sample values.
 public struct InstallerImageSub: InstallerImage {
+  /// The identifier of the library that owns this image, set to a sample value.
   public var libraryID: LibraryIdentifier? = .sampleLibraryID
 
+  /// The unique identifier of this image, set to a sample value.
   public var imageID: UUID = .imageIDSample
 
+  /// The metadata describing this image, populated with placeholder sample values.
   public var metadata: Metadata = .init(
     longName: "",
     defaultName: "",
@@ -52,6 +56,10 @@ public struct InstallerImageSub: InstallerImage {
     systemID: .sample
   )
 
+  /// Returns the URL for this image.
+  ///
+  /// - Returns: A fixed sample URL pointing at the Bushel website.
+  /// - Throws: This stub does not throw.
   public func getURL() throws -> URL {
     .bushelWebSite
   }

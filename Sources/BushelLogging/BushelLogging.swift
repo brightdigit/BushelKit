@@ -29,7 +29,9 @@
 
 public import protocol FelinePine.LoggingSystem
 
+/// The logging system used throughout BushelKit, defining the available log categories.
 public enum BushelLogging: LoggingSystem, Sendable {
+  /// The categories used to group log messages by subsystem or feature area.
   public enum Category: String, CaseIterable, Sendable {
     case audioVisual
     case library

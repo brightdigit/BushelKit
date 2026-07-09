@@ -30,13 +30,25 @@
 public import BushelFoundation
 public import Foundation
 
+/// An installable OS image provided by a hub.
 public struct HubImage: Identifiable, InstallImage, Sendable {
+  /// The human-readable title of the image.
   public let title: String
+  /// Metadata describing the image.
   public let metadata: ImageMetadata
+  /// The location of the image.
   public let url: URL
+  /// The signature verification status of the image.
   public let verification: SigVerification
+  /// The unique identifier of the image, derived from its URL.
   public var id: URL { self.url }
 
+  /// Creates a hub image.
+  /// - Parameters:
+  ///   - title: The human-readable title of the image.
+  ///   - metadata: Metadata describing the image.
+  ///   - verification: The signature verification status of the image.
+  ///   - url: The location of the image.
   public init(title: String, metadata: ImageMetadata, verification: SigVerification, url: URL) {
     self.title = title
     self.metadata = metadata
@@ -50,6 +62,12 @@ public struct HubImage: Identifiable, InstallImage, Sendable {
 }
 
 extension ImageSignature {
+  /// Creates an image signature from a hub image.
+  /// - Parameters:
+  ///   - sourceID: The identifier of the signature source.
+  ///   - priority: The signature priority to apply.
+  ///   - hubImage: The hub image whose details describe the signature.
+  ///   - timestamp: The timestamp of the signature. Defaults to the current time.
   public init(
     sourceID: String, priority: SignaturePriority, hubImage: HubImage, timestamp: Date = .now
   ) {

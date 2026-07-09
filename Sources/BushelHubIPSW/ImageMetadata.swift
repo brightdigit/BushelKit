@@ -32,6 +32,9 @@ public import IPSWDownloads
 internal import RadiantDocs
 
 extension ImageMetadata {
+  /// Creates image metadata from an IPSW Downloads firmware entry.
+  /// - Parameter firmware: The firmware description to derive metadata from.
+  /// - Throws: An error if the metadata cannot be constructed from the firmware.
   public init(firmware: Firmware) throws {
     self.init(
       isImageSupported: true,

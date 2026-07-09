@@ -29,6 +29,7 @@
 
 /// Represents a specific type of memory data.
 public struct SPMemoryDataType: Codable, Equatable, Sendable {
+  /// Maps property names to their serialized keys.
   public enum CodingKeys: String, CodingKey {
     case dimmType = "dimm_type"
     case spMemoryDataType = "SPMemoryDataType"

@@ -33,6 +33,9 @@ internal import Foundation
 public import IPSWDownloads
 
 extension HubImage {
+  /// Creates a hub image from an IPSW Downloads firmware entry.
+  /// - Parameter firmware: The firmware to build the hub image from.
+  /// - Throws: An error if the hub image cannot be constructed from the firmware.
   public init(firmware: Firmware) throws {
     try self.init(
       title: MacOSVirtualization.defaultName(fromMetadata: firmware),

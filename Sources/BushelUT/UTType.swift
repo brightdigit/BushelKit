@@ -33,6 +33,9 @@
   public import RadiantDocs
 
   extension UTType {
+    /// Creates a uniform type identifier from a Bushel ``FileType``.
+    ///
+    /// - Parameter fileType: The file type to convert, using its exported identifier when owned.
     public init(fileType: FileType) {
       if fileType.isOwned {
         self.init(exportedAs: fileType.utIdentifier)
@@ -42,6 +45,11 @@
       }
     }
 
+    /// Returns all uniform type identifiers that should be allowed for a single file type.
+    ///
+    /// - Parameter fileType: The file type to resolve into content types.
+    /// - Returns: The matching content types, including exported, file-extension,
+    ///   and identifier-based types.
     public static func allowedContentTypes(for fileType: FileType) -> [UTType] {
       var types = [UTType]()
 
@@ -60,6 +68,10 @@
       return types
     }
 
+    /// Returns all uniform type identifiers that should be allowed for the given file types.
+    ///
+    /// - Parameter fileTypes: The file types to resolve into content types.
+    /// - Returns: The combined matching content types for all supplied file types.
     public static func allowedContentTypes(for fileTypes: FileType...) -> [UTType] {
       fileTypes.flatMap(allowedContentTypes(for:))
     }

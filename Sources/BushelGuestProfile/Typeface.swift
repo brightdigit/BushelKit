@@ -31,6 +31,7 @@ internal import Foundation
 
 /// Represents a typeface in a font.
 public struct Typeface: Codable, Equatable, Sendable {
+  /// Maps property names to their serialized keys.
   public enum CodingKeys: String, CodingKey {
     case name = "_name"
     case copyProtected = "copy_protected"

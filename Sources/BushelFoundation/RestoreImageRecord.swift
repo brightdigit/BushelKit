@@ -84,6 +84,31 @@ public struct RestoreImageRecord: Codable, Sendable {
     "RestoreImage-\(buildNumber)"
   }
 
+  /// Returns true if all fields pass validation.
+  public var isValid: Bool {
+    do {
+      try validate()
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  /// Creates a new restore image record.
+  ///
+  /// - Parameters:
+  ///   - version: The macOS version.
+  ///   - buildNumber: The build identifier.
+  ///   - releaseDate: The official release date.
+  ///   - downloadURL: The direct IPSW download link.
+  ///   - fileSize: The file size in bytes.
+  ///   - sha256Hash: The SHA-256 checksum for integrity verification.
+  ///   - sha1Hash: The SHA-1 hash for compatibility.
+  ///   - isSigned: Whether Apple still signs this image, or `nil` if unknown.
+  ///   - isPrerelease: Whether this is a beta or RC release.
+  ///   - source: The data source of the record.
+  ///   - notes: Additional metadata or release notes.
+  ///   - sourceUpdatedAt: When the source last updated this record, if known.
   public init(
     version: String,
     buildNumber: String,
@@ -124,16 +149,6 @@ public struct RestoreImageRecord: Codable, Sendable {
     try Self.validateSHA1Hash(sha1Hash)
     try Self.validateFileSize(fileSize)
     try Self.validateDownloadURL(downloadURL)
-  }
-
-  /// Returns true if all fields pass validation.
-  public var isValid: Bool {
-    do {
-      try validate()
-      return true
-    } catch {
-      return false
-    }
   }
 }
 

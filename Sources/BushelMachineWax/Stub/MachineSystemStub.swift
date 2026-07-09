@@ -33,16 +33,28 @@ public import BushelMachine
 public import Foundation
 public import OSVer
 
+/// A stub `MachineSystem` implementation for tests, returning fixed stub values.
 @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public struct MachineSystemStub: MachineSystem, Equatable {
+  /// The restore image type produced by this system, a stub implementation.
   public typealias RestoreImageType = RestoreImageStub
 
+  /// The default storage label used for machines created by this stub.
   public let defaultStorageLabel: String = "stub"
 
+  /// The identifier of the default snapshot system used by this stub.
   public let defaultSnapshotSystem: SnapshotterID = "testing"
 
+  /// The identifier of this virtual machine system.
   public var id: VMSystemID
 
+  /// Creates a stub machine builder for the given configuration.
+  ///
+  /// - Parameters:
+  ///   - configuration: The build configuration (ignored by this stub).
+  ///   - url: The destination URL passed to the created builder.
+  /// - Returns: A ``MachineBuilderStub`` targeting `url`.
+  /// - Throws: This stub does not throw.
   public func createBuilder(
     for _: MachineBuildConfiguration<RestoreImageType>,
     at url: URL
@@ -50,6 +62,13 @@ public struct MachineSystemStub: MachineSystem, Equatable {
     MachineBuilderStub(url: url)
   }
 
+  /// Returns a registration for a stub machine at the given URL.
+  ///
+  /// - Parameters:
+  ///   - url: The location of the machine (unused beyond registration).
+  ///   - configuration: The configuration used to construct the stub machine.
+  /// - Returns: A registration wrapping a ``MachineStub`` in the starting state.
+  /// - Throws: This stub does not throw.
   public func machine(at url: URL, withConfiguration configuration: MachineConfiguration)
     async throws -> MachineRegistration
   {
@@ -58,14 +77,29 @@ public struct MachineSystemStub: MachineSystem, Equatable {
     ).register(_:_:)
   }
 
+  /// Returns a stub restore image for the given installer image.
+  ///
+  /// - Parameter installerImage: The source installer image (ignored by this stub).
+  /// - Returns: A newly created stub restore image.
+  /// - Throws: This stub does not throw.
   public func restoreImage(from _: any InstallerImage) async throws -> RestoreImageType {
     .init()
   }
 
+  /// Returns the configuration range supported for the given installer image.
+  ///
+  /// - Parameter installerImage: The installer image (ignored by this stub).
+  /// - Returns: The default configuration range.
   public func configurationRange(for _: any InstallerImage) -> ConfigurationRange {
     .default
   }
 
+  /// Returns a short display name for the given operating system version.
+  ///
+  /// - Parameters:
+  ///   - osVer: The operating system version.
+  ///   - buildVersion: An optional build version to append.
+  /// - Returns: The version description, optionally followed by the build version.
   public func operatingSystemShortName(for osVer: OSVer, buildVersion: String?) -> String {
     [osVer.description, buildVersion].compactMap { $0 }.joined(separator: " ")
   }

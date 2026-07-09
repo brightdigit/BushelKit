@@ -35,6 +35,14 @@ public import BushelLogging
 #endif
 
 extension Sequence {
+  /// Maps each element with a throwing transform, skipping elements that throw.
+  ///
+  /// Elements whose transform throws are omitted from the result, and the error is
+  /// reported via an assertion failure and the optional logger.
+  /// - Parameters:
+  ///   - logger: An optional logger used to record transform failures.
+  ///   - transform: A throwing closure that transforms each element.
+  /// - Returns: An array of the successfully transformed elements.
   public func tryCompactMap<T>(logger: Logger? = nil, _ transform: (Self.Element) throws -> T)
     -> [T]
   {

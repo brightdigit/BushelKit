@@ -54,6 +54,7 @@
       }
     }
 
+    /// The installed operating system described by this restore image.
     public var operatingSystem: any OperatingSystemInstalled {
       OperatingSystem(
         operatingSystemVersion: .init(self.operatingSystemVersion),
@@ -61,6 +62,10 @@
       )
     }
 
+    /// Fetches the latest supported macOS restore image using an async wrapper.
+    ///
+    /// - Returns: The most recent restore image supported by the host.
+    /// - Throws: An error if the restore image could not be fetched.
     @available(*, deprecated, message: "Temporary method until Swift 6 migration.")
     public static func unsafeFetchLatestSupported() async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in
@@ -70,6 +75,11 @@
       }
     }
 
+    /// Loads a macOS restore image from the given URL using an async wrapper.
+    ///
+    /// - Parameter url: The location of the restore image to load.
+    /// - Returns: The loaded restore image.
+    /// - Throws: An error if the restore image could not be loaded.
     @available(*, deprecated, message: "Temporary method until Swift 6 migration.")
     public static func unsafeLoadFromURL(_ url: URL) async throws -> VZMacOSRestoreImage {
       try await withCheckedThrowingContinuation { continuation in

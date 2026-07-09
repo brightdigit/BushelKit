@@ -31,15 +31,24 @@ public import BushelFoundation
 internal import Foundation
 internal import OSVer
 
+/// Describes a released major version of macOS available for installation.
 public struct MacOSRelease: InstallerRelease {
+  /// The major version number of the macOS release (for example, `15`).
   public let majorVersion: Int
+  /// The user-facing version name (for example, `macOS 15`).
   public let versionName: String
+  /// The marketing release name for this version (for example, `Sequoia`).
   public let releaseName: String
+  /// The name of the image asset representing this release.
   public let imageName: String
+  /// The stable identifier for the release, derived from its major version.
   public var id: Int {
     majorVersion
   }
 
+  /// Creates a release descriptor for the given macOS major version.
+  ///
+  /// - Parameter majorVersion: The major version number of the macOS release.
   public init?(majorVersion: Int) {
     guard let releaseName = OSVer.macOSReleaseName(majorVersion: majorVersion)
     else {

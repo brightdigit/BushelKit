@@ -31,9 +31,41 @@ import Testing
 
 @testable import BushelFoundation
 
-struct SigVerifierFindVerificationTests {
+// Mock implementation that returns specific verification
+internal actor MockSigVerifierReturning: SigVerifier {
+  internal let id: VMSystemID = "test-system"
+  internal let verification: SigVerification
+
+  internal init(verification: SigVerification) {
+    self.verification = verification
+  }
+
+  internal func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
+    -> SigVerification
+  {
+    verification
+  }
+}
+
+// Mock implementation that throws specific errors
+internal actor MockSigVerifierWithError: SigVerifier {
+  internal let id: VMSystemID = "test-system"
+  internal let error: SigVerificationError
+
+  internal init(error: SigVerificationError) {
+    self.error = error
+  }
+
+  internal func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
+    -> SigVerification
+  {
+    throw error
+  }
+}
+
+internal struct SigVerifierFindVerificationTests {
   @Test("findVerification returns successful verification result when signed")
-  func testFindVerificationReturnsSignedResult() async throws {
+  internal func testFindVerificationReturnsSignedResult() async throws {
     let verifier = MockSigVerifierReturning(verification: .signed)
     let source = SignatureSource.dummy  // This will be whatever mock source we have
 
@@ -43,7 +75,7 @@ struct SigVerifierFindVerificationTests {
   }
 
   @Test("findVerification returns successful verification result when unsigned")
-  func testFindVerificationReturnsUnsignedResult() async throws {
+  internal func testFindVerificationReturnsUnsignedResult() async throws {
     let verifier = MockSigVerifierReturning(verification: .unsigned)
     let source = SignatureSource.dummy
 
@@ -53,7 +85,7 @@ struct SigVerifierFindVerificationTests {
   }
 
   @Test("findVerification returns nil when notFound error occurs")
-  func testFindVerificationReturnsNilForNotFound() async throws {
+  internal func testFindVerificationReturnsNilForNotFound() async throws {
     let verifier = MockSigVerifierWithError(error: .notFound)
     let source = SignatureSource.dummy
 
@@ -63,7 +95,7 @@ struct SigVerifierFindVerificationTests {
   }
 
   @Test("findVerification propagates unsupportedSource error")
-  func testFindVerificationPropagatesUnsupportedSourceError() async throws {
+  internal func testFindVerificationPropagatesUnsupportedSourceError() async throws {
     let verifier = MockSigVerifierWithError(error: .unsupportedSource)
     let source = SignatureSource.dummy
 
@@ -78,7 +110,7 @@ struct SigVerifierFindVerificationTests {
   }
 
   @Test("findVerification propagates internalError")
-  func testFindVerificationPropagatesInternalError() async throws {
+  internal func testFindVerificationPropagatesInternalError() async throws {
     struct TestError: Error {}
     let internalError = TestError()
     let verifier = MockSigVerifierWithError(error: .internalError(internalError))
@@ -95,7 +127,7 @@ struct SigVerifierFindVerificationTests {
   }
 
   @Test("findVerification propagates unknownError")
-  func testFindVerificationPropagatesUnknownError() async throws {
+  internal func testFindVerificationPropagatesUnknownError() async throws {
     struct TestError: Error {}
     let unknownError = TestError()
     let verifier = MockSigVerifierWithError(error: .unknownError(unknownError))
@@ -112,41 +144,9 @@ struct SigVerifierFindVerificationTests {
   }
 }
 
-// Mock implementation that returns specific verification
-actor MockSigVerifierReturning: SigVerifier {
-  let id: VMSystemID = "test-system"
-  let verification: SigVerification
-
-  init(verification: SigVerification) {
-    self.verification = verification
-  }
-
-  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
-    -> SigVerification
-  {
-    verification
-  }
-}
-
-// Mock implementation that throws specific errors
-actor MockSigVerifierWithError: SigVerifier {
-  let id: VMSystemID = "test-system"
-  let error: SigVerificationError
-
-  init(error: SigVerificationError) {
-    self.error = error
-  }
-
-  func isSignatureSigned(from source: SignatureSource) async throws(SigVerificationError)
-    -> SigVerification
-  {
-    throw error
-  }
-}
-
 // Extension to provide a dummy SignatureSource for testing
 extension SignatureSource {
-  static var dummy: SignatureSource {
+  internal static var dummy: SignatureSource {
     .signatureID("test-signature-id")
   }
 }

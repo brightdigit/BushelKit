@@ -31,14 +31,19 @@ public import BushelFoundation
 public import BushelMachine
 internal import Foundation
 
+/// A release paired with the installer images available for it.
 public struct ReleaseMetadata: Identifiable, Equatable {
+  /// The underlying release descriptor.
   public let metadata: any InstallerRelease
+  /// The installer images belonging to this release.
   public let images: [any InstallerImage]
 
+  /// The major version of the release, used as its stable identifier.
   public var id: Int {
     metadata.majorVersion
   }
 
+  /// A Boolean value indicating whether this release represents a custom (user-supplied) version.
   public var isCustom: Bool {
     self.metadata.isCustom
   }
@@ -48,6 +53,11 @@ public struct ReleaseMetadata: Identifiable, Equatable {
     self.images = images
   }
 
+  /// Compares two release metadata values by their underlying releases.
+  /// - Parameters:
+  ///   - lhs: The first release metadata to compare.
+  ///   - rhs: The second release metadata to compare.
+  /// - Returns: `true` if the underlying releases are equal.
   public static func == (lhs: ReleaseMetadata, rhs: ReleaseMetadata) -> Bool {
     lhs.metadata.isEqual(to: rhs.metadata)
   }

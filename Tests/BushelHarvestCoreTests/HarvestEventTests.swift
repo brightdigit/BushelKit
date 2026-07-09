@@ -45,8 +45,8 @@ internal struct HarvestEventTests {
   }
 
   @Test("Initialization with custom values")
-  internal func initializationWithCustomValues() {
-    let customId = UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!
+  internal func initializationWithCustomValues() throws {
+    let customId = try #require(UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F"))
     let customTimestamp = Date(timeIntervalSince1970: 1_640_995_200)  // 2022-01-01 00:00:00 UTC
     let eventType = "system.shutdown"
 
@@ -84,8 +84,8 @@ internal struct HarvestEventTests {
 
   @Test("Codable conformance")
   internal func codableConformance() throws {
-    let originalEvent = HarvestEvent(
-      id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!,
+    let originalEvent = try HarvestEvent(
+      id: #require(UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")),
       timestamp: Date(timeIntervalSince1970: 1_640_995_200),
       eventType: "test.codable.event"
     )
@@ -96,7 +96,7 @@ internal struct HarvestEventTests {
     let jsonData = try encoder.encode(originalEvent)
 
     // Verify JSON contains expected fields
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
     #expect(jsonString.contains("E621E1F8-C36C-495A-93FC-0C247A3E6E5F"))
     #expect(jsonString.contains("test.codable.event"))
 
@@ -125,8 +125,8 @@ internal struct HarvestEventTests {
 
   @Test("JSON structure")
   internal func jsonStructure() throws {
-    let event = HarvestEvent(
-      id: UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")!,
+    let event = try HarvestEvent(
+      id: #require(UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")),
       timestamp: Date(timeIntervalSince1970: 1_609_459_200),  // 2021-01-01 00:00:00 UTC
       eventType: "json.structure.test"
     )
@@ -136,7 +136,7 @@ internal struct HarvestEventTests {
     encoder.outputFormatting = .prettyPrinted
 
     let jsonData = try encoder.encode(event)
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
 
     // Verify JSON structure
     #expect(jsonString.contains("\"id\""))
@@ -180,17 +180,18 @@ internal struct HarvestEventTests {
 
       #expect(decodedEvent.id == originalEvent.id)
       #expect(decodedEvent.eventType == originalEvent.eventType)
-      #expect(
-        abs(
-          decodedEvent.timestamp.timeIntervalSince1970
-            - originalEvent.timestamp.timeIntervalSince1970) < 0.001)
+      let timestampDelta = abs(
+        decodedEvent.timestamp.timeIntervalSince1970
+          - originalEvent.timestamp.timeIntervalSince1970
+      )
+      #expect(timestampDelta < 0.001)
     }
   }
 
   @Test("Empty event type")
   internal func emptyEventType() {
     let event = HarvestEvent(eventType: "")
-    #expect(event.eventType == "")
+    #expect(event.eventType.isEmpty)
   }
 
   @Test("Long event type")

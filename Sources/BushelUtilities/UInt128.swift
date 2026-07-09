@@ -31,6 +31,7 @@
 /// for errors that can occur during string
 /// conversion.
 
+/// The errors that can occur while working with ``UInt128`` values, such as string conversion failures.
 public enum UInt128Errors: Error {
   /// Input cannot be converted to a UInt128 value.
   case invalidString
@@ -67,6 +68,7 @@ public struct UInt128 {
     self.value.lowerBits = lowerBits
   }
 
+  /// Creates a UInt128 value equal to zero.
   public init() {
     self.init(upperBits: 0, lowerBits: 0)
   }
@@ -442,16 +444,19 @@ extension UInt128: FixedWidthInteger {
 extension UInt128 {
   // MARK: Instance Properties
 
+  /// The number of bits used to represent a UInt128 value, which is always 128.
   public static var bitWidth: Int { 128 }
 }
 
 extension UInt128: BinaryInteger {
   // MARK: Instance Methods
 
+  /// The words of the value's binary representation, ordered from least to most significant.
   public var words: [UInt] {
     Array(self.value.lowerBits.words) + Array(self.value.upperBits.words)
   }
 
+  /// The number of trailing zero bits in the value's binary representation.
   public var trailingZeroBitCount: Int {
     if self.value.lowerBits == 0 {
       return UInt64.bitWidth + self.value.upperBits.trailingZeroBitCount
@@ -461,6 +466,10 @@ extension UInt128: BinaryInteger {
 
   // MARK: Initializers
 
+  /// Creates a UInt128 value from a floating-point value, if it can be represented exactly.
+  ///
+  /// - Parameter source: The floating-point value to convert.
+  /// - Returns: `nil` if `source` is negative, fractional, or otherwise not exactly representable.
   public init?(exactly source: some BinaryFloatingPoint) {
     if source.isZero {
       self = UInt128()
@@ -471,28 +480,53 @@ extension UInt128: BinaryInteger {
     }
   }
 
+  /// Creates a UInt128 value by rounding a floating-point value toward zero.
+  ///
+  /// - Parameter source: The floating-point value to convert.
   public init(_ source: some BinaryFloatingPoint) {
     self.init(UInt64(source))
   }
 
   // MARK: Type Methods
 
+  /// Returns the quotient of dividing the first value by the second.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to divide.
+  ///   - rhs: The value to divide by.
+  /// - Returns: The quotient, truncated toward zero.
   public static func / (lhs: UInt128, rhs: UInt128) -> UInt128 {
     let result = lhs.dividedReportingOverflow(by: rhs)
 
     return result.partialValue
   }
 
+  /// Divides the first value by the second and stores the quotient in the first value.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to divide and update in place.
+  ///   - rhs: The value to divide by.
   public static func /= (lhs: inout UInt128, rhs: UInt128) {
     lhs = lhs / rhs
   }
 
+  /// Returns the remainder of dividing the first value by the second.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to divide.
+  ///   - rhs: The value to divide by.
+  /// - Returns: The remainder of the division.
   public static func % (lhs: UInt128, rhs: UInt128) -> UInt128 {
     let result = lhs.remainderReportingOverflow(dividingBy: rhs)
 
     return result.partialValue
   }
 
+  /// Divides the first value by the second and stores the remainder in the first value.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to divide and update in place.
+  ///   - rhs: The value to divide by.
   public static func %= (lhs: inout UInt128, rhs: UInt128) {
     lhs = lhs % rhs
   }
@@ -583,6 +617,9 @@ extension UInt128: UnsignedInteger {}
 // MARK: - Hashable Conformance
 
 extension UInt128: Hashable {
+  /// Feeds the value's components into the given hasher.
+  ///
+  /// - Parameter hasher: The hasher to combine the upper and lower bits into.
   public func hash(into hasher: inout Hasher) {
     hasher.combine(self.value.lowerBits)
     hasher.combine(self.value.upperBits)
@@ -592,32 +629,65 @@ extension UInt128: Hashable {
 // MARK: - Numeric Conformance
 
 extension UInt128: Numeric {
+  /// Returns the sum of the two values, trapping on overflow.
+  ///
+  /// - Parameters:
+  ///   - lhs: The first value to add.
+  ///   - rhs: The second value to add.
+  /// - Returns: The sum of `lhs` and `rhs`.
   public static func + (lhs: UInt128, rhs: UInt128) -> UInt128 {
     precondition(~lhs >= rhs, "Addition overflow!")
     let result = lhs.addingReportingOverflow(rhs)
     return result.partialValue
   }
 
+  /// Adds the second value to the first and stores the sum in the first value, trapping on overflow.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to add to and update in place.
+  ///   - rhs: The value to add.
   public static func += (lhs: inout UInt128, rhs: UInt128) {
     lhs = lhs + rhs
   }
 
+  /// Returns the difference of the two values, trapping on underflow.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to subtract from.
+  ///   - rhs: The value to subtract.
+  /// - Returns: The difference of `lhs` and `rhs`.
   public static func - (lhs: UInt128, rhs: UInt128) -> UInt128 {
     precondition(lhs >= rhs, "Integer underflow")
     let result = lhs.subtractingReportingOverflow(rhs)
     return result.partialValue
   }
 
+  /// Subtracts the second value from the first and stores the difference in the first value, trapping on underflow.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to subtract from and update in place.
+  ///   - rhs: The value to subtract.
   public static func -= (lhs: inout UInt128, rhs: UInt128) {
     lhs = lhs - rhs
   }
 
+  /// Returns the product of the two values, trapping on overflow.
+  ///
+  /// - Parameters:
+  ///   - lhs: The first value to multiply.
+  ///   - rhs: The second value to multiply.
+  /// - Returns: The product of `lhs` and `rhs`.
   public static func * (lhs: UInt128, rhs: UInt128) -> UInt128 {
     let result = lhs.multipliedReportingOverflow(by: rhs)
     precondition(!result.overflow, "Multiplication overflow!")
     return result.partialValue
   }
 
+  /// Multiplies the first value by the second and stores the product in the first value, trapping on overflow.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to multiply and update in place.
+  ///   - rhs: The value to multiply by.
   public static func *= (lhs: inout UInt128, rhs: UInt128) {
     lhs = lhs * rhs
   }
@@ -638,6 +708,9 @@ extension UInt128: Equatable {
 // MARK: - ExpressibleByIntegerLiteral Conformance
 
 extension UInt128: ExpressibleByIntegerLiteral {
+  /// Creates a UInt128 value from an integer literal.
+  ///
+  /// - Parameter value: The integer literal to store in the lower 64 bits.
   public init(integerLiteral value: IntegerLiteralType) {
     self.init(upperBits: 0, lowerBits: UInt64(value))
   }
@@ -718,6 +791,7 @@ extension UInt128: CustomStringConvertible {
 // MARK: - CustomDebugStringConvertible Conformance
 
 extension UInt128: CustomDebugStringConvertible {
+  /// A textual representation of the value, suitable for debugging.
   public var debugDescription: String {
     self.description
   }
@@ -726,6 +800,12 @@ extension UInt128: CustomDebugStringConvertible {
 // MARK: - Comparable Conformance
 
 extension UInt128: Comparable {
+  /// Returns a Boolean value indicating whether the first value is less than the second.
+  ///
+  /// - Parameters:
+  ///   - lhs: The value to compare on the left side.
+  ///   - rhs: The value to compare on the right side.
+  /// - Returns: `true` if `lhs` is strictly less than `rhs`; otherwise, `false`.
   public static func < (lhs: UInt128, rhs: UInt128) -> Bool {
     if lhs.value.upperBits < rhs.value.upperBits {
       return true
@@ -745,6 +825,10 @@ extension UInt128: Codable {
     case lowerBits
   }
 
+  /// Creates a UInt128 value by decoding its upper and lower bits from the given decoder.
+  ///
+  /// - Parameter decoder: The decoder to read the encoded representation from.
+  /// - Throws: An error if the encoded data is missing or malformed.
   public init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     let upperBits = try container.decode(UInt64.self, forKey: .upperBits)
@@ -752,6 +836,10 @@ extension UInt128: Codable {
     self.init(upperBits: upperBits, lowerBits: lowerBits)
   }
 
+  /// Encodes the value's upper and lower bits into the given encoder.
+  ///
+  /// - Parameter encoder: The encoder to write the representation to.
+  /// - Throws: An error if any value cannot be encoded.
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.value.upperBits, forKey: .upperBits)
@@ -798,6 +886,9 @@ extension UInt128 {
 // MARK: - BinaryFloatingPoint Interworking
 
 extension BinaryFloatingPoint {
+  /// Creates a floating-point value from a UInt128, trapping if it exceeds 64 bits.
+  ///
+  /// - Parameter value: The UInt128 value to convert; its upper bits must be zero.
   public init(_ value: UInt128) {
     precondition(
       value.value.upperBits == 0,
@@ -806,6 +897,10 @@ extension BinaryFloatingPoint {
     self.init(value.value.lowerBits)
   }
 
+  /// Creates a floating-point value from a UInt128, if it can be represented within 64 bits.
+  ///
+  /// - Parameter value: The UInt128 value to convert.
+  /// - Returns: `nil` if `value` has any bits set above the lower 64 bits.
   public init?(exactly value: UInt128) {
     if value.value.upperBits > 0 {
       return nil

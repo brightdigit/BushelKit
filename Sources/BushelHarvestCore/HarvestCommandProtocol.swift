@@ -1,13 +1,13 @@
 //
-//  CommandProtocol.swift
+//  HarvestCommandProtocol.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
-//  Copyright © 2024 BrightDigit.
+//  Copyright © 2025 BrightDigit.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without
+//  files (the “Software”), to deal in the Software without
 //  restriction, including without limitation the rights to use,
 //  copy, modify, merge, publish, distribute, sublicense, and/or
 //  sell copies of the Software, and to permit persons to whom the
@@ -17,7 +17,7 @@
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 //  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 //  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -28,6 +28,41 @@
 //
 
 public import Foundation
+
+/// Command categories for organizing Harvest operations
+///
+/// Commands are grouped into categories to enable:
+/// - Organized routing to specialized command handlers
+/// - Category-based authorization and security policies
+/// - Logical grouping of related functionality
+/// - Easier debugging and monitoring
+///
+/// ## Categories
+/// - `.system` - System-level operations like shutdown, status checks, and configuration
+/// - `.file` - File system operations like reading, writing, copying, and directory traversal
+/// - `.network` - Network operations like connection management and data transfer
+/// - `.clipboard` - Clipboard operations for copy/paste functionality between host and guest
+/// - `.remote` - Remote debugging and development tools operations
+/// - `.security` - Security operations like authentication, authorization, and access control
+public enum CommandCategory: String, Codable, Sendable {
+  /// System-level operations (shutdown, status, configuration, etc.)
+  case system
+
+  /// File system operations (read, write, copy, directory operations, etc.)
+  case file
+
+  /// Network operations (connection management, data transfer, etc.)
+  case network
+
+  /// Clipboard operations (copy, paste, clipboard sharing, etc.)
+  case clipboard
+
+  /// Remote debugging and development operations (SSH, debugging tools, etc.)
+  case remote
+
+  /// Security operations (authentication, authorization, access control, etc.)
+  case security
+}
 
 /// Protocol for Harvest commands
 ///
@@ -72,39 +107,4 @@ public protocol HarvestCommandProtocol: Codable, Sendable {
   /// Used for organizing commands, implementing category-specific
   /// authorization, and routing commands to appropriate handlers.
   var category: CommandCategory { get }
-}
-
-/// Command categories for organizing Harvest operations
-///
-/// Commands are grouped into categories to enable:
-/// - Organized routing to specialized command handlers
-/// - Category-based authorization and security policies
-/// - Logical grouping of related functionality
-/// - Easier debugging and monitoring
-///
-/// ## Categories
-/// - `.system` - System-level operations like shutdown, status checks, and configuration
-/// - `.file` - File system operations like reading, writing, copying, and directory traversal
-/// - `.network` - Network operations like connection management and data transfer
-/// - `.clipboard` - Clipboard operations for copy/paste functionality between host and guest
-/// - `.remote` - Remote debugging and development tools operations
-/// - `.security` - Security operations like authentication, authorization, and access control
-public enum CommandCategory: String, Codable, Sendable {
-  /// System-level operations (shutdown, status, configuration, etc.)
-  case system
-
-  /// File system operations (read, write, copy, directory operations, etc.)
-  case file
-
-  /// Network operations (connection management, data transfer, etc.)
-  case network
-
-  /// Clipboard operations (copy, paste, clipboard sharing, etc.)
-  case clipboard
-
-  /// Remote debugging and development operations (SSH, debugging tools, etc.)
-  case remote
-
-  /// Security operations (authentication, authorization, access control, etc.)
-  case security
 }

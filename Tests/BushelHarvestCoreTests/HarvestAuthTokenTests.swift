@@ -112,9 +112,8 @@ internal struct HarvestAuthTokenTests {
     encoder.dateEncodingStrategy = .iso8601
     let jsonData = try encoder.encode(token)
 
-    let jsonString = String(data: jsonData, encoding: .utf8)
-    #expect(jsonString != nil)
-    #expect(jsonString!.contains("jwt.token.here"))
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
+    #expect(jsonString.contains("jwt.token.here"))
 
     // Verify round-trip
     let decoder = JSONDecoder()

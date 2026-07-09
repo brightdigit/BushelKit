@@ -30,5 +30,6 @@
 public import BushelFoundation
 
 extension MachineBuildRequest {
+  /// A sample machine build request backed by the sample installer identifier, for use in tests.
   public static let sampleBuildRequest: Self = .init(restoreImage: .sampleInstallerIdentifier)
 }

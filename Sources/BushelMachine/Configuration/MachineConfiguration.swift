@@ -40,8 +40,11 @@ internal import RadiantKit
 public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable {
   /// System ID
   public let vmSystemID: VMSystemID
+  /// Identifier of the snapshot system used to capture and restore machine state.
   public let snapshotSystemID: SnapshotterID
+  /// Version of the operating system installed on the machine.
   public let operatingSystemVersion: OSVer
+  /// Build version string of the installed operating system, if known.
   public let buildVersion: String?
 
   /// Storage specifications
@@ -58,15 +61,35 @@ public struct MachineConfiguration: Codable, OperatingSystemInstalled, Sendable 
   /// Snapshot of the machine
   public let snapshots: [Snapshot]
 
+  /// Videos recorded from the machine, if any.
   public let videos: [RecordedVideo]?
+  /// Screenshot images captured from the machine, if any.
   public let images: [RecordedImage]?
 
+  /// Identifier of the installer image used to restore or install this machine.
   public let restoreImageFile: InstallerImageIdentifier
 
+  /// The operating system version and build combined into version components.
   public var operatingSystemVersionComponents: OperatingSystemVersionComponents {
     .init(buildVersion: buildVersion, operatingSystemVersion: operatingSystemVersion)
   }
 
+  /// Creates a machine configuration from its individual specifications.
+  ///
+  /// - Parameters:
+  ///   - restoreImageFile: Identifier of the installer image used to restore or install the machine.
+  ///   - vmSystemID: Identifier of the virtual machine system.
+  ///   - snapshotSystemID: Identifier of the snapshot system.
+  ///   - operatingSystemVersion: Version of the operating system installed on the machine.
+  ///   - buildVersion: Build version string of the operating system, if known.
+  ///   - storage: Storage device specifications for the machine.
+  ///   - cpuCount: Number of CPU cores allocated to the machine.
+  ///   - memory: Amount of memory in bytes allocated to the machine.
+  ///   - networkConfigurations: Network device configurations for the machine.
+  ///   - graphicsConfigurations: Graphics device configurations for the machine.
+  ///   - snapshots: Snapshots associated with the machine.
+  ///   - videos: Videos recorded from the machine.
+  ///   - images: Screenshot images captured from the machine.
   public init(
     restoreImageFile: InstallerImageIdentifier,
     vmSystemID: VMSystemID,
@@ -146,24 +169,33 @@ extension MachineConfiguration {
 }
 
 extension MachineConfiguration: CodablePackage {
+  /// The JSON decoder used to decode a machine configuration.
   public static var decoder: JSONDecoder {
     JSON.decoder
   }
 
+  /// The JSON encoder used to encode a machine configuration.
   public static var encoder: JSONEncoder {
     JSON.encoder
   }
 
+  /// The file name used to store the machine configuration within its package.
   public static var configurationFileWrapperKey: String {
     URL.bushel.paths.machineJSONFileName
   }
 
+  /// The content types this configuration can be read from.
   public static var readableContentTypes: [FileType] {
     [.virtualMachine]
   }
 }
 
 extension MachineConfiguration {
+  /// Creates a machine configuration from an existing one, replacing its snapshots.
+  ///
+  /// - Parameters:
+  ///   - original: The configuration to copy.
+  ///   - withSnapshots: A closure that transforms the original snapshots into the new snapshots.
   @available(*, deprecated)
   public init(
     original: MachineConfiguration,

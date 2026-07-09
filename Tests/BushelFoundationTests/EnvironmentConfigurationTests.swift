@@ -33,9 +33,9 @@ import Testing
 
 @testable import BushelFoundation
 
-struct EnvironmentConfigurationTests {
+internal struct EnvironmentConfigurationTests {
   @Test("EnvironmentConfiguration properties read from environment")
-  func testEnvironmentProperties() {
+  internal func testEnvironmentProperties() {
     // Create mock environment
     let mockEnvironment: [String: String] = [
       "DISABLE_ASSERTION_FAILURE_FOR_ERROR": "true",
@@ -83,7 +83,7 @@ struct EnvironmentConfigurationTests {
   }
 
   @Test("EnvironmentConfiguration uses defaults when environment empty")
-  func testDefaultValues() {
+  internal func testDefaultValues() {
     let emptyEnvironment: [String: String] = [:]
 
     @EnvironmentProperty("DISABLE_ASSERTION_FAILURE_FOR_ERROR", source: emptyEnvironment)
@@ -117,7 +117,7 @@ struct EnvironmentConfigurationTests {
   }
 
   @Test("EnvironmentConfiguration.Key raw values are correct")
-  func testKeyRawValues() {
+  internal func testKeyRawValues() {
     #expect(
       EnvironmentConfiguration.Key.disableAssertionFailureForError.rawValue
         == "DISABLE_ASSERTION_FAILURE_FOR_ERROR")
@@ -135,7 +135,7 @@ struct EnvironmentConfigurationTests {
   }
 
   @Test("EnvironmentConfiguration customMirror includes all properties")
-  func testCustomMirror() {
+  internal func testCustomMirror() {
     let config = EnvironmentConfiguration.shared
     let mirror = config.customMirror
 
@@ -162,7 +162,7 @@ struct EnvironmentConfigurationTests {
   }
 
   @Test("EnvironmentConfiguration.shared returns a stable value")
-  func testSharedSingleton() {
+  internal func testSharedSingleton() {
     let instance1 = EnvironmentConfiguration.shared
     let instance2 = EnvironmentConfiguration.shared
 
@@ -178,7 +178,7 @@ struct EnvironmentConfigurationTests {
   }
 
   @Test("EnvironmentProperty with Key enum")
-  func testEnvironmentPropertyWithKeyEnum() {
+  internal func testEnvironmentPropertyWithKeyEnum() {
     let mockEnvironment: [String: String] = [
       "TRIGGER_TRACKING_PERMISSIONS_REQUEST": "true"
     ]
@@ -193,7 +193,7 @@ struct EnvironmentConfigurationTests {
   }
 
   @Test("triggerTrackingPermissionsRequest property specifically")
-  func testTriggerTrackingPermissionsRequestProperty() {
+  internal func testTriggerTrackingPermissionsRequestProperty() {
     // Test with "true"
     let envTrue: [String: String] = ["TRIGGER_TRACKING_PERMISSIONS_REQUEST": "true"]
     @EnvironmentProperty(

@@ -29,7 +29,10 @@
 
 internal import Foundation
 
+/// The result of looking up a release and image within a release collection.
 public struct ReleaseQueryResult {
+  /// The release that matched the query.
   public let release: ReleaseSelected
+  /// The specific image version selected within the release.
   public let version: SelectedVersion
 }

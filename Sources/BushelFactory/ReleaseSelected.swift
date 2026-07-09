@@ -29,6 +29,7 @@
 
 internal import Foundation
 
+/// A selection describing which kind of release the user has chosen.
 public enum ReleaseSelected {
   case version(ReleaseMetadata)
   case custom
@@ -36,6 +37,8 @@ public enum ReleaseSelected {
 }
 
 extension ReleaseSelected {
+  /// Creates a selection from release metadata, resolving to a custom or versioned case.
+  /// - Parameter metadata: The release metadata to classify.
   public init(metadata: ReleaseMetadata) {
     if metadata.isCustom {
       self = .custom

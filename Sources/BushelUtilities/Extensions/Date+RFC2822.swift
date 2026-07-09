@@ -39,9 +39,10 @@ extension Date {
       // swiftlint:disable:next line_length
       "\(weekday: .abbreviated), \(day: .twoDigits) \(month: .abbreviated) \(year: .padded(4)) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits):\(second: .twoDigits) GMT",
     locale: Locale(identifier: "en_US_POSIX"),
-    // TimeZone(identifier: "GMT") should never fail for GMT, but provide fallback
-    timeZone: TimeZone(identifier: "GMT") ?? TimeZone(secondsFromGMT: 0) ?? TimeZone(
-      identifier: "UTC")!
+    // secondsFromGMT: 0 is always a valid offset; the initializer only returns nil
+    // for out-of-range offsets. .gmt would be cleaner but is macOS 13+ only.
+    // swiftlint:disable:next force_unwrapping
+    timeZone: TimeZone(secondsFromGMT: 0)!
   )
 
   /// Creates a date from an RFC 2822 formatted string

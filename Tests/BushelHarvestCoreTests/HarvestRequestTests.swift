@@ -55,8 +55,8 @@ internal struct HarvestRequestTests {
 
   @Test("Codable conformance")
   internal func codableConformance() throws {
-    let originalRequest = HarvestRequest(
-      id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!,
+    let originalRequest = try HarvestRequest(
+      id: #require(UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")),
       timestamp: Date(timeIntervalSince1970: 1_640_995_200)
     )
 
@@ -66,7 +66,7 @@ internal struct HarvestRequestTests {
     let jsonData = try encoder.encode(originalRequest)
 
     // Verify JSON contains expected fields
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
     #expect(jsonString.contains("E621E1F8-C36C-495A-93FC-0C247A3E6E5F"))
 
     // Test decoding
@@ -75,10 +75,11 @@ internal struct HarvestRequestTests {
     let decodedRequest = try decoder.decode(HarvestRequest.self, from: jsonData)
 
     #expect(decodedRequest.id == originalRequest.id)
-    #expect(
-      abs(
-        decodedRequest.timestamp.timeIntervalSince1970
-          - originalRequest.timestamp.timeIntervalSince1970) < 1.0)
+    let timestampDelta = abs(
+      decodedRequest.timestamp.timeIntervalSince1970
+        - originalRequest.timestamp.timeIntervalSince1970
+    )
+    #expect(timestampDelta < 1.0)
   }
 
   @Test("Sendable conformance")
@@ -113,8 +114,8 @@ internal struct HarvestRequestTests {
 
   @Test("JSON structure")
   internal func jsonStructure() throws {
-    let request = HarvestRequest(
-      id: UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")!,
+    let request = try HarvestRequest(
+      id: #require(UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")),
       timestamp: Date(timeIntervalSince1970: 1_609_459_200)  // 2021-01-01 00:00:00 UTC
     )
 
@@ -123,7 +124,7 @@ internal struct HarvestRequestTests {
     encoder.outputFormatting = .prettyPrinted
 
     let jsonData = try encoder.encode(request)
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
 
     // Verify JSON structure
     #expect(jsonString.contains("\"id\""))
@@ -151,10 +152,11 @@ internal struct HarvestRequestTests {
       let decodedRequest = try decoder.decode(HarvestRequest.self, from: jsonData)
 
       #expect(decodedRequest.id == originalRequest.id)
-      #expect(
-        abs(
-          decodedRequest.timestamp.timeIntervalSince1970
-            - originalRequest.timestamp.timeIntervalSince1970) < 0.001)
+      let timestampDelta = abs(
+        decodedRequest.timestamp.timeIntervalSince1970
+          - originalRequest.timestamp.timeIntervalSince1970
+      )
+      #expect(timestampDelta < 0.001)
     }
   }
 }

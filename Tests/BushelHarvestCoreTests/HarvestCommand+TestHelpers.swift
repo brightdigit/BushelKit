@@ -1,5 +1,5 @@
 //
-//  HarvestCommandTestHelpers.swift
+//  HarvestCommand+TestHelpers.swift
 //  BushelKit
 //
 //  Created by Leo Dion.
@@ -38,7 +38,7 @@ extension HarvestCommand {
   /// (the factory methods such as ``HarvestCommand/system(_:)`` keep category
   /// and payload consistent). Tests that only care about the category use this
   /// helper to pair each category with a representative payload.
-  init(id: UUID = UUID(), category: CommandCategory) {
+  internal init(id: UUID = UUID(), category: CommandCategory) {
     let payload: CommandPayload
     switch category {
     case .system:

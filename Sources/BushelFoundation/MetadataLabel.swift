@@ -29,6 +29,7 @@
 
 internal import Foundation
 
+/// Display labels describing an operating system image for presentation.
 public struct MetadataLabel: Equatable, Sendable {
   /// The long name of the operating system.
   public let operatingSystemLongName: String

@@ -56,6 +56,7 @@ public struct VirtualizationData: Sendable {
 
 extension VirtualizationData {
   #warning("@leo: help here")
+  /// The set of file paths within a virtual machine bundle that hold virtualization data.
   public typealias Paths = URL.Bushel.Paths.VZMac
 
   /// A private struct representing a directory containing virtual machine data.

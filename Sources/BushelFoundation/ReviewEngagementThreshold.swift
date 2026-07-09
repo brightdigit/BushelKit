@@ -39,6 +39,7 @@ public struct ReviewEngagementThreshold:
   Codable,
   Equatable
 {
+  /// The underlying integer type backing the threshold.
   public typealias RawValue = Int
 
   /// The default threshold value (10 interactions).

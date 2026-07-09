@@ -31,9 +31,12 @@ internal import BushelFoundation
 public import Foundation
 
 extension UUID {
-  // swiftlint:disable:next force_unwrapping
-  public static let imageIDSample: Self = .init(uuidString: "2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")!
+  /// A fixed sample image identifier UUID for use in tests.
+  public static let imageIDSample: Self =
+    // swiftlint:disable:next force_unwrapping
+    .init(uuidString: "2480CC13-8CFE-4CB6-9FBF-FFD2157B8995")!
 
+  /// A fixed sample bookmark identifier UUID for use in tests.
   public static let bookmarkIDSample: Self = .init(
     uuidString: "C90C2C17-7CA1-466C-93C0-D73591D65C94"
       // swiftlint:disable:next force_unwrapping

@@ -51,6 +51,14 @@ public struct SwiftVersionRecord: Codable, Sendable {
     "SwiftVersion-\(version)"
   }
 
+  /// Creates a new Swift version record.
+  ///
+  /// - Parameters:
+  ///   - version: The Swift version.
+  ///   - releaseDate: The release date.
+  ///   - downloadURL: The optional swift.org toolchain download link.
+  ///   - isPrerelease: Whether this is a beta or snapshot release.
+  ///   - notes: Optional release notes.
   public init(
     version: String,
     releaseDate: Date,

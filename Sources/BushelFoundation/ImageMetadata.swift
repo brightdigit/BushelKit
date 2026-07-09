@@ -52,6 +52,7 @@ public struct ImageMetadata: Codable,
   /// The file extension of the image.
   public let fileExtension: String
 
+  /// The signature verification result for the image, if verification was performed.
   public let sigVerification: SigVerification?
 
   /// A custom debug description string providing details about the image metadata.

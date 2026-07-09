@@ -31,6 +31,10 @@ public import BushelMachine
 internal import Foundation
 
 extension MachineConfiguration {
+  /// Creates a machine configuration by resolving the values provided by a configurable source.
+  /// - Parameter configurable: The source providing the machine system, selected image, and specifications.
+  /// - Throws: A ``ConfigurationError`` when the system manager, restore image,
+  ///   or specifications are missing.
   @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
   public init(
     configurable: some MachineConfigurable
@@ -54,6 +58,11 @@ extension MachineConfiguration {
     )
   }
 
+  /// Creates a machine configuration from a restore image, machine system, and specification configuration.
+  /// - Parameters:
+  ///   - restoreImage: The installer image used to restore the virtual machine.
+  ///   - machineSystem: The machine system providing default identifiers and storage settings.
+  ///   - specificationConfiguration: The resolved CPU, memory, and storage specifications.
   @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
   public init(
     restoreImage: any InstallerImage,

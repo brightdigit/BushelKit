@@ -32,9 +32,9 @@ import Testing
 
 @testable import BushelUtilities
 
-struct FileManagerErrorsTests {
+internal struct FileManagerErrorsTests {
   @Test("isFileNotFound returns true for file not found error")
-  func testIsFileNotFoundWithCorrectError() {
+  internal func testIsFileNotFoundWithCorrectError() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileNoSuchFileError,
@@ -47,7 +47,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isFileNotFound returns false for wrong domain")
-  func testIsFileNotFoundWithWrongDomain() {
+  internal func testIsFileNotFoundWithWrongDomain() {
     let error = NSError(
       domain: NSPOSIXErrorDomain,
       code: NSFileNoSuchFileError,
@@ -59,7 +59,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isFileNotFound returns false for wrong error code")
-  func testIsFileNotFoundWithWrongCode() {
+  internal func testIsFileNotFoundWithWrongCode() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileReadNoPermissionError,
@@ -70,7 +70,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isCorruptFile returns true for corrupt file error")
-  func testIsCorruptFileWithCorrectError() {
+  internal func testIsCorruptFileWithCorrectError() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileReadCorruptFileError,
@@ -83,7 +83,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isCorruptFile returns false for wrong domain")
-  func testIsCorruptFileWithWrongDomain() {
+  internal func testIsCorruptFileWithWrongDomain() {
     let error = NSError(
       domain: NSPOSIXErrorDomain,
       code: NSFileReadCorruptFileError,
@@ -95,7 +95,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isCorruptFile returns false for wrong error code")
-  func testIsCorruptFileWithWrongCode() {
+  internal func testIsCorruptFileWithWrongCode() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileReadNoPermissionError,
@@ -106,7 +106,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isFileNotFoundOrCorrupt returns true for file not found")
-  func testIsFileNotFoundOrCorruptWithFileNotFound() {
+  internal func testIsFileNotFoundOrCorruptWithFileNotFound() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileNoSuchFileError,
@@ -117,7 +117,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isFileNotFoundOrCorrupt returns true for corrupt file")
-  func testIsFileNotFoundOrCorruptWithCorruptFile() {
+  internal func testIsFileNotFoundOrCorruptWithCorruptFile() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileReadCorruptFileError,
@@ -128,7 +128,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isFileNotFoundOrCorrupt returns false for other errors")
-  func testIsFileNotFoundOrCorruptWithOtherError() {
+  internal func testIsFileNotFoundOrCorruptWithOtherError() {
     let error = NSError(
       domain: NSCocoaErrorDomain,
       code: NSFileReadNoPermissionError,
@@ -139,7 +139,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("isFileNotFoundOrCorrupt returns false for different domain")
-  func testIsFileNotFoundOrCorruptWithDifferentDomain() {
+  internal func testIsFileNotFoundOrCorruptWithDifferentDomain() {
     let error = NSError(
       domain: NSURLErrorDomain,
       code: NSFileNoSuchFileError,
@@ -150,7 +150,7 @@ struct FileManagerErrorsTests {
   }
 
   @Test("All error properties work with userInfo populated")
-  func testErrorPropertiesWithUserInfo() {
+  internal func testErrorPropertiesWithUserInfo() {
     let userInfo: [String: Any] = [
       NSFilePathErrorKey: "/path/to/file",
       NSLocalizedDescriptionKey: "Test error",

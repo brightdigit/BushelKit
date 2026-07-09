@@ -30,12 +30,15 @@
 public import ArgumentParser
 internal import Foundation
 
+/// The `machine` command group for creating and managing virtual machines.
 public struct Machine: ParsableCommand {
+  /// The command-line configuration describing the command and its subcommands.
   public static let configuration = CommandConfiguration(
     abstract: "A utility for performing maths.",
     subcommands: [Machine.Create.self],
     defaultSubcommand: Machine.Create.self
   )
 
+  /// Creates a new `Machine` command.
   public init() {}
 }

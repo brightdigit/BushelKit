@@ -68,6 +68,16 @@ public struct DataSourceMetadata: Codable, Sendable {
 
   // MARK: Lifecycle
 
+  /// Creates a new metadata entry describing a data source fetch.
+  ///
+  /// - Parameters:
+  ///   - sourceName: The name of the data source.
+  ///   - recordTypeName: The name of the record type fetched.
+  ///   - lastFetchedAt: The date of the most recent fetch.
+  ///   - sourceUpdatedAt: The date the source was last updated, if known.
+  ///   - recordCount: The number of records retrieved from the source.
+  ///   - fetchDurationSeconds: How long the fetch operation took, in seconds.
+  ///   - lastError: The last error message if the fetch failed.
   public init(
     sourceName: String,
     recordTypeName: String,
@@ -80,21 +90,26 @@ public struct DataSourceMetadata: Codable, Sendable {
     // Validation using precondition (fail-fast approach)
     precondition(
       Self.isValidSourceName(sourceName),
-      "sourceName must be non-empty and contain only ASCII characters")
+      "sourceName must be non-empty and contain only ASCII characters"
+    )
     precondition(
       Self.isValidRecordTypeName(recordTypeName),
-      "recordTypeName must be non-empty and contain only ASCII characters")
+      "recordTypeName must be non-empty and contain only ASCII characters"
+    )
 
     let recordName = Self.makeRecordName(sourceName: sourceName, recordTypeName: recordTypeName)
     precondition(
       Self.isValidRecordName(recordName),
-      "CloudKit record name exceeds 255 characters: \(recordName.count)")
+      "CloudKit record name exceeds 255 characters: \(recordName.count)"
+    )
 
     precondition(
-      Self.isValidRecordCount(recordCount), "recordCount cannot be negative: \(recordCount)")
+      Self.isValidRecordCount(recordCount), "recordCount cannot be negative: \(recordCount)"
+    )
     precondition(
       Self.isValidFetchDuration(fetchDurationSeconds),
-      "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)")
+      "fetchDurationSeconds cannot be negative: \(fetchDurationSeconds)"
+    )
 
     self.sourceName = sourceName
     self.recordTypeName = recordTypeName

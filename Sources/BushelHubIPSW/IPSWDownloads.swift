@@ -40,8 +40,10 @@ extension IPSWDownloads: Loggable {
   private static let virtualMacID = "VirtualMac2,1"
   private static let lastCountUserDefaultsKey = "IPSWDownloadsImageLastCount"
 
+  /// The logging category used for IPSW Downloads log messages.
   public static let loggingCategory: BushelLogging.Category = .hub
 
+  /// The last known number of available firmware images, persisted in user defaults.
   public static var lastCount: Int? {
     get {
       let userDefaults = UserDefaults(suiteName: Bundle.suiteName)
@@ -62,6 +64,8 @@ extension IPSWDownloads: Loggable {
     }
   }
 
+  /// Returns the hubs provided by the IPSW Downloads source.
+  /// - Returns: An array containing the IPSW Downloads hub.
   @Sendable
   public static func hubs() -> [Hub] {
     [
@@ -76,6 +80,9 @@ extension IPSWDownloads: Loggable {
     ]
   }
 
+  /// Fetches the available firmware images from IPSW Downloads as hub images.
+  /// - Returns: An array of hub images for the available macOS firmwares.
+  /// - Throws: An error if the firmware list cannot be retrieved.
   @Sendable
   public static func hubImages() async throws -> [HubImage] {
     let client = IPSWDownloads(transport: URLSessionTransport())

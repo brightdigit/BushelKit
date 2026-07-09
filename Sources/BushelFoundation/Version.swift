@@ -32,6 +32,7 @@ public import Foundation
 
 #if canImport(os)
   public import os.log
+  /// The platform logger type used for logging version-related events.
   public typealias Logger = os.Logger
 #endif
 /// Represents a version of an application, combining a semantic version with
@@ -73,6 +74,7 @@ public struct Version: CustomStringConvertible, Sendable {
 
 extension Version {
   #if canImport(os)
+    /// The shared logger used for version-related application logging.
     public static let logger: Logger = .init(
       subsystem: Bundle.main.bundleIdentifier ?? "Bushel",
       category: "application"

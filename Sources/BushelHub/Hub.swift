@@ -30,14 +30,29 @@
 public import BushelFoundation
 internal import Foundation
 
+/// A source that aggregates and provides a collection of installable images.
 public struct Hub: Hashable, Identifiable, Sendable {
+  /// The human-readable title of the hub.
   public let title: String
+  /// The unique identifier of the hub.
   public let id: String
+  /// The number of images the hub provides, if known.
   public let count: Int?
+  /// The signature priority applied to images from this hub.
   public let signaturePriority: SignaturePriority
+  /// The virtual machine system the hub's images target.
   public let systemID: VMSystemID
+  /// A closure that asynchronously fetches the hub's images.
   public let getImages: @Sendable () async throws -> [HubImage]
 
+  /// Creates a hub.
+  /// - Parameters:
+  ///   - title: The human-readable title of the hub.
+  ///   - id: The unique identifier of the hub.
+  ///   - systemID: The virtual machine system the hub's images target.
+  ///   - signaturePriority: The signature priority applied to the hub's images.
+  ///   - count: The number of images the hub provides, if known.
+  ///   - images: A closure that asynchronously fetches the hub's images.
   public init(
     title: String,
     id: String,
@@ -54,10 +69,17 @@ public struct Hub: Hashable, Identifiable, Sendable {
     self.getImages = images
   }
 
+  /// Returns a Boolean value indicating whether two hubs have the same identifier.
+  /// - Parameters:
+  ///   - lhs: The first hub to compare.
+  ///   - rhs: The second hub to compare.
+  /// - Returns: `true` if the hubs share the same identifier.
   public static func == (lhs: Hub, rhs: Hub) -> Bool {
     lhs.id == rhs.id
   }
 
+  /// Hashes the hub's identifier into the given hasher.
+  /// - Parameter hasher: The hasher to combine the hub's identifier into.
   public func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }

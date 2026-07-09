@@ -30,6 +30,8 @@
 public import BushelMachine
 internal import Foundation
 
+/// A type that supplies the machine system, selected image, and specifications
+/// needed to build a machine configuration.
 @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 public protocol MachineConfigurable {
   associatedtype Name: Hashable & Sendable

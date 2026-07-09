@@ -30,6 +30,11 @@
 internal import Foundation
 
 extension ClosedRange where Bound: Randomizable & AdditiveArithmetic {
+  /// Returns a random closed range with a randomized start and size, for use in tests.
+  /// - Parameters:
+  ///   - startingRange: The range from which the lower bound is drawn.
+  ///   - sizeRange: The range from which the range's size is drawn.
+  /// - Returns: A random closed range whose lower bound and width fall within the given ranges.
   public static func random(
     startingIn startingRange: ClosedRange<Bound>,
     withSizeWithin sizeRange: ClosedRange<Bound>

@@ -43,8 +43,8 @@ internal struct HarvestCommandTests {
   }
 
   @Test("Initialization with custom ID")
-  internal func initializationWithCustomId() {
-    let customId = UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!
+  internal func initializationWithCustomId() throws {
+    let customId = try #require(UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F"))
     let command = HarvestCommand(id: customId, category: .file)
 
     #expect(command.id == customId)
@@ -83,8 +83,8 @@ internal struct HarvestCommandTests {
 
   @Test("Codable conformance")
   internal func codableConformance() throws {
-    let originalCommand = HarvestCommand(
-      id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!,
+    let originalCommand = try HarvestCommand(
+      id: #require(UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")),
       category: .clipboard
     )
 
@@ -93,7 +93,7 @@ internal struct HarvestCommandTests {
     let jsonData = try encoder.encode(originalCommand)
 
     // Verify JSON contains expected fields
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
     #expect(jsonString.contains("E621E1F8-C36C-495A-93FC-0C247A3E6E5F"))
     #expect(jsonString.contains("clipboard"))
 
@@ -117,8 +117,8 @@ internal struct HarvestCommandTests {
 
   @Test("JSON structure")
   internal func jsonStructure() throws {
-    let command = HarvestCommand(
-      id: UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")!,
+    let command = try HarvestCommand(
+      id: #require(UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")),
       category: .system
     )
 
@@ -126,7 +126,7 @@ internal struct HarvestCommandTests {
     encoder.outputFormatting = .prettyPrinted
 
     let jsonData = try encoder.encode(command)
-    let jsonString = String(data: jsonData, encoding: .utf8)!
+    let jsonString = try #require(String(data: jsonData, encoding: .utf8))
 
     // Verify JSON structure
     #expect(jsonString.contains("\"id\""))

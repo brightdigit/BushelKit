@@ -27,18 +27,30 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// A named template that computes recommended CPU, memory, and storage for a machine.
 public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Sendable, Equatable {
+  /// The identifier naming this template.
   public let nameID: Name
+  /// The recommended storage size, in gigabytes.
   public let idealStorage: Int
+  /// The name of the system image representing this template.
   public let systemImageName: String
 
   internal let memoryWithin: @Sendable (any CalculationParameters) -> Int
   internal let cpuWithin: @Sendable (any CalculationParameters) -> Int
 
+  /// The stable identifier for this template.
   public var id: Name {
     nameID
   }
 
+  /// Creates a specification template with the given identity and value-calculation closures.
+  /// - Parameters:
+  ///   - nameID: The identifier naming the template.
+  ///   - systemImageName: The name of the system image representing the template.
+  ///   - idealStorage: The recommended storage size, in gigabytes.
+  ///   - memoryWithin: A closure computing the recommended memory index for a given range.
+  ///   - cpuWithin: A closure computing the recommended CPU index for a given range.
   public init(
     nameID: Name,
     systemImageName: String,
@@ -53,6 +65,11 @@ public struct SpecificationTemplate<Name: Hashable & Sendable>: Identifiable, Se
     self.idealStorage = idealStorage
   }
 
+  /// Compares two templates by their identifiers.
+  /// - Parameters:
+  ///   - lhs: The first template to compare.
+  ///   - rhs: The second template to compare.
+  /// - Returns: `true` if the templates share the same identifier.
   public static func == (lhs: Self, rhs: Self) -> Bool {
     lhs.id == rhs.id
   }
