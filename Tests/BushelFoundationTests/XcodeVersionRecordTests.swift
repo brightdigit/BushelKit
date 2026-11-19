@@ -114,5 +114,36 @@ internal final class XcodeVersionRecordTests: XCTestCase {
     XCTAssertNil(minimal.includedSwiftVersion)
     XCTAssertNil(minimal.sdkVersions)
     XCTAssertNil(minimal.notes)
+    XCTAssertNil(minimal.prereleaseLabel)
+  }
+
+  internal func testPrereleaseLabelRoundTrip() throws {
+    let beta = XcodeVersionRecord(
+      version: "16.1",
+      buildNumber: "16B5029d",
+      releaseDate: Date(timeIntervalSince1970: 1_727_740_800),
+      isPrerelease: true,
+      prereleaseLabel: "Beta 3"
+    )
+
+    let encoded = try JSONEncoder().encode(beta)
+    let decoded = try JSONDecoder().decode(XcodeVersionRecord.self, from: encoded)
+
+    XCTAssertEqual(decoded.prereleaseLabel, "Beta 3")
+  }
+
+  /// Records cached before `prereleaseLabel` existed still decode, with no label.
+  internal func testDecodesWithoutPrereleaseLabel() throws {
+    let json = Data(
+      #"""
+      {"version": "16.1", "buildNumber": "16B5029d",
+       "releaseDate": 749433600, "isPrerelease": true}
+      """#.utf8
+    )
+
+    let decoded = try JSONDecoder().decode(XcodeVersionRecord.self, from: json)
+
+    XCTAssertTrue(decoded.isPrerelease)
+    XCTAssertNil(decoded.prereleaseLabel)
   }
 }

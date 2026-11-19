@@ -52,6 +52,13 @@ public struct XcodeVersionRecord: Codable, Sendable {
   /// Beta/RC indicator
   public var isPrerelease: Bool
 
+  /// This Xcode's own prerelease stage (e.g., "Beta 3", "RC 1"); `nil` for final
+  /// releases, and for records written before the field existed.
+  ///
+  /// It's the Xcode's beta or RC number, which can differ from the OS seed number in
+  /// ``SDKVersionRecord/prereleaseLabel``.
+  public var prereleaseLabel: String?
+
   /// Reference to minimum RestoreImage record required (recordName)
   public var minimumMacOS: String?
 
@@ -78,6 +85,8 @@ public struct XcodeVersionRecord: Codable, Sendable {
   ///   - downloadURL: The optional developer.apple.com download link.
   ///   - fileSize: The download size in bytes, if known.
   ///   - isPrerelease: Whether this is a beta or RC release.
+  ///   - prereleaseLabel: This Xcode's prerelease stage, such as "Beta 3";
+  ///     `nil` for final releases.
   ///   - minimumMacOS: The record name of the minimum required restore image.
   ///   - includedSwiftVersion: The record name of the bundled Swift compiler.
   ///   - sdkVersions: A JSON string of bundled SDK versions.
@@ -89,6 +98,7 @@ public struct XcodeVersionRecord: Codable, Sendable {
     downloadURL: URL? = nil,
     fileSize: Int? = nil,
     isPrerelease: Bool,
+    prereleaseLabel: String? = nil,
     minimumMacOS: String? = nil,
     includedSwiftVersion: String? = nil,
     sdkVersions: String? = nil,
@@ -100,6 +110,7 @@ public struct XcodeVersionRecord: Codable, Sendable {
     self.downloadURL = downloadURL
     self.fileSize = fileSize
     self.isPrerelease = isPrerelease
+    self.prereleaseLabel = prereleaseLabel
     self.minimumMacOS = minimumMacOS
     self.includedSwiftVersion = includedSwiftVersion
     self.sdkVersions = sdkVersions
