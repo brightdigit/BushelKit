@@ -27,6 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.RestoreImageRecord. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias RestoreImageRecord = SwoopKit.RestoreImageRecord`.
+
 public import Foundation
 
 /// Represents a macOS IPSW restore image for Apple Virtualization framework
@@ -37,6 +40,7 @@ public import Foundation
 ///   source (e.g. ipsw.me, mrmacintosh.com, mesu.apple.com, CloudKit), callers
 ///   must call ``validate()`` (or check ``isValid``) on the decoded value to
 ///   reject malformed input.
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.RestoreImageRecord.")
 public struct RestoreImageRecord: Codable, Sendable {
   /// macOS version (e.g., "14.2.1", "15.0 Beta 3")
   public var version: String
@@ -152,6 +156,7 @@ public struct RestoreImageRecord: Codable, Sendable {
   }
 }
 
+@available(*, deprecated, message: "Moved to SwoopKit.")
 extension RestoreImageRecord {
   /// Validates that a string contains only lowercase hexadecimal characters.
   ///

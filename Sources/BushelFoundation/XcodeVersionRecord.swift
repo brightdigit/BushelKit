@@ -27,9 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.XcodeVersionRecord. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias XcodeVersionRecord = SwoopKit.XcodeVersionRecord`.
+
 public import Foundation
 
 /// Represents an Xcode release with macOS requirements and bundled Swift version
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.XcodeVersionRecord.")
 public struct XcodeVersionRecord: Codable, Sendable {
   /// Xcode version (e.g., "15.1", "15.2 Beta 3")
   public var version: String

@@ -27,6 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.SDKVersionRecord. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias SDKVersionRecord = SwoopKit.SDKVersionRecord`.
+
 public import Foundation
 
 /// Represents a platform SDK build (iOS, macOS, tvOS, visionOS, watchOS) shipped with Xcode.
@@ -39,6 +42,7 @@ public import Foundation
 /// - Note: SDK build numbers do not always equal simulator runtime build numbers,
 ///   so clients should match runtimes on ``platform`` + ``version`` + ``isPrerelease``
 ///   and treat a ``buildNumber`` match as a bonus.
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.SDKVersionRecord.")
 public struct SDKVersionRecord: Codable, Sendable, Equatable {
   /// Apple platforms that ship SDKs with Xcode.
   public enum Platform: String, Codable, Sendable, CaseIterable {

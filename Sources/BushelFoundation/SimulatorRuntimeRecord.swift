@@ -27,6 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.SimulatorRuntimeRecord. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias SimulatorRuntimeRecord = SwoopKit.SimulatorRuntimeRecord`.
+
 public import Foundation
 
 /// Represents a simulator runtime build (iOS, tvOS, visionOS, watchOS) from Apple's
@@ -39,6 +42,7 @@ public import Foundation
 ///
 /// ``releaseLabel`` comes from the index's runtime name ("iOS 27.2 Release Candidate
 /// Simulator Runtime"), never from the build number. The index has no release dates.
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.SimulatorRuntimeRecord.")
 public struct SimulatorRuntimeRecord: Codable, Sendable, Hashable {
   /// The runtime's platform. Runtimes never have `macOS`.
   public typealias Platform = SDKVersionRecord.Platform

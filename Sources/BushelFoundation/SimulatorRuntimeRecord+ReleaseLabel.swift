@@ -27,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@available(*, deprecated, message: "Moved to SwoopKit.")
 extension SimulatorRuntimeRecord {
   /// A runtime's release stage, with its number for betas and release candidates.
   ///
@@ -104,6 +105,7 @@ extension SimulatorRuntimeRecord {
   }
 }
 
+@available(*, deprecated, message: "Moved to SwoopKit.")
 extension SimulatorRuntimeRecord.ReleaseLabel: Codable {
   public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()

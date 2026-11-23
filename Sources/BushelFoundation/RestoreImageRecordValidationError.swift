@@ -27,9 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.RestoreImageRecordValidationError. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias RestoreImageRecordValidationError = SwoopKit.RestoreImageRecordValidationError`.
+
 public import Foundation
 
 /// Validation errors for RestoreImageRecord.
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.RestoreImageRecordValidationError.")
 public enum RestoreImageRecordValidationError: Error, Sendable, Equatable {
   /// SHA-256 hash has invalid length.
   case invalidSHA256Hash(String, expectedLength: Int)

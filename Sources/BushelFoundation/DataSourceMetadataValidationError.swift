@@ -27,7 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.DataSourceMetadataValidationError. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias DataSourceMetadataValidationError = SwoopKit.DataSourceMetadataValidationError`.
+
 /// Validation errors for DataSourceMetadata.
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.DataSourceMetadataValidationError.")
 public struct DataSourceMetadataValidationError: Error, Sendable {
   /// Specific validation error details.
   public enum Details: Equatable, Sendable {

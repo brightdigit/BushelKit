@@ -27,6 +27,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// TODO: Deprecated copy of SwoopKit.DataSourceMetadata. Once BushelKit depends on
+// SwoopKit, replace it with `public typealias DataSourceMetadata = SwoopKit.DataSourceMetadata`.
+
 public import Foundation
 
 /// Metadata about when a data source was last fetched and updated
@@ -37,6 +40,7 @@ public import Foundation
 ///   external source (e.g. appledb.dev, ipsw.me, CloudKit), callers must call
 ///   ``validate(sourceName:recordTypeName:recordCount:fetchDurationSeconds:)``
 ///   on the decoded values to reject malformed input.
+@available(*, deprecated, message: "Moved to SwoopKit. Use SwoopKit.DataSourceMetadata.")
 public struct DataSourceMetadata: Codable, Sendable {
   // MARK: Public
 
